@@ -1,6 +1,5 @@
 # api
 
-[![GitHub release](https://img.shields.io/github/release/dragonflyoss/api.svg)](https://github.com/dragonflyoss/api/releases)
 [![LICENSE](https://img.shields.io/github/license/dragonflyoss/api.svg?style=flat-square)](https://github.com/dragonflyoss/api/blob/main/LICENSE)
 
 Canonical location of the Dragonfly API definition.
