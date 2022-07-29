@@ -52,7 +52,7 @@ message RegisterResult{
   // Task id
   string task_id = 2 [(validate.rules).string.min_len = 1];
   // File size scope.
-  common.SizeScope size_scope = 3 [(validate.rules).enum.defined_only = true];
+  common.SizeScope size_scope = 3;
   // Download the only piece directly for small or tiny file.
   oneof direct_piece{
     // Return single piece info when size scope is small.
