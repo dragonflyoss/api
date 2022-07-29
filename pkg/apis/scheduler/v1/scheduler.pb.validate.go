@@ -306,16 +306,7 @@ func (m *RegisterResult) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if _, ok := v1.SizeScope_name[int32(m.GetSizeScope())]; !ok {
-		err := RegisterResultValidationError{
-			field:  "SizeScope",
-			reason: "value must be one of the defined enum values",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for SizeScope
 
 	if all {
 		switch v := interface{}(m.GetExtendAttribute()).(type) {

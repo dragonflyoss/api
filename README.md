@@ -1,3 +1,3 @@
 # api
 
-Canonical location of the Dragonfly API definition
+Canonical location of the Dragonfly API definition.
