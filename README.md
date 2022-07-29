@@ -1,7 +1,6 @@
 # api
 
 [![Discussions](https://img.shields.io/badge/discussions-on%20github-blue?style=flat-square)](https://github.com/dragonflyoss/Dragonfly2/discussions)
-[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fdragonfly_oss)](https://twitter.com/dragonfly_oss)
 [![LICENSE](https://img.shields.io/github/license/dragonflyoss/api.svg?style=flat-square)](https://github.com/dragonflyoss/api/blob/main/LICENSE)
 
 Canonical location of the Dragonfly API definition.
