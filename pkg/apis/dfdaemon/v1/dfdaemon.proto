@@ -24,35 +24,6 @@ import "validate/validate.proto";
 
 option go_package = "d7y.io/api/pkg/apis/dfdaemon/v1";
 
-message SeedRequest{
-  string task_id = 1 [(validate.rules).string.min_len = 1];
-  string url = 2 [(validate.rules).string.uri = true];
-  common.UrlMeta url_meta = 3;
-}
-
-// keep piece meta and data separately
-// check piece md5, md5s sign and total content length
-message PieceSeed{
-  // peer id for cdn node, need suffix with _CDN
-  string peer_id = 2 [(validate.rules).string.min_len = 1];
-  // cdn host id
-  string host_id = 3 [(validate.rules).string.min_len = 1];
-  common.PieceInfo piece_info = 4;
-
-  // whether or not all seeds are downloaded
-  bool done = 5;
-  // content total length for the url, content_length < 0 represent content length is unknown
-  int64 content_length = 6;
-  // total piece count, -1 represents task is downloading or failed
-  int32 total_piece_count = 7;
-  // begin time for the piece downloading
-  uint64 begin_time = 8;
-  // end time for the piece downloading
-  uint64 end_time = 9;
-  // task extend attribute
-  common.ExtendAttribute extend_attribute = 10;
-}
-
 message DownRequest{
   // Identify one downloading, the framework will fill it automatically.
   string uuid = 1 [(validate.rules).string.uuid = true];
@@ -158,10 +129,4 @@ service Daemon{
   rpc ExportTask(ExportTaskRequest) returns(google.protobuf.Empty);
   // Delete file from P2P cache system
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
-  // Generate seeds and return to scheduler
-  rpc ObtainSeeds(SeedRequest)returns(stream PieceSeed);
-  // Get piece tasks from cdn
-  rpc GetPieceTasks(common.PieceTaskRequest)returns(common.PiecePacket);
-  // Sync piece tasks with other peers
-  rpc SyncPieceTasks(stream common.PieceTaskRequest)returns(stream common.PiecePacket);
 }
