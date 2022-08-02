@@ -180,6 +180,8 @@ func (m *DownRequest) validate(all bool) error {
 
 	// no validation rules for KeepOriginalOffset
 
+	// no validation rules for Recursive
+
 	if len(errors) > 0 {
 		return DownRequestMultiError(errors)
 	}
@@ -327,6 +329,8 @@ func (m *DownResult) validate(all bool) error {
 	}
 
 	// no validation rules for Done
+
+	// no validation rules for Output
 
 	if len(errors) > 0 {
 		return DownResultMultiError(errors)

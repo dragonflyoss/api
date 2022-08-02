@@ -50,6 +50,8 @@ message DownRequest{
   int64 gid = 11;
   // Keep original offset, used for ranged request, only available for hard link, otherwise will failed.
   bool keep_original_offset = 12;
+  // Recursive download, when enabled, daemon will call resource list api to list and then recursive download each object.
+  bool recursive = 13;
 }
 
 message DownResult{
@@ -61,6 +63,8 @@ message DownResult{
   uint64 completed_length = 4 [(validate.rules).uint64.gte = 0];
   // Task has been completed.
   bool done = 5;
+  // Task output. Used in recursive download.
+  string output = 6;
 }
 
 message StatTaskRequest{

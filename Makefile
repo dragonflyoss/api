@@ -34,6 +34,7 @@ generate:
 # Generate grpc protos
 protoc:
 	@./hack/protoc.sh
+	@go generate ./...
 .PHONY: protoc
 
 # Clear compiled files
