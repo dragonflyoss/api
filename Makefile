@@ -27,7 +27,7 @@ markdownlint:
 .PHONY: markdownlint
 
 # Run go generate
-generate:
+generate: protoc
 	@go generate ./...
 .PHONY: generate
 
