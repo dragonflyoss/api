@@ -126,6 +126,8 @@ message UrlMeta{
   string filter = 4;
   // other url header infos
   map<string, string> header = 5;
+  // application 
+  string application = 6 [(validate.rules).string = {pattern: "^[\u4e00-\u9fa5a-zA-Z0-9-_]{3,32}$", ignore_empty:true}];
 }
 
 message HostLoad{

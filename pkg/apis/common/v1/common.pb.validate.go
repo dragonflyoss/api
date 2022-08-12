@@ -195,6 +195,21 @@ func (m *UrlMeta) validate(all bool) error {
 
 	// no validation rules for Header
 
+	if m.GetApplication() != "" {
+
+		if !_UrlMeta_Application_Pattern.MatchString(m.GetApplication()) {
+			err := UrlMetaValidationError{
+				field:  "Application",
+				reason: "value does not match regex pattern \"^[一-龥a-zA-Z0-9-_]{3,32}$\"",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return UrlMetaMultiError(errors)
 	}
@@ -275,6 +290,8 @@ var _ interface {
 var _UrlMeta_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$")
 
 var _UrlMeta_Range_Pattern = regexp.MustCompile("^[0-9]+-[0-9]*$")
+
+var _UrlMeta_Application_Pattern = regexp.MustCompile("^[一-龥a-zA-Z0-9-_]{3,32}$")
 
 // Validate checks the field values on HostLoad with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
