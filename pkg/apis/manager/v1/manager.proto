@@ -285,7 +285,7 @@ message ListBucketsResponse {
 // Model represents information of model.
 message Model {
   // Model id.
-  string id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model name.
   string name = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version id.
@@ -365,7 +365,7 @@ message DeleteModelRequest {
 // ModelVersion represents information of model version.
 message ModelVersion {
   // Model version id.
-  string id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version data.
   bytes data = 2 [(validate.rules).bytes.min_len = 1];
   // Model version mae.
@@ -408,28 +408,26 @@ message GetModelVersionRequest {
 
 // CreateModelVersionRequest represents request of CreateModelVersion.
 message CreateModelVersionRequest {
-  // Model version id.
-  string id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Scheduler id.
-  uint64 scheduler_id = 2 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
-  string model_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version data.
-  bytes data = 4 [(validate.rules).bytes.min_len = 1];
+  bytes data = 3 [(validate.rules).bytes.min_len = 1];
   // Model version mae.
-  double mae = 5 [(validate.rules).double.gte = 0];
+  double mae = 4 [(validate.rules).double.gte = 0];
   // Model version mse.
-  double mse = 6 [(validate.rules).double.gte = 0];
+  double mse = 5 [(validate.rules).double.gte = 0];
   // Model version rmse.
-  double rmse = 7 [(validate.rules).double.gte = 0];
+  double rmse = 6 [(validate.rules).double.gte = 0];
   // Model version r^2.
-  double r2 = 8 [(validate.rules).double.gte = 0];
+  double r2 = 7 [(validate.rules).double.gte = 0];
 }
 
 // UpdateModelVersionRequest represents request of UpdateModelVersion.
 message UpdateModelVersionRequest {
   // Model version id.
-  string id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Scheduler id.
   uint64 scheduler_id = 2 [(validate.rules).uint64 = {gte: 1}];
   // Model id.

@@ -2771,9 +2771,9 @@ func (m *Model) validate(all bool) error {
 
 	var errors []error
 
-	if l := utf8.RuneCountInString(m.GetId()); l < 1 || l > 1024 {
+	if l := utf8.RuneCountInString(m.GetModelId()); l < 1 || l > 1024 {
 		err := ModelValidationError{
-			field:  "Id",
+			field:  "ModelId",
 			reason: "value length must be between 1 and 1024 runes, inclusive",
 		}
 		if !all {
@@ -3898,9 +3898,9 @@ func (m *ModelVersion) validate(all bool) error {
 
 	var errors []error
 
-	if l := utf8.RuneCountInString(m.GetId()); l < 1 || l > 1024 {
+	if l := utf8.RuneCountInString(m.GetVersionId()); l < 1 || l > 1024 {
 		err := ModelVersionValidationError{
-			field:  "Id",
+			field:  "VersionId",
 			reason: "value length must be between 1 and 1024 runes, inclusive",
 		}
 		if !all {
@@ -4480,17 +4480,6 @@ func (m *CreateModelVersionRequest) validate(all bool) error {
 
 	var errors []error
 
-	if l := utf8.RuneCountInString(m.GetId()); l < 1 || l > 1024 {
-		err := CreateModelVersionRequestValidationError{
-			field:  "Id",
-			reason: "value length must be between 1 and 1024 runes, inclusive",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if m.GetSchedulerId() < 1 {
 		err := CreateModelVersionRequestValidationError{
 			field:  "SchedulerId",
@@ -4670,9 +4659,9 @@ func (m *UpdateModelVersionRequest) validate(all bool) error {
 
 	var errors []error
 
-	if l := utf8.RuneCountInString(m.GetId()); l < 1 || l > 1024 {
+	if l := utf8.RuneCountInString(m.GetVersionId()); l < 1 || l > 1024 {
 		err := UpdateModelVersionRequestValidationError{
-			field:  "Id",
+			field:  "VersionId",
 			reason: "value length must be between 1 and 1024 runes, inclusive",
 		}
 		if !all {
