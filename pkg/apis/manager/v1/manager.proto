@@ -297,9 +297,9 @@ message Model {
   // Scheduler ip.
   string ip = 6 [(validate.rules).string.ip = true];
   // Model create time.
-  google.protobuf.Timestamp create_at = 7 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 7 [(validate.rules).timestamp.required = true];
   // Model update time.
-  google.protobuf.Timestamp update_at = 8 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 8 [(validate.rules).timestamp.required = true];
 }
 
 // ListModelsRequest represents request of ListModels.
@@ -377,9 +377,9 @@ message ModelVersion {
   // Model version r^2.
   double r2 = 6 [(validate.rules).double.gte = 0];
   // Model create time.
-  google.protobuf.Timestamp create_at = 7 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 7 [(validate.rules).timestamp.required = true];
   // Model update time.
-  google.protobuf.Timestamp update_at = 8 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 8 [(validate.rules).timestamp.required = true];
 }
 
 // ListModelVersionsRequest represents request of ListModelVersions.

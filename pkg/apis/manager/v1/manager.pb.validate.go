@@ -2838,9 +2838,9 @@ func (m *Model) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetCreateAt() == nil {
+	if m.GetCreatedAt() == nil {
 		err := ModelValidationError{
-			field:  "CreateAt",
+			field:  "CreatedAt",
 			reason: "value is required",
 		}
 		if !all {
@@ -2849,9 +2849,9 @@ func (m *Model) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetUpdateAt() == nil {
+	if m.GetUpdatedAt() == nil {
 		err := ModelValidationError{
-			field:  "UpdateAt",
+			field:  "UpdatedAt",
 			reason: "value is required",
 		}
 		if !all {
@@ -3964,9 +3964,9 @@ func (m *ModelVersion) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetCreateAt() == nil {
+	if m.GetCreatedAt() == nil {
 		err := ModelVersionValidationError{
-			field:  "CreateAt",
+			field:  "CreatedAt",
 			reason: "value is required",
 		}
 		if !all {
@@ -3975,9 +3975,9 @@ func (m *ModelVersion) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetUpdateAt() == nil {
+	if m.GetUpdatedAt() == nil {
 		err := ModelVersionValidationError{
-			field:  "UpdateAt",
+			field:  "UpdatedAt",
 			reason: "value is required",
 		}
 		if !all {
