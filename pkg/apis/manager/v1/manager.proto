@@ -366,8 +366,8 @@ message DeleteModelRequest {
 message ModelVersion {
   // Model version id.
   string id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
-  // Model version name.
-  bytes date = 2 [(validate.rules).bytes.min_len = 1];
+  // Model version data.
+  bytes data = 2 [(validate.rules).bytes.min_len = 1];
   // Model version mae.
   double mae = 3 [(validate.rules).double.gte = 0];
   // Model version mse.
@@ -414,8 +414,8 @@ message CreateModelVersionRequest {
   uint64 scheduler_id = 2 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
-  // Model version name.
-  bytes date = 4 [(validate.rules).bytes.min_len = 1];
+  // Model version data.
+  bytes data = 4 [(validate.rules).bytes.min_len = 1];
   // Model version mae.
   double mae = 5 [(validate.rules).double.gte = 0];
   // Model version mse.
@@ -434,8 +434,8 @@ message UpdateModelVersionRequest {
   uint64 scheduler_id = 2 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
-  // Model version name.
-  bytes date = 4 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
+  // Model version data.
+  bytes data = 4 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
   // Model version mae.
   double mae = 5 [(validate.rules).double = {gte: 0, ignore_empty: true}];
   // Model version mse.

@@ -3909,9 +3909,9 @@ func (m *ModelVersion) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if len(m.GetDate()) < 1 {
+	if len(m.GetData()) < 1 {
 		err := ModelVersionValidationError{
-			field:  "Date",
+			field:  "Data",
 			reason: "value length must be at least 1 bytes",
 		}
 		if !all {
@@ -4513,9 +4513,9 @@ func (m *CreateModelVersionRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if len(m.GetDate()) < 1 {
+	if len(m.GetData()) < 1 {
 		err := CreateModelVersionRequestValidationError{
-			field:  "Date",
+			field:  "Data",
 			reason: "value length must be at least 1 bytes",
 		}
 		if !all {
@@ -4703,11 +4703,11 @@ func (m *UpdateModelVersionRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if len(m.GetDate()) > 0 {
+	if len(m.GetData()) > 0 {
 
-		if len(m.GetDate()) < 1 {
+		if len(m.GetData()) < 1 {
 			err := UpdateModelVersionRequestValidationError{
-				field:  "Date",
+				field:  "Data",
 				reason: "value length must be at least 1 bytes",
 			}
 			if !all {
