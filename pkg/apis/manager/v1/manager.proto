@@ -403,7 +403,7 @@ message GetModelVersionRequest {
   // Model id.
   string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version id.
-  string model_version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
 }
 
 // CreateModelVersionRequest represents request of CreateModelVersion.
@@ -453,7 +453,7 @@ message DeleteModelVersionRequest {
   // Model id.
   string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version id.
-  string model_version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
 }
 
 // KeepAliveRequest represents request of KeepAlive.

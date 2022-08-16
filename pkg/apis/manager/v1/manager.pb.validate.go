@@ -4367,9 +4367,9 @@ func (m *GetModelVersionRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if l := utf8.RuneCountInString(m.GetModelVersionId()); l < 1 || l > 1024 {
+	if l := utf8.RuneCountInString(m.GetVersionId()); l < 1 || l > 1024 {
 		err := GetModelVersionRequestValidationError{
-			field:  "ModelVersionId",
+			field:  "VersionId",
 			reason: "value length must be between 1 and 1024 runes, inclusive",
 		}
 		if !all {
@@ -4902,9 +4902,9 @@ func (m *DeleteModelVersionRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if l := utf8.RuneCountInString(m.GetModelVersionId()); l < 1 || l > 1024 {
+	if l := utf8.RuneCountInString(m.GetVersionId()); l < 1 || l > 1024 {
 		err := DeleteModelVersionRequestValidationError{
-			field:  "ModelVersionId",
+			field:  "VersionId",
 			reason: "value length must be between 1 and 1024 runes, inclusive",
 		}
 		if !all {
