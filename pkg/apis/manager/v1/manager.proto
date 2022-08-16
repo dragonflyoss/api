@@ -291,7 +291,7 @@ message Model {
   // Model version id.
   string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Scheduler id.
-  string scheduler_id = 4 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 4 [(validate.rules).uint64 = {gte: 1}];
   // Scheduler hostname.
   string host_name = 5 [(validate.rules).string.hostname = true];
   // Scheduler ip.
@@ -305,7 +305,7 @@ message Model {
 // ListModelsRequest represents request of ListModels.
 message ListModelsRequest {
   // Scheduler id.
-  string scheduler_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
 }
 
 // ListModelsResponse represents response of ListModels.
@@ -317,7 +317,7 @@ message ListModelsResponse {
 // GetModelRequest represents request of GetModel.
 message GetModelRequest {
   // Scheduler id.
-  string scheduler_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
 }
@@ -331,7 +331,7 @@ message CreateModelRequest {
   // Model version id.
   string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Scheduler id.
-  string scheduler_id = 4 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 4 [(validate.rules).uint64 = {gte: 1}];
   // Scheduler hostname.
   string host_name = 5 [(validate.rules).string.hostname = true];
   // Scheduler ip.
@@ -347,7 +347,7 @@ message UpdateModelRequest {
   // Model version id.
   string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler id.
-  string scheduler_id = 4 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 4 [(validate.rules).uint64 = {gte: 1}];
   // Scheduler hostname.
   string host_name = 5 [(validate.rules).string = {hostname: true, ignore_empty: true}];
   // Scheduler ip.
@@ -357,7 +357,7 @@ message UpdateModelRequest {
 // DeleteModelRequest represents request of DeleteModel.
 message DeleteModelRequest {
   // Scheduler id.
-  string scheduler_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
 }
@@ -385,7 +385,7 @@ message ModelVersion {
 // ListModelVersionsRequest represents request of ListModelVersions.
 message ListModelVersionsRequest {
   // Scheduler id.
-  string scheduler_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
 }
@@ -399,7 +399,7 @@ message ListModelVersionsResponse {
 // GetModelVersionRequest represents request of GetModelVersion.
 message GetModelVersionRequest {
   // Scheduler id.
-  string scheduler_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version id.
@@ -411,7 +411,7 @@ message CreateModelVersionRequest {
   // Model version id.
   string id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Scheduler id.
-  string scheduler_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 2 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version name.
@@ -431,7 +431,7 @@ message UpdateModelVersionRequest {
   // Model version id.
   string id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Scheduler id.
-  string scheduler_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 2 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version name.
@@ -449,7 +449,7 @@ message UpdateModelVersionRequest {
 // DeleteModelVersionRequest represents request of DeleteModelVersion.
 message DeleteModelVersionRequest {
   // Scheduler id.
-  string scheduler_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
   // Model id.
   string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Model version id.
