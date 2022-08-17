@@ -18,8 +18,6 @@ syntax = "proto3";
 
 package security;
 
-import "validate/validate.proto";
-
 option go_package = "d7y.io/api/pkg/apis/security/v1";
 
 // Refer: https://github.com/istio/api/blob/master/security/v1alpha1/ca.proto
@@ -33,9 +31,9 @@ message CertificateRequest {
   // PEM-encoded certificate request.
   // The public key in the CSR is used to generate the certificate,
   // and other fields in the generated certificate may be overwritten by the CA.
-  string csr = 1; // TODO [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty:true}];
+  string csr = 1;
   // Optional: requested certificate validity period, in seconds.
-  int64 validity_duration = 2 [(validate.rules).int64.gte = 3600];
+  int64 validity_duration = 2;
 }
 
 // Certificate response type.

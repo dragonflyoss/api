@@ -59,16 +59,7 @@ func (m *CertificateRequest) validate(all bool) error {
 
 	// no validation rules for Csr
 
-	if m.GetValidityDuration() < 3600 {
-		err := CertificateRequestValidationError{
-			field:  "ValidityDuration",
-			reason: "value must be greater than or equal to 3600",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for ValidityDuration
 
 	if len(errors) > 0 {
 		return CertificateRequestMultiError(errors)
