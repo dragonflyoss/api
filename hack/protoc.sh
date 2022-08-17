@@ -4,7 +4,7 @@ PROTOC_ALL_IMAGE=${PROTOC_ALL_IMAGE:-"namely/protoc-all:1.47_2"}
 PROTO_PATH=pkg/apis
 LANGUAGE=go
 
-proto_modules="common/v1 cdnsystem/v1 dfdaemon/v1 errordetails/v1 manager/v1 scheduler/v1"
+proto_modules="common/v1 cdnsystem/v1 dfdaemon/v1 errordetails/v1 manager/v1 scheduler/v1 security/v1"
 
 echo "generate protos..."
 
@@ -20,4 +20,3 @@ for module in ${proto_modules}; do
     echo "generate protos ${module} failed"
   fi
 done
-
