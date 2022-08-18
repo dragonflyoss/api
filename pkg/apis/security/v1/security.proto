@@ -38,10 +38,8 @@ message CertificateRequest {
 
 // Certificate response type.
 message CertificateResponse {
-  // PEM-encoded certificate key.
-  string private_key = 1;
   // PEM-encoded certificate chain.
-  repeated string certificate_chain = 2;
+  repeated string certificate_chain = 1;
 }
 
 // Service for managing certificates issued by the CA.
