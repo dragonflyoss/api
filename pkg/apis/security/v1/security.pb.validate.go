@@ -163,8 +163,6 @@ func (m *CertificateResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PrivateKey
-
 	if len(errors) > 0 {
 		return CertificateResponseMultiError(errors)
 	}
