@@ -228,6 +228,10 @@ message ListSchedulersRequest {
   string ip = 3 [(validate.rules).string.ip = true];
   // Source service host information.
   map<string, string> host_info = 5 [(validate.rules).map.ignore_empty = true];
+  // Dfdaemon version.
+  string version = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  // Dfdaemon commit.
+  string commit = 7 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
 }
 
 // ListSchedulersResponse represents response of ListSchedulers.
