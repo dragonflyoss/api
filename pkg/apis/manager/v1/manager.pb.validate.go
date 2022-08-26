@@ -1756,6 +1756,36 @@ func (m *ListSchedulersRequest) validate(all bool) error {
 
 	}
 
+	if m.GetVersion() != "" {
+
+		if l := utf8.RuneCountInString(m.GetVersion()); l < 1 || l > 1024 {
+			err := ListSchedulersRequestValidationError{
+				field:  "Version",
+				reason: "value length must be between 1 and 1024 runes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetCommit() != "" {
+
+		if l := utf8.RuneCountInString(m.GetCommit()); l < 1 || l > 1024 {
+			err := ListSchedulersRequestValidationError{
+				field:  "Commit",
+				reason: "value length must be between 1 and 1024 runes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return ListSchedulersRequestMultiError(errors)
 	}
