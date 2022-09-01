@@ -57,35 +57,26 @@ func (m *CertificateRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Csr
+	if utf8.RuneCountInString(m.GetCsr()) < 1 {
+		err := CertificateRequestValidationError{
+			field:  "Csr",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	if all {
-		switch v := interface{}(m.GetValidityDuration()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CertificateRequestValidationError{
-					field:  "ValidityDuration",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, CertificateRequestValidationError{
-					field:  "ValidityDuration",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
+	if m.GetValidityPeriod() == nil {
+		err := CertificateRequestValidationError{
+			field:  "ValidityPeriod",
+			reason: "value is required",
 		}
-	} else if v, ok := interface{}(m.GetValidityDuration()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CertificateRequestValidationError{
-				field:  "ValidityDuration",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
+		if !all {
+			return err
 		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -189,6 +180,17 @@ func (m *CertificateResponse) validate(all bool) error {
 	}
 
 	var errors []error
+
+	if len(m.GetCertificateChain()) < 1 {
+		err := CertificateResponseValidationError{
+			field:  "CertificateChain",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return CertificateResponseMultiError(errors)
