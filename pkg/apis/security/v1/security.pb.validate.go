@@ -59,7 +59,34 @@ func (m *CertificateRequest) validate(all bool) error {
 
 	// no validation rules for Csr
 
-	// no validation rules for ValidityDuration
+	if all {
+		switch v := interface{}(m.GetValidityDuration()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, CertificateRequestValidationError{
+					field:  "ValidityDuration",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, CertificateRequestValidationError{
+					field:  "ValidityDuration",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetValidityDuration()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CertificateRequestValidationError{
+				field:  "ValidityDuration",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	if len(errors) > 0 {
 		return CertificateRequestMultiError(errors)

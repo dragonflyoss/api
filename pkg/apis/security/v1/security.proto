@@ -18,6 +18,8 @@ syntax = "proto3";
 
 package security;
 
+import "google/protobuf/duration.proto";
+
 option go_package = "d7y.io/api/pkg/apis/security/v1";
 
 // Refer: https://github.com/istio/api/blob/master/security/v1alpha1/ca.proto
@@ -33,7 +35,7 @@ message CertificateRequest {
   // and other fields in the generated certificate may be overwritten by the CA.
   string csr = 1;
   // Optional: requested certificate validity period, in seconds.
-  int64 validity_duration = 2;
+  google.protobuf.Duration validity_duration = 2;
 }
 
 // Certificate response type.
