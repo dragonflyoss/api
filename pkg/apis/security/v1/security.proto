@@ -31,17 +31,17 @@ option go_package = "d7y.io/api/pkg/apis/security/v1";
 // For mTLS, all peers need to request TLS certificates for communicating
 // The server side may overwrite ant requested certificate filed based on its policies.
 message CertificateRequest {
-  // PEM-encoded certificate request.
+  // ASN.1 DER form certificate request.
   // The public key in the CSR is used to generate the certificate,
   // and other fields in the generated certificate may be overwritten by the CA.
-  string csr = 1 [(validate.rules).string.min_len = 1];
+  bytes csr = 1 [(validate.rules).bytes.min_len = 1];
   // Optional: requested certificate validity period.
   google.protobuf.Duration validity_period = 2 [(validate.rules).duration.required = true];
 }
 
 // Certificate response type.
 message CertificateResponse {
-  // PEM-encoded certificate chain.
+  // ASN.1 DER form certificate chain.
   repeated bytes certificate_chain = 1 [(validate.rules).repeated.min_items = 1];
 }
 
