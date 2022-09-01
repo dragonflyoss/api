@@ -57,9 +57,27 @@ func (m *CertificateRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Csr
+	if utf8.RuneCountInString(m.GetCsr()) < 1 {
+		err := CertificateRequestValidationError{
+			field:  "Csr",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for ValidityDuration
+	if m.GetValidityPeriod() == nil {
+		err := CertificateRequestValidationError{
+			field:  "ValidityPeriod",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return CertificateRequestMultiError(errors)
@@ -162,6 +180,17 @@ func (m *CertificateResponse) validate(all bool) error {
 	}
 
 	var errors []error
+
+	if len(m.GetCertificateChain()) < 1 {
+		err := CertificateResponseValidationError{
+			field:  "CertificateChain",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return CertificateResponseMultiError(errors)
