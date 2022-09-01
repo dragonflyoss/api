@@ -57,10 +57,10 @@ func (m *CertificateRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetCsr()) < 1 {
+	if len(m.GetCsr()) < 1 {
 		err := CertificateRequestValidationError{
 			field:  "Csr",
-			reason: "value length must be at least 1 runes",
+			reason: "value length must be at least 1 bytes",
 		}
 		if !all {
 			return err
