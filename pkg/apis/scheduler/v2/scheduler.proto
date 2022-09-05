@@ -1,0 +1,238 @@
+/*
+ *     Copyright 2022 The Dragonfly Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package scheduler;
+
+import "pkg/apis/common/v2/common.proto";
+import "pkg/apis/errordetails/v2/errordetails.proto";
+import "validate/validate.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "d7y.io/api/pkg/apis/scheduler/v2";
+
+// Peer metadata.
+message Peer{
+  // Peer id.
+  string id = 1 [(validate.rules).string.min_len = 1];
+  // Pieces of peer.
+  repeated common.Piece pieces = 2 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Task info.
+  Task task = 3 [(validate.rules).message.required = true];
+  // Host info.
+  Host host = 4 [(validate.rules).message.required = true];
+  // Peer state.
+  string state = 5 [(validate.rules).string.min_len = 1];
+  // Peer create time.
+  google.protobuf.Timestamp created_at = 6 [(validate.rules).timestamp.required = true];
+  // Peer update time.
+  google.protobuf.Timestamp updated_at = 7 [(validate.rules).timestamp.required = true];
+}
+
+// Task metadata.
+message Task{
+  // Task id.
+  string id = 1 [(validate.rules).string.min_len = 1];
+  // Task type.
+  string type = 2 [(validate.rules).string.uri = true];
+  // Task size scope.
+  common.SizeScope size_scope = 3;
+  // Pieces of task.
+  repeated common.Piece pieces = 4 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Task state.
+  string state = 5 [(validate.rules).string.min_len = 1];
+  // Download url.
+  string url = 6 [(validate.rules).string.uri = true];
+  // URL meta info.
+  common.UrlMeta url_meta = 7 [(validate.rules).message.required = true];
+  // Task content length.
+  int64 content_length = 8 [(validate.rules).int64.gte = 1];
+  // Task total piece count.
+  int32 total_piece_count = 9 [(validate.rules).int32.gte = 1];
+  // Task peer count.
+  int32 peer_count = 10 [(validate.rules).int32.gte = 0];
+  // Task contains available peer.
+  bool hasAvailablePeer = 11;
+  // Task create time.
+  google.protobuf.Timestamp created_at = 12 [(validate.rules).timestamp.required = true];
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 13 [(validate.rules).timestamp.required = true];
+}
+
+// Host metadata.
+message Host{
+  // Host id.
+  string id = 1 [(validate.rules).string.min_len = 1];
+  // Host ip
+  string ip = 2 [(validate.rules).string.ip = true];
+  // Peer hostname.
+  string host_name = 3 [(validate.rules).string.hostname = true];
+  // Port of grpc service.
+  int32 port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  // Port of download server.
+  int32 download_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  // Security domain for network.
+  string security_domain = 6 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // Location path(area|country|province|city|...).
+  string location = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // IDC where the peer host is located
+  string idc = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // Network topology(switch|router|...).
+  string net_topology = 9 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+}
+
+// RegisteredRequest represents registered request of AnnouncePeerRequest.
+message RegisterRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 2 [(validate.rules).string.min_len = 1];
+  // Download url.
+  string url = 3 [(validate.rules).string.uri = true];
+  // URL meta info.
+  common.UrlMeta url_meta = 4 [(validate.rules).message.required = true];
+  // Host info.
+  Host host = 5 [(validate.rules).message.required = true];
+  // Task type.
+  common.TaskType task_type = 6;
+  // Pattern includes p2p, seed-peer and source.
+  common.Pattern pattern = 7;
+}
+
+// TaskDownloadStartedRequest represents peer download started request of AnnouncePeerRequest.
+message PeerDownloadStartedRequest {
+}
+
+// PeerDownloadBackToSourceRequest represents peer download back-to-source request of AnnouncePeerRequest.
+message PeerDownloadBackToSourceRequest {
+  // Download back-to-source reason.
+  string reason = 1 [(validate.rules).string.min_len = 1];
+}
+
+// PeerDownloadFinishedRequest represents peer download finished request of AnnouncePeerRequest.
+message PeerDownloadFinishedRequest {
+  // Task total piece count.
+  int32 total_piece_count = 1 [(validate.rules).int32.gte = 1];
+  // Total content length.
+  int64 content_length = 2 [(validate.rules).int64.gte = 0];
+  // Total traffic of p2p network.
+  uint64 traffic = 3 [(validate.rules).uint64.gte = 0];
+}
+
+// PieceDownloadFinishedRequest represents piece download finished request of AnnouncePeerRequest.
+message PieceDownloadFinishedRequest {
+  // Piece info.
+  common.Piece piece = 1 [(validate.rules).message.required = true];
+}
+
+// AnnouncePeerRequest represents request of AnnouncePeer.
+message AnnouncePeerRequest{
+  oneof request {
+    option (validate.required) = true;
+
+    RegisterRequest register_request = 1;
+    PeerDownloadStartedRequest peer_download_started_request = 2;
+    PeerDownloadBackToSourceRequest peer_download_back_to_source_request = 3;
+    PeerDownloadFinishedRequest peer_download_finished_request = 4;
+    PieceDownloadFinishedRequest piece_download_finished_request = 5;
+    errordetails.PeerDownloadBackToSourceFailed peer_download_back_to_source_failed = 6;
+    errordetails.PieceDownloadFailed piece_download_failed = 7;
+    errordetails.PieceInfoSyncFailed piece_info_sync_failed = 8;
+    errordetails.ScheduleFailed schedule_failed = 9;
+  }
+}
+
+// TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
+message TinyTaskResponse {
+  bytes data = 1 [(validate.rules).bytes.min_len = 1];
+}
+
+// SmallTaskResponse represents small task response of AnnouncePeerResponse.
+message SmallTaskResponse {
+  // Piece info.
+  common.Piece piece = 1 [(validate.rules).message.required = true];
+}
+
+// NormalTaskResponse represents normal task response of AnnouncePeerResponse.
+message NormalTaskResponse {
+  // Candidate parents.
+  repeated Peer candidate_parents = 1 [(validate.rules).repeated = {min_items: 1}];
+  // Concurrent downloading count from main peer.
+  int32 parallel_count = 2 [(validate.rules).int32.gte = 1];
+}
+
+// NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
+message NeedBackToSourceResponse {
+  // Download back-to-source reason.
+  string reason = 1 [(validate.rules).string.min_len = 1];
+}
+
+// AnnouncePeerResponse represents response of AnnouncePeer.
+message AnnouncePeerResponse{
+  oneof response {
+    option (validate.required) = true;
+
+    TinyTaskResponse tiny_task_response = 1;
+    SmallTaskResponse small_task_response = 2;
+    NormalTaskResponse normal_task_response = 3;
+    NeedBackToSourceResponse need_back_to_source_response = 4;
+    errordetails.ScheduleFailed scheduleFailed = 5;
+  }
+}
+
+// StatPeerRequest represents request of StatPeer.
+message StatPeerRequest{
+  // Peer id.
+  string peer_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// LeavePeerRequest represents request of LeavePeer.
+message LeavePeerRequest{
+  // Peer id.
+  string peer_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// StatTaskRequest represents request of StatTask.
+message StatTaskRequest{
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// LeaveTaskRequest represents request of LeaveTask.
+message LeaveTaskRequest{
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// Scheduler RPC Service.
+service Scheduler{
+  // AnnouncePeer announces peer to scheduler.
+  rpc AnnouncePeer(stream AnnouncePeerRequest) returns(stream AnnouncePeerResponse);
+
+  // Checks information of peer.
+  rpc StatPeer(StatPeerRequest)returns(Peer);
+
+  // LeavePeer releases peer in scheduler.
+  rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
+
+  // Checks information of task.
+  rpc StatTask(StatTaskRequest)returns(Task);
+
+  // LeaveTask releases task in scheduler.
+  rpc LeaveTask(LeaveTaskRequest)returns(google.protobuf.Empty);
+}

@@ -27,4 +27,3 @@ message SourceError {
   // source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
   common.ExtendAttribute metadata = 2;
 }
-
