@@ -1,0 +1,119 @@
+/*
+ *     Copyright 2022 The Dragonfly Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package common;
+
+import "validate/validate.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "d7y.io/api/pkg/apis/common/v2";
+
+// SizeScope represents size scope of task.
+enum SizeScope{
+  // size > one piece size.
+  NORMAL = 0;
+
+  // 128 byte < size <= one piece size and be plain type.
+  SMALL = 1;
+
+  // size <= 128 byte and be plain type.
+  TINY = 2;
+}
+
+// Pattern represents pattern of task.
+enum Pattern{
+  // Default pattern, scheduler will use all p2p node
+  // include dfdaemon and seed peers.
+  P2P = 0;
+
+  // Seed peer pattern, scheduler will use only seed peers.
+  SEED_PEER = 1;
+
+  // Source pattern, scheduler will say back source
+  // when there is no available peer in p2p.
+  SOURCE = 2;
+}
+
+// TaskType represents type of task.
+enum TaskType{
+  // DFDAEMON is dfdeamon type of task,
+  // dfdeamon task is a normal p2p task.
+  DFDAEMON = 0;
+
+  // DFCACHE is dfcache type of task,
+  // dfcache task is a cache task, and the task url is fake url.
+  // It can only be used for caching and cannot be downloaded back to source.
+  DFCACHE = 1;
+
+  // DFSTORE is dfstore type of task,
+  // dfstore task is a persistent task in backend.
+  DFSTORE = 2;
+}
+
+message Range{
+  uint64 begin = 1;
+  uint64 end = 2;
+}
+
+// Metadata represents metadata of task.
+message Metadata{
+  // Download url.
+  string url = 1 [(validate.rules).string.uri = true];
+  // Digest checks integrity of url content, for example md5:xxx or sha256:yyy.
+  string digest = 2 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty: true}];
+  // Range is url range of request.
+  Range range = 3;
+  // URL tag identifies different task for same url.
+  string tag = 4;
+  // Application of task.
+  string application = 5;
+  // Filter url used to generate task id.
+  repeated string filters = 6;
+  // Task request headers.
+  map<string, string> header = 7;
+  // Task piece size.
+  int32 piece_size = 8 [(validate.rules).int32.gte = 1];
+}
+
+message Piece{
+  // Piece number.
+  uint32 number = 1 [(validate.rules).uint32.gte = 0];
+	// Parent peer id.
+  string parent_id = 2 [(validate.rules).string.min_len = 1];
+	// Piece offset.
+  uint64 offset = 3 [(validate.rules).uint64.gte = 0];
+	// Piece size.
+  uint64 size = 4 [(validate.rules).uint64.gt = 0];
+	// Digest of piece data, for example md5:xxx or sha256:yyy.
+  string digest = 5 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty: true}];
+  // Downloading piece costs time.
+  google.protobuf.Duration cost = 6 [(validate.rules).duration.required = true];
+  // Piece create time.
+  google.protobuf.Timestamp created_at = 7 [(validate.rules).timestamp.required = true];
+}
+
+// ExtendAttribute represents extend of attribution.
+message ExtendAttribute{
+  // Task response header, eg: HTTP Response Header
+  map<string, string> header = 1;
+  // Task response code, eg: HTTP Status Code
+  int32 status_code = 2 [(validate.rules).int32 = {gte: 100, lt: 599}];
+  // Task response status, eg: HTTP Status
+  string status = 3 [(validate.rules).string.min_len = 1];
+}

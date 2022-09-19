@@ -16,4 +16,4 @@
 
 package mocks
 
-//go:generate mockgen -destination errordetails_mock.go -source ../errordetails.pb.go -package mocks
+//go:generate mockgen -destination scheduler_mock.go -source ../scheduler.pb.go -package mocks
