@@ -128,6 +128,26 @@ func (mr *MockSchedulerClientMockRecorder) AnnouncePeer(ctx interface{}, opts ..
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnouncePeer", reflect.TypeOf((*MockSchedulerClient)(nil).AnnouncePeer), varargs...)
 }
 
+// ExchangePeer mocks base method.
+func (m *MockSchedulerClient) ExchangePeer(ctx context.Context, in *v2.ExchangePeerRequest, opts ...grpc.CallOption) (*v2.ExchangePeerResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ExchangePeer", varargs...)
+	ret0, _ := ret[0].(*v2.ExchangePeerResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ExchangePeer indicates an expected call of ExchangePeer.
+func (mr *MockSchedulerClientMockRecorder) ExchangePeer(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangePeer", reflect.TypeOf((*MockSchedulerClient)(nil).ExchangePeer), varargs...)
+}
+
 // LeavePeer mocks base method.
 func (m *MockSchedulerClient) LeavePeer(ctx context.Context, in *v2.LeavePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -380,6 +400,21 @@ func (m *MockSchedulerServer) AnnouncePeer(arg0 v2.Scheduler_AnnouncePeerServer)
 func (mr *MockSchedulerServerMockRecorder) AnnouncePeer(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnouncePeer", reflect.TypeOf((*MockSchedulerServer)(nil).AnnouncePeer), arg0)
+}
+
+// ExchangePeer mocks base method.
+func (m *MockSchedulerServer) ExchangePeer(arg0 context.Context, arg1 *v2.ExchangePeerRequest) (*v2.ExchangePeerResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ExchangePeer", arg0, arg1)
+	ret0, _ := ret[0].(*v2.ExchangePeerResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ExchangePeer indicates an expected call of ExchangePeer.
+func (mr *MockSchedulerServerMockRecorder) ExchangePeer(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangePeer", reflect.TypeOf((*MockSchedulerServer)(nil).ExchangePeer), arg0, arg1)
 }
 
 // LeavePeer mocks base method.

@@ -1260,6 +1260,86 @@ func (x *StatPeerRequest) GetPeerId() string {
 	return ""
 }
 
+// TODO exchange peer request definition.
+// ExchangePeerRequest represents request of ExchangePeer.
+type ExchangePeerRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ExchangePeerRequest) Reset() {
+	*x = ExchangePeerRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExchangePeerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExchangePeerRequest) ProtoMessage() {}
+
+func (x *ExchangePeerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExchangePeerRequest.ProtoReflect.Descriptor instead.
+func (*ExchangePeerRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{15}
+}
+
+// TODO exchange peer response definition.
+// ExchangePeerResponse represents response of ExchangePeer.
+type ExchangePeerResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ExchangePeerResponse) Reset() {
+	*x = ExchangePeerResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ExchangePeerResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExchangePeerResponse) ProtoMessage() {}
+
+func (x *ExchangePeerResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExchangePeerResponse.ProtoReflect.Descriptor instead.
+func (*ExchangePeerResponse) Descriptor() ([]byte, []int) {
+	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{16}
+}
+
 // LeavePeerRequest represents request of LeavePeer.
 type LeavePeerRequest struct {
 	state         protoimpl.MessageState
@@ -1273,7 +1353,7 @@ type LeavePeerRequest struct {
 func (x *LeavePeerRequest) Reset() {
 	*x = LeavePeerRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[15]
+		mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1286,7 +1366,7 @@ func (x *LeavePeerRequest) String() string {
 func (*LeavePeerRequest) ProtoMessage() {}
 
 func (x *LeavePeerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[15]
+	mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1299,7 +1379,7 @@ func (x *LeavePeerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeavePeerRequest.ProtoReflect.Descriptor instead.
 func (*LeavePeerRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{15}
+	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *LeavePeerRequest) GetPeerId() string {
@@ -1322,7 +1402,7 @@ type StatTaskRequest struct {
 func (x *StatTaskRequest) Reset() {
 	*x = StatTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[16]
+		mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1335,7 +1415,7 @@ func (x *StatTaskRequest) String() string {
 func (*StatTaskRequest) ProtoMessage() {}
 
 func (x *StatTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[16]
+	mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1348,7 +1428,7 @@ func (x *StatTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatTaskRequest.ProtoReflect.Descriptor instead.
 func (*StatTaskRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{16}
+	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *StatTaskRequest) GetTaskId() string {
@@ -1371,7 +1451,7 @@ type LeaveTaskRequest struct {
 func (x *LeaveTaskRequest) Reset() {
 	*x = LeaveTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[17]
+		mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1384,7 +1464,7 @@ func (x *LeaveTaskRequest) String() string {
 func (*LeaveTaskRequest) ProtoMessage() {}
 
 func (x *LeaveTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[17]
+	mi := &file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1397,7 +1477,7 @@ func (x *LeaveTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaveTaskRequest.ProtoReflect.Descriptor instead.
 func (*LeaveTaskRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{17}
+	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *LeaveTaskRequest) GetTaskId() string {
@@ -1649,31 +1729,39 @@ var file_pkg_apis_scheduler_v2_scheduler_proto_rawDesc = []byte{
 	0x0a, 0x0f, 0x53, 0x74, 0x61, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x12, 0x20, 0x0a, 0x07, 0x70, 0x65, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
 	0x28, 0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x06, 0x70, 0x65, 0x65,
-	0x72, 0x49, 0x64, 0x22, 0x34, 0x0a, 0x10, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65, 0x65, 0x72,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x07, 0x70, 0x65, 0x65, 0x72, 0x5f,
-	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10,
-	0x01, 0x52, 0x06, 0x70, 0x65, 0x65, 0x72, 0x49, 0x64, 0x22, 0x33, 0x0a, 0x0f, 0x53, 0x74, 0x61,
-	0x74, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x07,
-	0x74, 0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x07, 0xfa,
-	0x42, 0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x22, 0x34,
-	0x0a, 0x10, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x12, 0x20, 0x0a, 0x07, 0x74, 0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x06, 0x74, 0x61,
-	0x73, 0x6b, 0x49, 0x64, 0x32, 0xd6, 0x02, 0x0a, 0x09, 0x53, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c,
-	0x65, 0x72, 0x12, 0x53, 0x0a, 0x0c, 0x41, 0x6e, 0x6e, 0x6f, 0x75, 0x6e, 0x63, 0x65, 0x50, 0x65,
-	0x65, 0x72, 0x12, 0x1e, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x41,
-	0x6e, 0x6e, 0x6f, 0x75, 0x6e, 0x63, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x1f, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x41,
-	0x6e, 0x6e, 0x6f, 0x75, 0x6e, 0x63, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x28, 0x01, 0x30, 0x01, 0x12, 0x37, 0x0a, 0x08, 0x53, 0x74, 0x61, 0x74, 0x50,
-	0x65, 0x65, 0x72, 0x12, 0x1a, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e,
-	0x53, 0x74, 0x61, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x0f, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x50, 0x65, 0x65, 0x72,
-	0x12, 0x40, 0x0a, 0x09, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65, 0x65, 0x72, 0x12, 0x1b, 0x2e,
-	0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50,
-	0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70,
-	0x74, 0x79, 0x12, 0x37, 0x0a, 0x08, 0x53, 0x74, 0x61, 0x74, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x1a,
+	0x72, 0x49, 0x64, 0x22, 0x15, 0x0a, 0x13, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50,
+	0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x16, 0x0a, 0x14, 0x45, 0x78,
+	0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x34, 0x0a, 0x10, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x07, 0x70, 0x65, 0x65, 0x72, 0x5f, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10, 0x01,
+	0x52, 0x06, 0x70, 0x65, 0x65, 0x72, 0x49, 0x64, 0x22, 0x33, 0x0a, 0x0f, 0x53, 0x74, 0x61, 0x74,
+	0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x07, 0x74,
+	0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x07, 0xfa, 0x42,
+	0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x22, 0x34, 0x0a,
+	0x10, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x20, 0x0a, 0x07, 0x74, 0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x06, 0x74, 0x61, 0x73,
+	0x6b, 0x49, 0x64, 0x32, 0xa7, 0x03, 0x0a, 0x09, 0x53, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65,
+	0x72, 0x12, 0x53, 0x0a, 0x0c, 0x41, 0x6e, 0x6e, 0x6f, 0x75, 0x6e, 0x63, 0x65, 0x50, 0x65, 0x65,
+	0x72, 0x12, 0x1e, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x41, 0x6e,
+	0x6e, 0x6f, 0x75, 0x6e, 0x63, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x1f, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x41, 0x6e,
+	0x6e, 0x6f, 0x75, 0x6e, 0x63, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x28, 0x01, 0x30, 0x01, 0x12, 0x37, 0x0a, 0x08, 0x53, 0x74, 0x61, 0x74, 0x50, 0x65,
+	0x65, 0x72, 0x12, 0x1a, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x53,
+	0x74, 0x61, 0x74, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0f,
+	0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x50, 0x65, 0x65, 0x72, 0x12,
+	0x40, 0x0a, 0x09, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65, 0x65, 0x72, 0x12, 0x1b, 0x2e, 0x73,
+	0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x4c, 0x65, 0x61, 0x76, 0x65, 0x50, 0x65,
+	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
+	0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74,
+	0x79, 0x12, 0x4f, 0x0a, 0x0c, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50, 0x65, 0x65,
+	0x72, 0x12, 0x1e, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x45, 0x78,
+	0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x1f, 0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x45, 0x78,
+	0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x37, 0x0a, 0x08, 0x53, 0x74, 0x61, 0x74, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x1a,
 	0x2e, 0x73, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x54,
 	0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0f, 0x2e, 0x73, 0x63, 0x68,
 	0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x54, 0x61, 0x73, 0x6b, 0x12, 0x40, 0x0a, 0x09, 0x4c,
@@ -1698,7 +1786,7 @@ func file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP() []byte {
 	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescData
 }
 
-var file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_pkg_apis_scheduler_v2_scheduler_proto_goTypes = []interface{}{
 	(*Peer)(nil),                               // 0: scheduler.Peer
 	(*Task)(nil),                               // 1: scheduler.Task
@@ -1715,65 +1803,69 @@ var file_pkg_apis_scheduler_v2_scheduler_proto_goTypes = []interface{}{
 	(*NeedBackToSourceResponse)(nil),           // 12: scheduler.NeedBackToSourceResponse
 	(*AnnouncePeerResponse)(nil),               // 13: scheduler.AnnouncePeerResponse
 	(*StatPeerRequest)(nil),                    // 14: scheduler.StatPeerRequest
-	(*LeavePeerRequest)(nil),                   // 15: scheduler.LeavePeerRequest
-	(*StatTaskRequest)(nil),                    // 16: scheduler.StatTaskRequest
-	(*LeaveTaskRequest)(nil),                   // 17: scheduler.LeaveTaskRequest
-	(*v2.Piece)(nil),                           // 18: common.Piece
-	(*timestamppb.Timestamp)(nil),              // 19: google.protobuf.Timestamp
-	(v2.SizeScope)(0),                          // 20: common.SizeScope
-	(*v2.Metadata)(nil),                        // 21: common.Metadata
-	(v2.TaskType)(0),                           // 22: common.TaskType
-	(v2.Pattern)(0),                            // 23: common.Pattern
-	(*v21.PeerDownloadBackToSourceFailed)(nil), // 24: errordetails.PeerDownloadBackToSourceFailed
-	(*v21.PieceDownloadFailed)(nil),            // 25: errordetails.PieceDownloadFailed
-	(*v21.PieceInfoSyncFailed)(nil),            // 26: errordetails.PieceInfoSyncFailed
-	(*v21.ScheduleFailed)(nil),                 // 27: errordetails.ScheduleFailed
-	(*emptypb.Empty)(nil),                      // 28: google.protobuf.Empty
+	(*ExchangePeerRequest)(nil),                // 15: scheduler.ExchangePeerRequest
+	(*ExchangePeerResponse)(nil),               // 16: scheduler.ExchangePeerResponse
+	(*LeavePeerRequest)(nil),                   // 17: scheduler.LeavePeerRequest
+	(*StatTaskRequest)(nil),                    // 18: scheduler.StatTaskRequest
+	(*LeaveTaskRequest)(nil),                   // 19: scheduler.LeaveTaskRequest
+	(*v2.Piece)(nil),                           // 20: common.Piece
+	(*timestamppb.Timestamp)(nil),              // 21: google.protobuf.Timestamp
+	(v2.SizeScope)(0),                          // 22: common.SizeScope
+	(*v2.Metadata)(nil),                        // 23: common.Metadata
+	(v2.TaskType)(0),                           // 24: common.TaskType
+	(v2.Pattern)(0),                            // 25: common.Pattern
+	(*v21.PeerDownloadBackToSourceFailed)(nil), // 26: errordetails.PeerDownloadBackToSourceFailed
+	(*v21.PieceDownloadFailed)(nil),            // 27: errordetails.PieceDownloadFailed
+	(*v21.PieceInfoSyncFailed)(nil),            // 28: errordetails.PieceInfoSyncFailed
+	(*v21.ScheduleFailed)(nil),                 // 29: errordetails.ScheduleFailed
+	(*emptypb.Empty)(nil),                      // 30: google.protobuf.Empty
 }
 var file_pkg_apis_scheduler_v2_scheduler_proto_depIdxs = []int32{
-	18, // 0: scheduler.Peer.pieces:type_name -> common.Piece
+	20, // 0: scheduler.Peer.pieces:type_name -> common.Piece
 	1,  // 1: scheduler.Peer.task:type_name -> scheduler.Task
 	2,  // 2: scheduler.Peer.host:type_name -> scheduler.Host
-	19, // 3: scheduler.Peer.created_at:type_name -> google.protobuf.Timestamp
-	19, // 4: scheduler.Peer.updated_at:type_name -> google.protobuf.Timestamp
-	20, // 5: scheduler.Task.size_scope:type_name -> common.SizeScope
-	18, // 6: scheduler.Task.pieces:type_name -> common.Piece
-	21, // 7: scheduler.Task.metadata:type_name -> common.Metadata
-	19, // 8: scheduler.Task.created_at:type_name -> google.protobuf.Timestamp
-	19, // 9: scheduler.Task.updated_at:type_name -> google.protobuf.Timestamp
-	21, // 10: scheduler.RegisterRequest.metadata:type_name -> common.Metadata
+	21, // 3: scheduler.Peer.created_at:type_name -> google.protobuf.Timestamp
+	21, // 4: scheduler.Peer.updated_at:type_name -> google.protobuf.Timestamp
+	22, // 5: scheduler.Task.size_scope:type_name -> common.SizeScope
+	20, // 6: scheduler.Task.pieces:type_name -> common.Piece
+	23, // 7: scheduler.Task.metadata:type_name -> common.Metadata
+	21, // 8: scheduler.Task.created_at:type_name -> google.protobuf.Timestamp
+	21, // 9: scheduler.Task.updated_at:type_name -> google.protobuf.Timestamp
+	23, // 10: scheduler.RegisterRequest.metadata:type_name -> common.Metadata
 	2,  // 11: scheduler.RegisterRequest.host:type_name -> scheduler.Host
-	22, // 12: scheduler.RegisterRequest.task_type:type_name -> common.TaskType
-	23, // 13: scheduler.RegisterRequest.pattern:type_name -> common.Pattern
-	18, // 14: scheduler.PieceDownloadFinishedRequest.piece:type_name -> common.Piece
+	24, // 12: scheduler.RegisterRequest.task_type:type_name -> common.TaskType
+	25, // 13: scheduler.RegisterRequest.pattern:type_name -> common.Pattern
+	20, // 14: scheduler.PieceDownloadFinishedRequest.piece:type_name -> common.Piece
 	3,  // 15: scheduler.AnnouncePeerRequest.register_request:type_name -> scheduler.RegisterRequest
 	4,  // 16: scheduler.AnnouncePeerRequest.peer_download_started_request:type_name -> scheduler.PeerDownloadStartedRequest
 	5,  // 17: scheduler.AnnouncePeerRequest.peer_download_back_to_source_request:type_name -> scheduler.PeerDownloadBackToSourceRequest
 	6,  // 18: scheduler.AnnouncePeerRequest.peer_download_finished_request:type_name -> scheduler.PeerDownloadFinishedRequest
 	7,  // 19: scheduler.AnnouncePeerRequest.piece_download_finished_request:type_name -> scheduler.PieceDownloadFinishedRequest
-	24, // 20: scheduler.AnnouncePeerRequest.peer_download_back_to_source_failed:type_name -> errordetails.PeerDownloadBackToSourceFailed
-	25, // 21: scheduler.AnnouncePeerRequest.piece_download_failed:type_name -> errordetails.PieceDownloadFailed
-	26, // 22: scheduler.AnnouncePeerRequest.piece_info_sync_failed:type_name -> errordetails.PieceInfoSyncFailed
-	27, // 23: scheduler.AnnouncePeerRequest.schedule_failed:type_name -> errordetails.ScheduleFailed
-	18, // 24: scheduler.SmallTaskResponse.piece:type_name -> common.Piece
+	26, // 20: scheduler.AnnouncePeerRequest.peer_download_back_to_source_failed:type_name -> errordetails.PeerDownloadBackToSourceFailed
+	27, // 21: scheduler.AnnouncePeerRequest.piece_download_failed:type_name -> errordetails.PieceDownloadFailed
+	28, // 22: scheduler.AnnouncePeerRequest.piece_info_sync_failed:type_name -> errordetails.PieceInfoSyncFailed
+	29, // 23: scheduler.AnnouncePeerRequest.schedule_failed:type_name -> errordetails.ScheduleFailed
+	20, // 24: scheduler.SmallTaskResponse.piece:type_name -> common.Piece
 	0,  // 25: scheduler.NormalTaskResponse.candidate_parents:type_name -> scheduler.Peer
 	9,  // 26: scheduler.AnnouncePeerResponse.tiny_task_response:type_name -> scheduler.TinyTaskResponse
 	10, // 27: scheduler.AnnouncePeerResponse.small_task_response:type_name -> scheduler.SmallTaskResponse
 	11, // 28: scheduler.AnnouncePeerResponse.normal_task_response:type_name -> scheduler.NormalTaskResponse
 	12, // 29: scheduler.AnnouncePeerResponse.need_back_to_source_response:type_name -> scheduler.NeedBackToSourceResponse
-	27, // 30: scheduler.AnnouncePeerResponse.scheduleFailed:type_name -> errordetails.ScheduleFailed
+	29, // 30: scheduler.AnnouncePeerResponse.scheduleFailed:type_name -> errordetails.ScheduleFailed
 	8,  // 31: scheduler.Scheduler.AnnouncePeer:input_type -> scheduler.AnnouncePeerRequest
 	14, // 32: scheduler.Scheduler.StatPeer:input_type -> scheduler.StatPeerRequest
-	15, // 33: scheduler.Scheduler.LeavePeer:input_type -> scheduler.LeavePeerRequest
-	16, // 34: scheduler.Scheduler.StatTask:input_type -> scheduler.StatTaskRequest
-	17, // 35: scheduler.Scheduler.LeaveTask:input_type -> scheduler.LeaveTaskRequest
-	13, // 36: scheduler.Scheduler.AnnouncePeer:output_type -> scheduler.AnnouncePeerResponse
-	0,  // 37: scheduler.Scheduler.StatPeer:output_type -> scheduler.Peer
-	28, // 38: scheduler.Scheduler.LeavePeer:output_type -> google.protobuf.Empty
-	1,  // 39: scheduler.Scheduler.StatTask:output_type -> scheduler.Task
-	28, // 40: scheduler.Scheduler.LeaveTask:output_type -> google.protobuf.Empty
-	36, // [36:41] is the sub-list for method output_type
-	31, // [31:36] is the sub-list for method input_type
+	17, // 33: scheduler.Scheduler.LeavePeer:input_type -> scheduler.LeavePeerRequest
+	15, // 34: scheduler.Scheduler.ExchangePeer:input_type -> scheduler.ExchangePeerRequest
+	18, // 35: scheduler.Scheduler.StatTask:input_type -> scheduler.StatTaskRequest
+	19, // 36: scheduler.Scheduler.LeaveTask:input_type -> scheduler.LeaveTaskRequest
+	13, // 37: scheduler.Scheduler.AnnouncePeer:output_type -> scheduler.AnnouncePeerResponse
+	0,  // 38: scheduler.Scheduler.StatPeer:output_type -> scheduler.Peer
+	30, // 39: scheduler.Scheduler.LeavePeer:output_type -> google.protobuf.Empty
+	16, // 40: scheduler.Scheduler.ExchangePeer:output_type -> scheduler.ExchangePeerResponse
+	1,  // 41: scheduler.Scheduler.StatTask:output_type -> scheduler.Task
+	30, // 42: scheduler.Scheduler.LeaveTask:output_type -> google.protobuf.Empty
+	37, // [37:43] is the sub-list for method output_type
+	31, // [31:37] is the sub-list for method input_type
 	31, // [31:31] is the sub-list for extension type_name
 	31, // [31:31] is the sub-list for extension extendee
 	0,  // [0:31] is the sub-list for field type_name
@@ -1966,7 +2058,7 @@ func file_pkg_apis_scheduler_v2_scheduler_proto_init() {
 			}
 		}
 		file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LeavePeerRequest); i {
+			switch v := v.(*ExchangePeerRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1978,7 +2070,7 @@ func file_pkg_apis_scheduler_v2_scheduler_proto_init() {
 			}
 		}
 		file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StatTaskRequest); i {
+			switch v := v.(*ExchangePeerResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1990,6 +2082,30 @@ func file_pkg_apis_scheduler_v2_scheduler_proto_init() {
 			}
 		}
 		file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LeavePeerRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StatTaskRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*LeaveTaskRequest); i {
 			case 0:
 				return &v.state
@@ -2026,7 +2142,7 @@ func file_pkg_apis_scheduler_v2_scheduler_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pkg_apis_scheduler_v2_scheduler_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   18,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -2058,6 +2174,9 @@ type SchedulerClient interface {
 	StatPeer(ctx context.Context, in *StatPeerRequest, opts ...grpc.CallOption) (*Peer, error)
 	// LeavePeer releases peer in scheduler.
 	LeavePeer(ctx context.Context, in *LeavePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// TODO exchange peer api definition.
+	// ExchangePeer exchanges peer information.
+	ExchangePeer(ctx context.Context, in *ExchangePeerRequest, opts ...grpc.CallOption) (*ExchangePeerResponse, error)
 	// Checks information of task.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	// LeaveTask releases task in scheduler.
@@ -2121,6 +2240,15 @@ func (c *schedulerClient) LeavePeer(ctx context.Context, in *LeavePeerRequest, o
 	return out, nil
 }
 
+func (c *schedulerClient) ExchangePeer(ctx context.Context, in *ExchangePeerRequest, opts ...grpc.CallOption) (*ExchangePeerResponse, error) {
+	out := new(ExchangePeerResponse)
+	err := c.cc.Invoke(ctx, "/scheduler.Scheduler/ExchangePeer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *schedulerClient) StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*Task, error) {
 	out := new(Task)
 	err := c.cc.Invoke(ctx, "/scheduler.Scheduler/StatTask", in, out, opts...)
@@ -2147,6 +2275,9 @@ type SchedulerServer interface {
 	StatPeer(context.Context, *StatPeerRequest) (*Peer, error)
 	// LeavePeer releases peer in scheduler.
 	LeavePeer(context.Context, *LeavePeerRequest) (*emptypb.Empty, error)
+	// TODO exchange peer api definition.
+	// ExchangePeer exchanges peer information.
+	ExchangePeer(context.Context, *ExchangePeerRequest) (*ExchangePeerResponse, error)
 	// Checks information of task.
 	StatTask(context.Context, *StatTaskRequest) (*Task, error)
 	// LeaveTask releases task in scheduler.
@@ -2165,6 +2296,9 @@ func (*UnimplementedSchedulerServer) StatPeer(context.Context, *StatPeerRequest)
 }
 func (*UnimplementedSchedulerServer) LeavePeer(context.Context, *LeavePeerRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeavePeer not implemented")
+}
+func (*UnimplementedSchedulerServer) ExchangePeer(context.Context, *ExchangePeerRequest) (*ExchangePeerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExchangePeer not implemented")
 }
 func (*UnimplementedSchedulerServer) StatTask(context.Context, *StatTaskRequest) (*Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
@@ -2239,6 +2373,24 @@ func _Scheduler_LeavePeer_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scheduler_ExchangePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExchangePeerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).ExchangePeer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.Scheduler/ExchangePeer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).ExchangePeer(ctx, req.(*ExchangePeerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Scheduler_StatTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StatTaskRequest)
 	if err := dec(in); err != nil {
@@ -2286,6 +2438,10 @@ var _Scheduler_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LeavePeer",
 			Handler:    _Scheduler_LeavePeer_Handler,
+		},
+		{
+			MethodName: "ExchangePeer",
+			Handler:    _Scheduler_ExchangePeer_Handler,
 		},
 		{
 			MethodName: "StatTask",

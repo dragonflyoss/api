@@ -195,6 +195,16 @@ message StatPeerRequest{
   string peer_id = 1 [(validate.rules).string.min_len = 1];
 }
 
+// TODO exchange peer request definition.
+// ExchangePeerRequest represents request of ExchangePeer.
+message ExchangePeerRequest{
+}
+
+// TODO exchange peer response definition.
+// ExchangePeerResponse represents response of ExchangePeer.
+message ExchangePeerResponse{
+}
+
 // LeavePeerRequest represents request of LeavePeer.
 message LeavePeerRequest{
   // Peer id.
@@ -223,6 +233,10 @@ service Scheduler{
 
   // LeavePeer releases peer in scheduler.
   rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
+
+  // TODO exchange peer api definition.
+  // ExchangePeer exchanges peer information.
+  rpc ExchangePeer(ExchangePeerRequest)returns(ExchangePeerResponse);
 
   // Checks information of task.
   rpc StatTask(StatTaskRequest)returns(Task);

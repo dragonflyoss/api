@@ -52,18 +52,18 @@ enum Pattern{
 
 // TaskType represents type of task.
 enum TaskType{
-  // Normal is normal type of task,
-  // normal task is a normal p2p task.
-  Normal = 0;
+  // DFDAEMON is dfdeamon type of task,
+  // dfdeamon task is a normal p2p task.
+  DFDAEMON = 0;
 
-  // DfCache is dfcache type of task,
+  // DFCACHE is dfcache type of task,
   // dfcache task is a cache task, and the task url is fake url.
   // It can only be used for caching and cannot be downloaded back to source.
-  DfCache = 1;
+  DFCACHE = 1;
 
-  // DfStore is dfstore type of task,
+  // DFSTORE is dfstore type of task,
   // dfstore task is a persistent task in backend.
-  DfStore = 2;
+  DFSTORE = 2;
 }
 
 message Range{

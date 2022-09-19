@@ -2838,6 +2838,210 @@ var _ interface {
 	ErrorName() string
 } = StatPeerRequestValidationError{}
 
+// Validate checks the field values on ExchangePeerRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ExchangePeerRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ExchangePeerRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ExchangePeerRequestMultiError, or nil if none found.
+func (m *ExchangePeerRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ExchangePeerRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return ExchangePeerRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ExchangePeerRequestMultiError is an error wrapping multiple validation
+// errors returned by ExchangePeerRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ExchangePeerRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ExchangePeerRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ExchangePeerRequestMultiError) AllErrors() []error { return m }
+
+// ExchangePeerRequestValidationError is the validation error returned by
+// ExchangePeerRequest.Validate if the designated constraints aren't met.
+type ExchangePeerRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ExchangePeerRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ExchangePeerRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ExchangePeerRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ExchangePeerRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ExchangePeerRequestValidationError) ErrorName() string {
+	return "ExchangePeerRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ExchangePeerRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sExchangePeerRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ExchangePeerRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ExchangePeerRequestValidationError{}
+
+// Validate checks the field values on ExchangePeerResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ExchangePeerResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ExchangePeerResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ExchangePeerResponseMultiError, or nil if none found.
+func (m *ExchangePeerResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ExchangePeerResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return ExchangePeerResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ExchangePeerResponseMultiError is an error wrapping multiple validation
+// errors returned by ExchangePeerResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ExchangePeerResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ExchangePeerResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ExchangePeerResponseMultiError) AllErrors() []error { return m }
+
+// ExchangePeerResponseValidationError is the validation error returned by
+// ExchangePeerResponse.Validate if the designated constraints aren't met.
+type ExchangePeerResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ExchangePeerResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ExchangePeerResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ExchangePeerResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ExchangePeerResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ExchangePeerResponseValidationError) ErrorName() string {
+	return "ExchangePeerResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ExchangePeerResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sExchangePeerResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ExchangePeerResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ExchangePeerResponseValidationError{}
+
 // Validate checks the field values on LeavePeerRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
