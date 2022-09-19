@@ -137,31 +137,53 @@ var _ interface {
 	ErrorName() string
 } = RangeValidationError{}
 
-// Validate checks the field values on UrlMeta with the rules defined in the
+// Validate checks the field values on Metadata with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *UrlMeta) Validate() error {
+func (m *Metadata) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on UrlMeta with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in UrlMetaMultiError, or nil if none found.
-func (m *UrlMeta) ValidateAll() error {
+// ValidateAll checks the field values on Metadata with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MetadataMultiError, or nil
+// if none found.
+func (m *Metadata) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *UrlMeta) validate(all bool) error {
+func (m *Metadata) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = MetadataValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := MetadataValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if m.GetDigest() != "" {
 
-		if !_UrlMeta_Digest_Pattern.MatchString(m.GetDigest()) {
-			err := UrlMetaValidationError{
+		if !_Metadata_Digest_Pattern.MatchString(m.GetDigest()) {
+			err := MetadataValidationError{
 				field:  "Digest",
 				reason: "value does not match regex pattern \"^(md5)|(sha256):[A-Fa-f0-9]+$\"",
 			}
@@ -177,7 +199,7 @@ func (m *UrlMeta) validate(all bool) error {
 		switch v := interface{}(m.GetRange()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, UrlMetaValidationError{
+				errors = append(errors, MetadataValidationError{
 					field:  "Range",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -185,7 +207,7 @@ func (m *UrlMeta) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, UrlMetaValidationError{
+				errors = append(errors, MetadataValidationError{
 					field:  "Range",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -194,7 +216,7 @@ func (m *UrlMeta) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return UrlMetaValidationError{
+			return MetadataValidationError{
 				field:  "Range",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -208,19 +230,30 @@ func (m *UrlMeta) validate(all bool) error {
 
 	// no validation rules for Header
 
+	if m.GetPieceSize() < 1 {
+		err := MetadataValidationError{
+			field:  "PieceSize",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
-		return UrlMetaMultiError(errors)
+		return MetadataMultiError(errors)
 	}
 
 	return nil
 }
 
-// UrlMetaMultiError is an error wrapping multiple validation errors returned
-// by UrlMeta.ValidateAll() if the designated constraints aren't met.
-type UrlMetaMultiError []error
+// MetadataMultiError is an error wrapping multiple validation errors returned
+// by Metadata.ValidateAll() if the designated constraints aren't met.
+type MetadataMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m UrlMetaMultiError) Error() string {
+func (m MetadataMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -229,11 +262,11 @@ func (m UrlMetaMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m UrlMetaMultiError) AllErrors() []error { return m }
+func (m MetadataMultiError) AllErrors() []error { return m }
 
-// UrlMetaValidationError is the validation error returned by UrlMeta.Validate
-// if the designated constraints aren't met.
-type UrlMetaValidationError struct {
+// MetadataValidationError is the validation error returned by
+// Metadata.Validate if the designated constraints aren't met.
+type MetadataValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -241,22 +274,22 @@ type UrlMetaValidationError struct {
 }
 
 // Field function returns field value.
-func (e UrlMetaValidationError) Field() string { return e.field }
+func (e MetadataValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e UrlMetaValidationError) Reason() string { return e.reason }
+func (e MetadataValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e UrlMetaValidationError) Cause() error { return e.cause }
+func (e MetadataValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e UrlMetaValidationError) Key() bool { return e.key }
+func (e MetadataValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e UrlMetaValidationError) ErrorName() string { return "UrlMetaValidationError" }
+func (e MetadataValidationError) ErrorName() string { return "MetadataValidationError" }
 
 // Error satisfies the builtin error interface
-func (e UrlMetaValidationError) Error() string {
+func (e MetadataValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -268,14 +301,14 @@ func (e UrlMetaValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sUrlMeta.%s: %s%s",
+		"invalid %sMetadata.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = UrlMetaValidationError{}
+var _ error = MetadataValidationError{}
 
 var _ interface {
 	Field() string
@@ -283,9 +316,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = UrlMetaValidationError{}
+} = MetadataValidationError{}
 
-var _UrlMeta_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$")
+var _Metadata_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$")
 
 // Validate checks the field values on Piece with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

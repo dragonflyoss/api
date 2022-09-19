@@ -71,20 +71,24 @@ message Range{
   uint64 end = 2;
 }
 
-// UrlMeta represents url meta info.
-message UrlMeta{
+// Metadata represents metadata of task.
+message Metadata{
+  // Download url.
+  string url = 1 [(validate.rules).string.uri = true];
   // Digest checks integrity of url content, for example md5:xxx or sha256:yyy.
-  string digest = 1 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty: true}];
+  string digest = 2 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty: true}];
   // Range is url range of request.
-  Range range = 2;
+  Range range = 3;
   // URL tag identifies different task for same url.
-  string tag = 3;
+  string tag = 4;
   // Application of task.
-  string application = 4;
+  string application = 5;
   // Filter url used to generate task id.
-  repeated string filters = 5;
+  repeated string filters = 6;
   // Task request headers.
-  map<string, string> header = 6;
+  map<string, string> header = 7;
+  // Task piece size.
+  int32 piece_size = 8 [(validate.rules).int32.gte = 1];
 }
 
 message Piece{

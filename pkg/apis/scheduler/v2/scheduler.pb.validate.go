@@ -421,30 +421,9 @@ func (m *Task) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if uri, err := url.Parse(m.GetUrl()); err != nil {
-		err = TaskValidationError{
-			field:  "Url",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	} else if !uri.IsAbs() {
+	if m.GetMetadata() == nil {
 		err := TaskValidationError{
-			field:  "Url",
-			reason: "value must be absolute",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetUrlMeta() == nil {
-		err := TaskValidationError{
-			field:  "UrlMeta",
+			field:  "Metadata",
 			reason: "value is required",
 		}
 		if !all {
@@ -454,11 +433,11 @@ func (m *Task) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetUrlMeta()).(type) {
+		switch v := interface{}(m.GetMetadata()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, TaskValidationError{
-					field:  "UrlMeta",
+					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -466,16 +445,16 @@ func (m *Task) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, TaskValidationError{
-					field:  "UrlMeta",
+					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetUrlMeta()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return TaskValidationError{
-				field:  "UrlMeta",
+				field:  "Metadata",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -485,17 +464,6 @@ func (m *Task) validate(all bool) error {
 	if m.GetContentLength() < 1 {
 		err := TaskValidationError{
 			field:  "ContentLength",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetTotalPieceCount() < 1 {
-		err := TaskValidationError{
-			field:  "TotalPieceCount",
 			reason: "value must be greater than or equal to 1",
 		}
 		if !all {
@@ -648,20 +616,39 @@ func (m *Host) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if ip := net.ParseIP(m.GetIp()); ip == nil {
-		err := HostValidationError{
-			field:  "Ip",
-			reason: "value must be a valid IP address",
+	if m.GetIpv4() != "" {
+
+		if ip := net.ParseIP(m.GetIpv4()); ip == nil || ip.To4() == nil {
+			err := HostValidationError{
+				field:  "Ipv4",
+				reason: "value must be a valid IPv4 address",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if m.GetIpv6() != "" {
+
+		if ip := net.ParseIP(m.GetIpv6()); ip == nil || ip.To4() != nil {
+			err := HostValidationError{
+				field:  "Ipv6",
+				reason: "value must be a valid IPv6 address",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = HostValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -708,12 +695,12 @@ func (m *Host) validate(all bool) error {
 
 	}
 
-	if m.GetLocation() != "" {
+	if len(m.GetLocation()) > 0 {
 
-		if utf8.RuneCountInString(m.GetLocation()) < 1 {
+		if len(m.GetLocation()) < 1 {
 			err := HostValidationError{
 				field:  "Location",
-				reason: "value length must be at least 1 runes",
+				reason: "value must contain at least 1 item(s)",
 			}
 			if !all {
 				return err
@@ -738,12 +725,12 @@ func (m *Host) validate(all bool) error {
 
 	}
 
-	if m.GetNetTopology() != "" {
+	if len(m.GetNetTopology()) > 0 {
 
-		if utf8.RuneCountInString(m.GetNetTopology()) < 1 {
+		if len(m.GetNetTopology()) < 1 {
 			err := HostValidationError{
 				field:  "NetTopology",
-				reason: "value length must be at least 1 runes",
+				reason: "value must contain at least 1 item(s)",
 			}
 			if !all {
 				return err
@@ -904,30 +891,9 @@ func (m *RegisterRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if uri, err := url.Parse(m.GetUrl()); err != nil {
-		err = RegisterRequestValidationError{
-			field:  "Url",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	} else if !uri.IsAbs() {
+	if m.GetMetadata() == nil {
 		err := RegisterRequestValidationError{
-			field:  "Url",
-			reason: "value must be absolute",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetUrlMeta() == nil {
-		err := RegisterRequestValidationError{
-			field:  "UrlMeta",
+			field:  "Metadata",
 			reason: "value is required",
 		}
 		if !all {
@@ -937,11 +903,11 @@ func (m *RegisterRequest) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetUrlMeta()).(type) {
+		switch v := interface{}(m.GetMetadata()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, RegisterRequestValidationError{
-					field:  "UrlMeta",
+					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -949,16 +915,16 @@ func (m *RegisterRequest) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, RegisterRequestValidationError{
-					field:  "UrlMeta",
+					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetUrlMeta()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return RegisterRequestValidationError{
-				field:  "UrlMeta",
+				field:  "Metadata",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -1324,17 +1290,6 @@ func (m *PeerDownloadFinishedRequest) validate(all bool) error {
 	}
 
 	var errors []error
-
-	if m.GetTotalPieceCount() < 1 {
-		err := PeerDownloadFinishedRequestValidationError{
-			field:  "TotalPieceCount",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
 
 	if m.GetContentLength() < 0 {
 		err := PeerDownloadFinishedRequestValidationError{

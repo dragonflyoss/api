@@ -56,44 +56,42 @@ message Task{
   repeated common.Piece pieces = 4 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
   // Task state.
   string state = 5 [(validate.rules).string.min_len = 1];
-  // Download url.
-  string url = 6 [(validate.rules).string.uri = true];
-  // URL meta info.
-  common.UrlMeta url_meta = 7 [(validate.rules).message.required = true];
+  // Task metadata.
+  common.Metadata metadata = 6 [(validate.rules).message.required = true];
   // Task content length.
-  int64 content_length = 8 [(validate.rules).int64.gte = 1];
-  // Task total piece count.
-  int32 total_piece_count = 9 [(validate.rules).int32.gte = 1];
+  int64 content_length = 7 [(validate.rules).int64.gte = 1];
   // Task peer count.
-  int32 peer_count = 10 [(validate.rules).int32.gte = 0];
+  int32 peer_count = 8 [(validate.rules).int32.gte = 0];
   // Task contains available peer.
-  bool hasAvailablePeer = 11;
+  bool hasAvailablePeer = 9;
   // Task create time.
-  google.protobuf.Timestamp created_at = 12 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
   // Task update time.
-  google.protobuf.Timestamp updated_at = 13 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
 }
 
 // Host metadata.
 message Host{
   // Host id.
   string id = 1 [(validate.rules).string.min_len = 1];
-  // Host ip
-  string ip = 2 [(validate.rules).string.ip = true];
+  // Host ipv4.
+  string ipv4 = 2 [(validate.rules).string = {ipv4: true, ignore_empty: true}];
+  // Host ipv6.
+  string ipv6 = 3 [(validate.rules).string = {ipv6: true, ignore_empty: true}];
   // Peer hostname.
-  string host_name = 3 [(validate.rules).string.hostname = true];
+  string hostname = 4 [(validate.rules).string.hostname = true];
   // Port of grpc service.
-  int32 port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Port of download server.
-  int32 download_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 download_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Security domain for network.
-  string security_domain = 6 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // Location path(area|country|province|city|...).
-  string location = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // IDC where the peer host is located
-  string idc = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // Network topology(switch|router|...).
-  string net_topology = 9 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  string security_domain = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // Host location(area, country, province, city, etc.).
+  repeated string location = 8 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // IDC where the peer host is located.
+  string idc = 9 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // Network topology(switch, router, etc.).
+  repeated string net_topology = 10 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
 }
 
 // RegisteredRequest represents registered request of AnnouncePeerRequest.
@@ -102,16 +100,14 @@ message RegisterRequest {
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Peer id.
   string peer_id = 2 [(validate.rules).string.min_len = 1];
-  // Download url.
-  string url = 3 [(validate.rules).string.uri = true];
-  // URL meta info.
-  common.UrlMeta url_meta = 4 [(validate.rules).message.required = true];
+  // Task metadata.
+  common.Metadata metadata = 3 [(validate.rules).message.required = true];
   // Host info.
-  Host host = 5 [(validate.rules).message.required = true];
+  Host host = 4 [(validate.rules).message.required = true];
   // Task type.
-  common.TaskType task_type = 6;
+  common.TaskType task_type = 5;
   // Pattern includes p2p, seed-peer and source.
-  common.Pattern pattern = 7;
+  common.Pattern pattern = 6;
 }
 
 // TaskDownloadStartedRequest represents peer download started request of AnnouncePeerRequest.
@@ -126,12 +122,10 @@ message PeerDownloadBackToSourceRequest {
 
 // PeerDownloadFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 message PeerDownloadFinishedRequest {
-  // Task total piece count.
-  int32 total_piece_count = 1 [(validate.rules).int32.gte = 1];
   // Total content length.
-  int64 content_length = 2 [(validate.rules).int64.gte = 0];
+  int64 content_length = 1 [(validate.rules).int64.gte = 0];
   // Total traffic of p2p network.
-  uint64 traffic = 3 [(validate.rules).uint64.gte = 0];
+  uint64 traffic = 2 [(validate.rules).uint64.gte = 0];
 }
 
 // PieceDownloadFinishedRequest represents piece download finished request of AnnouncePeerRequest.
