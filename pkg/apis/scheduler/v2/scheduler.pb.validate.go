@@ -2749,6 +2749,17 @@ func (m *StatPeerRequest) validate(all bool) error {
 
 	var errors []error
 
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := StatPeerRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
 		err := StatPeerRequestValidationError{
 			field:  "PeerId",
@@ -2859,6 +2870,28 @@ func (m *ExchangePeerRequest) validate(all bool) error {
 	}
 
 	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := ExchangePeerRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
+		err := ExchangePeerRequestValidationError{
+			field:  "PeerId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return ExchangePeerRequestMultiError(errors)
@@ -3063,6 +3096,17 @@ func (m *LeavePeerRequest) validate(all bool) error {
 	}
 
 	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := LeavePeerRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
 		err := LeavePeerRequestValidationError{
