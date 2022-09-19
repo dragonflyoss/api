@@ -26,7 +26,8 @@ option go_package = "d7y.io/api/pkg/apis/dfdaemon/v1";
 
 message DownRequest{
   // Identify one downloading, the framework will fill it automatically.
-  string uuid = 1 [(validate.rules).string.uuid = true];
+  // Deprecated
+  string uuid = 1;
   // Download file from the url, not only for http.
   string url = 2 [(validate.rules).string.uri = true];
   // Pieces will be written to output path directly,
