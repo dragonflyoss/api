@@ -34,6 +34,9 @@ enum SizeScope{
 
   // size <= 128 byte and be plain type.
   TINY = 2;
+
+  // size == 0 byte and be plain type.
+  EMPTY = 3;
 }
 
 // Pattern represents pattern of task.
