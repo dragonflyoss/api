@@ -1,6 +1,6 @@
 module d7y.io/api
 
-go 1.18
+go 1.19
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v0.6.8
