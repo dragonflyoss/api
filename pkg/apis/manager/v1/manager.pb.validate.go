@@ -3983,16 +3983,7 @@ func (m *ModelVersion) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetR2() < 0 {
-		err := ModelVersionValidationError{
-			field:  "R2",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for R2
 
 	if m.GetCreatedAt() == nil {
 		err := ModelVersionValidationError{
@@ -4576,16 +4567,7 @@ func (m *CreateModelVersionRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetR2() < 0 {
-		err := CreateModelVersionRequestValidationError{
-			field:  "R2",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for R2
 
 	if len(errors) > 0 {
 		return CreateModelVersionRequestMultiError(errors)
@@ -4783,17 +4765,6 @@ func (m *UpdateModelVersionRequest) validate(all bool) error {
 	}
 
 	if m.GetR2() != 0 {
-
-		if m.GetR2() < 0 {
-			err := UpdateModelVersionRequestValidationError{
-				field:  "R2",
-				reason: "value must be greater than or equal to 0",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
 
 	}
 

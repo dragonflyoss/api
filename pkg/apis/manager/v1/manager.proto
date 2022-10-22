@@ -379,7 +379,7 @@ message ModelVersion {
   // Model version rmse.
   double rmse = 5 [(validate.rules).double.gte = 0];
   // Model version r^2.
-  double r2 = 6 [(validate.rules).double.gte = 0];
+  double r2 = 6;
   // Model create time.
   google.protobuf.Timestamp created_at = 7 [(validate.rules).timestamp.required = true];
   // Model update time.
@@ -425,7 +425,7 @@ message CreateModelVersionRequest {
   // Model version rmse.
   double rmse = 6 [(validate.rules).double.gte = 0];
   // Model version r^2.
-  double r2 = 7 [(validate.rules).double.gte = 0];
+  double r2 = 7;
 }
 
 // UpdateModelVersionRequest represents request of UpdateModelVersion.
@@ -445,7 +445,7 @@ message UpdateModelVersionRequest {
   // Model version rmse.
   double rmse = 7 [(validate.rules).double = {gte: 0, ignore_empty: true}];
   // Model version r^2.
-  double r2 = 8 [(validate.rules).double = {gte: 0, ignore_empty: true}];
+  double r2 = 8 [(validate.rules).double = {ignore_empty: true}];
 }
 
 // DeleteModelVersionRequest represents request of DeleteModelVersion.
