@@ -3219,21 +3219,6 @@ func (m *LeavePeersRequest) validate(all bool) error {
 
 	var errors []error
 
-	if len(m.GetTaskIds()) > 0 {
-
-		if len(m.GetTaskIds()) < 1 {
-			err := LeavePeersRequestValidationError{
-				field:  "TaskIds",
-				reason: "value must contain at least 1 item(s)",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if len(m.GetPeerIds()) < 1 {
 		err := LeavePeersRequestValidationError{
 			field:  "PeerIds",
