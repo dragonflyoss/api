@@ -1591,6 +1591,134 @@ var _ interface {
 	ErrorName() string
 } = PeerTargetValidationError{}
 
+// Validate checks the field values on LeaveTasksRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *LeaveTasksRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on LeaveTasksRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// LeaveTasksRequestMultiError, or nil if none found.
+func (m *LeaveTasksRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *LeaveTasksRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(m.GetTaskIds()) > 0 {
+
+		if len(m.GetTaskIds()) < 1 {
+			err := LeaveTasksRequestValidationError{
+				field:  "TaskIds",
+				reason: "value must contain at least 1 item(s)",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if len(m.GetPeerIds()) < 1 {
+		err := LeaveTasksRequestValidationError{
+			field:  "PeerIds",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return LeaveTasksRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// LeaveTasksRequestMultiError is an error wrapping multiple validation errors
+// returned by LeaveTasksRequest.ValidateAll() if the designated constraints
+// aren't met.
+type LeaveTasksRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m LeaveTasksRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m LeaveTasksRequestMultiError) AllErrors() []error { return m }
+
+// LeaveTasksRequestValidationError is the validation error returned by
+// LeaveTasksRequest.Validate if the designated constraints aren't met.
+type LeaveTasksRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LeaveTasksRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LeaveTasksRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LeaveTasksRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LeaveTasksRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LeaveTasksRequestValidationError) ErrorName() string {
+	return "LeaveTasksRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e LeaveTasksRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLeaveTasksRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LeaveTasksRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LeaveTasksRequestValidationError{}
+
 // Validate checks the field values on StatTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
