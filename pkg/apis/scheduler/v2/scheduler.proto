@@ -221,10 +221,8 @@ message LeavePeerRequest{
 
 // LeavePeersRequest represents request of LeavePeers.
 message LeavePeersRequest{
-  // Task ids.
-  repeated string task_ids = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
   // Peer ids.
-  repeated string peer_ids = 2 [(validate.rules).repeated = {min_items: 1}];
+  repeated string peer_ids = 1 [(validate.rules).repeated = {min_items: 1}];
 }
 
 // StatTaskRequest represents request of StatTask.
