@@ -168,6 +168,26 @@ func (mr *MockSchedulerClientMockRecorder) LeavePeer(ctx, in interface{}, opts .
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeavePeer", reflect.TypeOf((*MockSchedulerClient)(nil).LeavePeer), varargs...)
 }
 
+// LeavePeers mocks base method.
+func (m *MockSchedulerClient) LeavePeers(ctx context.Context, in *v2.LeavePeersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "LeavePeers", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LeavePeers indicates an expected call of LeavePeers.
+func (mr *MockSchedulerClientMockRecorder) LeavePeers(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeavePeers", reflect.TypeOf((*MockSchedulerClient)(nil).LeavePeers), varargs...)
+}
+
 // LeaveTask mocks base method.
 func (m *MockSchedulerClient) LeaveTask(ctx context.Context, in *v2.LeaveTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -430,6 +450,21 @@ func (m *MockSchedulerServer) LeavePeer(arg0 context.Context, arg1 *v2.LeavePeer
 func (mr *MockSchedulerServerMockRecorder) LeavePeer(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeavePeer", reflect.TypeOf((*MockSchedulerServer)(nil).LeavePeer), arg0, arg1)
+}
+
+// LeavePeers mocks base method.
+func (m *MockSchedulerServer) LeavePeers(arg0 context.Context, arg1 *v2.LeavePeersRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LeavePeers", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LeavePeers indicates an expected call of LeavePeers.
+func (mr *MockSchedulerServerMockRecorder) LeavePeers(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeavePeers", reflect.TypeOf((*MockSchedulerServer)(nil).LeavePeers), arg0, arg1)
 }
 
 // LeaveTask mocks base method.

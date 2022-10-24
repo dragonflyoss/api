@@ -219,6 +219,14 @@ message LeavePeerRequest{
   string peer_id = 2 [(validate.rules).string.min_len = 1];
 }
 
+// LeavePeersRequest represents request of LeavePeers.
+message LeavePeersRequest{
+  // Task ids.
+  repeated string task_ids = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Peer ids.
+  repeated string peer_ids = 2 [(validate.rules).repeated = {min_items: 1}];
+}
+
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest{
   // Task id.
@@ -241,6 +249,9 @@ service Scheduler{
 
   // LeavePeer releases peer in scheduler.
   rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
+
+  // LeavePeers releases peers in scheduler.
+  rpc LeavePeers(LeavePeersRequest)returns(google.protobuf.Empty);
 
   // TODO exchange peer api definition.
   // ExchangePeer exchanges peer information.
