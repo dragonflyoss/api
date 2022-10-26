@@ -148,6 +148,26 @@ func (mr *MockSchedulerClientMockRecorder) ExchangePeer(ctx, in interface{}, opt
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangePeer", reflect.TypeOf((*MockSchedulerClient)(nil).ExchangePeer), varargs...)
 }
 
+// LeaveHost mocks base method.
+func (m *MockSchedulerClient) LeaveHost(ctx context.Context, in *v2.LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "LeaveHost", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LeaveHost indicates an expected call of LeaveHost.
+func (mr *MockSchedulerClientMockRecorder) LeaveHost(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeaveHost", reflect.TypeOf((*MockSchedulerClient)(nil).LeaveHost), varargs...)
+}
+
 // LeavePeer mocks base method.
 func (m *MockSchedulerClient) LeavePeer(ctx context.Context, in *v2.LeavePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -166,46 +186,6 @@ func (mr *MockSchedulerClientMockRecorder) LeavePeer(ctx, in interface{}, opts .
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeavePeer", reflect.TypeOf((*MockSchedulerClient)(nil).LeavePeer), varargs...)
-}
-
-// LeavePeers mocks base method.
-func (m *MockSchedulerClient) LeavePeers(ctx context.Context, in *v2.LeavePeersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "LeavePeers", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// LeavePeers indicates an expected call of LeavePeers.
-func (mr *MockSchedulerClientMockRecorder) LeavePeers(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeavePeers", reflect.TypeOf((*MockSchedulerClient)(nil).LeavePeers), varargs...)
-}
-
-// LeaveTask mocks base method.
-func (m *MockSchedulerClient) LeaveTask(ctx context.Context, in *v2.LeaveTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "LeaveTask", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// LeaveTask indicates an expected call of LeaveTask.
-func (mr *MockSchedulerClientMockRecorder) LeaveTask(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeaveTask", reflect.TypeOf((*MockSchedulerClient)(nil).LeaveTask), varargs...)
 }
 
 // StatPeer mocks base method.
@@ -437,6 +417,21 @@ func (mr *MockSchedulerServerMockRecorder) ExchangePeer(arg0, arg1 interface{}) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangePeer", reflect.TypeOf((*MockSchedulerServer)(nil).ExchangePeer), arg0, arg1)
 }
 
+// LeaveHost mocks base method.
+func (m *MockSchedulerServer) LeaveHost(arg0 context.Context, arg1 *v2.LeaveHostRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LeaveHost", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LeaveHost indicates an expected call of LeaveHost.
+func (mr *MockSchedulerServerMockRecorder) LeaveHost(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeaveHost", reflect.TypeOf((*MockSchedulerServer)(nil).LeaveHost), arg0, arg1)
+}
+
 // LeavePeer mocks base method.
 func (m *MockSchedulerServer) LeavePeer(arg0 context.Context, arg1 *v2.LeavePeerRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -450,36 +445,6 @@ func (m *MockSchedulerServer) LeavePeer(arg0 context.Context, arg1 *v2.LeavePeer
 func (mr *MockSchedulerServerMockRecorder) LeavePeer(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeavePeer", reflect.TypeOf((*MockSchedulerServer)(nil).LeavePeer), arg0, arg1)
-}
-
-// LeavePeers mocks base method.
-func (m *MockSchedulerServer) LeavePeers(arg0 context.Context, arg1 *v2.LeavePeersRequest) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LeavePeers", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// LeavePeers indicates an expected call of LeavePeers.
-func (mr *MockSchedulerServerMockRecorder) LeavePeers(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeavePeers", reflect.TypeOf((*MockSchedulerServer)(nil).LeavePeers), arg0, arg1)
-}
-
-// LeaveTask mocks base method.
-func (m *MockSchedulerServer) LeaveTask(arg0 context.Context, arg1 *v2.LeaveTaskRequest) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LeaveTask", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// LeaveTask indicates an expected call of LeaveTask.
-func (mr *MockSchedulerServerMockRecorder) LeaveTask(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeaveTask", reflect.TypeOf((*MockSchedulerServer)(nil).LeaveTask), arg0, arg1)
 }
 
 // StatPeer mocks base method.

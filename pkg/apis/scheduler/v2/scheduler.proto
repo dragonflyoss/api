@@ -213,28 +213,20 @@ message ExchangePeerResponse{
 
 // LeavePeerRequest represents request of LeavePeer.
 message LeavePeerRequest{
-  // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
   // Peer id.
-  string peer_id = 2 [(validate.rules).string.min_len = 1];
-}
-
-// LeavePeersRequest represents request of LeavePeers.
-message LeavePeersRequest{
-  // Peer ids.
-  repeated string peer_ids = 1 [(validate.rules).repeated = {min_items: 1}];
+  string id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest{
   // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+  string id = 1 [(validate.rules).string.min_len = 1];
 }
 
-// LeaveTaskRequest represents request of LeaveTask.
-message LeaveTaskRequest{
-  // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+// LeaveHostRequest represents request of LeaveHost.
+message LeaveHostRequest{
+  // Host id.
+  string id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // Scheduler RPC Service.
@@ -248,9 +240,6 @@ service Scheduler{
   // LeavePeer releases peer in scheduler.
   rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
 
-  // LeavePeers releases peers in scheduler.
-  rpc LeavePeers(LeavePeersRequest)returns(google.protobuf.Empty);
-
   // TODO exchange peer api definition.
   // ExchangePeer exchanges peer information.
   rpc ExchangePeer(ExchangePeerRequest)returns(ExchangePeerResponse);
@@ -258,6 +247,6 @@ service Scheduler{
   // Checks information of task.
   rpc StatTask(StatTaskRequest)returns(Task);
 
-  // LeaveTask releases task in scheduler.
-  rpc LeaveTask(LeaveTaskRequest)returns(google.protobuf.Empty);
+  // LeaveHost releases host in scheduler.
+  rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
 }

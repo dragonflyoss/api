@@ -195,13 +195,6 @@ message PeerTarget{
   string peer_id = 2 [(validate.rules).string.min_len = 1];
 }
 
-message LeaveTasksRequest{
-  // Task ids.
-  repeated string task_ids = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
-  // Peer ids.
-  repeated string peer_ids = 2 [(validate.rules).repeated = {min_items: 1}];
-}
-
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest{
   // Task id.
@@ -242,6 +235,12 @@ message AnnounceTaskRequest{
   common.TaskType task_type = 6;
 }
 
+// LeaveHostRequest represents request of LeaveHost.
+message LeaveHostRequest{
+  // Host id.
+  string id = 1 [(validate.rules).string.min_len = 1];
+}
+
 // Scheduler RPC Service.
 service Scheduler{
   // RegisterPeerTask registers a peer into task.
@@ -256,12 +255,12 @@ service Scheduler{
   // LeaveTask makes the peer leaving from task.
   rpc LeaveTask(PeerTarget)returns(google.protobuf.Empty);
 
-  // LeaveTasks makes the peers leaving from task.
-  rpc LeaveTasks(LeaveTasksRequest)returns(google.protobuf.Empty);
-
   // Checks if any peer has the given task.
   rpc StatTask(StatTaskRequest)returns(Task);
 
   // A peer announces that it has the announced task to other peers.
   rpc AnnounceTask(AnnounceTaskRequest) returns(google.protobuf.Empty);
+
+  // LeaveHost makes the peers leaving from host.
+  rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
 }

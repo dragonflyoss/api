@@ -3097,20 +3097,9 @@ func (m *LeavePeerRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+	if utf8.RuneCountInString(m.GetId()) < 1 {
 		err := LeavePeerRequestValidationError{
-			field:  "TaskId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
-		err := LeavePeerRequestValidationError{
-			field:  "PeerId",
+			field:  "Id",
 			reason: "value length must be at least 1 runes",
 		}
 		if !all {
@@ -3197,119 +3186,6 @@ var _ interface {
 	ErrorName() string
 } = LeavePeerRequestValidationError{}
 
-// Validate checks the field values on LeavePeersRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *LeavePeersRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on LeavePeersRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// LeavePeersRequestMultiError, or nil if none found.
-func (m *LeavePeersRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *LeavePeersRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if len(m.GetPeerIds()) < 1 {
-		err := LeavePeersRequestValidationError{
-			field:  "PeerIds",
-			reason: "value must contain at least 1 item(s)",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return LeavePeersRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// LeavePeersRequestMultiError is an error wrapping multiple validation errors
-// returned by LeavePeersRequest.ValidateAll() if the designated constraints
-// aren't met.
-type LeavePeersRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m LeavePeersRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m LeavePeersRequestMultiError) AllErrors() []error { return m }
-
-// LeavePeersRequestValidationError is the validation error returned by
-// LeavePeersRequest.Validate if the designated constraints aren't met.
-type LeavePeersRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e LeavePeersRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e LeavePeersRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e LeavePeersRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e LeavePeersRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e LeavePeersRequestValidationError) ErrorName() string {
-	return "LeavePeersRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e LeavePeersRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sLeavePeersRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = LeavePeersRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = LeavePeersRequestValidationError{}
-
 // Validate checks the field values on StatTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -3332,9 +3208,9 @@ func (m *StatTaskRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+	if utf8.RuneCountInString(m.GetId()) < 1 {
 		err := StatTaskRequestValidationError{
-			field:  "TaskId",
+			field:  "Id",
 			reason: "value length must be at least 1 runes",
 		}
 		if !all {
@@ -3421,31 +3297,31 @@ var _ interface {
 	ErrorName() string
 } = StatTaskRequestValidationError{}
 
-// Validate checks the field values on LeaveTaskRequest with the rules defined
+// Validate checks the field values on LeaveHostRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
-func (m *LeaveTaskRequest) Validate() error {
+func (m *LeaveHostRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on LeaveTaskRequest with the rules
+// ValidateAll checks the field values on LeaveHostRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// LeaveTaskRequestMultiError, or nil if none found.
-func (m *LeaveTaskRequest) ValidateAll() error {
+// LeaveHostRequestMultiError, or nil if none found.
+func (m *LeaveHostRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *LeaveTaskRequest) validate(all bool) error {
+func (m *LeaveHostRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := LeaveTaskRequestValidationError{
-			field:  "TaskId",
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		err := LeaveHostRequestValidationError{
+			field:  "Id",
 			reason: "value length must be at least 1 runes",
 		}
 		if !all {
@@ -3455,19 +3331,19 @@ func (m *LeaveTaskRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return LeaveTaskRequestMultiError(errors)
+		return LeaveHostRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// LeaveTaskRequestMultiError is an error wrapping multiple validation errors
-// returned by LeaveTaskRequest.ValidateAll() if the designated constraints
+// LeaveHostRequestMultiError is an error wrapping multiple validation errors
+// returned by LeaveHostRequest.ValidateAll() if the designated constraints
 // aren't met.
-type LeaveTaskRequestMultiError []error
+type LeaveHostRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m LeaveTaskRequestMultiError) Error() string {
+func (m LeaveHostRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -3476,11 +3352,11 @@ func (m LeaveTaskRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m LeaveTaskRequestMultiError) AllErrors() []error { return m }
+func (m LeaveHostRequestMultiError) AllErrors() []error { return m }
 
-// LeaveTaskRequestValidationError is the validation error returned by
-// LeaveTaskRequest.Validate if the designated constraints aren't met.
-type LeaveTaskRequestValidationError struct {
+// LeaveHostRequestValidationError is the validation error returned by
+// LeaveHostRequest.Validate if the designated constraints aren't met.
+type LeaveHostRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -3488,22 +3364,22 @@ type LeaveTaskRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e LeaveTaskRequestValidationError) Field() string { return e.field }
+func (e LeaveHostRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e LeaveTaskRequestValidationError) Reason() string { return e.reason }
+func (e LeaveHostRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e LeaveTaskRequestValidationError) Cause() error { return e.cause }
+func (e LeaveHostRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e LeaveTaskRequestValidationError) Key() bool { return e.key }
+func (e LeaveHostRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e LeaveTaskRequestValidationError) ErrorName() string { return "LeaveTaskRequestValidationError" }
+func (e LeaveHostRequestValidationError) ErrorName() string { return "LeaveHostRequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e LeaveTaskRequestValidationError) Error() string {
+func (e LeaveHostRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -3515,14 +3391,14 @@ func (e LeaveTaskRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sLeaveTaskRequest.%s: %s%s",
+		"invalid %sLeaveHostRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = LeaveTaskRequestValidationError{}
+var _ error = LeaveHostRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -3530,4 +3406,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = LeaveTaskRequestValidationError{}
+} = LeaveHostRequestValidationError{}
