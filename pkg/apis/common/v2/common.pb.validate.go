@@ -400,6 +400,8 @@ func (m *Piece) validate(all bool) error {
 
 	}
 
+	// no validation rules for TrafficType
+
 	if m.GetCost() == nil {
 		err := PieceValidationError{
 			field:  "Cost",
