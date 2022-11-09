@@ -57,11 +57,14 @@ enum TaskType{
 
 // TrafficType represents type of traffic.
 enum TrafficType{
-  // BACK_TO_SOURCE is back-to-source traffic.
+  // BACK_TO_SOURCE is to download traffic from the source.
   BACK_TO_SOURCE = 0;
 
-  // P2P is p2p traffic.
-  P2P = 1;
+  // REMOTE_PEER is to download traffic from the remote peer.
+  REMOTE_PEER = 1;
+
+  // LOCAL_PEER is to download traffic from the local peer.
+  LOCAL_PEER = 2;
 }
 
 // Range represents download range.
