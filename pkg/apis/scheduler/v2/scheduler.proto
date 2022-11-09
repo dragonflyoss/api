@@ -106,8 +106,6 @@ message RegisterRequest {
   Host host = 4 [(validate.rules).message.required = true];
   // Task type.
   common.TaskType task_type = 5;
-  // Pattern includes p2p, seed-peer and source.
-  common.Pattern pattern = 6;
 }
 
 // TaskDownloadStartedRequest represents peer download started request of AnnouncePeerRequest.
@@ -124,8 +122,8 @@ message PeerDownloadBackToSourceRequest {
 message PeerDownloadFinishedRequest {
   // Total content length.
   int64 content_length = 1 [(validate.rules).int64.gte = 0];
-  // Total traffic of p2p network.
-  uint64 traffic = 2 [(validate.rules).uint64.gte = 0];
+  // Total piece count.
+  int64 piece_count = 2 [(validate.rules).int64.gte = 0];
 }
 
 // PieceDownloadFinishedRequest represents piece download finished request of AnnouncePeerRequest.

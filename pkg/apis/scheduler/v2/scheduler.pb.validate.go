@@ -973,8 +973,6 @@ func (m *RegisterRequest) validate(all bool) error {
 
 	// no validation rules for TaskType
 
-	// no validation rules for Pattern
-
 	if len(errors) > 0 {
 		return RegisterRequestMultiError(errors)
 	}
@@ -1302,9 +1300,9 @@ func (m *PeerDownloadFinishedRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetTraffic() < 0 {
+	if m.GetPieceCount() < 0 {
 		err := PeerDownloadFinishedRequestValidationError{
-			field:  "Traffic",
+			field:  "PieceCount",
 			reason: "value must be greater than or equal to 0",
 		}
 		if !all {

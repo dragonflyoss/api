@@ -217,6 +217,8 @@ func (m *PieceSeed) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Reuse
+
 	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
 		err := PieceSeedValidationError{
 			field:  "PeerId",
