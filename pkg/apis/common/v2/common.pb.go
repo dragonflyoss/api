@@ -375,6 +375,7 @@ func (x *Metadata) GetPieceSize() int32 {
 	return 0
 }
 
+// Piece represents information of piece.
 type Piece struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

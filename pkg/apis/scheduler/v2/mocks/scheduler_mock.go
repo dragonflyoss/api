@@ -108,6 +108,26 @@ func (m *MockSchedulerClient) EXPECT() *MockSchedulerClientMockRecorder {
 	return m.recorder
 }
 
+// AnnounceHost mocks base method.
+func (m *MockSchedulerClient) AnnounceHost(ctx context.Context, in *v2.AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AnnounceHost", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AnnounceHost indicates an expected call of AnnounceHost.
+func (mr *MockSchedulerClientMockRecorder) AnnounceHost(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnounceHost", reflect.TypeOf((*MockSchedulerClient)(nil).AnnounceHost), varargs...)
+}
+
 // AnnouncePeer mocks base method.
 func (m *MockSchedulerClient) AnnouncePeer(ctx context.Context, opts ...grpc.CallOption) (v2.Scheduler_AnnouncePeerClient, error) {
 	m.ctrl.T.Helper()
@@ -386,6 +406,21 @@ func NewMockSchedulerServer(ctrl *gomock.Controller) *MockSchedulerServer {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockSchedulerServer) EXPECT() *MockSchedulerServerMockRecorder {
 	return m.recorder
+}
+
+// AnnounceHost mocks base method.
+func (m *MockSchedulerServer) AnnounceHost(arg0 context.Context, arg1 *v2.AnnounceHostRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AnnounceHost", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AnnounceHost indicates an expected call of AnnounceHost.
+func (mr *MockSchedulerServerMockRecorder) AnnounceHost(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnounceHost", reflect.TypeOf((*MockSchedulerServer)(nil).AnnounceHost), arg0, arg1)
 }
 
 // AnnouncePeer mocks base method.
