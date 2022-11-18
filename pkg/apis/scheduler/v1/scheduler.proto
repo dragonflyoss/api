@@ -187,12 +187,20 @@ message PeerResult{
   }
 }
 
-// PeerTarget represents request of LeaveTask.
-message PeerTarget{
+// AnnounceTaskRequest represents request of AnnounceTask.
+message AnnounceTaskRequest{
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
-  // Peer id.
-  string peer_id = 2 [(validate.rules).string.min_len = 1];
+  // Download url.
+  string url = 2 [(validate.rules).string = {uri: true, ignore_empty: true}];
+  // URL meta info.
+  common.UrlMeta url_meta = 3 [(validate.rules).message.required = true];
+  // Peer host info.
+  PeerHost peer_host = 4;
+  // Task piece info.
+  common.PiecePacket piece_packet = 5 [(validate.rules).message.required = true];
+  // Task type.
+  common.TaskType task_type = 6;
 }
 
 // StatTaskRequest represents request of StatTask.
@@ -219,20 +227,18 @@ message Task{
   bool hasAvailablePeer = 7;
 }
 
-// AnnounceTaskRequest represents request of AnnounceTask.
-message AnnounceTaskRequest{
+// PeerTarget represents request of LeaveTask.
+message PeerTarget{
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
-  // Download url.
-  string url = 2 [(validate.rules).string = {uri: true, ignore_empty: true}];
-  // URL meta info.
-  common.UrlMeta url_meta = 3 [(validate.rules).message.required = true];
-  // Peer host info.
-  PeerHost peer_host = 4;
-  // Task piece info.
-  common.PiecePacket piece_packet = 5 [(validate.rules).message.required = true];
-  // Task type.
-  common.TaskType task_type = 6;
+  // Peer id.
+  string peer_id = 2 [(validate.rules).string.min_len = 1];
+}
+
+// LeaveHostRequest represents request of LeaveHost.
+message LeaveHostRequest{
+  // Host id.
+  string id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // AnnounceHostRequest represents request of AnnounceHost.
@@ -372,12 +378,6 @@ message Build {
   string platform = 4 [(validate.rules).string.min_len = 1];
 }
 
-// LeaveHostRequest represents request of LeaveHost.
-message LeaveHostRequest{
-  // Host id.
-  string id = 1 [(validate.rules).string.min_len = 1];
-}
-
 // Scheduler RPC Service.
 service Scheduler{
   // RegisterPeerTask registers a peer into task.
@@ -389,14 +389,14 @@ service Scheduler{
   // ReportPeerResult reports downloading result for the peer.
   rpc ReportPeerResult(PeerResult)returns(google.protobuf.Empty);
 
-  // LeaveTask makes the peer leaving from task.
-  rpc LeaveTask(PeerTarget)returns(google.protobuf.Empty);
+  // A peer announces that it has the announced task to other peers.
+  rpc AnnounceTask(AnnounceTaskRequest) returns(google.protobuf.Empty);
 
   // Checks if any peer has the given task.
   rpc StatTask(StatTaskRequest)returns(Task);
 
-  // A peer announces that it has the announced task to other peers.
-  rpc AnnounceTask(AnnounceTaskRequest) returns(google.protobuf.Empty);
+  // LeaveTask makes the peer leaving from task.
+  rpc LeaveTask(PeerTarget)returns(google.protobuf.Empty);
 
   // AnnounceHost announces host to scheduler.
   rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);
