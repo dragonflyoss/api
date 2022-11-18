@@ -1470,22 +1470,22 @@ var _ interface {
 	ErrorName() string
 } = PeerResultValidationError{}
 
-// Validate checks the field values on PeerTarget with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *PeerTarget) Validate() error {
+// Validate checks the field values on AnnounceTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AnnounceTaskRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PeerTarget with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in PeerTargetMultiError, or
-// nil if none found.
-func (m *PeerTarget) ValidateAll() error {
+// ValidateAll checks the field values on AnnounceTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AnnounceTaskRequestMultiError, or nil if none found.
+func (m *AnnounceTaskRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PeerTarget) validate(all bool) error {
+func (m *AnnounceTaskRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1493,7 +1493,7 @@ func (m *PeerTarget) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := PeerTargetValidationError{
+		err := AnnounceTaskRequestValidationError{
 			field:  "TaskId",
 			reason: "value length must be at least 1 runes",
 		}
@@ -1503,10 +1503,35 @@ func (m *PeerTarget) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
-		err := PeerTargetValidationError{
-			field:  "PeerId",
-			reason: "value length must be at least 1 runes",
+	if m.GetUrl() != "" {
+
+		if uri, err := url.Parse(m.GetUrl()); err != nil {
+			err = AnnounceTaskRequestValidationError{
+				field:  "Url",
+				reason: "value must be a valid URI",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else if !uri.IsAbs() {
+			err := AnnounceTaskRequestValidationError{
+				field:  "Url",
+				reason: "value must be absolute",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetUrlMeta() == nil {
+		err := AnnounceTaskRequestValidationError{
+			field:  "UrlMeta",
+			reason: "value is required",
 		}
 		if !all {
 			return err
@@ -1514,19 +1539,120 @@ func (m *PeerTarget) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if all {
+		switch v := interface{}(m.GetUrlMeta()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, AnnounceTaskRequestValidationError{
+					field:  "UrlMeta",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, AnnounceTaskRequestValidationError{
+					field:  "UrlMeta",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetUrlMeta()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AnnounceTaskRequestValidationError{
+				field:  "UrlMeta",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetPeerHost()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, AnnounceTaskRequestValidationError{
+					field:  "PeerHost",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, AnnounceTaskRequestValidationError{
+					field:  "PeerHost",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPeerHost()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AnnounceTaskRequestValidationError{
+				field:  "PeerHost",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetPiecePacket() == nil {
+		err := AnnounceTaskRequestValidationError{
+			field:  "PiecePacket",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetPiecePacket()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, AnnounceTaskRequestValidationError{
+					field:  "PiecePacket",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, AnnounceTaskRequestValidationError{
+					field:  "PiecePacket",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPiecePacket()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AnnounceTaskRequestValidationError{
+				field:  "PiecePacket",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for TaskType
+
 	if len(errors) > 0 {
-		return PeerTargetMultiError(errors)
+		return AnnounceTaskRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// PeerTargetMultiError is an error wrapping multiple validation errors
-// returned by PeerTarget.ValidateAll() if the designated constraints aren't met.
-type PeerTargetMultiError []error
+// AnnounceTaskRequestMultiError is an error wrapping multiple validation
+// errors returned by AnnounceTaskRequest.ValidateAll() if the designated
+// constraints aren't met.
+type AnnounceTaskRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PeerTargetMultiError) Error() string {
+func (m AnnounceTaskRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1535,11 +1661,11 @@ func (m PeerTargetMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PeerTargetMultiError) AllErrors() []error { return m }
+func (m AnnounceTaskRequestMultiError) AllErrors() []error { return m }
 
-// PeerTargetValidationError is the validation error returned by
-// PeerTarget.Validate if the designated constraints aren't met.
-type PeerTargetValidationError struct {
+// AnnounceTaskRequestValidationError is the validation error returned by
+// AnnounceTaskRequest.Validate if the designated constraints aren't met.
+type AnnounceTaskRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1547,22 +1673,24 @@ type PeerTargetValidationError struct {
 }
 
 // Field function returns field value.
-func (e PeerTargetValidationError) Field() string { return e.field }
+func (e AnnounceTaskRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PeerTargetValidationError) Reason() string { return e.reason }
+func (e AnnounceTaskRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PeerTargetValidationError) Cause() error { return e.cause }
+func (e AnnounceTaskRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PeerTargetValidationError) Key() bool { return e.key }
+func (e AnnounceTaskRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PeerTargetValidationError) ErrorName() string { return "PeerTargetValidationError" }
+func (e AnnounceTaskRequestValidationError) ErrorName() string {
+	return "AnnounceTaskRequestValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e PeerTargetValidationError) Error() string {
+func (e AnnounceTaskRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1574,14 +1702,14 @@ func (e PeerTargetValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPeerTarget.%s: %s%s",
+		"invalid %sAnnounceTaskRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PeerTargetValidationError{}
+var _ error = AnnounceTaskRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1589,7 +1717,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PeerTargetValidationError{}
+} = AnnounceTaskRequestValidationError{}
 
 // Validate checks the field values on StatTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -1859,22 +1987,22 @@ var _ interface {
 	ErrorName() string
 } = TaskValidationError{}
 
-// Validate checks the field values on AnnounceTaskRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *AnnounceTaskRequest) Validate() error {
+// Validate checks the field values on PeerTarget with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *PeerTarget) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AnnounceTaskRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// AnnounceTaskRequestMultiError, or nil if none found.
-func (m *AnnounceTaskRequest) ValidateAll() error {
+// ValidateAll checks the field values on PeerTarget with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PeerTargetMultiError, or
+// nil if none found.
+func (m *PeerTarget) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AnnounceTaskRequest) validate(all bool) error {
+func (m *PeerTarget) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1882,7 +2010,7 @@ func (m *AnnounceTaskRequest) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := AnnounceTaskRequestValidationError{
+		err := PeerTargetValidationError{
 			field:  "TaskId",
 			reason: "value length must be at least 1 runes",
 		}
@@ -1892,156 +2020,30 @@ func (m *AnnounceTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetUrl() != "" {
-
-		if uri, err := url.Parse(m.GetUrl()); err != nil {
-			err = AnnounceTaskRequestValidationError{
-				field:  "Url",
-				reason: "value must be a valid URI",
-				cause:  err,
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		} else if !uri.IsAbs() {
-			err := AnnounceTaskRequestValidationError{
-				field:  "Url",
-				reason: "value must be absolute",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if m.GetUrlMeta() == nil {
-		err := AnnounceTaskRequestValidationError{
-			field:  "UrlMeta",
-			reason: "value is required",
+	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
+		err := PeerTargetValidationError{
+			field:  "PeerId",
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err
 		}
 		errors = append(errors, err)
 	}
-
-	if all {
-		switch v := interface{}(m.GetUrlMeta()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, AnnounceTaskRequestValidationError{
-					field:  "UrlMeta",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, AnnounceTaskRequestValidationError{
-					field:  "UrlMeta",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetUrlMeta()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return AnnounceTaskRequestValidationError{
-				field:  "UrlMeta",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if all {
-		switch v := interface{}(m.GetPeerHost()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, AnnounceTaskRequestValidationError{
-					field:  "PeerHost",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, AnnounceTaskRequestValidationError{
-					field:  "PeerHost",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetPeerHost()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return AnnounceTaskRequestValidationError{
-				field:  "PeerHost",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if m.GetPiecePacket() == nil {
-		err := AnnounceTaskRequestValidationError{
-			field:  "PiecePacket",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetPiecePacket()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, AnnounceTaskRequestValidationError{
-					field:  "PiecePacket",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, AnnounceTaskRequestValidationError{
-					field:  "PiecePacket",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetPiecePacket()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return AnnounceTaskRequestValidationError{
-				field:  "PiecePacket",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	// no validation rules for TaskType
 
 	if len(errors) > 0 {
-		return AnnounceTaskRequestMultiError(errors)
+		return PeerTargetMultiError(errors)
 	}
 
 	return nil
 }
 
-// AnnounceTaskRequestMultiError is an error wrapping multiple validation
-// errors returned by AnnounceTaskRequest.ValidateAll() if the designated
-// constraints aren't met.
-type AnnounceTaskRequestMultiError []error
+// PeerTargetMultiError is an error wrapping multiple validation errors
+// returned by PeerTarget.ValidateAll() if the designated constraints aren't met.
+type PeerTargetMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AnnounceTaskRequestMultiError) Error() string {
+func (m PeerTargetMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2050,11 +2052,11 @@ func (m AnnounceTaskRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AnnounceTaskRequestMultiError) AllErrors() []error { return m }
+func (m PeerTargetMultiError) AllErrors() []error { return m }
 
-// AnnounceTaskRequestValidationError is the validation error returned by
-// AnnounceTaskRequest.Validate if the designated constraints aren't met.
-type AnnounceTaskRequestValidationError struct {
+// PeerTargetValidationError is the validation error returned by
+// PeerTarget.Validate if the designated constraints aren't met.
+type PeerTargetValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2062,24 +2064,22 @@ type AnnounceTaskRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e AnnounceTaskRequestValidationError) Field() string { return e.field }
+func (e PeerTargetValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AnnounceTaskRequestValidationError) Reason() string { return e.reason }
+func (e PeerTargetValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AnnounceTaskRequestValidationError) Cause() error { return e.cause }
+func (e PeerTargetValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AnnounceTaskRequestValidationError) Key() bool { return e.key }
+func (e PeerTargetValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AnnounceTaskRequestValidationError) ErrorName() string {
-	return "AnnounceTaskRequestValidationError"
-}
+func (e PeerTargetValidationError) ErrorName() string { return "PeerTargetValidationError" }
 
 // Error satisfies the builtin error interface
-func (e AnnounceTaskRequestValidationError) Error() string {
+func (e PeerTargetValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2091,14 +2091,14 @@ func (e AnnounceTaskRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAnnounceTaskRequest.%s: %s%s",
+		"invalid %sPeerTarget.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AnnounceTaskRequestValidationError{}
+var _ error = PeerTargetValidationError{}
 
 var _ interface {
 	Field() string
@@ -2106,7 +2106,118 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AnnounceTaskRequestValidationError{}
+} = PeerTargetValidationError{}
+
+// Validate checks the field values on LeaveHostRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *LeaveHostRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on LeaveHostRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// LeaveHostRequestMultiError, or nil if none found.
+func (m *LeaveHostRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *LeaveHostRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		err := LeaveHostRequestValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return LeaveHostRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// LeaveHostRequestMultiError is an error wrapping multiple validation errors
+// returned by LeaveHostRequest.ValidateAll() if the designated constraints
+// aren't met.
+type LeaveHostRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m LeaveHostRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m LeaveHostRequestMultiError) AllErrors() []error { return m }
+
+// LeaveHostRequestValidationError is the validation error returned by
+// LeaveHostRequest.Validate if the designated constraints aren't met.
+type LeaveHostRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LeaveHostRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LeaveHostRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LeaveHostRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LeaveHostRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LeaveHostRequestValidationError) ErrorName() string { return "LeaveHostRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LeaveHostRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLeaveHostRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LeaveHostRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LeaveHostRequestValidationError{}
 
 // Validate checks the field values on AnnounceHostRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -3404,117 +3515,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = BuildValidationError{}
-
-// Validate checks the field values on LeaveHostRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *LeaveHostRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on LeaveHostRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// LeaveHostRequestMultiError, or nil if none found.
-func (m *LeaveHostRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *LeaveHostRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if utf8.RuneCountInString(m.GetId()) < 1 {
-		err := LeaveHostRequestValidationError{
-			field:  "Id",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return LeaveHostRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// LeaveHostRequestMultiError is an error wrapping multiple validation errors
-// returned by LeaveHostRequest.ValidateAll() if the designated constraints
-// aren't met.
-type LeaveHostRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m LeaveHostRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m LeaveHostRequestMultiError) AllErrors() []error { return m }
-
-// LeaveHostRequestValidationError is the validation error returned by
-// LeaveHostRequest.Validate if the designated constraints aren't met.
-type LeaveHostRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e LeaveHostRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e LeaveHostRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e LeaveHostRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e LeaveHostRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e LeaveHostRequestValidationError) ErrorName() string { return "LeaveHostRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e LeaveHostRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sLeaveHostRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = LeaveHostRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = LeaveHostRequestValidationError{}
 
 // Validate checks the field values on PeerPacket_DestPeer with the rules
 // defined in the proto definition for this message. If any rules are
