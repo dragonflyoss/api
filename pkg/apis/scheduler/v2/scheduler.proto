@@ -48,8 +48,8 @@ message Peer{
 message Task{
   // Task id.
   string id = 1 [(validate.rules).string.min_len = 1];
-  // Task type.
-  string type = 2 [(validate.rules).string.uri = true];
+  // Host type.
+  string type = 2 [(validate.rules).string = {in: ["normal", "super", "strong", "weak"]}];
   // Task size scope.
   common.SizeScope size_scope = 3;
   // Pieces of task.
