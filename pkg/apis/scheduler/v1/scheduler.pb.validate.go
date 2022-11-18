@@ -2252,6 +2252,17 @@ func (m *AnnounceHostRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.GetType() > 3 {
+		err := AnnounceHostRequestValidationError{
+			field:  "Type",
+			reason: "value must be less than or equal to 3",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if utf8.RuneCountInString(m.GetHostname()) < 1 {
 		err := AnnounceHostRequestValidationError{
 			field:  "Hostname",
