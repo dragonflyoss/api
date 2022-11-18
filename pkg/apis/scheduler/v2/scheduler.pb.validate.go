@@ -338,20 +338,10 @@ func (m *Task) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if uri, err := url.Parse(m.GetType()); err != nil {
-		err = TaskValidationError{
-			field:  "Type",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	} else if !uri.IsAbs() {
+	if _, ok := _Task_Type_InLookup[m.GetType()]; !ok {
 		err := TaskValidationError{
 			field:  "Type",
-			reason: "value must be absolute",
+			reason: "value must be in list [normal super strong weak]",
 		}
 		if !all {
 			return err
@@ -583,6 +573,13 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TaskValidationError{}
+
+var _Task_Type_InLookup = map[string]struct{}{
+	"normal": {},
+	"super":  {},
+	"strong": {},
+	"weak":   {},
+}
 
 // Validate checks the field values on Host with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error

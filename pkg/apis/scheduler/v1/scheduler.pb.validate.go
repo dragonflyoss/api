@@ -2252,10 +2252,10 @@ func (m *AnnounceHostRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetType() > 3 {
+	if _, ok := _AnnounceHostRequest_Type_InLookup[m.GetType()]; !ok {
 		err := AnnounceHostRequestValidationError{
 			field:  "Type",
-			reason: "value must be less than or equal to 3",
+			reason: "value must be in list [normal super strong weak]",
 		}
 		if !all {
 			return err
@@ -2641,6 +2641,13 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = AnnounceHostRequestValidationError{}
+
+var _AnnounceHostRequest_Type_InLookup = map[string]struct{}{
+	"normal": {},
+	"super":  {},
+	"strong": {},
+	"weak":   {},
+}
 
 // Validate checks the field values on CPU with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error

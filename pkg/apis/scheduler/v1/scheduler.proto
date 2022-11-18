@@ -246,7 +246,7 @@ message AnnounceHostRequest{
   // Host id.
   string id = 1 [(validate.rules).string.min_len = 1];
   // Host type.
-  uint32 type = 2 [(validate.rules).uint32.lte = 3];
+  string type = 2 [(validate.rules).string = {in: ["normal", "super", "strong", "weak"]}];
   // Hostname.
   string hostname = 3 [(validate.rules).string.min_len = 1];
   // Host ip.
