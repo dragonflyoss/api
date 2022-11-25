@@ -2307,60 +2307,15 @@ func (m *AnnounceHostRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetOs()) < 1 {
-		err := AnnounceHostRequestValidationError{
-			field:  "Os",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Os
 
-	if utf8.RuneCountInString(m.GetPlatform()) < 1 {
-		err := AnnounceHostRequestValidationError{
-			field:  "Platform",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Platform
 
-	if utf8.RuneCountInString(m.GetPlatformFamily()) < 1 {
-		err := AnnounceHostRequestValidationError{
-			field:  "PlatformFamily",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for PlatformFamily
 
-	if utf8.RuneCountInString(m.GetPlatformVersion()) < 1 {
-		err := AnnounceHostRequestValidationError{
-			field:  "PlatformVersion",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for PlatformVersion
 
-	if utf8.RuneCountInString(m.GetKernelVersion()) < 1 {
-		err := AnnounceHostRequestValidationError{
-			field:  "KernelVersion",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for KernelVersion
 
 	if m.GetCpu() == nil {
 		err := AnnounceHostRequestValidationError{
@@ -3413,49 +3368,13 @@ func (m *Build) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetGitVersion()) < 1 {
-		err := BuildValidationError{
-			field:  "GitVersion",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for GitVersion
 
-	if utf8.RuneCountInString(m.GetGitCommit()) < 1 {
-		err := BuildValidationError{
-			field:  "GitCommit",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for GitCommit
 
-	if utf8.RuneCountInString(m.GetGoVersion()) < 1 {
-		err := BuildValidationError{
-			field:  "GoVersion",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for GoVersion
 
-	if utf8.RuneCountInString(m.GetPlatform()) < 1 {
-		err := BuildValidationError{
-			field:  "Platform",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Platform
 
 	if len(errors) > 0 {
 		return BuildMultiError(errors)
