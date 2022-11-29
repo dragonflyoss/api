@@ -57,6 +57,7 @@ enum Code{
   SchedPeerNotFound = 5004; // peer not found in scheduler
   SchedPeerPieceResultReportFail = 5005; // report piece
   SchedTaskStatusError = 5006; // task status is fail
+  SchedReregister = 5007; // task should be reregister
 
   // cdnsystem response error 6000-6999
   CDNTaskRegistryFail = 6001;
