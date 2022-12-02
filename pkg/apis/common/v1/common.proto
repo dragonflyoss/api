@@ -95,6 +95,44 @@ enum Pattern{
   SOURCE = 2;
 }
 
+// Pirority represents priority of task
+// If Priority >= BackSourceMust, the task always has ability to back source if needed
+// If priority >= SeedPeerTriggerMust, seed Peer is always triggered if allowed
+enum Priority {
+  // DisableBackSource mean the task is forbidden to  back source, can only download from p2p node
+  DisableBacksource = 0;
+  
+  // BackSourceLow mean the ability to backSource is dicided by scheduler
+  BackSourceLow = 1;
+  
+  // BackSourceMust mean the task has ablitiy to backSource if needed
+  BackSourceMust = 2;
+  
+  // SeedPeerTriggerLow mean the task will not possibly trigger seedPeer 
+  SeedPeerTriggerLow  = 3;
+  
+  // SeedPeerTriggerMid mean the task maybe trigger seedPeer
+  SeedPeerTriggerMid  = 4;
+  
+  // SeedPeerTriggerHight mean the task will trigger seedPeer very likely
+  SeedPeerTriggerHigh  = 5;
+  
+  // SeedPeerTriggerMust mean the task must trigger seedPeer if allowed
+  SeedPeerTriggerMust  = 6;
+  
+  // SeedPeerStoreLow mean the task has low storage priority
+  SeedPeerStoreLow = 7;
+
+  // SeedPeerStoreMid mean the task has middle storage priority
+  SeedPeerStoreMid = 8;
+
+  // SeedPeerStoreHigh mean the task has high storage priority
+  SeedPeerStoreHigh = 9;
+
+  // SeedPeerStoreMid mean the task has custom storage priority
+  SeedPeerStoreReserve  = 10;
+}
+
 // TaskType represents type of task.
 enum TaskType{
 	// Normal is normal type of task,

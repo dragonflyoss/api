@@ -27,6 +27,7 @@ message SeedRequest{
   string task_id = 1 [(validate.rules).string.min_len = 1];
   string url = 2 [(validate.rules).string.uri = true];
   common.UrlMeta url_meta = 3;
+  common.Priority priority = 4;
 }
 
 // keep piece meta and data separately

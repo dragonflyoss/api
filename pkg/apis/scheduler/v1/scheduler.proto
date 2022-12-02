@@ -43,6 +43,8 @@ message PeerTaskRequest{
   common.Pattern pattern = 7;
   // Task id.
   string task_id = 8;
+  // Priority
+  common.Priority priority = 9;
 }
 
 // RegisterResult represents response of RegisterPeerTask.

@@ -118,6 +118,8 @@ func (m *SeedRequest) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for Priority
+
 	if len(errors) > 0 {
 		return SeedRequestMultiError(errors)
 	}
