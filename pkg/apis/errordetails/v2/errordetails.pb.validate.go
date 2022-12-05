@@ -405,6 +405,110 @@ var _ interface {
 	ErrorName() string
 } = PieceInfoSyncFailedValidationError{}
 
+// Validate checks the field values on ScheduleForbidden with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ScheduleForbidden) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ScheduleForbidden with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ScheduleForbiddenMultiError, or nil if none found.
+func (m *ScheduleForbidden) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ScheduleForbidden) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Description
+
+	if len(errors) > 0 {
+		return ScheduleForbiddenMultiError(errors)
+	}
+
+	return nil
+}
+
+// ScheduleForbiddenMultiError is an error wrapping multiple validation errors
+// returned by ScheduleForbidden.ValidateAll() if the designated constraints
+// aren't met.
+type ScheduleForbiddenMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ScheduleForbiddenMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ScheduleForbiddenMultiError) AllErrors() []error { return m }
+
+// ScheduleForbiddenValidationError is the validation error returned by
+// ScheduleForbidden.Validate if the designated constraints aren't met.
+type ScheduleForbiddenValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ScheduleForbiddenValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ScheduleForbiddenValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ScheduleForbiddenValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ScheduleForbiddenValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ScheduleForbiddenValidationError) ErrorName() string {
+	return "ScheduleForbiddenValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ScheduleForbiddenValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sScheduleForbidden.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ScheduleForbiddenValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ScheduleForbiddenValidationError{}
+
 // Validate checks the field values on ScheduleFailed with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.

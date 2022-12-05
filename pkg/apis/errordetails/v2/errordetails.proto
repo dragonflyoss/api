@@ -53,6 +53,12 @@ message PieceInfoSyncFailed {
   string description = 3;
 }
 
+// ScheduleForbidden is error detail of forbidden.
+message ScheduleForbidden {
+  // The description of the error.
+  string description = 1;
+}
+
 // ScheduleFailed is error detail of scheduling.
 message ScheduleFailed {
   // The description of the error.
