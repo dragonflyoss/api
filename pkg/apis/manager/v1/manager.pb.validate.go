@@ -5273,6 +5273,17 @@ func (m *Application) validate(all bool) error {
 
 	var errors []error
 
+	if m.GetId() < 1 {
+		err := ApplicationValidationError{
+			field:  "Id",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 1024 {
 		err := ApplicationValidationError{
 			field:  "Name",
