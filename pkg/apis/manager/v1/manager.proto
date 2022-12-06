@@ -509,14 +509,16 @@ message ApplicationPriority {
 
 // Application represents config of application.
 message Application {
+  // Application id.
+  uint64 id = 1 [(validate.rules).uint64 = {gte: 1}];
   // Application name.
-  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
   // Application url.
-  string url = 2 [(validate.rules).string.uri = true];
+  string url = 3 [(validate.rules).string.uri = true];
   // Application biography.
-  string bio = 3;
+  string bio = 4;
   // Application priority.
-  ApplicationPriority priority = 4 [(validate.rules).message.required = true];
+  ApplicationPriority priority = 5 [(validate.rules).message.required = true];
 }
 
 // ListApplicationsRequest represents request of ListApplications.
