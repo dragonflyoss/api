@@ -4983,6 +4983,746 @@ var _ interface {
 	ErrorName() string
 } = DeleteModelVersionRequestValidationError{}
 
+// Validate checks the field values on URLPriority with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *URLPriority) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on URLPriority with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in URLPriorityMultiError, or
+// nil if none found.
+func (m *URLPriority) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *URLPriority) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetRegex()) < 1 {
+		err := URLPriorityValidationError{
+			field:  "Regex",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if val := m.GetValue(); val < 0 || val > 20 {
+		err := URLPriorityValidationError{
+			field:  "Value",
+			reason: "value must be inside range [0, 20]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return URLPriorityMultiError(errors)
+	}
+
+	return nil
+}
+
+// URLPriorityMultiError is an error wrapping multiple validation errors
+// returned by URLPriority.ValidateAll() if the designated constraints aren't met.
+type URLPriorityMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m URLPriorityMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m URLPriorityMultiError) AllErrors() []error { return m }
+
+// URLPriorityValidationError is the validation error returned by
+// URLPriority.Validate if the designated constraints aren't met.
+type URLPriorityValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e URLPriorityValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e URLPriorityValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e URLPriorityValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e URLPriorityValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e URLPriorityValidationError) ErrorName() string { return "URLPriorityValidationError" }
+
+// Error satisfies the builtin error interface
+func (e URLPriorityValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sURLPriority.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = URLPriorityValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = URLPriorityValidationError{}
+
+// Validate checks the field values on Priority with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Priority) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Priority with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PriorityMultiError, or nil
+// if none found.
+func (m *Priority) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Priority) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if val := m.GetValue(); val < 0 || val > 20 {
+		err := PriorityValidationError{
+			field:  "Value",
+			reason: "value must be inside range [0, 20]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	for idx, item := range m.GetUrls() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PriorityValidationError{
+						field:  fmt.Sprintf("Urls[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PriorityValidationError{
+						field:  fmt.Sprintf("Urls[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PriorityValidationError{
+					field:  fmt.Sprintf("Urls[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return PriorityMultiError(errors)
+	}
+
+	return nil
+}
+
+// PriorityMultiError is an error wrapping multiple validation errors returned
+// by Priority.ValidateAll() if the designated constraints aren't met.
+type PriorityMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PriorityMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PriorityMultiError) AllErrors() []error { return m }
+
+// PriorityValidationError is the validation error returned by
+// Priority.Validate if the designated constraints aren't met.
+type PriorityValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PriorityValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PriorityValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PriorityValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PriorityValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PriorityValidationError) ErrorName() string { return "PriorityValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PriorityValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPriority.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PriorityValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PriorityValidationError{}
+
+// Validate checks the field values on Application with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Application) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Application with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ApplicationMultiError, or
+// nil if none found.
+func (m *Application) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Application) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 1024 {
+		err := ApplicationValidationError{
+			field:  "Name",
+			reason: "value length must be between 1 and 1024 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = ApplicationValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := ApplicationValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Bio
+
+	if m.GetPriority() == nil {
+		err := ApplicationValidationError{
+			field:  "Priority",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetPriority()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ApplicationValidationError{
+					field:  "Priority",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ApplicationValidationError{
+					field:  "Priority",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPriority()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationValidationError{
+				field:  "Priority",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return ApplicationMultiError(errors)
+	}
+
+	return nil
+}
+
+// ApplicationMultiError is an error wrapping multiple validation errors
+// returned by Application.ValidateAll() if the designated constraints aren't met.
+type ApplicationMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ApplicationMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ApplicationMultiError) AllErrors() []error { return m }
+
+// ApplicationValidationError is the validation error returned by
+// Application.Validate if the designated constraints aren't met.
+type ApplicationValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationValidationError) ErrorName() string { return "ApplicationValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ApplicationValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplication.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationValidationError{}
+
+// Validate checks the field values on ListApplicationsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListApplicationsRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListApplicationsRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListApplicationsRequestMultiError, or nil if none found.
+func (m *ListApplicationsRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListApplicationsRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		err := ListApplicationsRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if err := m._validateHostname(m.GetHostName()); err != nil {
+		err = ListApplicationsRequestValidationError{
+			field:  "HostName",
+			reason: "value must be a valid hostname",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if ip := net.ParseIP(m.GetIp()); ip == nil {
+		err := ListApplicationsRequestValidationError{
+			field:  "Ip",
+			reason: "value must be a valid IP address",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return ListApplicationsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *ListApplicationsRequest) _validateHostname(host string) error {
+	s := strings.ToLower(strings.TrimSuffix(host, "."))
+
+	if len(host) > 253 {
+		return errors.New("hostname cannot exceed 253 characters")
+	}
+
+	for _, part := range strings.Split(s, ".") {
+		if l := len(part); l == 0 || l > 63 {
+			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+		}
+
+		if part[0] == '-' {
+			return errors.New("hostname parts cannot begin with hyphens")
+		}
+
+		if part[len(part)-1] == '-' {
+			return errors.New("hostname parts cannot end with hyphens")
+		}
+
+		for _, r := range part {
+			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
+				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+			}
+		}
+	}
+
+	return nil
+}
+
+// ListApplicationsRequestMultiError is an error wrapping multiple validation
+// errors returned by ListApplicationsRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ListApplicationsRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListApplicationsRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListApplicationsRequestMultiError) AllErrors() []error { return m }
+
+// ListApplicationsRequestValidationError is the validation error returned by
+// ListApplicationsRequest.Validate if the designated constraints aren't met.
+type ListApplicationsRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListApplicationsRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListApplicationsRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListApplicationsRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListApplicationsRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListApplicationsRequestValidationError) ErrorName() string {
+	return "ListApplicationsRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListApplicationsRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListApplicationsRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListApplicationsRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListApplicationsRequestValidationError{}
+
+// Validate checks the field values on ListApplicationsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListApplicationsResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListApplicationsResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListApplicationsResponseMultiError, or nil if none found.
+func (m *ListApplicationsResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListApplicationsResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetApplications() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListApplicationsResponseValidationError{
+						field:  fmt.Sprintf("Applications[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListApplicationsResponseValidationError{
+						field:  fmt.Sprintf("Applications[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListApplicationsResponseValidationError{
+					field:  fmt.Sprintf("Applications[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListApplicationsResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListApplicationsResponseMultiError is an error wrapping multiple validation
+// errors returned by ListApplicationsResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListApplicationsResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListApplicationsResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListApplicationsResponseMultiError) AllErrors() []error { return m }
+
+// ListApplicationsResponseValidationError is the validation error returned by
+// ListApplicationsResponse.Validate if the designated constraints aren't met.
+type ListApplicationsResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListApplicationsResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListApplicationsResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListApplicationsResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListApplicationsResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListApplicationsResponseValidationError) ErrorName() string {
+	return "ListApplicationsResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListApplicationsResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListApplicationsResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListApplicationsResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListApplicationsResponseValidationError{}
+
 // Validate checks the field values on KeepAliveRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.

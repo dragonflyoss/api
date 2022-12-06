@@ -458,6 +458,50 @@ message DeleteModelVersionRequest {
   string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
 }
 
+// URLPriority represents config of url priority.
+message URLPriority {
+  // URL regex.
+  string regex = 1 [(validate.rules).string = {min_len: 1}];
+  // URL priority value.
+  int32 value = 2 [(validate.rules).int32 = {gte: 0, lte: 20}];
+}
+
+// Priority represents config of priority.
+message Priority {
+  // Priority value.
+  int32 value = 1 [(validate.rules).int32 = {gte: 0, lte: 20}];
+  // URL priority.
+  repeated URLPriority urls = 2;
+}
+
+// Application represents config of application.
+message Application {
+  // Application name.
+  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  // Application url.
+  string url = 2 [(validate.rules).string.uri = true];
+  // Application biography.
+  string bio = 3;
+  // Application priority.
+  Priority priority = 4 [(validate.rules).message.required = true];
+}
+
+// ListApplicationsRequest represents request of ListApplications.
+message ListApplicationsRequest {
+  // Request source type.
+  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  // Source service hostname.
+  string host_name = 2 [(validate.rules).string.hostname = true];
+  // Source service ip.
+  string ip = 3 [(validate.rules).string.ip = true];
+}
+
+// ListApplicationsResponse represents response of ListApplications.
+message ListApplicationsResponse {
+  // Application configs.
+  repeated Application applications = 1;
+}
+
 // KeepAliveRequest represents request of KeepAlive.
 message KeepAliveRequest {
   // Request source type.
@@ -522,6 +566,9 @@ service Manager {
 
   // Delete model version information.
   rpc DeleteModelVersion(DeleteModelVersionRequest)returns(google.protobuf.Empty);
+
+  // List applications configuration.
+  rpc ListApplications(ListApplicationsRequest)returns(ListApplicationsResponse);
 
   // KeepAlive with manager.
   rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
