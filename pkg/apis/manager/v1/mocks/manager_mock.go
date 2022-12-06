@@ -238,6 +238,26 @@ func (mr *MockManagerClientMockRecorder) KeepAlive(ctx interface{}, opts ...inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "KeepAlive", reflect.TypeOf((*MockManagerClient)(nil).KeepAlive), varargs...)
 }
 
+// ListApplications mocks base method.
+func (m *MockManagerClient) ListApplications(ctx context.Context, in *v1.ListApplicationsRequest, opts ...grpc.CallOption) (*v1.ListApplicationsResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListApplications", varargs...)
+	ret0, _ := ret[0].(*v1.ListApplicationsResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListApplications indicates an expected call of ListApplications.
+func (mr *MockManagerClientMockRecorder) ListApplications(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListApplications", reflect.TypeOf((*MockManagerClient)(nil).ListApplications), varargs...)
+}
+
 // ListBuckets mocks base method.
 func (m *MockManagerClient) ListBuckets(ctx context.Context, in *v1.ListBucketsRequest, opts ...grpc.CallOption) (*v1.ListBucketsResponse, error) {
 	m.ctrl.T.Helper()
@@ -705,6 +725,21 @@ func (m *MockManagerServer) KeepAlive(arg0 v1.Manager_KeepAliveServer) error {
 func (mr *MockManagerServerMockRecorder) KeepAlive(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "KeepAlive", reflect.TypeOf((*MockManagerServer)(nil).KeepAlive), arg0)
+}
+
+// ListApplications mocks base method.
+func (m *MockManagerServer) ListApplications(arg0 context.Context, arg1 *v1.ListApplicationsRequest) (*v1.ListApplicationsResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListApplications", arg0, arg1)
+	ret0, _ := ret[0].(*v1.ListApplicationsResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListApplications indicates an expected call of ListApplications.
+func (mr *MockManagerServerMockRecorder) ListApplications(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListApplications", reflect.TypeOf((*MockManagerServer)(nil).ListApplications), arg0, arg1)
 }
 
 // ListBuckets mocks base method.

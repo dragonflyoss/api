@@ -34,6 +34,39 @@ enum SourceType {
   SEED_PEER_SOURCE = 2;
 }
 
+// Priority represents priority of application.
+enum Priority {
+  // Level0 represents the download task is forbidden,
+  // and an error code is returned during the registration.
+  Level0 = 0;
+
+  // Level1 represents when the task is downloaded for the first time,
+  // allow peers to download from the other peers,
+  // but not back-to-source. When the task is not downloaded for
+  // the first time, it is scheduled normally.
+  Level1 = 1;
+
+  // Level2 represents when the task is downloaded for the first time,
+  // the normal peer is first to download back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  Level2 = 2;
+
+  // Level3 represents when the task is downloaded for the first time,
+  // the weak peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  Level3 = 3;
+
+  // Level4 represents when the task is downloaded for the first time,
+  // the strong peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  Level4 = 4;
+
+  // Level4 represents when the task is downloaded for the first time,
+  // the super peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  Level5 = 5;
+}
+
 // SecurityGroup represents security group of cluster.
 message SecurityGroup {
   // Group id.
@@ -458,6 +491,50 @@ message DeleteModelVersionRequest {
   string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
 }
 
+// URLPriority represents config of url priority.
+message URLPriority {
+  // URL regex.
+  string regex = 1 [(validate.rules).string = {min_len: 1}];
+  // URL priority value.
+  Priority value = 2 [(validate.rules).enum.defined_only = true];
+}
+
+// ApplicationPriority represents config of application priority.
+message ApplicationPriority {
+  // Priority value.
+  Priority value = 1 [(validate.rules).enum.defined_only = true];
+  // URL priority.
+  repeated URLPriority urls = 2;
+}
+
+// Application represents config of application.
+message Application {
+  // Application name.
+  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  // Application url.
+  string url = 2 [(validate.rules).string.uri = true];
+  // Application biography.
+  string bio = 3;
+  // Application priority.
+  ApplicationPriority priority = 4 [(validate.rules).message.required = true];
+}
+
+// ListApplicationsRequest represents request of ListApplications.
+message ListApplicationsRequest {
+  // Request source type.
+  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  // Source service hostname.
+  string host_name = 2 [(validate.rules).string.hostname = true];
+  // Source service ip.
+  string ip = 3 [(validate.rules).string.ip = true];
+}
+
+// ListApplicationsResponse represents response of ListApplications.
+message ListApplicationsResponse {
+  // Application configs.
+  repeated Application applications = 1;
+}
+
 // KeepAliveRequest represents request of KeepAlive.
 message KeepAliveRequest {
   // Request source type.
@@ -522,6 +599,9 @@ service Manager {
 
   // Delete model version information.
   rpc DeleteModelVersion(DeleteModelVersionRequest)returns(google.protobuf.Empty);
+
+  // List applications configuration.
+  rpc ListApplications(ListApplicationsRequest)returns(ListApplicationsResponse);
 
   // KeepAlive with manager.
   rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
