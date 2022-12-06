@@ -25,7 +25,7 @@ import "google/protobuf/timestamp.proto";
 option go_package = "d7y.io/api/pkg/apis/common/v2";
 
 // SizeScope represents size scope of task.
-enum SizeScope{
+enum SizeScope {
   // size > one piece size.
   NORMAL = 0;
 
@@ -40,7 +40,7 @@ enum SizeScope{
 }
 
 // TaskType represents type of task.
-enum TaskType{
+enum TaskType {
   // DFDAEMON is dfdeamon type of task,
   // dfdeamon task is a normal p2p task.
   DFDAEMON = 0;
@@ -56,7 +56,7 @@ enum TaskType{
 }
 
 // TrafficType represents type of traffic.
-enum TrafficType{
+enum TrafficType {
   // BACK_TO_SOURCE is to download traffic from the source.
   BACK_TO_SOURCE = 0;
 
@@ -68,7 +68,7 @@ enum TrafficType{
 }
 
 // Range represents download range.
-message Range{
+message Range {
   // Begin of range.
   uint64 begin = 1;
   // End of range.
@@ -76,7 +76,7 @@ message Range{
 }
 
 // Metadata represents metadata of task.
-message Metadata{
+message Metadata {
   // Download url.
   string url = 1 [(validate.rules).string.uri = true];
   // Digest checks integrity of url content, for example md5:xxx or sha256:yyy.
@@ -96,7 +96,7 @@ message Metadata{
 }
 
 // Piece represents information of piece.
-message Piece{
+message Piece {
   // Piece number.
   uint32 number = 1 [(validate.rules).uint32.gte = 0];
 	// Parent peer id.
@@ -116,7 +116,7 @@ message Piece{
 }
 
 // ExtendAttribute represents extend of attribution.
-message ExtendAttribute{
+message ExtendAttribute {
   // Task response header, eg: HTTP Response Header
   map<string, string> header = 1;
   // Task response code, eg: HTTP Status Code

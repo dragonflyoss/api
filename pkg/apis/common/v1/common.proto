@@ -22,7 +22,7 @@ import "validate/validate.proto";
 
 option go_package = "d7y.io/api/pkg/apis/common/v1";
 
-enum Code{
+enum Code {
   X_UNSPECIFIED = 0;
   // success code 200-299
   Success = 200;
@@ -68,23 +68,26 @@ enum Code{
   InvalidResourceType = 7001;
 }
 
-enum PieceStyle{
+enum PieceStyle {
   PLAIN = 0;
 }
 
-enum SizeScope{
+enum SizeScope {
   // size > one piece size
   NORMAL = 0;
+
   // 128 byte < size <= one piece size and be plain type
   SMALL = 1;
+
   // size <= 128 byte and be plain type
   TINY = 2;
+
   // size == 0 byte and be plain type
   EMPTY = 3;
 }
 
 // Pattern represents pattern of task.
-enum Pattern{
+enum Pattern {
   // Default pattern, scheduler will use all p2p node
   // include dfdaemon and seed peers.
   P2P = 0;
@@ -98,7 +101,7 @@ enum Pattern{
 }
 
 // TaskType represents type of task.
-enum TaskType{
+enum TaskType {
 	// Normal is normal type of task,
 	// normal task is a normal p2p task.
   Normal = 0;
@@ -119,7 +122,7 @@ message GrpcDfError {
 }
 
 // UrlMeta describes url meta info.
-message UrlMeta{
+message UrlMeta {
   // digest checks integrity of url content, for example md5:xxx or sha256:yyy
   string digest = 1 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty:true}];
   // url tag identifies different task for same url, conflict with digest
@@ -134,7 +137,7 @@ message UrlMeta{
   string application = 6;
 }
 
-message HostLoad{
+message HostLoad {
   // cpu usage
   float cpu_ratio = 1 [(validate.rules).float = {gte: 0, lte: 1}];
   // memory usage
@@ -143,7 +146,7 @@ message HostLoad{
   float disk_ratio = 3 [(validate.rules).float = {gte: 0, lte: 1}];
 }
 
-message PieceTaskRequest{
+message PieceTaskRequest {
   string task_id = 1 [(validate.rules).string.min_len = 1];
   string src_pid = 2 [(validate.rules).string.min_len = 1];
   string dst_pid = 3 [(validate.rules).string.min_len = 1];
@@ -153,7 +156,7 @@ message PieceTaskRequest{
   uint32 limit = 5 [(validate.rules).uint32.gte = 0];
 }
 
-message PieceInfo{
+message PieceInfo {
   // piece_num < 0 represent start report piece flag
   int32 piece_num = 1;
   uint64 range_start = 2 [(validate.rules).uint64.gte = 0];
@@ -165,7 +168,7 @@ message PieceInfo{
   uint64 download_cost = 7 [(validate.rules).uint64.gte = 0];
 }
 
-message ExtendAttribute{
+message ExtendAttribute {
   // task response header, eg: HTTP Response Header
   map<string, string> header = 1;
   // task response code, eg: HTTP Status Code
@@ -174,7 +177,7 @@ message ExtendAttribute{
   string status = 3;
 }
 
-message PiecePacket{
+message PiecePacket {
   string task_id = 2 [(validate.rules).string.min_len = 1];
   string dst_pid = 3 [(validate.rules).string.min_len = 1];
   // ip:port

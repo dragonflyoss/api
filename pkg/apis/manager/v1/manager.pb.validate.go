@@ -5016,10 +5016,10 @@ func (m *URLPriority) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if val := m.GetValue(); val < 0 || val > 20 {
+	if _, ok := Priority_name[int32(m.GetValue())]; !ok {
 		err := URLPriorityValidationError{
 			field:  "Value",
-			reason: "value must be inside range [0, 20]",
+			reason: "value must be one of the defined enum values",
 		}
 		if !all {
 			return err
@@ -5104,32 +5104,32 @@ var _ interface {
 	ErrorName() string
 } = URLPriorityValidationError{}
 
-// Validate checks the field values on Priority with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *Priority) Validate() error {
+// Validate checks the field values on ApplicationPriority with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ApplicationPriority) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Priority with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in PriorityMultiError, or nil
-// if none found.
-func (m *Priority) ValidateAll() error {
+// ValidateAll checks the field values on ApplicationPriority with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ApplicationPriorityMultiError, or nil if none found.
+func (m *ApplicationPriority) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Priority) validate(all bool) error {
+func (m *ApplicationPriority) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	if val := m.GetValue(); val < 0 || val > 20 {
-		err := PriorityValidationError{
+	if _, ok := Priority_name[int32(m.GetValue())]; !ok {
+		err := ApplicationPriorityValidationError{
 			field:  "Value",
-			reason: "value must be inside range [0, 20]",
+			reason: "value must be one of the defined enum values",
 		}
 		if !all {
 			return err
@@ -5144,7 +5144,7 @@ func (m *Priority) validate(all bool) error {
 			switch v := interface{}(item).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, PriorityValidationError{
+					errors = append(errors, ApplicationPriorityValidationError{
 						field:  fmt.Sprintf("Urls[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -5152,7 +5152,7 @@ func (m *Priority) validate(all bool) error {
 				}
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
-					errors = append(errors, PriorityValidationError{
+					errors = append(errors, ApplicationPriorityValidationError{
 						field:  fmt.Sprintf("Urls[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -5161,7 +5161,7 @@ func (m *Priority) validate(all bool) error {
 			}
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return PriorityValidationError{
+				return ApplicationPriorityValidationError{
 					field:  fmt.Sprintf("Urls[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -5172,18 +5172,19 @@ func (m *Priority) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return PriorityMultiError(errors)
+		return ApplicationPriorityMultiError(errors)
 	}
 
 	return nil
 }
 
-// PriorityMultiError is an error wrapping multiple validation errors returned
-// by Priority.ValidateAll() if the designated constraints aren't met.
-type PriorityMultiError []error
+// ApplicationPriorityMultiError is an error wrapping multiple validation
+// errors returned by ApplicationPriority.ValidateAll() if the designated
+// constraints aren't met.
+type ApplicationPriorityMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PriorityMultiError) Error() string {
+func (m ApplicationPriorityMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -5192,11 +5193,11 @@ func (m PriorityMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PriorityMultiError) AllErrors() []error { return m }
+func (m ApplicationPriorityMultiError) AllErrors() []error { return m }
 
-// PriorityValidationError is the validation error returned by
-// Priority.Validate if the designated constraints aren't met.
-type PriorityValidationError struct {
+// ApplicationPriorityValidationError is the validation error returned by
+// ApplicationPriority.Validate if the designated constraints aren't met.
+type ApplicationPriorityValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -5204,22 +5205,24 @@ type PriorityValidationError struct {
 }
 
 // Field function returns field value.
-func (e PriorityValidationError) Field() string { return e.field }
+func (e ApplicationPriorityValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PriorityValidationError) Reason() string { return e.reason }
+func (e ApplicationPriorityValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PriorityValidationError) Cause() error { return e.cause }
+func (e ApplicationPriorityValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PriorityValidationError) Key() bool { return e.key }
+func (e ApplicationPriorityValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PriorityValidationError) ErrorName() string { return "PriorityValidationError" }
+func (e ApplicationPriorityValidationError) ErrorName() string {
+	return "ApplicationPriorityValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e PriorityValidationError) Error() string {
+func (e ApplicationPriorityValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -5231,14 +5234,14 @@ func (e PriorityValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPriority.%s: %s%s",
+		"invalid %sApplicationPriority.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PriorityValidationError{}
+var _ error = ApplicationPriorityValidationError{}
 
 var _ interface {
 	Field() string
@@ -5246,7 +5249,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PriorityValidationError{}
+} = ApplicationPriorityValidationError{}
 
 // Validate checks the field values on Application with the rules defined in
 // the proto definition for this message. If any rules are violated, the first

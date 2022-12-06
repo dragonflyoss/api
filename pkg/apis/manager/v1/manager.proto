@@ -34,6 +34,39 @@ enum SourceType {
   SEED_PEER_SOURCE = 2;
 }
 
+// Priority represents priority of application.
+enum Priority {
+  // Level0 represents the download task is forbidden,
+  // and an error code is returned during the registration.
+  Level0 = 0;
+
+  // Level1 represents when the task is downloaded for the first time,
+  // allow peers to download from the other peers,
+  // but not back-to-source. When the task is not downloaded for
+  // the first time, it is scheduled normally.
+  Level1 = 1;
+
+  // Level2 represents when the task is downloaded for the first time,
+  // the normal peer is first to download back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  Level2 = 2;
+
+  // Level3 represents when the task is downloaded for the first time,
+  // the weak peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  Level3 = 3;
+
+  // Level4 represents when the task is downloaded for the first time,
+  // the strong peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  Level4 = 4;
+
+  // Level4 represents when the task is downloaded for the first time,
+  // the super peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  Level5 = 5;
+}
+
 // SecurityGroup represents security group of cluster.
 message SecurityGroup {
   // Group id.
@@ -463,13 +496,13 @@ message URLPriority {
   // URL regex.
   string regex = 1 [(validate.rules).string = {min_len: 1}];
   // URL priority value.
-  int32 value = 2 [(validate.rules).int32 = {gte: 0, lte: 20}];
+  Priority value = 2 [(validate.rules).enum.defined_only = true];
 }
 
-// Priority represents config of priority.
-message Priority {
+// ApplicationPriority represents config of application priority.
+message ApplicationPriority {
   // Priority value.
-  int32 value = 1 [(validate.rules).int32 = {gte: 0, lte: 20}];
+  Priority value = 1 [(validate.rules).enum.defined_only = true];
   // URL priority.
   repeated URLPriority urls = 2;
 }
@@ -483,7 +516,7 @@ message Application {
   // Application biography.
   string bio = 3;
   // Application priority.
-  Priority priority = 4 [(validate.rules).message.required = true];
+  ApplicationPriority priority = 4 [(validate.rules).message.required = true];
 }
 
 // ListApplicationsRequest represents request of ListApplications.
