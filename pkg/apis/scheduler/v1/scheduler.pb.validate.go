@@ -193,6 +193,8 @@ func (m *PeerTaskRequest) validate(all bool) error {
 
 	// no validation rules for TaskId
 
+	// no validation rules for Value
+
 	if len(errors) > 0 {
 		return PeerTaskRequestMultiError(errors)
 	}
