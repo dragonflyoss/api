@@ -36,35 +36,38 @@ enum SourceType {
 
 // Priority represents priority of application.
 enum Priority {
-  // LEVEL0 represents the download task is forbidden,
-  // and an error code is returned during the registration.
+  // LEVEL0 has no special meaning for scheduler.
   LEVEL0 = 0;
 
-  // LEVEL1 represents when the task is downloaded for the first time,
-  // allow peers to download from the other peers,
-  // but not back-to-source. When the task is not downloaded for
-  // the first time, it is scheduled normally.
+  // LEVEL1 represents the download task is forbidden,
+  // and an error code is returned during the registration.
   LEVEL1 = 1;
 
   // LEVEL2 represents when the task is downloaded for the first time,
-  // the normal peer is first to download back-to-source.
-  // When the task is not downloaded for the first time, it is scheduled normally.
+  // allow peers to download from the other peers,
+  // but not back-to-source. When the task is not downloaded for
+  // the first time, it is scheduled normally.
   LEVEL2 = 2;
 
   // LEVEL3 represents when the task is downloaded for the first time,
-  // the weak peer is first triggered to back-to-source.
+  // the normal peer is first to download back-to-source.
   // When the task is not downloaded for the first time, it is scheduled normally.
   LEVEL3 = 3;
 
   // LEVEL4 represents when the task is downloaded for the first time,
-  // the strong peer is first triggered to back-to-source.
+  // the weak peer is first triggered to back-to-source.
   // When the task is not downloaded for the first time, it is scheduled normally.
   LEVEL4 = 4;
 
   // LEVEL5 represents when the task is downloaded for the first time,
-  // the super peer is first triggered to back-to-source.
+  // the strong peer is first triggered to back-to-source.
   // When the task is not downloaded for the first time, it is scheduled normally.
   LEVEL5 = 5;
+
+  // LEVEL6 represents when the task is downloaded for the first time,
+  // the super peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL6 = 6;
 }
 
 // SecurityGroup represents security group of cluster.
