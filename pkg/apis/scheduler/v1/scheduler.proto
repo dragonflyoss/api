@@ -45,7 +45,7 @@ message PeerTaskRequest{
   // Task id.
   string task_id = 8;
   // Task priority.
-  manager.Priority value = 9;
+  manager.Priority priority = 9;
 }
 
 // RegisterResult represents response of RegisterPeerTask.

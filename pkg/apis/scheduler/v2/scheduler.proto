@@ -108,7 +108,7 @@ message RegisterRequest {
   // Task type.
   common.TaskType task_type = 5;
   // Peer priority.
-  manager.Priority value = 6 [(validate.rules).enum.defined_only = true];
+  manager.Priority priority = 6 [(validate.rules).enum.defined_only = true];
 }
 
 // TaskDownloadStartedRequest represents peer download started request of AnnouncePeerRequest.

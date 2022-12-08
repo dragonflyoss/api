@@ -974,9 +974,9 @@ func (m *RegisterRequest) validate(all bool) error {
 
 	// no validation rules for TaskType
 
-	if _, ok := v1.Priority_name[int32(m.GetValue())]; !ok {
+	if _, ok := v1.Priority_name[int32(m.GetPriority())]; !ok {
 		err := RegisterRequestValidationError{
-			field:  "Value",
+			field:  "Priority",
 			reason: "value must be one of the defined enum values",
 		}
 		if !all {
