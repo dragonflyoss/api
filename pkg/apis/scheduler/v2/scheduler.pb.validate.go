@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	v1 "d7y.io/api/pkg/apis/manager/v1"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = v1.Priority(0)
 )
 
 // Validate checks the field values on Peer with the rules defined in the proto
@@ -969,6 +973,17 @@ func (m *RegisterRequest) validate(all bool) error {
 	}
 
 	// no validation rules for TaskType
+
+	if _, ok := v1.Priority_name[int32(m.GetValue())]; !ok {
+		err := RegisterRequestValidationError{
+			field:  "Value",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return RegisterRequestMultiError(errors)

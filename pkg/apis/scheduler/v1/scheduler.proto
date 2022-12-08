@@ -19,6 +19,7 @@ syntax = "proto3";
 package scheduler;
 
 import "pkg/apis/common/v1/common.proto";
+import "pkg/apis/manager/v1/manager.proto";
 import "pkg/apis/errordetails/v1/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
@@ -43,6 +44,8 @@ message PeerTaskRequest{
   common.Pattern pattern = 7;
   // Task id.
   string task_id = 8;
+  // Task priority.
+  manager.Priority value = 9;
 }
 
 // RegisterResult represents response of RegisterPeerTask.

@@ -99,27 +99,27 @@ func (SourceType) EnumDescriptor() ([]byte, []int) {
 type Priority int32
 
 const (
-	// Level0 represents the download task is forbidden,
+	// LEVEL0 represents the download task is forbidden,
 	// and an error code is returned during the registration.
 	Priority_LEVEL0 Priority = 0
-	// Level1 represents when the task is downloaded for the first time,
+	// LEVEL1 represents when the task is downloaded for the first time,
 	// allow peers to download from the other peers,
 	// but not back-to-source. When the task is not downloaded for
 	// the first time, it is scheduled normally.
 	Priority_LEVEL1 Priority = 1
-	// Level2 represents when the task is downloaded for the first time,
+	// LEVEL2 represents when the task is downloaded for the first time,
 	// the normal peer is first to download back-to-source.
 	// When the task is not downloaded for the first time, it is scheduled normally.
 	Priority_LEVEL2 Priority = 2
-	// Level3 represents when the task is downloaded for the first time,
+	// LEVEL3 represents when the task is downloaded for the first time,
 	// the weak peer is first triggered to back-to-source.
 	// When the task is not downloaded for the first time, it is scheduled normally.
 	Priority_LEVEL3 Priority = 3
-	// Level4 represents when the task is downloaded for the first time,
+	// LEVEL4 represents when the task is downloaded for the first time,
 	// the strong peer is first triggered to back-to-source.
 	// When the task is not downloaded for the first time, it is scheduled normally.
 	Priority_LEVEL4 Priority = 4
-	// Level4 represents when the task is downloaded for the first time,
+	// LEVEL5 represents when the task is downloaded for the first time,
 	// the super peer is first triggered to back-to-source.
 	// When the task is not downloaded for the first time, it is scheduled normally.
 	Priority_LEVEL5 Priority = 5
