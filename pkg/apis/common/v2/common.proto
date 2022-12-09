@@ -67,6 +67,42 @@ enum TrafficType {
   LOCAL_PEER = 2;
 }
 
+// Priority represents priority of application.
+enum Priority {
+  // LEVEL0 has no special meaning for scheduler.
+  LEVEL0 = 0;
+
+  // LEVEL1 represents the download task is forbidden,
+  // and an error code is returned during the registration.
+  LEVEL1 = 1;
+
+  // LEVEL2 represents when the task is downloaded for the first time,
+  // allow peers to download from the other peers,
+  // but not back-to-source. When the task is not downloaded for
+  // the first time, it is scheduled normally.
+  LEVEL2 = 2;
+
+  // LEVEL3 represents when the task is downloaded for the first time,
+  // the normal peer is first to download back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL3 = 3;
+
+  // LEVEL4 represents when the task is downloaded for the first time,
+  // the weak peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL4 = 4;
+
+  // LEVEL5 represents when the task is downloaded for the first time,
+  // the strong peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL5 = 5;
+
+  // LEVEL6 represents when the task is downloaded for the first time,
+  // the super peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL6 = 6;
+}
+
 // Range represents download range.
 message Range {
   // Begin of range.
@@ -87,12 +123,14 @@ message Metadata {
   string tag = 4;
   // Application of task.
   string application = 5;
+  // Peer priority.
+  Priority priority = 6 [(validate.rules).enum.defined_only = true];
   // Filter url used to generate task id.
-  repeated string filters = 6;
+  repeated string filters = 7;
   // Task request headers.
-  map<string, string> header = 7;
+  map<string, string> header = 8;
   // Task piece size.
-  int32 piece_size = 8 [(validate.rules).int32.gte = 1];
+  int32 piece_size = 9 [(validate.rules).int32.gte = 1];
 }
 
 // Piece represents information of piece.

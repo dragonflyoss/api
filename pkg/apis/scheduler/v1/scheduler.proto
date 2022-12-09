@@ -19,7 +19,6 @@ syntax = "proto3";
 package scheduler;
 
 import "pkg/apis/common/v1/common.proto";
-import "pkg/apis/manager/v1/manager.proto";
 import "pkg/apis/errordetails/v1/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
@@ -40,12 +39,10 @@ message PeerTaskRequest{
   common.HostLoad host_load = 5;
   // Whether this request is caused by migration.
   bool is_migrating = 6;
-  // Pattern includes p2p, seed-peer and source.
+  // DEPRECATED: Please use the `UrlMeta.Priority` field instead.
   common.Pattern pattern = 7;
   // Task id.
   string task_id = 8;
-  // Task priority.
-  manager.Priority priority = 9;
 }
 
 // RegisterResult represents response of RegisterPeerTask.

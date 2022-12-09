@@ -18,12 +18,12 @@ syntax = "proto3";
 
 package manager;
 
-import "pkg/apis/common/v1/common.proto";
+import "pkg/apis/common/v2/common.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "d7y.io/api/pkg/apis/manager/v1";
+option go_package = "d7y.io/api/pkg/apis/manager/v2";
 
 // Request source type.
 enum SourceType {

@@ -228,6 +228,17 @@ func (m *Metadata) validate(all bool) error {
 
 	// no validation rules for Application
 
+	if _, ok := Priority_name[int32(m.GetPriority())]; !ok {
+		err := MetadataValidationError{
+			field:  "Priority",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	// no validation rules for Header
 
 	if m.GetPieceSize() < 1 {
