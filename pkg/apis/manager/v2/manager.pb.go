@@ -17,13 +17,13 @@
 // versions:
 // 	protoc-gen-go v1.28.0
 // 	protoc        v3.19.4
-// source: pkg/apis/manager/v1/manager.proto
+// source: pkg/apis/manager/v2/manager.proto
 
-package v1
+package v2
 
 import (
 	context "context"
-	v1 "d7y.io/api/pkg/apis/common/v1"
+	v2 "d7y.io/api/pkg/apis/common/v2"
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -80,11 +80,11 @@ func (x SourceType) String() string {
 }
 
 func (SourceType) Descriptor() protoreflect.EnumDescriptor {
-	return file_pkg_apis_manager_v1_manager_proto_enumTypes[0].Descriptor()
+	return file_pkg_apis_manager_v2_manager_proto_enumTypes[0].Descriptor()
 }
 
 func (SourceType) Type() protoreflect.EnumType {
-	return &file_pkg_apis_manager_v1_manager_proto_enumTypes[0]
+	return &file_pkg_apis_manager_v2_manager_proto_enumTypes[0]
 }
 
 func (x SourceType) Number() protoreflect.EnumNumber {
@@ -93,7 +93,7 @@ func (x SourceType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SourceType.Descriptor instead.
 func (SourceType) EnumDescriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{0}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{0}
 }
 
 // SecurityGroup represents security group of cluster.
@@ -117,7 +117,7 @@ type SecurityGroup struct {
 func (x *SecurityGroup) Reset() {
 	*x = SecurityGroup{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[0]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -130,7 +130,7 @@ func (x *SecurityGroup) String() string {
 func (*SecurityGroup) ProtoMessage() {}
 
 func (x *SecurityGroup) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[0]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -143,7 +143,7 @@ func (x *SecurityGroup) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SecurityGroup.ProtoReflect.Descriptor instead.
 func (*SecurityGroup) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{0}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *SecurityGroup) GetId() uint64 {
@@ -204,7 +204,7 @@ type SeedPeerCluster struct {
 func (x *SeedPeerCluster) Reset() {
 	*x = SeedPeerCluster{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[1]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -217,7 +217,7 @@ func (x *SeedPeerCluster) String() string {
 func (*SeedPeerCluster) ProtoMessage() {}
 
 func (x *SeedPeerCluster) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[1]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -230,7 +230,7 @@ func (x *SeedPeerCluster) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SeedPeerCluster.ProtoReflect.Descriptor instead.
 func (*SeedPeerCluster) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{1}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SeedPeerCluster) GetId() uint64 {
@@ -314,7 +314,7 @@ type SeedPeer struct {
 func (x *SeedPeer) Reset() {
 	*x = SeedPeer{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[2]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -327,7 +327,7 @@ func (x *SeedPeer) String() string {
 func (*SeedPeer) ProtoMessage() {}
 
 func (x *SeedPeer) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[2]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -340,7 +340,7 @@ func (x *SeedPeer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SeedPeer.ProtoReflect.Descriptor instead.
 func (*SeedPeer) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{2}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SeedPeer) GetId() uint64 {
@@ -460,7 +460,7 @@ type GetSeedPeerRequest struct {
 func (x *GetSeedPeerRequest) Reset() {
 	*x = GetSeedPeerRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[3]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -473,7 +473,7 @@ func (x *GetSeedPeerRequest) String() string {
 func (*GetSeedPeerRequest) ProtoMessage() {}
 
 func (x *GetSeedPeerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[3]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -486,7 +486,7 @@ func (x *GetSeedPeerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSeedPeerRequest.ProtoReflect.Descriptor instead.
 func (*GetSeedPeerRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{3}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetSeedPeerRequest) GetSourceType() SourceType {
@@ -550,7 +550,7 @@ type UpdateSeedPeerRequest struct {
 func (x *UpdateSeedPeerRequest) Reset() {
 	*x = UpdateSeedPeerRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[4]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -563,7 +563,7 @@ func (x *UpdateSeedPeerRequest) String() string {
 func (*UpdateSeedPeerRequest) ProtoMessage() {}
 
 func (x *UpdateSeedPeerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[4]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -576,7 +576,7 @@ func (x *UpdateSeedPeerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSeedPeerRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSeedPeerRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{4}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *UpdateSeedPeerRequest) GetSourceType() SourceType {
@@ -681,7 +681,7 @@ type SchedulerCluster struct {
 func (x *SchedulerCluster) Reset() {
 	*x = SchedulerCluster{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[5]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -694,7 +694,7 @@ func (x *SchedulerCluster) String() string {
 func (*SchedulerCluster) ProtoMessage() {}
 
 func (x *SchedulerCluster) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[5]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -707,7 +707,7 @@ func (x *SchedulerCluster) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SchedulerCluster.ProtoReflect.Descriptor instead.
 func (*SchedulerCluster) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{5}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *SchedulerCluster) GetId() uint64 {
@@ -796,7 +796,7 @@ type Scheduler struct {
 func (x *Scheduler) Reset() {
 	*x = Scheduler{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[6]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -809,7 +809,7 @@ func (x *Scheduler) String() string {
 func (*Scheduler) ProtoMessage() {}
 
 func (x *Scheduler) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[6]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -822,7 +822,7 @@ func (x *Scheduler) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Scheduler.ProtoReflect.Descriptor instead.
 func (*Scheduler) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{6}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *Scheduler) GetId() uint64 {
@@ -935,7 +935,7 @@ type GetSchedulerRequest struct {
 func (x *GetSchedulerRequest) Reset() {
 	*x = GetSchedulerRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[7]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -948,7 +948,7 @@ func (x *GetSchedulerRequest) String() string {
 func (*GetSchedulerRequest) ProtoMessage() {}
 
 func (x *GetSchedulerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[7]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -961,7 +961,7 @@ func (x *GetSchedulerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSchedulerRequest.ProtoReflect.Descriptor instead.
 func (*GetSchedulerRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{7}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetSchedulerRequest) GetSourceType() SourceType {
@@ -1023,7 +1023,7 @@ type UpdateSchedulerRequest struct {
 func (x *UpdateSchedulerRequest) Reset() {
 	*x = UpdateSchedulerRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[8]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1036,7 +1036,7 @@ func (x *UpdateSchedulerRequest) String() string {
 func (*UpdateSchedulerRequest) ProtoMessage() {}
 
 func (x *UpdateSchedulerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[8]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1049,7 +1049,7 @@ func (x *UpdateSchedulerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSchedulerRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSchedulerRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{8}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *UpdateSchedulerRequest) GetSourceType() SourceType {
@@ -1145,7 +1145,7 @@ type ListSchedulersRequest struct {
 func (x *ListSchedulersRequest) Reset() {
 	*x = ListSchedulersRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[9]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1158,7 +1158,7 @@ func (x *ListSchedulersRequest) String() string {
 func (*ListSchedulersRequest) ProtoMessage() {}
 
 func (x *ListSchedulersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[9]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1171,7 +1171,7 @@ func (x *ListSchedulersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSchedulersRequest.ProtoReflect.Descriptor instead.
 func (*ListSchedulersRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{9}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListSchedulersRequest) GetSourceType() SourceType {
@@ -1229,7 +1229,7 @@ type ListSchedulersResponse struct {
 func (x *ListSchedulersResponse) Reset() {
 	*x = ListSchedulersResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[10]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1242,7 +1242,7 @@ func (x *ListSchedulersResponse) String() string {
 func (*ListSchedulersResponse) ProtoMessage() {}
 
 func (x *ListSchedulersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[10]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1255,7 +1255,7 @@ func (x *ListSchedulersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListSchedulersResponse.ProtoReflect.Descriptor instead.
 func (*ListSchedulersResponse) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{10}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListSchedulersResponse) GetSchedulers() []*Scheduler {
@@ -1286,7 +1286,7 @@ type ObjectStorage struct {
 func (x *ObjectStorage) Reset() {
 	*x = ObjectStorage{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[11]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1299,7 +1299,7 @@ func (x *ObjectStorage) String() string {
 func (*ObjectStorage) ProtoMessage() {}
 
 func (x *ObjectStorage) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[11]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1312,7 +1312,7 @@ func (x *ObjectStorage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ObjectStorage.ProtoReflect.Descriptor instead.
 func (*ObjectStorage) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{11}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ObjectStorage) GetName() string {
@@ -1367,7 +1367,7 @@ type GetObjectStorageRequest struct {
 func (x *GetObjectStorageRequest) Reset() {
 	*x = GetObjectStorageRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[12]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1380,7 +1380,7 @@ func (x *GetObjectStorageRequest) String() string {
 func (*GetObjectStorageRequest) ProtoMessage() {}
 
 func (x *GetObjectStorageRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[12]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1393,7 +1393,7 @@ func (x *GetObjectStorageRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetObjectStorageRequest.ProtoReflect.Descriptor instead.
 func (*GetObjectStorageRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{12}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetObjectStorageRequest) GetSourceType() SourceType {
@@ -1430,7 +1430,7 @@ type Bucket struct {
 func (x *Bucket) Reset() {
 	*x = Bucket{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[13]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1443,7 +1443,7 @@ func (x *Bucket) String() string {
 func (*Bucket) ProtoMessage() {}
 
 func (x *Bucket) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[13]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1456,7 +1456,7 @@ func (x *Bucket) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Bucket.ProtoReflect.Descriptor instead.
 func (*Bucket) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{13}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Bucket) GetName() string {
@@ -1483,7 +1483,7 @@ type ListBucketsRequest struct {
 func (x *ListBucketsRequest) Reset() {
 	*x = ListBucketsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[14]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1496,7 +1496,7 @@ func (x *ListBucketsRequest) String() string {
 func (*ListBucketsRequest) ProtoMessage() {}
 
 func (x *ListBucketsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[14]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1509,7 +1509,7 @@ func (x *ListBucketsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBucketsRequest.ProtoReflect.Descriptor instead.
 func (*ListBucketsRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{14}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListBucketsRequest) GetSourceType() SourceType {
@@ -1546,7 +1546,7 @@ type ListBucketsResponse struct {
 func (x *ListBucketsResponse) Reset() {
 	*x = ListBucketsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[15]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1559,7 +1559,7 @@ func (x *ListBucketsResponse) String() string {
 func (*ListBucketsResponse) ProtoMessage() {}
 
 func (x *ListBucketsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[15]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1572,7 +1572,7 @@ func (x *ListBucketsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListBucketsResponse.ProtoReflect.Descriptor instead.
 func (*ListBucketsResponse) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{15}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ListBucketsResponse) GetBuckets() []*Bucket {
@@ -1609,7 +1609,7 @@ type Model struct {
 func (x *Model) Reset() {
 	*x = Model{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[16]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1622,7 +1622,7 @@ func (x *Model) String() string {
 func (*Model) ProtoMessage() {}
 
 func (x *Model) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[16]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1635,7 +1635,7 @@ func (x *Model) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Model.ProtoReflect.Descriptor instead.
 func (*Model) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{16}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *Model) GetModelId() string {
@@ -1707,7 +1707,7 @@ type ListModelsRequest struct {
 func (x *ListModelsRequest) Reset() {
 	*x = ListModelsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[17]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1720,7 +1720,7 @@ func (x *ListModelsRequest) String() string {
 func (*ListModelsRequest) ProtoMessage() {}
 
 func (x *ListModelsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[17]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1733,7 +1733,7 @@ func (x *ListModelsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListModelsRequest.ProtoReflect.Descriptor instead.
 func (*ListModelsRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{17}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ListModelsRequest) GetSchedulerId() uint64 {
@@ -1756,7 +1756,7 @@ type ListModelsResponse struct {
 func (x *ListModelsResponse) Reset() {
 	*x = ListModelsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[18]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1769,7 +1769,7 @@ func (x *ListModelsResponse) String() string {
 func (*ListModelsResponse) ProtoMessage() {}
 
 func (x *ListModelsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[18]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1782,7 +1782,7 @@ func (x *ListModelsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListModelsResponse.ProtoReflect.Descriptor instead.
 func (*ListModelsResponse) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{18}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ListModelsResponse) GetModels() []*Model {
@@ -1807,7 +1807,7 @@ type GetModelRequest struct {
 func (x *GetModelRequest) Reset() {
 	*x = GetModelRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[19]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1820,7 +1820,7 @@ func (x *GetModelRequest) String() string {
 func (*GetModelRequest) ProtoMessage() {}
 
 func (x *GetModelRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[19]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1833,7 +1833,7 @@ func (x *GetModelRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetModelRequest.ProtoReflect.Descriptor instead.
 func (*GetModelRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{19}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GetModelRequest) GetSchedulerId() uint64 {
@@ -1873,7 +1873,7 @@ type CreateModelRequest struct {
 func (x *CreateModelRequest) Reset() {
 	*x = CreateModelRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[20]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1886,7 +1886,7 @@ func (x *CreateModelRequest) String() string {
 func (*CreateModelRequest) ProtoMessage() {}
 
 func (x *CreateModelRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[20]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1899,7 +1899,7 @@ func (x *CreateModelRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateModelRequest.ProtoReflect.Descriptor instead.
 func (*CreateModelRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{20}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *CreateModelRequest) GetModelId() string {
@@ -1967,7 +1967,7 @@ type UpdateModelRequest struct {
 func (x *UpdateModelRequest) Reset() {
 	*x = UpdateModelRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[21]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1980,7 +1980,7 @@ func (x *UpdateModelRequest) String() string {
 func (*UpdateModelRequest) ProtoMessage() {}
 
 func (x *UpdateModelRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[21]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1993,7 +1993,7 @@ func (x *UpdateModelRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateModelRequest.ProtoReflect.Descriptor instead.
 func (*UpdateModelRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{21}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *UpdateModelRequest) GetModelId() string {
@@ -2053,7 +2053,7 @@ type DeleteModelRequest struct {
 func (x *DeleteModelRequest) Reset() {
 	*x = DeleteModelRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[22]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2066,7 +2066,7 @@ func (x *DeleteModelRequest) String() string {
 func (*DeleteModelRequest) ProtoMessage() {}
 
 func (x *DeleteModelRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[22]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2079,7 +2079,7 @@ func (x *DeleteModelRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteModelRequest.ProtoReflect.Descriptor instead.
 func (*DeleteModelRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{22}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *DeleteModelRequest) GetSchedulerId() uint64 {
@@ -2123,7 +2123,7 @@ type ModelVersion struct {
 func (x *ModelVersion) Reset() {
 	*x = ModelVersion{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[23]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2136,7 +2136,7 @@ func (x *ModelVersion) String() string {
 func (*ModelVersion) ProtoMessage() {}
 
 func (x *ModelVersion) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[23]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2149,7 +2149,7 @@ func (x *ModelVersion) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ModelVersion.ProtoReflect.Descriptor instead.
 func (*ModelVersion) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{23}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ModelVersion) GetVersionId() string {
@@ -2223,7 +2223,7 @@ type ListModelVersionsRequest struct {
 func (x *ListModelVersionsRequest) Reset() {
 	*x = ListModelVersionsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[24]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2236,7 +2236,7 @@ func (x *ListModelVersionsRequest) String() string {
 func (*ListModelVersionsRequest) ProtoMessage() {}
 
 func (x *ListModelVersionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[24]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2249,7 +2249,7 @@ func (x *ListModelVersionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListModelVersionsRequest.ProtoReflect.Descriptor instead.
 func (*ListModelVersionsRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{24}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ListModelVersionsRequest) GetSchedulerId() uint64 {
@@ -2279,7 +2279,7 @@ type ListModelVersionsResponse struct {
 func (x *ListModelVersionsResponse) Reset() {
 	*x = ListModelVersionsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[25]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2292,7 +2292,7 @@ func (x *ListModelVersionsResponse) String() string {
 func (*ListModelVersionsResponse) ProtoMessage() {}
 
 func (x *ListModelVersionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[25]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2305,7 +2305,7 @@ func (x *ListModelVersionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListModelVersionsResponse.ProtoReflect.Descriptor instead.
 func (*ListModelVersionsResponse) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{25}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ListModelVersionsResponse) GetModelVersions() []*ModelVersion {
@@ -2332,7 +2332,7 @@ type GetModelVersionRequest struct {
 func (x *GetModelVersionRequest) Reset() {
 	*x = GetModelVersionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[26]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2345,7 +2345,7 @@ func (x *GetModelVersionRequest) String() string {
 func (*GetModelVersionRequest) ProtoMessage() {}
 
 func (x *GetModelVersionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[26]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2358,7 +2358,7 @@ func (x *GetModelVersionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetModelVersionRequest.ProtoReflect.Descriptor instead.
 func (*GetModelVersionRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{26}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *GetModelVersionRequest) GetSchedulerId() uint64 {
@@ -2407,7 +2407,7 @@ type CreateModelVersionRequest struct {
 func (x *CreateModelVersionRequest) Reset() {
 	*x = CreateModelVersionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[27]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2420,7 +2420,7 @@ func (x *CreateModelVersionRequest) String() string {
 func (*CreateModelVersionRequest) ProtoMessage() {}
 
 func (x *CreateModelVersionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[27]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2433,7 +2433,7 @@ func (x *CreateModelVersionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateModelVersionRequest.ProtoReflect.Descriptor instead.
 func (*CreateModelVersionRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{27}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *CreateModelVersionRequest) GetSchedulerId() uint64 {
@@ -2512,7 +2512,7 @@ type UpdateModelVersionRequest struct {
 func (x *UpdateModelVersionRequest) Reset() {
 	*x = UpdateModelVersionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[28]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2525,7 +2525,7 @@ func (x *UpdateModelVersionRequest) String() string {
 func (*UpdateModelVersionRequest) ProtoMessage() {}
 
 func (x *UpdateModelVersionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[28]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2538,7 +2538,7 @@ func (x *UpdateModelVersionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateModelVersionRequest.ProtoReflect.Descriptor instead.
 func (*UpdateModelVersionRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{28}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *UpdateModelVersionRequest) GetVersionId() string {
@@ -2614,7 +2614,7 @@ type DeleteModelVersionRequest struct {
 func (x *DeleteModelVersionRequest) Reset() {
 	*x = DeleteModelVersionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[29]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2627,7 +2627,7 @@ func (x *DeleteModelVersionRequest) String() string {
 func (*DeleteModelVersionRequest) ProtoMessage() {}
 
 func (x *DeleteModelVersionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[29]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2640,7 +2640,7 @@ func (x *DeleteModelVersionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteModelVersionRequest.ProtoReflect.Descriptor instead.
 func (*DeleteModelVersionRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{29}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *DeleteModelVersionRequest) GetSchedulerId() uint64 {
@@ -2673,13 +2673,13 @@ type URLPriority struct {
 	// URL regex.
 	Regex string `protobuf:"bytes,1,opt,name=regex,proto3" json:"regex,omitempty"`
 	// URL priority value.
-	Value v1.Priority `protobuf:"varint,2,opt,name=value,proto3,enum=common.Priority" json:"value,omitempty"`
+	Value v2.Priority `protobuf:"varint,2,opt,name=value,proto3,enum=common.Priority" json:"value,omitempty"`
 }
 
 func (x *URLPriority) Reset() {
 	*x = URLPriority{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[30]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2692,7 +2692,7 @@ func (x *URLPriority) String() string {
 func (*URLPriority) ProtoMessage() {}
 
 func (x *URLPriority) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[30]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2705,7 +2705,7 @@ func (x *URLPriority) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use URLPriority.ProtoReflect.Descriptor instead.
 func (*URLPriority) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{30}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *URLPriority) GetRegex() string {
@@ -2715,11 +2715,11 @@ func (x *URLPriority) GetRegex() string {
 	return ""
 }
 
-func (x *URLPriority) GetValue() v1.Priority {
+func (x *URLPriority) GetValue() v2.Priority {
 	if x != nil {
 		return x.Value
 	}
-	return v1.Priority(0)
+	return v2.Priority(0)
 }
 
 // ApplicationPriority represents config of application priority.
@@ -2729,7 +2729,7 @@ type ApplicationPriority struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Priority value.
-	Value v1.Priority `protobuf:"varint,1,opt,name=value,proto3,enum=common.Priority" json:"value,omitempty"`
+	Value v2.Priority `protobuf:"varint,1,opt,name=value,proto3,enum=common.Priority" json:"value,omitempty"`
 	// URL priority.
 	Urls []*URLPriority `protobuf:"bytes,2,rep,name=urls,proto3" json:"urls,omitempty"`
 }
@@ -2737,7 +2737,7 @@ type ApplicationPriority struct {
 func (x *ApplicationPriority) Reset() {
 	*x = ApplicationPriority{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[31]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2750,7 +2750,7 @@ func (x *ApplicationPriority) String() string {
 func (*ApplicationPriority) ProtoMessage() {}
 
 func (x *ApplicationPriority) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[31]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2763,14 +2763,14 @@ func (x *ApplicationPriority) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ApplicationPriority.ProtoReflect.Descriptor instead.
 func (*ApplicationPriority) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{31}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{31}
 }
 
-func (x *ApplicationPriority) GetValue() v1.Priority {
+func (x *ApplicationPriority) GetValue() v2.Priority {
 	if x != nil {
 		return x.Value
 	}
-	return v1.Priority(0)
+	return v2.Priority(0)
 }
 
 func (x *ApplicationPriority) GetUrls() []*URLPriority {
@@ -2801,7 +2801,7 @@ type Application struct {
 func (x *Application) Reset() {
 	*x = Application{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[32]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2814,7 +2814,7 @@ func (x *Application) String() string {
 func (*Application) ProtoMessage() {}
 
 func (x *Application) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[32]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2827,7 +2827,7 @@ func (x *Application) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Application.ProtoReflect.Descriptor instead.
 func (*Application) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{32}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *Application) GetId() uint64 {
@@ -2882,7 +2882,7 @@ type ListApplicationsRequest struct {
 func (x *ListApplicationsRequest) Reset() {
 	*x = ListApplicationsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[33]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2895,7 +2895,7 @@ func (x *ListApplicationsRequest) String() string {
 func (*ListApplicationsRequest) ProtoMessage() {}
 
 func (x *ListApplicationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[33]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2908,7 +2908,7 @@ func (x *ListApplicationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApplicationsRequest.ProtoReflect.Descriptor instead.
 func (*ListApplicationsRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{33}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *ListApplicationsRequest) GetSourceType() SourceType {
@@ -2945,7 +2945,7 @@ type ListApplicationsResponse struct {
 func (x *ListApplicationsResponse) Reset() {
 	*x = ListApplicationsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[34]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2958,7 +2958,7 @@ func (x *ListApplicationsResponse) String() string {
 func (*ListApplicationsResponse) ProtoMessage() {}
 
 func (x *ListApplicationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[34]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2971,7 +2971,7 @@ func (x *ListApplicationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListApplicationsResponse.ProtoReflect.Descriptor instead.
 func (*ListApplicationsResponse) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{34}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ListApplicationsResponse) GetApplications() []*Application {
@@ -3000,7 +3000,7 @@ type KeepAliveRequest struct {
 func (x *KeepAliveRequest) Reset() {
 	*x = KeepAliveRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[35]
+		mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3013,7 +3013,7 @@ func (x *KeepAliveRequest) String() string {
 func (*KeepAliveRequest) ProtoMessage() {}
 
 func (x *KeepAliveRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pkg_apis_manager_v1_manager_proto_msgTypes[35]
+	mi := &file_pkg_apis_manager_v2_manager_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3026,7 +3026,7 @@ func (x *KeepAliveRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use KeepAliveRequest.ProtoReflect.Descriptor instead.
 func (*KeepAliveRequest) Descriptor() ([]byte, []int) {
-	return file_pkg_apis_manager_v1_manager_proto_rawDescGZIP(), []int{35}
+	return file_pkg_apis_manager_v2_manager_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *KeepAliveRequest) GetSourceType() SourceType {
@@ -3057,13 +3057,13 @@ func (x *KeepAliveRequest) GetIp() string {
 	return ""
 }
 
-var File_pkg_apis_manager_v1_manager_proto protoreflect.FileDescriptor
+var File_pkg_apis_manager_v2_manager_proto protoreflect.FileDescriptor
 
-var file_pkg_apis_manager_v1_manager_proto_rawDesc = []byte{
+var file_pkg_apis_manager_v2_manager_proto_rawDesc = []byte{
 	0x0a, 0x21, 0x70, 0x6b, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x73, 0x2f, 0x6d, 0x61, 0x6e, 0x61, 0x67,
-	0x65, 0x72, 0x2f, 0x76, 0x31, 0x2f, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x2e, 0x70, 0x72,
+	0x65, 0x72, 0x2f, 0x76, 0x32, 0x2f, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x2e, 0x70, 0x72,
 	0x6f, 0x74, 0x6f, 0x12, 0x07, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x1a, 0x1f, 0x70, 0x6b,
-	0x67, 0x2f, 0x61, 0x70, 0x69, 0x73, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2f, 0x76, 0x31,
+	0x67, 0x2f, 0x61, 0x70, 0x69, 0x73, 0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2f, 0x76, 0x32,
 	0x2f, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1b, 0x67,
 	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65,
 	0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x17, 0x76, 0x61, 0x6c, 0x69,
@@ -3626,24 +3626,24 @@ var file_pkg_apis_manager_v1_manager_proto_rawDesc = []byte{
 	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x28, 0x01, 0x42,
 	0x20, 0x5a, 0x1e, 0x64, 0x37, 0x79, 0x2e, 0x69, 0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x70, 0x6b,
 	0x67, 0x2f, 0x61, 0x70, 0x69, 0x73, 0x2f, 0x6d, 0x61, 0x6e, 0x61, 0x67, 0x65, 0x72, 0x2f, 0x76,
-	0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x32, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_pkg_apis_manager_v1_manager_proto_rawDescOnce sync.Once
-	file_pkg_apis_manager_v1_manager_proto_rawDescData = file_pkg_apis_manager_v1_manager_proto_rawDesc
+	file_pkg_apis_manager_v2_manager_proto_rawDescOnce sync.Once
+	file_pkg_apis_manager_v2_manager_proto_rawDescData = file_pkg_apis_manager_v2_manager_proto_rawDesc
 )
 
-func file_pkg_apis_manager_v1_manager_proto_rawDescGZIP() []byte {
-	file_pkg_apis_manager_v1_manager_proto_rawDescOnce.Do(func() {
-		file_pkg_apis_manager_v1_manager_proto_rawDescData = protoimpl.X.CompressGZIP(file_pkg_apis_manager_v1_manager_proto_rawDescData)
+func file_pkg_apis_manager_v2_manager_proto_rawDescGZIP() []byte {
+	file_pkg_apis_manager_v2_manager_proto_rawDescOnce.Do(func() {
+		file_pkg_apis_manager_v2_manager_proto_rawDescData = protoimpl.X.CompressGZIP(file_pkg_apis_manager_v2_manager_proto_rawDescData)
 	})
-	return file_pkg_apis_manager_v1_manager_proto_rawDescData
+	return file_pkg_apis_manager_v2_manager_proto_rawDescData
 }
 
-var file_pkg_apis_manager_v1_manager_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_pkg_apis_manager_v1_manager_proto_msgTypes = make([]protoimpl.MessageInfo, 37)
-var file_pkg_apis_manager_v1_manager_proto_goTypes = []interface{}{
+var file_pkg_apis_manager_v2_manager_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_pkg_apis_manager_v2_manager_proto_msgTypes = make([]protoimpl.MessageInfo, 37)
+var file_pkg_apis_manager_v2_manager_proto_goTypes = []interface{}{
 	(SourceType)(0),                   // 0: manager.SourceType
 	(*SecurityGroup)(nil),             // 1: manager.SecurityGroup
 	(*SeedPeerCluster)(nil),           // 2: manager.SeedPeerCluster
@@ -3683,10 +3683,10 @@ var file_pkg_apis_manager_v1_manager_proto_goTypes = []interface{}{
 	(*KeepAliveRequest)(nil),          // 36: manager.KeepAliveRequest
 	nil,                               // 37: manager.ListSchedulersRequest.HostInfoEntry
 	(*timestamppb.Timestamp)(nil),     // 38: google.protobuf.Timestamp
-	(v1.Priority)(0),                  // 39: common.Priority
+	(v2.Priority)(0),                  // 39: common.Priority
 	(*emptypb.Empty)(nil),             // 40: google.protobuf.Empty
 }
-var file_pkg_apis_manager_v1_manager_proto_depIdxs = []int32{
+var file_pkg_apis_manager_v2_manager_proto_depIdxs = []int32{
 	1,  // 0: manager.SeedPeerCluster.security_group:type_name -> manager.SecurityGroup
 	2,  // 1: manager.SeedPeer.seed_peer_cluster:type_name -> manager.SeedPeerCluster
 	7,  // 2: manager.SeedPeer.schedulers:type_name -> manager.Scheduler
@@ -3761,13 +3761,13 @@ var file_pkg_apis_manager_v1_manager_proto_depIdxs = []int32{
 	0,  // [0:29] is the sub-list for field type_name
 }
 
-func init() { file_pkg_apis_manager_v1_manager_proto_init() }
-func file_pkg_apis_manager_v1_manager_proto_init() {
-	if File_pkg_apis_manager_v1_manager_proto != nil {
+func init() { file_pkg_apis_manager_v2_manager_proto_init() }
+func file_pkg_apis_manager_v2_manager_proto_init() {
+	if File_pkg_apis_manager_v2_manager_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SecurityGroup); i {
 			case 0:
 				return &v.state
@@ -3779,7 +3779,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SeedPeerCluster); i {
 			case 0:
 				return &v.state
@@ -3791,7 +3791,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SeedPeer); i {
 			case 0:
 				return &v.state
@@ -3803,7 +3803,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetSeedPeerRequest); i {
 			case 0:
 				return &v.state
@@ -3815,7 +3815,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateSeedPeerRequest); i {
 			case 0:
 				return &v.state
@@ -3827,7 +3827,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SchedulerCluster); i {
 			case 0:
 				return &v.state
@@ -3839,7 +3839,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Scheduler); i {
 			case 0:
 				return &v.state
@@ -3851,7 +3851,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetSchedulerRequest); i {
 			case 0:
 				return &v.state
@@ -3863,7 +3863,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateSchedulerRequest); i {
 			case 0:
 				return &v.state
@@ -3875,7 +3875,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListSchedulersRequest); i {
 			case 0:
 				return &v.state
@@ -3887,7 +3887,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListSchedulersResponse); i {
 			case 0:
 				return &v.state
@@ -3899,7 +3899,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ObjectStorage); i {
 			case 0:
 				return &v.state
@@ -3911,7 +3911,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetObjectStorageRequest); i {
 			case 0:
 				return &v.state
@@ -3923,7 +3923,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Bucket); i {
 			case 0:
 				return &v.state
@@ -3935,7 +3935,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListBucketsRequest); i {
 			case 0:
 				return &v.state
@@ -3947,7 +3947,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListBucketsResponse); i {
 			case 0:
 				return &v.state
@@ -3959,7 +3959,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Model); i {
 			case 0:
 				return &v.state
@@ -3971,7 +3971,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListModelsRequest); i {
 			case 0:
 				return &v.state
@@ -3983,7 +3983,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListModelsResponse); i {
 			case 0:
 				return &v.state
@@ -3995,7 +3995,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetModelRequest); i {
 			case 0:
 				return &v.state
@@ -4007,7 +4007,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateModelRequest); i {
 			case 0:
 				return &v.state
@@ -4019,7 +4019,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateModelRequest); i {
 			case 0:
 				return &v.state
@@ -4031,7 +4031,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteModelRequest); i {
 			case 0:
 				return &v.state
@@ -4043,7 +4043,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ModelVersion); i {
 			case 0:
 				return &v.state
@@ -4055,7 +4055,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListModelVersionsRequest); i {
 			case 0:
 				return &v.state
@@ -4067,7 +4067,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListModelVersionsResponse); i {
 			case 0:
 				return &v.state
@@ -4079,7 +4079,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetModelVersionRequest); i {
 			case 0:
 				return &v.state
@@ -4091,7 +4091,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateModelVersionRequest); i {
 			case 0:
 				return &v.state
@@ -4103,7 +4103,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateModelVersionRequest); i {
 			case 0:
 				return &v.state
@@ -4115,7 +4115,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteModelVersionRequest); i {
 			case 0:
 				return &v.state
@@ -4127,7 +4127,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*URLPriority); i {
 			case 0:
 				return &v.state
@@ -4139,7 +4139,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ApplicationPriority); i {
 			case 0:
 				return &v.state
@@ -4151,7 +4151,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Application); i {
 			case 0:
 				return &v.state
@@ -4163,7 +4163,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListApplicationsRequest); i {
 			case 0:
 				return &v.state
@@ -4175,7 +4175,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListApplicationsResponse); i {
 			case 0:
 				return &v.state
@@ -4187,7 +4187,7 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 				return nil
 			}
 		}
-		file_pkg_apis_manager_v1_manager_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+		file_pkg_apis_manager_v2_manager_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*KeepAliveRequest); i {
 			case 0:
 				return &v.state
@@ -4204,21 +4204,21 @@ func file_pkg_apis_manager_v1_manager_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_pkg_apis_manager_v1_manager_proto_rawDesc,
+			RawDescriptor: file_pkg_apis_manager_v2_manager_proto_rawDesc,
 			NumEnums:      1,
 			NumMessages:   37,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_pkg_apis_manager_v1_manager_proto_goTypes,
-		DependencyIndexes: file_pkg_apis_manager_v1_manager_proto_depIdxs,
-		EnumInfos:         file_pkg_apis_manager_v1_manager_proto_enumTypes,
-		MessageInfos:      file_pkg_apis_manager_v1_manager_proto_msgTypes,
+		GoTypes:           file_pkg_apis_manager_v2_manager_proto_goTypes,
+		DependencyIndexes: file_pkg_apis_manager_v2_manager_proto_depIdxs,
+		EnumInfos:         file_pkg_apis_manager_v2_manager_proto_enumTypes,
+		MessageInfos:      file_pkg_apis_manager_v2_manager_proto_msgTypes,
 	}.Build()
-	File_pkg_apis_manager_v1_manager_proto = out.File
-	file_pkg_apis_manager_v1_manager_proto_rawDesc = nil
-	file_pkg_apis_manager_v1_manager_proto_goTypes = nil
-	file_pkg_apis_manager_v1_manager_proto_depIdxs = nil
+	File_pkg_apis_manager_v2_manager_proto = out.File
+	file_pkg_apis_manager_v2_manager_proto_rawDesc = nil
+	file_pkg_apis_manager_v2_manager_proto_goTypes = nil
+	file_pkg_apis_manager_v2_manager_proto_depIdxs = nil
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -5019,5 +5019,5 @@ var _Manager_serviceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
-	Metadata: "pkg/apis/manager/v1/manager.proto",
+	Metadata: "pkg/apis/manager/v2/manager.proto",
 }

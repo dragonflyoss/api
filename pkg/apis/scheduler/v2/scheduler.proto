@@ -19,7 +19,6 @@ syntax = "proto3";
 package scheduler;
 
 import "pkg/apis/common/v2/common.proto";
-import "pkg/apis/manager/v1/manager.proto";
 import "pkg/apis/errordetails/v2/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
@@ -107,8 +106,6 @@ message RegisterRequest {
   Host host = 4 [(validate.rules).message.required = true];
   // Task type.
   common.TaskType task_type = 5;
-  // Peer priority.
-  manager.Priority priority = 6 [(validate.rules).enum.defined_only = true];
 }
 
 // TaskDownloadStartedRequest represents peer download started request of AnnouncePeerRequest.

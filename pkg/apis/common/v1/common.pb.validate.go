@@ -197,6 +197,8 @@ func (m *UrlMeta) validate(all bool) error {
 
 	// no validation rules for Application
 
+	// no validation rules for Priority
+
 	if len(errors) > 0 {
 		return UrlMetaMultiError(errors)
 	}
