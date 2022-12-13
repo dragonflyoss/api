@@ -41,10 +41,6 @@ message DownRequest{
   bool disable_back_source = 6;
   // URL meta info.
   common.UrlMeta url_meta = 7;
-  // Pattern has p2p/seed-peer/source, default is p2p.
-  string pattern = 8 [(validate.rules).string = {in:["p2p", "seed-peer", "source"], ignore_empty:true}];
-  // Call system.
-  string callsystem = 9;
   // User id.
   int64 uid = 10;
   // Group id.
@@ -99,8 +95,6 @@ message ExportTaskRequest{
   double limit = 4 [(validate.rules).double.gte = 0];
   // URL meta info.
   common.UrlMeta url_meta = 5;
-  // Call system.
-  string callsystem = 6;
   // User id.
   int64 uid = 7;
   // Group id.
