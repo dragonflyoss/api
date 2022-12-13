@@ -273,61 +273,6 @@ func (SizeScope) EnumDescriptor() ([]byte, []int) {
 	return file_pkg_apis_common_v1_common_proto_rawDescGZIP(), []int{2}
 }
 
-// Pattern represents pattern of task.
-type Pattern int32
-
-const (
-	// Default pattern, scheduler will use all p2p node
-	// include dfdaemon and seed peers.
-	Pattern_P2P Pattern = 0
-	// Seed peer pattern, scheduler will use only seed peers.
-	Pattern_SEED_PEER Pattern = 1
-	// Source pattern, scheduler will say back source
-	// when there is no available peer in p2p.
-	Pattern_SOURCE Pattern = 2
-)
-
-// Enum value maps for Pattern.
-var (
-	Pattern_name = map[int32]string{
-		0: "P2P",
-		1: "SEED_PEER",
-		2: "SOURCE",
-	}
-	Pattern_value = map[string]int32{
-		"P2P":       0,
-		"SEED_PEER": 1,
-		"SOURCE":    2,
-	}
-)
-
-func (x Pattern) Enum() *Pattern {
-	p := new(Pattern)
-	*p = x
-	return p
-}
-
-func (x Pattern) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Pattern) Descriptor() protoreflect.EnumDescriptor {
-	return file_pkg_apis_common_v1_common_proto_enumTypes[3].Descriptor()
-}
-
-func (Pattern) Type() protoreflect.EnumType {
-	return &file_pkg_apis_common_v1_common_proto_enumTypes[3]
-}
-
-func (x Pattern) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Pattern.Descriptor instead.
-func (Pattern) EnumDescriptor() ([]byte, []int) {
-	return file_pkg_apis_common_v1_common_proto_rawDescGZIP(), []int{3}
-}
-
 // TaskType represents type of task.
 type TaskType int32
 
@@ -369,11 +314,11 @@ func (x TaskType) String() string {
 }
 
 func (TaskType) Descriptor() protoreflect.EnumDescriptor {
-	return file_pkg_apis_common_v1_common_proto_enumTypes[4].Descriptor()
+	return file_pkg_apis_common_v1_common_proto_enumTypes[3].Descriptor()
 }
 
 func (TaskType) Type() protoreflect.EnumType {
-	return &file_pkg_apis_common_v1_common_proto_enumTypes[4]
+	return &file_pkg_apis_common_v1_common_proto_enumTypes[3]
 }
 
 func (x TaskType) Number() protoreflect.EnumNumber {
@@ -382,7 +327,7 @@ func (x TaskType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use TaskType.Descriptor instead.
 func (TaskType) EnumDescriptor() ([]byte, []int) {
-	return file_pkg_apis_common_v1_common_proto_rawDescGZIP(), []int{4}
+	return file_pkg_apis_common_v1_common_proto_rawDescGZIP(), []int{3}
 }
 
 // Priority represents priority of application.
@@ -450,11 +395,11 @@ func (x Priority) String() string {
 }
 
 func (Priority) Descriptor() protoreflect.EnumDescriptor {
-	return file_pkg_apis_common_v1_common_proto_enumTypes[5].Descriptor()
+	return file_pkg_apis_common_v1_common_proto_enumTypes[4].Descriptor()
 }
 
 func (Priority) Type() protoreflect.EnumType {
-	return &file_pkg_apis_common_v1_common_proto_enumTypes[5]
+	return &file_pkg_apis_common_v1_common_proto_enumTypes[4]
 }
 
 func (x Priority) Number() protoreflect.EnumNumber {
@@ -463,7 +408,7 @@ func (x Priority) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Priority.Descriptor instead.
 func (Priority) EnumDescriptor() ([]byte, []int) {
-	return file_pkg_apis_common_v1_common_proto_rawDescGZIP(), []int{5}
+	return file_pkg_apis_common_v1_common_proto_rawDescGZIP(), []int{4}
 }
 
 type GrpcDfError struct {
@@ -1205,21 +1150,18 @@ var file_pkg_apis_common_v1_common_proto_rawDesc = []byte{
 	0x53, 0x69, 0x7a, 0x65, 0x53, 0x63, 0x6f, 0x70, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x4e, 0x4f, 0x52,
 	0x4d, 0x41, 0x4c, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x53, 0x4d, 0x41, 0x4c, 0x4c, 0x10, 0x01,
 	0x12, 0x08, 0x0a, 0x04, 0x54, 0x49, 0x4e, 0x59, 0x10, 0x02, 0x12, 0x09, 0x0a, 0x05, 0x45, 0x4d,
-	0x50, 0x54, 0x59, 0x10, 0x03, 0x2a, 0x2d, 0x0a, 0x07, 0x50, 0x61, 0x74, 0x74, 0x65, 0x72, 0x6e,
-	0x12, 0x07, 0x0a, 0x03, 0x50, 0x32, 0x50, 0x10, 0x00, 0x12, 0x0d, 0x0a, 0x09, 0x53, 0x45, 0x45,
-	0x44, 0x5f, 0x50, 0x45, 0x45, 0x52, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x53, 0x4f, 0x55, 0x52,
-	0x43, 0x45, 0x10, 0x02, 0x2a, 0x30, 0x0a, 0x08, 0x54, 0x61, 0x73, 0x6b, 0x54, 0x79, 0x70, 0x65,
-	0x12, 0x0a, 0x0a, 0x06, 0x4e, 0x6f, 0x72, 0x6d, 0x61, 0x6c, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07,
-	0x44, 0x66, 0x43, 0x61, 0x63, 0x68, 0x65, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x66, 0x53,
-	0x74, 0x6f, 0x72, 0x65, 0x10, 0x02, 0x2a, 0x5e, 0x0a, 0x08, 0x50, 0x72, 0x69, 0x6f, 0x72, 0x69,
-	0x74, 0x79, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x30, 0x10, 0x00, 0x12, 0x0a,
-	0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x31, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45,
-	0x56, 0x45, 0x4c, 0x32, 0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x33,
-	0x10, 0x03, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x34, 0x10, 0x04, 0x12, 0x0a,
-	0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x35, 0x10, 0x05, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45,
-	0x56, 0x45, 0x4c, 0x36, 0x10, 0x06, 0x42, 0x1f, 0x5a, 0x1d, 0x64, 0x37, 0x79, 0x2e, 0x69, 0x6f,
-	0x2f, 0x61, 0x70, 0x69, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x73, 0x2f, 0x63, 0x6f,
-	0x6d, 0x6d, 0x6f, 0x6e, 0x2f, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x50, 0x54, 0x59, 0x10, 0x03, 0x2a, 0x30, 0x0a, 0x08, 0x54, 0x61, 0x73, 0x6b, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x0a, 0x0a, 0x06, 0x4e, 0x6f, 0x72, 0x6d, 0x61, 0x6c, 0x10, 0x00, 0x12, 0x0b, 0x0a,
+	0x07, 0x44, 0x66, 0x43, 0x61, 0x63, 0x68, 0x65, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x66,
+	0x53, 0x74, 0x6f, 0x72, 0x65, 0x10, 0x02, 0x2a, 0x5e, 0x0a, 0x08, 0x50, 0x72, 0x69, 0x6f, 0x72,
+	0x69, 0x74, 0x79, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x30, 0x10, 0x00, 0x12,
+	0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x31, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x4c,
+	0x45, 0x56, 0x45, 0x4c, 0x32, 0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c,
+	0x33, 0x10, 0x03, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x34, 0x10, 0x04, 0x12,
+	0x0a, 0x0a, 0x06, 0x4c, 0x45, 0x56, 0x45, 0x4c, 0x35, 0x10, 0x05, 0x12, 0x0a, 0x0a, 0x06, 0x4c,
+	0x45, 0x56, 0x45, 0x4c, 0x36, 0x10, 0x06, 0x42, 0x1f, 0x5a, 0x1d, 0x64, 0x37, 0x79, 0x2e, 0x69,
+	0x6f, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x61, 0x70, 0x69, 0x73, 0x2f, 0x63,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2f, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1234,33 +1176,32 @@ func file_pkg_apis_common_v1_common_proto_rawDescGZIP() []byte {
 	return file_pkg_apis_common_v1_common_proto_rawDescData
 }
 
-var file_pkg_apis_common_v1_common_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
+var file_pkg_apis_common_v1_common_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_pkg_apis_common_v1_common_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_pkg_apis_common_v1_common_proto_goTypes = []interface{}{
 	(Code)(0),                // 0: common.Code
 	(PieceStyle)(0),          // 1: common.PieceStyle
 	(SizeScope)(0),           // 2: common.SizeScope
-	(Pattern)(0),             // 3: common.Pattern
-	(TaskType)(0),            // 4: common.TaskType
-	(Priority)(0),            // 5: common.Priority
-	(*GrpcDfError)(nil),      // 6: common.GrpcDfError
-	(*UrlMeta)(nil),          // 7: common.UrlMeta
-	(*HostLoad)(nil),         // 8: common.HostLoad
-	(*PieceTaskRequest)(nil), // 9: common.PieceTaskRequest
-	(*PieceInfo)(nil),        // 10: common.PieceInfo
-	(*ExtendAttribute)(nil),  // 11: common.ExtendAttribute
-	(*PiecePacket)(nil),      // 12: common.PiecePacket
-	nil,                      // 13: common.UrlMeta.HeaderEntry
-	nil,                      // 14: common.ExtendAttribute.HeaderEntry
+	(TaskType)(0),            // 3: common.TaskType
+	(Priority)(0),            // 4: common.Priority
+	(*GrpcDfError)(nil),      // 5: common.GrpcDfError
+	(*UrlMeta)(nil),          // 6: common.UrlMeta
+	(*HostLoad)(nil),         // 7: common.HostLoad
+	(*PieceTaskRequest)(nil), // 8: common.PieceTaskRequest
+	(*PieceInfo)(nil),        // 9: common.PieceInfo
+	(*ExtendAttribute)(nil),  // 10: common.ExtendAttribute
+	(*PiecePacket)(nil),      // 11: common.PiecePacket
+	nil,                      // 12: common.UrlMeta.HeaderEntry
+	nil,                      // 13: common.ExtendAttribute.HeaderEntry
 }
 var file_pkg_apis_common_v1_common_proto_depIdxs = []int32{
 	0,  // 0: common.GrpcDfError.code:type_name -> common.Code
-	13, // 1: common.UrlMeta.header:type_name -> common.UrlMeta.HeaderEntry
-	5,  // 2: common.UrlMeta.priority:type_name -> common.Priority
+	12, // 1: common.UrlMeta.header:type_name -> common.UrlMeta.HeaderEntry
+	4,  // 2: common.UrlMeta.priority:type_name -> common.Priority
 	1,  // 3: common.PieceInfo.piece_style:type_name -> common.PieceStyle
-	14, // 4: common.ExtendAttribute.header:type_name -> common.ExtendAttribute.HeaderEntry
-	10, // 5: common.PiecePacket.piece_infos:type_name -> common.PieceInfo
-	11, // 6: common.PiecePacket.extend_attribute:type_name -> common.ExtendAttribute
+	13, // 4: common.ExtendAttribute.header:type_name -> common.ExtendAttribute.HeaderEntry
+	9,  // 5: common.PiecePacket.piece_infos:type_name -> common.PieceInfo
+	10, // 6: common.PiecePacket.extend_attribute:type_name -> common.ExtendAttribute
 	7,  // [7:7] is the sub-list for method output_type
 	7,  // [7:7] is the sub-list for method input_type
 	7,  // [7:7] is the sub-list for extension type_name
@@ -1364,7 +1305,7 @@ func file_pkg_apis_common_v1_common_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pkg_apis_common_v1_common_proto_rawDesc,
-			NumEnums:      6,
+			NumEnums:      5,
 			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,

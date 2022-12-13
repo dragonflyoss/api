@@ -144,23 +144,6 @@ func (m *DownRequest) validate(all bool) error {
 		}
 	}
 
-	if m.GetPattern() != "" {
-
-		if _, ok := _DownRequest_Pattern_InLookup[m.GetPattern()]; !ok {
-			err := DownRequestValidationError{
-				field:  "Pattern",
-				reason: "value must be in list [p2p seed-peer source]",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	// no validation rules for Callsystem
-
 	// no validation rules for Uid
 
 	// no validation rules for Gid
@@ -245,12 +228,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DownRequestValidationError{}
-
-var _DownRequest_Pattern_InLookup = map[string]struct{}{
-	"p2p":       {},
-	"seed-peer": {},
-	"source":    {},
-}
 
 // Validate checks the field values on DownResult with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
@@ -779,8 +756,6 @@ func (m *ExportTaskRequest) validate(all bool) error {
 			}
 		}
 	}
-
-	// no validation rules for Callsystem
 
 	// no validation rules for Uid
 

@@ -39,8 +39,6 @@ message PeerTaskRequest{
   common.HostLoad host_load = 5;
   // Whether this request is caused by migration.
   bool is_migrating = 6;
-  // DEPRECATED: Please use the `UrlMeta.Priority` field instead.
-  common.Pattern pattern = 7;
   // Task id.
   string task_id = 8;
 }
