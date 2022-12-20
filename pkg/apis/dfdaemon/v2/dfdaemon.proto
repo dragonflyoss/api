@@ -1,0 +1,107 @@
+/*
+ *     Copyright 2022 The Dragonfly Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package dfdaemon;
+
+import "pkg/apis/common/v2/common.proto";
+import "pkg/apis/errordetails/v2/errordetails.proto";
+import "google/protobuf/empty.proto";
+import "validate/validate.proto";
+
+option go_package = "d7y.io/api/pkg/apis/dfdaemon/v2";
+
+// InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
+message InterestedAllPiecesRequest {
+}
+
+// InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
+message InterestedPiecesRequest {
+  // Interested piece numbers.
+  repeated uint32 piece_numbers = 1 [(validate.rules).repeated = {min_items: 1}];
+}
+
+// StatMetadata represents stat metadata request of SyncPiecesRequest.
+message StatMetadataRequest {
+}
+
+// SyncPiecesRequest represents request of AnnouncePeer.
+message SyncPiecesRequest{
+  oneof request {
+    option (validate.required) = true;
+
+    InterestedAllPiecesRequest interested_all_pieces_request = 1;
+    InterestedPiecesRequest interested_pieces_request = 2;
+    StatMetadataRequest stat_metadata_request = 3;
+  }
+}
+
+// InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
+message InterestedPiecesResponse {
+  // Interested pieces of task.
+  repeated common.Piece pieces = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+}
+
+// StatMetadata represents stat metadata request of SyncPiecesResponse.
+message StatMetadataResponse {
+  // Task metadata.
+  common.Metadata metadata = 1 [(validate.rules).message.required = true];
+}
+
+// SyncPiecesResponse represents response of SyncPieces.
+message SyncPiecesResponse {
+  oneof response {
+    option (validate.required) = true;
+
+    InterestedPiecesResponse interested_pieces_response = 1;
+    StatMetadataResponse stat_metadata_response = 2;
+  }
+
+  oneof errordetails {
+    errordetails.SyncPiecesFailed sync_pieces_failed = 3;
+    errordetails.StatMetadataFailed stat_metadata_failed = 4;
+  }
+}
+
+// TriggerTaskRequest represents request of TriggerTask.
+message TriggerTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Task metadata.
+  common.Metadata metadata = 2 [(validate.rules).message.required = true];
+}
+
+// StatTaskRequest represents request of StatTask.
+message StatTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// StatTaskResponse represents response of StatTask.
+message StatTaskResponse {
+  common.Task task = 1[(validate.rules).message.required = true];
+}
+
+// Dfdaemon RPC Service.
+service Dfdaemon{
+  // SyncPieces syncs pieces from the other peers.
+  rpc SyncPieces(stream SyncPiecesRequest)returns(stream SyncPiecesResponse);
+  // TriggerTask triggers task back-to-source download.
+  rpc TriggerTask(TriggerTaskRequest) returns(google.protobuf.Empty);
+  // StatTask stats task information.
+  rpc StatTask(StatTaskRequest) returns(common.Task);
+}
