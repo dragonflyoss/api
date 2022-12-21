@@ -374,9 +374,20 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 
 	var errors []error
 
-	switch m.Request.(type) {
-
+	oneofRequestPresent := false
+	switch v := m.Request.(type) {
 	case *SyncPiecesRequest_InterestedAllPiecesRequest:
+		if v == nil {
+			err := SyncPiecesRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetInterestedAllPiecesRequest()).(type) {
@@ -408,6 +419,17 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 		}
 
 	case *SyncPiecesRequest_InterestedPiecesRequest:
+		if v == nil {
+			err := SyncPiecesRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetInterestedPiecesRequest()).(type) {
@@ -439,6 +461,17 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 		}
 
 	case *SyncPiecesRequest_StatMetadataRequest:
+		if v == nil {
+			err := SyncPiecesRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetStatMetadataRequest()).(type) {
@@ -470,6 +503,9 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 		}
 
 	default:
+		_ = v // ensures v is used
+	}
+	if !oneofRequestPresent {
 		err := SyncPiecesRequestValidationError{
 			field:  "Request",
 			reason: "value is required",
@@ -478,7 +514,6 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
-
 	}
 
 	if len(errors) > 0 {
@@ -876,9 +911,20 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 
 	var errors []error
 
-	switch m.Response.(type) {
-
+	oneofResponsePresent := false
+	switch v := m.Response.(type) {
 	case *SyncPiecesResponse_InterestedPiecesResponse:
+		if v == nil {
+			err := SyncPiecesResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
 
 		if all {
 			switch v := interface{}(m.GetInterestedPiecesResponse()).(type) {
@@ -910,6 +956,17 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 		}
 
 	case *SyncPiecesResponse_StatMetadataResponse:
+		if v == nil {
+			err := SyncPiecesResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
 
 		if all {
 			switch v := interface{}(m.GetStatMetadataResponse()).(type) {
@@ -941,6 +998,9 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 		}
 
 	default:
+		_ = v // ensures v is used
+	}
+	if !oneofResponsePresent {
 		err := SyncPiecesResponseValidationError{
 			field:  "Response",
 			reason: "value is required",
@@ -949,12 +1009,19 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
-
 	}
-
-	switch m.Errordetails.(type) {
-
+	switch v := m.Errordetails.(type) {
 	case *SyncPiecesResponse_SyncPiecesFailed:
+		if v == nil {
+			err := SyncPiecesResponseValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetSyncPiecesFailed()).(type) {
@@ -986,6 +1053,16 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 		}
 
 	case *SyncPiecesResponse_StatMetadataFailed:
+		if v == nil {
+			err := SyncPiecesResponseValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetStatMetadataFailed()).(type) {
@@ -1016,6 +1093,8 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 			}
 		}
 
+	default:
+		_ = v // ensures v is used
 	}
 
 	if len(errors) > 0 {
@@ -1501,3 +1580,466 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = StatTaskResponseValidationError{}
+
+// Validate checks the field values on ImportTaskRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ImportTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ImportTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ImportTaskRequestMultiError, or nil if none found.
+func (m *ImportTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ImportTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetMetadata() == nil {
+		err := ImportTaskRequestValidationError{
+			field:  "Metadata",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetMetadata()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ImportTaskRequestValidationError{
+					field:  "Metadata",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ImportTaskRequestValidationError{
+					field:  "Metadata",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ImportTaskRequestValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetPath()) < 1 {
+		err := ImportTaskRequestValidationError{
+			field:  "Path",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return ImportTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ImportTaskRequestMultiError is an error wrapping multiple validation errors
+// returned by ImportTaskRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ImportTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ImportTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ImportTaskRequestMultiError) AllErrors() []error { return m }
+
+// ImportTaskRequestValidationError is the validation error returned by
+// ImportTaskRequest.Validate if the designated constraints aren't met.
+type ImportTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ImportTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ImportTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ImportTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ImportTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ImportTaskRequestValidationError) ErrorName() string {
+	return "ImportTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ImportTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sImportTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ImportTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ImportTaskRequestValidationError{}
+
+// Validate checks the field values on ExportTaskRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ExportTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ExportTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ExportTaskRequestMultiError, or nil if none found.
+func (m *ExportTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ExportTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetMetadata() == nil {
+		err := ExportTaskRequestValidationError{
+			field:  "Metadata",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetMetadata()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ExportTaskRequestValidationError{
+					field:  "Metadata",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ExportTaskRequestValidationError{
+					field:  "Metadata",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ExportTaskRequestValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetPath()) < 1 {
+		err := ExportTaskRequestValidationError{
+			field:  "Path",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetTimeout() == nil {
+		err := ExportTaskRequestValidationError{
+			field:  "Timeout",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetDownloadRateLimit() < 0 {
+		err := ExportTaskRequestValidationError{
+			field:  "DownloadRateLimit",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUid() < 0 {
+		err := ExportTaskRequestValidationError{
+			field:  "Uid",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetGid() < 0 {
+		err := ExportTaskRequestValidationError{
+			field:  "Gid",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return ExportTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ExportTaskRequestMultiError is an error wrapping multiple validation errors
+// returned by ExportTaskRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ExportTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ExportTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ExportTaskRequestMultiError) AllErrors() []error { return m }
+
+// ExportTaskRequestValidationError is the validation error returned by
+// ExportTaskRequest.Validate if the designated constraints aren't met.
+type ExportTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ExportTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ExportTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ExportTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ExportTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ExportTaskRequestValidationError) ErrorName() string {
+	return "ExportTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ExportTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sExportTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ExportTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ExportTaskRequestValidationError{}
+
+// Validate checks the field values on DeleteTaskRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *DeleteTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteTaskRequestMultiError, or nil if none found.
+func (m *DeleteTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := DeleteTaskRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeleteTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteTaskRequestMultiError is an error wrapping multiple validation errors
+// returned by DeleteTaskRequest.ValidateAll() if the designated constraints
+// aren't met.
+type DeleteTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteTaskRequestMultiError) AllErrors() []error { return m }
+
+// DeleteTaskRequestValidationError is the validation error returned by
+// DeleteTaskRequest.Validate if the designated constraints aren't met.
+type DeleteTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteTaskRequestValidationError) ErrorName() string {
+	return "DeleteTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteTaskRequestValidationError{}

@@ -144,6 +144,66 @@ func (m *MockDfdaemonClient) EXPECT() *MockDfdaemonClientMockRecorder {
 	return m.recorder
 }
 
+// DeleteTask mocks base method.
+func (m *MockDfdaemonClient) DeleteTask(ctx context.Context, in *v20.DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteTask", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTask indicates an expected call of DeleteTask.
+func (mr *MockDfdaemonClientMockRecorder) DeleteTask(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockDfdaemonClient)(nil).DeleteTask), varargs...)
+}
+
+// ExportTask mocks base method.
+func (m *MockDfdaemonClient) ExportTask(ctx context.Context, in *v20.ExportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ExportTask", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ExportTask indicates an expected call of ExportTask.
+func (mr *MockDfdaemonClientMockRecorder) ExportTask(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExportTask", reflect.TypeOf((*MockDfdaemonClient)(nil).ExportTask), varargs...)
+}
+
+// ImportTask mocks base method.
+func (m *MockDfdaemonClient) ImportTask(ctx context.Context, in *v20.ImportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ImportTask", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ImportTask indicates an expected call of ImportTask.
+func (mr *MockDfdaemonClientMockRecorder) ImportTask(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImportTask", reflect.TypeOf((*MockDfdaemonClient)(nil).ImportTask), varargs...)
+}
+
 // StatTask mocks base method.
 func (m *MockDfdaemonClient) StatTask(ctx context.Context, in *v20.StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
 	m.ctrl.T.Helper()
@@ -362,6 +422,51 @@ func NewMockDfdaemonServer(ctrl *gomock.Controller) *MockDfdaemonServer {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDfdaemonServer) EXPECT() *MockDfdaemonServerMockRecorder {
 	return m.recorder
+}
+
+// DeleteTask mocks base method.
+func (m *MockDfdaemonServer) DeleteTask(arg0 context.Context, arg1 *v20.DeleteTaskRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteTask", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTask indicates an expected call of DeleteTask.
+func (mr *MockDfdaemonServerMockRecorder) DeleteTask(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockDfdaemonServer)(nil).DeleteTask), arg0, arg1)
+}
+
+// ExportTask mocks base method.
+func (m *MockDfdaemonServer) ExportTask(arg0 context.Context, arg1 *v20.ExportTaskRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ExportTask", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ExportTask indicates an expected call of ExportTask.
+func (mr *MockDfdaemonServerMockRecorder) ExportTask(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExportTask", reflect.TypeOf((*MockDfdaemonServer)(nil).ExportTask), arg0, arg1)
+}
+
+// ImportTask mocks base method.
+func (m *MockDfdaemonServer) ImportTask(arg0 context.Context, arg1 *v20.ImportTaskRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ImportTask", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ImportTask indicates an expected call of ImportTask.
+func (mr *MockDfdaemonServerMockRecorder) ImportTask(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImportTask", reflect.TypeOf((*MockDfdaemonServer)(nil).ImportTask), arg0, arg1)
 }
 
 // StatTask mocks base method.

@@ -982,9 +982,20 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 
 	var errors []error
 
-	switch m.Request.(type) {
-
+	oneofRequestPresent := false
+	switch v := m.Request.(type) {
 	case *AnnouncePeerRequest_RegisterPeerRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetRegisterPeerRequest()).(type) {
@@ -1016,6 +1027,17 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_DownloadPeerStartedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetDownloadPeerStartedRequest()).(type) {
@@ -1047,6 +1069,17 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_DownloadPeerBackToSourceStartedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetDownloadPeerBackToSourceStartedRequest()).(type) {
@@ -1078,6 +1111,17 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_DownloadPeerFinishedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetDownloadPeerFinishedRequest()).(type) {
@@ -1109,6 +1153,17 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_DownloadPeerBackToSourceFinishedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetDownloadPeerBackToSourceFinishedRequest()).(type) {
@@ -1140,6 +1195,17 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_DownloadPieceFinishedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetDownloadPieceFinishedRequest()).(type) {
@@ -1171,6 +1237,17 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_DownloadPieceBackToSourceFinishedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
 
 		if all {
 			switch v := interface{}(m.GetDownloadPieceBackToSourceFinishedRequest()).(type) {
@@ -1202,6 +1279,9 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	default:
+		_ = v // ensures v is used
+	}
+	if !oneofRequestPresent {
 		err := AnnouncePeerRequestValidationError{
 			field:  "Request",
 			reason: "value is required",
@@ -1210,12 +1290,19 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
-
 	}
-
-	switch m.Errordetails.(type) {
-
+	switch v := m.Errordetails.(type) {
 	case *AnnouncePeerRequest_DownloadPeerBackToSourceFailed:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetDownloadPeerBackToSourceFailed()).(type) {
@@ -1247,6 +1334,16 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_DownloadPieceBackToSourceFailed:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetDownloadPieceBackToSourceFailed()).(type) {
@@ -1278,6 +1375,16 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_SyncPiecesFailed:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetSyncPiecesFailed()).(type) {
@@ -1309,6 +1416,16 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 		}
 
 	case *AnnouncePeerRequest_DownloadPieceFailed:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetDownloadPieceFailed()).(type) {
@@ -1339,6 +1456,8 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			}
 		}
 
+	default:
+		_ = v // ensures v is used
 	}
 
 	if len(errors) > 0 {
@@ -1967,9 +2086,20 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 
 	var errors []error
 
-	switch m.Response.(type) {
-
+	oneofResponsePresent := false
+	switch v := m.Response.(type) {
 	case *AnnouncePeerResponse_TinyTaskResponse:
+		if v == nil {
+			err := AnnouncePeerResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
 
 		if all {
 			switch v := interface{}(m.GetTinyTaskResponse()).(type) {
@@ -2001,6 +2131,17 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 		}
 
 	case *AnnouncePeerResponse_SmallTaskResponse:
+		if v == nil {
+			err := AnnouncePeerResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
 
 		if all {
 			switch v := interface{}(m.GetSmallTaskResponse()).(type) {
@@ -2032,6 +2173,17 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 		}
 
 	case *AnnouncePeerResponse_NormalTaskResponse:
+		if v == nil {
+			err := AnnouncePeerResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
 
 		if all {
 			switch v := interface{}(m.GetNormalTaskResponse()).(type) {
@@ -2063,6 +2215,17 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 		}
 
 	case *AnnouncePeerResponse_NeedBackToSourceResponse:
+		if v == nil {
+			err := AnnouncePeerResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
 
 		if all {
 			switch v := interface{}(m.GetNeedBackToSourceResponse()).(type) {
@@ -2094,6 +2257,9 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 		}
 
 	default:
+		_ = v // ensures v is used
+	}
+	if !oneofResponsePresent {
 		err := AnnouncePeerResponseValidationError{
 			field:  "Response",
 			reason: "value is required",
@@ -2102,12 +2268,19 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
-
 	}
-
-	switch m.Errordetails.(type) {
-
+	switch v := m.Errordetails.(type) {
 	case *AnnouncePeerResponse_SchedulePeerForbidden:
+		if v == nil {
+			err := AnnouncePeerResponseValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetSchedulePeerForbidden()).(type) {
@@ -2139,6 +2312,16 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 		}
 
 	case *AnnouncePeerResponse_SchedulePeerFailed:
+		if v == nil {
+			err := AnnouncePeerResponseValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetSchedulePeerFailed()).(type) {
@@ -2169,6 +2352,8 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 			}
 		}
 
+	default:
+		_ = v // ensures v is used
 	}
 
 	if len(errors) > 0 {
