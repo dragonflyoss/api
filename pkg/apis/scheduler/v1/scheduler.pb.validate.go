@@ -335,9 +335,18 @@ func (m *RegisterResult) validate(all bool) error {
 		}
 	}
 
-	switch m.DirectPiece.(type) {
-
+	switch v := m.DirectPiece.(type) {
 	case *RegisterResult_SinglePiece:
+		if v == nil {
+			err := RegisterResultValidationError{
+				field:  "DirectPiece",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetSinglePiece()).(type) {
@@ -369,8 +378,19 @@ func (m *RegisterResult) validate(all bool) error {
 		}
 
 	case *RegisterResult_PieceContent:
+		if v == nil {
+			err := RegisterResultValidationError{
+				field:  "DirectPiece",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 		// no validation rules for PieceContent
-
+	default:
+		_ = v // ensures v is used
 	}
 
 	if len(errors) > 0 {
@@ -1134,9 +1154,18 @@ func (m *PeerPacket) validate(all bool) error {
 
 	// no validation rules for Code
 
-	switch m.Errordetails.(type) {
-
+	switch v := m.Errordetails.(type) {
 	case *PeerPacket_SourceError:
+		if v == nil {
+			err := PeerPacketValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetSourceError()).(type) {
@@ -1167,6 +1196,8 @@ func (m *PeerPacket) validate(all bool) error {
 			}
 		}
 
+	default:
+		_ = v // ensures v is used
 	}
 
 	if len(errors) > 0 {
@@ -1356,9 +1387,18 @@ func (m *PeerResult) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	switch m.Errordetails.(type) {
-
+	switch v := m.Errordetails.(type) {
 	case *PeerResult_SourceError:
+		if v == nil {
+			err := PeerResultValidationError{
+				field:  "Errordetails",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
 		if all {
 			switch v := interface{}(m.GetSourceError()).(type) {
@@ -1389,6 +1429,8 @@ func (m *PeerResult) validate(all bool) error {
 			}
 		}
 
+	default:
+		_ = v // ensures v is used
 	}
 
 	if len(errors) > 0 {
