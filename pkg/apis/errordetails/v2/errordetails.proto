@@ -23,44 +23,62 @@ import "pkg/apis/common/v2/common.proto";
 
 option go_package = "d7y.io/api/pkg/apis/errordetails/v2";
 
-// PeerDownloadBackToSourceFailed is error detail of downloading back-to-source.
-message PeerDownloadBackToSourceFailed {
-  // Temporary recoverable error of source.
-  bool temporary = 1;
-  // Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
-  common.ExtendAttribute metadata = 2;
-  // The description of the error.
-  string description = 3;
-}
-
-// PieceDownloadFailed is error detail of downloading piece.
-message PieceDownloadFailed {
-  // Temporary recoverable error of parent peer.
-  bool temporary = 1;
-	// Parent peer id.
-  string parent_id = 2 [(validate.rules).string.min_len = 1];
-  // The description of the error.
-  string description = 3;
-}
-
-// PieceInfoSyncFailed is error detail of syncing piece info.
-message PieceInfoSyncFailed {
-  // Temporary recoverable error of parent peer.
-  bool temporary = 1;
-	// Parent peer id.
-  string parent_id = 2 [(validate.rules).string.min_len = 1];
-  // The description of the error.
-  string description = 3;
-}
-
-// ScheduleForbidden is error detail of forbidden.
-message ScheduleForbidden {
+// DownloadPeerBackToSourceFailed is error detail of downloading peer back-to-source.
+message DownloadPeerBackToSourceFailed {
   // The description of the error.
   string description = 1;
 }
 
-// ScheduleFailed is error detail of scheduling.
-message ScheduleFailed {
+// DownloadPieceBackToSourceFailed is error detail of downloading piece back-to-source.
+message DownloadPieceBackToSourceFailed {
+  // Temporary recoverable error of source.
+  bool temporary = 1;
+  // Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
+  common.ExtendAttribute metadata = 2 [(validate.rules).message.required = true];
+  // The number of piece.
+  uint32 piece_number = 3 [(validate.rules).uint32.gte = 0];
+  // The description of the error.
+  string description = 4;
+}
+
+// DownloadPieceFailed is error detail of downloading piece.
+message DownloadPieceFailed {
+  // Temporary recoverable error of parent peer.
+  bool temporary = 1;
+  // Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
+  common.ExtendAttribute metadata = 2 [(validate.rules).message.required = true];
+  // Piece is information of piece.
+  string parent_id = 3 [(validate.rules).string.min_len = 1];
+  // The number of piece.
+  uint32 piece_number = 4 [(validate.rules).uint32.gte = 0];
+  // The description of the error.
+  string description = 5;
+}
+
+// SchedulePeerForbidden is error detail of forbidden.
+message SchedulePeerForbidden {
+  // The description of the error.
+  string description = 1;
+}
+
+// SchedulePeerFailed is error detail of scheduling.
+message SchedulePeerFailed {
+  // The description of the error.
+  string description = 1;
+}
+
+// SyncPiecesFailed is error detail of syncing pieces.
+message SyncPiecesFailed {
+  // Temporary recoverable error of parent peer.
+  bool temporary = 1;
+	// Parent peer id.
+  string parent_id = 2 [(validate.rules).string.min_len = 1];
+  // The description of the error.
+  string description = 3;
+}
+
+// StatMetadataFailed is error detail of stat metadata.
+message StatMetadataFailed {
   // The description of the error.
   string description = 1;
 }

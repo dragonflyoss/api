@@ -8,7 +8,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	v2 "d7y.io/api/pkg/apis/scheduler/v2"
+	v2 "d7y.io/api/pkg/apis/common/v2"
+	v20 "d7y.io/api/pkg/apis/scheduler/v2"
 	gomock "github.com/golang/mock/gomock"
 	grpc "google.golang.org/grpc"
 	metadata "google.golang.org/grpc/metadata"
@@ -50,6 +51,41 @@ func (mr *MockisAnnouncePeerRequest_RequestMockRecorder) isAnnouncePeerRequest_R
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "isAnnouncePeerRequest_Request", reflect.TypeOf((*MockisAnnouncePeerRequest_Request)(nil).isAnnouncePeerRequest_Request))
 }
 
+// MockisAnnouncePeerRequest_Errordetails is a mock of isAnnouncePeerRequest_Errordetails interface.
+type MockisAnnouncePeerRequest_Errordetails struct {
+	ctrl     *gomock.Controller
+	recorder *MockisAnnouncePeerRequest_ErrordetailsMockRecorder
+}
+
+// MockisAnnouncePeerRequest_ErrordetailsMockRecorder is the mock recorder for MockisAnnouncePeerRequest_Errordetails.
+type MockisAnnouncePeerRequest_ErrordetailsMockRecorder struct {
+	mock *MockisAnnouncePeerRequest_Errordetails
+}
+
+// NewMockisAnnouncePeerRequest_Errordetails creates a new mock instance.
+func NewMockisAnnouncePeerRequest_Errordetails(ctrl *gomock.Controller) *MockisAnnouncePeerRequest_Errordetails {
+	mock := &MockisAnnouncePeerRequest_Errordetails{ctrl: ctrl}
+	mock.recorder = &MockisAnnouncePeerRequest_ErrordetailsMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockisAnnouncePeerRequest_Errordetails) EXPECT() *MockisAnnouncePeerRequest_ErrordetailsMockRecorder {
+	return m.recorder
+}
+
+// isAnnouncePeerRequest_Errordetails mocks base method.
+func (m *MockisAnnouncePeerRequest_Errordetails) isAnnouncePeerRequest_Errordetails() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "isAnnouncePeerRequest_Errordetails")
+}
+
+// isAnnouncePeerRequest_Errordetails indicates an expected call of isAnnouncePeerRequest_Errordetails.
+func (mr *MockisAnnouncePeerRequest_ErrordetailsMockRecorder) isAnnouncePeerRequest_Errordetails() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "isAnnouncePeerRequest_Errordetails", reflect.TypeOf((*MockisAnnouncePeerRequest_Errordetails)(nil).isAnnouncePeerRequest_Errordetails))
+}
+
 // MockisAnnouncePeerResponse_Response is a mock of isAnnouncePeerResponse_Response interface.
 type MockisAnnouncePeerResponse_Response struct {
 	ctrl     *gomock.Controller
@@ -85,6 +121,41 @@ func (mr *MockisAnnouncePeerResponse_ResponseMockRecorder) isAnnouncePeerRespons
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "isAnnouncePeerResponse_Response", reflect.TypeOf((*MockisAnnouncePeerResponse_Response)(nil).isAnnouncePeerResponse_Response))
 }
 
+// MockisAnnouncePeerResponse_Errordetails is a mock of isAnnouncePeerResponse_Errordetails interface.
+type MockisAnnouncePeerResponse_Errordetails struct {
+	ctrl     *gomock.Controller
+	recorder *MockisAnnouncePeerResponse_ErrordetailsMockRecorder
+}
+
+// MockisAnnouncePeerResponse_ErrordetailsMockRecorder is the mock recorder for MockisAnnouncePeerResponse_Errordetails.
+type MockisAnnouncePeerResponse_ErrordetailsMockRecorder struct {
+	mock *MockisAnnouncePeerResponse_Errordetails
+}
+
+// NewMockisAnnouncePeerResponse_Errordetails creates a new mock instance.
+func NewMockisAnnouncePeerResponse_Errordetails(ctrl *gomock.Controller) *MockisAnnouncePeerResponse_Errordetails {
+	mock := &MockisAnnouncePeerResponse_Errordetails{ctrl: ctrl}
+	mock.recorder = &MockisAnnouncePeerResponse_ErrordetailsMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockisAnnouncePeerResponse_Errordetails) EXPECT() *MockisAnnouncePeerResponse_ErrordetailsMockRecorder {
+	return m.recorder
+}
+
+// isAnnouncePeerResponse_Errordetails mocks base method.
+func (m *MockisAnnouncePeerResponse_Errordetails) isAnnouncePeerResponse_Errordetails() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "isAnnouncePeerResponse_Errordetails")
+}
+
+// isAnnouncePeerResponse_Errordetails indicates an expected call of isAnnouncePeerResponse_Errordetails.
+func (mr *MockisAnnouncePeerResponse_ErrordetailsMockRecorder) isAnnouncePeerResponse_Errordetails() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "isAnnouncePeerResponse_Errordetails", reflect.TypeOf((*MockisAnnouncePeerResponse_Errordetails)(nil).isAnnouncePeerResponse_Errordetails))
+}
+
 // MockSchedulerClient is a mock of SchedulerClient interface.
 type MockSchedulerClient struct {
 	ctrl     *gomock.Controller
@@ -109,7 +180,7 @@ func (m *MockSchedulerClient) EXPECT() *MockSchedulerClientMockRecorder {
 }
 
 // AnnounceHost mocks base method.
-func (m *MockSchedulerClient) AnnounceHost(ctx context.Context, in *v2.AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (m *MockSchedulerClient) AnnounceHost(ctx context.Context, in *v20.AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
@@ -129,14 +200,14 @@ func (mr *MockSchedulerClientMockRecorder) AnnounceHost(ctx, in interface{}, opt
 }
 
 // AnnouncePeer mocks base method.
-func (m *MockSchedulerClient) AnnouncePeer(ctx context.Context, opts ...grpc.CallOption) (v2.Scheduler_AnnouncePeerClient, error) {
+func (m *MockSchedulerClient) AnnouncePeer(ctx context.Context, opts ...grpc.CallOption) (v20.Scheduler_AnnouncePeerClient, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "AnnouncePeer", varargs...)
-	ret0, _ := ret[0].(v2.Scheduler_AnnouncePeerClient)
+	ret0, _ := ret[0].(v20.Scheduler_AnnouncePeerClient)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -149,14 +220,14 @@ func (mr *MockSchedulerClientMockRecorder) AnnouncePeer(ctx interface{}, opts ..
 }
 
 // ExchangePeer mocks base method.
-func (m *MockSchedulerClient) ExchangePeer(ctx context.Context, in *v2.ExchangePeerRequest, opts ...grpc.CallOption) (*v2.ExchangePeerResponse, error) {
+func (m *MockSchedulerClient) ExchangePeer(ctx context.Context, in *v20.ExchangePeerRequest, opts ...grpc.CallOption) (*v20.ExchangePeerResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "ExchangePeer", varargs...)
-	ret0, _ := ret[0].(*v2.ExchangePeerResponse)
+	ret0, _ := ret[0].(*v20.ExchangePeerResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -169,7 +240,7 @@ func (mr *MockSchedulerClientMockRecorder) ExchangePeer(ctx, in interface{}, opt
 }
 
 // LeaveHost mocks base method.
-func (m *MockSchedulerClient) LeaveHost(ctx context.Context, in *v2.LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (m *MockSchedulerClient) LeaveHost(ctx context.Context, in *v20.LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
@@ -189,7 +260,7 @@ func (mr *MockSchedulerClientMockRecorder) LeaveHost(ctx, in interface{}, opts .
 }
 
 // LeavePeer mocks base method.
-func (m *MockSchedulerClient) LeavePeer(ctx context.Context, in *v2.LeavePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (m *MockSchedulerClient) LeavePeer(ctx context.Context, in *v20.LeavePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
@@ -209,7 +280,7 @@ func (mr *MockSchedulerClientMockRecorder) LeavePeer(ctx, in interface{}, opts .
 }
 
 // StatPeer mocks base method.
-func (m *MockSchedulerClient) StatPeer(ctx context.Context, in *v2.StatPeerRequest, opts ...grpc.CallOption) (*v2.Peer, error) {
+func (m *MockSchedulerClient) StatPeer(ctx context.Context, in *v20.StatPeerRequest, opts ...grpc.CallOption) (*v2.Peer, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
@@ -229,7 +300,7 @@ func (mr *MockSchedulerClientMockRecorder) StatPeer(ctx, in interface{}, opts ..
 }
 
 // StatTask mocks base method.
-func (m *MockSchedulerClient) StatTask(ctx context.Context, in *v2.StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
+func (m *MockSchedulerClient) StatTask(ctx context.Context, in *v20.StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
@@ -315,10 +386,10 @@ func (mr *MockScheduler_AnnouncePeerClientMockRecorder) Header() *gomock.Call {
 }
 
 // Recv mocks base method.
-func (m *MockScheduler_AnnouncePeerClient) Recv() (*v2.AnnouncePeerResponse, error) {
+func (m *MockScheduler_AnnouncePeerClient) Recv() (*v20.AnnouncePeerResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Recv")
-	ret0, _ := ret[0].(*v2.AnnouncePeerResponse)
+	ret0, _ := ret[0].(*v20.AnnouncePeerResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -344,7 +415,7 @@ func (mr *MockScheduler_AnnouncePeerClientMockRecorder) RecvMsg(m interface{}) *
 }
 
 // Send mocks base method.
-func (m *MockScheduler_AnnouncePeerClient) Send(arg0 *v2.AnnouncePeerRequest) error {
+func (m *MockScheduler_AnnouncePeerClient) Send(arg0 *v20.AnnouncePeerRequest) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Send", arg0)
 	ret0, _ := ret[0].(error)
@@ -409,7 +480,7 @@ func (m *MockSchedulerServer) EXPECT() *MockSchedulerServerMockRecorder {
 }
 
 // AnnounceHost mocks base method.
-func (m *MockSchedulerServer) AnnounceHost(arg0 context.Context, arg1 *v2.AnnounceHostRequest) (*emptypb.Empty, error) {
+func (m *MockSchedulerServer) AnnounceHost(arg0 context.Context, arg1 *v20.AnnounceHostRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AnnounceHost", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -424,7 +495,7 @@ func (mr *MockSchedulerServerMockRecorder) AnnounceHost(arg0, arg1 interface{}) 
 }
 
 // AnnouncePeer mocks base method.
-func (m *MockSchedulerServer) AnnouncePeer(arg0 v2.Scheduler_AnnouncePeerServer) error {
+func (m *MockSchedulerServer) AnnouncePeer(arg0 v20.Scheduler_AnnouncePeerServer) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AnnouncePeer", arg0)
 	ret0, _ := ret[0].(error)
@@ -438,10 +509,10 @@ func (mr *MockSchedulerServerMockRecorder) AnnouncePeer(arg0 interface{}) *gomoc
 }
 
 // ExchangePeer mocks base method.
-func (m *MockSchedulerServer) ExchangePeer(arg0 context.Context, arg1 *v2.ExchangePeerRequest) (*v2.ExchangePeerResponse, error) {
+func (m *MockSchedulerServer) ExchangePeer(arg0 context.Context, arg1 *v20.ExchangePeerRequest) (*v20.ExchangePeerResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ExchangePeer", arg0, arg1)
-	ret0, _ := ret[0].(*v2.ExchangePeerResponse)
+	ret0, _ := ret[0].(*v20.ExchangePeerResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -453,7 +524,7 @@ func (mr *MockSchedulerServerMockRecorder) ExchangePeer(arg0, arg1 interface{}) 
 }
 
 // LeaveHost mocks base method.
-func (m *MockSchedulerServer) LeaveHost(arg0 context.Context, arg1 *v2.LeaveHostRequest) (*emptypb.Empty, error) {
+func (m *MockSchedulerServer) LeaveHost(arg0 context.Context, arg1 *v20.LeaveHostRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "LeaveHost", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -468,7 +539,7 @@ func (mr *MockSchedulerServerMockRecorder) LeaveHost(arg0, arg1 interface{}) *go
 }
 
 // LeavePeer mocks base method.
-func (m *MockSchedulerServer) LeavePeer(arg0 context.Context, arg1 *v2.LeavePeerRequest) (*emptypb.Empty, error) {
+func (m *MockSchedulerServer) LeavePeer(arg0 context.Context, arg1 *v20.LeavePeerRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "LeavePeer", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
@@ -483,7 +554,7 @@ func (mr *MockSchedulerServerMockRecorder) LeavePeer(arg0, arg1 interface{}) *go
 }
 
 // StatPeer mocks base method.
-func (m *MockSchedulerServer) StatPeer(arg0 context.Context, arg1 *v2.StatPeerRequest) (*v2.Peer, error) {
+func (m *MockSchedulerServer) StatPeer(arg0 context.Context, arg1 *v20.StatPeerRequest) (*v2.Peer, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "StatPeer", arg0, arg1)
 	ret0, _ := ret[0].(*v2.Peer)
@@ -498,7 +569,7 @@ func (mr *MockSchedulerServerMockRecorder) StatPeer(arg0, arg1 interface{}) *gom
 }
 
 // StatTask mocks base method.
-func (m *MockSchedulerServer) StatTask(arg0 context.Context, arg1 *v2.StatTaskRequest) (*v2.Task, error) {
+func (m *MockSchedulerServer) StatTask(arg0 context.Context, arg1 *v20.StatTaskRequest) (*v2.Task, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "StatTask", arg0, arg1)
 	ret0, _ := ret[0].(*v2.Task)
@@ -550,10 +621,10 @@ func (mr *MockScheduler_AnnouncePeerServerMockRecorder) Context() *gomock.Call {
 }
 
 // Recv mocks base method.
-func (m *MockScheduler_AnnouncePeerServer) Recv() (*v2.AnnouncePeerRequest, error) {
+func (m *MockScheduler_AnnouncePeerServer) Recv() (*v20.AnnouncePeerRequest, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Recv")
-	ret0, _ := ret[0].(*v2.AnnouncePeerRequest)
+	ret0, _ := ret[0].(*v20.AnnouncePeerRequest)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -579,7 +650,7 @@ func (mr *MockScheduler_AnnouncePeerServerMockRecorder) RecvMsg(m interface{}) *
 }
 
 // Send mocks base method.
-func (m *MockScheduler_AnnouncePeerServer) Send(arg0 *v2.AnnouncePeerResponse) error {
+func (m *MockScheduler_AnnouncePeerServer) Send(arg0 *v20.AnnouncePeerResponse) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Send", arg0)
 	ret0, _ := ret[0].(error)

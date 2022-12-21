@@ -35,831 +35,22 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on Peer with the rules defined in the proto
-// definition for this message. If any rules are violated, the first error
-// encountered is returned, or nil if there are no violations.
-func (m *Peer) Validate() error {
+// Validate checks the field values on RegisterPeerRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RegisterPeerRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Peer with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in PeerMultiError, or nil if none found.
-func (m *Peer) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *Peer) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if utf8.RuneCountInString(m.GetId()) < 1 {
-		err := PeerValidationError{
-			field:  "Id",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(m.GetPieces()) > 0 {
-
-		if len(m.GetPieces()) < 1 {
-			err := PeerValidationError{
-				field:  "Pieces",
-				reason: "value must contain at least 1 item(s)",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-		for idx, item := range m.GetPieces() {
-			_, _ = idx, item
-
-			if all {
-				switch v := interface{}(item).(type) {
-				case interface{ ValidateAll() error }:
-					if err := v.ValidateAll(); err != nil {
-						errors = append(errors, PeerValidationError{
-							field:  fmt.Sprintf("Pieces[%v]", idx),
-							reason: "embedded message failed validation",
-							cause:  err,
-						})
-					}
-				case interface{ Validate() error }:
-					if err := v.Validate(); err != nil {
-						errors = append(errors, PeerValidationError{
-							field:  fmt.Sprintf("Pieces[%v]", idx),
-							reason: "embedded message failed validation",
-							cause:  err,
-						})
-					}
-				}
-			} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-				if err := v.Validate(); err != nil {
-					return PeerValidationError{
-						field:  fmt.Sprintf("Pieces[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-
-		}
-
-	}
-
-	if m.GetTask() == nil {
-		err := PeerValidationError{
-			field:  "Task",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetTask()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, PeerValidationError{
-					field:  "Task",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, PeerValidationError{
-					field:  "Task",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetTask()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PeerValidationError{
-				field:  "Task",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if m.GetHost() == nil {
-		err := PeerValidationError{
-			field:  "Host",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetHost()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, PeerValidationError{
-					field:  "Host",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, PeerValidationError{
-					field:  "Host",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PeerValidationError{
-				field:  "Host",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetState()) < 1 {
-		err := PeerValidationError{
-			field:  "State",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetCreatedAt() == nil {
-		err := PeerValidationError{
-			field:  "CreatedAt",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetUpdatedAt() == nil {
-		err := PeerValidationError{
-			field:  "UpdatedAt",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return PeerMultiError(errors)
-	}
-
-	return nil
-}
-
-// PeerMultiError is an error wrapping multiple validation errors returned by
-// Peer.ValidateAll() if the designated constraints aren't met.
-type PeerMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m PeerMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m PeerMultiError) AllErrors() []error { return m }
-
-// PeerValidationError is the validation error returned by Peer.Validate if the
-// designated constraints aren't met.
-type PeerValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e PeerValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e PeerValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e PeerValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e PeerValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e PeerValidationError) ErrorName() string { return "PeerValidationError" }
-
-// Error satisfies the builtin error interface
-func (e PeerValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sPeer.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = PeerValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = PeerValidationError{}
-
-// Validate checks the field values on Task with the rules defined in the proto
-// definition for this message. If any rules are violated, the first error
-// encountered is returned, or nil if there are no violations.
-func (m *Task) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on Task with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in TaskMultiError, or nil if none found.
-func (m *Task) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *Task) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if utf8.RuneCountInString(m.GetId()) < 1 {
-		err := TaskValidationError{
-			field:  "Id",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if _, ok := _Task_Type_InLookup[m.GetType()]; !ok {
-		err := TaskValidationError{
-			field:  "Type",
-			reason: "value must be in list [normal super strong weak]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	// no validation rules for SizeScope
-
-	if len(m.GetPieces()) > 0 {
-
-		if len(m.GetPieces()) < 1 {
-			err := TaskValidationError{
-				field:  "Pieces",
-				reason: "value must contain at least 1 item(s)",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-		for idx, item := range m.GetPieces() {
-			_, _ = idx, item
-
-			if all {
-				switch v := interface{}(item).(type) {
-				case interface{ ValidateAll() error }:
-					if err := v.ValidateAll(); err != nil {
-						errors = append(errors, TaskValidationError{
-							field:  fmt.Sprintf("Pieces[%v]", idx),
-							reason: "embedded message failed validation",
-							cause:  err,
-						})
-					}
-				case interface{ Validate() error }:
-					if err := v.Validate(); err != nil {
-						errors = append(errors, TaskValidationError{
-							field:  fmt.Sprintf("Pieces[%v]", idx),
-							reason: "embedded message failed validation",
-							cause:  err,
-						})
-					}
-				}
-			} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-				if err := v.Validate(); err != nil {
-					return TaskValidationError{
-						field:  fmt.Sprintf("Pieces[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					}
-				}
-			}
-
-		}
-
-	}
-
-	if utf8.RuneCountInString(m.GetState()) < 1 {
-		err := TaskValidationError{
-			field:  "State",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetMetadata() == nil {
-		err := TaskValidationError{
-			field:  "Metadata",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, TaskValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, TaskValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TaskValidationError{
-				field:  "Metadata",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if m.GetContentLength() < 1 {
-		err := TaskValidationError{
-			field:  "ContentLength",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetPeerCount() < 0 {
-		err := TaskValidationError{
-			field:  "PeerCount",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	// no validation rules for HasAvailablePeer
-
-	if m.GetCreatedAt() == nil {
-		err := TaskValidationError{
-			field:  "CreatedAt",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetUpdatedAt() == nil {
-		err := TaskValidationError{
-			field:  "UpdatedAt",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return TaskMultiError(errors)
-	}
-
-	return nil
-}
-
-// TaskMultiError is an error wrapping multiple validation errors returned by
-// Task.ValidateAll() if the designated constraints aren't met.
-type TaskMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m TaskMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m TaskMultiError) AllErrors() []error { return m }
-
-// TaskValidationError is the validation error returned by Task.Validate if the
-// designated constraints aren't met.
-type TaskValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e TaskValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e TaskValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e TaskValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e TaskValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e TaskValidationError) ErrorName() string { return "TaskValidationError" }
-
-// Error satisfies the builtin error interface
-func (e TaskValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sTask.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = TaskValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = TaskValidationError{}
-
-var _Task_Type_InLookup = map[string]struct{}{
-	"normal": {},
-	"super":  {},
-	"strong": {},
-	"weak":   {},
-}
-
-// Validate checks the field values on Host with the rules defined in the proto
-// definition for this message. If any rules are violated, the first error
-// encountered is returned, or nil if there are no violations.
-func (m *Host) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on Host with the rules defined in the
-// proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in HostMultiError, or nil if none found.
-func (m *Host) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *Host) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if utf8.RuneCountInString(m.GetId()) < 1 {
-		err := HostValidationError{
-			field:  "Id",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetIpv4() != "" {
-
-		if ip := net.ParseIP(m.GetIpv4()); ip == nil || ip.To4() == nil {
-			err := HostValidationError{
-				field:  "Ipv4",
-				reason: "value must be a valid IPv4 address",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if m.GetIpv6() != "" {
-
-		if ip := net.ParseIP(m.GetIpv6()); ip == nil || ip.To4() != nil {
-			err := HostValidationError{
-				field:  "Ipv6",
-				reason: "value must be a valid IPv6 address",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if err := m._validateHostname(m.GetHostname()); err != nil {
-		err = HostValidationError{
-			field:  "Hostname",
-			reason: "value must be a valid hostname",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if val := m.GetPort(); val < 1024 || val >= 65535 {
-		err := HostValidationError{
-			field:  "Port",
-			reason: "value must be inside range [1024, 65535)",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if val := m.GetDownloadPort(); val < 1024 || val >= 65535 {
-		err := HostValidationError{
-			field:  "DownloadPort",
-			reason: "value must be inside range [1024, 65535)",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetSecurityDomain() != "" {
-
-		if utf8.RuneCountInString(m.GetSecurityDomain()) < 1 {
-			err := HostValidationError{
-				field:  "SecurityDomain",
-				reason: "value length must be at least 1 runes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if len(m.GetLocation()) > 0 {
-
-		if len(m.GetLocation()) < 1 {
-			err := HostValidationError{
-				field:  "Location",
-				reason: "value must contain at least 1 item(s)",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if m.GetIdc() != "" {
-
-		if utf8.RuneCountInString(m.GetIdc()) < 1 {
-			err := HostValidationError{
-				field:  "Idc",
-				reason: "value length must be at least 1 runes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if len(m.GetNetTopology()) > 0 {
-
-		if len(m.GetNetTopology()) < 1 {
-			err := HostValidationError{
-				field:  "NetTopology",
-				reason: "value must contain at least 1 item(s)",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if len(errors) > 0 {
-		return HostMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *Host) _validateHostname(host string) error {
-	s := strings.ToLower(strings.TrimSuffix(host, "."))
-
-	if len(host) > 253 {
-		return errors.New("hostname cannot exceed 253 characters")
-	}
-
-	for _, part := range strings.Split(s, ".") {
-		if l := len(part); l == 0 || l > 63 {
-			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
-		}
-
-		if part[0] == '-' {
-			return errors.New("hostname parts cannot begin with hyphens")
-		}
-
-		if part[len(part)-1] == '-' {
-			return errors.New("hostname parts cannot end with hyphens")
-		}
-
-		for _, r := range part {
-			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
-				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
-			}
-		}
-	}
-
-	return nil
-}
-
-// HostMultiError is an error wrapping multiple validation errors returned by
-// Host.ValidateAll() if the designated constraints aren't met.
-type HostMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m HostMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m HostMultiError) AllErrors() []error { return m }
-
-// HostValidationError is the validation error returned by Host.Validate if the
-// designated constraints aren't met.
-type HostValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e HostValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e HostValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e HostValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e HostValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e HostValidationError) ErrorName() string { return "HostValidationError" }
-
-// Error satisfies the builtin error interface
-func (e HostValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sHost.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = HostValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = HostValidationError{}
-
-// Validate checks the field values on RegisterRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *RegisterRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on RegisterRequest with the rules
+// ValidateAll checks the field values on RegisterPeerRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// RegisterRequestMultiError, or nil if none found.
-func (m *RegisterRequest) ValidateAll() error {
+// RegisterPeerRequestMultiError, or nil if none found.
+func (m *RegisterPeerRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *RegisterRequest) validate(all bool) error {
+func (m *RegisterPeerRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -867,7 +58,7 @@ func (m *RegisterRequest) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := RegisterRequestValidationError{
+		err := RegisterPeerRequestValidationError{
 			field:  "TaskId",
 			reason: "value length must be at least 1 runes",
 		}
@@ -878,7 +69,7 @@ func (m *RegisterRequest) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
-		err := RegisterRequestValidationError{
+		err := RegisterPeerRequestValidationError{
 			field:  "PeerId",
 			reason: "value length must be at least 1 runes",
 		}
@@ -889,7 +80,7 @@ func (m *RegisterRequest) validate(all bool) error {
 	}
 
 	if m.GetMetadata() == nil {
-		err := RegisterRequestValidationError{
+		err := RegisterPeerRequestValidationError{
 			field:  "Metadata",
 			reason: "value is required",
 		}
@@ -903,7 +94,7 @@ func (m *RegisterRequest) validate(all bool) error {
 		switch v := interface{}(m.GetMetadata()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RegisterRequestValidationError{
+				errors = append(errors, RegisterPeerRequestValidationError{
 					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -911,7 +102,7 @@ func (m *RegisterRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, RegisterRequestValidationError{
+				errors = append(errors, RegisterPeerRequestValidationError{
 					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -920,7 +111,7 @@ func (m *RegisterRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return RegisterRequestValidationError{
+			return RegisterPeerRequestValidationError{
 				field:  "Metadata",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -928,62 +119,20 @@ func (m *RegisterRequest) validate(all bool) error {
 		}
 	}
 
-	if m.GetHost() == nil {
-		err := RegisterRequestValidationError{
-			field:  "Host",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetHost()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RegisterRequestValidationError{
-					field:  "Host",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, RegisterRequestValidationError{
-					field:  "Host",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return RegisterRequestValidationError{
-				field:  "Host",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	// no validation rules for TaskType
-
 	if len(errors) > 0 {
-		return RegisterRequestMultiError(errors)
+		return RegisterPeerRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// RegisterRequestMultiError is an error wrapping multiple validation errors
-// returned by RegisterRequest.ValidateAll() if the designated constraints
-// aren't met.
-type RegisterRequestMultiError []error
+// RegisterPeerRequestMultiError is an error wrapping multiple validation
+// errors returned by RegisterPeerRequest.ValidateAll() if the designated
+// constraints aren't met.
+type RegisterPeerRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RegisterRequestMultiError) Error() string {
+func (m RegisterPeerRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -992,11 +141,11 @@ func (m RegisterRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RegisterRequestMultiError) AllErrors() []error { return m }
+func (m RegisterPeerRequestMultiError) AllErrors() []error { return m }
 
-// RegisterRequestValidationError is the validation error returned by
-// RegisterRequest.Validate if the designated constraints aren't met.
-type RegisterRequestValidationError struct {
+// RegisterPeerRequestValidationError is the validation error returned by
+// RegisterPeerRequest.Validate if the designated constraints aren't met.
+type RegisterPeerRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1004,22 +153,24 @@ type RegisterRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e RegisterRequestValidationError) Field() string { return e.field }
+func (e RegisterPeerRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RegisterRequestValidationError) Reason() string { return e.reason }
+func (e RegisterPeerRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RegisterRequestValidationError) Cause() error { return e.cause }
+func (e RegisterPeerRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RegisterRequestValidationError) Key() bool { return e.key }
+func (e RegisterPeerRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RegisterRequestValidationError) ErrorName() string { return "RegisterRequestValidationError" }
+func (e RegisterPeerRequestValidationError) ErrorName() string {
+	return "RegisterPeerRequestValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e RegisterRequestValidationError) Error() string {
+func (e RegisterPeerRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1031,14 +182,14 @@ func (e RegisterRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRegisterRequest.%s: %s%s",
+		"invalid %sRegisterPeerRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RegisterRequestValidationError{}
+var _ error = RegisterPeerRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1046,24 +197,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RegisterRequestValidationError{}
+} = RegisterPeerRequestValidationError{}
 
-// Validate checks the field values on PeerDownloadStartedRequest with the
+// Validate checks the field values on DownloadPeerStartedRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *PeerDownloadStartedRequest) Validate() error {
+func (m *DownloadPeerStartedRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PeerDownloadStartedRequest with the
+// ValidateAll checks the field values on DownloadPeerStartedRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// PeerDownloadStartedRequestMultiError, or nil if none found.
-func (m *PeerDownloadStartedRequest) ValidateAll() error {
+// DownloadPeerStartedRequestMultiError, or nil if none found.
+func (m *DownloadPeerStartedRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PeerDownloadStartedRequest) validate(all bool) error {
+func (m *DownloadPeerStartedRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1071,19 +222,19 @@ func (m *PeerDownloadStartedRequest) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return PeerDownloadStartedRequestMultiError(errors)
+		return DownloadPeerStartedRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// PeerDownloadStartedRequestMultiError is an error wrapping multiple
-// validation errors returned by PeerDownloadStartedRequest.ValidateAll() if
+// DownloadPeerStartedRequestMultiError is an error wrapping multiple
+// validation errors returned by DownloadPeerStartedRequest.ValidateAll() if
 // the designated constraints aren't met.
-type PeerDownloadStartedRequestMultiError []error
+type DownloadPeerStartedRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PeerDownloadStartedRequestMultiError) Error() string {
+func (m DownloadPeerStartedRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1092,11 +243,11 @@ func (m PeerDownloadStartedRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PeerDownloadStartedRequestMultiError) AllErrors() []error { return m }
+func (m DownloadPeerStartedRequestMultiError) AllErrors() []error { return m }
 
-// PeerDownloadStartedRequestValidationError is the validation error returned
-// by PeerDownloadStartedRequest.Validate if the designated constraints aren't met.
-type PeerDownloadStartedRequestValidationError struct {
+// DownloadPeerStartedRequestValidationError is the validation error returned
+// by DownloadPeerStartedRequest.Validate if the designated constraints aren't met.
+type DownloadPeerStartedRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1104,24 +255,24 @@ type PeerDownloadStartedRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e PeerDownloadStartedRequestValidationError) Field() string { return e.field }
+func (e DownloadPeerStartedRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PeerDownloadStartedRequestValidationError) Reason() string { return e.reason }
+func (e DownloadPeerStartedRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PeerDownloadStartedRequestValidationError) Cause() error { return e.cause }
+func (e DownloadPeerStartedRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PeerDownloadStartedRequestValidationError) Key() bool { return e.key }
+func (e DownloadPeerStartedRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PeerDownloadStartedRequestValidationError) ErrorName() string {
-	return "PeerDownloadStartedRequestValidationError"
+func (e DownloadPeerStartedRequestValidationError) ErrorName() string {
+	return "DownloadPeerStartedRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e PeerDownloadStartedRequestValidationError) Error() string {
+func (e DownloadPeerStartedRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1133,14 +284,14 @@ func (e PeerDownloadStartedRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPeerDownloadStartedRequest.%s: %s%s",
+		"invalid %sDownloadPeerStartedRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PeerDownloadStartedRequestValidationError{}
+var _ error = DownloadPeerStartedRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1148,24 +299,26 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PeerDownloadStartedRequestValidationError{}
+} = DownloadPeerStartedRequestValidationError{}
 
-// Validate checks the field values on PeerDownloadBackToSourceRequest with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *PeerDownloadBackToSourceRequest) Validate() error {
+// Validate checks the field values on DownloadPeerBackToSourceStartedRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *DownloadPeerBackToSourceStartedRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PeerDownloadBackToSourceRequest with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, the result is a list of violation errors wrapped in
-// PeerDownloadBackToSourceRequestMultiError, or nil if none found.
-func (m *PeerDownloadBackToSourceRequest) ValidateAll() error {
+// ValidateAll checks the field values on
+// DownloadPeerBackToSourceStartedRequest with the rules defined in the proto
+// definition for this message. If any rules are violated, the result is a
+// list of violation errors wrapped in
+// DownloadPeerBackToSourceStartedRequestMultiError, or nil if none found.
+func (m *DownloadPeerBackToSourceStartedRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PeerDownloadBackToSourceRequest) validate(all bool) error {
+func (m *DownloadPeerBackToSourceStartedRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1173,7 +326,7 @@ func (m *PeerDownloadBackToSourceRequest) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetReason()) < 1 {
-		err := PeerDownloadBackToSourceRequestValidationError{
+		err := DownloadPeerBackToSourceStartedRequestValidationError{
 			field:  "Reason",
 			reason: "value length must be at least 1 runes",
 		}
@@ -1184,19 +337,20 @@ func (m *PeerDownloadBackToSourceRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return PeerDownloadBackToSourceRequestMultiError(errors)
+		return DownloadPeerBackToSourceStartedRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// PeerDownloadBackToSourceRequestMultiError is an error wrapping multiple
-// validation errors returned by PeerDownloadBackToSourceRequest.ValidateAll()
-// if the designated constraints aren't met.
-type PeerDownloadBackToSourceRequestMultiError []error
+// DownloadPeerBackToSourceStartedRequestMultiError is an error wrapping
+// multiple validation errors returned by
+// DownloadPeerBackToSourceStartedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadPeerBackToSourceStartedRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PeerDownloadBackToSourceRequestMultiError) Error() string {
+func (m DownloadPeerBackToSourceStartedRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1205,12 +359,12 @@ func (m PeerDownloadBackToSourceRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PeerDownloadBackToSourceRequestMultiError) AllErrors() []error { return m }
+func (m DownloadPeerBackToSourceStartedRequestMultiError) AllErrors() []error { return m }
 
-// PeerDownloadBackToSourceRequestValidationError is the validation error
-// returned by PeerDownloadBackToSourceRequest.Validate if the designated
-// constraints aren't met.
-type PeerDownloadBackToSourceRequestValidationError struct {
+// DownloadPeerBackToSourceStartedRequestValidationError is the validation
+// error returned by DownloadPeerBackToSourceStartedRequest.Validate if the
+// designated constraints aren't met.
+type DownloadPeerBackToSourceStartedRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1218,24 +372,24 @@ type PeerDownloadBackToSourceRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e PeerDownloadBackToSourceRequestValidationError) Field() string { return e.field }
+func (e DownloadPeerBackToSourceStartedRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PeerDownloadBackToSourceRequestValidationError) Reason() string { return e.reason }
+func (e DownloadPeerBackToSourceStartedRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PeerDownloadBackToSourceRequestValidationError) Cause() error { return e.cause }
+func (e DownloadPeerBackToSourceStartedRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PeerDownloadBackToSourceRequestValidationError) Key() bool { return e.key }
+func (e DownloadPeerBackToSourceStartedRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PeerDownloadBackToSourceRequestValidationError) ErrorName() string {
-	return "PeerDownloadBackToSourceRequestValidationError"
+func (e DownloadPeerBackToSourceStartedRequestValidationError) ErrorName() string {
+	return "DownloadPeerBackToSourceStartedRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e PeerDownloadBackToSourceRequestValidationError) Error() string {
+func (e DownloadPeerBackToSourceStartedRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1247,14 +401,14 @@ func (e PeerDownloadBackToSourceRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPeerDownloadBackToSourceRequest.%s: %s%s",
+		"invalid %sDownloadPeerBackToSourceStartedRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PeerDownloadBackToSourceRequestValidationError{}
+var _ error = DownloadPeerBackToSourceStartedRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1262,24 +416,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PeerDownloadBackToSourceRequestValidationError{}
+} = DownloadPeerBackToSourceStartedRequestValidationError{}
 
-// Validate checks the field values on PeerDownloadFinishedRequest with the
+// Validate checks the field values on DownloadPeerFinishedRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *PeerDownloadFinishedRequest) Validate() error {
+func (m *DownloadPeerFinishedRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PeerDownloadFinishedRequest with the
+// ValidateAll checks the field values on DownloadPeerFinishedRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// PeerDownloadFinishedRequestMultiError, or nil if none found.
-func (m *PeerDownloadFinishedRequest) ValidateAll() error {
+// DownloadPeerFinishedRequestMultiError, or nil if none found.
+func (m *DownloadPeerFinishedRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PeerDownloadFinishedRequest) validate(all bool) error {
+func (m *DownloadPeerFinishedRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1287,7 +441,7 @@ func (m *PeerDownloadFinishedRequest) validate(all bool) error {
 	var errors []error
 
 	if m.GetContentLength() < 0 {
-		err := PeerDownloadFinishedRequestValidationError{
+		err := DownloadPeerFinishedRequestValidationError{
 			field:  "ContentLength",
 			reason: "value must be greater than or equal to 0",
 		}
@@ -1298,7 +452,7 @@ func (m *PeerDownloadFinishedRequest) validate(all bool) error {
 	}
 
 	if m.GetPieceCount() < 0 {
-		err := PeerDownloadFinishedRequestValidationError{
+		err := DownloadPeerFinishedRequestValidationError{
 			field:  "PieceCount",
 			reason: "value must be greater than or equal to 0",
 		}
@@ -1309,19 +463,19 @@ func (m *PeerDownloadFinishedRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return PeerDownloadFinishedRequestMultiError(errors)
+		return DownloadPeerFinishedRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// PeerDownloadFinishedRequestMultiError is an error wrapping multiple
-// validation errors returned by PeerDownloadFinishedRequest.ValidateAll() if
+// DownloadPeerFinishedRequestMultiError is an error wrapping multiple
+// validation errors returned by DownloadPeerFinishedRequest.ValidateAll() if
 // the designated constraints aren't met.
-type PeerDownloadFinishedRequestMultiError []error
+type DownloadPeerFinishedRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PeerDownloadFinishedRequestMultiError) Error() string {
+func (m DownloadPeerFinishedRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1330,12 +484,12 @@ func (m PeerDownloadFinishedRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PeerDownloadFinishedRequestMultiError) AllErrors() []error { return m }
+func (m DownloadPeerFinishedRequestMultiError) AllErrors() []error { return m }
 
-// PeerDownloadFinishedRequestValidationError is the validation error returned
-// by PeerDownloadFinishedRequest.Validate if the designated constraints
+// DownloadPeerFinishedRequestValidationError is the validation error returned
+// by DownloadPeerFinishedRequest.Validate if the designated constraints
 // aren't met.
-type PeerDownloadFinishedRequestValidationError struct {
+type DownloadPeerFinishedRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1343,24 +497,24 @@ type PeerDownloadFinishedRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e PeerDownloadFinishedRequestValidationError) Field() string { return e.field }
+func (e DownloadPeerFinishedRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PeerDownloadFinishedRequestValidationError) Reason() string { return e.reason }
+func (e DownloadPeerFinishedRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PeerDownloadFinishedRequestValidationError) Cause() error { return e.cause }
+func (e DownloadPeerFinishedRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PeerDownloadFinishedRequestValidationError) Key() bool { return e.key }
+func (e DownloadPeerFinishedRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PeerDownloadFinishedRequestValidationError) ErrorName() string {
-	return "PeerDownloadFinishedRequestValidationError"
+func (e DownloadPeerFinishedRequestValidationError) ErrorName() string {
+	return "DownloadPeerFinishedRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e PeerDownloadFinishedRequestValidationError) Error() string {
+func (e DownloadPeerFinishedRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1372,14 +526,14 @@ func (e PeerDownloadFinishedRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPeerDownloadFinishedRequest.%s: %s%s",
+		"invalid %sDownloadPeerFinishedRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PeerDownloadFinishedRequestValidationError{}
+var _ error = DownloadPeerFinishedRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1387,24 +541,152 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PeerDownloadFinishedRequestValidationError{}
+} = DownloadPeerFinishedRequestValidationError{}
 
-// Validate checks the field values on PieceDownloadFinishedRequest with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *PieceDownloadFinishedRequest) Validate() error {
+// Validate checks the field values on DownloadPeerBackToSourceFinishedRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *DownloadPeerBackToSourceFinishedRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PieceDownloadFinishedRequest with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// PieceDownloadFinishedRequestMultiError, or nil if none found.
-func (m *PieceDownloadFinishedRequest) ValidateAll() error {
+// ValidateAll checks the field values on
+// DownloadPeerBackToSourceFinishedRequest with the rules defined in the proto
+// definition for this message. If any rules are violated, the result is a
+// list of violation errors wrapped in
+// DownloadPeerBackToSourceFinishedRequestMultiError, or nil if none found.
+func (m *DownloadPeerBackToSourceFinishedRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PieceDownloadFinishedRequest) validate(all bool) error {
+func (m *DownloadPeerBackToSourceFinishedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetContentLength() < 0 {
+		err := DownloadPeerBackToSourceFinishedRequestValidationError{
+			field:  "ContentLength",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPieceCount() < 0 {
+		err := DownloadPeerBackToSourceFinishedRequestValidationError{
+			field:  "PieceCount",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DownloadPeerBackToSourceFinishedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPeerBackToSourceFinishedRequestMultiError is an error wrapping
+// multiple validation errors returned by
+// DownloadPeerBackToSourceFinishedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadPeerBackToSourceFinishedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPeerBackToSourceFinishedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPeerBackToSourceFinishedRequestMultiError) AllErrors() []error { return m }
+
+// DownloadPeerBackToSourceFinishedRequestValidationError is the validation
+// error returned by DownloadPeerBackToSourceFinishedRequest.Validate if the
+// designated constraints aren't met.
+type DownloadPeerBackToSourceFinishedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPeerBackToSourceFinishedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPeerBackToSourceFinishedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPeerBackToSourceFinishedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPeerBackToSourceFinishedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPeerBackToSourceFinishedRequestValidationError) ErrorName() string {
+	return "DownloadPeerBackToSourceFinishedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPeerBackToSourceFinishedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPeerBackToSourceFinishedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPeerBackToSourceFinishedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPeerBackToSourceFinishedRequestValidationError{}
+
+// Validate checks the field values on DownloadPieceFinishedRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DownloadPieceFinishedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPieceFinishedRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DownloadPieceFinishedRequestMultiError, or nil if none found.
+func (m *DownloadPieceFinishedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPieceFinishedRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1412,7 +694,7 @@ func (m *PieceDownloadFinishedRequest) validate(all bool) error {
 	var errors []error
 
 	if m.GetPiece() == nil {
-		err := PieceDownloadFinishedRequestValidationError{
+		err := DownloadPieceFinishedRequestValidationError{
 			field:  "Piece",
 			reason: "value is required",
 		}
@@ -1426,7 +708,7 @@ func (m *PieceDownloadFinishedRequest) validate(all bool) error {
 		switch v := interface{}(m.GetPiece()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, PieceDownloadFinishedRequestValidationError{
+				errors = append(errors, DownloadPieceFinishedRequestValidationError{
 					field:  "Piece",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1434,7 +716,7 @@ func (m *PieceDownloadFinishedRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, PieceDownloadFinishedRequestValidationError{
+				errors = append(errors, DownloadPieceFinishedRequestValidationError{
 					field:  "Piece",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1443,7 +725,7 @@ func (m *PieceDownloadFinishedRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return PieceDownloadFinishedRequestValidationError{
+			return DownloadPieceFinishedRequestValidationError{
 				field:  "Piece",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1452,19 +734,19 @@ func (m *PieceDownloadFinishedRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return PieceDownloadFinishedRequestMultiError(errors)
+		return DownloadPieceFinishedRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// PieceDownloadFinishedRequestMultiError is an error wrapping multiple
-// validation errors returned by PieceDownloadFinishedRequest.ValidateAll() if
+// DownloadPieceFinishedRequestMultiError is an error wrapping multiple
+// validation errors returned by DownloadPieceFinishedRequest.ValidateAll() if
 // the designated constraints aren't met.
-type PieceDownloadFinishedRequestMultiError []error
+type DownloadPieceFinishedRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PieceDownloadFinishedRequestMultiError) Error() string {
+func (m DownloadPieceFinishedRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1473,12 +755,12 @@ func (m PieceDownloadFinishedRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PieceDownloadFinishedRequestMultiError) AllErrors() []error { return m }
+func (m DownloadPieceFinishedRequestMultiError) AllErrors() []error { return m }
 
-// PieceDownloadFinishedRequestValidationError is the validation error returned
-// by PieceDownloadFinishedRequest.Validate if the designated constraints
+// DownloadPieceFinishedRequestValidationError is the validation error returned
+// by DownloadPieceFinishedRequest.Validate if the designated constraints
 // aren't met.
-type PieceDownloadFinishedRequestValidationError struct {
+type DownloadPieceFinishedRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1486,24 +768,24 @@ type PieceDownloadFinishedRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e PieceDownloadFinishedRequestValidationError) Field() string { return e.field }
+func (e DownloadPieceFinishedRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PieceDownloadFinishedRequestValidationError) Reason() string { return e.reason }
+func (e DownloadPieceFinishedRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PieceDownloadFinishedRequestValidationError) Cause() error { return e.cause }
+func (e DownloadPieceFinishedRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PieceDownloadFinishedRequestValidationError) Key() bool { return e.key }
+func (e DownloadPieceFinishedRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PieceDownloadFinishedRequestValidationError) ErrorName() string {
-	return "PieceDownloadFinishedRequestValidationError"
+func (e DownloadPieceFinishedRequestValidationError) ErrorName() string {
+	return "DownloadPieceFinishedRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e PieceDownloadFinishedRequestValidationError) Error() string {
+func (e DownloadPieceFinishedRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1515,14 +797,14 @@ func (e PieceDownloadFinishedRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPieceDownloadFinishedRequest.%s: %s%s",
+		"invalid %sDownloadPieceFinishedRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PieceDownloadFinishedRequestValidationError{}
+var _ error = DownloadPieceFinishedRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1530,7 +812,153 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PieceDownloadFinishedRequestValidationError{}
+} = DownloadPieceFinishedRequestValidationError{}
+
+// Validate checks the field values on DownloadPieceBackToSourceFinishedRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *DownloadPieceBackToSourceFinishedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on
+// DownloadPieceBackToSourceFinishedRequest with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in
+// DownloadPieceBackToSourceFinishedRequestMultiError, or nil if none found.
+func (m *DownloadPieceBackToSourceFinishedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPieceBackToSourceFinishedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetPiece() == nil {
+		err := DownloadPieceBackToSourceFinishedRequestValidationError{
+			field:  "Piece",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetPiece()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DownloadPieceBackToSourceFinishedRequestValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DownloadPieceBackToSourceFinishedRequestValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DownloadPieceBackToSourceFinishedRequestValidationError{
+				field:  "Piece",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return DownloadPieceBackToSourceFinishedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPieceBackToSourceFinishedRequestMultiError is an error wrapping
+// multiple validation errors returned by
+// DownloadPieceBackToSourceFinishedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadPieceBackToSourceFinishedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPieceBackToSourceFinishedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPieceBackToSourceFinishedRequestMultiError) AllErrors() []error { return m }
+
+// DownloadPieceBackToSourceFinishedRequestValidationError is the validation
+// error returned by DownloadPieceBackToSourceFinishedRequest.Validate if the
+// designated constraints aren't met.
+type DownloadPieceBackToSourceFinishedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPieceBackToSourceFinishedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPieceBackToSourceFinishedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPieceBackToSourceFinishedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPieceBackToSourceFinishedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPieceBackToSourceFinishedRequestValidationError) ErrorName() string {
+	return "DownloadPieceBackToSourceFinishedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPieceBackToSourceFinishedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPieceBackToSourceFinishedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPieceBackToSourceFinishedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPieceBackToSourceFinishedRequestValidationError{}
 
 // Validate checks the field values on AnnouncePeerRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -1556,14 +984,14 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 
 	switch m.Request.(type) {
 
-	case *AnnouncePeerRequest_RegisterRequest:
+	case *AnnouncePeerRequest_RegisterPeerRequest:
 
 		if all {
-			switch v := interface{}(m.GetRegisterRequest()).(type) {
+			switch v := interface{}(m.GetRegisterPeerRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "RegisterRequest",
+						field:  "RegisterPeerRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1571,30 +999,30 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "RegisterRequest",
+						field:  "RegisterPeerRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetRegisterRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetRegisterPeerRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
-					field:  "RegisterRequest",
+					field:  "RegisterPeerRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
 			}
 		}
 
-	case *AnnouncePeerRequest_PeerDownloadStartedRequest:
+	case *AnnouncePeerRequest_DownloadPeerStartedRequest:
 
 		if all {
-			switch v := interface{}(m.GetPeerDownloadStartedRequest()).(type) {
+			switch v := interface{}(m.GetDownloadPeerStartedRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PeerDownloadStartedRequest",
+						field:  "DownloadPeerStartedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1602,30 +1030,30 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PeerDownloadStartedRequest",
+						field:  "DownloadPeerStartedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetPeerDownloadStartedRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetDownloadPeerStartedRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
-					field:  "PeerDownloadStartedRequest",
+					field:  "DownloadPeerStartedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
 			}
 		}
 
-	case *AnnouncePeerRequest_PeerDownloadBackToSourceRequest:
+	case *AnnouncePeerRequest_DownloadPeerBackToSourceStartedRequest:
 
 		if all {
-			switch v := interface{}(m.GetPeerDownloadBackToSourceRequest()).(type) {
+			switch v := interface{}(m.GetDownloadPeerBackToSourceStartedRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PeerDownloadBackToSourceRequest",
+						field:  "DownloadPeerBackToSourceStartedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1633,30 +1061,30 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PeerDownloadBackToSourceRequest",
+						field:  "DownloadPeerBackToSourceStartedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetPeerDownloadBackToSourceRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetDownloadPeerBackToSourceStartedRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
-					field:  "PeerDownloadBackToSourceRequest",
+					field:  "DownloadPeerBackToSourceStartedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
 			}
 		}
 
-	case *AnnouncePeerRequest_PeerDownloadFinishedRequest:
+	case *AnnouncePeerRequest_DownloadPeerFinishedRequest:
 
 		if all {
-			switch v := interface{}(m.GetPeerDownloadFinishedRequest()).(type) {
+			switch v := interface{}(m.GetDownloadPeerFinishedRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PeerDownloadFinishedRequest",
+						field:  "DownloadPeerFinishedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1664,30 +1092,30 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PeerDownloadFinishedRequest",
+						field:  "DownloadPeerFinishedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetPeerDownloadFinishedRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetDownloadPeerFinishedRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
-					field:  "PeerDownloadFinishedRequest",
+					field:  "DownloadPeerFinishedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
 			}
 		}
 
-	case *AnnouncePeerRequest_PieceDownloadFinishedRequest:
+	case *AnnouncePeerRequest_DownloadPeerBackToSourceFinishedRequest:
 
 		if all {
-			switch v := interface{}(m.GetPieceDownloadFinishedRequest()).(type) {
+			switch v := interface{}(m.GetDownloadPeerBackToSourceFinishedRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PieceDownloadFinishedRequest",
+						field:  "DownloadPeerBackToSourceFinishedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1695,30 +1123,30 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PieceDownloadFinishedRequest",
+						field:  "DownloadPeerBackToSourceFinishedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetPieceDownloadFinishedRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetDownloadPeerBackToSourceFinishedRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
-					field:  "PieceDownloadFinishedRequest",
+					field:  "DownloadPeerBackToSourceFinishedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
 			}
 		}
 
-	case *AnnouncePeerRequest_PeerDownloadBackToSourceFailed:
+	case *AnnouncePeerRequest_DownloadPieceFinishedRequest:
 
 		if all {
-			switch v := interface{}(m.GetPeerDownloadBackToSourceFailed()).(type) {
+			switch v := interface{}(m.GetDownloadPieceFinishedRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PeerDownloadBackToSourceFailed",
+						field:  "DownloadPieceFinishedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1726,30 +1154,30 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PeerDownloadBackToSourceFailed",
+						field:  "DownloadPieceFinishedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetPeerDownloadBackToSourceFailed()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetDownloadPieceFinishedRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
-					field:  "PeerDownloadBackToSourceFailed",
+					field:  "DownloadPieceFinishedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
 			}
 		}
 
-	case *AnnouncePeerRequest_PieceDownloadFailed:
+	case *AnnouncePeerRequest_DownloadPieceBackToSourceFinishedRequest:
 
 		if all {
-			switch v := interface{}(m.GetPieceDownloadFailed()).(type) {
+			switch v := interface{}(m.GetDownloadPieceBackToSourceFinishedRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PieceDownloadFailed",
+						field:  "DownloadPieceBackToSourceFinishedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1757,78 +1185,16 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PieceDownloadFailed",
+						field:  "DownloadPieceBackToSourceFinishedRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetPieceDownloadFailed()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetDownloadPieceBackToSourceFinishedRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
-					field:  "PieceDownloadFailed",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	case *AnnouncePeerRequest_PieceInfoSyncFailed:
-
-		if all {
-			switch v := interface{}(m.GetPieceInfoSyncFailed()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PieceInfoSyncFailed",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "PieceInfoSyncFailed",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetPieceInfoSyncFailed()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return AnnouncePeerRequestValidationError{
-					field:  "PieceInfoSyncFailed",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	case *AnnouncePeerRequest_ScheduleFailed:
-
-		if all {
-			switch v := interface{}(m.GetScheduleFailed()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "ScheduleFailed",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "ScheduleFailed",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetScheduleFailed()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return AnnouncePeerRequestValidationError{
-					field:  "ScheduleFailed",
+					field:  "DownloadPieceBackToSourceFinishedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -1844,6 +1210,134 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+
+	}
+
+	switch m.Errordetails.(type) {
+
+	case *AnnouncePeerRequest_DownloadPeerBackToSourceFailed:
+
+		if all {
+			switch v := interface{}(m.GetDownloadPeerBackToSourceFailed()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPeerBackToSourceFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPeerBackToSourceFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadPeerBackToSourceFailed()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "DownloadPeerBackToSourceFailed",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_DownloadPieceBackToSourceFailed:
+
+		if all {
+			switch v := interface{}(m.GetDownloadPieceBackToSourceFailed()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPieceBackToSourceFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPieceBackToSourceFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadPieceBackToSourceFailed()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "DownloadPieceBackToSourceFailed",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_SyncPiecesFailed:
+
+		if all {
+			switch v := interface{}(m.GetSyncPiecesFailed()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "SyncPiecesFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "SyncPiecesFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetSyncPiecesFailed()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "SyncPiecesFailed",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_DownloadPieceFailed:
+
+		if all {
+			switch v := interface{}(m.GetDownloadPieceFailed()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPieceFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPieceFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadPieceFailed()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "DownloadPieceFailed",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
 
 	}
 
@@ -2599,37 +2093,6 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 			}
 		}
 
-	case *AnnouncePeerResponse_ScheduleFailed:
-
-		if all {
-			switch v := interface{}(m.GetScheduleFailed()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, AnnouncePeerResponseValidationError{
-						field:  "ScheduleFailed",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, AnnouncePeerResponseValidationError{
-						field:  "ScheduleFailed",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetScheduleFailed()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return AnnouncePeerResponseValidationError{
-					field:  "ScheduleFailed",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
 	default:
 		err := AnnouncePeerResponseValidationError{
 			field:  "Response",
@@ -2639,6 +2102,72 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+
+	}
+
+	switch m.Errordetails.(type) {
+
+	case *AnnouncePeerResponse_SchedulePeerForbidden:
+
+		if all {
+			switch v := interface{}(m.GetSchedulePeerForbidden()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerResponseValidationError{
+						field:  "SchedulePeerForbidden",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerResponseValidationError{
+						field:  "SchedulePeerForbidden",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetSchedulePeerForbidden()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerResponseValidationError{
+					field:  "SchedulePeerForbidden",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerResponse_SchedulePeerFailed:
+
+		if all {
+			switch v := interface{}(m.GetSchedulePeerFailed()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerResponseValidationError{
+						field:  "SchedulePeerFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerResponseValidationError{
+						field:  "SchedulePeerFailed",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetSchedulePeerFailed()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerResponseValidationError{
+					field:  "SchedulePeerFailed",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
 
 	}
 

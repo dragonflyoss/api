@@ -22,130 +22,76 @@ import "pkg/apis/common/v2/common.proto";
 import "pkg/apis/errordetails/v2/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "d7y.io/api/pkg/apis/scheduler/v2";
 
-// Peer metadata.
-message Peer{
-  // Peer id.
-  string id = 1 [(validate.rules).string.min_len = 1];
-  // Pieces of peer.
-  repeated common.Piece pieces = 2 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
-  // Task info.
-  Task task = 3 [(validate.rules).message.required = true];
-  // Host info.
-  Host host = 4 [(validate.rules).message.required = true];
-  // Peer state.
-  string state = 5 [(validate.rules).string.min_len = 1];
-  // Peer create time.
-  google.protobuf.Timestamp created_at = 6 [(validate.rules).timestamp.required = true];
-  // Peer update time.
-  google.protobuf.Timestamp updated_at = 7 [(validate.rules).timestamp.required = true];
-}
-
-// Task metadata.
-message Task{
-  // Task id.
-  string id = 1 [(validate.rules).string.min_len = 1];
-  // Host type.
-  string type = 2 [(validate.rules).string = {in: ["normal", "super", "strong", "weak"]}];
-  // Task size scope.
-  common.SizeScope size_scope = 3;
-  // Pieces of task.
-  repeated common.Piece pieces = 4 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
-  // Task state.
-  string state = 5 [(validate.rules).string.min_len = 1];
-  // Task metadata.
-  common.Metadata metadata = 6 [(validate.rules).message.required = true];
-  // Task content length.
-  int64 content_length = 7 [(validate.rules).int64.gte = 1];
-  // Task peer count.
-  int32 peer_count = 8 [(validate.rules).int32.gte = 0];
-  // Task contains available peer.
-  bool hasAvailablePeer = 9;
-  // Task create time.
-  google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
-  // Task update time.
-  google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
-}
-
-// Host metadata.
-message Host{
-  // Host id.
-  string id = 1 [(validate.rules).string.min_len = 1];
-  // Host ipv4.
-  string ipv4 = 2 [(validate.rules).string = {ipv4: true, ignore_empty: true}];
-  // Host ipv6.
-  string ipv6 = 3 [(validate.rules).string = {ipv6: true, ignore_empty: true}];
-  // Peer hostname.
-  string hostname = 4 [(validate.rules).string.hostname = true];
-  // Port of grpc service.
-  int32 port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // Port of download server.
-  int32 download_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // Security domain for network.
-  string security_domain = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // Host location(area, country, province, city, etc.).
-  repeated string location = 8 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
-  // IDC where the peer host is located.
-  string idc = 9 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // Network topology(switch, router, etc.).
-  repeated string net_topology = 10 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
-}
-
-// RegisteredRequest represents registered request of AnnouncePeerRequest.
-message RegisterRequest {
+// RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
+message RegisterPeerRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Peer id.
   string peer_id = 2 [(validate.rules).string.min_len = 1];
   // Task metadata.
   common.Metadata metadata = 3 [(validate.rules).message.required = true];
-  // Host info.
-  Host host = 4 [(validate.rules).message.required = true];
-  // Task type.
-  common.TaskType task_type = 5;
 }
 
-// TaskDownloadStartedRequest represents peer download started request of AnnouncePeerRequest.
-message PeerDownloadStartedRequest {
+// DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
+message DownloadPeerStartedRequest {
 }
 
-// PeerDownloadBackToSourceRequest represents peer download back-to-source request of AnnouncePeerRequest.
-message PeerDownloadBackToSourceRequest {
+// DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
+message DownloadPeerBackToSourceStartedRequest {
   // Download back-to-source reason.
   string reason = 1 [(validate.rules).string.min_len = 1];
 }
 
-// PeerDownloadFinishedRequest represents peer download finished request of AnnouncePeerRequest.
-message PeerDownloadFinishedRequest {
+// DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
+message DownloadPeerFinishedRequest {
   // Total content length.
   int64 content_length = 1 [(validate.rules).int64.gte = 0];
   // Total piece count.
   int64 piece_count = 2 [(validate.rules).int64.gte = 0];
 }
 
-// PieceDownloadFinishedRequest represents piece download finished request of AnnouncePeerRequest.
-message PieceDownloadFinishedRequest {
+// DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
+message DownloadPeerBackToSourceFinishedRequest {
+  // Total content length.
+  int64 content_length = 1 [(validate.rules).int64.gte = 0];
+  // Total piece count.
+  int64 piece_count = 2 [(validate.rules).int64.gte = 0];
+}
+
+// DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
+message DownloadPieceFinishedRequest {
+  // Piece info.
+  common.Piece piece = 1 [(validate.rules).message.required = true];
+}
+
+// DownloadPieceBackToSourceFinishedRequest represents piece download back-to-source finished request of AnnouncePeerRequest.
+message DownloadPieceBackToSourceFinishedRequest {
   // Piece info.
   common.Piece piece = 1 [(validate.rules).message.required = true];
 }
 
 // AnnouncePeerRequest represents request of AnnouncePeer.
-message AnnouncePeerRequest{
+message AnnouncePeerRequest {
   oneof request {
     option (validate.required) = true;
 
-    RegisterRequest register_request = 1;
-    PeerDownloadStartedRequest peer_download_started_request = 2;
-    PeerDownloadBackToSourceRequest peer_download_back_to_source_request = 3;
-    PeerDownloadFinishedRequest peer_download_finished_request = 4;
-    PieceDownloadFinishedRequest piece_download_finished_request = 5;
-    errordetails.PeerDownloadBackToSourceFailed peer_download_back_to_source_failed = 6;
-    errordetails.PieceDownloadFailed piece_download_failed = 7;
-    errordetails.PieceInfoSyncFailed piece_info_sync_failed = 8;
-    errordetails.ScheduleFailed schedule_failed = 9;
+    RegisterPeerRequest register_peer_request = 1;
+    DownloadPeerStartedRequest download_peer_started_request = 2;
+    DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 3;
+    DownloadPeerFinishedRequest download_peer_finished_request = 4;
+    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 5;
+    DownloadPieceFinishedRequest download_piece_finished_request = 6;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 7;
+  }
+
+  oneof errordetails {
+    errordetails.DownloadPeerBackToSourceFailed download_peer_back_to_source_failed = 8;
+    errordetails.DownloadPieceBackToSourceFailed download_piece_back_to_source_failed = 9;
+    errordetails.SyncPiecesFailed sync_pieces_failed = 10;
+    errordetails.DownloadPieceFailed download_piece_failed = 11;
   }
 }
 
@@ -163,7 +109,7 @@ message SmallTaskResponse {
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 message NormalTaskResponse {
   // Candidate parents.
-  repeated Peer candidate_parents = 1 [(validate.rules).repeated = {min_items: 1}];
+  repeated common.Peer candidate_parents = 1 [(validate.rules).repeated = {min_items: 1}];
   // Concurrent downloading count from main peer.
   int32 parallel_count = 2 [(validate.rules).int32.gte = 1];
 }
@@ -175,7 +121,7 @@ message NeedBackToSourceResponse {
 }
 
 // AnnouncePeerResponse represents response of AnnouncePeer.
-message AnnouncePeerResponse{
+message AnnouncePeerResponse {
   oneof response {
     option (validate.required) = true;
 
@@ -183,12 +129,16 @@ message AnnouncePeerResponse{
     SmallTaskResponse small_task_response = 2;
     NormalTaskResponse normal_task_response = 3;
     NeedBackToSourceResponse need_back_to_source_response = 4;
-    errordetails.ScheduleFailed scheduleFailed = 5;
+  }
+
+  oneof errordetails {
+    errordetails.SchedulePeerForbidden schedule_peer_forbidden = 5;
+    errordetails.SchedulePeerFailed schedule_peer_failed = 6;
   }
 }
 
 // StatPeerRequest represents request of StatPeer.
-message StatPeerRequest{
+message StatPeerRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Peer id.
@@ -197,7 +147,7 @@ message StatPeerRequest{
 
 // TODO exchange peer request definition.
 // ExchangePeerRequest represents request of ExchangePeer.
-message ExchangePeerRequest{
+message ExchangePeerRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Peer id.
@@ -206,23 +156,23 @@ message ExchangePeerRequest{
 
 // TODO exchange peer response definition.
 // ExchangePeerResponse represents response of ExchangePeer.
-message ExchangePeerResponse{
+message ExchangePeerResponse {
 }
 
 // LeavePeerRequest represents request of LeavePeer.
-message LeavePeerRequest{
+message LeavePeerRequest {
   // Peer id.
   string id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // StatTaskRequest represents request of StatTask.
-message StatTaskRequest{
+message StatTaskRequest {
   // Task id.
   string id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // AnnounceHostRequest represents request of AnnounceHost.
-message AnnounceHostRequest{
+message AnnounceHostRequest {
   // Host id.
   string id = 1 [(validate.rules).string.min_len = 1];
   // Host type.
@@ -372,7 +322,7 @@ service Scheduler{
   rpc AnnouncePeer(stream AnnouncePeerRequest) returns(stream AnnouncePeerResponse);
 
   // Checks information of peer.
-  rpc StatPeer(StatPeerRequest)returns(Peer);
+  rpc StatPeer(StatPeerRequest)returns(common.Peer);
 
   // LeavePeer releases peer in scheduler.
   rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
@@ -382,7 +332,7 @@ service Scheduler{
   rpc ExchangePeer(ExchangePeerRequest)returns(ExchangePeerResponse);
 
   // Checks information of task.
-  rpc StatTask(StatTaskRequest)returns(Task);
+  rpc StatTask(StatTaskRequest)returns(common.Task);
 
   // AnnounceHost announces host to scheduler.
   rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);
