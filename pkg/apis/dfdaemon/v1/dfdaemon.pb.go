@@ -22,14 +22,13 @@
 package v1
 
 import (
-	reflect "reflect"
-	sync "sync"
-
 	v1 "d7y.io/api/pkg/apis/common/v1"
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
+	reflect "reflect"
+	sync "sync"
 )
 
 const (

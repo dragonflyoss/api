@@ -1,0 +1,19 @@
+[package]
+name = "api"
+version = "0.1.0"
+authors = ["Gaius <gaius.qi@gmail.com>"]
+edition = "2021"
+license = "Apache-2.0"
+homepage = "https://d7y.io"
+repository = "https://github.com/dragonflyoss/api"
+readme = "README.md"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+tonic = "0.8.3"
+prost = "0.11"
+prost-types = "0.11"
+tokio = { version = "1.8.2", features = ["rt-multi-thread", "macros"] }
+
+[build-dependencies]
+tonic-build = "0.8.3"

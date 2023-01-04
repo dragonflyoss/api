@@ -18,12 +18,9 @@ syntax = "proto3";
 
 package manager;
 
-import "pkg/apis/common/v2/common.proto";
+import "common.proto";
 import "google/protobuf/empty.proto";
-import "validate/validate.proto";
 import "google/protobuf/timestamp.proto";
-
-option go_package = "d7y.io/api/pkg/apis/manager/v2";
 
 // Request source type.
 enum SourceType {
@@ -74,6 +71,50 @@ message SeedPeer {
   // Seed peer type.
   string type = 3;
   // Seed peer idc.
+  string idc = 5;
+  // Seed peer network topology.
+  string net_topology = 6;
+  // Seed peer location.
+  string location = 7;
+  // Seed peer ip.
+  string ip = 8;
+  // Seed peer grpc port.
+  int32 port = 9;
+  // Seed peer download port.
+  int32 download_port = 10;
+  // Seed peer state.
+  string state = 11;
+  // ID of the cluster to which the seed peer belongs.
+  uint64 seed_peer_cluster_id = 12;
+  // Cluster to which the seed peer belongs.
+  SeedPeerCluster seed_peer_cluster = 13;
+  // Schedulers included in seed peer.
+  repeated Scheduler schedulers = 14;
+  // Seed peer object storage port.
+  int32 object_storage_port = 15;
+}
+
+// GetSeedPeerRequest represents request of GetSeedPeer.
+message GetSeedPeerRequest {
+  // Request source type.
+  SourceType source_type = 1;
+  // Seed peer hostname.
+  string host_name = 2;
+  // ID of the cluster to which the seed peer belongs.
+  uint64 seed_peer_cluster_id = 3;
+  // Seed peer ip.
+  string ip = 4;
+}
+
+// UpdateSeedPeerRequest represents request of UpdateSeedPeer.
+message UpdateSeedPeerRequest {
+  // Request source type.
+  SourceType source_type = 1;
+  // Seed peer hostname.
+  string host_name = 2;
+  // Seed peer type.
+  string type = 3;
+  // Seed peer idc.
   string idc = 4;
   // Seed peer network topology.
   string net_topology = 5;
@@ -81,58 +122,14 @@ message SeedPeer {
   string location = 6;
   // Seed peer ip.
   string ip = 7;
-  // Seed peer grpc port.
+  // Seed peer port.
   int32 port = 8;
   // Seed peer download port.
   int32 download_port = 9;
-  // Seed peer state.
-  string state = 10;
   // ID of the cluster to which the seed peer belongs.
-  uint64 seed_peer_cluster_id = 11;
-  // Cluster to which the seed peer belongs.
-  SeedPeerCluster seed_peer_cluster = 12;
-  // Schedulers included in seed peer.
-  repeated Scheduler schedulers = 13;
+  uint64 seed_peer_cluster_id = 10;
   // Seed peer object storage port.
-  int32 object_storage_port = 14;
-}
-
-// GetSeedPeerRequest represents request of GetSeedPeer.
-message GetSeedPeerRequest {
-  // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
-  // Seed peer hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
-  // ID of the cluster to which the seed peer belongs.
-  uint64 seed_peer_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
-  // Seed peer ip.
-  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
-}
-
-// UpdateSeedPeerRequest represents request of UpdateSeedPeer.
-message UpdateSeedPeerRequest {
-  // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
-  // Seed peer hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
-  // Seed peer type.
-  string type = 3 [(validate.rules).string = {in: ["super", "strong", "weak"]}];
-  // Seed peer idc.
-  string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // Seed peer network topology.
-  string net_topology = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // Seed peer location.
-  string location = 6 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
-  // Seed peer ip.
-  string ip = 7 [(validate.rules).string = {ip: true}];
-  // Seed peer port.
-  int32 port = 8 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // Seed peer download port.
-  int32 download_port = 9 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // ID of the cluster to which the seed peer belongs.
-  uint64 seed_peer_cluster_id = 10 [(validate.rules).uint64 = {gte: 1}];
-  // Seed peer object storage port.
-  int32 object_storage_port = 11 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  int32 object_storage_port = 11;
 }
 
 // SeedPeerCluster represents cluster of scheduler.
@@ -186,53 +183,53 @@ message Scheduler {
 // GetSchedulerRequest represents request of GetScheduler.
 message GetSchedulerRequest {
   // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  SourceType source_type = 1;
   // Scheduler hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string host_name = 2;
   // ID of the cluster to which the scheduler belongs.
-  uint64 scheduler_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_cluster_id = 3;
   // Scheduler ip.
-  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  string ip = 4;
 }
 
 // UpdateSchedulerRequest represents request of UpdateScheduler.
 message UpdateSchedulerRequest {
   // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  SourceType source_type = 1;
   // Scheduler hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string host_name = 2;
   // ID of the cluster to which the scheduler belongs.
-  uint64 scheduler_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_cluster_id = 3;
   // Deprecated: Do not use.
-  string vips = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string vips = 4;
   // Scheduler idc.
-  string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string idc = 5;
   // Scheduler location.
-  string location = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string location = 6;
   // Deprecated: Use net_topology instead.
-  bytes net_config = 7 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
+  bytes net_config = 7;
   // Scheduler ip.
-  string ip = 8 [(validate.rules).string = {ip: true}];
+  string ip = 8;
   // Scheduler port.
-  int32 port = 9 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 9;
   // Scheduler network topology.
-  string net_topology = 10 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string net_topology = 10;
 }
 
 // ListSchedulersRequest represents request of ListSchedulers.
 message ListSchedulersRequest {
   // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string host_name = 2;
   // Source service ip.
-  string ip = 3 [(validate.rules).string.ip = true];
+  string ip = 3;
   // Source service host information.
-  map<string, string> host_info = 4 [(validate.rules).map.ignore_empty = true];
+  map<string, string> host_info = 4;
   // Dfdaemon version.
-  string version = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string version = 5;
   // Dfdaemon commit.
-  string commit = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string commit = 6;
 }
 
 // ListSchedulersResponse represents response of ListSchedulers.
@@ -244,41 +241,41 @@ message ListSchedulersResponse {
 // ObjectStorage represents config of object storage.
 message ObjectStorage {
   // Object storage name of type.
-  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string name = 1;
   // Storage region.
-  string region = 2 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string region = 2;
   // Datacenter endpoint.
-  string endpoint = 3 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string endpoint = 3;
   // Access key id.
-  string access_key = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string access_key = 4;
   // Access key secret.
-  string secret_key = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string secret_key = 5;
 }
 
 // GetObjectStorageRequest represents request of GetObjectStorage.
 message GetObjectStorageRequest {
   // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string host_name = 2;
   // Source service ip.
-  string ip = 3 [(validate.rules).string.ip = true];
+  string ip = 3;
 }
 
 // Bucket represents config of bucket.
 message Bucket {
   // Bucket name.
-  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string name = 1;
 }
 
 // ListSchedulersRequest represents request of ListBuckets.
 message ListBucketsRequest {
   // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string host_name = 2;
   // Source service ip.
-  string ip = 3 [(validate.rules).string.ip = true];
+  string ip = 3;
 }
 
 // ListBucketsResponse represents response of ListBuckets.
@@ -290,27 +287,27 @@ message ListBucketsResponse {
 // Model represents information of model.
 message Model {
   // Model id.
-  string model_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 1;
   // Model name.
-  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string name = 2;
   // Model version id.
-  string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 3;
   // Scheduler id.
-  uint64 scheduler_id = 4 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 4;
   // Scheduler hostname.
-  string host_name = 5 [(validate.rules).string.hostname = true];
+  string host_name = 5;
   // Scheduler ip.
-  string ip = 6 [(validate.rules).string.ip = true];
+  string ip = 6;
   // Model create time.
-  google.protobuf.Timestamp created_at = 7 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 7;
   // Model update time.
-  google.protobuf.Timestamp updated_at = 8 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 8;
 }
 
 // ListModelsRequest represents request of ListModels.
 message ListModelsRequest {
   // Scheduler id.
-  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 1;
 }
 
 // ListModelsResponse represents response of ListModels.
@@ -322,77 +319,77 @@ message ListModelsResponse {
 // GetModelRequest represents request of GetModel.
 message GetModelRequest {
   // Scheduler id.
-  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 1;
   // Model id.
-  string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 2;
 }
 
 // CreateModelRequest represents request of CreateModel.
 message CreateModelRequest {
   // Model id.
-  string model_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 1;
   // Model name.
-  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string name = 2;
   // Model version id.
-  string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 3;
   // Scheduler id.
-  uint64 scheduler_id = 4 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 4;
   // Scheduler hostname.
-  string host_name = 5 [(validate.rules).string.hostname = true];
+  string host_name = 5;
   // Scheduler ip.
-  string ip = 6 [(validate.rules).string.ip = true];
+  string ip = 6;
 }
 
 // UpdateModelRequest represents request of UpdateModel.
 message UpdateModelRequest {
   // Model id.
-  string model_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 1;
   // Model name.
-  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string name = 2;
   // Model version id.
-  string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string version_id = 3;
   // Scheduler id.
-  uint64 scheduler_id = 4 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 4;
   // Scheduler hostname.
-  string host_name = 5 [(validate.rules).string = {hostname: true, ignore_empty: true}];
+  string host_name = 5;
   // Scheduler ip.
-  string ip = 6 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  string ip = 6;
 }
 
 // DeleteModelRequest represents request of DeleteModel.
 message DeleteModelRequest {
   // Scheduler id.
-  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 1;
   // Model id.
-  string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 2;
 }
 
 // ModelVersion represents information of model version.
 message ModelVersion {
   // Model version id.
-  string version_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 1;
   // Model version data.
-  bytes data = 2 [(validate.rules).bytes.min_len = 1];
+  bytes data = 2;
   // Model version mae.
-  double mae = 3 [(validate.rules).double.gte = 0];
+  double mae = 3;
   // Model version mse.
-  double mse = 4 [(validate.rules).double.gte = 0];
+  double mse = 4;
   // Model version rmse.
-  double rmse = 5 [(validate.rules).double.gte = 0];
+  double rmse = 5;
   // Model version r^2.
   double r2 = 6;
   // Model create time.
-  google.protobuf.Timestamp created_at = 7 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 7;
   // Model update time.
-  google.protobuf.Timestamp updated_at = 8 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 8;
 }
 
 // ListModelVersionsRequest represents request of ListModelVersions.
 message ListModelVersionsRequest {
   // Scheduler id.
-  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 1;
   // Model id.
-  string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 2;
 }
 
 // ListModelVersionsResponse represents response of ListModelVersions.
@@ -404,27 +401,27 @@ message ListModelVersionsResponse {
 // GetModelVersionRequest represents request of GetModelVersion.
 message GetModelVersionRequest {
   // Scheduler id.
-  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 1;
   // Model id.
-  string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 2;
   // Model version id.
-  string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 3;
 }
 
 // CreateModelVersionRequest represents request of CreateModelVersion.
 message CreateModelVersionRequest {
   // Scheduler id.
-  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 1;
   // Model id.
-  string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 2;
   // Model version data.
-  bytes data = 3 [(validate.rules).bytes.min_len = 1];
+  bytes data = 3;
   // Model version mae.
-  double mae = 4 [(validate.rules).double.gte = 0];
+  double mae = 4;
   // Model version mse.
-  double mse = 5 [(validate.rules).double.gte = 0];
+  double mse = 5;
   // Model version rmse.
-  double rmse = 6 [(validate.rules).double.gte = 0];
+  double rmse = 6;
   // Model version r^2.
   double r2 = 7;
 }
@@ -432,37 +429,37 @@ message CreateModelVersionRequest {
 // UpdateModelVersionRequest represents request of UpdateModelVersion.
 message UpdateModelVersionRequest {
   // Model version id.
-  string version_id = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 1;
   // Scheduler id.
-  uint64 scheduler_id = 2 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 2;
   // Model id.
-  string model_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 3;
   // Model version data.
-  bytes data = 4 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
+  bytes data = 4;
   // Model version mae.
-  double mae = 5 [(validate.rules).double = {gte: 0, ignore_empty: true}];
+  double mae = 5;
   // Model version mse.
-  double mse = 6 [(validate.rules).double = {gte: 0, ignore_empty: true}];
+  double mse = 6;
   // Model version rmse.
-  double rmse = 7 [(validate.rules).double = {gte: 0, ignore_empty: true}];
+  double rmse = 7;
   // Model version r^2.
-  double r2 = 8 [(validate.rules).double = {ignore_empty: true}];
+  double r2 = 8;
 }
 
 // DeleteModelVersionRequest represents request of DeleteModelVersion.
 message DeleteModelVersionRequest {
   // Scheduler id.
-  uint64 scheduler_id = 1 [(validate.rules).uint64 = {gte: 1}];
+  uint64 scheduler_id = 1;
   // Model id.
-  string model_id = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string model_id = 2;
   // Model version id.
-  string version_id = 3 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string version_id = 3;
 }
 
 // URLPriority represents config of url priority.
 message URLPriority {
   // URL regex.
-  string regex = 1 [(validate.rules).string = {min_len: 1}];
+  string regex = 1;
   // URL priority value.
   common.Priority value = 2;
 }
@@ -478,25 +475,25 @@ message ApplicationPriority {
 // Application represents config of application.
 message Application {
   // Application id.
-  uint64 id = 1 [(validate.rules).uint64 = {gte: 1}];
+  uint64 id = 1;
   // Application name.
-  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string name = 2;
   // Application url.
-  string url = 3 [(validate.rules).string.uri = true];
+  string url = 3;
   // Application biography.
   string bio = 4;
   // Application priority.
-  ApplicationPriority priority = 5 [(validate.rules).message.required = true];
+  ApplicationPriority priority = 5;
 }
 
 // ListApplicationsRequest represents request of ListApplications.
 message ListApplicationsRequest {
   // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string host_name = 2;
   // Source service ip.
-  string ip = 3 [(validate.rules).string.ip = true];
+  string ip = 3;
 }
 
 // ListApplicationsResponse represents response of ListApplications.
@@ -508,13 +505,13 @@ message ListApplicationsResponse {
 // KeepAliveRequest represents request of KeepAlive.
 message KeepAliveRequest {
   // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string host_name = 2;
   // ID of the cluster to which the source service belongs.
-  uint64 cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
+  uint64 cluster_id = 3;
   // Source service ip.
-  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  string ip = 4;
 }
 
 // Manager RPC Service.

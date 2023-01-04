@@ -1,0 +1,231 @@
+/*
+ *     Copyright 2022 The Dragonfly Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package common;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+// SizeScope represents size scope of task.
+enum SizeScope {
+  // size > one piece size.
+  NORMAL = 0;
+
+  // 128 byte < size <= one piece size and be plain type.
+  SMALL = 1;
+
+  // size <= 128 byte and be plain type.
+  TINY = 2;
+
+  // size == 0 byte and be plain type.
+  EMPTY = 3;
+}
+
+// TaskType represents type of task.
+enum TaskType {
+  // DFDAEMON is dfdeamon type of task,
+  // dfdeamon task is a normal p2p task.
+  DFDAEMON = 0;
+
+  // DFCACHE is dfcache type of task,
+  // dfcache task is a cache task, and the task url is fake url.
+  // It can only be used for caching and cannot be downloaded back to source.
+  DFCACHE = 1;
+
+  // DFSTORE is dfstore type of task,
+  // dfstore task is a persistent task in backend.
+  DFSTORE = 2;
+}
+
+// TrafficType represents type of traffic.
+enum TrafficType {
+  // BACK_TO_SOURCE is to download traffic from the source.
+  BACK_TO_SOURCE = 0;
+
+  // REMOTE_PEER is to download traffic from the remote peer.
+  REMOTE_PEER = 1;
+
+  // LOCAL_PEER is to download traffic from the local peer.
+  LOCAL_PEER = 2;
+}
+
+// Priority represents priority of application.
+enum Priority {
+  // LEVEL0 has no special meaning for scheduler.
+  LEVEL0 = 0;
+
+  // LEVEL1 represents the download task is forbidden,
+  // and an error code is returned during the registration.
+  LEVEL1 = 1;
+
+  // LEVEL2 represents when the task is downloaded for the first time,
+  // allow peers to download from the other peers,
+  // but not back-to-source. When the task is not downloaded for
+  // the first time, it is scheduled normally.
+  LEVEL2 = 2;
+
+  // LEVEL3 represents when the task is downloaded for the first time,
+  // the normal peer is first to download back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL3 = 3;
+
+  // LEVEL4 represents when the task is downloaded for the first time,
+  // the weak peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL4 = 4;
+
+  // LEVEL5 represents when the task is downloaded for the first time,
+  // the strong peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL5 = 5;
+
+  // LEVEL6 represents when the task is downloaded for the first time,
+  // the super peer is first triggered to back-to-source.
+  // When the task is not downloaded for the first time, it is scheduled normally.
+  LEVEL6 = 6;
+}
+
+// Peer metadata.
+message Peer {
+  // Peer id.
+  string id = 1;
+  // Pieces of peer.
+  repeated Piece pieces = 2;
+  // Task info.
+  Task task = 3;
+  // Host info.
+  Host host = 4;
+  // Peer state.
+  string state = 5;
+  // Peer create time.
+  google.protobuf.Timestamp created_at = 6;
+  // Peer update time.
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+// Task metadata.
+message Task {
+  // Task id.
+  string id = 1;
+  // Host type.
+  string type = 2;
+  // Task size scope.
+  SizeScope size_scope = 3;
+  // Pieces of task.
+  repeated Piece pieces = 4;
+  // Task state.
+  string state = 5;
+  // Task metadata.
+  Metadata metadata = 6;
+  // Task content length.
+  int64 content_length = 7;
+  // Task peer count.
+  int32 peer_count = 8;
+  // Task contains available peer.
+  bool hasAvailablePeer = 9;
+  // Task create time.
+  google.protobuf.Timestamp created_at = 10;
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+// Host metadata.
+message Host {
+  // Host id.
+  string id = 1;
+  // Host ipv4.
+  string ipv4 = 2;
+  // Host ipv6.
+  string ipv6 = 3;
+  // Peer hostname.
+  string hostname = 4;
+  // Port of grpc service.
+  int32 port = 5;
+  // Port of download server.
+  int32 download_port = 6;
+  // Security domain for network.
+  string security_domain = 7;
+  // Host location(area, country, province, city, etc.).
+  repeated string location = 8;
+  // IDC where the peer host is located.
+  string idc = 9;
+  // Network topology(switch, router, etc.).
+  repeated string net_topology = 10;
+}
+
+// Range represents download range.
+message Range {
+  // Begin of range.
+  uint64 begin = 1;
+  // End of range.
+  uint64 end = 2;
+}
+
+// Metadata represents metadata of task.
+message Metadata {
+  // Download url.
+  string url = 1;
+  // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+  string digest = 2;
+  // Range is url range of request.
+  Range range = 3;
+  // Task type.
+  common.TaskType type = 4;
+  // URL tag identifies different task for same url.
+  string tag = 5;
+  // Application of task.
+  string application = 6;
+  // Peer priority.
+  Priority priority = 7;
+  // Filter url used to generate task id.
+  repeated string filters = 8;
+  // Task request headers.
+  map<string, string> header = 9;
+  // Task piece size.
+  int32 piece_size = 10;
+}
+
+// Piece represents information of piece.
+message Piece {
+  // Piece number.
+  uint32 number = 1;
+	// Parent peer id.
+  string parent_id = 2;
+	// Piece offset.
+  uint64 offset = 3;
+	// Piece size.
+  uint64 size = 4;
+	// Digest of the piece data, for example md5:xxx or sha256:yyy.
+  string digest = 5;
+  // Traffic type.
+  TrafficType traffic_type = 6;
+  // Downloading piece costs time.
+  google.protobuf.Duration cost = 7;
+  // Piece create time.
+  google.protobuf.Timestamp created_at = 8;
+}
+
+// ExtendAttribute represents extend of attribution.
+message ExtendAttribute {
+  // Task response header, eg: HTTP Response Header
+  map<string, string> header = 1;
+  // Task response code, eg: HTTP Status Code
+  int32 status_code = 2;
+  // Task response status, eg: HTTP Status
+  string status = 3;
+}

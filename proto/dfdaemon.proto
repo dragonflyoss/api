@@ -18,13 +18,10 @@ syntax = "proto3";
 
 package dfdaemon;
 
-import "pkg/apis/common/v2/common.proto";
-import "pkg/apis/errordetails/v2/errordetails.proto";
+import "common.proto";
+import "errordetails.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
-import "validate/validate.proto";
-
-option go_package = "d7y.io/api/pkg/apis/dfdaemon/v2";
 
 // InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
 message InterestedAllPiecesRequest {
@@ -33,7 +30,7 @@ message InterestedAllPiecesRequest {
 // InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
 message InterestedPiecesRequest {
   // Interested piece numbers.
-  repeated uint32 piece_numbers = 1 [(validate.rules).repeated = {min_items: 1}];
+  repeated uint32 piece_numbers = 1;
 }
 
 // StatMetadata represents stat metadata request of SyncPiecesRequest.
@@ -43,8 +40,6 @@ message StatMetadataRequest {
 // SyncPiecesRequest represents request of AnnouncePeer.
 message SyncPiecesRequest{
   oneof request {
-    option (validate.required) = true;
-
     InterestedAllPiecesRequest interested_all_pieces_request = 1;
     InterestedPiecesRequest interested_pieces_request = 2;
     StatMetadataRequest stat_metadata_request = 3;
@@ -54,20 +49,18 @@ message SyncPiecesRequest{
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
 message InterestedPiecesResponse {
   // Interested pieces of task.
-  repeated common.Piece pieces = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated common.Piece pieces = 1;
 }
 
 // StatMetadata represents stat metadata request of SyncPiecesResponse.
 message StatMetadataResponse {
   // Task metadata.
-  common.Metadata metadata = 1 [(validate.rules).message.required = true];
+  common.Metadata metadata = 1;
 }
 
 // SyncPiecesResponse represents response of SyncPieces.
 message SyncPiecesResponse {
   oneof response {
-    option (validate.required) = true;
-
     InterestedPiecesResponse interested_pieces_response = 1;
     StatMetadataResponse stat_metadata_response = 2;
   }
@@ -81,50 +74,50 @@ message SyncPiecesResponse {
 // TriggerTaskRequest represents request of TriggerTask.
 message TriggerTaskRequest {
   // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+  string task_id = 1;
   // Task metadata.
-  common.Metadata metadata = 2 [(validate.rules).message.required = true];
+  common.Metadata metadata = 2;
 }
 
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest {
   // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+  string task_id = 1;
 }
 
 // StatTaskResponse represents response of StatTask.
 message StatTaskResponse {
-  common.Task task = 1 [(validate.rules).message.required = true];
+  common.Task task = 1;
 }
 
 // ImportTaskRequest represents request of ImportTask.
 message ImportTaskRequest {
   // Task metadata.
-  common.Metadata metadata = 1 [(validate.rules).message.required = true];
+  common.Metadata metadata = 1;
   // File path to be imported.
-  string path = 2 [(validate.rules).string.min_len = 1];
+  string path = 2;
 }
 
 // ExportTaskRequest represents request of ExportTask.
 message ExportTaskRequest {
   // Task metadata.
-  common.Metadata metadata = 1 [(validate.rules).message.required = true];
+  common.Metadata metadata = 1;
   // File path to be exported.
-  string path = 2 [(validate.rules).string.min_len = 1];
+  string path = 2;
   // Download timeout.
-  google.protobuf.Duration timeout = 3 [(validate.rules).duration.required = true];
+  google.protobuf.Duration timeout = 3;
   // Download rate limit in bytes per second.
-  double download_rate_limit = 4 [(validate.rules).double.gte = 0];
+  double download_rate_limit = 4;
   // User id.
-  uint64 uid = 5 [(validate.rules).uint64.gte = 0];
+  uint64 uid = 5;
   // Group id.
-  uint64 gid = 6 [(validate.rules).uint64.gte = 0];
+  uint64 gid = 6;
 }
 
 // DeleteTaskRequest represents request of DeleteTask.
 message DeleteTaskRequest {
   // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+  string task_id = 1;
 }
 
 // Dfdaemon RPC Service.
