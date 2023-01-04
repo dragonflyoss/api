@@ -43,7 +43,7 @@ jobs:
         with:
           command: check
 
-      - name: Cargo clippy
+      - name: Run cargo clippy
         uses: actions-rs/cargo@v1
         with:
           command: clippy
