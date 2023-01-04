@@ -1,0 +1,335 @@
+/*
+ *     Copyright 2022 The Dragonfly Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package scheduler;
+
+import "common.proto";
+import "errordetails.proto";
+import "google/protobuf/empty.proto";
+
+// RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
+message RegisterPeerRequest {
+  // Task id.
+  string task_id = 1;
+  // Peer id.
+  string peer_id = 2;
+  // Task metadata.
+  common.Metadata metadata = 3;
+}
+
+// DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
+message DownloadPeerStartedRequest {
+}
+
+// DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
+message DownloadPeerBackToSourceStartedRequest {
+  // Download back-to-source reason.
+  string reason = 1;
+}
+
+// DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
+message DownloadPeerFinishedRequest {
+  // Total content length.
+  int64 content_length = 1;
+  // Total piece count.
+  int64 piece_count = 2;
+}
+
+// DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
+message DownloadPeerBackToSourceFinishedRequest {
+  // Total content length.
+  int64 content_length = 1;
+  // Total piece count.
+  int64 piece_count = 2;
+}
+
+// DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
+message DownloadPieceFinishedRequest {
+  // Piece info.
+  common.Piece piece = 1;
+}
+
+// DownloadPieceBackToSourceFinishedRequest represents piece download back-to-source finished request of AnnouncePeerRequest.
+message DownloadPieceBackToSourceFinishedRequest {
+  // Piece info.
+  common.Piece piece = 1;
+}
+
+// AnnouncePeerRequest represents request of AnnouncePeer.
+message AnnouncePeerRequest {
+  oneof request {
+    RegisterPeerRequest register_peer_request = 1;
+    DownloadPeerStartedRequest download_peer_started_request = 2;
+    DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 3;
+    DownloadPeerFinishedRequest download_peer_finished_request = 4;
+    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 5;
+    DownloadPieceFinishedRequest download_piece_finished_request = 6;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 7;
+  }
+
+  oneof errordetails {
+    errordetails.DownloadPeerBackToSourceFailed download_peer_back_to_source_failed = 8;
+    errordetails.DownloadPieceBackToSourceFailed download_piece_back_to_source_failed = 9;
+    errordetails.SyncPiecesFailed sync_pieces_failed = 10;
+    errordetails.DownloadPieceFailed download_piece_failed = 11;
+  }
+}
+
+// TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
+message TinyTaskResponse {
+  bytes data = 1;
+}
+
+// SmallTaskResponse represents small task response of AnnouncePeerResponse.
+message SmallTaskResponse {
+  // Piece info.
+  common.Piece piece = 1;
+}
+
+// NormalTaskResponse represents normal task response of AnnouncePeerResponse.
+message NormalTaskResponse {
+  // Candidate parents.
+  repeated common.Peer candidate_parents = 1;
+  // Concurrent downloading count from main peer.
+  int32 parallel_count = 2;
+}
+
+// NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
+message NeedBackToSourceResponse {
+  // Download back-to-source reason.
+  string reason = 1;
+}
+
+// AnnouncePeerResponse represents response of AnnouncePeer.
+message AnnouncePeerResponse {
+  oneof response {
+    TinyTaskResponse tiny_task_response = 1;
+    SmallTaskResponse small_task_response = 2;
+    NormalTaskResponse normal_task_response = 3;
+    NeedBackToSourceResponse need_back_to_source_response = 4;
+  }
+
+  oneof errordetails {
+    errordetails.SchedulePeerForbidden schedule_peer_forbidden = 5;
+    errordetails.SchedulePeerFailed schedule_peer_failed = 6;
+  }
+}
+
+// StatPeerRequest represents request of StatPeer.
+message StatPeerRequest {
+  // Task id.
+  string task_id = 1;
+  // Peer id.
+  string peer_id = 2;
+}
+
+// TODO exchange peer request definition.
+// ExchangePeerRequest represents request of ExchangePeer.
+message ExchangePeerRequest {
+  // Task id.
+  string task_id = 1;
+  // Peer id.
+  string peer_id = 2;
+}
+
+// TODO exchange peer response definition.
+// ExchangePeerResponse represents response of ExchangePeer.
+message ExchangePeerResponse {
+}
+
+// LeavePeerRequest represents request of LeavePeer.
+message LeavePeerRequest {
+  // Peer id.
+  string id = 1;
+}
+
+// StatTaskRequest represents request of StatTask.
+message StatTaskRequest {
+  // Task id.
+  string id = 1;
+}
+
+// AnnounceHostRequest represents request of AnnounceHost.
+message AnnounceHostRequest {
+  // Host id.
+  string id = 1;
+  // Host type.
+  uint32 type = 2;
+  // Hostname.
+  string hostname = 3;
+  // Host ip.
+  string ip = 4;
+  // Port of grpc service.
+  int32 port = 5;
+  // Port of download server.
+  int32 download_port = 6;
+  // Host OS.
+  string os = 7;
+  // Host platform.
+  string platform = 8;
+  // Host platform family.
+  string platform_family = 9;
+  // Host platform version.
+  string platform_version = 10;
+  // Host kernel version.
+  string kernel_version = 11;
+  // CPU Stat.
+  CPU cpu = 12;
+  // Memory Stat.
+  Memory memory = 13;
+  // Network Stat.
+  Network network = 14;
+  // Disk Stat.
+  Disk disk = 15;
+  // Build information.
+  Build build = 16;
+}
+
+// CPU Stat.
+message CPU {
+  // Number of logical cores in the system.
+  uint32 logical_count = 1;
+  // Number of physical cores in the system
+  uint32 physical_count = 2;
+  // Percent calculates the percentage of cpu used.
+  double percent = 3;
+  // Calculates the percentage of cpu used by process.
+  double process_percent = 4;
+  // CPUTimes contains the amounts of time the CPU has spent performing different kinds of work.
+  CPUTimes times = 5;
+}
+
+// CPUTimes contains the amounts of time the CPU has spent performing different
+// kinds of work. Time units are in seconds.
+message CPUTimes {
+  // CPU time of user.
+  double user = 1;
+  // CPU time of system.
+  double system = 2;
+  // CPU time of idle.
+  double idle = 3;
+  // CPU time of nice.
+  double nice = 4;
+  // CPU time of iowait.
+  double iowait = 5;
+  // CPU time of irq.
+  double irq = 6;
+  // CPU time of softirq.
+  double softirq = 7;
+  // CPU time of steal.
+  double steal = 8;
+  // CPU time of guest.
+  double guest = 9;
+  // CPU time of guest nice.
+  double guest_nice = 10;
+}
+
+// Memory Stat.
+message Memory {
+  // Total amount of RAM on this system.
+  uint64 total = 1;
+  // RAM available for programs to allocate.
+  uint64 available = 2;
+  // RAM used by programs.
+  uint64 used = 3;
+  // Percentage of RAM used by programs.
+  double used_percent = 4;
+  // Calculates the percentage of memory used by process.
+  double process_used_percent = 5;
+  // This is the kernel's notion of free memory.
+  uint64 free = 6;
+}
+
+// Network Stat.
+message Network {
+  // Return count of tcp connections opened and status is ESTABLISHED.
+  uint32 tcp_connection_count = 1;
+  // Return count of upload tcp connections opened and status is ESTABLISHED.
+  uint32 upload_tcp_connection_count = 2;
+  // Security domain for network.
+  string security_domain = 3;
+  // Location path(area|country|province|city|...).
+  string location = 4;
+  // IDC where the peer host is located
+  string idc = 5;
+  // Network topology(switch|router|...).
+  string net_topology = 6;
+}
+
+// Disk Stat.
+message Disk {
+  // Total amount of disk on the data path of dragonfly.
+  uint64 total = 1;
+  // Free amount of disk on the data path of dragonfly.
+  uint64 free = 2;
+  // Used amount of disk on the data path of dragonfly.
+  uint64 used = 3;
+  // Used percent of disk on the data path of dragonfly directory.
+  double used_percent = 4;
+  // Total amount of indoes on the data path of dragonfly directory.
+  uint64 inodes_total = 5;
+  // Used amount of indoes on the data path of dragonfly directory.
+  uint64 inodes_used = 6;
+  // Free amount of indoes on the data path of dragonfly directory.
+  uint64 inodes_free = 7;
+  // Used percent of indoes on the data path of dragonfly directory.
+  double inodes_used_percent = 8;
+}
+
+// Build information.
+message Build {
+  // Git version.
+  string git_version = 1;
+  // Git commit.
+  string git_commit = 2;
+  // Golang version.
+  string go_version = 3;
+  // Build platform.
+  string platform = 4;
+}
+
+// LeaveHostRequest represents request of LeaveHost.
+message LeaveHostRequest{
+  // Host id.
+  string id = 1;
+}
+
+// Scheduler RPC Service.
+service Scheduler{
+  // AnnouncePeer announces peer to scheduler.
+  rpc AnnouncePeer(stream AnnouncePeerRequest) returns(stream AnnouncePeerResponse);
+
+  // Checks information of peer.
+  rpc StatPeer(StatPeerRequest)returns(common.Peer);
+
+  // LeavePeer releases peer in scheduler.
+  rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
+
+  // TODO exchange peer api definition.
+  // ExchangePeer exchanges peer information.
+  rpc ExchangePeer(ExchangePeerRequest)returns(ExchangePeerResponse);
+
+  // Checks information of task.
+  rpc StatTask(StatTaskRequest)returns(common.Task);
+
+  // AnnounceHost announces host to scheduler.
+  rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);
+
+  // LeaveHost releases host in scheduler.
+  rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
+}
