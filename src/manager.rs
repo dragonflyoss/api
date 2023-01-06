@@ -303,21 +303,29 @@ pub struct ListSchedulersResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ObjectStorage {
-    /// Object storage name of type.
+    /// name is object storage name of type, it can be s3, oss or obs.
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
-    /// Storage region.
+    /// Region is storage region.
     #[prost(string, tag = "2")]
     pub region: ::prost::alloc::string::String,
-    /// Datacenter endpoint.
+    /// Endpoint is datacenter endpoint.
     #[prost(string, tag = "3")]
     pub endpoint: ::prost::alloc::string::String,
-    /// Access key id.
+    /// AccessKey is access key ID.
     #[prost(string, tag = "4")]
     pub access_key: ::prost::alloc::string::String,
-    /// Access key secret.
+    /// SecretKey is access key secret.
     #[prost(string, tag = "5")]
     pub secret_key: ::prost::alloc::string::String,
+    /// S3ForcePathStyle sets force path style for s3, true by default.
+    /// Set this to `true` to force the request to use path-style addressing,
+    /// i.e., `<http://s3.amazonaws.com/BUCKET/KEY`.> By default, the S3 client
+    /// will use virtual hosted bucket addressing when possible
+    /// (`<http://BUCKET.s3.amazonaws.com/KEY`>).
+    /// Refer to <https://github.com/aws/aws-sdk-go/blob/main/aws/config.go#L118.>
+    #[prost(bool, tag = "6")]
+    pub s3_force_path_style: bool,
 }
 /// GetObjectStorageRequest represents request of GetObjectStorage.
 #[allow(clippy::derive_partial_eq_without_eq)]
