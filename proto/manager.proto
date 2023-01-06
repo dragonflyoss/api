@@ -240,16 +240,23 @@ message ListSchedulersResponse {
 
 // ObjectStorage represents config of object storage.
 message ObjectStorage {
-  // Object storage name of type.
+  // name is object storage name of type, it can be s3, oss or obs.
   string name = 1;
-  // Storage region.
+  // Region is storage region.
   string region = 2;
-  // Datacenter endpoint.
+  // Endpoint is datacenter endpoint.
   string endpoint = 3;
-  // Access key id.
+  // AccessKey is access key ID.
   string access_key = 4;
-  // Access key secret.
+  // SecretKey is access key secret.
   string secret_key = 5;
+  // S3ForcePathStyle sets force path style for s3, true by default.
+  // Set this to `true` to force the request to use path-style addressing,
+  // i.e., `http://s3.amazonaws.com/BUCKET/KEY`. By default, the S3 client
+  // will use virtual hosted bucket addressing when possible
+  // (`http://BUCKET.s3.amazonaws.com/KEY`).
+  // Refer to https://github.com/aws/aws-sdk-go/blob/main/aws/config.go#L118.
+  bool s3_force_path_style = 6;
 }
 
 // GetObjectStorageRequest represents request of GetObjectStorage.

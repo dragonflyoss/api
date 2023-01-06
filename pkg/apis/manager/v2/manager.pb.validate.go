@@ -2125,6 +2125,8 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	}
 
+	// no validation rules for S3ForcePathStyle
+
 	if len(errors) > 0 {
 		return ObjectStorageMultiError(errors)
 	}
