@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package dfdaemon.v1;
+package dfdaemon;
 
 import "pkg/apis/common/v1/common.proto";
 import "google/protobuf/empty.proto";
@@ -40,7 +40,7 @@ message DownRequest{
   // Disable back-to-source.
   bool disable_back_source = 6;
   // URL meta info.
-  common.v1.UrlMeta url_meta = 7;
+  common.UrlMeta url_meta = 7;
   // User id.
   int64 uid = 10;
   // Group id.
@@ -68,7 +68,7 @@ message StatTaskRequest{
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
-  common.v1.UrlMeta url_meta = 2;
+  common.UrlMeta url_meta = 2;
   // Check local cache only.
   bool local_only = 3;
 }
@@ -77,11 +77,11 @@ message ImportTaskRequest{
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
-  common.v1.UrlMeta url_meta = 2;
+  common.UrlMeta url_meta = 2;
   // File to be imported.
   string path = 3 [(validate.rules).string.min_len = 1];
   // Task type.
-  common.v1.TaskType type = 4;
+  common.TaskType type = 4;
 }
 
 message ExportTaskRequest{
@@ -94,7 +94,7 @@ message ExportTaskRequest{
   // Rate limit in bytes per second.
   double limit = 4 [(validate.rules).double.gte = 0];
   // URL meta info.
-  common.v1.UrlMeta url_meta = 5;
+  common.UrlMeta url_meta = 5;
   // User id.
   int64 uid = 7;
   // Group id.
@@ -107,7 +107,7 @@ message DeleteTaskRequest{
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
-  common.v1.UrlMeta url_meta = 2;
+  common.UrlMeta url_meta = 2;
 }
 
 // Daemon Client RPC Service
@@ -115,11 +115,11 @@ service Daemon{
   // Trigger client to download file
   rpc Download(DownRequest) returns(stream DownResult);
   // Get piece tasks from other peers
-  rpc GetPieceTasks(common.v1.PieceTaskRequest)returns(common.v1.PiecePacket);
+  rpc GetPieceTasks(common.PieceTaskRequest)returns(common.PiecePacket);
   // Check daemon health
   rpc CheckHealth(google.protobuf.Empty)returns(google.protobuf.Empty);
   // Sync piece tasks with other peers
-  rpc SyncPieceTasks(stream common.v1.PieceTaskRequest)returns(stream common.v1.PiecePacket);
+  rpc SyncPieceTasks(stream common.PieceTaskRequest)returns(stream common.PiecePacket);
   // Check if given task exists in P2P cache system
   rpc StatTask(StatTaskRequest) returns(google.protobuf.Empty);
   // Import the given file into P2P cache system

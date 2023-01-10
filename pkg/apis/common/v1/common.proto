@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package common.v1;
+package common;
 
 import "validate/validate.proto";
 
