@@ -4,7 +4,7 @@
 // - protoc             v3.21.6
 // source: pkg/apis/cdnsystem/v1/cdnsystem.proto
 
-package v1
+package cdnsystem
 
 import (
 	context "context"
@@ -40,7 +40,7 @@ func NewSeederClient(cc grpc.ClientConnInterface) SeederClient {
 }
 
 func (c *seederClient) ObtainSeeds(ctx context.Context, in *SeedRequest, opts ...grpc.CallOption) (Seeder_ObtainSeedsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Seeder_ServiceDesc.Streams[0], "/cdnsystem.Seeder/ObtainSeeds", opts...)
+	stream, err := c.cc.NewStream(ctx, &Seeder_ServiceDesc.Streams[0], "/cdnsystem.v1.Seeder/ObtainSeeds", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func (x *seederObtainSeedsClient) Recv() (*PieceSeed, error) {
 
 func (c *seederClient) GetPieceTasks(ctx context.Context, in *v1.PieceTaskRequest, opts ...grpc.CallOption) (*v1.PiecePacket, error) {
 	out := new(v1.PiecePacket)
-	err := c.cc.Invoke(ctx, "/cdnsystem.Seeder/GetPieceTasks", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cdnsystem.v1.Seeder/GetPieceTasks", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func (c *seederClient) GetPieceTasks(ctx context.Context, in *v1.PieceTaskReques
 }
 
 func (c *seederClient) SyncPieceTasks(ctx context.Context, opts ...grpc.CallOption) (Seeder_SyncPieceTasksClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Seeder_ServiceDesc.Streams[1], "/cdnsystem.Seeder/SyncPieceTasks", opts...)
+	stream, err := c.cc.NewStream(ctx, &Seeder_ServiceDesc.Streams[1], "/cdnsystem.v1.Seeder/SyncPieceTasks", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +179,7 @@ func _Seeder_GetPieceTasks_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cdnsystem.Seeder/GetPieceTasks",
+		FullMethod: "/cdnsystem.v1.Seeder/GetPieceTasks",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SeederServer).GetPieceTasks(ctx, req.(*v1.PieceTaskRequest))
@@ -217,7 +217,7 @@ func (x *seederSyncPieceTasksServer) Recv() (*v1.PieceTaskRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Seeder_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "cdnsystem.Seeder",
+	ServiceName: "cdnsystem.v1.Seeder",
 	HandlerType: (*SeederServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

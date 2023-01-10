@@ -4,7 +4,7 @@
 // - protoc             v3.21.6
 // source: pkg/apis/security/v1/security.proto
 
-package v1
+package security
 
 import (
 	context "context"
@@ -36,7 +36,7 @@ func NewCertificateServiceClient(cc grpc.ClientConnInterface) CertificateService
 
 func (c *certificateServiceClient) IssueCertificate(ctx context.Context, in *CertificateRequest, opts ...grpc.CallOption) (*CertificateResponse, error) {
 	out := new(CertificateResponse)
-	err := c.cc.Invoke(ctx, "/security.CertificateService/IssueCertificate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/security.v1.CertificateService/IssueCertificate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _CertificateService_IssueCertificate_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/security.CertificateService/IssueCertificate",
+		FullMethod: "/security.v1.CertificateService/IssueCertificate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CertificateServiceServer).IssueCertificate(ctx, req.(*CertificateRequest))
@@ -92,7 +92,7 @@ func _CertificateService_IssueCertificate_Handler(srv interface{}, ctx context.C
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CertificateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "security.CertificateService",
+	ServiceName: "security.v1.CertificateService",
 	HandlerType: (*CertificateServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -4,7 +4,7 @@
 // - protoc             v3.21.6
 // source: pkg/apis/scheduler/v2/scheduler.proto
 
-package v2
+package scheduler
 
 import (
 	context "context"
@@ -50,7 +50,7 @@ func NewSchedulerClient(cc grpc.ClientConnInterface) SchedulerClient {
 }
 
 func (c *schedulerClient) AnnouncePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnouncePeerClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[0], "/scheduler.Scheduler/AnnouncePeer", opts...)
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[0], "/scheduler.v2.Scheduler/AnnouncePeer", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (x *schedulerAnnouncePeerClient) Recv() (*AnnouncePeerResponse, error) {
 
 func (c *schedulerClient) StatPeer(ctx context.Context, in *StatPeerRequest, opts ...grpc.CallOption) (*v2.Peer, error) {
 	out := new(v2.Peer)
-	err := c.cc.Invoke(ctx, "/scheduler.Scheduler/StatPeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatPeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func (c *schedulerClient) StatPeer(ctx context.Context, in *StatPeerRequest, opt
 
 func (c *schedulerClient) LeavePeer(ctx context.Context, in *LeavePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.Scheduler/LeavePeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/LeavePeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (c *schedulerClient) LeavePeer(ctx context.Context, in *LeavePeerRequest, o
 
 func (c *schedulerClient) ExchangePeer(ctx context.Context, in *ExchangePeerRequest, opts ...grpc.CallOption) (*ExchangePeerResponse, error) {
 	out := new(ExchangePeerResponse)
-	err := c.cc.Invoke(ctx, "/scheduler.Scheduler/ExchangePeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/ExchangePeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (c *schedulerClient) ExchangePeer(ctx context.Context, in *ExchangePeerRequ
 
 func (c *schedulerClient) StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
 	out := new(v2.Task)
-	err := c.cc.Invoke(ctx, "/scheduler.Scheduler/StatTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (c *schedulerClient) StatTask(ctx context.Context, in *StatTaskRequest, opt
 
 func (c *schedulerClient) AnnounceHost(ctx context.Context, in *AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.Scheduler/AnnounceHost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/AnnounceHost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func (c *schedulerClient) AnnounceHost(ctx context.Context, in *AnnounceHostRequ
 
 func (c *schedulerClient) LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.Scheduler/LeaveHost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/LeaveHost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +228,7 @@ func _Scheduler_StatPeer_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.Scheduler/StatPeer",
+		FullMethod: "/scheduler.v2.Scheduler/StatPeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SchedulerServer).StatPeer(ctx, req.(*StatPeerRequest))
@@ -246,7 +246,7 @@ func _Scheduler_LeavePeer_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.Scheduler/LeavePeer",
+		FullMethod: "/scheduler.v2.Scheduler/LeavePeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SchedulerServer).LeavePeer(ctx, req.(*LeavePeerRequest))
@@ -264,7 +264,7 @@ func _Scheduler_ExchangePeer_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.Scheduler/ExchangePeer",
+		FullMethod: "/scheduler.v2.Scheduler/ExchangePeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SchedulerServer).ExchangePeer(ctx, req.(*ExchangePeerRequest))
@@ -282,7 +282,7 @@ func _Scheduler_StatTask_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.Scheduler/StatTask",
+		FullMethod: "/scheduler.v2.Scheduler/StatTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SchedulerServer).StatTask(ctx, req.(*StatTaskRequest))
@@ -300,7 +300,7 @@ func _Scheduler_AnnounceHost_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.Scheduler/AnnounceHost",
+		FullMethod: "/scheduler.v2.Scheduler/AnnounceHost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SchedulerServer).AnnounceHost(ctx, req.(*AnnounceHostRequest))
@@ -318,7 +318,7 @@ func _Scheduler_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.Scheduler/LeaveHost",
+		FullMethod: "/scheduler.v2.Scheduler/LeaveHost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SchedulerServer).LeaveHost(ctx, req.(*LeaveHostRequest))
@@ -330,7 +330,7 @@ func _Scheduler_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Scheduler_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "scheduler.Scheduler",
+	ServiceName: "scheduler.v2.Scheduler",
 	HandlerType: (*SchedulerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

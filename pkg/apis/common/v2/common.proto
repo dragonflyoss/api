@@ -16,13 +16,13 @@
 
 syntax = "proto3";
 
-package common;
+package common.v2;
 
 import "validate/validate.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "d7y.io/api/pkg/apis/common/v2";
+option go_package = "d7y.io/api/pkg/apis/common/v2;common";
 
 // SizeScope represents size scope of task.
 enum SizeScope {
@@ -188,7 +188,7 @@ message Metadata {
   // Range is url range of request.
   Range range = 3;
   // Task type.
-  common.TaskType type = 4 [(validate.rules).enum.defined_only = true];
+  TaskType type = 4 [(validate.rules).enum.defined_only = true];
   // URL tag identifies different task for same url.
   string tag = 5;
   // Application of task.

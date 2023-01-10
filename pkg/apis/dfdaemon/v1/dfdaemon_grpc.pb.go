@@ -4,7 +4,7 @@
 // - protoc             v3.21.6
 // source: pkg/apis/dfdaemon/v1/dfdaemon.proto
 
-package v1
+package dfdaemon
 
 import (
 	context "context"
@@ -51,7 +51,7 @@ func NewDaemonClient(cc grpc.ClientConnInterface) DaemonClient {
 }
 
 func (c *daemonClient) Download(ctx context.Context, in *DownRequest, opts ...grpc.CallOption) (Daemon_DownloadClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Daemon_ServiceDesc.Streams[0], "/dfdaemon.Daemon/Download", opts...)
+	stream, err := c.cc.NewStream(ctx, &Daemon_ServiceDesc.Streams[0], "/dfdaemon.v1.Daemon/Download", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (x *daemonDownloadClient) Recv() (*DownResult, error) {
 
 func (c *daemonClient) GetPieceTasks(ctx context.Context, in *v1.PieceTaskRequest, opts ...grpc.CallOption) (*v1.PiecePacket, error) {
 	out := new(v1.PiecePacket)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Daemon/GetPieceTasks", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v1.Daemon/GetPieceTasks", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (c *daemonClient) GetPieceTasks(ctx context.Context, in *v1.PieceTaskReques
 
 func (c *daemonClient) CheckHealth(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Daemon/CheckHealth", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v1.Daemon/CheckHealth", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func (c *daemonClient) CheckHealth(ctx context.Context, in *emptypb.Empty, opts 
 }
 
 func (c *daemonClient) SyncPieceTasks(ctx context.Context, opts ...grpc.CallOption) (Daemon_SyncPieceTasksClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Daemon_ServiceDesc.Streams[1], "/dfdaemon.Daemon/SyncPieceTasks", opts...)
+	stream, err := c.cc.NewStream(ctx, &Daemon_ServiceDesc.Streams[1], "/dfdaemon.v1.Daemon/SyncPieceTasks", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func (x *daemonSyncPieceTasksClient) Recv() (*v1.PiecePacket, error) {
 
 func (c *daemonClient) StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Daemon/StatTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v1.Daemon/StatTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +142,7 @@ func (c *daemonClient) StatTask(ctx context.Context, in *StatTaskRequest, opts .
 
 func (c *daemonClient) ImportTask(ctx context.Context, in *ImportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Daemon/ImportTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v1.Daemon/ImportTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -151,7 +151,7 @@ func (c *daemonClient) ImportTask(ctx context.Context, in *ImportTaskRequest, op
 
 func (c *daemonClient) ExportTask(ctx context.Context, in *ExportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Daemon/ExportTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v1.Daemon/ExportTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +160,7 @@ func (c *daemonClient) ExportTask(ctx context.Context, in *ExportTaskRequest, op
 
 func (c *daemonClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Daemon/DeleteTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v1.Daemon/DeleteTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +260,7 @@ func _Daemon_GetPieceTasks_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Daemon/GetPieceTasks",
+		FullMethod: "/dfdaemon.v1.Daemon/GetPieceTasks",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DaemonServer).GetPieceTasks(ctx, req.(*v1.PieceTaskRequest))
@@ -278,7 +278,7 @@ func _Daemon_CheckHealth_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Daemon/CheckHealth",
+		FullMethod: "/dfdaemon.v1.Daemon/CheckHealth",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DaemonServer).CheckHealth(ctx, req.(*emptypb.Empty))
@@ -322,7 +322,7 @@ func _Daemon_StatTask_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Daemon/StatTask",
+		FullMethod: "/dfdaemon.v1.Daemon/StatTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DaemonServer).StatTask(ctx, req.(*StatTaskRequest))
@@ -340,7 +340,7 @@ func _Daemon_ImportTask_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Daemon/ImportTask",
+		FullMethod: "/dfdaemon.v1.Daemon/ImportTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DaemonServer).ImportTask(ctx, req.(*ImportTaskRequest))
@@ -358,7 +358,7 @@ func _Daemon_ExportTask_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Daemon/ExportTask",
+		FullMethod: "/dfdaemon.v1.Daemon/ExportTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DaemonServer).ExportTask(ctx, req.(*ExportTaskRequest))
@@ -376,7 +376,7 @@ func _Daemon_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Daemon/DeleteTask",
+		FullMethod: "/dfdaemon.v1.Daemon/DeleteTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DaemonServer).DeleteTask(ctx, req.(*DeleteTaskRequest))
@@ -388,7 +388,7 @@ func _Daemon_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Daemon_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "dfdaemon.Daemon",
+	ServiceName: "dfdaemon.v1.Daemon",
 	HandlerType: (*DaemonServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

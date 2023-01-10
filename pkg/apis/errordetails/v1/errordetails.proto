@@ -16,14 +16,14 @@
 
 syntax = "proto3";
 
-package errordetails;
+package errordetails.v1;
 
 import "pkg/apis/common/v1/common.proto";
 
-option go_package = "d7y.io/api/pkg/apis/errordetails/v1";
+option go_package = "d7y.io/api/pkg/apis/errordetails/v1;errordetails";
 
 message SourceError {
   bool temporary = 1;
   // source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
-  common.ExtendAttribute metadata = 2;
+  common.v1.ExtendAttribute metadata = 2;
 }

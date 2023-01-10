@@ -4,7 +4,7 @@
 // - protoc             v3.21.6
 // source: pkg/apis/dfdaemon/v2/dfdaemon.proto
 
-package v2
+package dfdaemon
 
 import (
 	context "context"
@@ -47,7 +47,7 @@ func NewDfdaemonClient(cc grpc.ClientConnInterface) DfdaemonClient {
 }
 
 func (c *dfdaemonClient) SyncPieces(ctx context.Context, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Dfdaemon_ServiceDesc.Streams[0], "/dfdaemon.Dfdaemon/SyncPieces", opts...)
+	stream, err := c.cc.NewStream(ctx, &Dfdaemon_ServiceDesc.Streams[0], "/dfdaemon.v2.Dfdaemon/SyncPieces", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func (x *dfdaemonSyncPiecesClient) Recv() (*SyncPiecesResponse, error) {
 
 func (c *dfdaemonClient) TriggerTask(ctx context.Context, in *TriggerTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Dfdaemon/TriggerTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/TriggerTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func (c *dfdaemonClient) TriggerTask(ctx context.Context, in *TriggerTaskRequest
 
 func (c *dfdaemonClient) StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
 	out := new(v2.Task)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Dfdaemon/StatTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/StatTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ func (c *dfdaemonClient) StatTask(ctx context.Context, in *StatTaskRequest, opts
 
 func (c *dfdaemonClient) ImportTask(ctx context.Context, in *ImportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Dfdaemon/ImportTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/ImportTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +106,7 @@ func (c *dfdaemonClient) ImportTask(ctx context.Context, in *ImportTaskRequest, 
 
 func (c *dfdaemonClient) ExportTask(ctx context.Context, in *ExportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Dfdaemon/ExportTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/ExportTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func (c *dfdaemonClient) ExportTask(ctx context.Context, in *ExportTaskRequest, 
 
 func (c *dfdaemonClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.Dfdaemon/DeleteTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/DeleteTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +210,7 @@ func _Dfdaemon_TriggerTask_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Dfdaemon/TriggerTask",
+		FullMethod: "/dfdaemon.v2.Dfdaemon/TriggerTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DfdaemonServer).TriggerTask(ctx, req.(*TriggerTaskRequest))
@@ -228,7 +228,7 @@ func _Dfdaemon_StatTask_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Dfdaemon/StatTask",
+		FullMethod: "/dfdaemon.v2.Dfdaemon/StatTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DfdaemonServer).StatTask(ctx, req.(*StatTaskRequest))
@@ -246,7 +246,7 @@ func _Dfdaemon_ImportTask_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Dfdaemon/ImportTask",
+		FullMethod: "/dfdaemon.v2.Dfdaemon/ImportTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DfdaemonServer).ImportTask(ctx, req.(*ImportTaskRequest))
@@ -264,7 +264,7 @@ func _Dfdaemon_ExportTask_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Dfdaemon/ExportTask",
+		FullMethod: "/dfdaemon.v2.Dfdaemon/ExportTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DfdaemonServer).ExportTask(ctx, req.(*ExportTaskRequest))
@@ -282,7 +282,7 @@ func _Dfdaemon_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.Dfdaemon/DeleteTask",
+		FullMethod: "/dfdaemon.v2.Dfdaemon/DeleteTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DfdaemonServer).DeleteTask(ctx, req.(*DeleteTaskRequest))
@@ -294,7 +294,7 @@ func _Dfdaemon_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Dfdaemon_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "dfdaemon.Dfdaemon",
+	ServiceName: "dfdaemon.v2.Dfdaemon",
 	HandlerType: (*DfdaemonServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
