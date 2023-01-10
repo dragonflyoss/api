@@ -16,14 +16,14 @@
 
 syntax = "proto3";
 
-package scheduler;
+package scheduler.v2;
 
 import "pkg/apis/common/v2/common.proto";
 import "pkg/apis/errordetails/v2/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
 
-option go_package = "d7y.io/api/pkg/apis/scheduler/v2";
+option go_package = "d7y.io/api/pkg/apis/scheduler/v2;scheduler";
 
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {
@@ -32,7 +32,7 @@ message RegisterPeerRequest {
   // Peer id.
   string peer_id = 2 [(validate.rules).string.min_len = 1];
   // Task metadata.
-  common.Metadata metadata = 3 [(validate.rules).message.required = true];
+  common.v2.Metadata metadata = 3 [(validate.rules).message.required = true];
 }
 
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
@@ -64,13 +64,13 @@ message DownloadPeerBackToSourceFinishedRequest {
 // DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
 message DownloadPieceFinishedRequest {
   // Piece info.
-  common.Piece piece = 1 [(validate.rules).message.required = true];
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
 }
 
 // DownloadPieceBackToSourceFinishedRequest represents piece download back-to-source finished request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFinishedRequest {
   // Piece info.
-  common.Piece piece = 1 [(validate.rules).message.required = true];
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
 }
 
 // AnnouncePeerRequest represents request of AnnouncePeer.
@@ -88,10 +88,10 @@ message AnnouncePeerRequest {
   }
 
   oneof errordetails {
-    errordetails.DownloadPeerBackToSourceFailed download_peer_back_to_source_failed = 8;
-    errordetails.DownloadPieceBackToSourceFailed download_piece_back_to_source_failed = 9;
-    errordetails.SyncPiecesFailed sync_pieces_failed = 10;
-    errordetails.DownloadPieceFailed download_piece_failed = 11;
+    errordetails.v2.DownloadPeerBackToSourceFailed download_peer_back_to_source_failed = 8;
+    errordetails.v2.DownloadPieceBackToSourceFailed download_piece_back_to_source_failed = 9;
+    errordetails.v2.SyncPiecesFailed sync_pieces_failed = 10;
+    errordetails.v2.DownloadPieceFailed download_piece_failed = 11;
   }
 }
 
@@ -103,13 +103,13 @@ message TinyTaskResponse {
 // SmallTaskResponse represents small task response of AnnouncePeerResponse.
 message SmallTaskResponse {
   // Piece info.
-  common.Piece piece = 1 [(validate.rules).message.required = true];
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
 }
 
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 message NormalTaskResponse {
   // Candidate parents.
-  repeated common.Peer candidate_parents = 1 [(validate.rules).repeated = {min_items: 1}];
+  repeated common.v2.Peer candidate_parents = 1 [(validate.rules).repeated = {min_items: 1}];
   // Concurrent downloading count from main peer.
   int32 parallel_count = 2 [(validate.rules).int32.gte = 1];
 }
@@ -132,8 +132,8 @@ message AnnouncePeerResponse {
   }
 
   oneof errordetails {
-    errordetails.SchedulePeerForbidden schedule_peer_forbidden = 5;
-    errordetails.SchedulePeerFailed schedule_peer_failed = 6;
+    errordetails.v2.SchedulePeerForbidden schedule_peer_forbidden = 5;
+    errordetails.v2.SchedulePeerFailed schedule_peer_failed = 6;
   }
 }
 
@@ -322,7 +322,7 @@ service Scheduler{
   rpc AnnouncePeer(stream AnnouncePeerRequest) returns(stream AnnouncePeerResponse);
 
   // Checks information of peer.
-  rpc StatPeer(StatPeerRequest)returns(common.Peer);
+  rpc StatPeer(StatPeerRequest)returns(common.v2.Peer);
 
   // LeavePeer releases peer in scheduler.
   rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
@@ -332,7 +332,7 @@ service Scheduler{
   rpc ExchangePeer(ExchangePeerRequest)returns(ExchangePeerResponse);
 
   // Checks information of task.
-  rpc StatTask(StatTaskRequest)returns(common.Task);
+  rpc StatTask(StatTaskRequest)returns(common.v2.Task);
 
   // AnnounceHost announces host to scheduler.
   rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);

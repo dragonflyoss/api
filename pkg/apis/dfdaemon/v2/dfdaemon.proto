@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package dfdaemon;
+package dfdaemon.v2;
 
 import "pkg/apis/common/v2/common.proto";
 import "pkg/apis/errordetails/v2/errordetails.proto";
@@ -24,7 +24,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
-option go_package = "d7y.io/api/pkg/apis/dfdaemon/v2";
+option go_package = "d7y.io/api/pkg/apis/dfdaemon/v2;dfdaemon";
 
 // InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
 message InterestedAllPiecesRequest {
@@ -54,13 +54,13 @@ message SyncPiecesRequest{
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
 message InterestedPiecesResponse {
   // Interested pieces of task.
-  repeated common.Piece pieces = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated common.v2.Piece pieces = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
 }
 
 // StatMetadata represents stat metadata request of SyncPiecesResponse.
 message StatMetadataResponse {
   // Task metadata.
-  common.Metadata metadata = 1 [(validate.rules).message.required = true];
+  common.v2.Metadata metadata = 1 [(validate.rules).message.required = true];
 }
 
 // SyncPiecesResponse represents response of SyncPieces.
@@ -73,8 +73,8 @@ message SyncPiecesResponse {
   }
 
   oneof errordetails {
-    errordetails.SyncPiecesFailed sync_pieces_failed = 3;
-    errordetails.StatMetadataFailed stat_metadata_failed = 4;
+    errordetails.v2.SyncPiecesFailed sync_pieces_failed = 3;
+    errordetails.v2.StatMetadataFailed stat_metadata_failed = 4;
   }
 }
 
@@ -83,7 +83,7 @@ message TriggerTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Task metadata.
-  common.Metadata metadata = 2 [(validate.rules).message.required = true];
+  common.v2.Metadata metadata = 2 [(validate.rules).message.required = true];
 }
 
 // StatTaskRequest represents request of StatTask.
@@ -94,13 +94,13 @@ message StatTaskRequest {
 
 // StatTaskResponse represents response of StatTask.
 message StatTaskResponse {
-  common.Task task = 1 [(validate.rules).message.required = true];
+  common.v2.Task task = 1 [(validate.rules).message.required = true];
 }
 
 // ImportTaskRequest represents request of ImportTask.
 message ImportTaskRequest {
   // Task metadata.
-  common.Metadata metadata = 1 [(validate.rules).message.required = true];
+  common.v2.Metadata metadata = 1 [(validate.rules).message.required = true];
   // File path to be imported.
   string path = 2 [(validate.rules).string.min_len = 1];
 }
@@ -108,7 +108,7 @@ message ImportTaskRequest {
 // ExportTaskRequest represents request of ExportTask.
 message ExportTaskRequest {
   // Task metadata.
-  common.Metadata metadata = 1 [(validate.rules).message.required = true];
+  common.v2.Metadata metadata = 1 [(validate.rules).message.required = true];
   // File path to be exported.
   string path = 2 [(validate.rules).string.min_len = 1];
   // Download timeout.
@@ -136,7 +136,7 @@ service Dfdaemon{
   rpc TriggerTask(TriggerTaskRequest) returns(google.protobuf.Empty);
 
   // StatTask stats task information.
-  rpc StatTask(StatTaskRequest) returns(common.Task);
+  rpc StatTask(StatTaskRequest) returns(common.v2.Task);
 
   // ImportTask imports task to p2p network.
   rpc ImportTask(ImportTaskRequest) returns(google.protobuf.Empty);
