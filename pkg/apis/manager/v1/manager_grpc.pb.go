@@ -73,7 +73,7 @@ func NewManagerClient(cc grpc.ClientConnInterface) ManagerClient {
 
 func (c *managerClient) GetSeedPeer(ctx context.Context, in *GetSeedPeerRequest, opts ...grpc.CallOption) (*SeedPeer, error) {
 	out := new(SeedPeer)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/GetSeedPeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/GetSeedPeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (c *managerClient) GetSeedPeer(ctx context.Context, in *GetSeedPeerRequest,
 
 func (c *managerClient) UpdateSeedPeer(ctx context.Context, in *UpdateSeedPeerRequest, opts ...grpc.CallOption) (*SeedPeer, error) {
 	out := new(SeedPeer)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/UpdateSeedPeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/UpdateSeedPeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ func (c *managerClient) UpdateSeedPeer(ctx context.Context, in *UpdateSeedPeerRe
 
 func (c *managerClient) GetScheduler(ctx context.Context, in *GetSchedulerRequest, opts ...grpc.CallOption) (*Scheduler, error) {
 	out := new(Scheduler)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/GetScheduler", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/GetScheduler", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (c *managerClient) GetScheduler(ctx context.Context, in *GetSchedulerReques
 
 func (c *managerClient) UpdateScheduler(ctx context.Context, in *UpdateSchedulerRequest, opts ...grpc.CallOption) (*Scheduler, error) {
 	out := new(Scheduler)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/UpdateScheduler", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/UpdateScheduler", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (c *managerClient) UpdateScheduler(ctx context.Context, in *UpdateScheduler
 
 func (c *managerClient) ListSchedulers(ctx context.Context, in *ListSchedulersRequest, opts ...grpc.CallOption) (*ListSchedulersResponse, error) {
 	out := new(ListSchedulersResponse)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/ListSchedulers", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/ListSchedulers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -118,7 +118,7 @@ func (c *managerClient) ListSchedulers(ctx context.Context, in *ListSchedulersRe
 
 func (c *managerClient) GetObjectStorage(ctx context.Context, in *GetObjectStorageRequest, opts ...grpc.CallOption) (*ObjectStorage, error) {
 	out := new(ObjectStorage)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/GetObjectStorage", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/GetObjectStorage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func (c *managerClient) GetObjectStorage(ctx context.Context, in *GetObjectStora
 
 func (c *managerClient) ListBuckets(ctx context.Context, in *ListBucketsRequest, opts ...grpc.CallOption) (*ListBucketsResponse, error) {
 	out := new(ListBucketsResponse)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/ListBuckets", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/ListBuckets", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +136,7 @@ func (c *managerClient) ListBuckets(ctx context.Context, in *ListBucketsRequest,
 
 func (c *managerClient) ListModels(ctx context.Context, in *ListModelsRequest, opts ...grpc.CallOption) (*ListModelsResponse, error) {
 	out := new(ListModelsResponse)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/ListModels", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/ListModels", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (c *managerClient) ListModels(ctx context.Context, in *ListModelsRequest, o
 
 func (c *managerClient) GetModel(ctx context.Context, in *GetModelRequest, opts ...grpc.CallOption) (*Model, error) {
 	out := new(Model)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/GetModel", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/GetModel", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +154,7 @@ func (c *managerClient) GetModel(ctx context.Context, in *GetModelRequest, opts 
 
 func (c *managerClient) CreateModel(ctx context.Context, in *CreateModelRequest, opts ...grpc.CallOption) (*Model, error) {
 	out := new(Model)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/CreateModel", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/CreateModel", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +163,7 @@ func (c *managerClient) CreateModel(ctx context.Context, in *CreateModelRequest,
 
 func (c *managerClient) UpdateModel(ctx context.Context, in *UpdateModelRequest, opts ...grpc.CallOption) (*Model, error) {
 	out := new(Model)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/UpdateModel", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/UpdateModel", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +172,7 @@ func (c *managerClient) UpdateModel(ctx context.Context, in *UpdateModelRequest,
 
 func (c *managerClient) DeleteModel(ctx context.Context, in *DeleteModelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/DeleteModel", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/DeleteModel", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func (c *managerClient) DeleteModel(ctx context.Context, in *DeleteModelRequest,
 
 func (c *managerClient) ListModelVersions(ctx context.Context, in *ListModelVersionsRequest, opts ...grpc.CallOption) (*ListModelVersionsResponse, error) {
 	out := new(ListModelVersionsResponse)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/ListModelVersions", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/ListModelVersions", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (c *managerClient) ListModelVersions(ctx context.Context, in *ListModelVers
 
 func (c *managerClient) GetModelVersion(ctx context.Context, in *GetModelVersionRequest, opts ...grpc.CallOption) (*ModelVersion, error) {
 	out := new(ModelVersion)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/GetModelVersion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/GetModelVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +199,7 @@ func (c *managerClient) GetModelVersion(ctx context.Context, in *GetModelVersion
 
 func (c *managerClient) CreateModelVersion(ctx context.Context, in *CreateModelVersionRequest, opts ...grpc.CallOption) (*ModelVersion, error) {
 	out := new(ModelVersion)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/CreateModelVersion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/CreateModelVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -208,7 +208,7 @@ func (c *managerClient) CreateModelVersion(ctx context.Context, in *CreateModelV
 
 func (c *managerClient) UpdateModelVersion(ctx context.Context, in *UpdateModelVersionRequest, opts ...grpc.CallOption) (*ModelVersion, error) {
 	out := new(ModelVersion)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/UpdateModelVersion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/UpdateModelVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -217,7 +217,7 @@ func (c *managerClient) UpdateModelVersion(ctx context.Context, in *UpdateModelV
 
 func (c *managerClient) DeleteModelVersion(ctx context.Context, in *DeleteModelVersionRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/DeleteModelVersion", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/DeleteModelVersion", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +226,7 @@ func (c *managerClient) DeleteModelVersion(ctx context.Context, in *DeleteModelV
 
 func (c *managerClient) ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error) {
 	out := new(ListApplicationsResponse)
-	err := c.cc.Invoke(ctx, "/manager.v1.Manager/ListApplications", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/manager.Manager/ListApplications", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +234,7 @@ func (c *managerClient) ListApplications(ctx context.Context, in *ListApplicatio
 }
 
 func (c *managerClient) KeepAlive(ctx context.Context, opts ...grpc.CallOption) (Manager_KeepAliveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Manager_ServiceDesc.Streams[0], "/manager.v1.Manager/KeepAlive", opts...)
+	stream, err := c.cc.NewStream(ctx, &Manager_ServiceDesc.Streams[0], "/manager.Manager/KeepAlive", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -394,7 +394,7 @@ func _Manager_GetSeedPeer_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/GetSeedPeer",
+		FullMethod: "/manager.Manager/GetSeedPeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).GetSeedPeer(ctx, req.(*GetSeedPeerRequest))
@@ -412,7 +412,7 @@ func _Manager_UpdateSeedPeer_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/UpdateSeedPeer",
+		FullMethod: "/manager.Manager/UpdateSeedPeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).UpdateSeedPeer(ctx, req.(*UpdateSeedPeerRequest))
@@ -430,7 +430,7 @@ func _Manager_GetScheduler_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/GetScheduler",
+		FullMethod: "/manager.Manager/GetScheduler",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).GetScheduler(ctx, req.(*GetSchedulerRequest))
@@ -448,7 +448,7 @@ func _Manager_UpdateScheduler_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/UpdateScheduler",
+		FullMethod: "/manager.Manager/UpdateScheduler",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).UpdateScheduler(ctx, req.(*UpdateSchedulerRequest))
@@ -466,7 +466,7 @@ func _Manager_ListSchedulers_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/ListSchedulers",
+		FullMethod: "/manager.Manager/ListSchedulers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).ListSchedulers(ctx, req.(*ListSchedulersRequest))
@@ -484,7 +484,7 @@ func _Manager_GetObjectStorage_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/GetObjectStorage",
+		FullMethod: "/manager.Manager/GetObjectStorage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).GetObjectStorage(ctx, req.(*GetObjectStorageRequest))
@@ -502,7 +502,7 @@ func _Manager_ListBuckets_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/ListBuckets",
+		FullMethod: "/manager.Manager/ListBuckets",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).ListBuckets(ctx, req.(*ListBucketsRequest))
@@ -520,7 +520,7 @@ func _Manager_ListModels_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/ListModels",
+		FullMethod: "/manager.Manager/ListModels",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).ListModels(ctx, req.(*ListModelsRequest))
@@ -538,7 +538,7 @@ func _Manager_GetModel_Handler(srv interface{}, ctx context.Context, dec func(in
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/GetModel",
+		FullMethod: "/manager.Manager/GetModel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).GetModel(ctx, req.(*GetModelRequest))
@@ -556,7 +556,7 @@ func _Manager_CreateModel_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/CreateModel",
+		FullMethod: "/manager.Manager/CreateModel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).CreateModel(ctx, req.(*CreateModelRequest))
@@ -574,7 +574,7 @@ func _Manager_UpdateModel_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/UpdateModel",
+		FullMethod: "/manager.Manager/UpdateModel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).UpdateModel(ctx, req.(*UpdateModelRequest))
@@ -592,7 +592,7 @@ func _Manager_DeleteModel_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/DeleteModel",
+		FullMethod: "/manager.Manager/DeleteModel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).DeleteModel(ctx, req.(*DeleteModelRequest))
@@ -610,7 +610,7 @@ func _Manager_ListModelVersions_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/ListModelVersions",
+		FullMethod: "/manager.Manager/ListModelVersions",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).ListModelVersions(ctx, req.(*ListModelVersionsRequest))
@@ -628,7 +628,7 @@ func _Manager_GetModelVersion_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/GetModelVersion",
+		FullMethod: "/manager.Manager/GetModelVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).GetModelVersion(ctx, req.(*GetModelVersionRequest))
@@ -646,7 +646,7 @@ func _Manager_CreateModelVersion_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/CreateModelVersion",
+		FullMethod: "/manager.Manager/CreateModelVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).CreateModelVersion(ctx, req.(*CreateModelVersionRequest))
@@ -664,7 +664,7 @@ func _Manager_UpdateModelVersion_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/UpdateModelVersion",
+		FullMethod: "/manager.Manager/UpdateModelVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).UpdateModelVersion(ctx, req.(*UpdateModelVersionRequest))
@@ -682,7 +682,7 @@ func _Manager_DeleteModelVersion_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/DeleteModelVersion",
+		FullMethod: "/manager.Manager/DeleteModelVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).DeleteModelVersion(ctx, req.(*DeleteModelVersionRequest))
@@ -700,7 +700,7 @@ func _Manager_ListApplications_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/manager.v1.Manager/ListApplications",
+		FullMethod: "/manager.Manager/ListApplications",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).ListApplications(ctx, req.(*ListApplicationsRequest))
@@ -738,7 +738,7 @@ func (x *managerKeepAliveServer) Recv() (*KeepAliveRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Manager_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "manager.v1.Manager",
+	ServiceName: "manager.Manager",
 	HandlerType: (*ManagerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

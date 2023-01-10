@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package cdnsystem.v1;
+package cdnsystem;
 
 import "pkg/apis/common/v1/common.proto";
 import "validate/validate.proto";
@@ -26,7 +26,7 @@ option go_package = "d7y.io/api/pkg/apis/cdnsystem/v1;cdnsystem";
 message SeedRequest{
   string task_id = 1 [(validate.rules).string.min_len = 1];
   string url = 2 [(validate.rules).string.uri = true];
-  common.v1.UrlMeta url_meta = 3;
+  common.UrlMeta url_meta = 3;
 }
 
 // keep piece meta and data separately
@@ -39,7 +39,7 @@ message PieceSeed{
   // cdn host id
   string host_id = 3 [(validate.rules).string.min_len = 1];
   // piece info
-  common.v1.PieceInfo piece_info = 4;
+  common.PieceInfo piece_info = 4;
   // whether or not all seeds are downloaded
   bool done = 5;
   // content total length for the url, content_length < 0 represent content length is unknown
@@ -51,7 +51,7 @@ message PieceSeed{
   // end time for the piece downloading
   uint64 end_time = 9;
   // task extend attribute
-  common.v1.ExtendAttribute extend_attribute = 10;
+  common.ExtendAttribute extend_attribute = 10;
 }
 
 // CDN System RPC Service
@@ -59,8 +59,8 @@ service Seeder{
   // Generate seeds and return to scheduler
   rpc ObtainSeeds(SeedRequest)returns(stream PieceSeed);
   // Get piece tasks from cdn
-  rpc GetPieceTasks(common.v1.PieceTaskRequest)returns(common.v1.PiecePacket);
+  rpc GetPieceTasks(common.PieceTaskRequest)returns(common.PiecePacket);
   // Sync piece tasks with other peers
-  rpc SyncPieceTasks(stream common.v1.PieceTaskRequest)returns(stream common.v1.PiecePacket);
+  rpc SyncPieceTasks(stream common.PieceTaskRequest)returns(stream common.PiecePacket);
 }
 

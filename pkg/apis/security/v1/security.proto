@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package security.v1;
+package security;
 
 import "google/protobuf/duration.proto";
 import "validate/validate.proto";
