@@ -24,12 +24,8 @@ import "google/protobuf/empty.proto";
 
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {
-  // Task id.
-  string task_id = 1;
-  // Peer id.
-  string peer_id = 2;
   // Task metadata.
-  common.Metadata metadata = 3;
+  common.Metadata metadata = 1;
 }
 
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
@@ -72,21 +68,26 @@ message DownloadPieceBackToSourceFinishedRequest {
 
 // AnnouncePeerRequest represents request of AnnouncePeer.
 message AnnouncePeerRequest {
+  // Task id.
+  string task_id = 1;
+  // Peer id.
+  string peer_id = 2;
+
   oneof request {
-    RegisterPeerRequest register_peer_request = 1;
-    DownloadPeerStartedRequest download_peer_started_request = 2;
-    DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 3;
-    DownloadPeerFinishedRequest download_peer_finished_request = 4;
-    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 5;
-    DownloadPieceFinishedRequest download_piece_finished_request = 6;
-    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 7;
+    RegisterPeerRequest register_peer_request = 3;
+    DownloadPeerStartedRequest download_peer_started_request = 4;
+    DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 5;
+    DownloadPeerFinishedRequest download_peer_finished_request = 6;
+    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 7;
+    DownloadPieceFinishedRequest download_piece_finished_request = 8;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 9;
   }
 
   oneof errordetails {
-    errordetails.DownloadPeerBackToSourceFailed download_peer_back_to_source_failed = 8;
-    errordetails.DownloadPieceBackToSourceFailed download_piece_back_to_source_failed = 9;
-    errordetails.SyncPiecesFailed sync_pieces_failed = 10;
-    errordetails.DownloadPieceFailed download_piece_failed = 11;
+    errordetails.DownloadPeerBackToSourceFailed download_peer_back_to_source_failed = 10;
+    errordetails.DownloadPieceBackToSourceFailed download_piece_back_to_source_failed = 11;
+    errordetails.SyncPiecesFailed sync_pieces_failed = 12;
+    errordetails.DownloadPieceFailed download_piece_failed = 13;
   }
 }
 
