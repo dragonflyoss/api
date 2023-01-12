@@ -16,4 +16,4 @@
 
 package mocks
 
-//go:generate mockgen -destination dfdaemon_mock.go -source ../dfdaemon.pb.go -package mocks
+//go:generate mockgen -destination dfdaemon_mock.go -source ../dfdaemon_grpc.pb.go -package mocks

@@ -16,4 +16,4 @@
 
 package mocks
 
-//go:generate mockgen -destination cdnsystem_mock.go -source ../cdnsystem.pb.go -package mocks
+//go:generate mockgen -destination cdnsystem_mock.go -source ../cdnsystem_grpc.pb.go -package mocks

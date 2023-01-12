@@ -16,4 +16,4 @@
 
 package mocks
 
-//go:generate mockgen -destination manager_mock.go -source ../manager.pb.go -package mocks
+//go:generate mockgen -destination manager_mock.go -source ../manager_grpc.pb.go -package mocks
