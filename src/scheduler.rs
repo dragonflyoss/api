@@ -212,9 +212,12 @@ pub struct ExchangePeerResponse {}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LeavePeerRequest {
-    /// Peer id.
+    /// Task id.
     #[prost(string, tag = "1")]
-    pub id: ::prost::alloc::string::String,
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "2")]
+    pub peer_id: ::prost::alloc::string::String,
 }
 /// StatTaskRequest represents request of StatTask.
 #[allow(clippy::derive_partial_eq_without_eq)]

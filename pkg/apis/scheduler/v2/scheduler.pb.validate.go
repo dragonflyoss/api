@@ -2806,9 +2806,20 @@ func (m *LeavePeerRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetId()) < 1 {
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
 		err := LeavePeerRequestValidationError{
-			field:  "Id",
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
+		err := LeavePeerRequestValidationError{
+			field:  "PeerId",
 			reason: "value length must be at least 1 runes",
 		}
 		if !all {
