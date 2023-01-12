@@ -2,14 +2,8 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegisterPeerRequest {
-    /// Task id.
-    #[prost(string, tag = "1")]
-    pub task_id: ::prost::alloc::string::String,
-    /// Peer id.
-    #[prost(string, tag = "2")]
-    pub peer_id: ::prost::alloc::string::String,
     /// Task metadata.
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag = "1")]
     pub metadata: ::core::option::Option<super::common::Metadata>,
 }
 /// DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
@@ -66,9 +60,15 @@ pub struct DownloadPieceBackToSourceFinishedRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerRequest {
-    #[prost(oneof = "announce_peer_request::Request", tags = "1, 2, 3, 4, 5, 6, 7")]
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "2")]
+    pub peer_id: ::prost::alloc::string::String,
+    #[prost(oneof = "announce_peer_request::Request", tags = "3, 4, 5, 6, 7, 8, 9")]
     pub request: ::core::option::Option<announce_peer_request::Request>,
-    #[prost(oneof = "announce_peer_request::Errordetails", tags = "8, 9, 10, 11")]
+    #[prost(oneof = "announce_peer_request::Errordetails", tags = "10, 11, 12, 13")]
     pub errordetails: ::core::option::Option<announce_peer_request::Errordetails>,
 }
 /// Nested message and enum types in `AnnouncePeerRequest`.
@@ -76,23 +76,23 @@ pub mod announce_peer_request {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
-        #[prost(message, tag = "1")]
-        RegisterPeerRequest(super::RegisterPeerRequest),
-        #[prost(message, tag = "2")]
-        DownloadPeerStartedRequest(super::DownloadPeerStartedRequest),
         #[prost(message, tag = "3")]
+        RegisterPeerRequest(super::RegisterPeerRequest),
+        #[prost(message, tag = "4")]
+        DownloadPeerStartedRequest(super::DownloadPeerStartedRequest),
+        #[prost(message, tag = "5")]
         DownloadPeerBackToSourceStartedRequest(
             super::DownloadPeerBackToSourceStartedRequest,
         ),
-        #[prost(message, tag = "4")]
+        #[prost(message, tag = "6")]
         DownloadPeerFinishedRequest(super::DownloadPeerFinishedRequest),
-        #[prost(message, tag = "5")]
+        #[prost(message, tag = "7")]
         DownloadPeerBackToSourceFinishedRequest(
             super::DownloadPeerBackToSourceFinishedRequest,
         ),
-        #[prost(message, tag = "6")]
+        #[prost(message, tag = "8")]
         DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
-        #[prost(message, tag = "7")]
+        #[prost(message, tag = "9")]
         DownloadPieceBackToSourceFinishedRequest(
             super::DownloadPieceBackToSourceFinishedRequest,
         ),
@@ -100,17 +100,17 @@ pub mod announce_peer_request {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Errordetails {
-        #[prost(message, tag = "8")]
+        #[prost(message, tag = "10")]
         DownloadPeerBackToSourceFailed(
             super::super::errordetails::DownloadPeerBackToSourceFailed,
         ),
-        #[prost(message, tag = "9")]
+        #[prost(message, tag = "11")]
         DownloadPieceBackToSourceFailed(
             super::super::errordetails::DownloadPieceBackToSourceFailed,
         ),
-        #[prost(message, tag = "10")]
+        #[prost(message, tag = "12")]
         SyncPiecesFailed(super::super::errordetails::SyncPiecesFailed),
-        #[prost(message, tag = "11")]
+        #[prost(message, tag = "13")]
         DownloadPieceFailed(super::super::errordetails::DownloadPieceFailed),
     }
 }
