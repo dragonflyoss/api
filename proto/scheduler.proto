@@ -155,8 +155,10 @@ message ExchangePeerResponse {
 
 // LeavePeerRequest represents request of LeavePeer.
 message LeavePeerRequest {
+  // Task id.
+  string task_id = 1;
   // Peer id.
-  string id = 1;
+  string peer_id = 2;
 }
 
 // StatTaskRequest represents request of StatTask.
