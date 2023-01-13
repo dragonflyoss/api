@@ -207,13 +207,13 @@ message Metadata {
 message Piece {
   // Piece number.
   uint32 number = 1 [(validate.rules).uint32.gte = 0];
-	// Parent peer id.
+  // Parent peer id.
   string parent_id = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-	// Piece offset.
+  // Piece offset.
   uint64 offset = 3 [(validate.rules).uint64.gte = 0];
-	// Piece size.
+  // Piece size.
   uint64 size = 4 [(validate.rules).uint64.gt = 0];
-	// Digest of the piece data, for example md5:xxx or sha256:yyy.
+  // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty: true}];
   // Traffic type.
   TrafficType traffic_type = 6;
