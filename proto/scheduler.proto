@@ -316,24 +316,24 @@ message LeaveHostRequest{
 message Probe {
   // Host metadata.
   common.Host host = 1;
-  // RTTs is all of the round-trip times sent via this pinger.
-  repeated google.protobuf.Duration rtts = 2;
-  // MinRTT is the minimum round-trip time sent via this pinger.
-  google.protobuf.Duration min_rtt = 3;
-  // MaxRTT is the maximum round-trip time sent via this pinger.
-  google.protobuf.Duration max_rtt = 4;
-  // AvgRTT is the average round-trip time sent via this pinger.
-  google.protobuf.Duration avg_rtt = 5;
+  // RTT is the round-trip time sent via this pinger.
+  google.protobuf.Duration rtt = 2;
   // Task update time.
-  google.protobuf.Timestamp updated_at = 6;
+  google.protobuf.Timestamp updated_at = 3;
 }
 
-// SyncProbesRequest represents request of SyncProbes.
-message SyncProbesRequest {
+// ProbesOfHost represents probes information of the host.
+message ProbesOfHost {
   // Host metadata.
   common.Host host = 1;
   // Probes information.
   repeated Probe probes = 2;
+}
+
+// SyncProbesRequest represents request of SyncProbes.
+message SyncProbesRequest {
+  // Probes information of the host.
+  ProbesOfHost probes_of_host = 1;
 }
 
 // SyncProbesResponse represents response of SyncProbes.
@@ -342,6 +342,26 @@ message SyncProbesResponse {
   repeated common.Host hosts = 1;
   // Probe interval.
   google.protobuf.Duration probe_interval = 2;
+}
+
+// UpdateHostsRequest represents update hosts request of SyncNetworkTopologyRequest.
+message UpdateHostsRequest {
+  // Hosts needs to be updated.
+  repeated ProbesOfHost probes_of_hosts = 1;
+}
+
+// DeleteHostsRequest represents delete hosts request of SyncNetworkTopologyRequest.
+message DeleteHostsRequest {
+  // Hosts needs to be deleted.
+  repeated ProbesOfHost probes_of_hosts = 1;
+}
+
+// SyncProbesRequest represents request of SyncProbes.
+message SyncNetworkTopologyRequest {
+  oneof request {
+    UpdateHostsRequest update_probes_of_hosts_request = 1;
+    DeleteHostsRequest delete_probes_of_hosts_request = 2;
+  }
 }
 
 // Scheduler RPC Service.
@@ -370,4 +390,7 @@ service Scheduler{
 
   // SyncProbes sync probes of the host.
   rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);
+
+  // SyncNetworkTopology sync network topology of the hosts.
+  rpc SyncNetworkTopology(stream SyncNetworkTopologyRequest)returns(google.protobuf.Empty);
 }

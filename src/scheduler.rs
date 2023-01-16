@@ -440,32 +440,31 @@ pub struct Probe {
     /// Host metadata.
     #[prost(message, optional, tag = "1")]
     pub host: ::core::option::Option<super::common::Host>,
-    /// RTTs is all of the round-trip times sent via this pinger.
-    #[prost(message, repeated, tag = "2")]
-    pub rtts: ::prost::alloc::vec::Vec<::prost_types::Duration>,
-    /// MinRTT is the minimum round-trip time sent via this pinger.
-    #[prost(message, optional, tag = "3")]
-    pub min_rtt: ::core::option::Option<::prost_types::Duration>,
-    /// MaxRTT is the maximum round-trip time sent via this pinger.
-    #[prost(message, optional, tag = "4")]
-    pub max_rtt: ::core::option::Option<::prost_types::Duration>,
-    /// AvgRTT is the average round-trip time sent via this pinger.
-    #[prost(message, optional, tag = "5")]
-    pub avg_rtt: ::core::option::Option<::prost_types::Duration>,
+    /// RTT is the round-trip time sent via this pinger.
+    #[prost(message, optional, tag = "2")]
+    pub rtt: ::core::option::Option<::prost_types::Duration>,
     /// Task update time.
-    #[prost(message, optional, tag = "6")]
+    #[prost(message, optional, tag = "3")]
     pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
 }
-/// SyncProbesRequest represents request of SyncProbes.
+/// ProbesOfHost represents probes information of the host.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SyncProbesRequest {
+pub struct ProbesOfHost {
     /// Host metadata.
     #[prost(message, optional, tag = "1")]
     pub host: ::core::option::Option<super::common::Host>,
     /// Probes information.
     #[prost(message, repeated, tag = "2")]
     pub probes: ::prost::alloc::vec::Vec<Probe>,
+}
+/// SyncProbesRequest represents request of SyncProbes.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SyncProbesRequest {
+    /// Probes information of the host.
+    #[prost(message, optional, tag = "1")]
+    pub probes_of_host: ::core::option::Option<ProbesOfHost>,
 }
 /// SyncProbesResponse represents response of SyncProbes.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -477,6 +476,40 @@ pub struct SyncProbesResponse {
     /// Probe interval.
     #[prost(message, optional, tag = "2")]
     pub probe_interval: ::core::option::Option<::prost_types::Duration>,
+}
+/// UpdateHostsRequest represents update hosts request of SyncNetworkTopologyRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UpdateHostsRequest {
+    /// Hosts needs to be updated.
+    #[prost(message, repeated, tag = "1")]
+    pub probes_of_hosts: ::prost::alloc::vec::Vec<ProbesOfHost>,
+}
+/// DeleteHostsRequest represents delete hosts request of SyncNetworkTopologyRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteHostsRequest {
+    /// Hosts needs to be deleted.
+    #[prost(message, repeated, tag = "1")]
+    pub probes_of_hosts: ::prost::alloc::vec::Vec<ProbesOfHost>,
+}
+/// SyncProbesRequest represents request of SyncProbes.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SyncNetworkTopologyRequest {
+    #[prost(oneof = "sync_network_topology_request::Request", tags = "1, 2")]
+    pub request: ::core::option::Option<sync_network_topology_request::Request>,
+}
+/// Nested message and enum types in `SyncNetworkTopologyRequest`.
+pub mod sync_network_topology_request {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Request {
+        #[prost(message, tag = "1")]
+        UpdateProbesOfHostsRequest(super::UpdateHostsRequest),
+        #[prost(message, tag = "2")]
+        DeleteProbesOfHostsRequest(super::DeleteHostsRequest),
+    }
 }
 /// Generated client implementations.
 pub mod scheduler_client {
@@ -717,6 +750,30 @@ pub mod scheduler_client {
             );
             self.inner.streaming(request.into_streaming_request(), path, codec).await
         }
+        /// SyncNetworkTopology sync network topology of the hosts.
+        pub async fn sync_network_topology(
+            &mut self,
+            request: impl tonic::IntoStreamingRequest<
+                Message = super::SyncNetworkTopologyRequest,
+            >,
+        ) -> Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.Scheduler/SyncNetworkTopology",
+            );
+            self.inner
+                .client_streaming(request.into_streaming_request(), path, codec)
+                .await
+        }
     }
 }
 /// Generated server implementations.
@@ -779,6 +836,11 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<tonic::Streaming<super::SyncProbesRequest>>,
         ) -> Result<tonic::Response<Self::SyncProbesStream>, tonic::Status>;
+        /// SyncNetworkTopology sync network topology of the hosts.
+        async fn sync_network_topology(
+            &self,
+            request: tonic::Request<tonic::Streaming<super::SyncNetworkTopologyRequest>>,
+        ) -> Result<tonic::Response<()>, tonic::Status>;
     }
     /// Scheduler RPC Service.
     #[derive(Debug)]
@@ -1152,6 +1214,49 @@ pub mod scheduler_server {
                                 send_compression_encodings,
                             );
                         let res = grpc.streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.Scheduler/SyncNetworkTopology" => {
+                    #[allow(non_camel_case_types)]
+                    struct SyncNetworkTopologySvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::ClientStreamingService<
+                        super::SyncNetworkTopologyRequest,
+                    > for SyncNetworkTopologySvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                tonic::Streaming<super::SyncNetworkTopologyRequest>,
+                            >,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move {
+                                (*inner).sync_network_topology(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = SyncNetworkTopologySvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.client_streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
