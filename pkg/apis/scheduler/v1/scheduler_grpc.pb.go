@@ -41,6 +41,8 @@ type SchedulerClient interface {
 	LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// SyncProbes sync probes of the host.
 	SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error)
+	// SyncNetworkTopology sync network topology of the hosts.
+	SyncNetworkTopology(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncNetworkTopologyClient, error)
 }
 
 type schedulerClient struct {
@@ -176,6 +178,40 @@ func (x *schedulerSyncProbesClient) Recv() (*SyncProbesResponse, error) {
 	return m, nil
 }
 
+func (c *schedulerClient) SyncNetworkTopology(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncNetworkTopologyClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[2], "/scheduler.Scheduler/SyncNetworkTopology", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &schedulerSyncNetworkTopologyClient{stream}
+	return x, nil
+}
+
+type Scheduler_SyncNetworkTopologyClient interface {
+	Send(*SyncNetworkTopologyRequest) error
+	CloseAndRecv() (*emptypb.Empty, error)
+	grpc.ClientStream
+}
+
+type schedulerSyncNetworkTopologyClient struct {
+	grpc.ClientStream
+}
+
+func (x *schedulerSyncNetworkTopologyClient) Send(m *SyncNetworkTopologyRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *schedulerSyncNetworkTopologyClient) CloseAndRecv() (*emptypb.Empty, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(emptypb.Empty)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // SchedulerServer is the server API for Scheduler service.
 // All implementations should embed UnimplementedSchedulerServer
 // for forward compatibility
@@ -198,6 +234,8 @@ type SchedulerServer interface {
 	LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error)
 	// SyncProbes sync probes of the host.
 	SyncProbes(Scheduler_SyncProbesServer) error
+	// SyncNetworkTopology sync network topology of the hosts.
+	SyncNetworkTopology(Scheduler_SyncNetworkTopologyServer) error
 }
 
 // UnimplementedSchedulerServer should be embedded to have forward compatible implementations.
@@ -230,6 +268,9 @@ func (UnimplementedSchedulerServer) LeaveHost(context.Context, *LeaveHostRequest
 }
 func (UnimplementedSchedulerServer) SyncProbes(Scheduler_SyncProbesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncProbes not implemented")
+}
+func (UnimplementedSchedulerServer) SyncNetworkTopology(Scheduler_SyncNetworkTopologyServer) error {
+	return status.Errorf(codes.Unimplemented, "method SyncNetworkTopology not implemented")
 }
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
@@ -421,6 +462,32 @@ func (x *schedulerSyncProbesServer) Recv() (*SyncProbesRequest, error) {
 	return m, nil
 }
 
+func _Scheduler_SyncNetworkTopology_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SchedulerServer).SyncNetworkTopology(&schedulerSyncNetworkTopologyServer{stream})
+}
+
+type Scheduler_SyncNetworkTopologyServer interface {
+	SendAndClose(*emptypb.Empty) error
+	Recv() (*SyncNetworkTopologyRequest, error)
+	grpc.ServerStream
+}
+
+type schedulerSyncNetworkTopologyServer struct {
+	grpc.ServerStream
+}
+
+func (x *schedulerSyncNetworkTopologyServer) SendAndClose(m *emptypb.Empty) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *schedulerSyncNetworkTopologyServer) Recv() (*SyncNetworkTopologyRequest, error) {
+	m := new(SyncNetworkTopologyRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // Scheduler_ServiceDesc is the grpc.ServiceDesc for Scheduler service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -468,6 +535,11 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "SyncProbes",
 			Handler:       _Scheduler_SyncProbes_Handler,
 			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "SyncNetworkTopology",
+			Handler:       _Scheduler_SyncNetworkTopology_Handler,
 			ClientStreams: true,
 		},
 	},

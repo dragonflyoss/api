@@ -376,24 +376,24 @@ message Build {
 message Probe {
   // Host metadata.
   common.Host host = 1 [(validate.rules).message.required = true];
-  // RTTs is all of the round-trip times sent via this pinger.
-  repeated google.protobuf.Duration rtts = 2 [(validate.rules).repeated = {min_items: 1}];
-  // MinRTT is the minimum round-trip time sent via this pinger.
-  google.protobuf.Duration min_rtt = 3 [(validate.rules).duration.required = true];
-  // MaxRTT is the maximum round-trip time sent via this pinger.
-  google.protobuf.Duration max_rtt = 4 [(validate.rules).duration.required = true];
-  // AvgRTT is the average round-trip time sent via this pinger.
-  google.protobuf.Duration avg_rtt = 5 [(validate.rules).duration.required = true];
+  // RTT is the round-trip time sent via this pinger.
+  google.protobuf.Duration rtt = 2 [(validate.rules).duration.required = true];
   // Task update time.
-  google.protobuf.Timestamp updated_at = 6 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 3 [(validate.rules).timestamp.required = true];
 }
 
-// SyncProbesRequest represents request of SyncProbes.
-message SyncProbesRequest {
+// ProbesOfHost represents probes information of the host.
+message ProbesOfHost {
   // Host metadata.
   common.Host host = 1 [(validate.rules).message.required = true];
   // Probes information.
   repeated Probe probes = 2 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+}
+
+// SyncProbesRequest represents request of SyncProbes.
+message SyncProbesRequest {
+  // Probes information of the host.
+  ProbesOfHost probes_of_host = 1 [(validate.rules).message.required = true];
 }
 
 // SyncProbesResponse represents response of SyncProbes.
@@ -402,6 +402,28 @@ message SyncProbesResponse {
   repeated common.Host hosts = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
   // Probe interval.
   google.protobuf.Duration probe_interval = 2 [(validate.rules).duration.required = true];
+}
+
+// UpdateHostsRequest represents update hosts request of SyncNetworkTopologyRequest.
+message UpdateHostsRequest {
+  // Hosts needs to be updated.
+  repeated ProbesOfHost probes_of_hosts = 1 [(validate.rules).repeated = {min_items: 1}];
+}
+
+// DeleteHostsRequest represents delete hosts request of SyncNetworkTopologyRequest.
+message DeleteHostsRequest {
+  // Hosts needs to be deleted.
+  repeated ProbesOfHost probes_of_hosts = 1 [(validate.rules).repeated = {min_items: 1}];
+}
+
+// SyncProbesRequest represents request of SyncProbes.
+message SyncNetworkTopologyRequest {
+  oneof request {
+    option (validate.required) = true;
+
+    UpdateHostsRequest update_probes_of_hosts_request = 1;
+    DeleteHostsRequest delete_probes_of_hosts_request = 2;
+  }
 }
 
 // Scheduler RPC Service.
@@ -432,4 +454,7 @@ service Scheduler{
 
   // SyncProbes sync probes of the host.
   rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);
+
+  // SyncNetworkTopology sync network topology of the hosts.
+  rpc SyncNetworkTopology(stream SyncNetworkTopologyRequest)returns(google.protobuf.Empty);
 }
