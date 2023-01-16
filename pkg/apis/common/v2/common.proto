@@ -151,24 +151,22 @@ message Task {
 message Host {
   // Host id.
   string id = 1 [(validate.rules).string.min_len = 1];
-  // Host ipv4.
-  string ipv4 = 2 [(validate.rules).string = {ipv4: true, ignore_empty: true}];
-  // Host ipv6.
-  string ipv6 = 3 [(validate.rules).string = {ipv6: true, ignore_empty: true}];
+  // Host ip.
+  string ip = 2 [(validate.rules).string.min_len = 1];
   // Peer hostname.
-  string hostname = 4 [(validate.rules).string.hostname = true];
+  string hostname = 3 [(validate.rules).string.hostname = true];
   // Port of grpc service.
-  int32 port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Port of download server.
-  int32 download_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 download_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Security domain for network.
-  string security_domain = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  string security_domain = 6 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Host location(area, country, province, city, etc.).
-  repeated string location = 8 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated string location = 7 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
   // IDC where the peer host is located.
-  string idc = 9 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  string idc = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Network topology(switch, router, etc.).
-  repeated string net_topology = 10 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated string net_topology = 9 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
 }
 
 // Range represents download range.

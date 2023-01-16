@@ -22,6 +22,8 @@ import "pkg/apis/common/v2/common.proto";
 import "pkg/apis/errordetails/v2/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "d7y.io/api/pkg/apis/scheduler/v2;scheduler";
 
@@ -319,6 +321,38 @@ message LeaveHostRequest{
   string id = 1 [(validate.rules).string.min_len = 1];
 }
 
+// Probe information.
+message Probe {
+  // Host metadata.
+  common.Host host = 1 [(validate.rules).message.required = true];
+  // RTTs is all of the round-trip times sent via this pinger.
+  repeated google.protobuf.Duration rtts = 2 [(validate.rules).repeated = {min_items: 1}];
+  // MinRTT is the minimum round-trip time sent via this pinger.
+  google.protobuf.Duration min_rtt = 3 [(validate.rules).duration.required = true];
+  // MaxRTT is the maximum round-trip time sent via this pinger.
+  google.protobuf.Duration max_rtt = 4 [(validate.rules).duration.required = true];
+  // AvgRTT is the average round-trip time sent via this pinger.
+  google.protobuf.Duration avg_rtt = 5 [(validate.rules).duration.required = true];
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 6 [(validate.rules).timestamp.required = true];
+}
+
+// SyncProbesRequest represents request of SyncProbes.
+message SyncProbesRequest {
+  // Host metadata.
+  common.Host host = 1 [(validate.rules).message.required = true];
+  // Probes information.
+  repeated Probe probes = 2 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+}
+
+// SyncProbesResponse represents response of SyncProbes.
+message SyncProbesResponse {
+  // Hosts needs to be probed.
+  repeated common.Host hosts = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Probe interval.
+  google.protobuf.Duration probe_interval = 2 [(validate.rules).duration.required = true];
+}
+
 // Scheduler RPC Service.
 service Scheduler{
   // AnnouncePeer announces peer to scheduler.
@@ -342,4 +376,7 @@ service Scheduler{
 
   // LeaveHost releases host in scheduler.
   rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
+
+  // SyncProbes sync probes of the host.
+  rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);
 }
