@@ -21,6 +21,8 @@ package scheduler;
 import "common.proto";
 import "errordetails.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
 
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {
@@ -312,6 +314,38 @@ message LeaveHostRequest{
   string id = 1;
 }
 
+// Probe information.
+message Probe {
+  // Host metadata.
+  common.Host host = 1;
+  // RTTs is all of the round-trip times sent via this pinger.
+  repeated google.protobuf.Duration rtts = 2;
+  // MinRTT is the minimum round-trip time sent via this pinger.
+  google.protobuf.Duration min_rtt = 3;
+  // MaxRTT is the maximum round-trip time sent via this pinger.
+  google.protobuf.Duration max_rtt = 4;
+  // AvgRTT is the average round-trip time sent via this pinger.
+  google.protobuf.Duration avg_rtt = 5;
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+// SyncProbesRequest represents request of SyncProbes.
+message SyncProbesRequest {
+  // Host metadata.
+  common.Host host = 1;
+  // Probes information.
+  repeated Probe probes = 2;
+}
+
+// SyncProbesResponse represents response of SyncProbes.
+message SyncProbesResponse {
+  // Hosts needs to be probed.
+  repeated common.Host hosts = 1;
+  // Probe interval.
+  google.protobuf.Duration probe_interval = 2;
+}
+
 // Scheduler RPC Service.
 service Scheduler{
   // AnnouncePeer announces peer to scheduler.
@@ -335,4 +369,7 @@ service Scheduler{
 
   // LeaveHost releases host in scheduler.
   rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
+
+  // SyncProbes sync probes of the host.
+  rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);
 }

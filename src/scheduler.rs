@@ -436,6 +436,51 @@ pub struct LeaveHostRequest {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
 }
+/// Probe information.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Probe {
+    /// Host metadata.
+    #[prost(message, optional, tag = "1")]
+    pub host: ::core::option::Option<super::common::Host>,
+    /// RTTs is all of the round-trip times sent via this pinger.
+    #[prost(message, repeated, tag = "2")]
+    pub rtts: ::prost::alloc::vec::Vec<::prost_types::Duration>,
+    /// MinRTT is the minimum round-trip time sent via this pinger.
+    #[prost(message, optional, tag = "3")]
+    pub min_rtt: ::core::option::Option<::prost_types::Duration>,
+    /// MaxRTT is the maximum round-trip time sent via this pinger.
+    #[prost(message, optional, tag = "4")]
+    pub max_rtt: ::core::option::Option<::prost_types::Duration>,
+    /// AvgRTT is the average round-trip time sent via this pinger.
+    #[prost(message, optional, tag = "5")]
+    pub avg_rtt: ::core::option::Option<::prost_types::Duration>,
+    /// Task update time.
+    #[prost(message, optional, tag = "6")]
+    pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
+}
+/// SyncProbesRequest represents request of SyncProbes.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SyncProbesRequest {
+    /// Host metadata.
+    #[prost(message, optional, tag = "1")]
+    pub host: ::core::option::Option<super::common::Host>,
+    /// Probes information.
+    #[prost(message, repeated, tag = "2")]
+    pub probes: ::prost::alloc::vec::Vec<Probe>,
+}
+/// SyncProbesResponse represents response of SyncProbes.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SyncProbesResponse {
+    /// Hosts needs to be probed.
+    #[prost(message, repeated, tag = "1")]
+    pub hosts: ::prost::alloc::vec::Vec<super::common::Host>,
+    /// Probe interval.
+    #[prost(message, optional, tag = "2")]
+    pub probe_interval: ::core::option::Option<::prost_types::Duration>,
+}
 /// Generated client implementations.
 pub mod scheduler_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
@@ -652,6 +697,29 @@ pub mod scheduler_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        /// SyncProbes sync probes of the host.
+        pub async fn sync_probes(
+            &mut self,
+            request: impl tonic::IntoStreamingRequest<Message = super::SyncProbesRequest>,
+        ) -> Result<
+            tonic::Response<tonic::codec::Streaming<super::SyncProbesResponse>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.Scheduler/SyncProbes",
+            );
+            self.inner.streaming(request.into_streaming_request(), path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -703,6 +771,17 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::LeaveHostRequest>,
         ) -> Result<tonic::Response<()>, tonic::Status>;
+        /// Server streaming response type for the SyncProbes method.
+        type SyncProbesStream: futures_core::Stream<
+                Item = Result<super::SyncProbesResponse, tonic::Status>,
+            >
+            + Send
+            + 'static;
+        /// SyncProbes sync probes of the host.
+        async fn sync_probes(
+            &self,
+            request: tonic::Request<tonic::Streaming<super::SyncProbesRequest>>,
+        ) -> Result<tonic::Response<Self::SyncProbesStream>, tonic::Status>;
     }
     /// Scheduler RPC Service.
     #[derive(Debug)]
@@ -1035,6 +1114,47 @@ pub mod scheduler_server {
                                 send_compression_encodings,
                             );
                         let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.Scheduler/SyncProbes" => {
+                    #[allow(non_camel_case_types)]
+                    struct SyncProbesSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::StreamingService<super::SyncProbesRequest>
+                    for SyncProbesSvc<T> {
+                        type Response = super::SyncProbesResponse;
+                        type ResponseStream = T::SyncProbesStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                tonic::Streaming<super::SyncProbesRequest>,
+                            >,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).sync_probes(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = SyncProbesSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)

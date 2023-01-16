@@ -69,32 +69,29 @@ pub struct Host {
     /// Host id.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    /// Host ipv4.
+    /// Host ip.
     #[prost(string, tag = "2")]
-    pub ipv4: ::prost::alloc::string::String,
-    /// Host ipv6.
-    #[prost(string, tag = "3")]
-    pub ipv6: ::prost::alloc::string::String,
+    pub ip: ::prost::alloc::string::String,
     /// Peer hostname.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "3")]
     pub hostname: ::prost::alloc::string::String,
     /// Port of grpc service.
-    #[prost(int32, tag = "5")]
+    #[prost(int32, tag = "4")]
     pub port: i32,
     /// Port of download server.
-    #[prost(int32, tag = "6")]
+    #[prost(int32, tag = "5")]
     pub download_port: i32,
     /// Security domain for network.
-    #[prost(string, tag = "7")]
+    #[prost(string, tag = "6")]
     pub security_domain: ::prost::alloc::string::String,
     /// Host location(area, country, province, city, etc.).
-    #[prost(string, repeated, tag = "8")]
+    #[prost(string, repeated, tag = "7")]
     pub location: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// IDC where the peer host is located.
-    #[prost(string, tag = "9")]
+    #[prost(string, tag = "8")]
     pub idc: ::prost::alloc::string::String,
     /// Network topology(switch, router, etc.).
-    #[prost(string, repeated, tag = "10")]
+    #[prost(string, repeated, tag = "9")]
     pub net_topology: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Range represents download range.

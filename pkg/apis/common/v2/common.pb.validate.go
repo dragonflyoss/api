@@ -613,34 +613,15 @@ func (m *Host) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetIpv4() != "" {
-
-		if ip := net.ParseIP(m.GetIpv4()); ip == nil || ip.To4() == nil {
-			err := HostValidationError{
-				field:  "Ipv4",
-				reason: "value must be a valid IPv4 address",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if utf8.RuneCountInString(m.GetIp()) < 1 {
+		err := HostValidationError{
+			field:  "Ip",
+			reason: "value length must be at least 1 runes",
 		}
-
-	}
-
-	if m.GetIpv6() != "" {
-
-		if ip := net.ParseIP(m.GetIpv6()); ip == nil || ip.To4() != nil {
-			err := HostValidationError{
-				field:  "Ipv6",
-				reason: "value must be a valid IPv6 address",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+		if !all {
+			return err
 		}
-
+		errors = append(errors, err)
 	}
 
 	if err := m._validateHostname(m.GetHostname()); err != nil {

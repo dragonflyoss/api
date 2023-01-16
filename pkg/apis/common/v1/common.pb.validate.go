@@ -280,138 +280,6 @@ var _UrlMeta_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$"
 
 var _UrlMeta_Range_Pattern = regexp.MustCompile("^[0-9]+-[0-9]*$")
 
-// Validate checks the field values on HostLoad with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *HostLoad) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on HostLoad with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in HostLoadMultiError, or nil
-// if none found.
-func (m *HostLoad) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *HostLoad) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if val := m.GetCpuRatio(); val < 0 || val > 1 {
-		err := HostLoadValidationError{
-			field:  "CpuRatio",
-			reason: "value must be inside range [0, 1]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if val := m.GetMemRatio(); val < 0 || val > 1 {
-		err := HostLoadValidationError{
-			field:  "MemRatio",
-			reason: "value must be inside range [0, 1]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if val := m.GetDiskRatio(); val < 0 || val > 1 {
-		err := HostLoadValidationError{
-			field:  "DiskRatio",
-			reason: "value must be inside range [0, 1]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return HostLoadMultiError(errors)
-	}
-
-	return nil
-}
-
-// HostLoadMultiError is an error wrapping multiple validation errors returned
-// by HostLoad.ValidateAll() if the designated constraints aren't met.
-type HostLoadMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m HostLoadMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m HostLoadMultiError) AllErrors() []error { return m }
-
-// HostLoadValidationError is the validation error returned by
-// HostLoad.Validate if the designated constraints aren't met.
-type HostLoadValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e HostLoadValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e HostLoadValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e HostLoadValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e HostLoadValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e HostLoadValidationError) ErrorName() string { return "HostLoadValidationError" }
-
-// Error satisfies the builtin error interface
-func (e HostLoadValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sHostLoad.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = HostLoadValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = HostLoadValidationError{}
-
 // Validate checks the field values on PieceTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -1037,3 +905,247 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PiecePacketValidationError{}
+
+// Validate checks the field values on Host with the rules defined in the proto
+// definition for this message. If any rules are violated, the first error
+// encountered is returned, or nil if there are no violations.
+func (m *Host) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Host with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in HostMultiError, or nil if none found.
+func (m *Host) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Host) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		err := HostValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetIp()) < 1 {
+		err := HostValidationError{
+			field:  "Ip",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if err := m._validateHostname(m.GetHostname()); err != nil {
+		err = HostValidationError{
+			field:  "Hostname",
+			reason: "value must be a valid hostname",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if val := m.GetPort(); val < 1024 || val >= 65535 {
+		err := HostValidationError{
+			field:  "Port",
+			reason: "value must be inside range [1024, 65535)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if val := m.GetDownloadPort(); val < 1024 || val >= 65535 {
+		err := HostValidationError{
+			field:  "DownloadPort",
+			reason: "value must be inside range [1024, 65535)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetSecurityDomain() != "" {
+
+		if utf8.RuneCountInString(m.GetSecurityDomain()) < 1 {
+			err := HostValidationError{
+				field:  "SecurityDomain",
+				reason: "value length must be at least 1 runes",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if len(m.GetLocation()) > 0 {
+
+		if len(m.GetLocation()) < 1 {
+			err := HostValidationError{
+				field:  "Location",
+				reason: "value must contain at least 1 item(s)",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetIdc() != "" {
+
+		if utf8.RuneCountInString(m.GetIdc()) < 1 {
+			err := HostValidationError{
+				field:  "Idc",
+				reason: "value length must be at least 1 runes",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if len(m.GetNetTopology()) > 0 {
+
+		if len(m.GetNetTopology()) < 1 {
+			err := HostValidationError{
+				field:  "NetTopology",
+				reason: "value must contain at least 1 item(s)",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return HostMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *Host) _validateHostname(host string) error {
+	s := strings.ToLower(strings.TrimSuffix(host, "."))
+
+	if len(host) > 253 {
+		return errors.New("hostname cannot exceed 253 characters")
+	}
+
+	for _, part := range strings.Split(s, ".") {
+		if l := len(part); l == 0 || l > 63 {
+			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+		}
+
+		if part[0] == '-' {
+			return errors.New("hostname parts cannot begin with hyphens")
+		}
+
+		if part[len(part)-1] == '-' {
+			return errors.New("hostname parts cannot end with hyphens")
+		}
+
+		for _, r := range part {
+			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
+				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+			}
+		}
+	}
+
+	return nil
+}
+
+// HostMultiError is an error wrapping multiple validation errors returned by
+// Host.ValidateAll() if the designated constraints aren't met.
+type HostMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HostMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HostMultiError) AllErrors() []error { return m }
+
+// HostValidationError is the validation error returned by Host.Validate if the
+// designated constraints aren't met.
+type HostValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HostValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HostValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HostValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HostValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HostValidationError) ErrorName() string { return "HostValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HostValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHost.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HostValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HostValidationError{}
