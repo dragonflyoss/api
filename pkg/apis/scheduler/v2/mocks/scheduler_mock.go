@@ -179,6 +179,26 @@ func (mr *MockSchedulerClientMockRecorder) StatTask(ctx, in interface{}, opts ..
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatTask", reflect.TypeOf((*MockSchedulerClient)(nil).StatTask), varargs...)
 }
 
+// SyncProbes mocks base method.
+func (m *MockSchedulerClient) SyncProbes(ctx context.Context, opts ...grpc.CallOption) (scheduler.Scheduler_SyncProbesClient, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SyncProbes", varargs...)
+	ret0, _ := ret[0].(scheduler.Scheduler_SyncProbesClient)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SyncProbes indicates an expected call of SyncProbes.
+func (mr *MockSchedulerClientMockRecorder) SyncProbes(ctx interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncProbes", reflect.TypeOf((*MockSchedulerClient)(nil).SyncProbes), varargs...)
+}
+
 // MockScheduler_AnnouncePeerClient is a mock of Scheduler_AnnouncePeerClient interface.
 type MockScheduler_AnnouncePeerClient struct {
 	ctrl     *gomock.Controller
@@ -316,6 +336,143 @@ func (mr *MockScheduler_AnnouncePeerClientMockRecorder) Trailer() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockScheduler_AnnouncePeerClient)(nil).Trailer))
 }
 
+// MockScheduler_SyncProbesClient is a mock of Scheduler_SyncProbesClient interface.
+type MockScheduler_SyncProbesClient struct {
+	ctrl     *gomock.Controller
+	recorder *MockScheduler_SyncProbesClientMockRecorder
+}
+
+// MockScheduler_SyncProbesClientMockRecorder is the mock recorder for MockScheduler_SyncProbesClient.
+type MockScheduler_SyncProbesClientMockRecorder struct {
+	mock *MockScheduler_SyncProbesClient
+}
+
+// NewMockScheduler_SyncProbesClient creates a new mock instance.
+func NewMockScheduler_SyncProbesClient(ctrl *gomock.Controller) *MockScheduler_SyncProbesClient {
+	mock := &MockScheduler_SyncProbesClient{ctrl: ctrl}
+	mock.recorder = &MockScheduler_SyncProbesClientMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockScheduler_SyncProbesClient) EXPECT() *MockScheduler_SyncProbesClientMockRecorder {
+	return m.recorder
+}
+
+// CloseSend mocks base method.
+func (m *MockScheduler_SyncProbesClient) CloseSend() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CloseSend")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CloseSend indicates an expected call of CloseSend.
+func (mr *MockScheduler_SyncProbesClientMockRecorder) CloseSend() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CloseSend", reflect.TypeOf((*MockScheduler_SyncProbesClient)(nil).CloseSend))
+}
+
+// Context mocks base method.
+func (m *MockScheduler_SyncProbesClient) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockScheduler_SyncProbesClientMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockScheduler_SyncProbesClient)(nil).Context))
+}
+
+// Header mocks base method.
+func (m *MockScheduler_SyncProbesClient) Header() (metadata.MD, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Header")
+	ret0, _ := ret[0].(metadata.MD)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Header indicates an expected call of Header.
+func (mr *MockScheduler_SyncProbesClientMockRecorder) Header() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Header", reflect.TypeOf((*MockScheduler_SyncProbesClient)(nil).Header))
+}
+
+// Recv mocks base method.
+func (m *MockScheduler_SyncProbesClient) Recv() (*scheduler.SyncProbesResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Recv")
+	ret0, _ := ret[0].(*scheduler.SyncProbesResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recv indicates an expected call of Recv.
+func (mr *MockScheduler_SyncProbesClientMockRecorder) Recv() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockScheduler_SyncProbesClient)(nil).Recv))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockScheduler_SyncProbesClient) RecvMsg(m interface{}) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockScheduler_SyncProbesClientMockRecorder) RecvMsg(m interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockScheduler_SyncProbesClient)(nil).RecvMsg), m)
+}
+
+// Send mocks base method.
+func (m *MockScheduler_SyncProbesClient) Send(arg0 *scheduler.SyncProbesRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Send", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Send indicates an expected call of Send.
+func (mr *MockScheduler_SyncProbesClientMockRecorder) Send(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockScheduler_SyncProbesClient)(nil).Send), arg0)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockScheduler_SyncProbesClient) SendMsg(m interface{}) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockScheduler_SyncProbesClientMockRecorder) SendMsg(m interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockScheduler_SyncProbesClient)(nil).SendMsg), m)
+}
+
+// Trailer mocks base method.
+func (m *MockScheduler_SyncProbesClient) Trailer() metadata.MD {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Trailer")
+	ret0, _ := ret[0].(metadata.MD)
+	return ret0
+}
+
+// Trailer indicates an expected call of Trailer.
+func (mr *MockScheduler_SyncProbesClientMockRecorder) Trailer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockScheduler_SyncProbesClient)(nil).Trailer))
+}
+
 // MockSchedulerServer is a mock of SchedulerServer interface.
 type MockSchedulerServer struct {
 	ctrl     *gomock.Controller
@@ -441,6 +598,20 @@ func (m *MockSchedulerServer) StatTask(arg0 context.Context, arg1 *scheduler.Sta
 func (mr *MockSchedulerServerMockRecorder) StatTask(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatTask", reflect.TypeOf((*MockSchedulerServer)(nil).StatTask), arg0, arg1)
+}
+
+// SyncProbes mocks base method.
+func (m *MockSchedulerServer) SyncProbes(arg0 scheduler.Scheduler_SyncProbesServer) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SyncProbes", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SyncProbes indicates an expected call of SyncProbes.
+func (mr *MockSchedulerServerMockRecorder) SyncProbes(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncProbes", reflect.TypeOf((*MockSchedulerServer)(nil).SyncProbes), arg0)
 }
 
 // MockUnsafeSchedulerServer is a mock of UnsafeSchedulerServer interface.
@@ -610,4 +781,138 @@ func (m *MockScheduler_AnnouncePeerServer) SetTrailer(arg0 metadata.MD) {
 func (mr *MockScheduler_AnnouncePeerServerMockRecorder) SetTrailer(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockScheduler_AnnouncePeerServer)(nil).SetTrailer), arg0)
+}
+
+// MockScheduler_SyncProbesServer is a mock of Scheduler_SyncProbesServer interface.
+type MockScheduler_SyncProbesServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockScheduler_SyncProbesServerMockRecorder
+}
+
+// MockScheduler_SyncProbesServerMockRecorder is the mock recorder for MockScheduler_SyncProbesServer.
+type MockScheduler_SyncProbesServerMockRecorder struct {
+	mock *MockScheduler_SyncProbesServer
+}
+
+// NewMockScheduler_SyncProbesServer creates a new mock instance.
+func NewMockScheduler_SyncProbesServer(ctrl *gomock.Controller) *MockScheduler_SyncProbesServer {
+	mock := &MockScheduler_SyncProbesServer{ctrl: ctrl}
+	mock.recorder = &MockScheduler_SyncProbesServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockScheduler_SyncProbesServer) EXPECT() *MockScheduler_SyncProbesServerMockRecorder {
+	return m.recorder
+}
+
+// Context mocks base method.
+func (m *MockScheduler_SyncProbesServer) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockScheduler_SyncProbesServerMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockScheduler_SyncProbesServer)(nil).Context))
+}
+
+// Recv mocks base method.
+func (m *MockScheduler_SyncProbesServer) Recv() (*scheduler.SyncProbesRequest, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Recv")
+	ret0, _ := ret[0].(*scheduler.SyncProbesRequest)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recv indicates an expected call of Recv.
+func (mr *MockScheduler_SyncProbesServerMockRecorder) Recv() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockScheduler_SyncProbesServer)(nil).Recv))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockScheduler_SyncProbesServer) RecvMsg(m interface{}) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockScheduler_SyncProbesServerMockRecorder) RecvMsg(m interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockScheduler_SyncProbesServer)(nil).RecvMsg), m)
+}
+
+// Send mocks base method.
+func (m *MockScheduler_SyncProbesServer) Send(arg0 *scheduler.SyncProbesResponse) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Send", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Send indicates an expected call of Send.
+func (mr *MockScheduler_SyncProbesServerMockRecorder) Send(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockScheduler_SyncProbesServer)(nil).Send), arg0)
+}
+
+// SendHeader mocks base method.
+func (m *MockScheduler_SyncProbesServer) SendHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SendHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendHeader indicates an expected call of SendHeader.
+func (mr *MockScheduler_SyncProbesServerMockRecorder) SendHeader(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendHeader", reflect.TypeOf((*MockScheduler_SyncProbesServer)(nil).SendHeader), arg0)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockScheduler_SyncProbesServer) SendMsg(m interface{}) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockScheduler_SyncProbesServerMockRecorder) SendMsg(m interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockScheduler_SyncProbesServer)(nil).SendMsg), m)
+}
+
+// SetHeader mocks base method.
+func (m *MockScheduler_SyncProbesServer) SetHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetHeader indicates an expected call of SetHeader.
+func (mr *MockScheduler_SyncProbesServerMockRecorder) SetHeader(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHeader", reflect.TypeOf((*MockScheduler_SyncProbesServer)(nil).SetHeader), arg0)
+}
+
+// SetTrailer mocks base method.
+func (m *MockScheduler_SyncProbesServer) SetTrailer(arg0 metadata.MD) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetTrailer", arg0)
+}
+
+// SetTrailer indicates an expected call of SetTrailer.
+func (mr *MockScheduler_SyncProbesServerMockRecorder) SetTrailer(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockScheduler_SyncProbesServer)(nil).SetTrailer), arg0)
 }

@@ -90,9 +90,6 @@ pub struct Host {
     /// IDC where the peer host is located.
     #[prost(string, tag = "8")]
     pub idc: ::prost::alloc::string::String,
-    /// Network topology(switch, router, etc.).
-    #[prost(string, repeated, tag = "9")]
-    pub net_topology: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// Range represents download range.
 #[allow(clippy::derive_partial_eq_without_eq)]

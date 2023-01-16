@@ -279,8 +279,6 @@ message Network {
   string location = 4;
   // IDC where the peer host is located
   string idc = 5;
-  // Network topology(switch|router|...).
-  string net_topology = 6;
 }
 
 // Disk Stat.
@@ -324,7 +322,7 @@ message LeaveHostRequest{
 // Probe information.
 message Probe {
   // Host metadata.
-  common.Host host = 1 [(validate.rules).message.required = true];
+  common.v2.Host host = 1 [(validate.rules).message.required = true];
   // RTTs is all of the round-trip times sent via this pinger.
   repeated google.protobuf.Duration rtts = 2 [(validate.rules).repeated = {min_items: 1}];
   // MinRTT is the minimum round-trip time sent via this pinger.
@@ -340,7 +338,7 @@ message Probe {
 // SyncProbesRequest represents request of SyncProbes.
 message SyncProbesRequest {
   // Host metadata.
-  common.Host host = 1 [(validate.rules).message.required = true];
+  common.v2.Host host = 1 [(validate.rules).message.required = true];
   // Probes information.
   repeated Probe probes = 2 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
 }
@@ -348,7 +346,7 @@ message SyncProbesRequest {
 // SyncProbesResponse represents response of SyncProbes.
 message SyncProbesResponse {
   // Hosts needs to be probed.
-  repeated common.Host hosts = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated common.v2.Host hosts = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
   // Probe interval.
   google.protobuf.Duration probe_interval = 2 [(validate.rules).duration.required = true];
 }

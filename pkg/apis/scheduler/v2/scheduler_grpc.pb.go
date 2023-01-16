@@ -39,6 +39,8 @@ type SchedulerClient interface {
 	AnnounceHost(ctx context.Context, in *AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
 	LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// SyncProbes sync probes of the host.
+	SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error)
 }
 
 type schedulerClient struct {
@@ -134,6 +136,37 @@ func (c *schedulerClient) LeaveHost(ctx context.Context, in *LeaveHostRequest, o
 	return out, nil
 }
 
+func (c *schedulerClient) SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[1], "/scheduler.v2.Scheduler/SyncProbes", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &schedulerSyncProbesClient{stream}
+	return x, nil
+}
+
+type Scheduler_SyncProbesClient interface {
+	Send(*SyncProbesRequest) error
+	Recv() (*SyncProbesResponse, error)
+	grpc.ClientStream
+}
+
+type schedulerSyncProbesClient struct {
+	grpc.ClientStream
+}
+
+func (x *schedulerSyncProbesClient) Send(m *SyncProbesRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *schedulerSyncProbesClient) Recv() (*SyncProbesResponse, error) {
+	m := new(SyncProbesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // SchedulerServer is the server API for Scheduler service.
 // All implementations should embed UnimplementedSchedulerServer
 // for forward compatibility
@@ -153,6 +186,8 @@ type SchedulerServer interface {
 	AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
 	LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error)
+	// SyncProbes sync probes of the host.
+	SyncProbes(Scheduler_SyncProbesServer) error
 }
 
 // UnimplementedSchedulerServer should be embedded to have forward compatible implementations.
@@ -179,6 +214,9 @@ func (UnimplementedSchedulerServer) AnnounceHost(context.Context, *AnnounceHostR
 }
 func (UnimplementedSchedulerServer) LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveHost not implemented")
+}
+func (UnimplementedSchedulerServer) SyncProbes(Scheduler_SyncProbesServer) error {
+	return status.Errorf(codes.Unimplemented, "method SyncProbes not implemented")
 }
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
@@ -326,6 +364,32 @@ func _Scheduler_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scheduler_SyncProbes_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SchedulerServer).SyncProbes(&schedulerSyncProbesServer{stream})
+}
+
+type Scheduler_SyncProbesServer interface {
+	Send(*SyncProbesResponse) error
+	Recv() (*SyncProbesRequest, error)
+	grpc.ServerStream
+}
+
+type schedulerSyncProbesServer struct {
+	grpc.ServerStream
+}
+
+func (x *schedulerSyncProbesServer) Send(m *SyncProbesResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *schedulerSyncProbesServer) Recv() (*SyncProbesRequest, error) {
+	m := new(SyncProbesRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // Scheduler_ServiceDesc is the grpc.ServiceDesc for Scheduler service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -362,6 +426,12 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "AnnouncePeer",
 			Handler:       _Scheduler_AnnouncePeer_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "SyncProbes",
+			Handler:       _Scheduler_SyncProbes_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

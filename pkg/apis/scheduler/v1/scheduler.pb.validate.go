@@ -680,8 +680,6 @@ func (m *PeerHost) validate(all bool) error {
 
 	// no validation rules for Idc
 
-	// no validation rules for NetTopology
-
 	if len(errors) > 0 {
 		return PeerHostMultiError(errors)
 	}
@@ -3121,8 +3119,6 @@ func (m *Network) validate(all bool) error {
 	// no validation rules for Location
 
 	// no validation rules for Idc
-
-	// no validation rules for NetTopology
 
 	if len(errors) > 0 {
 		return NetworkMultiError(errors)

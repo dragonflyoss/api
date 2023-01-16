@@ -378,9 +378,6 @@ pub struct Network {
     /// IDC where the peer host is located
     #[prost(string, tag = "5")]
     pub idc: ::prost::alloc::string::String,
-    /// Network topology(switch|router|...).
-    #[prost(string, tag = "6")]
-    pub net_topology: ::prost::alloc::string::String,
 }
 /// Disk Stat.
 #[allow(clippy::derive_partial_eq_without_eq)]

@@ -272,8 +272,6 @@ message Network {
   string location = 4;
   // IDC where the peer host is located
   string idc = 5;
-  // Network topology(switch|router|...).
-  string net_topology = 6;
 }
 
 // Disk Stat.
