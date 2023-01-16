@@ -75,8 +75,6 @@ message SeedPeer {
   string type = 3;
   // Seed peer idc.
   string idc = 5;
-  // Seed peer network topology.
-  string net_topology = 6;
   // Seed peer location.
   string location = 7;
   // Seed peer ip.
@@ -119,8 +117,6 @@ message UpdateSeedPeerRequest {
   string type = 3 [(validate.rules).string = {in: ["super", "strong", "weak"]}];
   // Seed peer idc.
   string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // Seed peer network topology.
-  string net_topology = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Seed peer location.
   string location = 7 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
   // Seed peer ip.
@@ -165,8 +161,6 @@ message Scheduler {
   string idc = 4;
   // Scheduler location.
   string location = 5;
-  // Deprecated: Use net_topology instead.
-  bytes net_config = 6;
   // Scheduler ip.
   string ip = 7;
   // Scheduler grpc port.
@@ -179,8 +173,6 @@ message Scheduler {
   SchedulerCluster scheduler_cluster = 11;
   // Seed peers to which the scheduler belongs.
   repeated SeedPeer seed_peers = 13;
-  // Scheduler network topology.
-  string net_topology = 14;
 }
 
 // GetSchedulerRequest represents request of GetScheduler.
@@ -209,14 +201,12 @@ message UpdateSchedulerRequest {
   string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler location.
   string location = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // Deprecated: Use net_topology instead.
+  // Deprecated: Remove net_config params.
   bytes net_config = 7 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
   // Scheduler ip.
   string ip = 8 [(validate.rules).string = {ip: true}];
   // Scheduler port.
   int32 port = 9 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // Scheduler network topology.
-  string net_topology = 10 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
 }
 
 // ListSchedulersRequest represents request of ListSchedulers.

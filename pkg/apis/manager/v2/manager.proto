@@ -75,26 +75,24 @@ message SeedPeer {
   string type = 3;
   // Seed peer idc.
   string idc = 4;
-  // Seed peer network topology.
-  string net_topology = 5;
   // Seed peer location.
-  string location = 6;
+  string location = 5;
   // Seed peer ip.
-  string ip = 7;
+  string ip = 6;
   // Seed peer grpc port.
-  int32 port = 8;
+  int32 port = 7;
   // Seed peer download port.
-  int32 download_port = 9;
+  int32 download_port = 8;
   // Seed peer state.
-  string state = 10;
+  string state = 9;
   // ID of the cluster to which the seed peer belongs.
-  uint64 seed_peer_cluster_id = 11;
+  uint64 seed_peer_cluster_id = 10;
   // Cluster to which the seed peer belongs.
-  SeedPeerCluster seed_peer_cluster = 12;
+  SeedPeerCluster seed_peer_cluster = 11;
   // Schedulers included in seed peer.
-  repeated Scheduler schedulers = 13;
+  repeated Scheduler schedulers = 12;
   // Seed peer object storage port.
-  int32 object_storage_port = 14;
+  int32 object_storage_port = 13;
 }
 
 // GetSeedPeerRequest represents request of GetSeedPeer.
@@ -119,20 +117,18 @@ message UpdateSeedPeerRequest {
   string type = 3 [(validate.rules).string = {in: ["super", "strong", "weak"]}];
   // Seed peer idc.
   string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // Seed peer network topology.
-  string net_topology = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Seed peer location.
-  string location = 6 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
+  string location = 5 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
   // Seed peer ip.
-  string ip = 7 [(validate.rules).string = {ip: true}];
+  string ip = 6 [(validate.rules).string = {ip: true}];
   // Seed peer port.
-  int32 port = 8 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 7 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Seed peer download port.
-  int32 download_port = 9 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 download_port = 8 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // ID of the cluster to which the seed peer belongs.
-  uint64 seed_peer_cluster_id = 10 [(validate.rules).uint64 = {gte: 1}];
+  uint64 seed_peer_cluster_id = 9 [(validate.rules).uint64 = {gte: 1}];
   // Seed peer object storage port.
-  int32 object_storage_port = 11 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  int32 object_storage_port = 10 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
 }
 
 // SeedPeerCluster represents cluster of scheduler.
@@ -159,28 +155,22 @@ message Scheduler {
   uint64 id = 1;
   // Scheduler hostname.
   string host_name = 2;
-  // Deprecated: Do not use.
-  string vips = 3;
   // Scheduler idc.
-  string idc = 4;
+  string idc = 3;
   // Scheduler location.
-  string location = 5;
-  // Deprecated: Use net_topology instead.
-  bytes net_config = 6;
+  string location = 4;
   // Scheduler ip.
-  string ip = 7;
+  string ip = 5;
   // Scheduler grpc port.
-  int32 port = 8;
+  int32 port = 6;
   // Scheduler state.
-  string state = 9;
+  string state = 7;
   // ID of the cluster to which the scheduler belongs.
-  uint64 scheduler_cluster_id = 10;
+  uint64 scheduler_cluster_id = 8;
   // Cluster to which the scheduler belongs.
-  SchedulerCluster scheduler_cluster = 11;
+  SchedulerCluster scheduler_cluster = 9;
   // Seed peers to which the scheduler belongs.
-  repeated SeedPeer seed_peers = 12;
-  // Scheduler network topology.
-  string net_topology = 13;
+  repeated SeedPeer seed_peers = 10;
 }
 
 // GetSchedulerRequest represents request of GetScheduler.
@@ -203,20 +193,14 @@ message UpdateSchedulerRequest {
   string host_name = 2 [(validate.rules).string.hostname = true];
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
-  // Deprecated: Do not use.
-  string vips = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler idc.
-  string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler location.
-  string location = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // Deprecated: Use net_topology instead.
-  bytes net_config = 7 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
+  string location = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler ip.
-  string ip = 8 [(validate.rules).string = {ip: true}];
+  string ip = 6 [(validate.rules).string = {ip: true}];
   // Scheduler port.
-  int32 port = 9 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // Scheduler network topology.
-  string net_topology = 10 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  int32 port = 7 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
 }
 
 // ListSchedulersRequest represents request of ListSchedulers.

@@ -162,8 +162,6 @@ message Host {
   repeated string location = 7;
   // IDC where the peer host is located.
   string idc = 8;
-  // Network topology(switch, router, etc.).
-  repeated string net_topology = 9;
 }
 
 // Range represents download range.

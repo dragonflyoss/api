@@ -55,37 +55,34 @@ pub struct SeedPeer {
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
     /// Seed peer idc.
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "4")]
     pub idc: ::prost::alloc::string::String,
-    /// Seed peer network topology.
-    #[prost(string, tag = "6")]
-    pub net_topology: ::prost::alloc::string::String,
     /// Seed peer location.
-    #[prost(string, tag = "7")]
+    #[prost(string, tag = "5")]
     pub location: ::prost::alloc::string::String,
     /// Seed peer ip.
-    #[prost(string, tag = "8")]
+    #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
     /// Seed peer grpc port.
-    #[prost(int32, tag = "9")]
+    #[prost(int32, tag = "7")]
     pub port: i32,
     /// Seed peer download port.
-    #[prost(int32, tag = "10")]
+    #[prost(int32, tag = "8")]
     pub download_port: i32,
     /// Seed peer state.
-    #[prost(string, tag = "11")]
+    #[prost(string, tag = "9")]
     pub state: ::prost::alloc::string::String,
     /// ID of the cluster to which the seed peer belongs.
-    #[prost(uint64, tag = "12")]
+    #[prost(uint64, tag = "10")]
     pub seed_peer_cluster_id: u64,
     /// Cluster to which the seed peer belongs.
-    #[prost(message, optional, tag = "13")]
+    #[prost(message, optional, tag = "11")]
     pub seed_peer_cluster: ::core::option::Option<SeedPeerCluster>,
     /// Schedulers included in seed peer.
-    #[prost(message, repeated, tag = "14")]
+    #[prost(message, repeated, tag = "12")]
     pub schedulers: ::prost::alloc::vec::Vec<Scheduler>,
     /// Seed peer object storage port.
-    #[prost(int32, tag = "15")]
+    #[prost(int32, tag = "13")]
     pub object_storage_port: i32,
 }
 /// GetSeedPeerRequest represents request of GetSeedPeer.
@@ -121,26 +118,23 @@ pub struct UpdateSeedPeerRequest {
     /// Seed peer idc.
     #[prost(string, tag = "4")]
     pub idc: ::prost::alloc::string::String,
-    /// Seed peer network topology.
-    #[prost(string, tag = "5")]
-    pub net_topology: ::prost::alloc::string::String,
     /// Seed peer location.
-    #[prost(string, tag = "6")]
+    #[prost(string, tag = "5")]
     pub location: ::prost::alloc::string::String,
     /// Seed peer ip.
-    #[prost(string, tag = "7")]
+    #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
     /// Seed peer port.
-    #[prost(int32, tag = "8")]
+    #[prost(int32, tag = "7")]
     pub port: i32,
     /// Seed peer download port.
-    #[prost(int32, tag = "9")]
+    #[prost(int32, tag = "8")]
     pub download_port: i32,
     /// ID of the cluster to which the seed peer belongs.
-    #[prost(uint64, tag = "10")]
+    #[prost(uint64, tag = "9")]
     pub seed_peer_cluster_id: u64,
     /// Seed peer object storage port.
-    #[prost(int32, tag = "11")]
+    #[prost(int32, tag = "10")]
     pub object_storage_port: i32,
 }
 /// SeedPeerCluster represents cluster of scheduler.
@@ -179,39 +173,30 @@ pub struct Scheduler {
     /// Scheduler hostname.
     #[prost(string, tag = "2")]
     pub host_name: ::prost::alloc::string::String,
-    /// Deprecated: Do not use.
-    #[prost(string, tag = "3")]
-    pub vips: ::prost::alloc::string::String,
     /// Scheduler idc.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "3")]
     pub idc: ::prost::alloc::string::String,
     /// Scheduler location.
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "4")]
     pub location: ::prost::alloc::string::String,
-    /// Deprecated: Use net_topology instead.
-    #[prost(bytes = "vec", tag = "6")]
-    pub net_config: ::prost::alloc::vec::Vec<u8>,
     /// Scheduler ip.
-    #[prost(string, tag = "7")]
+    #[prost(string, tag = "5")]
     pub ip: ::prost::alloc::string::String,
     /// Scheduler grpc port.
-    #[prost(int32, tag = "8")]
+    #[prost(int32, tag = "6")]
     pub port: i32,
     /// Scheduler state.
-    #[prost(string, tag = "9")]
+    #[prost(string, tag = "7")]
     pub state: ::prost::alloc::string::String,
     /// ID of the cluster to which the scheduler belongs.
-    #[prost(uint64, tag = "10")]
+    #[prost(uint64, tag = "8")]
     pub scheduler_cluster_id: u64,
     /// Cluster to which the scheduler belongs.
-    #[prost(message, optional, tag = "11")]
+    #[prost(message, optional, tag = "9")]
     pub scheduler_cluster: ::core::option::Option<SchedulerCluster>,
     /// Seed peers to which the scheduler belongs.
-    #[prost(message, repeated, tag = "12")]
+    #[prost(message, repeated, tag = "10")]
     pub seed_peers: ::prost::alloc::vec::Vec<SeedPeer>,
-    /// Scheduler network topology.
-    #[prost(string, tag = "13")]
-    pub net_topology: ::prost::alloc::string::String,
 }
 /// GetSchedulerRequest represents request of GetScheduler.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -243,27 +228,18 @@ pub struct UpdateSchedulerRequest {
     /// ID of the cluster to which the scheduler belongs.
     #[prost(uint64, tag = "3")]
     pub scheduler_cluster_id: u64,
-    /// Deprecated: Do not use.
-    #[prost(string, tag = "4")]
-    pub vips: ::prost::alloc::string::String,
     /// Scheduler idc.
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "4")]
     pub idc: ::prost::alloc::string::String,
     /// Scheduler location.
-    #[prost(string, tag = "6")]
+    #[prost(string, tag = "5")]
     pub location: ::prost::alloc::string::String,
-    /// Deprecated: Use net_topology instead.
-    #[prost(bytes = "vec", tag = "7")]
-    pub net_config: ::prost::alloc::vec::Vec<u8>,
     /// Scheduler ip.
-    #[prost(string, tag = "8")]
+    #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
     /// Scheduler port.
-    #[prost(int32, tag = "9")]
+    #[prost(int32, tag = "7")]
     pub port: i32,
-    /// Scheduler network topology.
-    #[prost(string, tag = "10")]
-    pub net_topology: ::prost::alloc::string::String,
 }
 /// ListSchedulersRequest represents request of ListSchedulers.
 #[allow(clippy::derive_partial_eq_without_eq)]

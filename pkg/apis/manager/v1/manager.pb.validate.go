@@ -318,8 +318,6 @@ func (m *SeedPeer) validate(all bool) error {
 
 	// no validation rules for Idc
 
-	// no validation rules for NetTopology
-
 	// no validation rules for Location
 
 	// no validation rules for Ip
@@ -726,21 +724,6 @@ func (m *UpdateSeedPeerRequest) validate(all bool) error {
 
 	}
 
-	if m.GetNetTopology() != "" {
-
-		if l := utf8.RuneCountInString(m.GetNetTopology()); l < 1 || l > 1024 {
-			err := UpdateSeedPeerRequestValidationError{
-				field:  "NetTopology",
-				reason: "value length must be between 1 and 1024 runes, inclusive",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if m.GetLocation() != "" {
 
 		if utf8.RuneCountInString(m.GetLocation()) > 1024 {
@@ -1104,8 +1087,6 @@ func (m *Scheduler) validate(all bool) error {
 
 	// no validation rules for Location
 
-	// no validation rules for NetConfig
-
 	// no validation rules for Ip
 
 	// no validation rules for Port
@@ -1176,8 +1157,6 @@ func (m *Scheduler) validate(all bool) error {
 		}
 
 	}
-
-	// no validation rules for NetTopology
 
 	if len(errors) > 0 {
 		return SchedulerMultiError(errors)
@@ -1573,21 +1552,6 @@ func (m *UpdateSchedulerRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
-	}
-
-	if m.GetNetTopology() != "" {
-
-		if l := utf8.RuneCountInString(m.GetNetTopology()); l < 1 || l > 1024 {
-			err := UpdateSchedulerRequestValidationError{
-				field:  "NetTopology",
-				reason: "value length must be between 1 and 1024 runes, inclusive",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
 	}
 
 	if len(errors) > 0 {

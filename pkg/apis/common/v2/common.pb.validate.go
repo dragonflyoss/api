@@ -673,12 +673,12 @@ func (m *Host) validate(all bool) error {
 
 	}
 
-	if len(m.GetLocation()) > 0 {
+	if m.GetLocation() != "" {
 
-		if len(m.GetLocation()) < 1 {
+		if utf8.RuneCountInString(m.GetLocation()) < 1 {
 			err := HostValidationError{
 				field:  "Location",
-				reason: "value must contain at least 1 item(s)",
+				reason: "value length must be at least 1 runes",
 			}
 			if !all {
 				return err
@@ -694,21 +694,6 @@ func (m *Host) validate(all bool) error {
 			err := HostValidationError{
 				field:  "Idc",
 				reason: "value length must be at least 1 runes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if len(m.GetNetTopology()) > 0 {
-
-		if len(m.GetNetTopology()) < 1 {
-			err := HostValidationError{
-				field:  "NetTopology",
-				reason: "value must contain at least 1 item(s)",
 			}
 			if !all {
 				return err

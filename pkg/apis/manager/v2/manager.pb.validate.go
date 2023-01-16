@@ -318,8 +318,6 @@ func (m *SeedPeer) validate(all bool) error {
 
 	// no validation rules for Idc
 
-	// no validation rules for NetTopology
-
 	// no validation rules for Location
 
 	// no validation rules for Ip
@@ -726,21 +724,6 @@ func (m *UpdateSeedPeerRequest) validate(all bool) error {
 
 	}
 
-	if m.GetNetTopology() != "" {
-
-		if l := utf8.RuneCountInString(m.GetNetTopology()); l < 1 || l > 1024 {
-			err := UpdateSeedPeerRequestValidationError{
-				field:  "NetTopology",
-				reason: "value length must be between 1 and 1024 runes, inclusive",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if m.GetLocation() != "" {
 
 		if utf8.RuneCountInString(m.GetLocation()) > 1024 {
@@ -1098,13 +1081,9 @@ func (m *Scheduler) validate(all bool) error {
 
 	// no validation rules for HostName
 
-	// no validation rules for Vips
-
 	// no validation rules for Idc
 
 	// no validation rules for Location
-
-	// no validation rules for NetConfig
 
 	// no validation rules for Ip
 
@@ -1176,8 +1155,6 @@ func (m *Scheduler) validate(all bool) error {
 		}
 
 	}
-
-	// no validation rules for NetTopology
 
 	if len(errors) > 0 {
 		return SchedulerMultiError(errors)
@@ -1493,21 +1470,6 @@ func (m *UpdateSchedulerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetVips() != "" {
-
-		if l := utf8.RuneCountInString(m.GetVips()); l < 1 || l > 1024 {
-			err := UpdateSchedulerRequestValidationError{
-				field:  "Vips",
-				reason: "value length must be between 1 and 1024 runes, inclusive",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if m.GetIdc() != "" {
 
 		if l := utf8.RuneCountInString(m.GetIdc()); l < 1 || l > 1024 {
@@ -1538,21 +1500,6 @@ func (m *UpdateSchedulerRequest) validate(all bool) error {
 
 	}
 
-	if len(m.GetNetConfig()) > 0 {
-
-		if len(m.GetNetConfig()) < 1 {
-			err := UpdateSchedulerRequestValidationError{
-				field:  "NetConfig",
-				reason: "value length must be at least 1 bytes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if ip := net.ParseIP(m.GetIp()); ip == nil {
 		err := UpdateSchedulerRequestValidationError{
 			field:  "Ip",
@@ -1573,21 +1520,6 @@ func (m *UpdateSchedulerRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
-	}
-
-	if m.GetNetTopology() != "" {
-
-		if l := utf8.RuneCountInString(m.GetNetTopology()); l < 1 || l > 1024 {
-			err := UpdateSchedulerRequestValidationError{
-				field:  "NetTopology",
-				reason: "value length must be between 1 and 1024 runes, inclusive",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
 	}
 
 	if len(errors) > 0 {
