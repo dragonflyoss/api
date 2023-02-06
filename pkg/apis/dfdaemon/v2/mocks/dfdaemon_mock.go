@@ -59,6 +59,26 @@ func (mr *MockDfdaemonClientMockRecorder) DeleteTask(ctx, in interface{}, opts .
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockDfdaemonClient)(nil).DeleteTask), varargs...)
 }
 
+// DownloadTask mocks base method.
+func (m *MockDfdaemonClient) DownloadTask(ctx context.Context, in *dfdaemon.DownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DownloadTask", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DownloadTask indicates an expected call of DownloadTask.
+func (mr *MockDfdaemonClientMockRecorder) DownloadTask(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadTask", reflect.TypeOf((*MockDfdaemonClient)(nil).DownloadTask), varargs...)
+}
+
 // ExportTask mocks base method.
 func (m *MockDfdaemonClient) ExportTask(ctx context.Context, in *dfdaemon.ExportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -137,26 +157,6 @@ func (mr *MockDfdaemonClientMockRecorder) SyncPieces(ctx interface{}, opts ...in
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncPieces", reflect.TypeOf((*MockDfdaemonClient)(nil).SyncPieces), varargs...)
-}
-
-// TriggerTask mocks base method.
-func (m *MockDfdaemonClient) TriggerTask(ctx context.Context, in *dfdaemon.TriggerTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "TriggerTask", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// TriggerTask indicates an expected call of TriggerTask.
-func (mr *MockDfdaemonClientMockRecorder) TriggerTask(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TriggerTask", reflect.TypeOf((*MockDfdaemonClient)(nil).TriggerTask), varargs...)
 }
 
 // MockDfdaemon_SyncPiecesClient is a mock of Dfdaemon_SyncPiecesClient interface.
@@ -334,6 +334,21 @@ func (mr *MockDfdaemonServerMockRecorder) DeleteTask(arg0, arg1 interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockDfdaemonServer)(nil).DeleteTask), arg0, arg1)
 }
 
+// DownloadTask mocks base method.
+func (m *MockDfdaemonServer) DownloadTask(arg0 context.Context, arg1 *dfdaemon.DownloadTaskRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DownloadTask", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DownloadTask indicates an expected call of DownloadTask.
+func (mr *MockDfdaemonServerMockRecorder) DownloadTask(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadTask", reflect.TypeOf((*MockDfdaemonServer)(nil).DownloadTask), arg0, arg1)
+}
+
 // ExportTask mocks base method.
 func (m *MockDfdaemonServer) ExportTask(arg0 context.Context, arg1 *dfdaemon.ExportTaskRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -391,21 +406,6 @@ func (m *MockDfdaemonServer) SyncPieces(arg0 dfdaemon.Dfdaemon_SyncPiecesServer)
 func (mr *MockDfdaemonServerMockRecorder) SyncPieces(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncPieces", reflect.TypeOf((*MockDfdaemonServer)(nil).SyncPieces), arg0)
-}
-
-// TriggerTask mocks base method.
-func (m *MockDfdaemonServer) TriggerTask(arg0 context.Context, arg1 *dfdaemon.TriggerTaskRequest) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "TriggerTask", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// TriggerTask indicates an expected call of TriggerTask.
-func (mr *MockDfdaemonServerMockRecorder) TriggerTask(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TriggerTask", reflect.TypeOf((*MockDfdaemonServer)(nil).TriggerTask), arg0, arg1)
 }
 
 // MockUnsafeDfdaemonServer is a mock of UnsafeDfdaemonServer interface.

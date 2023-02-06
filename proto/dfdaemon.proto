@@ -71,8 +71,8 @@ message SyncPiecesResponse {
   }
 }
 
-// TriggerTaskRequest represents request of TriggerTask.
-message TriggerTaskRequest {
+// DownloadTaskRequest represents request of DownloadTask.
+message DownloadTaskRequest {
   // Task id.
   string task_id = 1;
   // Task metadata.
@@ -125,8 +125,8 @@ service Dfdaemon{
   // SyncPieces syncs pieces from the other peers.
   rpc SyncPieces(stream SyncPiecesRequest)returns(stream SyncPiecesResponse);
 
-  // TriggerTask triggers task back-to-source download.
-  rpc TriggerTask(TriggerTaskRequest) returns(google.protobuf.Empty);
+  // DownloadTask downloads task back-to-source.
+  rpc DownloadTask(DownloadTaskRequest) returns(google.protobuf.Empty);
 
   // StatTask stats task information.
   rpc StatTask(StatTaskRequest) returns(common.Task);
