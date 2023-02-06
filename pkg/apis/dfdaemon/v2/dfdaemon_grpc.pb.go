@@ -26,8 +26,8 @@ const _ = grpc.SupportPackageIsVersion7
 type DfdaemonClient interface {
 	// SyncPieces syncs pieces from the other peers.
 	SyncPieces(ctx context.Context, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error)
-	// TriggerTask triggers task back-to-source download.
-	TriggerTask(ctx context.Context, in *TriggerTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DownloadTask downloads task back-to-source.
+	DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// StatTask stats task information.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
 	// ImportTask imports task to p2p network.
@@ -77,9 +77,9 @@ func (x *dfdaemonSyncPiecesClient) Recv() (*SyncPiecesResponse, error) {
 	return m, nil
 }
 
-func (c *dfdaemonClient) TriggerTask(ctx context.Context, in *TriggerTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dfdaemonClient) DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/TriggerTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/DownloadTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -128,8 +128,8 @@ func (c *dfdaemonClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, 
 type DfdaemonServer interface {
 	// SyncPieces syncs pieces from the other peers.
 	SyncPieces(Dfdaemon_SyncPiecesServer) error
-	// TriggerTask triggers task back-to-source download.
-	TriggerTask(context.Context, *TriggerTaskRequest) (*emptypb.Empty, error)
+	// DownloadTask downloads task back-to-source.
+	DownloadTask(context.Context, *DownloadTaskRequest) (*emptypb.Empty, error)
 	// StatTask stats task information.
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
 	// ImportTask imports task to p2p network.
@@ -147,8 +147,8 @@ type UnimplementedDfdaemonServer struct {
 func (UnimplementedDfdaemonServer) SyncPieces(Dfdaemon_SyncPiecesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncPieces not implemented")
 }
-func (UnimplementedDfdaemonServer) TriggerTask(context.Context, *TriggerTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TriggerTask not implemented")
+func (UnimplementedDfdaemonServer) DownloadTask(context.Context, *DownloadTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DownloadTask not implemented")
 }
 func (UnimplementedDfdaemonServer) StatTask(context.Context, *StatTaskRequest) (*v2.Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
@@ -200,20 +200,20 @@ func (x *dfdaemonSyncPiecesServer) Recv() (*SyncPiecesRequest, error) {
 	return m, nil
 }
 
-func _Dfdaemon_TriggerTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TriggerTaskRequest)
+func _Dfdaemon_DownloadTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadTaskRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DfdaemonServer).TriggerTask(ctx, in)
+		return srv.(DfdaemonServer).DownloadTask(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.v2.Dfdaemon/TriggerTask",
+		FullMethod: "/dfdaemon.v2.Dfdaemon/DownloadTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonServer).TriggerTask(ctx, req.(*TriggerTaskRequest))
+		return srv.(DfdaemonServer).DownloadTask(ctx, req.(*DownloadTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -298,8 +298,8 @@ var Dfdaemon_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DfdaemonServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "TriggerTask",
-			Handler:    _Dfdaemon_TriggerTask_Handler,
+			MethodName: "DownloadTask",
+			Handler:    _Dfdaemon_DownloadTask_Handler,
 		},
 		{
 			MethodName: "StatTask",

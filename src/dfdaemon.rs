@@ -78,10 +78,10 @@ pub mod sync_pieces_response {
         StatMetadataFailed(super::super::errordetails::StatMetadataFailed),
     }
 }
-/// TriggerTaskRequest represents request of TriggerTask.
+/// DownloadTaskRequest represents request of DownloadTask.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TriggerTaskRequest {
+pub struct DownloadTaskRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
@@ -239,10 +239,10 @@ pub mod dfdaemon_client {
             );
             self.inner.streaming(request.into_streaming_request(), path, codec).await
         }
-        /// TriggerTask triggers task back-to-source download.
-        pub async fn trigger_task(
+        /// DownloadTask downloads task back-to-source.
+        pub async fn download_task(
             &mut self,
-            request: impl tonic::IntoRequest<super::TriggerTaskRequest>,
+            request: impl tonic::IntoRequest<super::DownloadTaskRequest>,
         ) -> Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
@@ -255,7 +255,7 @@ pub mod dfdaemon_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.Dfdaemon/TriggerTask",
+                "/dfdaemon.Dfdaemon/DownloadTask",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -359,10 +359,10 @@ pub mod dfdaemon_server {
             &self,
             request: tonic::Request<tonic::Streaming<super::SyncPiecesRequest>>,
         ) -> Result<tonic::Response<Self::SyncPiecesStream>, tonic::Status>;
-        /// TriggerTask triggers task back-to-source download.
-        async fn trigger_task(
+        /// DownloadTask downloads task back-to-source.
+        async fn download_task(
             &self,
-            request: tonic::Request<super::TriggerTaskRequest>,
+            request: tonic::Request<super::DownloadTaskRequest>,
         ) -> Result<tonic::Response<()>, tonic::Status>;
         /// StatTask stats task information.
         async fn stat_task(
@@ -486,13 +486,13 @@ pub mod dfdaemon_server {
                     };
                     Box::pin(fut)
                 }
-                "/dfdaemon.Dfdaemon/TriggerTask" => {
+                "/dfdaemon.Dfdaemon/DownloadTask" => {
                     #[allow(non_camel_case_types)]
-                    struct TriggerTaskSvc<T: Dfdaemon>(pub Arc<T>);
+                    struct DownloadTaskSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<
                         T: Dfdaemon,
-                    > tonic::server::UnaryService<super::TriggerTaskRequest>
-                    for TriggerTaskSvc<T> {
+                    > tonic::server::UnaryService<super::DownloadTaskRequest>
+                    for DownloadTaskSvc<T> {
                         type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
@@ -500,11 +500,11 @@ pub mod dfdaemon_server {
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::TriggerTaskRequest>,
+                            request: tonic::Request<super::DownloadTaskRequest>,
                         ) -> Self::Future {
                             let inner = self.0.clone();
                             let fut = async move {
-                                (*inner).trigger_task(request).await
+                                (*inner).download_task(request).await
                             };
                             Box::pin(fut)
                         }
@@ -514,7 +514,7 @@ pub mod dfdaemon_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = TriggerTaskSvc(inner);
+                        let method = DownloadTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

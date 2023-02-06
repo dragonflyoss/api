@@ -1177,22 +1177,22 @@ var _ interface {
 	ErrorName() string
 } = SyncPiecesResponseValidationError{}
 
-// Validate checks the field values on TriggerTaskRequest with the rules
+// Validate checks the field values on DownloadTaskRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *TriggerTaskRequest) Validate() error {
+func (m *DownloadTaskRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on TriggerTaskRequest with the rules
+// ValidateAll checks the field values on DownloadTaskRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// TriggerTaskRequestMultiError, or nil if none found.
-func (m *TriggerTaskRequest) ValidateAll() error {
+// DownloadTaskRequestMultiError, or nil if none found.
+func (m *DownloadTaskRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *TriggerTaskRequest) validate(all bool) error {
+func (m *DownloadTaskRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1200,7 +1200,7 @@ func (m *TriggerTaskRequest) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := TriggerTaskRequestValidationError{
+		err := DownloadTaskRequestValidationError{
 			field:  "TaskId",
 			reason: "value length must be at least 1 runes",
 		}
@@ -1211,7 +1211,7 @@ func (m *TriggerTaskRequest) validate(all bool) error {
 	}
 
 	if m.GetMetadata() == nil {
-		err := TriggerTaskRequestValidationError{
+		err := DownloadTaskRequestValidationError{
 			field:  "Metadata",
 			reason: "value is required",
 		}
@@ -1225,7 +1225,7 @@ func (m *TriggerTaskRequest) validate(all bool) error {
 		switch v := interface{}(m.GetMetadata()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, TriggerTaskRequestValidationError{
+				errors = append(errors, DownloadTaskRequestValidationError{
 					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1233,7 +1233,7 @@ func (m *TriggerTaskRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, TriggerTaskRequestValidationError{
+				errors = append(errors, DownloadTaskRequestValidationError{
 					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1242,7 +1242,7 @@ func (m *TriggerTaskRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return TriggerTaskRequestValidationError{
+			return DownloadTaskRequestValidationError{
 				field:  "Metadata",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1251,19 +1251,19 @@ func (m *TriggerTaskRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return TriggerTaskRequestMultiError(errors)
+		return DownloadTaskRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// TriggerTaskRequestMultiError is an error wrapping multiple validation errors
-// returned by TriggerTaskRequest.ValidateAll() if the designated constraints
-// aren't met.
-type TriggerTaskRequestMultiError []error
+// DownloadTaskRequestMultiError is an error wrapping multiple validation
+// errors returned by DownloadTaskRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadTaskRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m TriggerTaskRequestMultiError) Error() string {
+func (m DownloadTaskRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1272,11 +1272,11 @@ func (m TriggerTaskRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m TriggerTaskRequestMultiError) AllErrors() []error { return m }
+func (m DownloadTaskRequestMultiError) AllErrors() []error { return m }
 
-// TriggerTaskRequestValidationError is the validation error returned by
-// TriggerTaskRequest.Validate if the designated constraints aren't met.
-type TriggerTaskRequestValidationError struct {
+// DownloadTaskRequestValidationError is the validation error returned by
+// DownloadTaskRequest.Validate if the designated constraints aren't met.
+type DownloadTaskRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1284,24 +1284,24 @@ type TriggerTaskRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e TriggerTaskRequestValidationError) Field() string { return e.field }
+func (e DownloadTaskRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e TriggerTaskRequestValidationError) Reason() string { return e.reason }
+func (e DownloadTaskRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e TriggerTaskRequestValidationError) Cause() error { return e.cause }
+func (e DownloadTaskRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e TriggerTaskRequestValidationError) Key() bool { return e.key }
+func (e DownloadTaskRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e TriggerTaskRequestValidationError) ErrorName() string {
-	return "TriggerTaskRequestValidationError"
+func (e DownloadTaskRequestValidationError) ErrorName() string {
+	return "DownloadTaskRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e TriggerTaskRequestValidationError) Error() string {
+func (e DownloadTaskRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1313,14 +1313,14 @@ func (e TriggerTaskRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sTriggerTaskRequest.%s: %s%s",
+		"invalid %sDownloadTaskRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = TriggerTaskRequestValidationError{}
+var _ error = DownloadTaskRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1328,7 +1328,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = TriggerTaskRequestValidationError{}
+} = DownloadTaskRequestValidationError{}
 
 // Validate checks the field values on StatTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
