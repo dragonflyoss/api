@@ -76,9 +76,3 @@ message SyncPiecesFailed {
   // The description of the error.
   string description = 3;
 }
-
-// StatMetadataFailed is error detail of stat metadata.
-message StatMetadataFailed {
-  // The description of the error.
-  string description = 1;
-}

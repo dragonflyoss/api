@@ -36,10 +36,6 @@ message InterestedPiecesRequest {
   repeated uint32 piece_numbers = 1 [(validate.rules).repeated = {min_items: 1}];
 }
 
-// StatMetadata represents stat metadata request of SyncPiecesRequest.
-message StatMetadataRequest {
-}
-
 // SyncPiecesRequest represents request of AnnouncePeer.
 message SyncPiecesRequest{
   oneof request {
@@ -47,7 +43,6 @@ message SyncPiecesRequest{
 
     InterestedAllPiecesRequest interested_all_pieces_request = 1;
     InterestedPiecesRequest interested_pieces_request = 2;
-    StatMetadataRequest stat_metadata_request = 3;
   }
 }
 
@@ -57,24 +52,16 @@ message InterestedPiecesResponse {
   repeated common.v2.Piece pieces = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
 }
 
-// StatMetadata represents stat metadata request of SyncPiecesResponse.
-message StatMetadataResponse {
-  // Task metadata.
-  common.v2.Metadata metadata = 1 [(validate.rules).message.required = true];
-}
-
 // SyncPiecesResponse represents response of SyncPieces.
 message SyncPiecesResponse {
   oneof response {
     option (validate.required) = true;
 
     InterestedPiecesResponse interested_pieces_response = 1;
-    StatMetadataResponse stat_metadata_response = 2;
   }
 
   oneof errordetails {
     errordetails.v2.SyncPiecesFailed sync_pieces_failed = 3;
-    errordetails.v2.StatMetadataFailed stat_metadata_failed = 4;
   }
 }
 
@@ -82,8 +69,8 @@ message SyncPiecesResponse {
 message DownloadTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
-  // Task metadata.
-  common.v2.Metadata metadata = 2 [(validate.rules).message.required = true];
+  // Download information.
+  common.v2.Download download = 2 [(validate.rules).message.required = true];
 }
 
 // StatTaskRequest represents request of StatTask.
@@ -100,15 +87,15 @@ message StatTaskResponse {
 // ImportTaskRequest represents request of ImportTask.
 message ImportTaskRequest {
   // Task metadata.
-  common.v2.Metadata metadata = 1 [(validate.rules).message.required = true];
+  common.v2.Task task = 1 [(validate.rules).message.required = true];
   // File path to be imported.
   string path = 2 [(validate.rules).string.min_len = 1];
 }
 
 // ExportTaskRequest represents request of ExportTask.
 message ExportTaskRequest {
-  // Task metadata.
-  common.v2.Metadata metadata = 1 [(validate.rules).message.required = true];
+  // Download information.
+  common.v2.Download download = 1 [(validate.rules).message.required = true];
   // File path to be exported.
   string path = 2 [(validate.rules).string.min_len = 1];
   // Download timeout.
