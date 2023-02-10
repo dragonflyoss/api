@@ -26,8 +26,8 @@ import "google/protobuf/timestamp.proto";
 
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {
-  // Task metadata.
-  common.Metadata metadata = 1;
+  // Download information.
+  common.Download download = 1;
 }
 
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.

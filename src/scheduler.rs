@@ -2,9 +2,9 @@
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegisterPeerRequest {
-    /// Task metadata.
+    /// Download information.
     #[prost(message, optional, tag = "1")]
-    pub metadata: ::core::option::Option<super::common::Metadata>,
+    pub download: ::core::option::Option<super::common::Download>,
 }
 /// DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]

@@ -107,44 +107,66 @@ enum Priority {
 message Peer {
   // Peer id.
   string id = 1 [(validate.rules).string.min_len = 1];
+  // Range is url range of request.
+  Range range = 2;
+  // Peer priority.
+  Priority priority = 3 [(validate.rules).enum.defined_only = true];
   // Pieces of peer.
-  repeated Piece pieces = 2 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
-  // Task info.
-  Task task = 3 [(validate.rules).message.required = true];
-  // Host info.
-  Host host = 4 [(validate.rules).message.required = true];
+  repeated Piece pieces = 4 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Peer downloads costs time.
+  google.protobuf.Duration cost = 5 [(validate.rules).duration.required = true];
   // Peer state.
-  string state = 5 [(validate.rules).string.min_len = 1];
+  string state = 6 [(validate.rules).string.min_len = 1];
+  // Task info.
+  Task task = 7 [(validate.rules).message.required = true];
+  // Host info.
+  Host host = 8 [(validate.rules).message.required = true];
+  // NeedBackToSource needs downloaded from source.
+  bool need_back_to_source = 9;
   // Peer create time.
-  google.protobuf.Timestamp created_at = 6 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
   // Peer update time.
-  google.protobuf.Timestamp updated_at = 7 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
 }
 
 // Task metadata.
 message Task {
   // Task id.
   string id = 1 [(validate.rules).string.min_len = 1];
-  // Host type.
+  // Task type.
   string type = 2 [(validate.rules).string = {in: ["normal", "super", "strong", "weak"]}];
-  // Task size scope.
-  SizeScope size_scope = 3;
-  // Pieces of task.
-  repeated Piece pieces = 4 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
-  // Task state.
-  string state = 5 [(validate.rules).string.min_len = 1];
-  // Task metadata.
-  Metadata metadata = 6 [(validate.rules).message.required = true];
+  // Download url.
+  string url = 3 [(validate.rules).string.uri = true];
+  // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+  string digest = 4 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty: true}];
+  // URL tag identifies different task for same url.
+  string tag = 5;
+  // Application of task.
+  string application = 6;
+  // Filter url used to generate task id.
+  repeated string filters = 7;
+  // Task request headers.
+  map<string, string> header = 8;
+  // Task piece size.
+  int32 piece_size = 9 [(validate.rules).int32.gte = 1];
   // Task content length.
-  int64 content_length = 7 [(validate.rules).int64.gte = 1];
+  int64 content_length = 10 [(validate.rules).int64.gte = 1];
+  // Task piece count.
+  int64 piece_count = 11 [(validate.rules).int64.gte = 0];
+  // Task size scope.
+  SizeScope size_scope = 12;
+  // Pieces of task.
+  repeated Piece pieces = 13 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Task state.
+  string state = 14 [(validate.rules).string.min_len = 1];
   // Task peer count.
-  int32 peer_count = 8 [(validate.rules).int32.gte = 0];
+  int32 peer_count = 15 [(validate.rules).int32.gte = 0];
   // Task contains available peer.
-  bool hasAvailablePeer = 9;
+  bool hasAvailablePeer = 16;
   // Task create time.
-  google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 17 [(validate.rules).timestamp.required = true];
   // Task update time.
-  google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 18 [(validate.rules).timestamp.required = true];
 }
 
 // Host metadata.
@@ -175,8 +197,8 @@ message Range {
   uint64 end = 2;
 }
 
-// Metadata represents metadata of task.
-message Metadata {
+// Download information.
+message Download {
   // Download url.
   string url = 1 [(validate.rules).string.uri = true];
   // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
@@ -197,6 +219,14 @@ message Metadata {
   map<string, string> header = 9;
   // Task piece size.
   int32 piece_size = 10 [(validate.rules).int32.gte = 1];
+  // File path to be exported.
+  string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // Download timeout.
+  google.protobuf.Duration timeout = 12 [(validate.rules).duration.required = true];
+  // Download rate limit in bytes per second.
+  double download_rate_limit = 13 [(validate.rules).double.gte = 0];
+  // NeedBackToSource needs downloaded from source.
+  bool need_back_to_source = 14;
 }
 
 // Piece represents information of piece.

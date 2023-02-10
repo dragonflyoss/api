@@ -104,44 +104,66 @@ enum Priority {
 message Peer {
   // Peer id.
   string id = 1;
+  // Range is url range of request.
+  Range range = 2;
+  // Peer priority.
+  Priority priority = 3;
   // Pieces of peer.
-  repeated Piece pieces = 2;
-  // Task info.
-  Task task = 3;
-  // Host info.
-  Host host = 4;
+  repeated Piece pieces = 4;
+  // Peer downloads costs time.
+  google.protobuf.Duration cost = 5;
   // Peer state.
-  string state = 5;
+  string state = 6;
+  // Task info.
+  Task task = 7;
+  // Host info.
+  Host host = 8;
+  // NeedBackToSource needs downloaded from source.
+  bool need_back_to_source = 9;
   // Peer create time.
-  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp created_at = 10;
   // Peer update time.
-  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp updated_at = 11;
 }
 
 // Task metadata.
 message Task {
   // Task id.
   string id = 1;
-  // Host type.
+  // Task type.
   string type = 2;
-  // Task size scope.
-  SizeScope size_scope = 3;
-  // Pieces of task.
-  repeated Piece pieces = 4;
-  // Task state.
-  string state = 5;
-  // Task metadata.
-  Metadata metadata = 6;
+  // Download url.
+  string url = 3;
+  // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+  string digest = 4;
+  // URL tag identifies different task for same url.
+  string tag = 5;
+  // Application of task.
+  string application = 6;
+  // Filter url used to generate task id.
+  repeated string filters = 7;
+  // Task request headers.
+  map<string, string> header = 8;
+  // Task piece size.
+  int32 piece_size = 9;
   // Task content length.
-  int64 content_length = 7;
+  int64 content_length = 10;
+  // Task piece count.
+  int64 piece_count = 11;
+  // Task size scope.
+  SizeScope size_scope = 12;
+  // Pieces of task.
+  repeated Piece pieces = 13;
+  // Task state.
+  string state = 14;
   // Task peer count.
-  int32 peer_count = 8;
+  int32 peer_count = 15;
   // Task contains available peer.
-  bool hasAvailablePeer = 9;
+  bool hasAvailablePeer = 16;
   // Task create time.
-  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp created_at = 17;
   // Task update time.
-  google.protobuf.Timestamp updated_at = 11;
+  google.protobuf.Timestamp updated_at = 18;
 }
 
 // Host metadata.
@@ -158,8 +180,8 @@ message Host {
   int32 download_port = 5;
   // Security domain for network.
   string security_domain = 6;
-  // Host location(area, country, province, city, etc.).
-  repeated string location = 7;
+  // Host location, eg: area|country|province|city.
+  string location = 7;
   // IDC where the peer host is located.
   string idc = 8;
 }
@@ -172,8 +194,8 @@ message Range {
   uint64 end = 2;
 }
 
-// Metadata represents metadata of task.
-message Metadata {
+// Download information.
+message Download {
   // Download url.
   string url = 1;
   // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
@@ -181,7 +203,7 @@ message Metadata {
   // Range is url range of request.
   Range range = 3;
   // Task type.
-  common.TaskType type = 4;
+  TaskType type = 4;
   // URL tag identifies different task for same url.
   string tag = 5;
   // Application of task.
@@ -194,19 +216,27 @@ message Metadata {
   map<string, string> header = 9;
   // Task piece size.
   int32 piece_size = 10;
+  // File path to be exported.
+  string output_path = 11;
+  // Download timeout.
+  google.protobuf.Duration timeout = 12;
+  // Download rate limit in bytes per second.
+  double download_rate_limit = 13;
+  // NeedBackToSource needs downloaded from source.
+  bool need_back_to_source = 14;
 }
 
 // Piece represents information of piece.
 message Piece {
   // Piece number.
   uint32 number = 1;
-	// Parent peer id.
+  // Parent peer id.
   string parent_id = 2;
-	// Piece offset.
+  // Piece offset.
   uint64 offset = 3;
-	// Piece size.
+  // Piece size.
   uint64 size = 4;
-	// Digest of the piece data, for example md5:xxx or sha256:yyy.
+  // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5;
   // Traffic type.
   TrafficType traffic_type = 6;

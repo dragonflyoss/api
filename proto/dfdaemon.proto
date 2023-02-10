@@ -20,7 +20,6 @@ package dfdaemon;
 
 import "common.proto";
 import "errordetails.proto";
-import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 
 // InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
@@ -33,16 +32,11 @@ message InterestedPiecesRequest {
   repeated uint32 piece_numbers = 1;
 }
 
-// StatMetadata represents stat metadata request of SyncPiecesRequest.
-message StatMetadataRequest {
-}
-
 // SyncPiecesRequest represents request of AnnouncePeer.
 message SyncPiecesRequest{
   oneof request {
     InterestedAllPiecesRequest interested_all_pieces_request = 1;
     InterestedPiecesRequest interested_pieces_request = 2;
-    StatMetadataRequest stat_metadata_request = 3;
   }
 }
 
@@ -52,31 +46,27 @@ message InterestedPiecesResponse {
   repeated common.Piece pieces = 1;
 }
 
-// StatMetadata represents stat metadata request of SyncPiecesResponse.
-message StatMetadataResponse {
-  // Task metadata.
-  common.Metadata metadata = 1;
-}
-
 // SyncPiecesResponse represents response of SyncPieces.
 message SyncPiecesResponse {
   oneof response {
     InterestedPiecesResponse interested_pieces_response = 1;
-    StatMetadataResponse stat_metadata_response = 2;
   }
 
   oneof errordetails {
     errordetails.SyncPiecesFailed sync_pieces_failed = 3;
-    errordetails.StatMetadataFailed stat_metadata_failed = 4;
   }
 }
 
 // DownloadTaskRequest represents request of DownloadTask.
 message DownloadTaskRequest {
-  // Task id.
-  string task_id = 1;
+  // Download information.
+  common.Download download = 1;
+}
+
+// UploadTaskRequest represents request of UploadTask.
+message UploadTaskRequest {
   // Task metadata.
-  common.Metadata metadata = 2;
+  common.Task task = 1;
 }
 
 // StatTaskRequest represents request of StatTask.
@@ -87,31 +77,8 @@ message StatTaskRequest {
 
 // StatTaskResponse represents response of StatTask.
 message StatTaskResponse {
+  // Task metadata.
   common.Task task = 1;
-}
-
-// ImportTaskRequest represents request of ImportTask.
-message ImportTaskRequest {
-  // Task metadata.
-  common.Metadata metadata = 1;
-  // File path to be imported.
-  string path = 2;
-}
-
-// ExportTaskRequest represents request of ExportTask.
-message ExportTaskRequest {
-  // Task metadata.
-  common.Metadata metadata = 1;
-  // File path to be exported.
-  string path = 2;
-  // Download timeout.
-  google.protobuf.Duration timeout = 3;
-  // Download rate limit in bytes per second.
-  double download_rate_limit = 4;
-  // User id.
-  uint64 uid = 5;
-  // Group id.
-  uint64 gid = 6;
 }
 
 // DeleteTaskRequest represents request of DeleteTask.
@@ -128,14 +95,11 @@ service Dfdaemon{
   // DownloadTask downloads task back-to-source.
   rpc DownloadTask(DownloadTaskRequest) returns(google.protobuf.Empty);
 
+  // UploadTask uploads task to p2p network.
+  rpc UploadTask(UploadTaskRequest) returns(google.protobuf.Empty);
+
   // StatTask stats task information.
   rpc StatTask(StatTaskRequest) returns(common.Task);
-
-  // ImportTask imports task to p2p network.
-  rpc ImportTask(ImportTaskRequest) returns(google.protobuf.Empty);
-
-  // ExportTask exports task from p2p network.
-  rpc ExportTask(ExportTaskRequest) returns(google.protobuf.Empty);
 
   // DeleteTask deletes task from p2p network.
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);

@@ -250,108 +250,6 @@ var _ interface {
 	ErrorName() string
 } = InterestedPiecesRequestValidationError{}
 
-// Validate checks the field values on StatMetadataRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StatMetadataRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on StatMetadataRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// StatMetadataRequestMultiError, or nil if none found.
-func (m *StatMetadataRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *StatMetadataRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if len(errors) > 0 {
-		return StatMetadataRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// StatMetadataRequestMultiError is an error wrapping multiple validation
-// errors returned by StatMetadataRequest.ValidateAll() if the designated
-// constraints aren't met.
-type StatMetadataRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m StatMetadataRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m StatMetadataRequestMultiError) AllErrors() []error { return m }
-
-// StatMetadataRequestValidationError is the validation error returned by
-// StatMetadataRequest.Validate if the designated constraints aren't met.
-type StatMetadataRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e StatMetadataRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e StatMetadataRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e StatMetadataRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e StatMetadataRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e StatMetadataRequestValidationError) ErrorName() string {
-	return "StatMetadataRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e StatMetadataRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sStatMetadataRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = StatMetadataRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = StatMetadataRequestValidationError{}
-
 // Validate checks the field values on SyncPiecesRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -454,48 +352,6 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return SyncPiecesRequestValidationError{
 					field:  "InterestedPiecesRequest",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	case *SyncPiecesRequest_StatMetadataRequest:
-		if v == nil {
-			err := SyncPiecesRequestValidationError{
-				field:  "Request",
-				reason: "oneof value cannot be a typed-nil",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-		oneofRequestPresent = true
-
-		if all {
-			switch v := interface{}(m.GetStatMetadataRequest()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, SyncPiecesRequestValidationError{
-						field:  "StatMetadataRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, SyncPiecesRequestValidationError{
-						field:  "StatMetadataRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetStatMetadataRequest()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return SyncPiecesRequestValidationError{
-					field:  "StatMetadataRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -747,148 +603,6 @@ var _ interface {
 	ErrorName() string
 } = InterestedPiecesResponseValidationError{}
 
-// Validate checks the field values on StatMetadataResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StatMetadataResponse) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on StatMetadataResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// StatMetadataResponseMultiError, or nil if none found.
-func (m *StatMetadataResponse) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *StatMetadataResponse) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if m.GetMetadata() == nil {
-		err := StatMetadataResponseValidationError{
-			field:  "Metadata",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, StatMetadataResponseValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, StatMetadataResponseValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return StatMetadataResponseValidationError{
-				field:  "Metadata",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if len(errors) > 0 {
-		return StatMetadataResponseMultiError(errors)
-	}
-
-	return nil
-}
-
-// StatMetadataResponseMultiError is an error wrapping multiple validation
-// errors returned by StatMetadataResponse.ValidateAll() if the designated
-// constraints aren't met.
-type StatMetadataResponseMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m StatMetadataResponseMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m StatMetadataResponseMultiError) AllErrors() []error { return m }
-
-// StatMetadataResponseValidationError is the validation error returned by
-// StatMetadataResponse.Validate if the designated constraints aren't met.
-type StatMetadataResponseValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e StatMetadataResponseValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e StatMetadataResponseValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e StatMetadataResponseValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e StatMetadataResponseValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e StatMetadataResponseValidationError) ErrorName() string {
-	return "StatMetadataResponseValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e StatMetadataResponseValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sStatMetadataResponse.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = StatMetadataResponseValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = StatMetadataResponseValidationError{}
-
 // Validate checks the field values on SyncPiecesResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -955,48 +669,6 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 			}
 		}
 
-	case *SyncPiecesResponse_StatMetadataResponse:
-		if v == nil {
-			err := SyncPiecesResponseValidationError{
-				field:  "Response",
-				reason: "oneof value cannot be a typed-nil",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-		oneofResponsePresent = true
-
-		if all {
-			switch v := interface{}(m.GetStatMetadataResponse()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, SyncPiecesResponseValidationError{
-						field:  "StatMetadataResponse",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, SyncPiecesResponseValidationError{
-						field:  "StatMetadataResponse",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetStatMetadataResponse()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return SyncPiecesResponseValidationError{
-					field:  "StatMetadataResponse",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
 	default:
 		_ = v // ensures v is used
 	}
@@ -1046,47 +718,6 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return SyncPiecesResponseValidationError{
 					field:  "SyncPiecesFailed",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	case *SyncPiecesResponse_StatMetadataFailed:
-		if v == nil {
-			err := SyncPiecesResponseValidationError{
-				field:  "Errordetails",
-				reason: "oneof value cannot be a typed-nil",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-		if all {
-			switch v := interface{}(m.GetStatMetadataFailed()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, SyncPiecesResponseValidationError{
-						field:  "StatMetadataFailed",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, SyncPiecesResponseValidationError{
-						field:  "StatMetadataFailed",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetStatMetadataFailed()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return SyncPiecesResponseValidationError{
-					field:  "StatMetadataFailed",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -1199,20 +830,9 @@ func (m *DownloadTaskRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+	if m.GetDownload() == nil {
 		err := DownloadTaskRequestValidationError{
-			field:  "TaskId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetMetadata() == nil {
-		err := DownloadTaskRequestValidationError{
-			field:  "Metadata",
+			field:  "Download",
 			reason: "value is required",
 		}
 		if !all {
@@ -1222,11 +842,11 @@ func (m *DownloadTaskRequest) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
+		switch v := interface{}(m.GetDownload()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, DownloadTaskRequestValidationError{
-					field:  "Metadata",
+					field:  "Download",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -1234,16 +854,16 @@ func (m *DownloadTaskRequest) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, DownloadTaskRequestValidationError{
-					field:  "Metadata",
+					field:  "Download",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetDownload()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return DownloadTaskRequestValidationError{
-				field:  "Metadata",
+				field:  "Download",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -1329,6 +949,148 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DownloadTaskRequestValidationError{}
+
+// Validate checks the field values on UploadTaskRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *UploadTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UploadTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UploadTaskRequestMultiError, or nil if none found.
+func (m *UploadTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UploadTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetTask() == nil {
+		err := UploadTaskRequestValidationError{
+			field:  "Task",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetTask()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, UploadTaskRequestValidationError{
+					field:  "Task",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, UploadTaskRequestValidationError{
+					field:  "Task",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetTask()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UploadTaskRequestValidationError{
+				field:  "Task",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return UploadTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UploadTaskRequestMultiError is an error wrapping multiple validation errors
+// returned by UploadTaskRequest.ValidateAll() if the designated constraints
+// aren't met.
+type UploadTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UploadTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UploadTaskRequestMultiError) AllErrors() []error { return m }
+
+// UploadTaskRequestValidationError is the validation error returned by
+// UploadTaskRequest.Validate if the designated constraints aren't met.
+type UploadTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UploadTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UploadTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UploadTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UploadTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UploadTaskRequestValidationError) ErrorName() string {
+	return "UploadTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UploadTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUploadTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UploadTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UploadTaskRequestValidationError{}
 
 // Validate checks the field values on StatTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -1580,356 +1342,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = StatTaskResponseValidationError{}
-
-// Validate checks the field values on ImportTaskRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *ImportTaskRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ImportTaskRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ImportTaskRequestMultiError, or nil if none found.
-func (m *ImportTaskRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *ImportTaskRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if m.GetMetadata() == nil {
-		err := ImportTaskRequestValidationError{
-			field:  "Metadata",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ImportTaskRequestValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ImportTaskRequestValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ImportTaskRequestValidationError{
-				field:  "Metadata",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetPath()) < 1 {
-		err := ImportTaskRequestValidationError{
-			field:  "Path",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return ImportTaskRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// ImportTaskRequestMultiError is an error wrapping multiple validation errors
-// returned by ImportTaskRequest.ValidateAll() if the designated constraints
-// aren't met.
-type ImportTaskRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m ImportTaskRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m ImportTaskRequestMultiError) AllErrors() []error { return m }
-
-// ImportTaskRequestValidationError is the validation error returned by
-// ImportTaskRequest.Validate if the designated constraints aren't met.
-type ImportTaskRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ImportTaskRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ImportTaskRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ImportTaskRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ImportTaskRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ImportTaskRequestValidationError) ErrorName() string {
-	return "ImportTaskRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e ImportTaskRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sImportTaskRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ImportTaskRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ImportTaskRequestValidationError{}
-
-// Validate checks the field values on ExportTaskRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *ExportTaskRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ExportTaskRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ExportTaskRequestMultiError, or nil if none found.
-func (m *ExportTaskRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *ExportTaskRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if m.GetMetadata() == nil {
-		err := ExportTaskRequestValidationError{
-			field:  "Metadata",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExportTaskRequestValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ExportTaskRequestValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ExportTaskRequestValidationError{
-				field:  "Metadata",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetPath()) < 1 {
-		err := ExportTaskRequestValidationError{
-			field:  "Path",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetTimeout() == nil {
-		err := ExportTaskRequestValidationError{
-			field:  "Timeout",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetDownloadRateLimit() < 0 {
-		err := ExportTaskRequestValidationError{
-			field:  "DownloadRateLimit",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetUid() < 0 {
-		err := ExportTaskRequestValidationError{
-			field:  "Uid",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetGid() < 0 {
-		err := ExportTaskRequestValidationError{
-			field:  "Gid",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return ExportTaskRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// ExportTaskRequestMultiError is an error wrapping multiple validation errors
-// returned by ExportTaskRequest.ValidateAll() if the designated constraints
-// aren't met.
-type ExportTaskRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m ExportTaskRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m ExportTaskRequestMultiError) AllErrors() []error { return m }
-
-// ExportTaskRequestValidationError is the validation error returned by
-// ExportTaskRequest.Validate if the designated constraints aren't met.
-type ExportTaskRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ExportTaskRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ExportTaskRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ExportTaskRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ExportTaskRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ExportTaskRequestValidationError) ErrorName() string {
-	return "ExportTaskRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e ExportTaskRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sExportTaskRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ExportTaskRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ExportTaskRequestValidationError{}
 
 // Validate checks the field values on DeleteTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the

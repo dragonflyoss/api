@@ -5,23 +5,35 @@ pub struct Peer {
     /// Peer id.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
+    /// Range is url range of request.
+    #[prost(message, optional, tag = "2")]
+    pub range: ::core::option::Option<Range>,
+    /// Peer priority.
+    #[prost(enumeration = "Priority", tag = "3")]
+    pub priority: i32,
     /// Pieces of peer.
-    #[prost(message, repeated, tag = "2")]
+    #[prost(message, repeated, tag = "4")]
     pub pieces: ::prost::alloc::vec::Vec<Piece>,
+    /// Peer downloads costs time.
+    #[prost(message, optional, tag = "5")]
+    pub cost: ::core::option::Option<::prost_types::Duration>,
+    /// Peer state.
+    #[prost(string, tag = "6")]
+    pub state: ::prost::alloc::string::String,
     /// Task info.
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag = "7")]
     pub task: ::core::option::Option<Task>,
     /// Host info.
-    #[prost(message, optional, tag = "4")]
+    #[prost(message, optional, tag = "8")]
     pub host: ::core::option::Option<Host>,
-    /// Peer state.
-    #[prost(string, tag = "5")]
-    pub state: ::prost::alloc::string::String,
+    /// NeedBackToSource needs downloaded from source.
+    #[prost(bool, tag = "9")]
+    pub need_back_to_source: bool,
     /// Peer create time.
-    #[prost(message, optional, tag = "6")]
+    #[prost(message, optional, tag = "10")]
     pub created_at: ::core::option::Option<::prost_types::Timestamp>,
     /// Peer update time.
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag = "11")]
     pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// Task metadata.
@@ -31,35 +43,59 @@ pub struct Task {
     /// Task id.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    /// Host type.
+    /// Task type.
     #[prost(string, tag = "2")]
     pub r#type: ::prost::alloc::string::String,
+    /// Download url.
+    #[prost(string, tag = "3")]
+    pub url: ::prost::alloc::string::String,
+    /// Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+    #[prost(string, tag = "4")]
+    pub digest: ::prost::alloc::string::String,
+    /// URL tag identifies different task for same url.
+    #[prost(string, tag = "5")]
+    pub tag: ::prost::alloc::string::String,
+    /// Application of task.
+    #[prost(string, tag = "6")]
+    pub application: ::prost::alloc::string::String,
+    /// Filter url used to generate task id.
+    #[prost(string, repeated, tag = "7")]
+    pub filters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Task request headers.
+    #[prost(map = "string, string", tag = "8")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Task piece size.
+    #[prost(int32, tag = "9")]
+    pub piece_size: i32,
+    /// Task content length.
+    #[prost(int64, tag = "10")]
+    pub content_length: i64,
+    /// Task piece count.
+    #[prost(int64, tag = "11")]
+    pub piece_count: i64,
     /// Task size scope.
-    #[prost(enumeration = "SizeScope", tag = "3")]
+    #[prost(enumeration = "SizeScope", tag = "12")]
     pub size_scope: i32,
     /// Pieces of task.
-    #[prost(message, repeated, tag = "4")]
+    #[prost(message, repeated, tag = "13")]
     pub pieces: ::prost::alloc::vec::Vec<Piece>,
     /// Task state.
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "14")]
     pub state: ::prost::alloc::string::String,
-    /// Task metadata.
-    #[prost(message, optional, tag = "6")]
-    pub metadata: ::core::option::Option<Metadata>,
-    /// Task content length.
-    #[prost(int64, tag = "7")]
-    pub content_length: i64,
     /// Task peer count.
-    #[prost(int32, tag = "8")]
+    #[prost(int32, tag = "15")]
     pub peer_count: i32,
     /// Task contains available peer.
-    #[prost(bool, tag = "9")]
+    #[prost(bool, tag = "16")]
     pub has_available_peer: bool,
     /// Task create time.
-    #[prost(message, optional, tag = "10")]
+    #[prost(message, optional, tag = "17")]
     pub created_at: ::core::option::Option<::prost_types::Timestamp>,
     /// Task update time.
-    #[prost(message, optional, tag = "11")]
+    #[prost(message, optional, tag = "18")]
     pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// Host metadata.
@@ -84,9 +120,9 @@ pub struct Host {
     /// Security domain for network.
     #[prost(string, tag = "6")]
     pub security_domain: ::prost::alloc::string::String,
-    /// Host location(area, country, province, city, etc.).
-    #[prost(string, repeated, tag = "7")]
-    pub location: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Host location, eg: area|country|province|city.
+    #[prost(string, tag = "7")]
+    pub location: ::prost::alloc::string::String,
     /// IDC where the peer host is located.
     #[prost(string, tag = "8")]
     pub idc: ::prost::alloc::string::String,
@@ -102,10 +138,10 @@ pub struct Range {
     #[prost(uint64, tag = "2")]
     pub end: u64,
 }
-/// Metadata represents metadata of task.
+/// Download information.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Metadata {
+pub struct Download {
     /// Download url.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
@@ -139,6 +175,18 @@ pub struct Metadata {
     /// Task piece size.
     #[prost(int32, tag = "10")]
     pub piece_size: i32,
+    /// File path to be exported.
+    #[prost(string, tag = "11")]
+    pub output_path: ::prost::alloc::string::String,
+    /// Download timeout.
+    #[prost(message, optional, tag = "12")]
+    pub timeout: ::core::option::Option<::prost_types::Duration>,
+    /// Download rate limit in bytes per second.
+    #[prost(double, tag = "13")]
+    pub download_rate_limit: f64,
+    /// NeedBackToSource needs downloaded from source.
+    #[prost(bool, tag = "14")]
+    pub need_back_to_source: bool,
 }
 /// Piece represents information of piece.
 #[allow(clippy::derive_partial_eq_without_eq)]
