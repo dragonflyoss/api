@@ -10,15 +10,11 @@ pub struct InterestedPiecesRequest {
     #[prost(uint32, repeated, tag = "1")]
     pub piece_numbers: ::prost::alloc::vec::Vec<u32>,
 }
-/// StatMetadata represents stat metadata request of SyncPiecesRequest.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct StatMetadataRequest {}
 /// SyncPiecesRequest represents request of AnnouncePeer.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesRequest {
-    #[prost(oneof = "sync_pieces_request::Request", tags = "1, 2, 3")]
+    #[prost(oneof = "sync_pieces_request::Request", tags = "1, 2")]
     pub request: ::core::option::Option<sync_pieces_request::Request>,
 }
 /// Nested message and enum types in `SyncPiecesRequest`.
@@ -30,8 +26,6 @@ pub mod sync_pieces_request {
         InterestedAllPiecesRequest(super::InterestedAllPiecesRequest),
         #[prost(message, tag = "2")]
         InterestedPiecesRequest(super::InterestedPiecesRequest),
-        #[prost(message, tag = "3")]
-        StatMetadataRequest(super::StatMetadataRequest),
     }
 }
 /// InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
@@ -42,21 +36,13 @@ pub struct InterestedPiecesResponse {
     #[prost(message, repeated, tag = "1")]
     pub pieces: ::prost::alloc::vec::Vec<super::common::Piece>,
 }
-/// StatMetadata represents stat metadata request of SyncPiecesResponse.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct StatMetadataResponse {
-    /// Task metadata.
-    #[prost(message, optional, tag = "1")]
-    pub metadata: ::core::option::Option<super::common::Metadata>,
-}
 /// SyncPiecesResponse represents response of SyncPieces.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesResponse {
-    #[prost(oneof = "sync_pieces_response::Response", tags = "1, 2")]
+    #[prost(oneof = "sync_pieces_response::Response", tags = "1")]
     pub response: ::core::option::Option<sync_pieces_response::Response>,
-    #[prost(oneof = "sync_pieces_response::Errordetails", tags = "3, 4")]
+    #[prost(oneof = "sync_pieces_response::Errordetails", tags = "3")]
     pub errordetails: ::core::option::Option<sync_pieces_response::Errordetails>,
 }
 /// Nested message and enum types in `SyncPiecesResponse`.
@@ -66,28 +52,29 @@ pub mod sync_pieces_response {
     pub enum Response {
         #[prost(message, tag = "1")]
         InterestedPiecesResponse(super::InterestedPiecesResponse),
-        #[prost(message, tag = "2")]
-        StatMetadataResponse(super::StatMetadataResponse),
     }
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Errordetails {
         #[prost(message, tag = "3")]
         SyncPiecesFailed(super::super::errordetails::SyncPiecesFailed),
-        #[prost(message, tag = "4")]
-        StatMetadataFailed(super::super::errordetails::StatMetadataFailed),
     }
 }
 /// DownloadTaskRequest represents request of DownloadTask.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadTaskRequest {
-    /// Task id.
-    #[prost(string, tag = "1")]
-    pub task_id: ::prost::alloc::string::String,
+    /// Download information.
+    #[prost(message, optional, tag = "1")]
+    pub download: ::core::option::Option<super::common::Download>,
+}
+/// UploadTaskRequest represents request of UploadTask.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UploadTaskRequest {
     /// Task metadata.
-    #[prost(message, optional, tag = "2")]
-    pub metadata: ::core::option::Option<super::common::Metadata>,
+    #[prost(message, optional, tag = "1")]
+    pub task: ::core::option::Option<super::common::Task>,
 }
 /// StatTaskRequest represents request of StatTask.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -101,42 +88,9 @@ pub struct StatTaskRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatTaskResponse {
+    /// Task metadata.
     #[prost(message, optional, tag = "1")]
     pub task: ::core::option::Option<super::common::Task>,
-}
-/// ImportTaskRequest represents request of ImportTask.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ImportTaskRequest {
-    /// Task metadata.
-    #[prost(message, optional, tag = "1")]
-    pub metadata: ::core::option::Option<super::common::Metadata>,
-    /// File path to be imported.
-    #[prost(string, tag = "2")]
-    pub path: ::prost::alloc::string::String,
-}
-/// ExportTaskRequest represents request of ExportTask.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ExportTaskRequest {
-    /// Task metadata.
-    #[prost(message, optional, tag = "1")]
-    pub metadata: ::core::option::Option<super::common::Metadata>,
-    /// File path to be exported.
-    #[prost(string, tag = "2")]
-    pub path: ::prost::alloc::string::String,
-    /// Download timeout.
-    #[prost(message, optional, tag = "3")]
-    pub timeout: ::core::option::Option<::prost_types::Duration>,
-    /// Download rate limit in bytes per second.
-    #[prost(double, tag = "4")]
-    pub download_rate_limit: f64,
-    /// User id.
-    #[prost(uint64, tag = "5")]
-    pub uid: u64,
-    /// Group id.
-    #[prost(uint64, tag = "6")]
-    pub gid: u64,
 }
 /// DeleteTaskRequest represents request of DeleteTask.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -259,6 +213,26 @@ pub mod dfdaemon_client {
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
+        /// UploadTask uploads task to p2p network.
+        pub async fn upload_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UploadTaskRequest>,
+        ) -> Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.Dfdaemon/UploadTask",
+            );
+            self.inner.unary(request.into_request(), path, codec).await
+        }
         /// StatTask stats task information.
         pub async fn stat_task(
             &mut self,
@@ -276,46 +250,6 @@ pub mod dfdaemon_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
                 "/dfdaemon.Dfdaemon/StatTask",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        /// ImportTask imports task to p2p network.
-        pub async fn import_task(
-            &mut self,
-            request: impl tonic::IntoRequest<super::ImportTaskRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.Dfdaemon/ImportTask",
-            );
-            self.inner.unary(request.into_request(), path, codec).await
-        }
-        /// ExportTask exports task from p2p network.
-        pub async fn export_task(
-            &mut self,
-            request: impl tonic::IntoRequest<super::ExportTaskRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.Dfdaemon/ExportTask",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
@@ -364,21 +298,16 @@ pub mod dfdaemon_server {
             &self,
             request: tonic::Request<super::DownloadTaskRequest>,
         ) -> Result<tonic::Response<()>, tonic::Status>;
+        /// UploadTask uploads task to p2p network.
+        async fn upload_task(
+            &self,
+            request: tonic::Request<super::UploadTaskRequest>,
+        ) -> Result<tonic::Response<()>, tonic::Status>;
         /// StatTask stats task information.
         async fn stat_task(
             &self,
             request: tonic::Request<super::StatTaskRequest>,
         ) -> Result<tonic::Response<super::super::common::Task>, tonic::Status>;
-        /// ImportTask imports task to p2p network.
-        async fn import_task(
-            &self,
-            request: tonic::Request<super::ImportTaskRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status>;
-        /// ExportTask exports task from p2p network.
-        async fn export_task(
-            &self,
-            request: tonic::Request<super::ExportTaskRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status>;
         /// DeleteTask deletes task from p2p network.
         async fn delete_task(
             &self,
@@ -526,6 +455,44 @@ pub mod dfdaemon_server {
                     };
                     Box::pin(fut)
                 }
+                "/dfdaemon.Dfdaemon/UploadTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct UploadTaskSvc<T: Dfdaemon>(pub Arc<T>);
+                    impl<
+                        T: Dfdaemon,
+                    > tonic::server::UnaryService<super::UploadTaskRequest>
+                    for UploadTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::UploadTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = self.0.clone();
+                            let fut = async move { (*inner).upload_task(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = UploadTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/dfdaemon.Dfdaemon/StatTask" => {
                     #[allow(non_camel_case_types)]
                     struct StatTaskSvc<T: Dfdaemon>(pub Arc<T>);
@@ -551,82 +518,6 @@ pub mod dfdaemon_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = StatTaskSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/dfdaemon.Dfdaemon/ImportTask" => {
-                    #[allow(non_camel_case_types)]
-                    struct ImportTaskSvc<T: Dfdaemon>(pub Arc<T>);
-                    impl<
-                        T: Dfdaemon,
-                    > tonic::server::UnaryService<super::ImportTaskRequest>
-                    for ImportTaskSvc<T> {
-                        type Response = ();
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::ImportTaskRequest>,
-                        ) -> Self::Future {
-                            let inner = self.0.clone();
-                            let fut = async move { (*inner).import_task(request).await };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = ImportTaskSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/dfdaemon.Dfdaemon/ExportTask" => {
-                    #[allow(non_camel_case_types)]
-                    struct ExportTaskSvc<T: Dfdaemon>(pub Arc<T>);
-                    impl<
-                        T: Dfdaemon,
-                    > tonic::server::UnaryService<super::ExportTaskRequest>
-                    for ExportTaskSvc<T> {
-                        type Response = ();
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::ExportTaskRequest>,
-                        ) -> Self::Future {
-                            let inner = self.0.clone();
-                            let fut = async move { (*inner).export_task(request).await };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = ExportTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

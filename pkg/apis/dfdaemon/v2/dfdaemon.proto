@@ -20,7 +20,6 @@ package dfdaemon.v2;
 
 import "pkg/apis/common/v2/common.proto";
 import "pkg/apis/errordetails/v2/errordetails.proto";
-import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
@@ -67,10 +66,14 @@ message SyncPiecesResponse {
 
 // DownloadTaskRequest represents request of DownloadTask.
 message DownloadTaskRequest {
-  // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
   // Download information.
-  common.v2.Download download = 2 [(validate.rules).message.required = true];
+  common.v2.Download download = 1 [(validate.rules).message.required = true];
+}
+
+// UploadTaskRequest represents request of UploadTask.
+message UploadTaskRequest {
+  // Task metadata.
+  common.v2.Task task = 1 [(validate.rules).message.required = true];
 }
 
 // StatTaskRequest represents request of StatTask.
@@ -81,31 +84,8 @@ message StatTaskRequest {
 
 // StatTaskResponse represents response of StatTask.
 message StatTaskResponse {
-  common.v2.Task task = 1 [(validate.rules).message.required = true];
-}
-
-// ImportTaskRequest represents request of ImportTask.
-message ImportTaskRequest {
   // Task metadata.
   common.v2.Task task = 1 [(validate.rules).message.required = true];
-  // File path to be imported.
-  string path = 2 [(validate.rules).string.min_len = 1];
-}
-
-// ExportTaskRequest represents request of ExportTask.
-message ExportTaskRequest {
-  // Download information.
-  common.v2.Download download = 1 [(validate.rules).message.required = true];
-  // File path to be exported.
-  string path = 2 [(validate.rules).string.min_len = 1];
-  // Download timeout.
-  google.protobuf.Duration timeout = 3 [(validate.rules).duration.required = true];
-  // Download rate limit in bytes per second.
-  double download_rate_limit = 4 [(validate.rules).double.gte = 0];
-  // User id.
-  uint64 uid = 5 [(validate.rules).uint64.gte = 0];
-  // Group id.
-  uint64 gid = 6 [(validate.rules).uint64.gte = 0];
 }
 
 // DeleteTaskRequest represents request of DeleteTask.
@@ -122,14 +102,11 @@ service Dfdaemon{
   // DownloadTask downloads task back-to-source.
   rpc DownloadTask(DownloadTaskRequest) returns(google.protobuf.Empty);
 
+  // UploadTask uploads task to p2p network.
+  rpc UploadTask(UploadTaskRequest) returns(google.protobuf.Empty);
+
   // StatTask stats task information.
   rpc StatTask(StatTaskRequest) returns(common.v2.Task);
-
-  // ImportTask imports task to p2p network.
-  rpc ImportTask(ImportTaskRequest) returns(google.protobuf.Empty);
-
-  // ExportTask exports task from p2p network.
-  rpc ExportTask(ExportTaskRequest) returns(google.protobuf.Empty);
 
   // DeleteTask deletes task from p2p network.
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);

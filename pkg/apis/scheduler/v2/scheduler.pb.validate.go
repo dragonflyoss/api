@@ -57,9 +57,9 @@ func (m *RegisterPeerRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetMetadata() == nil {
+	if m.GetDownload() == nil {
 		err := RegisterPeerRequestValidationError{
-			field:  "Metadata",
+			field:  "Download",
 			reason: "value is required",
 		}
 		if !all {
@@ -69,11 +69,11 @@ func (m *RegisterPeerRequest) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
+		switch v := interface{}(m.GetDownload()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, RegisterPeerRequestValidationError{
-					field:  "Metadata",
+					field:  "Download",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -81,16 +81,16 @@ func (m *RegisterPeerRequest) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, RegisterPeerRequestValidationError{
-					field:  "Metadata",
+					field:  "Download",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetDownload()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return RegisterPeerRequestValidationError{
-				field:  "Metadata",
+				field:  "Download",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}

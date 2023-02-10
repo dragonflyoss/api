@@ -31,7 +31,7 @@ message DownloadPieceBackToSourceFailed {
   // Temporary recoverable error of source.
   bool temporary = 1;
   // Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
-  common.ExtendAttribute metadata = 2;
+  common.ExtendAttribute extend_attribute = 2;
   // The number of piece.
   uint32 piece_number = 3;
   // The description of the error.
@@ -43,7 +43,7 @@ message DownloadPieceFailed {
   // Temporary recoverable error of parent peer.
   bool temporary = 1;
   // Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
-  common.ExtendAttribute metadata = 2;
+  common.ExtendAttribute extend_attribute = 2;
   // Piece is information of piece.
   string parent_id = 3;
   // The number of piece.
@@ -72,10 +72,4 @@ message SyncPiecesFailed {
   string parent_id = 2;
   // The description of the error.
   string description = 3;
-}
-
-// StatMetadataFailed is error detail of stat metadata.
-message StatMetadataFailed {
-  // The description of the error.
-  string description = 1;
 }

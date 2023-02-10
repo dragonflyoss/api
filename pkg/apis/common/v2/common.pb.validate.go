@@ -67,6 +67,46 @@ func (m *Peer) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if all {
+		switch v := interface{}(m.GetRange()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, PeerValidationError{
+					field:  "Range",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, PeerValidationError{
+					field:  "Range",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PeerValidationError{
+				field:  "Range",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if _, ok := Priority_name[int32(m.GetPriority())]; !ok {
+		err := PeerValidationError{
+			field:  "Priority",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(m.GetPieces()) > 0 {
 
 		if len(m.GetPieces()) < 1 {
@@ -114,6 +154,28 @@ func (m *Peer) validate(all bool) error {
 
 		}
 
+	}
+
+	if m.GetCost() == nil {
+		err := PeerValidationError{
+			field:  "Cost",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetState()) < 1 {
+		err := PeerValidationError{
+			field:  "State",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if m.GetTask() == nil {
@@ -196,16 +258,7 @@ func (m *Peer) validate(all bool) error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetState()) < 1 {
-		err := PeerValidationError{
-			field:  "State",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for NeedBackToSource
 
 	if m.GetCreatedAt() == nil {
 		err := PeerValidationError{
@@ -349,6 +402,81 @@ func (m *Task) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = TaskValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := TaskValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetDigest() != "" {
+
+		if !_Task_Digest_Pattern.MatchString(m.GetDigest()) {
+			err := TaskValidationError{
+				field:  "Digest",
+				reason: "value does not match regex pattern \"^(md5)|(sha256):[A-Fa-f0-9]+$\"",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	// no validation rules for Tag
+
+	// no validation rules for Application
+
+	// no validation rules for Header
+
+	if m.GetPieceSize() < 1 {
+		err := TaskValidationError{
+			field:  "PieceSize",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetContentLength() < 1 {
+		err := TaskValidationError{
+			field:  "ContentLength",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPieceCount() < 0 {
+		err := TaskValidationError{
+			field:  "PieceCount",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	// no validation rules for SizeScope
 
 	if len(m.GetPieces()) > 0 {
@@ -404,57 +532,6 @@ func (m *Task) validate(all bool) error {
 		err := TaskValidationError{
 			field:  "State",
 			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetMetadata() == nil {
-		err := TaskValidationError{
-			field:  "Metadata",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, TaskValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, TaskValidationError{
-					field:  "Metadata",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TaskValidationError{
-				field:  "Metadata",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if m.GetContentLength() < 1 {
-		err := TaskValidationError{
-			field:  "ContentLength",
-			reason: "value must be greater than or equal to 1",
 		}
 		if !all {
 			return err
@@ -580,6 +657,8 @@ var _Task_Type_InLookup = map[string]struct{}{
 	"strong": {},
 	"weak":   {},
 }
+
+var _Task_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$")
 
 // Validate checks the field values on Host with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error
@@ -912,22 +991,22 @@ var _ interface {
 	ErrorName() string
 } = RangeValidationError{}
 
-// Validate checks the field values on Metadata with the rules defined in the
+// Validate checks the field values on Download with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Metadata) Validate() error {
+func (m *Download) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Metadata with the rules defined in
+// ValidateAll checks the field values on Download with the rules defined in
 // the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in MetadataMultiError, or nil
+// result is a list of violation errors wrapped in DownloadMultiError, or nil
 // if none found.
-func (m *Metadata) ValidateAll() error {
+func (m *Download) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Metadata) validate(all bool) error {
+func (m *Download) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -935,7 +1014,7 @@ func (m *Metadata) validate(all bool) error {
 	var errors []error
 
 	if uri, err := url.Parse(m.GetUrl()); err != nil {
-		err = MetadataValidationError{
+		err = DownloadValidationError{
 			field:  "Url",
 			reason: "value must be a valid URI",
 			cause:  err,
@@ -945,7 +1024,7 @@ func (m *Metadata) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	} else if !uri.IsAbs() {
-		err := MetadataValidationError{
+		err := DownloadValidationError{
 			field:  "Url",
 			reason: "value must be absolute",
 		}
@@ -957,8 +1036,8 @@ func (m *Metadata) validate(all bool) error {
 
 	if m.GetDigest() != "" {
 
-		if !_Metadata_Digest_Pattern.MatchString(m.GetDigest()) {
-			err := MetadataValidationError{
+		if !_Download_Digest_Pattern.MatchString(m.GetDigest()) {
+			err := DownloadValidationError{
 				field:  "Digest",
 				reason: "value does not match regex pattern \"^(md5)|(sha256):[A-Fa-f0-9]+$\"",
 			}
@@ -974,7 +1053,7 @@ func (m *Metadata) validate(all bool) error {
 		switch v := interface{}(m.GetRange()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, MetadataValidationError{
+				errors = append(errors, DownloadValidationError{
 					field:  "Range",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -982,7 +1061,7 @@ func (m *Metadata) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, MetadataValidationError{
+				errors = append(errors, DownloadValidationError{
 					field:  "Range",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -991,7 +1070,7 @@ func (m *Metadata) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return MetadataValidationError{
+			return DownloadValidationError{
 				field:  "Range",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -1000,7 +1079,7 @@ func (m *Metadata) validate(all bool) error {
 	}
 
 	if _, ok := TaskType_name[int32(m.GetType())]; !ok {
-		err := MetadataValidationError{
+		err := DownloadValidationError{
 			field:  "Type",
 			reason: "value must be one of the defined enum values",
 		}
@@ -1015,7 +1094,7 @@ func (m *Metadata) validate(all bool) error {
 	// no validation rules for Application
 
 	if _, ok := Priority_name[int32(m.GetPriority())]; !ok {
-		err := MetadataValidationError{
+		err := DownloadValidationError{
 			field:  "Priority",
 			reason: "value must be one of the defined enum values",
 		}
@@ -1028,7 +1107,7 @@ func (m *Metadata) validate(all bool) error {
 	// no validation rules for Header
 
 	if m.GetPieceSize() < 1 {
-		err := MetadataValidationError{
+		err := DownloadValidationError{
 			field:  "PieceSize",
 			reason: "value must be greater than or equal to 1",
 		}
@@ -1038,19 +1117,58 @@ func (m *Metadata) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.GetOutputPath() != "" {
+
+		if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
+			err := DownloadValidationError{
+				field:  "OutputPath",
+				reason: "value length must be at least 1 runes",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetTimeout() == nil {
+		err := DownloadValidationError{
+			field:  "Timeout",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetDownloadRateLimit() < 0 {
+		err := DownloadValidationError{
+			field:  "DownloadRateLimit",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for NeedBackToSource
+
 	if len(errors) > 0 {
-		return MetadataMultiError(errors)
+		return DownloadMultiError(errors)
 	}
 
 	return nil
 }
 
-// MetadataMultiError is an error wrapping multiple validation errors returned
-// by Metadata.ValidateAll() if the designated constraints aren't met.
-type MetadataMultiError []error
+// DownloadMultiError is an error wrapping multiple validation errors returned
+// by Download.ValidateAll() if the designated constraints aren't met.
+type DownloadMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m MetadataMultiError) Error() string {
+func (m DownloadMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1059,11 +1177,11 @@ func (m MetadataMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m MetadataMultiError) AllErrors() []error { return m }
+func (m DownloadMultiError) AllErrors() []error { return m }
 
-// MetadataValidationError is the validation error returned by
-// Metadata.Validate if the designated constraints aren't met.
-type MetadataValidationError struct {
+// DownloadValidationError is the validation error returned by
+// Download.Validate if the designated constraints aren't met.
+type DownloadValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1071,22 +1189,22 @@ type MetadataValidationError struct {
 }
 
 // Field function returns field value.
-func (e MetadataValidationError) Field() string { return e.field }
+func (e DownloadValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e MetadataValidationError) Reason() string { return e.reason }
+func (e DownloadValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e MetadataValidationError) Cause() error { return e.cause }
+func (e DownloadValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e MetadataValidationError) Key() bool { return e.key }
+func (e DownloadValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e MetadataValidationError) ErrorName() string { return "MetadataValidationError" }
+func (e DownloadValidationError) ErrorName() string { return "DownloadValidationError" }
 
 // Error satisfies the builtin error interface
-func (e MetadataValidationError) Error() string {
+func (e DownloadValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1098,14 +1216,14 @@ func (e MetadataValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sMetadata.%s: %s%s",
+		"invalid %sDownload.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = MetadataValidationError{}
+var _ error = DownloadValidationError{}
 
 var _ interface {
 	Field() string
@@ -1113,9 +1231,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = MetadataValidationError{}
+} = DownloadValidationError{}
 
-var _Metadata_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$")
+var _Download_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$")
 
 // Validate checks the field values on Piece with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

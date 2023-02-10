@@ -164,9 +164,9 @@ func (m *DownloadPieceBackToSourceFailed) validate(all bool) error {
 
 	// no validation rules for Temporary
 
-	if m.GetMetadata() == nil {
+	if m.GetExtendAttribute() == nil {
 		err := DownloadPieceBackToSourceFailedValidationError{
-			field:  "Metadata",
+			field:  "ExtendAttribute",
 			reason: "value is required",
 		}
 		if !all {
@@ -176,11 +176,11 @@ func (m *DownloadPieceBackToSourceFailed) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
+		switch v := interface{}(m.GetExtendAttribute()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, DownloadPieceBackToSourceFailedValidationError{
-					field:  "Metadata",
+					field:  "ExtendAttribute",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -188,16 +188,16 @@ func (m *DownloadPieceBackToSourceFailed) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, DownloadPieceBackToSourceFailedValidationError{
-					field:  "Metadata",
+					field:  "ExtendAttribute",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetExtendAttribute()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return DownloadPieceBackToSourceFailedValidationError{
-				field:  "Metadata",
+				field:  "ExtendAttribute",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -322,9 +322,9 @@ func (m *DownloadPieceFailed) validate(all bool) error {
 
 	// no validation rules for Temporary
 
-	if m.GetMetadata() == nil {
+	if m.GetExtendAttribute() == nil {
 		err := DownloadPieceFailedValidationError{
-			field:  "Metadata",
+			field:  "ExtendAttribute",
 			reason: "value is required",
 		}
 		if !all {
@@ -334,11 +334,11 @@ func (m *DownloadPieceFailed) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetMetadata()).(type) {
+		switch v := interface{}(m.GetExtendAttribute()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, DownloadPieceFailedValidationError{
-					field:  "Metadata",
+					field:  "ExtendAttribute",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -346,16 +346,16 @@ func (m *DownloadPieceFailed) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, DownloadPieceFailedValidationError{
-					field:  "Metadata",
+					field:  "ExtendAttribute",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetExtendAttribute()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return DownloadPieceFailedValidationError{
-				field:  "Metadata",
+				field:  "ExtendAttribute",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -788,107 +788,3 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SyncPiecesFailedValidationError{}
-
-// Validate checks the field values on StatMetadataFailed with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StatMetadataFailed) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on StatMetadataFailed with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// StatMetadataFailedMultiError, or nil if none found.
-func (m *StatMetadataFailed) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *StatMetadataFailed) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	// no validation rules for Description
-
-	if len(errors) > 0 {
-		return StatMetadataFailedMultiError(errors)
-	}
-
-	return nil
-}
-
-// StatMetadataFailedMultiError is an error wrapping multiple validation errors
-// returned by StatMetadataFailed.ValidateAll() if the designated constraints
-// aren't met.
-type StatMetadataFailedMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m StatMetadataFailedMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m StatMetadataFailedMultiError) AllErrors() []error { return m }
-
-// StatMetadataFailedValidationError is the validation error returned by
-// StatMetadataFailed.Validate if the designated constraints aren't met.
-type StatMetadataFailedValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e StatMetadataFailedValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e StatMetadataFailedValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e StatMetadataFailedValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e StatMetadataFailedValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e StatMetadataFailedValidationError) ErrorName() string {
-	return "StatMetadataFailedValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e StatMetadataFailedValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sStatMetadataFailed.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = StatMetadataFailedValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = StatMetadataFailedValidationError{}

@@ -28,12 +28,10 @@ type DfdaemonClient interface {
 	SyncPieces(ctx context.Context, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error)
 	// DownloadTask downloads task back-to-source.
 	DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// UploadTask uploads task to p2p network.
+	UploadTask(ctx context.Context, in *UploadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// StatTask stats task information.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
-	// ImportTask imports task to p2p network.
-	ImportTask(ctx context.Context, in *ImportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// ExportTask exports task from p2p network.
-	ExportTask(ctx context.Context, in *ExportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -86,27 +84,18 @@ func (c *dfdaemonClient) DownloadTask(ctx context.Context, in *DownloadTaskReque
 	return out, nil
 }
 
+func (c *dfdaemonClient) UploadTask(ctx context.Context, in *UploadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/UploadTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *dfdaemonClient) StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
 	out := new(v2.Task)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/StatTask", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *dfdaemonClient) ImportTask(ctx context.Context, in *ImportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/ImportTask", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *dfdaemonClient) ExportTask(ctx context.Context, in *ExportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/ExportTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -130,12 +119,10 @@ type DfdaemonServer interface {
 	SyncPieces(Dfdaemon_SyncPiecesServer) error
 	// DownloadTask downloads task back-to-source.
 	DownloadTask(context.Context, *DownloadTaskRequest) (*emptypb.Empty, error)
+	// UploadTask uploads task to p2p network.
+	UploadTask(context.Context, *UploadTaskRequest) (*emptypb.Empty, error)
 	// StatTask stats task information.
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
-	// ImportTask imports task to p2p network.
-	ImportTask(context.Context, *ImportTaskRequest) (*emptypb.Empty, error)
-	// ExportTask exports task from p2p network.
-	ExportTask(context.Context, *ExportTaskRequest) (*emptypb.Empty, error)
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
 }
@@ -150,14 +137,11 @@ func (UnimplementedDfdaemonServer) SyncPieces(Dfdaemon_SyncPiecesServer) error {
 func (UnimplementedDfdaemonServer) DownloadTask(context.Context, *DownloadTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DownloadTask not implemented")
 }
+func (UnimplementedDfdaemonServer) UploadTask(context.Context, *UploadTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadTask not implemented")
+}
 func (UnimplementedDfdaemonServer) StatTask(context.Context, *StatTaskRequest) (*v2.Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
-}
-func (UnimplementedDfdaemonServer) ImportTask(context.Context, *ImportTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ImportTask not implemented")
-}
-func (UnimplementedDfdaemonServer) ExportTask(context.Context, *ExportTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExportTask not implemented")
 }
 func (UnimplementedDfdaemonServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
@@ -218,6 +202,24 @@ func _Dfdaemon_DownloadTask_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Dfdaemon_UploadTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DfdaemonServer).UploadTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dfdaemon.v2.Dfdaemon/UploadTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DfdaemonServer).UploadTask(ctx, req.(*UploadTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Dfdaemon_StatTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StatTaskRequest)
 	if err := dec(in); err != nil {
@@ -232,42 +234,6 @@ func _Dfdaemon_StatTask_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DfdaemonServer).StatTask(ctx, req.(*StatTaskRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Dfdaemon_ImportTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ImportTaskRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DfdaemonServer).ImportTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/dfdaemon.v2.Dfdaemon/ImportTask",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonServer).ImportTask(ctx, req.(*ImportTaskRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Dfdaemon_ExportTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExportTaskRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DfdaemonServer).ExportTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/dfdaemon.v2.Dfdaemon/ExportTask",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonServer).ExportTask(ctx, req.(*ExportTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -302,16 +268,12 @@ var Dfdaemon_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Dfdaemon_DownloadTask_Handler,
 		},
 		{
+			MethodName: "UploadTask",
+			Handler:    _Dfdaemon_UploadTask_Handler,
+		},
+		{
 			MethodName: "StatTask",
 			Handler:    _Dfdaemon_StatTask_Handler,
-		},
-		{
-			MethodName: "ImportTask",
-			Handler:    _Dfdaemon_ImportTask_Handler,
-		},
-		{
-			MethodName: "ExportTask",
-			Handler:    _Dfdaemon_ExportTask_Handler,
 		},
 		{
 			MethodName: "DeleteTask",

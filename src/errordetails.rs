@@ -15,7 +15,7 @@ pub struct DownloadPieceBackToSourceFailed {
     pub temporary: bool,
     /// Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
     #[prost(message, optional, tag = "2")]
-    pub metadata: ::core::option::Option<super::common::ExtendAttribute>,
+    pub extend_attribute: ::core::option::Option<super::common::ExtendAttribute>,
     /// The number of piece.
     #[prost(uint32, tag = "3")]
     pub piece_number: u32,
@@ -32,7 +32,7 @@ pub struct DownloadPieceFailed {
     pub temporary: bool,
     /// Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
     #[prost(message, optional, tag = "2")]
-    pub metadata: ::core::option::Option<super::common::ExtendAttribute>,
+    pub extend_attribute: ::core::option::Option<super::common::ExtendAttribute>,
     /// Piece is information of piece.
     #[prost(string, tag = "3")]
     pub parent_id: ::prost::alloc::string::String,
@@ -71,13 +71,5 @@ pub struct SyncPiecesFailed {
     pub parent_id: ::prost::alloc::string::String,
     /// The description of the error.
     #[prost(string, tag = "3")]
-    pub description: ::prost::alloc::string::String,
-}
-/// StatMetadataFailed is error detail of stat metadata.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct StatMetadataFailed {
-    /// The description of the error.
-    #[prost(string, tag = "1")]
     pub description: ::prost::alloc::string::String,
 }

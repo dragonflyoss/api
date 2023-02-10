@@ -34,7 +34,7 @@ message DownloadPieceBackToSourceFailed {
   // Temporary recoverable error of source.
   bool temporary = 1;
   // Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
-  common.v2.ExtendAttribute metadata = 2 [(validate.rules).message.required = true];
+  common.v2.ExtendAttribute extend_attribute = 2 [(validate.rules).message.required = true];
   // The number of piece.
   uint32 piece_number = 3 [(validate.rules).uint32.gte = 0];
   // The description of the error.
@@ -46,7 +46,7 @@ message DownloadPieceFailed {
   // Temporary recoverable error of parent peer.
   bool temporary = 1;
   // Source response metadata, eg: HTTP Status Code, HTTP Status, HTTP Header
-  common.v2.ExtendAttribute metadata = 2 [(validate.rules).message.required = true];
+  common.v2.ExtendAttribute extend_attribute = 2 [(validate.rules).message.required = true];
   // Piece is information of piece.
   string parent_id = 3 [(validate.rules).string.min_len = 1];
   // The number of piece.
