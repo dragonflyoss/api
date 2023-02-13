@@ -131,12 +131,12 @@ pub struct Host {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Range {
-    /// Begin of range.
-    #[prost(uint64, tag = "1")]
-    pub begin: u64,
-    /// End of range.
-    #[prost(uint64, tag = "2")]
-    pub end: u64,
+    /// Start of range.
+    #[prost(int64, tag = "1")]
+    pub start: i64,
+    /// Length of range.
+    #[prost(int64, tag = "2")]
+    pub length: i64,
 }
 /// Download information.
 #[allow(clippy::derive_partial_eq_without_eq)]
