@@ -910,9 +910,9 @@ func (m *Range) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Begin
+	// no validation rules for Start
 
-	// no validation rules for End
+	// no validation rules for Length
 
 	if len(errors) > 0 {
 		return RangeMultiError(errors)

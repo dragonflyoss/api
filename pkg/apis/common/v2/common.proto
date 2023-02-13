@@ -191,10 +191,10 @@ message Host {
 
 // Range represents download range.
 message Range {
-  // Begin of range.
-  uint64 begin = 1;
-  // End of range.
-  uint64 end = 2;
+  // Start of range.
+  int64 start = 1;
+  // Length of range.
+  int64 length = 2;
 }
 
 // Download information.
