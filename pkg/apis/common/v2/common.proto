@@ -147,8 +147,8 @@ message Task {
   repeated string filters = 7;
   // Task request headers.
   map<string, string> header = 8;
-  // Task piece size.
-  int32 piece_size = 9 [(validate.rules).int32.gte = 1];
+  // Task piece length.
+  int32 piece_length = 9 [(validate.rules).int32.gte = 1];
   // Task content length.
   int64 content_length = 10 [(validate.rules).int64.gte = 1];
   // Task piece count.
@@ -217,8 +217,8 @@ message Download {
   repeated string filters = 8;
   // Task request headers.
   map<string, string> header = 9;
-  // Task piece size.
-  int32 piece_size = 10 [(validate.rules).int32.gte = 1];
+  // Task piece length.
+  int32 piece_length = 10 [(validate.rules).int32.gte = 1];
   // File path to be exported.
   string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
@@ -237,8 +237,8 @@ message Piece {
   string parent_id = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Piece offset.
   uint64 offset = 3 [(validate.rules).uint64.gte = 0];
-  // Piece size.
-  uint64 size = 4 [(validate.rules).uint64.gt = 0];
+  // Piece length.
+  uint64 length = 4 [(validate.rules).uint64.gt = 0];
   // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty: true}];
   // Traffic type.

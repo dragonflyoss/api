@@ -444,9 +444,9 @@ func (m *Task) validate(all bool) error {
 
 	// no validation rules for Header
 
-	if m.GetPieceSize() < 1 {
+	if m.GetPieceLength() < 1 {
 		err := TaskValidationError{
-			field:  "PieceSize",
+			field:  "PieceLength",
 			reason: "value must be greater than or equal to 1",
 		}
 		if !all {
@@ -1106,9 +1106,9 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for Header
 
-	if m.GetPieceSize() < 1 {
+	if m.GetPieceLength() < 1 {
 		err := DownloadValidationError{
-			field:  "PieceSize",
+			field:  "PieceLength",
 			reason: "value must be greater than or equal to 1",
 		}
 		if !all {
@@ -1293,9 +1293,9 @@ func (m *Piece) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetSize() <= 0 {
+	if m.GetLength() <= 0 {
 		err := PieceValidationError{
-			field:  "Size",
+			field:  "Length",
 			reason: "value must be greater than 0",
 		}
 		if !all {

@@ -67,9 +67,9 @@ pub struct Task {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
-    /// Task piece size.
+    /// Task piece length.
     #[prost(int32, tag = "9")]
-    pub piece_size: i32,
+    pub piece_length: i32,
     /// Task content length.
     #[prost(int64, tag = "10")]
     pub content_length: i64,
@@ -172,9 +172,9 @@ pub struct Download {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
-    /// Task piece size.
+    /// Task piece length.
     #[prost(int32, tag = "10")]
-    pub piece_size: i32,
+    pub piece_length: i32,
     /// File path to be exported.
     #[prost(string, tag = "11")]
     pub output_path: ::prost::alloc::string::String,
@@ -201,9 +201,9 @@ pub struct Piece {
     /// Piece offset.
     #[prost(uint64, tag = "3")]
     pub offset: u64,
-    /// Piece size.
+    /// Piece length.
     #[prost(uint64, tag = "4")]
-    pub size: u64,
+    pub length: u64,
     /// Digest of the piece data, for example md5:xxx or sha256:yyy.
     #[prost(string, tag = "5")]
     pub digest: ::prost::alloc::string::String,

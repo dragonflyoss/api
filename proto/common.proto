@@ -144,8 +144,8 @@ message Task {
   repeated string filters = 7;
   // Task request headers.
   map<string, string> header = 8;
-  // Task piece size.
-  int32 piece_size = 9;
+  // Task piece length.
+  int32 piece_length = 9;
   // Task content length.
   int64 content_length = 10;
   // Task piece count.
@@ -214,8 +214,8 @@ message Download {
   repeated string filters = 8;
   // Task request headers.
   map<string, string> header = 9;
-  // Task piece size.
-  int32 piece_size = 10;
+  // Task piece length.
+  int32 piece_length = 10;
   // File path to be exported.
   string output_path = 11;
   // Download timeout.
@@ -234,8 +234,8 @@ message Piece {
   string parent_id = 2;
   // Piece offset.
   uint64 offset = 3;
-  // Piece size.
-  uint64 size = 4;
+  // Piece length.
+  uint64 length = 4;
   // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5;
   // Traffic type.
