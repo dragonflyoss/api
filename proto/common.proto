@@ -115,9 +115,9 @@ message Peer {
   // Peer state.
   string state = 6;
   // Task info.
-  string task_id = 7;
+  Task task = 7;
   // Host info.
-  string host_id = 8;
+  Host host = 8;
   // NeedBackToSource needs downloaded from source.
   bool need_back_to_source = 9;
   // Peer create time.

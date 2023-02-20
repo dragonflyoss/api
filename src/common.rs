@@ -21,11 +21,11 @@ pub struct Peer {
     #[prost(string, tag = "6")]
     pub state: ::prost::alloc::string::String,
     /// Task info.
-    #[prost(string, tag = "7")]
-    pub task_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "7")]
+    pub task: ::core::option::Option<Task>,
     /// Host info.
-    #[prost(string, tag = "8")]
-    pub host_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "8")]
+    pub host: ::core::option::Option<Host>,
     /// NeedBackToSource needs downloaded from source.
     #[prost(bool, tag = "9")]
     pub need_back_to_source: bool,
