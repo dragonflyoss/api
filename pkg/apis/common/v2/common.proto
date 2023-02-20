@@ -176,28 +176,137 @@ message Task {
 message Host {
   // Host id.
   string id = 1 [(validate.rules).string.min_len = 1];
+  // Host type.
+  uint32 type = 2 [(validate.rules).uint32.lte = 3];
+  // Hostname.
+  string hostname = 3 [(validate.rules).string.min_len = 1];
   // Host ip.
-  string ip = 2 [(validate.rules).string.min_len = 1];
-  // Peer hostname.
-  string hostname = 3 [(validate.rules).string.hostname = true];
+  string ip = 4 [(validate.rules).string.ip = true];
   // Port of grpc service.
-  int32 port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Port of download server.
-  int32 download_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // Security domain for network.
-  string security_domain = 6 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // Host location, eg: area|country|province|city.
-  string location = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // IDC where the peer host is located.
-  string idc = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  int32 download_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  // Host OS.
+  string os = 7;
+  // Host platform.
+  string platform = 8;
+  // Host platform family.
+  string platform_family = 9;
+  // Host platform version.
+  string platform_version = 10;
+  // Host kernel version.
+  string kernel_version = 11;
+  // CPU Stat.
+  CPU cpu = 12 [(validate.rules).message.required = true];
+  // Memory Stat.
+  Memory memory = 13 [(validate.rules).message.required = true];
+  // Network Stat.
+  Network network = 14 [(validate.rules).message.required = true];
+  // Disk Stat.
+  Disk disk = 15 [(validate.rules).message.required = true];
+  // Build information.
+  Build build = 16 [(validate.rules).message.required = true];
 }
 
-// Range represents download range.
-message Range {
-  // Start of range.
-  int64 start = 1;
-  // Length of range.
-  int64 length = 2;
+// CPU Stat.
+message CPU {
+  // Number of logical cores in the system.
+  uint32 logical_count = 1;
+  // Number of physical cores in the system
+  uint32 physical_count = 2;
+  // Percent calculates the percentage of cpu used.
+  double percent = 3 [(validate.rules).double = {gte: 0, lte: 100}];
+  // Calculates the percentage of cpu used by process.
+  double process_percent = 4 [(validate.rules).double = {gte: 0, lte: 100}];
+  // CPUTimes contains the amounts of time the CPU has spent performing different kinds of work.
+  CPUTimes times = 5 [(validate.rules).message.required = true];
+}
+
+// CPUTimes contains the amounts of time the CPU has spent performing different
+// kinds of work. Time units are in seconds.
+message CPUTimes {
+  // CPU time of user.
+  double user = 1 [(validate.rules).double.gte = 0];
+  // CPU time of system.
+  double system = 2 [(validate.rules).double.gte = 0];
+  // CPU time of idle.
+  double idle = 3 [(validate.rules).double.gte = 0];
+  // CPU time of nice.
+  double nice = 4 [(validate.rules).double.gte = 0];
+  // CPU time of iowait.
+  double iowait = 5 [(validate.rules).double.gte = 0];
+  // CPU time of irq.
+  double irq = 6 [(validate.rules).double.gte = 0];
+  // CPU time of softirq.
+  double softirq = 7 [(validate.rules).double.gte = 0];
+  // CPU time of steal.
+  double steal = 8 [(validate.rules).double.gte = 0];
+  // CPU time of guest.
+  double guest = 9 [(validate.rules).double.gte = 0];
+  // CPU time of guest nice.
+  double guest_nice = 10 [(validate.rules).double.gte = 0];
+}
+
+// Memory Stat.
+message Memory {
+  // Total amount of RAM on this system.
+  uint64 total = 1;
+  // RAM available for programs to allocate.
+  uint64 available = 2;
+  // RAM used by programs.
+  uint64 used = 3;
+  // Percentage of RAM used by programs.
+  double used_percent = 4 [(validate.rules).double = {gte: 0, lte: 100}];
+  // Calculates the percentage of memory used by process.
+  double process_used_percent = 5 [(validate.rules).double = {gte: 0, lte: 100}];
+  // This is the kernel's notion of free memory.
+  uint64 free = 6;
+}
+
+// Network Stat.
+message Network {
+  // Return count of tcp connections opened and status is ESTABLISHED.
+  uint32 tcp_connection_count = 1;
+  // Return count of upload tcp connections opened and status is ESTABLISHED.
+  uint32 upload_tcp_connection_count = 2;
+  // Security domain for network.
+  string security_domain = 3;
+  // Location path(area|country|province|city|...).
+  string location = 4;
+  // IDC where the peer host is located
+  string idc = 5;
+}
+
+// Disk Stat.
+message Disk {
+  // Total amount of disk on the data path of dragonfly.
+  uint64 total = 1;
+  // Free amount of disk on the data path of dragonfly.
+  uint64 free = 2;
+  // Used amount of disk on the data path of dragonfly.
+  uint64 used = 3;
+  // Used percent of disk on the data path of dragonfly directory.
+  double used_percent = 4 [(validate.rules).double = {gte: 0, lte: 100}];
+  // Total amount of indoes on the data path of dragonfly directory.
+  uint64 inodes_total = 5;
+  // Used amount of indoes on the data path of dragonfly directory.
+  uint64 inodes_used = 6;
+  // Free amount of indoes on the data path of dragonfly directory.
+  uint64 inodes_free = 7;
+  // Used percent of indoes on the data path of dragonfly directory.
+  double inodes_used_percent = 8 [(validate.rules).double = {gte: 0, lte: 100}];
+}
+
+// Build information.
+message Build {
+  // Git version.
+  string git_version = 1;
+  // Git commit.
+  string git_commit = 2;
+  // Golang version.
+  string go_version = 3;
+  // Build platform.
+  string platform = 4;
 }
 
 // Download information.
@@ -230,6 +339,14 @@ message Download {
   double download_rate_limit = 13 [(validate.rules).double.gte = 0];
   // NeedBackToSource needs downloaded from source.
   bool need_back_to_source = 14;
+}
+
+// Range represents download range.
+message Range {
+  // Start of range.
+  int64 start = 1;
+  // Length of range.
+  int64 length = 2;
 }
 
 // Piece represents information of piece.
