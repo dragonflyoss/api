@@ -26,8 +26,8 @@ pub struct DownloadPeerFinishedRequest {
     #[prost(int64, tag = "1")]
     pub content_length: i64,
     /// Total piece count.
-    #[prost(int64, tag = "2")]
-    pub piece_count: i64,
+    #[prost(int32, tag = "2")]
+    pub piece_count: i32,
 }
 /// DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -37,8 +37,8 @@ pub struct DownloadPeerBackToSourceFinishedRequest {
     #[prost(int64, tag = "1")]
     pub content_length: i64,
     /// Total piece count.
-    #[prost(int64, tag = "2")]
-    pub piece_count: i64,
+    #[prost(int32, tag = "2")]
+    pub piece_count: i32,
 }
 /// DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]

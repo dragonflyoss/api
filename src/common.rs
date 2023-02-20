@@ -74,8 +74,8 @@ pub struct Task {
     #[prost(int64, tag = "10")]
     pub content_length: i64,
     /// Task piece count.
-    #[prost(int64, tag = "11")]
-    pub piece_count: i64,
+    #[prost(int32, tag = "11")]
+    pub piece_count: i32,
     /// Task size scope.
     #[prost(enumeration = "SizeScope", tag = "12")]
     pub size_scope: i32,

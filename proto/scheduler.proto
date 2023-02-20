@@ -45,7 +45,7 @@ message DownloadPeerFinishedRequest {
   // Total content length.
   int64 content_length = 1;
   // Total piece count.
-  int64 piece_count = 2;
+  int32 piece_count = 2;
 }
 
 // DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
@@ -53,7 +53,7 @@ message DownloadPeerBackToSourceFinishedRequest {
   // Total content length.
   int64 content_length = 1;
   // Total piece count.
-  int64 piece_count = 2;
+  int32 piece_count = 2;
 }
 
 // DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
