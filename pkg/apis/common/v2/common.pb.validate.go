@@ -391,10 +391,10 @@ func (m *Task) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if _, ok := _Task_Type_InLookup[m.GetType()]; !ok {
+	if _, ok := TaskType_name[int32(m.GetType())]; !ok {
 		err := TaskValidationError{
 			field:  "Type",
-			reason: "value must be in list [normal super strong weak]",
+			reason: "value must be one of the defined enum values",
 		}
 		if !all {
 			return err
@@ -650,13 +650,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = TaskValidationError{}
-
-var _Task_Type_InLookup = map[string]struct{}{
-	"normal": {},
-	"super":  {},
-	"strong": {},
-	"weak":   {},
-}
 
 var _Task_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$")
 

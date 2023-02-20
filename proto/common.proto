@@ -131,7 +131,7 @@ message Task {
   // Task id.
   string id = 1;
   // Task type.
-  string type = 2;
+  TaskType type = 2;
   // Download url.
   string url = 3;
   // Digest of the pieces digest, for example md5:xxx or sha256:yyy.

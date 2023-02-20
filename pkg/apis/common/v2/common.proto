@@ -134,7 +134,7 @@ message Task {
   // Task id.
   string id = 1 [(validate.rules).string.min_len = 1];
   // Task type.
-  string type = 2 [(validate.rules).string = {in: ["normal", "super", "strong", "weak"]}];
+  TaskType type = 2 [(validate.rules).enum.defined_only = true];
   // Download url.
   string url = 3 [(validate.rules).string.uri = true];
   // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
