@@ -108,8 +108,8 @@ message SmallTaskResponse {
 message NormalTaskResponse {
   // Candidate parents.
   repeated common.Peer candidate_parents = 1;
-  // Concurrent downloading count from main peer.
-  int32 parallel_count = 2;
+  // Concurrent downloading piece count from the peers.
+  int32 parallel_piece_count = 2;
 }
 
 // NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
