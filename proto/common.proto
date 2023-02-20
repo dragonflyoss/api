@@ -149,7 +149,7 @@ message Task {
   // Task content length.
   int64 content_length = 10;
   // Task piece count.
-  int64 piece_count = 11;
+  int32 piece_count = 11;
   // Task size scope.
   SizeScope size_scope = 12;
   // Pieces of task.

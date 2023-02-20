@@ -155,7 +155,7 @@ message Task {
   // Task content length.
   int64 content_length = 10 [(validate.rules).int64.gte = 1];
   // Task piece count.
-  int64 piece_count = 11 [(validate.rules).int64.gte = 0];
+  int32 piece_count = 11 [(validate.rules).int32.gte = 0];
   // Task size scope.
   SizeScope size_scope = 12;
   // Pieces of task.
