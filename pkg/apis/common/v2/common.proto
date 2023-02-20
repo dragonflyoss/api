@@ -232,7 +232,7 @@ message Download {
 // Piece represents information of piece.
 message Piece {
   // Piece number.
-  uint32 number = 1 [(validate.rules).uint32.gte = 0];
+  int32 number = 1 [(validate.rules).int32.gte = 0];
   // Parent peer id.
   string parent_id = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Piece offset.
