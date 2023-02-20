@@ -44,8 +44,8 @@ pub struct Task {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
     /// Task type.
-    #[prost(string, tag = "2")]
-    pub r#type: ::prost::alloc::string::String,
+    #[prost(enumeration = "TaskType", tag = "2")]
+    pub r#type: i32,
     /// Download url.
     #[prost(string, tag = "3")]
     pub url: ::prost::alloc::string::String,
