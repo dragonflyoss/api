@@ -193,8 +193,8 @@ pub struct Download {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Piece {
     /// Piece number.
-    #[prost(uint32, tag = "1")]
-    pub number: u32,
+    #[prost(int32, tag = "1")]
+    pub number: i32,
     /// Parent peer id.
     #[prost(string, tag = "2")]
     pub parent_id: ::prost::alloc::string::String,
