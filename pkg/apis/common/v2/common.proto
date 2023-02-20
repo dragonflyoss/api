@@ -121,9 +121,9 @@ message Peer {
   // Peer state.
   string state = 6 [(validate.rules).string.min_len = 1];
   // Task info.
-  Task task = 7 [(validate.rules).message.required = true];
+  string task_id = 7 [(validate.rules).string.min_len = 1];
   // Host info.
-  Host host = 8 [(validate.rules).message.required = true];
+  string host_id = 8 [(validate.rules).string.min_len = 1];
   // NeedBackToSource needs downloaded from source.
   bool need_back_to_source = 9;
   // Peer create time.
