@@ -86,17 +86,20 @@ enum PieceStyle {
 
 // SizeScope represents size scope of task.
 enum SizeScope {
-  // size > one piece size.
+  // NORMAL task has pieces is more than one piece.
   NORMAL = 0;
 
-  // 128 byte < size <= one piece size and be plain type.
+  // SMALL task's content length is more than 128 byte and has only one piece.
   SMALL = 1;
 
-  // size <= 128 byte and be plain type.
+  // TINY task's content length is less than 128 byte.
   TINY = 2;
 
-  // size == 0 byte and be plain type.
+  // EMPTY task's content length is equal to zero.
   EMPTY = 3;
+
+  // UNKNOW task has invalid size scope.
+  UNKNOW = 4;
 }
 
 // TaskType represents type of task.
