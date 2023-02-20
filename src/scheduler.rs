@@ -138,7 +138,7 @@ pub struct NormalTaskResponse {
     pub candidate_parents: ::prost::alloc::vec::Vec<super::common::Peer>,
     /// Concurrent downloading piece count from the peers.
     #[prost(int32, tag = "2")]
-    pub parallel_piece_count: i32,
+    pub concurrent_piece_count: i32,
 }
 /// NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
 #[allow(clippy::derive_partial_eq_without_eq)]
