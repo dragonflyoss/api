@@ -1860,9 +1860,9 @@ func (m *NormalTaskResponse) validate(all bool) error {
 
 	}
 
-	if m.GetParallelCount() < 1 {
+	if m.GetParallelPieceCount() < 1 {
 		err := NormalTaskResponseValidationError{
-			field:  "ParallelCount",
+			field:  "ParallelPieceCount",
 			reason: "value must be greater than or equal to 1",
 		}
 		if !all {
