@@ -179,37 +179,6 @@ func (m *SeedPeerCluster) validate(all bool) error {
 
 	// no validation rules for Config
 
-	// no validation rules for Scopes
-
-	if all {
-		switch v := interface{}(m.GetSecurityGroup()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, SeedPeerClusterValidationError{
-					field:  "SecurityGroup",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, SeedPeerClusterValidationError{
-					field:  "SecurityGroup",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetSecurityGroup()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SeedPeerClusterValidationError{
-				field:  "SecurityGroup",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if len(errors) > 0 {
 		return SeedPeerClusterMultiError(errors)
 	}

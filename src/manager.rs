@@ -34,12 +34,6 @@ pub struct SeedPeerCluster {
     /// Cluster configuration.
     #[prost(bytes = "vec", tag = "4")]
     pub config: ::prost::alloc::vec::Vec<u8>,
-    /// Cluster scopes.
-    #[prost(bytes = "vec", tag = "5")]
-    pub scopes: ::prost::alloc::vec::Vec<u8>,
-    /// Security group to which the seed peer cluster belongs.
-    #[prost(message, optional, tag = "6")]
-    pub security_group: ::core::option::Option<SecurityGroup>,
 }
 /// SeedPeer represents seed peer for network.
 #[allow(clippy::derive_partial_eq_without_eq)]

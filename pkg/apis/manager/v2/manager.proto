@@ -59,10 +59,6 @@ message SeedPeerCluster {
   string bio = 3;
   // Cluster configuration.
   bytes config = 4;
-  // Cluster scopes.
-  bytes scopes = 5;
-  // Security group to which the seed peer cluster belongs.
-  SecurityGroup security_group = 6;
 }
 
 // SeedPeer represents seed peer for network.
