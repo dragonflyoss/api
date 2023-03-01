@@ -386,23 +386,6 @@ pub struct Piece {
     #[prost(message, optional, tag = "8")]
     pub created_at: ::core::option::Option<::prost_types::Timestamp>,
 }
-/// ExtendAttribute represents extend of attribution.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ExtendAttribute {
-    /// Task response header, eg: HTTP Response Header
-    #[prost(map = "string, string", tag = "1")]
-    pub header: ::std::collections::HashMap<
-        ::prost::alloc::string::String,
-        ::prost::alloc::string::String,
-    >,
-    /// Task response code, eg: HTTP Status Code
-    #[prost(int32, tag = "2")]
-    pub status_code: i32,
-    /// Task response status, eg: HTTP Status
-    #[prost(string, tag = "3")]
-    pub status: ::prost::alloc::string::String,
-}
 /// SizeScope represents size scope of task.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]

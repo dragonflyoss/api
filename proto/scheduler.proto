@@ -67,6 +67,40 @@ message DownloadPieceBackToSourceFinishedRequest {
   common.Piece piece = 1;
 }
 
+// DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
+message DownloadPieceFailedRequest {
+  // The number of piece.
+  uint32 piece_number = 1;
+  // Piece is information of piece.
+  string parent_id = 2;
+  // HTTP Response Header.
+  map<string, string> header = 3;
+  // HTTP Status Code.
+  int32 status_code = 4;
+  // HTTP Status.
+  string status = 5;
+}
+
+// DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
+message DownloadPieceBackToSourceFailedRequest {
+  // The number of piece.
+  uint32 piece_number = 1;
+  // HTTP Response Header.
+  map<string, string> header = 2;
+  // HTTP Status Code.
+  int32 status_code = 3;
+  // HTTP Status.
+  string status = 4;
+}
+
+// SyncPiecesFailedRequest syncs pieces failed request of AnnouncePeerRequest.
+message SyncPiecesFailedRequest {
+	// Parent peer id.
+  string parent_id = 1;
+  // The description of the error.
+  string description = 2;
+}
+
 // AnnouncePeerRequest represents request of AnnouncePeer.
 message AnnouncePeerRequest {
   // Task id.
@@ -82,6 +116,9 @@ message AnnouncePeerRequest {
     DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 7;
     DownloadPieceFinishedRequest download_piece_finished_request = 8;
     DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 9;
+    DownloadPieceFailedRequest download_piece_failed_request = 10;
+    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 11;
+    SyncPiecesFailedRequest sync_pieces_failed_request = 12;
   }
 }
 
@@ -110,6 +147,18 @@ message NeedBackToSourceResponse {
   string reason = 1;
 }
 
+// SchedulePeerForbiddenResponse schedules peer forbidden response of AnnouncePeerResponse.
+message SchedulePeerForbiddenResponse {
+  // The description of the error.
+  string description = 1;
+}
+
+// SchedulePeerFailedResponse schedules peer failed response of AnnouncePeerResponse.
+message SchedulePeerFailedResponse {
+  // The description of the error.
+  string description = 1;
+}
+
 // AnnouncePeerResponse represents response of AnnouncePeer.
 message AnnouncePeerResponse {
   oneof response {
@@ -117,6 +166,8 @@ message AnnouncePeerResponse {
     SmallTaskResponse small_task_response = 2;
     NormalTaskResponse normal_task_response = 3;
     NeedBackToSourceResponse need_back_to_source_response = 4;
+    SchedulePeerForbiddenResponse schedule_peer_forbidden_response = 5;
+    SchedulePeerFailedResponse schedule_peer_failed_response = 6;
   }
 }
 

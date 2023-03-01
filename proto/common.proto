@@ -362,13 +362,3 @@ message Piece {
   // Piece create time.
   google.protobuf.Timestamp created_at = 8;
 }
-
-// ExtendAttribute represents extend of attribution.
-message ExtendAttribute {
-  // Task response header, eg: HTTP Response Header
-  map<string, string> header = 1;
-  // Task response code, eg: HTTP Status Code
-  int32 status_code = 2;
-  // Task response status, eg: HTTP Status
-  string status = 3;
-}
