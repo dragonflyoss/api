@@ -14,9 +14,9 @@ pub struct DownloadPeerStartedRequest {}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerBackToSourceStartedRequest {
-    /// Download back-to-source reason.
+    /// The description of the back-to-source reason.
     #[prost(string, tag = "1")]
-    pub reason: ::prost::alloc::string::String,
+    pub description: ::prost::alloc::string::String,
 }
 /// DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -194,23 +194,7 @@ pub struct NormalTaskResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NeedBackToSourceResponse {
-    /// Download back-to-source reason.
-    #[prost(string, tag = "1")]
-    pub reason: ::prost::alloc::string::String,
-}
-/// SchedulePeerForbiddenResponse schedules peer forbidden response of AnnouncePeerResponse.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SchedulePeerForbiddenResponse {
-    /// The description of the error.
-    #[prost(string, tag = "1")]
-    pub description: ::prost::alloc::string::String,
-}
-/// SchedulePeerFailedResponse schedules peer failed response of AnnouncePeerResponse.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SchedulePeerFailedResponse {
-    /// The description of the error.
+    /// The description of the back-to-source reason.
     #[prost(string, tag = "1")]
     pub description: ::prost::alloc::string::String,
 }
@@ -218,7 +202,7 @@ pub struct SchedulePeerFailedResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerResponse {
-    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3, 4, 5, 6")]
+    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3, 4")]
     pub response: ::core::option::Option<announce_peer_response::Response>,
 }
 /// Nested message and enum types in `AnnouncePeerResponse`.
@@ -234,21 +218,20 @@ pub mod announce_peer_response {
         NormalTaskResponse(super::NormalTaskResponse),
         #[prost(message, tag = "4")]
         NeedBackToSourceResponse(super::NeedBackToSourceResponse),
-        #[prost(message, tag = "5")]
-        SchedulePeerForbiddenResponse(super::SchedulePeerForbiddenResponse),
-        #[prost(message, tag = "6")]
-        SchedulePeerFailedResponse(super::SchedulePeerFailedResponse),
     }
 }
 /// StatPeerRequest represents request of StatPeer.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatPeerRequest {
-    /// Task id.
+    /// Host id.
     #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
     /// Peer id.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
 }
 /// TODO exchange peer request definition.
@@ -256,11 +239,14 @@ pub struct StatPeerRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExchangePeerRequest {
-    /// Task id.
+    /// Host id.
     #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
     /// Peer id.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
 }
 /// TODO exchange peer response definition.
@@ -272,11 +258,14 @@ pub struct ExchangePeerResponse {}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LeavePeerRequest {
-    /// Task id.
+    /// Host id.
     #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
     /// Peer id.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
 }
 /// StatTaskRequest represents request of StatTask.
