@@ -303,9 +303,9 @@ func (m *DownloadPeerBackToSourceStartedRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetReason()) < 1 {
+	if utf8.RuneCountInString(m.GetDescription()) < 1 {
 		err := DownloadPeerBackToSourceStartedRequestValidationError{
-			field:  "Reason",
+			field:  "Description",
 			reason: "value length must be at least 1 runes",
 		}
 		if !all {
@@ -2346,9 +2346,9 @@ func (m *NeedBackToSourceResponse) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetReason()) < 1 {
+	if utf8.RuneCountInString(m.GetDescription()) < 1 {
 		err := NeedBackToSourceResponseValidationError{
-			field:  "Reason",
+			field:  "Description",
 			reason: "value length must be at least 1 runes",
 		}
 		if !all {

@@ -14,9 +14,9 @@ pub struct DownloadPeerStartedRequest {}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerBackToSourceStartedRequest {
-    /// Download back-to-source reason.
+    /// The description of the back-to-source reason.
     #[prost(string, tag = "1")]
-    pub reason: ::prost::alloc::string::String,
+    pub description: ::prost::alloc::string::String,
 }
 /// DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -194,9 +194,9 @@ pub struct NormalTaskResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NeedBackToSourceResponse {
-    /// Download back-to-source reason.
+    /// The description of the back-to-source reason.
     #[prost(string, tag = "1")]
-    pub reason: ::prost::alloc::string::String,
+    pub description: ::prost::alloc::string::String,
 }
 /// AnnouncePeerResponse represents response of AnnouncePeer.
 #[allow(clippy::derive_partial_eq_without_eq)]
