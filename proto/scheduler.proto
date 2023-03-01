@@ -103,22 +103,24 @@ message SyncPiecesFailedRequest {
 
 // AnnouncePeerRequest represents request of AnnouncePeer.
 message AnnouncePeerRequest {
+  // Host id.
+  string host_id = 1;
   // Task id.
-  string task_id = 1;
+  string task_id = 2;
   // Peer id.
-  string peer_id = 2;
+  string peer_id = 3;
 
   oneof request {
-    RegisterPeerRequest register_peer_request = 3;
-    DownloadPeerStartedRequest download_peer_started_request = 4;
-    DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 5;
-    DownloadPeerFinishedRequest download_peer_finished_request = 6;
-    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 7;
-    DownloadPieceFinishedRequest download_piece_finished_request = 8;
-    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 9;
-    DownloadPieceFailedRequest download_piece_failed_request = 10;
-    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 11;
-    SyncPiecesFailedRequest sync_pieces_failed_request = 12;
+    RegisterPeerRequest register_peer_request = 4;
+    DownloadPeerStartedRequest download_peer_started_request = 5;
+    DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 6;
+    DownloadPeerFinishedRequest download_peer_finished_request = 7;
+    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 8;
+    DownloadPieceFinishedRequest download_piece_finished_request = 9;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 10;
+    DownloadPieceFailedRequest download_piece_failed_request = 11;
+    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 12;
+    SyncPiecesFailedRequest sync_pieces_failed_request = 13;
   }
 }
 
@@ -147,18 +149,6 @@ message NeedBackToSourceResponse {
   string reason = 1;
 }
 
-// SchedulePeerForbiddenResponse schedules peer forbidden response of AnnouncePeerResponse.
-message SchedulePeerForbiddenResponse {
-  // The description of the error.
-  string description = 1;
-}
-
-// SchedulePeerFailedResponse schedules peer failed response of AnnouncePeerResponse.
-message SchedulePeerFailedResponse {
-  // The description of the error.
-  string description = 1;
-}
-
 // AnnouncePeerResponse represents response of AnnouncePeer.
 message AnnouncePeerResponse {
   oneof response {
@@ -166,8 +156,6 @@ message AnnouncePeerResponse {
     SmallTaskResponse small_task_response = 2;
     NormalTaskResponse normal_task_response = 3;
     NeedBackToSourceResponse need_back_to_source_response = 4;
-    SchedulePeerForbiddenResponse schedule_peer_forbidden_response = 5;
-    SchedulePeerFailedResponse schedule_peer_failed_response = 6;
   }
 }
 

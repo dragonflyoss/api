@@ -114,15 +114,18 @@ pub struct SyncPiecesFailedRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerRequest {
-    /// Task id.
+    /// Host id.
     #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
     /// Peer id.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
     #[prost(
         oneof = "announce_peer_request::Request",
-        tags = "3, 4, 5, 6, 7, 8, 9, 10, 11, 12"
+        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13"
     )]
     pub request: ::core::option::Option<announce_peer_request::Request>,
 }
@@ -131,33 +134,33 @@ pub mod announce_peer_request {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
-        #[prost(message, tag = "3")]
-        RegisterPeerRequest(super::RegisterPeerRequest),
         #[prost(message, tag = "4")]
-        DownloadPeerStartedRequest(super::DownloadPeerStartedRequest),
+        RegisterPeerRequest(super::RegisterPeerRequest),
         #[prost(message, tag = "5")]
+        DownloadPeerStartedRequest(super::DownloadPeerStartedRequest),
+        #[prost(message, tag = "6")]
         DownloadPeerBackToSourceStartedRequest(
             super::DownloadPeerBackToSourceStartedRequest,
         ),
-        #[prost(message, tag = "6")]
-        DownloadPeerFinishedRequest(super::DownloadPeerFinishedRequest),
         #[prost(message, tag = "7")]
+        DownloadPeerFinishedRequest(super::DownloadPeerFinishedRequest),
+        #[prost(message, tag = "8")]
         DownloadPeerBackToSourceFinishedRequest(
             super::DownloadPeerBackToSourceFinishedRequest,
         ),
-        #[prost(message, tag = "8")]
-        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
         #[prost(message, tag = "9")]
+        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
+        #[prost(message, tag = "10")]
         DownloadPieceBackToSourceFinishedRequest(
             super::DownloadPieceBackToSourceFinishedRequest,
         ),
-        #[prost(message, tag = "10")]
-        DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
         #[prost(message, tag = "11")]
+        DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
+        #[prost(message, tag = "12")]
         DownloadPieceBackToSourceFailedRequest(
             super::DownloadPieceBackToSourceFailedRequest,
         ),
-        #[prost(message, tag = "12")]
+        #[prost(message, tag = "13")]
         SyncPiecesFailedRequest(super::SyncPiecesFailedRequest),
     }
 }
@@ -195,27 +198,11 @@ pub struct NeedBackToSourceResponse {
     #[prost(string, tag = "1")]
     pub reason: ::prost::alloc::string::String,
 }
-/// SchedulePeerForbiddenResponse schedules peer forbidden response of AnnouncePeerResponse.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SchedulePeerForbiddenResponse {
-    /// The description of the error.
-    #[prost(string, tag = "1")]
-    pub description: ::prost::alloc::string::String,
-}
-/// SchedulePeerFailedResponse schedules peer failed response of AnnouncePeerResponse.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SchedulePeerFailedResponse {
-    /// The description of the error.
-    #[prost(string, tag = "1")]
-    pub description: ::prost::alloc::string::String,
-}
 /// AnnouncePeerResponse represents response of AnnouncePeer.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerResponse {
-    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3, 4, 5, 6")]
+    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3, 4")]
     pub response: ::core::option::Option<announce_peer_response::Response>,
 }
 /// Nested message and enum types in `AnnouncePeerResponse`.
@@ -231,10 +218,6 @@ pub mod announce_peer_response {
         NormalTaskResponse(super::NormalTaskResponse),
         #[prost(message, tag = "4")]
         NeedBackToSourceResponse(super::NeedBackToSourceResponse),
-        #[prost(message, tag = "5")]
-        SchedulePeerForbiddenResponse(super::SchedulePeerForbiddenResponse),
-        #[prost(message, tag = "6")]
-        SchedulePeerFailedResponse(super::SchedulePeerFailedResponse),
     }
 }
 /// StatPeerRequest represents request of StatPeer.
