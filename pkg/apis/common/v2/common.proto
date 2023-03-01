@@ -368,13 +368,3 @@ message Piece {
   // Piece create time.
   google.protobuf.Timestamp created_at = 8 [(validate.rules).timestamp.required = true];
 }
-
-// ExtendAttribute represents extend of attribution.
-message ExtendAttribute {
-  // Task response header, eg: HTTP Response Header
-  map<string, string> header = 1;
-  // Task response code, eg: HTTP Status Code
-  int32 status_code = 2 [(validate.rules).int32 = {gte: 100, lt: 599}];
-  // Task response status, eg: HTTP Status
-  string status = 3 [(validate.rules).string.min_len = 1];
-}
