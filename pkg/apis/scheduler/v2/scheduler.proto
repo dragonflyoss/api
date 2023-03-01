@@ -19,7 +19,6 @@ syntax = "proto3";
 package scheduler.v2;
 
 import "pkg/apis/common/v2/common.proto";
-import "pkg/apis/errordetails/v2/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/duration.proto";
@@ -89,13 +88,6 @@ message AnnouncePeerRequest {
     DownloadPieceFinishedRequest download_piece_finished_request = 8;
     DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 9;
   }
-
-  oneof errordetails {
-    errordetails.v2.DownloadPeerBackToSourceFailed download_peer_back_to_source_failed = 10;
-    errordetails.v2.DownloadPieceBackToSourceFailed download_piece_back_to_source_failed = 11;
-    errordetails.v2.SyncPiecesFailed sync_pieces_failed = 12;
-    errordetails.v2.DownloadPieceFailed download_piece_failed = 13;
-  }
 }
 
 // TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
@@ -132,11 +124,6 @@ message AnnouncePeerResponse {
     SmallTaskResponse small_task_response = 2;
     NormalTaskResponse normal_task_response = 3;
     NeedBackToSourceResponse need_back_to_source_response = 4;
-  }
-
-  oneof errordetails {
-    errordetails.v2.SchedulePeerForbidden schedule_peer_forbidden = 5;
-    errordetails.v2.SchedulePeerFailed schedule_peer_failed = 6;
   }
 }
 

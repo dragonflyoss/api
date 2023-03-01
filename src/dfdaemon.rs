@@ -42,8 +42,6 @@ pub struct InterestedPiecesResponse {
 pub struct SyncPiecesResponse {
     #[prost(oneof = "sync_pieces_response::Response", tags = "1")]
     pub response: ::core::option::Option<sync_pieces_response::Response>,
-    #[prost(oneof = "sync_pieces_response::Errordetails", tags = "3")]
-    pub errordetails: ::core::option::Option<sync_pieces_response::Errordetails>,
 }
 /// Nested message and enum types in `SyncPiecesResponse`.
 pub mod sync_pieces_response {
@@ -52,12 +50,6 @@ pub mod sync_pieces_response {
     pub enum Response {
         #[prost(message, tag = "1")]
         InterestedPiecesResponse(super::InterestedPiecesResponse),
-    }
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Errordetails {
-        #[prost(message, tag = "3")]
-        SyncPiecesFailed(super::super::errordetails::SyncPiecesFailed),
     }
 }
 /// DownloadTaskRequest represents request of DownloadTask.
