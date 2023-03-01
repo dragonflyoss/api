@@ -19,7 +19,6 @@ syntax = "proto3";
 package dfdaemon.v2;
 
 import "pkg/apis/common/v2/common.proto";
-import "pkg/apis/errordetails/v2/errordetails.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
@@ -57,10 +56,6 @@ message SyncPiecesResponse {
     option (validate.required) = true;
 
     InterestedPiecesResponse interested_pieces_response = 1;
-  }
-
-  oneof errordetails {
-    errordetails.v2.SyncPiecesFailed sync_pieces_failed = 3;
   }
 }
 

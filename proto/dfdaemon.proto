@@ -19,7 +19,6 @@ syntax = "proto3";
 package dfdaemon;
 
 import "common.proto";
-import "errordetails.proto";
 import "google/protobuf/empty.proto";
 
 // InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
@@ -50,10 +49,6 @@ message InterestedPiecesResponse {
 message SyncPiecesResponse {
   oneof response {
     InterestedPiecesResponse interested_pieces_response = 1;
-  }
-
-  oneof errordetails {
-    errordetails.SyncPiecesFailed sync_pieces_failed = 3;
   }
 }
 
