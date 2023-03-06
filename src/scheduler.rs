@@ -197,6 +197,10 @@ pub mod announce_peer_request {
         SyncPiecesFailedRequest(super::SyncPiecesFailedRequest),
     }
 }
+/// EmptyTaskResponse represents empty task response of AnnouncePeerResponse.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct EmptyTaskResponse {}
 /// TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -235,7 +239,7 @@ pub struct NeedBackToSourceResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerResponse {
-    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3, 4")]
+    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3, 4, 5")]
     pub response: ::core::option::Option<announce_peer_response::Response>,
 }
 /// Nested message and enum types in `AnnouncePeerResponse`.
@@ -244,12 +248,14 @@ pub mod announce_peer_response {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
         #[prost(message, tag = "1")]
-        TinyTaskResponse(super::TinyTaskResponse),
+        EmptyTaskResponse(super::EmptyTaskResponse),
         #[prost(message, tag = "2")]
-        SmallTaskResponse(super::SmallTaskResponse),
+        TinyTaskResponse(super::TinyTaskResponse),
         #[prost(message, tag = "3")]
-        NormalTaskResponse(super::NormalTaskResponse),
+        SmallTaskResponse(super::SmallTaskResponse),
         #[prost(message, tag = "4")]
+        NormalTaskResponse(super::NormalTaskResponse),
+        #[prost(message, tag = "5")]
         NeedBackToSourceResponse(super::NeedBackToSourceResponse),
     }
 }
