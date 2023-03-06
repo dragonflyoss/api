@@ -157,7 +157,7 @@ message TinyTaskResponse {
 // SmallTaskResponse represents small task response of AnnouncePeerResponse.
 message SmallTaskResponse {
   // Candidate parents.
-  common.Peer candidate_parent = 1;
+  repeated common.Peer candidate_parents = 1;
 }
 
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
