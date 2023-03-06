@@ -1901,48 +1901,6 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			}
 		}
 
-	case *AnnouncePeerRequest_DownloadSeedPeerBackToSourceStartedRequest:
-		if v == nil {
-			err := AnnouncePeerRequestValidationError{
-				field:  "Request",
-				reason: "oneof value cannot be a typed-nil",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-		oneofRequestPresent = true
-
-		if all {
-			switch v := interface{}(m.GetDownloadSeedPeerBackToSourceStartedRequest()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "DownloadSeedPeerBackToSourceStartedRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, AnnouncePeerRequestValidationError{
-						field:  "DownloadSeedPeerBackToSourceStartedRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetDownloadSeedPeerBackToSourceStartedRequest()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return AnnouncePeerRequestValidationError{
-					field:  "DownloadSeedPeerBackToSourceStartedRequest",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
 	case *AnnouncePeerRequest_DownloadPeerBackToSourceStartedRequest:
 		if v == nil {
 			err := AnnouncePeerRequestValidationError{
@@ -1979,6 +1937,48 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
 					field:  "DownloadPeerBackToSourceStartedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_DownloadSeedPeerBackToSourceStartedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetDownloadSeedPeerBackToSourceStartedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadSeedPeerBackToSourceStartedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadSeedPeerBackToSourceStartedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadSeedPeerBackToSourceStartedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "DownloadSeedPeerBackToSourceStartedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}

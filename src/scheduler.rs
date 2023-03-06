@@ -164,11 +164,11 @@ pub mod announce_peer_request {
         #[prost(message, tag = "6")]
         DownloadPeerStartedRequest(super::DownloadPeerStartedRequest),
         #[prost(message, tag = "7")]
-        DownloadSeedPeerBackToSourceStartedRequest(
+        DownloadPeerBackToSourceStartedRequest(
             super::DownloadPeerBackToSourceStartedRequest,
         ),
         #[prost(message, tag = "8")]
-        DownloadPeerBackToSourceStartedRequest(
+        DownloadSeedPeerBackToSourceStartedRequest(
             super::DownloadSeedPeerBackToSourceStartedRequest,
         ),
         #[prost(message, tag = "9")]

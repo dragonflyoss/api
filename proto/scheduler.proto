@@ -132,8 +132,8 @@ message AnnouncePeerRequest {
     RegisterPeerRequest register_peer_request = 4;
     RegisterSeedPeerRequest register_seed_peer_request = 5;
     DownloadPeerStartedRequest download_peer_started_request = 6;
-    DownloadPeerBackToSourceStartedRequest download_seed_peer_back_to_source_started_request = 7;
-    DownloadSeedPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 8;
+    DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 7;
+    DownloadSeedPeerBackToSourceStartedRequest download_seed_peer_back_to_source_started_request = 8;
     DownloadPeerFinishedRequest download_peer_finished_request = 9;
     DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 10;
     DownloadSeedPeerBackToSourceFinishedRequest download_seed_peer_back_to_source_finished_request = 11;
