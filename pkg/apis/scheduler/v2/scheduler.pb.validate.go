@@ -2415,6 +2415,108 @@ var _ interface {
 	ErrorName() string
 } = AnnouncePeerRequestValidationError{}
 
+// Validate checks the field values on EmptyTaskResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *EmptyTaskResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on EmptyTaskResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// EmptyTaskResponseMultiError, or nil if none found.
+func (m *EmptyTaskResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *EmptyTaskResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return EmptyTaskResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// EmptyTaskResponseMultiError is an error wrapping multiple validation errors
+// returned by EmptyTaskResponse.ValidateAll() if the designated constraints
+// aren't met.
+type EmptyTaskResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m EmptyTaskResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m EmptyTaskResponseMultiError) AllErrors() []error { return m }
+
+// EmptyTaskResponseValidationError is the validation error returned by
+// EmptyTaskResponse.Validate if the designated constraints aren't met.
+type EmptyTaskResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EmptyTaskResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EmptyTaskResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EmptyTaskResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EmptyTaskResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EmptyTaskResponseValidationError) ErrorName() string {
+	return "EmptyTaskResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e EmptyTaskResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEmptyTaskResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EmptyTaskResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EmptyTaskResponseValidationError{}
+
 // Validate checks the field values on TinyTaskResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -2963,6 +3065,48 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 
 	oneofResponsePresent := false
 	switch v := m.Response.(type) {
+	case *AnnouncePeerResponse_EmptyTaskResponse:
+		if v == nil {
+			err := AnnouncePeerResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
+
+		if all {
+			switch v := interface{}(m.GetEmptyTaskResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerResponseValidationError{
+						field:  "EmptyTaskResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerResponseValidationError{
+						field:  "EmptyTaskResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetEmptyTaskResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerResponseValidationError{
+					field:  "EmptyTaskResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
 	case *AnnouncePeerResponse_TinyTaskResponse:
 		if v == nil {
 			err := AnnouncePeerResponseValidationError{

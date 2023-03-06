@@ -150,6 +150,10 @@ message AnnouncePeerRequest {
   }
 }
 
+// EmptyTaskResponse represents empty task response of AnnouncePeerResponse.
+message EmptyTaskResponse {
+}
+
 // TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
 message TinyTaskResponse {
   bytes data = 1 [(validate.rules).bytes.min_len = 1];
@@ -180,10 +184,11 @@ message AnnouncePeerResponse {
   oneof response {
     option (validate.required) = true;
 
-    TinyTaskResponse tiny_task_response = 1;
-    SmallTaskResponse small_task_response = 2;
-    NormalTaskResponse normal_task_response = 3;
-    NeedBackToSourceResponse need_back_to_source_response = 4;
+    EmptyTaskResponse empty_task_response = 1;
+    TinyTaskResponse tiny_task_response = 2;
+    SmallTaskResponse small_task_response = 3;
+    NormalTaskResponse normal_task_response = 4;
+    NeedBackToSourceResponse need_back_to_source_response = 5;
   }
 }
 
