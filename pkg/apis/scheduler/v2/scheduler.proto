@@ -161,8 +161,6 @@ message TinyTaskResponse {
 
 // SmallTaskResponse represents small task response of AnnouncePeerResponse.
 message SmallTaskResponse {
-  // Piece info.
-  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
 }
 
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.

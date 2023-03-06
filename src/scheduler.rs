@@ -211,11 +211,7 @@ pub struct TinyTaskResponse {
 /// SmallTaskResponse represents small task response of AnnouncePeerResponse.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SmallTaskResponse {
-    /// Piece info.
-    #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::common::Piece>,
-}
+pub struct SmallTaskResponse {}
 /// NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
