@@ -2650,6 +2650,46 @@ func (m *SmallTaskResponse) validate(all bool) error {
 
 	var errors []error
 
+	if m.GetCandidateParent() == nil {
+		err := SmallTaskResponseValidationError{
+			field:  "CandidateParent",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetCandidateParent()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, SmallTaskResponseValidationError{
+					field:  "CandidateParent",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, SmallTaskResponseValidationError{
+					field:  "CandidateParent",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetCandidateParent()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SmallTaskResponseValidationError{
+				field:  "CandidateParent",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
 		return SmallTaskResponseMultiError(errors)
 	}

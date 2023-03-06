@@ -161,6 +161,8 @@ message TinyTaskResponse {
 
 // SmallTaskResponse represents small task response of AnnouncePeerResponse.
 message SmallTaskResponse {
+  // Candidate parents.
+  common.v2.Peer candidate_parent = 1 [(validate.rules).message.required = true];
 }
 
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
