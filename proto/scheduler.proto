@@ -29,6 +29,12 @@ message RegisterPeerRequest {
   common.Download download = 1;
 }
 
+// RegisterSeedPeerRequest represents seed peer registered request of AnnouncePeerRequest.
+message RegisterSeedPeerRequest {
+  // Download information.
+  common.Download download = 1;
+}
+
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
 message DownloadPeerStartedRequest {
 }
@@ -37,6 +43,10 @@ message DownloadPeerStartedRequest {
 message DownloadPeerBackToSourceStartedRequest {
   // The description of the back-to-source reason.
   string description = 1;
+}
+
+// DownloadSeedPeerBackToSourceStartedRequest represents seed peer download back-to-source started request of AnnouncePeerRequest.
+message DownloadSeedPeerBackToSourceStartedRequest {
 }
 
 // DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
@@ -49,6 +59,14 @@ message DownloadPeerFinishedRequest {
 
 // DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceFinishedRequest {
+  // Total content length.
+  int64 content_length = 1;
+  // Total piece count.
+  int32 piece_count = 2;
+}
+
+// DownloadSeedPeerBackToSourceFinishedRequest represents seed peer download back-to-source finished request of AnnouncePeerRequest.
+message DownloadSeedPeerBackToSourceFinishedRequest {
   // Total content length.
   int64 content_length = 1;
   // Total piece count.
@@ -112,15 +130,18 @@ message AnnouncePeerRequest {
 
   oneof request {
     RegisterPeerRequest register_peer_request = 4;
-    DownloadPeerStartedRequest download_peer_started_request = 5;
-    DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 6;
-    DownloadPeerFinishedRequest download_peer_finished_request = 7;
-    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 8;
-    DownloadPieceFinishedRequest download_piece_finished_request = 9;
-    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 10;
-    DownloadPieceFailedRequest download_piece_failed_request = 11;
-    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 12;
-    SyncPiecesFailedRequest sync_pieces_failed_request = 13;
+    RegisterSeedPeerRequest register_seed_peer_request = 5;
+    DownloadPeerStartedRequest download_peer_started_request = 6;
+    DownloadPeerBackToSourceStartedRequest download_seed_peer_back_to_source_started_request = 7;
+    DownloadSeedPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 8;
+    DownloadPeerFinishedRequest download_peer_finished_request = 9;
+    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 10;
+    DownloadSeedPeerBackToSourceFinishedRequest download_seed_peer_back_to_source_finished_request = 11;
+    DownloadPieceFinishedRequest download_piece_finished_request = 12;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 13;
+    DownloadPieceFailedRequest download_piece_failed_request = 14;
+    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 15;
+    SyncPiecesFailedRequest sync_pieces_failed_request = 16;
   }
 }
 
