@@ -213,8 +213,8 @@ pub struct TinyTaskResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SmallTaskResponse {
     /// Candidate parents.
-    #[prost(message, optional, tag = "1")]
-    pub candidate_parent: ::core::option::Option<super::common::Peer>,
+    #[prost(message, repeated, tag = "1")]
+    pub candidate_parents: ::prost::alloc::vec::Vec<super::common::Peer>,
 }
 /// NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 #[allow(clippy::derive_partial_eq_without_eq)]
