@@ -156,8 +156,6 @@ message TinyTaskResponse {
 
 // SmallTaskResponse represents small task response of AnnouncePeerResponse.
 message SmallTaskResponse {
-  // Piece info.
-  common.Piece piece = 1;
 }
 
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
