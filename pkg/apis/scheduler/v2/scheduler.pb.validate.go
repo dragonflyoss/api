@@ -177,6 +177,148 @@ var _ interface {
 	ErrorName() string
 } = RegisterPeerRequestValidationError{}
 
+// Validate checks the field values on RegisterSeedPeerRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RegisterSeedPeerRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RegisterSeedPeerRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RegisterSeedPeerRequestMultiError, or nil if none found.
+func (m *RegisterSeedPeerRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RegisterSeedPeerRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetDownload() == nil {
+		err := RegisterSeedPeerRequestValidationError{
+			field:  "Download",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetDownload()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, RegisterSeedPeerRequestValidationError{
+					field:  "Download",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, RegisterSeedPeerRequestValidationError{
+					field:  "Download",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetDownload()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RegisterSeedPeerRequestValidationError{
+				field:  "Download",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return RegisterSeedPeerRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// RegisterSeedPeerRequestMultiError is an error wrapping multiple validation
+// errors returned by RegisterSeedPeerRequest.ValidateAll() if the designated
+// constraints aren't met.
+type RegisterSeedPeerRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RegisterSeedPeerRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RegisterSeedPeerRequestMultiError) AllErrors() []error { return m }
+
+// RegisterSeedPeerRequestValidationError is the validation error returned by
+// RegisterSeedPeerRequest.Validate if the designated constraints aren't met.
+type RegisterSeedPeerRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RegisterSeedPeerRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RegisterSeedPeerRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RegisterSeedPeerRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RegisterSeedPeerRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RegisterSeedPeerRequestValidationError) ErrorName() string {
+	return "RegisterSeedPeerRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RegisterSeedPeerRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRegisterSeedPeerRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RegisterSeedPeerRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RegisterSeedPeerRequestValidationError{}
+
 // Validate checks the field values on DownloadPeerStartedRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -395,6 +537,112 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DownloadPeerBackToSourceStartedRequestValidationError{}
+
+// Validate checks the field values on
+// DownloadSeedPeerBackToSourceStartedRequest with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *DownloadSeedPeerBackToSourceStartedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on
+// DownloadSeedPeerBackToSourceStartedRequest with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in
+// DownloadSeedPeerBackToSourceStartedRequestMultiError, or nil if none found.
+func (m *DownloadSeedPeerBackToSourceStartedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadSeedPeerBackToSourceStartedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return DownloadSeedPeerBackToSourceStartedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadSeedPeerBackToSourceStartedRequestMultiError is an error wrapping
+// multiple validation errors returned by
+// DownloadSeedPeerBackToSourceStartedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadSeedPeerBackToSourceStartedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadSeedPeerBackToSourceStartedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadSeedPeerBackToSourceStartedRequestMultiError) AllErrors() []error { return m }
+
+// DownloadSeedPeerBackToSourceStartedRequestValidationError is the validation
+// error returned by DownloadSeedPeerBackToSourceStartedRequest.Validate if
+// the designated constraints aren't met.
+type DownloadSeedPeerBackToSourceStartedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadSeedPeerBackToSourceStartedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadSeedPeerBackToSourceStartedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadSeedPeerBackToSourceStartedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadSeedPeerBackToSourceStartedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadSeedPeerBackToSourceStartedRequestValidationError) ErrorName() string {
+	return "DownloadSeedPeerBackToSourceStartedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadSeedPeerBackToSourceStartedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadSeedPeerBackToSourceStartedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadSeedPeerBackToSourceStartedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadSeedPeerBackToSourceStartedRequestValidationError{}
 
 // Validate checks the field values on DownloadPeerFinishedRequest with the
 // rules defined in the proto definition for this message. If any rules are
@@ -648,6 +896,134 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DownloadPeerBackToSourceFinishedRequestValidationError{}
+
+// Validate checks the field values on
+// DownloadSeedPeerBackToSourceFinishedRequest with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *DownloadSeedPeerBackToSourceFinishedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on
+// DownloadSeedPeerBackToSourceFinishedRequest with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in
+// DownloadSeedPeerBackToSourceFinishedRequestMultiError, or nil if none found.
+func (m *DownloadSeedPeerBackToSourceFinishedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadSeedPeerBackToSourceFinishedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetContentLength() < 0 {
+		err := DownloadSeedPeerBackToSourceFinishedRequestValidationError{
+			field:  "ContentLength",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPieceCount() < 0 {
+		err := DownloadSeedPeerBackToSourceFinishedRequestValidationError{
+			field:  "PieceCount",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DownloadSeedPeerBackToSourceFinishedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadSeedPeerBackToSourceFinishedRequestMultiError is an error wrapping
+// multiple validation errors returned by
+// DownloadSeedPeerBackToSourceFinishedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadSeedPeerBackToSourceFinishedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadSeedPeerBackToSourceFinishedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadSeedPeerBackToSourceFinishedRequestMultiError) AllErrors() []error { return m }
+
+// DownloadSeedPeerBackToSourceFinishedRequestValidationError is the validation
+// error returned by DownloadSeedPeerBackToSourceFinishedRequest.Validate if
+// the designated constraints aren't met.
+type DownloadSeedPeerBackToSourceFinishedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadSeedPeerBackToSourceFinishedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadSeedPeerBackToSourceFinishedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadSeedPeerBackToSourceFinishedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadSeedPeerBackToSourceFinishedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadSeedPeerBackToSourceFinishedRequestValidationError) ErrorName() string {
+	return "DownloadSeedPeerBackToSourceFinishedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadSeedPeerBackToSourceFinishedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadSeedPeerBackToSourceFinishedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadSeedPeerBackToSourceFinishedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadSeedPeerBackToSourceFinishedRequestValidationError{}
 
 // Validate checks the field values on DownloadPieceFinishedRequest with the
 // rules defined in the proto definition for this message. If any rules are
@@ -1441,6 +1817,48 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			}
 		}
 
+	case *AnnouncePeerRequest_RegisterSeedPeerRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetRegisterSeedPeerRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "RegisterSeedPeerRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "RegisterSeedPeerRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetRegisterSeedPeerRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "RegisterSeedPeerRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
 	case *AnnouncePeerRequest_DownloadPeerStartedRequest:
 		if v == nil {
 			err := AnnouncePeerRequestValidationError{
@@ -1477,6 +1895,48 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
 					field:  "DownloadPeerStartedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_DownloadSeedPeerBackToSourceStartedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetDownloadSeedPeerBackToSourceStartedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadSeedPeerBackToSourceStartedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadSeedPeerBackToSourceStartedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadSeedPeerBackToSourceStartedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "DownloadSeedPeerBackToSourceStartedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -1603,6 +2063,48 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
 					field:  "DownloadPeerBackToSourceFinishedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_DownloadSeedPeerBackToSourceFinishedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetDownloadSeedPeerBackToSourceFinishedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadSeedPeerBackToSourceFinishedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadSeedPeerBackToSourceFinishedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadSeedPeerBackToSourceFinishedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "DownloadSeedPeerBackToSourceFinishedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
