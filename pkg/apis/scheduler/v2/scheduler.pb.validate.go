@@ -2650,10 +2650,10 @@ func (m *SmallTaskResponse) validate(all bool) error {
 
 	var errors []error
 
-	if len(m.GetCandidateParents()) < 1 {
+	if m.GetCandidateParent() == nil {
 		err := SmallTaskResponseValidationError{
-			field:  "CandidateParents",
-			reason: "value must contain at least 1 item(s)",
+			field:  "CandidateParent",
+			reason: "value is required",
 		}
 		if !all {
 			return err
@@ -2661,38 +2661,33 @@ func (m *SmallTaskResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	for idx, item := range m.GetCandidateParents() {
-		_, _ = idx, item
-
-		if all {
-			switch v := interface{}(item).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, SmallTaskResponseValidationError{
-						field:  fmt.Sprintf("CandidateParents[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, SmallTaskResponseValidationError{
-						field:  fmt.Sprintf("CandidateParents[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return SmallTaskResponseValidationError{
-					field:  fmt.Sprintf("CandidateParents[%v]", idx),
+	if all {
+		switch v := interface{}(m.GetCandidateParent()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, SmallTaskResponseValidationError{
+					field:  "CandidateParent",
 					reason: "embedded message failed validation",
 					cause:  err,
-				}
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, SmallTaskResponseValidationError{
+					field:  "CandidateParent",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
 			}
 		}
-
+	} else if v, ok := interface{}(m.GetCandidateParent()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SmallTaskResponseValidationError{
+				field:  "CandidateParent",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
 	}
 
 	if len(errors) > 0 {

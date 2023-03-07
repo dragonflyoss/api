@@ -209,13 +209,16 @@ pub struct TinyTaskResponse {
     pub data: ::prost::alloc::vec::Vec<u8>,
 }
 /// SmallTaskResponse represents small task response of AnnouncePeerResponse.
+///
+/// TODO Fix clippy lint PR into new version.
+/// The version of tonic needs to be upgraded,
+/// refer to <https://github.com/hyperium/tonic/pull/1181.>
+///
+/// Candidate parent.
+/// common.Peer candidate_parent = 1;
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SmallTaskResponse {
-    /// Candidate parents.
-    #[prost(message, repeated, tag = "1")]
-    pub candidate_parents: ::prost::alloc::vec::Vec<super::common::Peer>,
-}
+pub struct SmallTaskResponse {}
 /// NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
