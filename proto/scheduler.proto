@@ -156,8 +156,12 @@ message TinyTaskResponse {
 
 // SmallTaskResponse represents small task response of AnnouncePeerResponse.
 message SmallTaskResponse {
-  // Candidate parents.
-  repeated common.Peer candidate_parents = 1;
+  // TODO Fix clippy lint PR into new version.
+  // The version of tonic needs to be upgraded,
+  // refer to https://github.com/hyperium/tonic/pull/1181.
+  // 
+  // Candidate parent.
+  // common.Peer candidate_parent = 1;
 }
 
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
