@@ -68,24 +68,15 @@ pub struct DownloadPieceBackToSourceFinishedRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceFailedRequest {
+    /// Temporary indicates whether the error is temporary.
+    #[prost(bool, tag = "1")]
+    pub temporary: bool,
     /// The number of piece.
-    #[prost(uint32, tag = "1")]
+    #[prost(uint32, tag = "2")]
     pub piece_number: u32,
     /// Piece is information of piece.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag = "3")]
     pub parent_id: ::prost::alloc::string::String,
-    /// HTTP Response Header.
-    #[prost(map = "string, string", tag = "3")]
-    pub header: ::std::collections::HashMap<
-        ::prost::alloc::string::String,
-        ::prost::alloc::string::String,
-    >,
-    /// HTTP Status Code.
-    #[prost(int32, tag = "4")]
-    pub status_code: i32,
-    /// HTTP Status.
-    #[prost(string, tag = "5")]
-    pub status: ::prost::alloc::string::String,
 }
 /// DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]

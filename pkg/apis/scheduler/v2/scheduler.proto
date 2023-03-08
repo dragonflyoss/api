@@ -78,16 +78,12 @@ message DownloadPieceBackToSourceFinishedRequest {
 
 // DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
 message DownloadPieceFailedRequest {
+  // Temporary indicates whether the error is temporary.
+  bool temporary = 1;
   // The number of piece.
-  uint32 piece_number = 1 [(validate.rules).uint32.gte = 0];
+  uint32 piece_number = 2 [(validate.rules).uint32.gte = 0];
   // Piece is information of piece.
-  string parent_id = 2 [(validate.rules).string.min_len = 1];
-  // HTTP Response Header.
-  map<string, string> header = 3;
-  // HTTP Status Code.
-  int32 status_code = 4 [(validate.rules).int32 = {gte: 100, lt: 599}];
-  // HTTP Status.
-  string status = 5 [(validate.rules).string.min_len = 1];
+  string parent_id = 3 [(validate.rules).string.min_len = 1];
 }
 
 // DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
