@@ -1102,6 +1102,8 @@ func (m *DownloadPieceFailedRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Temporary
+
 	if m.GetPieceNumber() < 0 {
 		err := DownloadPieceFailedRequestValidationError{
 			field:  "PieceNumber",
@@ -1116,30 +1118,6 @@ func (m *DownloadPieceFailedRequest) validate(all bool) error {
 	if utf8.RuneCountInString(m.GetParentId()) < 1 {
 		err := DownloadPieceFailedRequestValidationError{
 			field:  "ParentId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	// no validation rules for Header
-
-	if val := m.GetStatusCode(); val < 100 || val >= 599 {
-		err := DownloadPieceFailedRequestValidationError{
-			field:  "StatusCode",
-			reason: "value must be inside range [100, 599)",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetStatus()) < 1 {
-		err := DownloadPieceFailedRequestValidationError{
-			field:  "Status",
 			reason: "value length must be at least 1 runes",
 		}
 		if !all {
