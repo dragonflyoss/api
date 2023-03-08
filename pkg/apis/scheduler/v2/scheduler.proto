@@ -48,10 +48,6 @@ message DownloadPeerBackToSourceStartedRequest {
   string description = 1 [(validate.rules).string.min_len = 1];
 }
 
-// DownloadSeedPeerBackToSourceStartedRequest represents seed peer download back-to-source started request of AnnouncePeerRequest.
-message DownloadSeedPeerBackToSourceStartedRequest {
-}
-
 // DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 message DownloadPeerFinishedRequest {
   // Total content length.
@@ -62,14 +58,6 @@ message DownloadPeerFinishedRequest {
 
 // DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceFinishedRequest {
-  // Total content length.
-  int64 content_length = 1 [(validate.rules).int64.gte = 0];
-  // Total piece count.
-  int32 piece_count = 2 [(validate.rules).int32.gte = 0];
-}
-
-// DownloadSeedPeerBackToSourceFinishedRequest represents seed peer download back-to-source finished request of AnnouncePeerRequest.
-message DownloadSeedPeerBackToSourceFinishedRequest {
   // Total content length.
   int64 content_length = 1 [(validate.rules).int64.gte = 0];
   // Total piece count.
@@ -138,15 +126,13 @@ message AnnouncePeerRequest {
     RegisterSeedPeerRequest register_seed_peer_request = 5;
     DownloadPeerStartedRequest download_peer_started_request = 6;
     DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 7;
-    DownloadSeedPeerBackToSourceStartedRequest download_seed_peer_back_to_source_started_request = 8;
-    DownloadPeerFinishedRequest download_peer_finished_request = 9;
-    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 10;
-    DownloadSeedPeerBackToSourceFinishedRequest download_seed_peer_back_to_source_finished_request = 11;
-    DownloadPieceFinishedRequest download_piece_finished_request = 12;
-    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 13;
-    DownloadPieceFailedRequest download_piece_failed_request = 14;
-    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 15;
-    SyncPiecesFailedRequest sync_pieces_failed_request = 16;
+    DownloadPeerFinishedRequest download_peer_finished_request = 8;
+    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 9;
+    DownloadPieceFinishedRequest download_piece_finished_request = 10;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 11;
+    DownloadPieceFailedRequest download_piece_failed_request = 12;
+    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 13;
+    SyncPiecesFailedRequest sync_pieces_failed_request = 14;
   }
 }
 
