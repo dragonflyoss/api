@@ -48,6 +48,22 @@ pub struct DownloadPeerBackToSourceFinishedRequest {
     #[prost(int32, tag = "2")]
     pub piece_count: i32,
 }
+/// DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadPeerFailedRequest {
+    /// The description of the download failed.
+    #[prost(string, tag = "1")]
+    pub description: ::prost::alloc::string::String,
+}
+/// DownloadPeerBackToSourceFailedRequest represents peer download back-to-source failed request of AnnouncePeerRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadPeerBackToSourceFailedRequest {
+    /// The description of the download back-to-source failed.
+    #[prost(string, tag = "1")]
+    pub description: ::prost::alloc::string::String,
+}
 /// DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -124,7 +140,7 @@ pub struct AnnouncePeerRequest {
     pub peer_id: ::prost::alloc::string::String,
     #[prost(
         oneof = "announce_peer_request::Request",
-        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14"
+        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16"
     )]
     pub request: ::core::option::Option<announce_peer_request::Request>,
 }
@@ -150,18 +166,24 @@ pub mod announce_peer_request {
             super::DownloadPeerBackToSourceFinishedRequest,
         ),
         #[prost(message, tag = "10")]
-        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
+        DownloadPeerFailedRequest(super::DownloadPeerFailedRequest),
         #[prost(message, tag = "11")]
+        DownloadPeerBackToSourceFailedRequest(
+            super::DownloadPeerBackToSourceFailedRequest,
+        ),
+        #[prost(message, tag = "12")]
+        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
+        #[prost(message, tag = "13")]
         DownloadPieceBackToSourceFinishedRequest(
             super::DownloadPieceBackToSourceFinishedRequest,
         ),
-        #[prost(message, tag = "12")]
+        #[prost(message, tag = "14")]
         DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
-        #[prost(message, tag = "13")]
+        #[prost(message, tag = "15")]
         DownloadPieceBackToSourceFailedRequest(
             super::DownloadPieceBackToSourceFailedRequest,
         ),
-        #[prost(message, tag = "14")]
+        #[prost(message, tag = "16")]
         SyncPiecesFailedRequest(super::SyncPiecesFailedRequest),
     }
 }
