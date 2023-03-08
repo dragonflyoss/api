@@ -61,6 +61,18 @@ message DownloadPeerBackToSourceFinishedRequest {
   int32 piece_count = 2;
 }
 
+// DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
+message DownloadPeerFailedRequest {
+  // The description of the download failed.
+  string description = 1;
+}
+
+// DownloadPeerBackToSourceFailedRequest represents peer download back-to-source failed request of AnnouncePeerRequest.
+message DownloadPeerBackToSourceFailedRequest {
+  // The description of the download back-to-source failed.
+  string description = 1;
+}
+
 // DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
 message DownloadPieceFinishedRequest {
   // Piece info.
@@ -119,11 +131,13 @@ message AnnouncePeerRequest {
     DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 7;
     DownloadPeerFinishedRequest download_peer_finished_request = 8;
     DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 9;
-    DownloadPieceFinishedRequest download_piece_finished_request = 10;
-    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 11;
-    DownloadPieceFailedRequest download_piece_failed_request = 12;
-    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 13;
-    SyncPiecesFailedRequest sync_pieces_failed_request = 14;
+    DownloadPeerFailedRequest download_peer_failed_request = 10;
+    DownloadPeerBackToSourceFailedRequest download_peer_back_to_source_failed_request = 11;
+    DownloadPieceFinishedRequest download_piece_finished_request = 12;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 13;
+    DownloadPieceFailedRequest download_piece_failed_request = 14;
+    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 15;
+    SyncPiecesFailedRequest sync_pieces_failed_request = 16;
   }
 }
 

@@ -791,6 +791,235 @@ var _ interface {
 	ErrorName() string
 } = DownloadPeerBackToSourceFinishedRequestValidationError{}
 
+// Validate checks the field values on DownloadPeerFailedRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DownloadPeerFailedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPeerFailedRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DownloadPeerFailedRequestMultiError, or nil if none found.
+func (m *DownloadPeerFailedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPeerFailedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetDescription()) < 1 {
+		err := DownloadPeerFailedRequestValidationError{
+			field:  "Description",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DownloadPeerFailedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPeerFailedRequestMultiError is an error wrapping multiple validation
+// errors returned by DownloadPeerFailedRequest.ValidateAll() if the
+// designated constraints aren't met.
+type DownloadPeerFailedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPeerFailedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPeerFailedRequestMultiError) AllErrors() []error { return m }
+
+// DownloadPeerFailedRequestValidationError is the validation error returned by
+// DownloadPeerFailedRequest.Validate if the designated constraints aren't met.
+type DownloadPeerFailedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPeerFailedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPeerFailedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPeerFailedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPeerFailedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPeerFailedRequestValidationError) ErrorName() string {
+	return "DownloadPeerFailedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPeerFailedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPeerFailedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPeerFailedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPeerFailedRequestValidationError{}
+
+// Validate checks the field values on DownloadPeerBackToSourceFailedRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *DownloadPeerBackToSourceFailedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPeerBackToSourceFailedRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// DownloadPeerBackToSourceFailedRequestMultiError, or nil if none found.
+func (m *DownloadPeerBackToSourceFailedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPeerBackToSourceFailedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetDescription()) < 1 {
+		err := DownloadPeerBackToSourceFailedRequestValidationError{
+			field:  "Description",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DownloadPeerBackToSourceFailedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPeerBackToSourceFailedRequestMultiError is an error wrapping
+// multiple validation errors returned by
+// DownloadPeerBackToSourceFailedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadPeerBackToSourceFailedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPeerBackToSourceFailedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPeerBackToSourceFailedRequestMultiError) AllErrors() []error { return m }
+
+// DownloadPeerBackToSourceFailedRequestValidationError is the validation error
+// returned by DownloadPeerBackToSourceFailedRequest.Validate if the
+// designated constraints aren't met.
+type DownloadPeerBackToSourceFailedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPeerBackToSourceFailedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPeerBackToSourceFailedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPeerBackToSourceFailedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPeerBackToSourceFailedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPeerBackToSourceFailedRequestValidationError) ErrorName() string {
+	return "DownloadPeerBackToSourceFailedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPeerBackToSourceFailedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPeerBackToSourceFailedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPeerBackToSourceFailedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPeerBackToSourceFailedRequestValidationError{}
+
 // Validate checks the field values on DownloadPieceFinishedRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -1765,6 +1994,90 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
 					field:  "DownloadPeerBackToSourceFinishedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_DownloadPeerFailedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetDownloadPeerFailedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPeerFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPeerFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadPeerFailedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "DownloadPeerFailedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_DownloadPeerBackToSourceFailedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetDownloadPeerBackToSourceFailedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPeerBackToSourceFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "DownloadPeerBackToSourceFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadPeerBackToSourceFailedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "DownloadPeerBackToSourceFailedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
