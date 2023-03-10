@@ -87,24 +87,45 @@ message DownloadPieceBackToSourceFinishedRequest {
 
 // DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
 message DownloadPieceFailedRequest {
+  // Piece info.
+  common.Piece piece = 1;
   // Temporary indicates whether the error is temporary.
-  bool temporary = 1;
-  // The number of piece.
-  uint32 piece_number = 2;
-  // Piece is information of piece.
-  string parent_id = 3;
+  bool temporary = 2;
+}
+
+// HTTPResponse represents http protocol response of DownloadPieceBackToSourceFailedRequest.
+message HTTPResponse {
+  // HTTP Response Header.
+  map<string, string> header = 1;
+  // HTTP Status Code.
+  int32 status_code = 2;
+  // HTTP Status.
+  string status = 3;
+}
+
+// HDFSResponse represents hdfs protocol response of DownloadPieceBackToSourceFailedRequest.
+message HDFSResponse {
+}
+
+// S3Response represents s3 protocol response of DownloadPieceBackToSourceFailedRequest.
+message S3Response {
+}
+
+// OSSResponse represents oss protocol response of DownloadPieceBackToSourceFailedRequest.
+message OSSResponse {
 }
 
 // DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFailedRequest {
-  // The number of piece.
-  uint32 piece_number = 1;
-  // HTTP Response Header.
-  map<string, string> header = 2;
-  // HTTP Status Code.
-  int32 status_code = 3;
-  // HTTP Status.
-  string status = 4;
+  // Piece info.
+  common.Piece piece = 1;
+
+  oneof response {
+    HTTPResponse http_response = 2;
+    HDFSResponse hdfs_response = 3;
+    S3Response s3_response = 4;
+    OSSResponse oss_response = 5;
+  }
 }
 
 // SyncPiecesFailedRequest syncs pieces failed request of AnnouncePeerRequest.

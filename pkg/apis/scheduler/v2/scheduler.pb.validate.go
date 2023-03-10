@@ -1331,29 +1331,47 @@ func (m *DownloadPieceFailedRequest) validate(all bool) error {
 
 	var errors []error
 
+	if m.GetPiece() == nil {
+		err := DownloadPieceFailedRequestValidationError{
+			field:  "Piece",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetPiece()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DownloadPieceFailedRequestValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DownloadPieceFailedRequestValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DownloadPieceFailedRequestValidationError{
+				field:  "Piece",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	// no validation rules for Temporary
-
-	if m.GetPieceNumber() < 0 {
-		err := DownloadPieceFailedRequestValidationError{
-			field:  "PieceNumber",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetParentId()) < 1 {
-		err := DownloadPieceFailedRequestValidationError{
-			field:  "ParentId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
 
 	if len(errors) > 0 {
 		return DownloadPieceFailedRequestMultiError(errors)
@@ -1435,6 +1453,426 @@ var _ interface {
 	ErrorName() string
 } = DownloadPieceFailedRequestValidationError{}
 
+// Validate checks the field values on HTTPResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *HTTPResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HTTPResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in HTTPResponseMultiError, or
+// nil if none found.
+func (m *HTTPResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HTTPResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Header
+
+	if val := m.GetStatusCode(); val < 100 || val >= 599 {
+		err := HTTPResponseValidationError{
+			field:  "StatusCode",
+			reason: "value must be inside range [100, 599)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetStatus()) < 1 {
+		err := HTTPResponseValidationError{
+			field:  "Status",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return HTTPResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// HTTPResponseMultiError is an error wrapping multiple validation errors
+// returned by HTTPResponse.ValidateAll() if the designated constraints aren't met.
+type HTTPResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HTTPResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HTTPResponseMultiError) AllErrors() []error { return m }
+
+// HTTPResponseValidationError is the validation error returned by
+// HTTPResponse.Validate if the designated constraints aren't met.
+type HTTPResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HTTPResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HTTPResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HTTPResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HTTPResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HTTPResponseValidationError) ErrorName() string { return "HTTPResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HTTPResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHTTPResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HTTPResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HTTPResponseValidationError{}
+
+// Validate checks the field values on HDFSResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *HDFSResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HDFSResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in HDFSResponseMultiError, or
+// nil if none found.
+func (m *HDFSResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HDFSResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return HDFSResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// HDFSResponseMultiError is an error wrapping multiple validation errors
+// returned by HDFSResponse.ValidateAll() if the designated constraints aren't met.
+type HDFSResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HDFSResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HDFSResponseMultiError) AllErrors() []error { return m }
+
+// HDFSResponseValidationError is the validation error returned by
+// HDFSResponse.Validate if the designated constraints aren't met.
+type HDFSResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HDFSResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HDFSResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HDFSResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HDFSResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HDFSResponseValidationError) ErrorName() string { return "HDFSResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HDFSResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHDFSResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HDFSResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HDFSResponseValidationError{}
+
+// Validate checks the field values on S3Response with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *S3Response) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on S3Response with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in S3ResponseMultiError, or
+// nil if none found.
+func (m *S3Response) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *S3Response) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return S3ResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// S3ResponseMultiError is an error wrapping multiple validation errors
+// returned by S3Response.ValidateAll() if the designated constraints aren't met.
+type S3ResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m S3ResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m S3ResponseMultiError) AllErrors() []error { return m }
+
+// S3ResponseValidationError is the validation error returned by
+// S3Response.Validate if the designated constraints aren't met.
+type S3ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e S3ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e S3ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e S3ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e S3ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e S3ResponseValidationError) ErrorName() string { return "S3ResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e S3ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sS3Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = S3ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = S3ResponseValidationError{}
+
+// Validate checks the field values on OSSResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *OSSResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OSSResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in OSSResponseMultiError, or
+// nil if none found.
+func (m *OSSResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OSSResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return OSSResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// OSSResponseMultiError is an error wrapping multiple validation errors
+// returned by OSSResponse.ValidateAll() if the designated constraints aren't met.
+type OSSResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OSSResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OSSResponseMultiError) AllErrors() []error { return m }
+
+// OSSResponseValidationError is the validation error returned by
+// OSSResponse.Validate if the designated constraints aren't met.
+type OSSResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OSSResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OSSResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OSSResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OSSResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OSSResponseValidationError) ErrorName() string { return "OSSResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OSSResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOSSResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OSSResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OSSResponseValidationError{}
+
 // Validate checks the field values on DownloadPieceBackToSourceFailedRequest
 // with the rules defined in the proto definition for this message. If any
 // rules are violated, the first error encountered is returned, or nil if
@@ -1459,10 +1897,10 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetPieceNumber() < 0 {
+	if m.GetPiece() == nil {
 		err := DownloadPieceBackToSourceFailedRequestValidationError{
-			field:  "PieceNumber",
-			reason: "value must be greater than or equal to 0",
+			field:  "Piece",
+			reason: "value is required",
 		}
 		if !all {
 			return err
@@ -1470,23 +1908,212 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Header
-
-	if val := m.GetStatusCode(); val < 100 || val >= 599 {
-		err := DownloadPieceBackToSourceFailedRequestValidationError{
-			field:  "StatusCode",
-			reason: "value must be inside range [100, 599)",
+	if all {
+		switch v := interface{}(m.GetPiece()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
 		}
-		if !all {
-			return err
+	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DownloadPieceBackToSourceFailedRequestValidationError{
+				field:  "Piece",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
 		}
-		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetStatus()) < 1 {
+	oneofResponsePresent := false
+	switch v := m.Response.(type) {
+	case *DownloadPieceBackToSourceFailedRequest_HttpResponse:
+		if v == nil {
+			err := DownloadPieceBackToSourceFailedRequestValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
+
+		if all {
+			switch v := interface{}(m.GetHttpResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "HttpResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "HttpResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHttpResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPieceBackToSourceFailedRequestValidationError{
+					field:  "HttpResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *DownloadPieceBackToSourceFailedRequest_HdfsResponse:
+		if v == nil {
+			err := DownloadPieceBackToSourceFailedRequestValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
+
+		if all {
+			switch v := interface{}(m.GetHdfsResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "HdfsResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "HdfsResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHdfsResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPieceBackToSourceFailedRequestValidationError{
+					field:  "HdfsResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *DownloadPieceBackToSourceFailedRequest_S3Response:
+		if v == nil {
+			err := DownloadPieceBackToSourceFailedRequestValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
+
+		if all {
+			switch v := interface{}(m.GetS3Response()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "S3Response",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "S3Response",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetS3Response()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPieceBackToSourceFailedRequestValidationError{
+					field:  "S3Response",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *DownloadPieceBackToSourceFailedRequest_OssResponse:
+		if v == nil {
+			err := DownloadPieceBackToSourceFailedRequestValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
+
+		if all {
+			switch v := interface{}(m.GetOssResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "OssResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "OssResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetOssResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPieceBackToSourceFailedRequestValidationError{
+					field:  "OssResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+	if !oneofResponsePresent {
 		err := DownloadPieceBackToSourceFailedRequestValidationError{
-			field:  "Status",
-			reason: "value length must be at least 1 runes",
+			field:  "Response",
+			reason: "value is required",
 		}
 		if !all {
 			return err

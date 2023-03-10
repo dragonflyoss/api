@@ -84,35 +84,71 @@ pub struct DownloadPieceBackToSourceFinishedRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceFailedRequest {
+    /// Piece info.
+    #[prost(message, optional, tag = "1")]
+    pub piece: ::core::option::Option<super::common::Piece>,
     /// Temporary indicates whether the error is temporary.
-    #[prost(bool, tag = "1")]
+    #[prost(bool, tag = "2")]
     pub temporary: bool,
-    /// The number of piece.
-    #[prost(uint32, tag = "2")]
-    pub piece_number: u32,
-    /// Piece is information of piece.
-    #[prost(string, tag = "3")]
-    pub parent_id: ::prost::alloc::string::String,
 }
-/// DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
+/// HTTPResponse represents http protocol response of DownloadPieceBackToSourceFailedRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadPieceBackToSourceFailedRequest {
-    /// The number of piece.
-    #[prost(uint32, tag = "1")]
-    pub piece_number: u32,
+pub struct HttpResponse {
     /// HTTP Response Header.
-    #[prost(map = "string, string", tag = "2")]
+    #[prost(map = "string, string", tag = "1")]
     pub header: ::std::collections::HashMap<
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
     /// HTTP Status Code.
-    #[prost(int32, tag = "3")]
+    #[prost(int32, tag = "2")]
     pub status_code: i32,
     /// HTTP Status.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "3")]
     pub status: ::prost::alloc::string::String,
+}
+/// HDFSResponse represents hdfs protocol response of DownloadPieceBackToSourceFailedRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct HdfsResponse {}
+/// S3Response represents s3 protocol response of DownloadPieceBackToSourceFailedRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct S3Response {}
+/// OSSResponse represents oss protocol response of DownloadPieceBackToSourceFailedRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct OssResponse {}
+/// DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadPieceBackToSourceFailedRequest {
+    /// Piece info.
+    #[prost(message, optional, tag = "1")]
+    pub piece: ::core::option::Option<super::common::Piece>,
+    #[prost(
+        oneof = "download_piece_back_to_source_failed_request::Response",
+        tags = "2, 3, 4, 5"
+    )]
+    pub response: ::core::option::Option<
+        download_piece_back_to_source_failed_request::Response,
+    >,
+}
+/// Nested message and enum types in `DownloadPieceBackToSourceFailedRequest`.
+pub mod download_piece_back_to_source_failed_request {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "2")]
+        HttpResponse(super::HttpResponse),
+        #[prost(message, tag = "3")]
+        HdfsResponse(super::HdfsResponse),
+        #[prost(message, tag = "4")]
+        S3Response(super::S3Response),
+        #[prost(message, tag = "5")]
+        OssResponse(super::OssResponse),
+    }
 }
 /// SyncPiecesFailedRequest syncs pieces failed request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
