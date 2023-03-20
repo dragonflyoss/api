@@ -38,126 +38,6 @@ func (m *MockManagerClient) EXPECT() *MockManagerClientMockRecorder {
 	return m.recorder
 }
 
-// CreateModel mocks base method.
-func (m *MockManagerClient) CreateModel(ctx context.Context, in *manager.CreateModelRequest, opts ...grpc.CallOption) (*manager.Model, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "CreateModel", varargs...)
-	ret0, _ := ret[0].(*manager.Model)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateModel indicates an expected call of CreateModel.
-func (mr *MockManagerClientMockRecorder) CreateModel(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateModel", reflect.TypeOf((*MockManagerClient)(nil).CreateModel), varargs...)
-}
-
-// CreateModelVersion mocks base method.
-func (m *MockManagerClient) CreateModelVersion(ctx context.Context, in *manager.CreateModelVersionRequest, opts ...grpc.CallOption) (*manager.ModelVersion, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "CreateModelVersion", varargs...)
-	ret0, _ := ret[0].(*manager.ModelVersion)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateModelVersion indicates an expected call of CreateModelVersion.
-func (mr *MockManagerClientMockRecorder) CreateModelVersion(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateModelVersion", reflect.TypeOf((*MockManagerClient)(nil).CreateModelVersion), varargs...)
-}
-
-// DeleteModel mocks base method.
-func (m *MockManagerClient) DeleteModel(ctx context.Context, in *manager.DeleteModelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DeleteModel", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeleteModel indicates an expected call of DeleteModel.
-func (mr *MockManagerClientMockRecorder) DeleteModel(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteModel", reflect.TypeOf((*MockManagerClient)(nil).DeleteModel), varargs...)
-}
-
-// DeleteModelVersion mocks base method.
-func (m *MockManagerClient) DeleteModelVersion(ctx context.Context, in *manager.DeleteModelVersionRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DeleteModelVersion", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeleteModelVersion indicates an expected call of DeleteModelVersion.
-func (mr *MockManagerClientMockRecorder) DeleteModelVersion(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteModelVersion", reflect.TypeOf((*MockManagerClient)(nil).DeleteModelVersion), varargs...)
-}
-
-// GetModel mocks base method.
-func (m *MockManagerClient) GetModel(ctx context.Context, in *manager.GetModelRequest, opts ...grpc.CallOption) (*manager.Model, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetModel", varargs...)
-	ret0, _ := ret[0].(*manager.Model)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetModel indicates an expected call of GetModel.
-func (mr *MockManagerClientMockRecorder) GetModel(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetModel", reflect.TypeOf((*MockManagerClient)(nil).GetModel), varargs...)
-}
-
-// GetModelVersion mocks base method.
-func (m *MockManagerClient) GetModelVersion(ctx context.Context, in *manager.GetModelVersionRequest, opts ...grpc.CallOption) (*manager.ModelVersion, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetModelVersion", varargs...)
-	ret0, _ := ret[0].(*manager.ModelVersion)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetModelVersion indicates an expected call of GetModelVersion.
-func (mr *MockManagerClientMockRecorder) GetModelVersion(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetModelVersion", reflect.TypeOf((*MockManagerClient)(nil).GetModelVersion), varargs...)
-}
-
 // GetObjectStorage mocks base method.
 func (m *MockManagerClient) GetObjectStorage(ctx context.Context, in *manager.GetObjectStorageRequest, opts ...grpc.CallOption) (*manager.ObjectStorage, error) {
 	m.ctrl.T.Helper()
@@ -278,46 +158,6 @@ func (mr *MockManagerClientMockRecorder) ListBuckets(ctx, in interface{}, opts .
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListBuckets", reflect.TypeOf((*MockManagerClient)(nil).ListBuckets), varargs...)
 }
 
-// ListModelVersions mocks base method.
-func (m *MockManagerClient) ListModelVersions(ctx context.Context, in *manager.ListModelVersionsRequest, opts ...grpc.CallOption) (*manager.ListModelVersionsResponse, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ListModelVersions", varargs...)
-	ret0, _ := ret[0].(*manager.ListModelVersionsResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ListModelVersions indicates an expected call of ListModelVersions.
-func (mr *MockManagerClientMockRecorder) ListModelVersions(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListModelVersions", reflect.TypeOf((*MockManagerClient)(nil).ListModelVersions), varargs...)
-}
-
-// ListModels mocks base method.
-func (m *MockManagerClient) ListModels(ctx context.Context, in *manager.ListModelsRequest, opts ...grpc.CallOption) (*manager.ListModelsResponse, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ListModels", varargs...)
-	ret0, _ := ret[0].(*manager.ListModelsResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ListModels indicates an expected call of ListModels.
-func (mr *MockManagerClientMockRecorder) ListModels(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListModels", reflect.TypeOf((*MockManagerClient)(nil).ListModels), varargs...)
-}
-
 // ListSchedulers mocks base method.
 func (m *MockManagerClient) ListSchedulers(ctx context.Context, in *manager.ListSchedulersRequest, opts ...grpc.CallOption) (*manager.ListSchedulersResponse, error) {
 	m.ctrl.T.Helper()
@@ -336,46 +176,6 @@ func (mr *MockManagerClientMockRecorder) ListSchedulers(ctx, in interface{}, opt
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSchedulers", reflect.TypeOf((*MockManagerClient)(nil).ListSchedulers), varargs...)
-}
-
-// UpdateModel mocks base method.
-func (m *MockManagerClient) UpdateModel(ctx context.Context, in *manager.UpdateModelRequest, opts ...grpc.CallOption) (*manager.Model, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpdateModel", varargs...)
-	ret0, _ := ret[0].(*manager.Model)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UpdateModel indicates an expected call of UpdateModel.
-func (mr *MockManagerClientMockRecorder) UpdateModel(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateModel", reflect.TypeOf((*MockManagerClient)(nil).UpdateModel), varargs...)
-}
-
-// UpdateModelVersion mocks base method.
-func (m *MockManagerClient) UpdateModelVersion(ctx context.Context, in *manager.UpdateModelVersionRequest, opts ...grpc.CallOption) (*manager.ModelVersion, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UpdateModelVersion", varargs...)
-	ret0, _ := ret[0].(*manager.ModelVersion)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UpdateModelVersion indicates an expected call of UpdateModelVersion.
-func (mr *MockManagerClientMockRecorder) UpdateModelVersion(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateModelVersion", reflect.TypeOf((*MockManagerClient)(nil).UpdateModelVersion), varargs...)
 }
 
 // UpdateScheduler mocks base method.
@@ -578,96 +378,6 @@ func (m *MockManagerServer) EXPECT() *MockManagerServerMockRecorder {
 	return m.recorder
 }
 
-// CreateModel mocks base method.
-func (m *MockManagerServer) CreateModel(arg0 context.Context, arg1 *manager.CreateModelRequest) (*manager.Model, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateModel", arg0, arg1)
-	ret0, _ := ret[0].(*manager.Model)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateModel indicates an expected call of CreateModel.
-func (mr *MockManagerServerMockRecorder) CreateModel(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateModel", reflect.TypeOf((*MockManagerServer)(nil).CreateModel), arg0, arg1)
-}
-
-// CreateModelVersion mocks base method.
-func (m *MockManagerServer) CreateModelVersion(arg0 context.Context, arg1 *manager.CreateModelVersionRequest) (*manager.ModelVersion, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateModelVersion", arg0, arg1)
-	ret0, _ := ret[0].(*manager.ModelVersion)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateModelVersion indicates an expected call of CreateModelVersion.
-func (mr *MockManagerServerMockRecorder) CreateModelVersion(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateModelVersion", reflect.TypeOf((*MockManagerServer)(nil).CreateModelVersion), arg0, arg1)
-}
-
-// DeleteModel mocks base method.
-func (m *MockManagerServer) DeleteModel(arg0 context.Context, arg1 *manager.DeleteModelRequest) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteModel", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeleteModel indicates an expected call of DeleteModel.
-func (mr *MockManagerServerMockRecorder) DeleteModel(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteModel", reflect.TypeOf((*MockManagerServer)(nil).DeleteModel), arg0, arg1)
-}
-
-// DeleteModelVersion mocks base method.
-func (m *MockManagerServer) DeleteModelVersion(arg0 context.Context, arg1 *manager.DeleteModelVersionRequest) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteModelVersion", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeleteModelVersion indicates an expected call of DeleteModelVersion.
-func (mr *MockManagerServerMockRecorder) DeleteModelVersion(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteModelVersion", reflect.TypeOf((*MockManagerServer)(nil).DeleteModelVersion), arg0, arg1)
-}
-
-// GetModel mocks base method.
-func (m *MockManagerServer) GetModel(arg0 context.Context, arg1 *manager.GetModelRequest) (*manager.Model, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetModel", arg0, arg1)
-	ret0, _ := ret[0].(*manager.Model)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetModel indicates an expected call of GetModel.
-func (mr *MockManagerServerMockRecorder) GetModel(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetModel", reflect.TypeOf((*MockManagerServer)(nil).GetModel), arg0, arg1)
-}
-
-// GetModelVersion mocks base method.
-func (m *MockManagerServer) GetModelVersion(arg0 context.Context, arg1 *manager.GetModelVersionRequest) (*manager.ModelVersion, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetModelVersion", arg0, arg1)
-	ret0, _ := ret[0].(*manager.ModelVersion)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetModelVersion indicates an expected call of GetModelVersion.
-func (mr *MockManagerServerMockRecorder) GetModelVersion(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetModelVersion", reflect.TypeOf((*MockManagerServer)(nil).GetModelVersion), arg0, arg1)
-}
-
 // GetObjectStorage mocks base method.
 func (m *MockManagerServer) GetObjectStorage(arg0 context.Context, arg1 *manager.GetObjectStorageRequest) (*manager.ObjectStorage, error) {
 	m.ctrl.T.Helper()
@@ -757,36 +467,6 @@ func (mr *MockManagerServerMockRecorder) ListBuckets(arg0, arg1 interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListBuckets", reflect.TypeOf((*MockManagerServer)(nil).ListBuckets), arg0, arg1)
 }
 
-// ListModelVersions mocks base method.
-func (m *MockManagerServer) ListModelVersions(arg0 context.Context, arg1 *manager.ListModelVersionsRequest) (*manager.ListModelVersionsResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListModelVersions", arg0, arg1)
-	ret0, _ := ret[0].(*manager.ListModelVersionsResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ListModelVersions indicates an expected call of ListModelVersions.
-func (mr *MockManagerServerMockRecorder) ListModelVersions(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListModelVersions", reflect.TypeOf((*MockManagerServer)(nil).ListModelVersions), arg0, arg1)
-}
-
-// ListModels mocks base method.
-func (m *MockManagerServer) ListModels(arg0 context.Context, arg1 *manager.ListModelsRequest) (*manager.ListModelsResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListModels", arg0, arg1)
-	ret0, _ := ret[0].(*manager.ListModelsResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ListModels indicates an expected call of ListModels.
-func (mr *MockManagerServerMockRecorder) ListModels(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListModels", reflect.TypeOf((*MockManagerServer)(nil).ListModels), arg0, arg1)
-}
-
 // ListSchedulers mocks base method.
 func (m *MockManagerServer) ListSchedulers(arg0 context.Context, arg1 *manager.ListSchedulersRequest) (*manager.ListSchedulersResponse, error) {
 	m.ctrl.T.Helper()
@@ -800,36 +480,6 @@ func (m *MockManagerServer) ListSchedulers(arg0 context.Context, arg1 *manager.L
 func (mr *MockManagerServerMockRecorder) ListSchedulers(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSchedulers", reflect.TypeOf((*MockManagerServer)(nil).ListSchedulers), arg0, arg1)
-}
-
-// UpdateModel mocks base method.
-func (m *MockManagerServer) UpdateModel(arg0 context.Context, arg1 *manager.UpdateModelRequest) (*manager.Model, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateModel", arg0, arg1)
-	ret0, _ := ret[0].(*manager.Model)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UpdateModel indicates an expected call of UpdateModel.
-func (mr *MockManagerServerMockRecorder) UpdateModel(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateModel", reflect.TypeOf((*MockManagerServer)(nil).UpdateModel), arg0, arg1)
-}
-
-// UpdateModelVersion mocks base method.
-func (m *MockManagerServer) UpdateModelVersion(arg0 context.Context, arg1 *manager.UpdateModelVersionRequest) (*manager.ModelVersion, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateModelVersion", arg0, arg1)
-	ret0, _ := ret[0].(*manager.ModelVersion)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UpdateModelVersion indicates an expected call of UpdateModelVersion.
-func (mr *MockManagerServerMockRecorder) UpdateModelVersion(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateModelVersion", reflect.TypeOf((*MockManagerServer)(nil).UpdateModelVersion), arg0, arg1)
 }
 
 // UpdateScheduler mocks base method.
