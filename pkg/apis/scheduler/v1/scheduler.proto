@@ -84,7 +84,7 @@ message PeerHost{
   // Port of download server.
   int32 down_port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Peer hostname.
-  string host_name = 5 [(validate.rules).string.hostname = true];
+  string hostname = 5 [(validate.rules).string.hostname = true];
   // Security domain for network.
   string security_domain = 6;
   // Location path(area|country|province|city|...).

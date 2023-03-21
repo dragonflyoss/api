@@ -65,7 +65,7 @@ message SeedPeer {
   // Seed peer id.
   uint64 id = 1;
   // Seed peer hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Seed peer type.
   string type = 3;
   // Seed peer idc.
@@ -95,7 +95,7 @@ message GetSeedPeerRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Seed peer hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // ID of the cluster to which the seed peer belongs.
   uint64 seed_peer_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Seed peer ip.
@@ -107,7 +107,7 @@ message UpdateSeedPeerRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Seed peer hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // Seed peer type.
   string type = 3 [(validate.rules).string = {in: ["super", "strong", "weak"]}];
   // Seed peer idc.
@@ -149,7 +149,7 @@ message Scheduler {
   // Scheduler id.
   uint64 id = 1;
   // Scheduler hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Scheduler idc.
   string idc = 3;
   // Scheduler location.
@@ -173,7 +173,7 @@ message GetSchedulerRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Scheduler hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Scheduler ip.
@@ -185,7 +185,7 @@ message UpdateSchedulerRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Scheduler hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Scheduler idc.
@@ -203,7 +203,7 @@ message ListSchedulersRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // Source service ip.
   string ip = 3 [(validate.rules).string.ip = true];
   // Source service host information.
@@ -246,7 +246,7 @@ message GetObjectStorageRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // Source service ip.
   string ip = 3 [(validate.rules).string.ip = true];
 }
@@ -262,7 +262,7 @@ message ListBucketsRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // Source service ip.
   string ip = 3 [(validate.rules).string.ip = true];
 }
@@ -308,7 +308,7 @@ message ListApplicationsRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // Source service ip.
   string ip = 3 [(validate.rules).string.ip = true];
 }
@@ -324,7 +324,7 @@ message KeepAliveRequest {
   // Request source type.
   SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
   // Source service hostname.
-  string host_name = 2 [(validate.rules).string.hostname = true];
+  string hostname = 2 [(validate.rules).string.hostname = true];
   // ID of the cluster to which the source service belongs.
   uint64 cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Source service ip.

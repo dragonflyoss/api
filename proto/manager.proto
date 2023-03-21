@@ -62,7 +62,7 @@ message SeedPeer {
   // Seed peer id.
   uint64 id = 1;
   // Seed peer hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Seed peer type.
   string type = 3;
   // Seed peer idc.
@@ -92,7 +92,7 @@ message GetSeedPeerRequest {
   // Request source type.
   SourceType source_type = 1;
   // Seed peer hostname.
-  string host_name = 2;
+  string hostname = 2;
   // ID of the cluster to which the seed peer belongs.
   uint64 seed_peer_cluster_id = 3;
   // Seed peer ip.
@@ -104,7 +104,7 @@ message UpdateSeedPeerRequest {
   // Request source type.
   SourceType source_type = 1;
   // Seed peer hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Seed peer type.
   string type = 3;
   // Seed peer idc.
@@ -146,7 +146,7 @@ message Scheduler {
   // Scheduler id.
   uint64 id = 1;
   // Scheduler hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Scheduler idc.
   string idc = 3;
   // Scheduler location.
@@ -170,7 +170,7 @@ message GetSchedulerRequest {
   // Request source type.
   SourceType source_type = 1;
   // Scheduler hostname.
-  string host_name = 2;
+  string hostname = 2;
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3;
   // Scheduler ip.
@@ -182,7 +182,7 @@ message UpdateSchedulerRequest {
   // Request source type.
   SourceType source_type = 1;
   // Scheduler hostname.
-  string host_name = 2;
+  string hostname = 2;
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3;
   // Scheduler idc.
@@ -200,7 +200,7 @@ message ListSchedulersRequest {
   // Request source type.
   SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Source service ip.
   string ip = 3;
   // Source service host information.
@@ -243,7 +243,7 @@ message GetObjectStorageRequest {
   // Request source type.
   SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Source service ip.
   string ip = 3;
 }
@@ -259,7 +259,7 @@ message ListBucketsRequest {
   // Request source type.
   SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Source service ip.
   string ip = 3;
 }
@@ -305,7 +305,7 @@ message ListApplicationsRequest {
   // Request source type.
   SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2;
+  string hostname = 2;
   // Source service ip.
   string ip = 3;
 }
@@ -321,7 +321,7 @@ message KeepAliveRequest {
   // Request source type.
   SourceType source_type = 1;
   // Source service hostname.
-  string host_name = 2;
+  string hostname = 2;
   // ID of the cluster to which the source service belongs.
   uint64 cluster_id = 3;
   // Source service ip.
