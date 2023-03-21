@@ -281,7 +281,7 @@ func (m *SeedPeer) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for HostName
+	// no validation rules for Hostname
 
 	// no validation rules for Type
 
@@ -474,9 +474,9 @@ func (m *GetSeedPeerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = GetSeedPeerRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -655,9 +655,9 @@ func (m *UpdateSeedPeerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = UpdateSeedPeerRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -1048,7 +1048,7 @@ func (m *Scheduler) validate(all bool) error {
 
 	// no validation rules for Id
 
-	// no validation rules for HostName
+	// no validation rules for Hostname
 
 	// no validation rules for Idc
 
@@ -1235,9 +1235,9 @@ func (m *GetSchedulerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = GetSchedulerRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -1416,9 +1416,9 @@ func (m *UpdateSchedulerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = UpdateSchedulerRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -1634,9 +1634,9 @@ func (m *ListSchedulersRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = ListSchedulersRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -2143,9 +2143,9 @@ func (m *GetObjectStorageRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = GetObjectStorageRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -2418,9 +2418,9 @@ func (m *ListBucketsRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = ListBucketsRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -3154,9 +3154,9 @@ func (m *ListApplicationsRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = ListApplicationsRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
@@ -3456,9 +3456,9 @@ func (m *KeepAliveRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = KeepAliveRequestValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}

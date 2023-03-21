@@ -44,7 +44,7 @@ pub struct SeedPeer {
     pub id: u64,
     /// Seed peer hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// Seed peer type.
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
@@ -88,7 +88,7 @@ pub struct GetSeedPeerRequest {
     pub source_type: i32,
     /// Seed peer hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// ID of the cluster to which the seed peer belongs.
     #[prost(uint64, tag = "3")]
     pub seed_peer_cluster_id: u64,
@@ -105,7 +105,7 @@ pub struct UpdateSeedPeerRequest {
     pub source_type: i32,
     /// Seed peer hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// Seed peer type.
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
@@ -166,7 +166,7 @@ pub struct Scheduler {
     pub id: u64,
     /// Scheduler hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// Scheduler idc.
     #[prost(string, tag = "3")]
     pub idc: ::prost::alloc::string::String,
@@ -201,7 +201,7 @@ pub struct GetSchedulerRequest {
     pub source_type: i32,
     /// Scheduler hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// ID of the cluster to which the scheduler belongs.
     #[prost(uint64, tag = "3")]
     pub scheduler_cluster_id: u64,
@@ -218,7 +218,7 @@ pub struct UpdateSchedulerRequest {
     pub source_type: i32,
     /// Scheduler hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// ID of the cluster to which the scheduler belongs.
     #[prost(uint64, tag = "3")]
     pub scheduler_cluster_id: u64,
@@ -244,7 +244,7 @@ pub struct ListSchedulersRequest {
     pub source_type: i32,
     /// Source service hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// Source service ip.
     #[prost(string, tag = "3")]
     pub ip: ::prost::alloc::string::String,
@@ -306,7 +306,7 @@ pub struct GetObjectStorageRequest {
     pub source_type: i32,
     /// Source service hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// Source service ip.
     #[prost(string, tag = "3")]
     pub ip: ::prost::alloc::string::String,
@@ -328,7 +328,7 @@ pub struct ListBucketsRequest {
     pub source_type: i32,
     /// Source service hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// Source service ip.
     #[prost(string, tag = "3")]
     pub ip: ::prost::alloc::string::String,
@@ -392,7 +392,7 @@ pub struct ListApplicationsRequest {
     pub source_type: i32,
     /// Source service hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// Source service ip.
     #[prost(string, tag = "3")]
     pub ip: ::prost::alloc::string::String,
@@ -414,7 +414,7 @@ pub struct KeepAliveRequest {
     pub source_type: i32,
     /// Source service hostname.
     #[prost(string, tag = "2")]
-    pub host_name: ::prost::alloc::string::String,
+    pub hostname: ::prost::alloc::string::String,
     /// ID of the cluster to which the source service belongs.
     #[prost(uint64, tag = "3")]
     pub cluster_id: u64,

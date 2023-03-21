@@ -662,9 +662,9 @@ func (m *PeerHost) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateHostname(m.GetHostName()); err != nil {
+	if err := m._validateHostname(m.GetHostname()); err != nil {
 		err = PeerHostValidationError{
-			field:  "HostName",
+			field:  "Hostname",
 			reason: "value must be a valid hostname",
 			cause:  err,
 		}
