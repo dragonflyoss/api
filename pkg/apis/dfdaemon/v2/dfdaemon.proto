@@ -90,7 +90,7 @@ message DeleteTaskRequest {
 }
 
 // Dfdaemon RPC Service.
-service Dfdaemon{
+service Dfdaemon {
   // SyncPieces syncs pieces from the other peers.
   rpc SyncPieces(stream SyncPiecesRequest)returns(stream SyncPiecesResponse);
 

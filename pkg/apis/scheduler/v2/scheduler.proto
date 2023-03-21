@@ -320,7 +320,7 @@ message SyncNetworkTopologyRequest {
 }
 
 // Scheduler RPC Service.
-service Scheduler{
+service Scheduler {
   // AnnouncePeer announces peer to scheduler.
   rpc AnnouncePeer(stream AnnouncePeerRequest) returns(stream AnnouncePeerResponse);
 
