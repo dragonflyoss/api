@@ -38,6 +38,26 @@ func (m *MockManagerClient) EXPECT() *MockManagerClientMockRecorder {
 	return m.recorder
 }
 
+// CreateModel mocks base method.
+func (m *MockManagerClient) CreateModel(ctx context.Context, in *manager.CreateModelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CreateModel", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateModel indicates an expected call of CreateModel.
+func (mr *MockManagerClientMockRecorder) CreateModel(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateModel", reflect.TypeOf((*MockManagerClient)(nil).CreateModel), varargs...)
+}
+
 // GetObjectStorage mocks base method.
 func (m *MockManagerClient) GetObjectStorage(ctx context.Context, in *manager.GetObjectStorageRequest, opts ...grpc.CallOption) (*manager.ObjectStorage, error) {
 	m.ctrl.T.Helper()
@@ -376,6 +396,21 @@ func NewMockManagerServer(ctrl *gomock.Controller) *MockManagerServer {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockManagerServer) EXPECT() *MockManagerServerMockRecorder {
 	return m.recorder
+}
+
+// CreateModel mocks base method.
+func (m *MockManagerServer) CreateModel(arg0 context.Context, arg1 *manager.CreateModelRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateModel", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateModel indicates an expected call of CreateModel.
+func (mr *MockManagerServerMockRecorder) CreateModel(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateModel", reflect.TypeOf((*MockManagerServer)(nil).CreateModel), arg0, arg1)
 }
 
 // GetObjectStorage mocks base method.

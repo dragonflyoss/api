@@ -23,15 +23,15 @@ import "validate/validate.proto";
 
 option go_package = "d7y.io/api/pkg/apis/trainer/v1;trainer";
 
-// GNNRequest represents gnn model request of TrainRequest.
-message GNNRequest {
-  // Dataset of training gnn.
+// TrainGNNRequest represents to train GNN model request of TrainRequest.
+message TrainGNNRequest {
+  // Dataset of training GNN.
   bytes dataset = 1 [(validate.rules).bytes.min_len = 1];
 }
 
-// MLPRequest represents mlp model request of TrainRequest.
-message MLPRequest {
-  // Dataset of training mlp.
+// TrainMLPRequest represents to train MLP model request of TrainRequest.
+message TrainMLPRequest {
+  // Dataset of training MLP.
   bytes dataset = 1 [(validate.rules).bytes.min_len = 1];
 }
 
@@ -47,8 +47,8 @@ message TrainRequest {
   oneof request {
     option (validate.required) = true;
 
-    GNNRequest gnn_request = 4;
-    MLPRequest mlp_request = 5;
+    TrainGNNRequest train_gnn_request = 4;
+    TrainMLPRequest train_mlp_request = 5;
   }
 }
 

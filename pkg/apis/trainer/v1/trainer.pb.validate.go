@@ -35,22 +35,22 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on GNNRequest with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *GNNRequest) Validate() error {
+// Validate checks the field values on TrainGNNRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *TrainGNNRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GNNRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in GNNRequestMultiError, or
-// nil if none found.
-func (m *GNNRequest) ValidateAll() error {
+// ValidateAll checks the field values on TrainGNNRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TrainGNNRequestMultiError, or nil if none found.
+func (m *TrainGNNRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GNNRequest) validate(all bool) error {
+func (m *TrainGNNRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -58,7 +58,7 @@ func (m *GNNRequest) validate(all bool) error {
 	var errors []error
 
 	if len(m.GetDataset()) < 1 {
-		err := GNNRequestValidationError{
+		err := TrainGNNRequestValidationError{
 			field:  "Dataset",
 			reason: "value length must be at least 1 bytes",
 		}
@@ -69,18 +69,19 @@ func (m *GNNRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GNNRequestMultiError(errors)
+		return TrainGNNRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// GNNRequestMultiError is an error wrapping multiple validation errors
-// returned by GNNRequest.ValidateAll() if the designated constraints aren't met.
-type GNNRequestMultiError []error
+// TrainGNNRequestMultiError is an error wrapping multiple validation errors
+// returned by TrainGNNRequest.ValidateAll() if the designated constraints
+// aren't met.
+type TrainGNNRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GNNRequestMultiError) Error() string {
+func (m TrainGNNRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -89,11 +90,11 @@ func (m GNNRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GNNRequestMultiError) AllErrors() []error { return m }
+func (m TrainGNNRequestMultiError) AllErrors() []error { return m }
 
-// GNNRequestValidationError is the validation error returned by
-// GNNRequest.Validate if the designated constraints aren't met.
-type GNNRequestValidationError struct {
+// TrainGNNRequestValidationError is the validation error returned by
+// TrainGNNRequest.Validate if the designated constraints aren't met.
+type TrainGNNRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -101,22 +102,22 @@ type GNNRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GNNRequestValidationError) Field() string { return e.field }
+func (e TrainGNNRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GNNRequestValidationError) Reason() string { return e.reason }
+func (e TrainGNNRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GNNRequestValidationError) Cause() error { return e.cause }
+func (e TrainGNNRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GNNRequestValidationError) Key() bool { return e.key }
+func (e TrainGNNRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GNNRequestValidationError) ErrorName() string { return "GNNRequestValidationError" }
+func (e TrainGNNRequestValidationError) ErrorName() string { return "TrainGNNRequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e GNNRequestValidationError) Error() string {
+func (e TrainGNNRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -128,14 +129,14 @@ func (e GNNRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGNNRequest.%s: %s%s",
+		"invalid %sTrainGNNRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GNNRequestValidationError{}
+var _ error = TrainGNNRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -143,24 +144,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GNNRequestValidationError{}
+} = TrainGNNRequestValidationError{}
 
-// Validate checks the field values on MLPRequest with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *MLPRequest) Validate() error {
+// Validate checks the field values on TrainMLPRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *TrainMLPRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on MLPRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in MLPRequestMultiError, or
-// nil if none found.
-func (m *MLPRequest) ValidateAll() error {
+// ValidateAll checks the field values on TrainMLPRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// TrainMLPRequestMultiError, or nil if none found.
+func (m *TrainMLPRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *MLPRequest) validate(all bool) error {
+func (m *TrainMLPRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -168,7 +169,7 @@ func (m *MLPRequest) validate(all bool) error {
 	var errors []error
 
 	if len(m.GetDataset()) < 1 {
-		err := MLPRequestValidationError{
+		err := TrainMLPRequestValidationError{
 			field:  "Dataset",
 			reason: "value length must be at least 1 bytes",
 		}
@@ -179,18 +180,19 @@ func (m *MLPRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return MLPRequestMultiError(errors)
+		return TrainMLPRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// MLPRequestMultiError is an error wrapping multiple validation errors
-// returned by MLPRequest.ValidateAll() if the designated constraints aren't met.
-type MLPRequestMultiError []error
+// TrainMLPRequestMultiError is an error wrapping multiple validation errors
+// returned by TrainMLPRequest.ValidateAll() if the designated constraints
+// aren't met.
+type TrainMLPRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m MLPRequestMultiError) Error() string {
+func (m TrainMLPRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -199,11 +201,11 @@ func (m MLPRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m MLPRequestMultiError) AllErrors() []error { return m }
+func (m TrainMLPRequestMultiError) AllErrors() []error { return m }
 
-// MLPRequestValidationError is the validation error returned by
-// MLPRequest.Validate if the designated constraints aren't met.
-type MLPRequestValidationError struct {
+// TrainMLPRequestValidationError is the validation error returned by
+// TrainMLPRequest.Validate if the designated constraints aren't met.
+type TrainMLPRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -211,22 +213,22 @@ type MLPRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e MLPRequestValidationError) Field() string { return e.field }
+func (e TrainMLPRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e MLPRequestValidationError) Reason() string { return e.reason }
+func (e TrainMLPRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e MLPRequestValidationError) Cause() error { return e.cause }
+func (e TrainMLPRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e MLPRequestValidationError) Key() bool { return e.key }
+func (e TrainMLPRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e MLPRequestValidationError) ErrorName() string { return "MLPRequestValidationError" }
+func (e TrainMLPRequestValidationError) ErrorName() string { return "TrainMLPRequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e MLPRequestValidationError) Error() string {
+func (e TrainMLPRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -238,14 +240,14 @@ func (e MLPRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sMLPRequest.%s: %s%s",
+		"invalid %sTrainMLPRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = MLPRequestValidationError{}
+var _ error = TrainMLPRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -253,7 +255,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = MLPRequestValidationError{}
+} = TrainMLPRequestValidationError{}
 
 // Validate checks the field values on TrainRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
@@ -312,7 +314,7 @@ func (m *TrainRequest) validate(all bool) error {
 
 	oneofRequestPresent := false
 	switch v := m.Request.(type) {
-	case *TrainRequest_GnnRequest:
+	case *TrainRequest_TrainGnnRequest:
 		if v == nil {
 			err := TrainRequestValidationError{
 				field:  "Request",
@@ -326,11 +328,11 @@ func (m *TrainRequest) validate(all bool) error {
 		oneofRequestPresent = true
 
 		if all {
-			switch v := interface{}(m.GetGnnRequest()).(type) {
+			switch v := interface{}(m.GetTrainGnnRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, TrainRequestValidationError{
-						field:  "GnnRequest",
+						field:  "TrainGnnRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -338,23 +340,23 @@ func (m *TrainRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, TrainRequestValidationError{
-						field:  "GnnRequest",
+						field:  "TrainGnnRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetGnnRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetTrainGnnRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return TrainRequestValidationError{
-					field:  "GnnRequest",
+					field:  "TrainGnnRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
 			}
 		}
 
-	case *TrainRequest_MlpRequest:
+	case *TrainRequest_TrainMlpRequest:
 		if v == nil {
 			err := TrainRequestValidationError{
 				field:  "Request",
@@ -368,11 +370,11 @@ func (m *TrainRequest) validate(all bool) error {
 		oneofRequestPresent = true
 
 		if all {
-			switch v := interface{}(m.GetMlpRequest()).(type) {
+			switch v := interface{}(m.GetTrainMlpRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, TrainRequestValidationError{
-						field:  "MlpRequest",
+						field:  "TrainMlpRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -380,16 +382,16 @@ func (m *TrainRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, TrainRequestValidationError{
-						field:  "MlpRequest",
+						field:  "TrainMlpRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetMlpRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetTrainMlpRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return TrainRequestValidationError{
-					field:  "MlpRequest",
+					field:  "TrainMlpRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
