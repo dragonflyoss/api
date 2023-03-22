@@ -23,16 +23,16 @@ pub struct CertificateResponse {
     pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// Generated client implementations.
-pub mod certificate_service_client {
+pub mod certificate_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
     /// Service for managing certificates issued by the CA.
     #[derive(Debug, Clone)]
-    pub struct CertificateServiceClient<T> {
+    pub struct CertificateClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl CertificateServiceClient<tonic::transport::Channel> {
+    impl CertificateClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -43,7 +43,7 @@ pub mod certificate_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> CertificateServiceClient<T>
+    impl<T> CertificateClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
@@ -61,7 +61,7 @@ pub mod certificate_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> CertificateServiceClient<InterceptedService<T, F>>
+        ) -> CertificateClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -75,7 +75,7 @@ pub mod certificate_service_client {
                 http::Request<tonic::body::BoxBody>,
             >>::Error: Into<StdError> + Send + Sync,
         {
-            CertificateServiceClient::new(InterceptedService::new(inner, interceptor))
+            CertificateClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -108,19 +108,19 @@ pub mod certificate_service_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/security.CertificateService/IssueCertificate",
+                "/security.Certificate/IssueCertificate",
             );
             self.inner.unary(request.into_request(), path, codec).await
         }
     }
 }
 /// Generated server implementations.
-pub mod certificate_service_server {
+pub mod certificate_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with CertificateServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with CertificateServer.
     #[async_trait]
-    pub trait CertificateService: Send + Sync + 'static {
+    pub trait Certificate: Send + Sync + 'static {
         /// Using provided CSR, returns a signed certificate.
         async fn issue_certificate(
             &self,
@@ -129,13 +129,13 @@ pub mod certificate_service_server {
     }
     /// Service for managing certificates issued by the CA.
     #[derive(Debug)]
-    pub struct CertificateServiceServer<T: CertificateService> {
+    pub struct CertificateServer<T: Certificate> {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
     }
     struct _Inner<T>(Arc<T>);
-    impl<T: CertificateService> CertificateServiceServer<T> {
+    impl<T: Certificate> CertificateServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -169,9 +169,9 @@ pub mod certificate_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for CertificateServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for CertificateServer<T>
     where
-        T: CertificateService,
+        T: Certificate,
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
@@ -187,11 +187,11 @@ pub mod certificate_service_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/security.CertificateService/IssueCertificate" => {
+                "/security.Certificate/IssueCertificate" => {
                     #[allow(non_camel_case_types)]
-                    struct IssueCertificateSvc<T: CertificateService>(pub Arc<T>);
+                    struct IssueCertificateSvc<T: Certificate>(pub Arc<T>);
                     impl<
-                        T: CertificateService,
+                        T: Certificate,
                     > tonic::server::UnaryService<super::CertificateRequest>
                     for IssueCertificateSvc<T> {
                         type Response = super::CertificateResponse;
@@ -242,7 +242,7 @@ pub mod certificate_service_server {
             }
         }
     }
-    impl<T: CertificateService> Clone for CertificateServiceServer<T> {
+    impl<T: Certificate> Clone for CertificateServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -252,7 +252,7 @@ pub mod certificate_service_server {
             }
         }
     }
-    impl<T: CertificateService> Clone for _Inner<T> {
+    impl<T: Certificate> Clone for _Inner<T> {
         fn clone(&self) -> Self {
             Self(self.0.clone())
         }
@@ -262,8 +262,7 @@ pub mod certificate_service_server {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: CertificateService> tonic::server::NamedService
-    for CertificateServiceServer<T> {
-        const NAME: &'static str = "security.CertificateService";
+    impl<T: Certificate> tonic::server::NamedService for CertificateServer<T> {
+        const NAME: &'static str = "security.Certificate";
     }
 }
