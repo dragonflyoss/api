@@ -319,6 +319,50 @@ message ListApplicationsResponse {
   repeated Application applications = 1;
 }
 
+// CreateGNNRequest represents to create GNN model request of TrainRequest.
+message CreateGNNRequest {
+  // Protocol buffer file of model.
+  bytes data = 1 [(validate.rules).bytes.min_len = 1];
+
+  // Recall of the model.
+  float recall = 2 [(validate.rules).float = {gte: 0, lte: 1}];
+
+  // Precision of the model.
+  float precision = 3 [(validate.rules).float = {gte: 0, lte: 1}];
+
+  // F1-Score of the model.
+  float f1_score = 4 [(validate.rules).float = {gte: 0, lte: 1}];
+}
+
+// CreateMLPRequest represents to create MLP model request of TrainRequest.
+message CreateMLPRequest {
+  // Protocol buffer file of model.
+  bytes data = 1 [(validate.rules).bytes.min_len = 1];
+
+  // MSE of the model.
+  float mse = 2 [(validate.rules).float = {gte: 0}];
+
+  // MAE of the model.
+  float mae = 3 [(validate.rules).float = {gte: 0}];
+}
+
+// CreateModelRequest represents request of CreateModel.
+message CreateModelRequest {
+  // Scheduler hostname.
+  string hostname = 1 [(validate.rules).string.min_len = 1];
+  // Scheduler ip.
+  string ip = 2 [(validate.rules).string.ip = true];
+  // Scheduler cluster id.
+  uint64 cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
+
+  oneof request {
+    option (validate.required) = true;
+
+    CreateGNNRequest create_gnn_request = 4;
+    CreateMLPRequest create_mlp_request = 5;
+  }
+}
+
 // KeepAliveRequest represents request of KeepAlive.
 message KeepAliveRequest {
   // Request source type.
@@ -356,6 +400,9 @@ service Manager {
 
   // List applications configuration.
   rpc ListApplications(ListApplicationsRequest)returns(ListApplicationsResponse);
+
+  // Create model and update data of model to object storage.
+  rpc CreateModel(CreateModelRequest)returns(google.protobuf.Empty);
 
   // KeepAlive with manager.
   rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
