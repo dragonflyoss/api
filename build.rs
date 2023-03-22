@@ -10,7 +10,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "proto/dfdaemon.proto",
                 "proto/manager.proto",
                 "proto/scheduler.proto",
-                "proto/trainer.proto",
             ],
             &["proto/"],
         )?;
