@@ -369,9 +369,9 @@ pub struct Probe {
     /// RTT is the round-trip time sent via this pinger.
     #[prost(message, optional, tag = "2")]
     pub rtt: ::core::option::Option<::prost_types::Duration>,
-    /// Task update time.
+    /// Probe create time.
     #[prost(message, optional, tag = "3")]
-    pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub created_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// ProbesOfHost represents probes information of the host.
 #[allow(clippy::derive_partial_eq_without_eq)]

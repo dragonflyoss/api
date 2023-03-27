@@ -265,8 +265,8 @@ message Probe {
   common.Host host = 1;
   // RTT is the round-trip time sent via this pinger.
   google.protobuf.Duration rtt = 2;
-  // Task update time.
-  google.protobuf.Timestamp updated_at = 3;
+  // Probe create time.
+  google.protobuf.Timestamp created_at = 3;
 }
 
 // ProbesOfHost represents probes information of the host.
