@@ -3507,9 +3507,9 @@ func (m *Probe) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetUpdatedAt() == nil {
+	if m.GetCreatedAt() == nil {
 		err := ProbeValidationError{
-			field:  "UpdatedAt",
+			field:  "CreatedAt",
 			reason: "value is required",
 		}
 		if !all {

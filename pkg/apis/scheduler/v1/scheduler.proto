@@ -378,8 +378,8 @@ message Probe {
   common.Host host = 1 [(validate.rules).message.required = true];
   // RTT is the round-trip time sent via this pinger.
   google.protobuf.Duration rtt = 2 [(validate.rules).duration.required = true];
-  // Task update time.
-  google.protobuf.Timestamp updated_at = 3 [(validate.rules).timestamp.required = true];
+  // Probe create time.
+  google.protobuf.Timestamp created_at = 3 [(validate.rules).timestamp.required = true];
 }
 
 // ProbesOfHost represents probes information of the host.
