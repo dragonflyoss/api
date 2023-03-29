@@ -1125,6 +1125,8 @@ func (m *Scheduler) validate(all bool) error {
 
 	}
 
+	// no validation rules for Features
+
 	if len(errors) > 0 {
 		return SchedulerMultiError(errors)
 	}
