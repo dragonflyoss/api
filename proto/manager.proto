@@ -163,6 +163,8 @@ message Scheduler {
   SchedulerCluster scheduler_cluster = 9;
   // Seed peers to which the scheduler belongs.
   repeated SeedPeer seed_peers = 10;
+  // Feature flags of scheduler.
+  map<string, bool> features = 11;
 }
 
 // GetSchedulerRequest represents request of GetScheduler.
