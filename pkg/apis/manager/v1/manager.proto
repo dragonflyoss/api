@@ -169,7 +169,7 @@ message Scheduler {
   // Seed peers to which the scheduler belongs.
   repeated SeedPeer seed_peers = 13;
   // Feature flags of scheduler.
-  map<string, bool> features = 14;
+  bytes features = 14;
 }
 
 // GetSchedulerRequest represents request of GetScheduler.
