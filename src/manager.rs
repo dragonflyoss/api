@@ -192,8 +192,8 @@ pub struct Scheduler {
     #[prost(message, repeated, tag = "10")]
     pub seed_peers: ::prost::alloc::vec::Vec<SeedPeer>,
     /// Feature flags of scheduler.
-    #[prost(map = "string, bool", tag = "11")]
-    pub features: ::std::collections::HashMap<::prost::alloc::string::String, bool>,
+    #[prost(bytes = "vec", tag = "11")]
+    pub features: ::prost::alloc::vec::Vec<u8>,
 }
 /// GetSchedulerRequest represents request of GetScheduler.
 #[allow(clippy::derive_partial_eq_without_eq)]
