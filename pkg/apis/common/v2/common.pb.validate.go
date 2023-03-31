@@ -1052,10 +1052,10 @@ func (m *CPU) validate(all bool) error {
 
 	// no validation rules for PhysicalCount
 
-	if val := m.GetPercent(); val < 0 || val > 100 {
+	if m.GetPercent() < 0 {
 		err := CPUValidationError{
 			field:  "Percent",
-			reason: "value must be inside range [0, 100]",
+			reason: "value must be greater than or equal to 0",
 		}
 		if !all {
 			return err
@@ -1063,10 +1063,10 @@ func (m *CPU) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if val := m.GetProcessPercent(); val < 0 || val > 100 {
+	if m.GetProcessPercent() < 0 {
 		err := CPUValidationError{
 			field:  "ProcessPercent",
-			reason: "value must be inside range [0, 100]",
+			reason: "value must be greater than or equal to 0",
 		}
 		if !all {
 			return err
