@@ -278,9 +278,9 @@ message CPU {
   // Number of physical cores in the system
   uint32 physical_count = 2;
   // Percent calculates the percentage of cpu used.
-  double percent = 3 [(validate.rules).double = {gte: 0, lte: 100}];
+  double percent = 3 [(validate.rules).double.gte = 0];
   // Calculates the percentage of cpu used by process.
-  double process_percent = 4 [(validate.rules).double = {gte: 0, lte: 100}];
+  double process_percent = 4 [(validate.rules).double.gte = 0];
   // CPUTimes contains the amounts of time the CPU has spent performing different kinds of work.
   CPUTimes times = 5 [(validate.rules).message.required = true];
 }
