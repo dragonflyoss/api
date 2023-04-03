@@ -451,7 +451,7 @@ pub mod scheduler_client {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D: TryInto<tonic::transport::Endpoint>,
             D::Error: Into<StdError>,
         {
             let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
@@ -507,13 +507,29 @@ pub mod scheduler_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
         /// AnnouncePeer announces peer to scheduler.
         pub async fn announce_peer(
             &mut self,
             request: impl tonic::IntoStreamingRequest<
                 Message = super::AnnouncePeerRequest,
             >,
-        ) -> Result<
+        ) -> std::result::Result<
             tonic::Response<tonic::codec::Streaming<super::AnnouncePeerResponse>>,
             tonic::Status,
         > {
@@ -530,13 +546,19 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/AnnouncePeer",
             );
-            self.inner.streaming(request.into_streaming_request(), path, codec).await
+            let mut req = request.into_streaming_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "AnnouncePeer"));
+            self.inner.streaming(req, path, codec).await
         }
         /// Checks information of peer.
         pub async fn stat_peer(
             &mut self,
             request: impl tonic::IntoRequest<super::StatPeerRequest>,
-        ) -> Result<tonic::Response<super::super::common::Peer>, tonic::Status> {
+        ) -> std::result::Result<
+            tonic::Response<super::super::common::Peer>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -550,13 +572,16 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/StatPeer",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "StatPeer"));
+            self.inner.unary(req, path, codec).await
         }
         /// LeavePeer releases peer in scheduler.
         pub async fn leave_peer(
             &mut self,
             request: impl tonic::IntoRequest<super::LeavePeerRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -570,14 +595,20 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/LeavePeer",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "LeavePeer"));
+            self.inner.unary(req, path, codec).await
         }
         /// TODO exchange peer api definition.
         /// ExchangePeer exchanges peer information.
         pub async fn exchange_peer(
             &mut self,
             request: impl tonic::IntoRequest<super::ExchangePeerRequest>,
-        ) -> Result<tonic::Response<super::ExchangePeerResponse>, tonic::Status> {
+        ) -> std::result::Result<
+            tonic::Response<super::ExchangePeerResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -591,13 +622,19 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/ExchangePeer",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "ExchangePeer"));
+            self.inner.unary(req, path, codec).await
         }
         /// Checks information of task.
         pub async fn stat_task(
             &mut self,
             request: impl tonic::IntoRequest<super::StatTaskRequest>,
-        ) -> Result<tonic::Response<super::super::common::Task>, tonic::Status> {
+        ) -> std::result::Result<
+            tonic::Response<super::super::common::Task>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -611,13 +648,16 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/StatTask",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "StatTask"));
+            self.inner.unary(req, path, codec).await
         }
         /// AnnounceHost announces host to scheduler.
         pub async fn announce_host(
             &mut self,
             request: impl tonic::IntoRequest<super::AnnounceHostRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -631,13 +671,16 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/AnnounceHost",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "AnnounceHost"));
+            self.inner.unary(req, path, codec).await
         }
         /// LeaveHost releases host in scheduler.
         pub async fn leave_host(
             &mut self,
             request: impl tonic::IntoRequest<super::LeaveHostRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -651,13 +694,16 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/LeaveHost",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "LeaveHost"));
+            self.inner.unary(req, path, codec).await
         }
         /// SyncProbes sync probes of the host.
         pub async fn sync_probes(
             &mut self,
             request: impl tonic::IntoStreamingRequest<Message = super::SyncProbesRequest>,
-        ) -> Result<
+        ) -> std::result::Result<
             tonic::Response<tonic::codec::Streaming<super::SyncProbesResponse>>,
             tonic::Status,
         > {
@@ -674,7 +720,10 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/SyncProbes",
             );
-            self.inner.streaming(request.into_streaming_request(), path, codec).await
+            let mut req = request.into_streaming_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "SyncProbes"));
+            self.inner.streaming(req, path, codec).await
         }
         /// SyncNetworkTopology sync network topology of the hosts.
         pub async fn sync_network_topology(
@@ -682,7 +731,7 @@ pub mod scheduler_client {
             request: impl tonic::IntoStreamingRequest<
                 Message = super::SyncNetworkTopologyRequest,
             >,
-        ) -> Result<tonic::Response<()>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -696,9 +745,10 @@ pub mod scheduler_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/scheduler.Scheduler/SyncNetworkTopology",
             );
-            self.inner
-                .client_streaming(request.into_streaming_request(), path, codec)
-                .await
+            let mut req = request.into_streaming_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.Scheduler", "SyncNetworkTopology"));
+            self.inner.client_streaming(req, path, codec).await
         }
     }
 }
@@ -711,7 +761,7 @@ pub mod scheduler_server {
     pub trait Scheduler: Send + Sync + 'static {
         /// Server streaming response type for the AnnouncePeer method.
         type AnnouncePeerStream: futures_core::Stream<
-                Item = Result<super::AnnouncePeerResponse, tonic::Status>,
+                Item = std::result::Result<super::AnnouncePeerResponse, tonic::Status>,
             >
             + Send
             + 'static;
@@ -719,41 +769,53 @@ pub mod scheduler_server {
         async fn announce_peer(
             &self,
             request: tonic::Request<tonic::Streaming<super::AnnouncePeerRequest>>,
-        ) -> Result<tonic::Response<Self::AnnouncePeerStream>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<Self::AnnouncePeerStream>,
+            tonic::Status,
+        >;
         /// Checks information of peer.
         async fn stat_peer(
             &self,
             request: tonic::Request<super::StatPeerRequest>,
-        ) -> Result<tonic::Response<super::super::common::Peer>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::super::common::Peer>,
+            tonic::Status,
+        >;
         /// LeavePeer releases peer in scheduler.
         async fn leave_peer(
             &self,
             request: tonic::Request<super::LeavePeerRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// TODO exchange peer api definition.
         /// ExchangePeer exchanges peer information.
         async fn exchange_peer(
             &self,
             request: tonic::Request<super::ExchangePeerRequest>,
-        ) -> Result<tonic::Response<super::ExchangePeerResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::ExchangePeerResponse>,
+            tonic::Status,
+        >;
         /// Checks information of task.
         async fn stat_task(
             &self,
             request: tonic::Request<super::StatTaskRequest>,
-        ) -> Result<tonic::Response<super::super::common::Task>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::super::common::Task>,
+            tonic::Status,
+        >;
         /// AnnounceHost announces host to scheduler.
         async fn announce_host(
             &self,
             request: tonic::Request<super::AnnounceHostRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// LeaveHost releases host in scheduler.
         async fn leave_host(
             &self,
             request: tonic::Request<super::LeaveHostRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Server streaming response type for the SyncProbes method.
         type SyncProbesStream: futures_core::Stream<
-                Item = Result<super::SyncProbesResponse, tonic::Status>,
+                Item = std::result::Result<super::SyncProbesResponse, tonic::Status>,
             >
             + Send
             + 'static;
@@ -761,12 +823,12 @@ pub mod scheduler_server {
         async fn sync_probes(
             &self,
             request: tonic::Request<tonic::Streaming<super::SyncProbesRequest>>,
-        ) -> Result<tonic::Response<Self::SyncProbesStream>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<Self::SyncProbesStream>, tonic::Status>;
         /// SyncNetworkTopology sync network topology of the hosts.
         async fn sync_network_topology(
             &self,
             request: tonic::Request<tonic::Streaming<super::SyncNetworkTopologyRequest>>,
-        ) -> Result<tonic::Response<()>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
     }
     /// Scheduler RPC Service.
     #[derive(Debug)]
@@ -774,6 +836,8 @@ pub mod scheduler_server {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
+        max_decoding_message_size: Option<usize>,
+        max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Scheduler> SchedulerServer<T> {
@@ -786,6 +850,8 @@ pub mod scheduler_server {
                 inner,
                 accept_compression_encodings: Default::default(),
                 send_compression_encodings: Default::default(),
+                max_decoding_message_size: None,
+                max_encoding_message_size: None,
             }
         }
         pub fn with_interceptor<F>(
@@ -809,6 +875,22 @@ pub mod scheduler_server {
             self.send_compression_encodings.enable(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.max_decoding_message_size = Some(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.max_encoding_message_size = Some(limit);
+            self
+        }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for SchedulerServer<T>
     where
@@ -822,7 +904,7 @@ pub mod scheduler_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<Result<(), Self::Error>> {
+        ) -> Poll<std::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -847,7 +929,7 @@ pub mod scheduler_server {
                                 tonic::Streaming<super::AnnouncePeerRequest>,
                             >,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).announce_peer(request).await
                             };
@@ -856,6 +938,8 @@ pub mod scheduler_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -865,6 +949,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.streaming(method, req).await;
                         Ok(res)
@@ -887,13 +975,15 @@ pub mod scheduler_server {
                             &mut self,
                             request: tonic::Request<super::StatPeerRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).stat_peer(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -903,6 +993,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -925,13 +1019,15 @@ pub mod scheduler_server {
                             &mut self,
                             request: tonic::Request<super::LeavePeerRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).leave_peer(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -941,6 +1037,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -963,7 +1063,7 @@ pub mod scheduler_server {
                             &mut self,
                             request: tonic::Request<super::ExchangePeerRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).exchange_peer(request).await
                             };
@@ -972,6 +1072,8 @@ pub mod scheduler_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -981,6 +1083,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1003,13 +1109,15 @@ pub mod scheduler_server {
                             &mut self,
                             request: tonic::Request<super::StatTaskRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).stat_task(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1019,6 +1127,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1041,7 +1153,7 @@ pub mod scheduler_server {
                             &mut self,
                             request: tonic::Request<super::AnnounceHostRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).announce_host(request).await
                             };
@@ -1050,6 +1162,8 @@ pub mod scheduler_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1059,6 +1173,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1081,13 +1199,15 @@ pub mod scheduler_server {
                             &mut self,
                             request: tonic::Request<super::LeaveHostRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).leave_host(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1097,6 +1217,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1122,13 +1246,15 @@ pub mod scheduler_server {
                                 tonic::Streaming<super::SyncProbesRequest>,
                             >,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).sync_probes(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1138,6 +1264,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.streaming(method, req).await;
                         Ok(res)
@@ -1163,7 +1293,7 @@ pub mod scheduler_server {
                                 tonic::Streaming<super::SyncNetworkTopologyRequest>,
                             >,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).sync_network_topology(request).await
                             };
@@ -1172,6 +1302,8 @@ pub mod scheduler_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1181,6 +1313,10 @@ pub mod scheduler_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.client_streaming(method, req).await;
                         Ok(res)
@@ -1209,12 +1345,14 @@ pub mod scheduler_server {
                 inner,
                 accept_compression_encodings: self.accept_compression_encodings,
                 send_compression_encodings: self.send_compression_encodings,
+                max_decoding_message_size: self.max_decoding_message_size,
+                max_encoding_message_size: self.max_encoding_message_size,
             }
         }
     }
     impl<T: Scheduler> Clone for _Inner<T> {
         fn clone(&self) -> Self {
-            Self(self.0.clone())
+            Self(Arc::clone(&self.0))
         }
     }
     impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
