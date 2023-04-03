@@ -472,7 +472,7 @@ pub mod manager_client {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
-            D: std::convert::TryInto<tonic::transport::Endpoint>,
+            D: TryInto<tonic::transport::Endpoint>,
             D::Error: Into<StdError>,
         {
             let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
@@ -528,11 +528,27 @@ pub mod manager_client {
             self.inner = self.inner.accept_compressed(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
         /// Get SeedPeer and SeedPeer cluster configuration.
         pub async fn get_seed_peer(
             &mut self,
             request: impl tonic::IntoRequest<super::GetSeedPeerRequest>,
-        ) -> Result<tonic::Response<super::SeedPeer>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::SeedPeer>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -546,13 +562,16 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/GetSeedPeer",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.Manager", "GetSeedPeer"));
+            self.inner.unary(req, path, codec).await
         }
         /// Update SeedPeer configuration.
         pub async fn update_seed_peer(
             &mut self,
             request: impl tonic::IntoRequest<super::UpdateSeedPeerRequest>,
-        ) -> Result<tonic::Response<super::SeedPeer>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::SeedPeer>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -566,13 +585,16 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/UpdateSeedPeer",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.Manager", "UpdateSeedPeer"));
+            self.inner.unary(req, path, codec).await
         }
         /// Get Scheduler and Scheduler cluster configuration.
         pub async fn get_scheduler(
             &mut self,
             request: impl tonic::IntoRequest<super::GetSchedulerRequest>,
-        ) -> Result<tonic::Response<super::Scheduler>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::Scheduler>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -586,13 +608,16 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/GetScheduler",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.Manager", "GetScheduler"));
+            self.inner.unary(req, path, codec).await
         }
         /// Update scheduler configuration.
         pub async fn update_scheduler(
             &mut self,
             request: impl tonic::IntoRequest<super::UpdateSchedulerRequest>,
-        ) -> Result<tonic::Response<super::Scheduler>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::Scheduler>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -606,13 +631,19 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/UpdateScheduler",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.Manager", "UpdateScheduler"));
+            self.inner.unary(req, path, codec).await
         }
         /// List acitve schedulers configuration.
         pub async fn list_schedulers(
             &mut self,
             request: impl tonic::IntoRequest<super::ListSchedulersRequest>,
-        ) -> Result<tonic::Response<super::ListSchedulersResponse>, tonic::Status> {
+        ) -> std::result::Result<
+            tonic::Response<super::ListSchedulersResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -626,13 +657,16 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/ListSchedulers",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.Manager", "ListSchedulers"));
+            self.inner.unary(req, path, codec).await
         }
         /// Get ObjectStorage configuration.
         pub async fn get_object_storage(
             &mut self,
             request: impl tonic::IntoRequest<super::GetObjectStorageRequest>,
-        ) -> Result<tonic::Response<super::ObjectStorage>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<super::ObjectStorage>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -646,13 +680,19 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/GetObjectStorage",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.Manager", "GetObjectStorage"));
+            self.inner.unary(req, path, codec).await
         }
         /// List buckets configuration.
         pub async fn list_buckets(
             &mut self,
             request: impl tonic::IntoRequest<super::ListBucketsRequest>,
-        ) -> Result<tonic::Response<super::ListBucketsResponse>, tonic::Status> {
+        ) -> std::result::Result<
+            tonic::Response<super::ListBucketsResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -666,13 +706,19 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/ListBuckets",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.Manager", "ListBuckets"));
+            self.inner.unary(req, path, codec).await
         }
         /// List applications configuration.
         pub async fn list_applications(
             &mut self,
             request: impl tonic::IntoRequest<super::ListApplicationsRequest>,
-        ) -> Result<tonic::Response<super::ListApplicationsResponse>, tonic::Status> {
+        ) -> std::result::Result<
+            tonic::Response<super::ListApplicationsResponse>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -686,13 +732,16 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/ListApplications",
             );
-            self.inner.unary(request.into_request(), path, codec).await
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.Manager", "ListApplications"));
+            self.inner.unary(req, path, codec).await
         }
         /// KeepAlive with manager.
         pub async fn keep_alive(
             &mut self,
             request: impl tonic::IntoStreamingRequest<Message = super::KeepAliveRequest>,
-        ) -> Result<tonic::Response<()>, tonic::Status> {
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -706,9 +755,9 @@ pub mod manager_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/manager.Manager/KeepAlive",
             );
-            self.inner
-                .client_streaming(request.into_streaming_request(), path, codec)
-                .await
+            let mut req = request.into_streaming_request();
+            req.extensions_mut().insert(GrpcMethod::new("manager.Manager", "KeepAlive"));
+            self.inner.client_streaming(req, path, codec).await
         }
     }
 }
@@ -723,47 +772,56 @@ pub mod manager_server {
         async fn get_seed_peer(
             &self,
             request: tonic::Request<super::GetSeedPeerRequest>,
-        ) -> Result<tonic::Response<super::SeedPeer>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::SeedPeer>, tonic::Status>;
         /// Update SeedPeer configuration.
         async fn update_seed_peer(
             &self,
             request: tonic::Request<super::UpdateSeedPeerRequest>,
-        ) -> Result<tonic::Response<super::SeedPeer>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::SeedPeer>, tonic::Status>;
         /// Get Scheduler and Scheduler cluster configuration.
         async fn get_scheduler(
             &self,
             request: tonic::Request<super::GetSchedulerRequest>,
-        ) -> Result<tonic::Response<super::Scheduler>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::Scheduler>, tonic::Status>;
         /// Update scheduler configuration.
         async fn update_scheduler(
             &self,
             request: tonic::Request<super::UpdateSchedulerRequest>,
-        ) -> Result<tonic::Response<super::Scheduler>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::Scheduler>, tonic::Status>;
         /// List acitve schedulers configuration.
         async fn list_schedulers(
             &self,
             request: tonic::Request<super::ListSchedulersRequest>,
-        ) -> Result<tonic::Response<super::ListSchedulersResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::ListSchedulersResponse>,
+            tonic::Status,
+        >;
         /// Get ObjectStorage configuration.
         async fn get_object_storage(
             &self,
             request: tonic::Request<super::GetObjectStorageRequest>,
-        ) -> Result<tonic::Response<super::ObjectStorage>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<super::ObjectStorage>, tonic::Status>;
         /// List buckets configuration.
         async fn list_buckets(
             &self,
             request: tonic::Request<super::ListBucketsRequest>,
-        ) -> Result<tonic::Response<super::ListBucketsResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::ListBucketsResponse>,
+            tonic::Status,
+        >;
         /// List applications configuration.
         async fn list_applications(
             &self,
             request: tonic::Request<super::ListApplicationsRequest>,
-        ) -> Result<tonic::Response<super::ListApplicationsResponse>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<super::ListApplicationsResponse>,
+            tonic::Status,
+        >;
         /// KeepAlive with manager.
         async fn keep_alive(
             &self,
             request: tonic::Request<tonic::Streaming<super::KeepAliveRequest>>,
-        ) -> Result<tonic::Response<()>, tonic::Status>;
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
     }
     /// Manager RPC Service.
     #[derive(Debug)]
@@ -771,6 +829,8 @@ pub mod manager_server {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
+        max_decoding_message_size: Option<usize>,
+        max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
     impl<T: Manager> ManagerServer<T> {
@@ -783,6 +843,8 @@ pub mod manager_server {
                 inner,
                 accept_compression_encodings: Default::default(),
                 send_compression_encodings: Default::default(),
+                max_decoding_message_size: None,
+                max_encoding_message_size: None,
             }
         }
         pub fn with_interceptor<F>(
@@ -806,6 +868,22 @@ pub mod manager_server {
             self.send_compression_encodings.enable(encoding);
             self
         }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.max_decoding_message_size = Some(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.max_encoding_message_size = Some(limit);
+            self
+        }
     }
     impl<T, B> tonic::codegen::Service<http::Request<B>> for ManagerServer<T>
     where
@@ -819,7 +897,7 @@ pub mod manager_server {
         fn poll_ready(
             &mut self,
             _cx: &mut Context<'_>,
-        ) -> Poll<Result<(), Self::Error>> {
+        ) -> Poll<std::result::Result<(), Self::Error>> {
             Poll::Ready(Ok(()))
         }
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
@@ -841,7 +919,7 @@ pub mod manager_server {
                             &mut self,
                             request: tonic::Request<super::GetSeedPeerRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).get_seed_peer(request).await
                             };
@@ -850,6 +928,8 @@ pub mod manager_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -859,6 +939,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -881,7 +965,7 @@ pub mod manager_server {
                             &mut self,
                             request: tonic::Request<super::UpdateSeedPeerRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).update_seed_peer(request).await
                             };
@@ -890,6 +974,8 @@ pub mod manager_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -899,6 +985,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -921,7 +1011,7 @@ pub mod manager_server {
                             &mut self,
                             request: tonic::Request<super::GetSchedulerRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).get_scheduler(request).await
                             };
@@ -930,6 +1020,8 @@ pub mod manager_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -939,6 +1031,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -961,7 +1057,7 @@ pub mod manager_server {
                             &mut self,
                             request: tonic::Request<super::UpdateSchedulerRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).update_scheduler(request).await
                             };
@@ -970,6 +1066,8 @@ pub mod manager_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -979,6 +1077,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1001,7 +1103,7 @@ pub mod manager_server {
                             &mut self,
                             request: tonic::Request<super::ListSchedulersRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).list_schedulers(request).await
                             };
@@ -1010,6 +1112,8 @@ pub mod manager_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1019,6 +1123,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1041,7 +1149,7 @@ pub mod manager_server {
                             &mut self,
                             request: tonic::Request<super::GetObjectStorageRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).get_object_storage(request).await
                             };
@@ -1050,6 +1158,8 @@ pub mod manager_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1059,6 +1169,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1081,7 +1195,7 @@ pub mod manager_server {
                             &mut self,
                             request: tonic::Request<super::ListBucketsRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).list_buckets(request).await
                             };
@@ -1090,6 +1204,8 @@ pub mod manager_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1099,6 +1215,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1121,7 +1241,7 @@ pub mod manager_server {
                             &mut self,
                             request: tonic::Request<super::ListApplicationsRequest>,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 (*inner).list_applications(request).await
                             };
@@ -1130,6 +1250,8 @@ pub mod manager_server {
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1139,6 +1261,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
                         Ok(res)
@@ -1163,13 +1289,15 @@ pub mod manager_server {
                                 tonic::Streaming<super::KeepAliveRequest>,
                             >,
                         ) -> Self::Future {
-                            let inner = self.0.clone();
+                            let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).keep_alive(request).await };
                             Box::pin(fut)
                         }
                     }
                     let accept_compression_encodings = self.accept_compression_encodings;
                     let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
@@ -1179,6 +1307,10 @@ pub mod manager_server {
                             .apply_compression_config(
                                 accept_compression_encodings,
                                 send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
                             );
                         let res = grpc.client_streaming(method, req).await;
                         Ok(res)
@@ -1207,12 +1339,14 @@ pub mod manager_server {
                 inner,
                 accept_compression_encodings: self.accept_compression_encodings,
                 send_compression_encodings: self.send_compression_encodings,
+                max_decoding_message_size: self.max_decoding_message_size,
+                max_encoding_message_size: self.max_encoding_message_size,
             }
         }
     }
     impl<T: Manager> Clone for _Inner<T> {
         fn clone(&self) -> Self {
-            Self(self.0.clone())
+            Self(Arc::clone(&self.0))
         }
     }
     impl<T: std::fmt::Debug> std::fmt::Debug for _Inner<T> {
