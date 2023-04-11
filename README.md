@@ -20,7 +20,7 @@ Join the conversation and help the community.
 - **Developer Group**: <dragonfly-developers@googlegroups.com>
 - **Github Discussions**: [Dragonfly Discussion Forum][discussion]
 - **Twitter**: [@dragonfly_oss](https://twitter.com/dragonfly_oss)
-- **DingTalk**: [23304666](https://h5.dingtalk.com/circle/healthCheckin.html?dtaction=os&corpId=ding0ba5f94d8290b9f7f235fbadcd45de0c&f4462ef5-a7d=9bec3e94-b34&cbdbhh=qwertyuiop)
+- **DingTalk**: [22880028764](https://qr.dingtalk.com/action/joingroup?code=v1,k1,pkV9IbsSyDusFQdByPSK3HfCG61ZCLeb8b/lpQ3uUqI=&_dt_no_comment=1&origin=11)
 
 ## Contributing
 
