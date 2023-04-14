@@ -156,6 +156,8 @@ func (m *DownRequest) validate(all bool) error {
 
 	// no validation rules for Recursive
 
+	// no validation rules for CreateNewFile
+
 	if len(errors) > 0 {
 		return DownRequestMultiError(errors)
 	}

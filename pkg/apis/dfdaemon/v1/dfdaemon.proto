@@ -49,6 +49,8 @@ message DownRequest{
   bool keep_original_offset = 12;
   // Recursive download, when enabled, daemon will call resource list api to list and then recursive download each object.
   bool recursive = 13;
+  // Create new file rather than any link to cached file, use this feature, will make file ready slowly, but is useful for multiple users environment.
+  bool create_new_file = 14;
 }
 
 message DownResult{
