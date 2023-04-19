@@ -1,23 +1,3 @@
-/// SecurityGroup represents security group of cluster.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SecurityGroup {
-    /// Group id.
-    #[prost(uint64, tag = "1")]
-    pub id: u64,
-    /// Group name.
-    #[prost(string, tag = "2")]
-    pub name: ::prost::alloc::string::String,
-    /// Group biography.
-    #[prost(string, tag = "3")]
-    pub bio: ::prost::alloc::string::String,
-    /// Group domain.
-    #[prost(string, tag = "4")]
-    pub domain: ::prost::alloc::string::String,
-    /// Group proxy domain.
-    #[prost(string, tag = "5")]
-    pub proxy_domain: ::prost::alloc::string::String,
-}
 /// SeedPeerCluster represents cluster of seed peer.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -153,9 +133,6 @@ pub struct SchedulerCluster {
     /// Cluster scopes.
     #[prost(bytes = "vec", tag = "6")]
     pub scopes: ::prost::alloc::vec::Vec<u8>,
-    /// Security group to which the scheduler cluster belongs.
-    #[prost(message, optional, tag = "7")]
-    pub security_group: ::core::option::Option<SecurityGroup>,
 }
 /// SeedPeerCluster represents scheduler for network.
 #[allow(clippy::derive_partial_eq_without_eq)]

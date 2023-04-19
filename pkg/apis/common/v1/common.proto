@@ -241,8 +241,6 @@ message Host {
   int32 port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Port of download server.
   int32 download_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // Security domain for network.
-  string security_domain = 6 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Host location, eg: area|country|province|city.
   string location = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // IDC where the peer host is located.
