@@ -269,12 +269,10 @@ message Network {
   uint32 tcp_connection_count = 1;
   // Return count of upload tcp connections opened and status is ESTABLISHED.
   uint32 upload_tcp_connection_count = 2;
-  // Security domain for network.
-  string security_domain = 3;
   // Location path(area|country|province|city|...).
-  string location = 4;
+  string location = 3;
   // IDC where the peer host is located
-  string idc = 5;
+  string idc = 4;
 }
 
 // Disk Stat.

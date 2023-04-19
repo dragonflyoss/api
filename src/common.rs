@@ -240,14 +240,11 @@ pub struct Network {
     /// Return count of upload tcp connections opened and status is ESTABLISHED.
     #[prost(uint32, tag = "2")]
     pub upload_tcp_connection_count: u32,
-    /// Security domain for network.
-    #[prost(string, tag = "3")]
-    pub security_domain: ::prost::alloc::string::String,
     /// Location path(area|country|province|city|...).
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "3")]
     pub location: ::prost::alloc::string::String,
     /// IDC where the peer host is located
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "4")]
     pub idc: ::prost::alloc::string::String,
 }
 /// Disk Stat.

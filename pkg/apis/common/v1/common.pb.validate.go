@@ -983,21 +983,6 @@ func (m *Host) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetSecurityDomain() != "" {
-
-		if utf8.RuneCountInString(m.GetSecurityDomain()) < 1 {
-			err := HostValidationError{
-				field:  "SecurityDomain",
-				reason: "value length must be at least 1 runes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if m.GetLocation() != "" {
 
 		if utf8.RuneCountInString(m.GetLocation()) < 1 {

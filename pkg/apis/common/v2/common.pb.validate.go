@@ -1553,8 +1553,6 @@ func (m *Network) validate(all bool) error {
 
 	// no validation rules for UploadTcpConnectionCount
 
-	// no validation rules for SecurityDomain
-
 	// no validation rules for Location
 
 	// no validation rules for Idc

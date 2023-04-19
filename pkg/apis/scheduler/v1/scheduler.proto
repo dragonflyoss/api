@@ -85,8 +85,6 @@ message PeerHost{
   int32 down_port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Peer hostname.
   string hostname = 5 [(validate.rules).string.hostname = true];
-  // Security domain for network.
-  string security_domain = 6;
   // Location path(area|country|province|city|...).
   string location = 7;
   // IDC where the peer host is located
@@ -156,8 +154,6 @@ message PeerResult{
   string peer_id = 2 [(validate.rules).string.min_len = 1];
   // Source host ip.
   string src_ip = 3 [(validate.rules).string.ip = true];
-  // Security domain.
-  string security_domain = 4;
   // IDC where the peer host is located
   string idc = 5;
   // Download url.
@@ -332,8 +328,6 @@ message Network {
   uint32 tcp_connection_count = 1;
   // Return count of upload tcp connections opened and status is ESTABLISHED.
   uint32 upload_tcp_connection_count = 2;
-  // Security domain for network.
-  string security_domain = 3;
   // Location path(area|country|province|city|...).
   string location = 4;
   // IDC where the peer host is located

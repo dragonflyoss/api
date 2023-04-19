@@ -674,8 +674,6 @@ func (m *PeerHost) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for SecurityDomain
-
 	// no validation rules for Location
 
 	// no validation rules for Idc
@@ -1275,8 +1273,6 @@ func (m *PeerResult) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
-
-	// no validation rules for SecurityDomain
 
 	// no validation rules for Idc
 
@@ -3113,8 +3109,6 @@ func (m *Network) validate(all bool) error {
 	// no validation rules for TcpConnectionCount
 
 	// no validation rules for UploadTcpConnectionCount
-
-	// no validation rules for SecurityDomain
 
 	// no validation rules for Location
 

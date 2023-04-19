@@ -34,20 +34,6 @@ enum SourceType {
   SEED_PEER_SOURCE = 2;
 }
 
-// SecurityGroup represents security group of cluster.
-message SecurityGroup {
-  // Group id.
-  uint64 id = 1;
-  // Group name.
-  string name = 2;
-  // Group biography.
-  string bio = 3;
-  // Group domain.
-  string domain = 4;
-  // Group proxy domain.
-  string proxy_domain = 5;
-}
-
 // SeedPeerCluster represents cluster of seed peer.
 message SeedPeerCluster {
   // Cluster id.
@@ -140,8 +126,6 @@ message SchedulerCluster {
   bytes client_config = 5;
   // Cluster scopes.
   bytes scopes = 6;
-  // Security group to which the scheduler cluster belongs.
-  SecurityGroup security_group = 7;
 }
 
 // SeedPeerCluster represents scheduler for network.
