@@ -291,26 +291,6 @@ message SyncProbesResponse {
   google.protobuf.Duration probe_interval = 2;
 }
 
-// UpdateHostsRequest represents update hosts request of SyncNetworkTopologyRequest.
-message UpdateHostsRequest {
-  // Hosts needs to be updated.
-  repeated ProbesOfHost probes_of_hosts = 1;
-}
-
-// DeleteHostsRequest represents delete hosts request of SyncNetworkTopologyRequest.
-message DeleteHostsRequest {
-  // Hosts needs to be deleted.
-  repeated ProbesOfHost probes_of_hosts = 1;
-}
-
-// SyncProbesRequest represents request of SyncProbes.
-message SyncNetworkTopologyRequest {
-  oneof request {
-    UpdateHostsRequest update_probes_of_hosts_request = 1;
-    DeleteHostsRequest delete_probes_of_hosts_request = 2;
-  }
-}
-
 // Scheduler RPC Service.
 service Scheduler{
   // AnnouncePeer announces peer to scheduler.
@@ -337,7 +317,4 @@ service Scheduler{
 
   // SyncProbes sync probes of the host.
   rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);
-
-  // SyncNetworkTopology sync network topology of the hosts.
-  rpc SyncNetworkTopology(stream SyncNetworkTopologyRequest)returns(google.protobuf.Empty);
 }
