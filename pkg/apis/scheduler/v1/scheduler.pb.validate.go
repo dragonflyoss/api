@@ -3429,6 +3429,148 @@ var _ interface {
 	ErrorName() string
 } = BuildValidationError{}
 
+// Validate checks the field values on ProbeStartedRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ProbeStartedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ProbeStartedRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ProbeStartedRequestMultiError, or nil if none found.
+func (m *ProbeStartedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ProbeStartedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetHost() == nil {
+		err := ProbeStartedRequestValidationError{
+			field:  "Host",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetHost()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ProbeStartedRequestValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ProbeStartedRequestValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ProbeStartedRequestValidationError{
+				field:  "Host",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return ProbeStartedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ProbeStartedRequestMultiError is an error wrapping multiple validation
+// errors returned by ProbeStartedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ProbeStartedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ProbeStartedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ProbeStartedRequestMultiError) AllErrors() []error { return m }
+
+// ProbeStartedRequestValidationError is the validation error returned by
+// ProbeStartedRequest.Validate if the designated constraints aren't met.
+type ProbeStartedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ProbeStartedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ProbeStartedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ProbeStartedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ProbeStartedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ProbeStartedRequestValidationError) ErrorName() string {
+	return "ProbeStartedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ProbeStartedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sProbeStartedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ProbeStartedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ProbeStartedRequestValidationError{}
+
 // Validate checks the field values on Probe with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -3589,22 +3731,22 @@ var _ interface {
 	ErrorName() string
 } = ProbeValidationError{}
 
-// Validate checks the field values on ProbesOfHost with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *ProbesOfHost) Validate() error {
+// Validate checks the field values on ProbeFinishedRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ProbeFinishedRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ProbesOfHost with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in ProbesOfHostMultiError, or
-// nil if none found.
-func (m *ProbesOfHost) ValidateAll() error {
+// ValidateAll checks the field values on ProbeFinishedRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ProbeFinishedRequestMultiError, or nil if none found.
+func (m *ProbeFinishedRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ProbesOfHost) validate(all bool) error {
+func (m *ProbeFinishedRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -3612,7 +3754,7 @@ func (m *ProbesOfHost) validate(all bool) error {
 	var errors []error
 
 	if m.GetHost() == nil {
-		err := ProbesOfHostValidationError{
+		err := ProbeFinishedRequestValidationError{
 			field:  "Host",
 			reason: "value is required",
 		}
@@ -3626,7 +3768,7 @@ func (m *ProbesOfHost) validate(all bool) error {
 		switch v := interface{}(m.GetHost()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ProbesOfHostValidationError{
+				errors = append(errors, ProbeFinishedRequestValidationError{
 					field:  "Host",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -3634,7 +3776,7 @@ func (m *ProbesOfHost) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ProbesOfHostValidationError{
+				errors = append(errors, ProbeFinishedRequestValidationError{
 					field:  "Host",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -3643,7 +3785,7 @@ func (m *ProbesOfHost) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ProbesOfHostValidationError{
+			return ProbeFinishedRequestValidationError{
 				field:  "Host",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -3651,68 +3793,65 @@ func (m *ProbesOfHost) validate(all bool) error {
 		}
 	}
 
-	if len(m.GetProbes()) > 0 {
-
-		if len(m.GetProbes()) < 1 {
-			err := ProbesOfHostValidationError{
-				field:  "Probes",
-				reason: "value must contain at least 1 item(s)",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+	if len(m.GetProbes()) < 1 {
+		err := ProbeFinishedRequestValidationError{
+			field:  "Probes",
+			reason: "value must contain at least 1 item(s)",
 		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-		for idx, item := range m.GetProbes() {
-			_, _ = idx, item
+	for idx, item := range m.GetProbes() {
+		_, _ = idx, item
 
-			if all {
-				switch v := interface{}(item).(type) {
-				case interface{ ValidateAll() error }:
-					if err := v.ValidateAll(); err != nil {
-						errors = append(errors, ProbesOfHostValidationError{
-							field:  fmt.Sprintf("Probes[%v]", idx),
-							reason: "embedded message failed validation",
-							cause:  err,
-						})
-					}
-				case interface{ Validate() error }:
-					if err := v.Validate(); err != nil {
-						errors = append(errors, ProbesOfHostValidationError{
-							field:  fmt.Sprintf("Probes[%v]", idx),
-							reason: "embedded message failed validation",
-							cause:  err,
-						})
-					}
-				}
-			} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-				if err := v.Validate(); err != nil {
-					return ProbesOfHostValidationError{
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ProbeFinishedRequestValidationError{
 						field:  fmt.Sprintf("Probes[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
-					}
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ProbeFinishedRequestValidationError{
+						field:  fmt.Sprintf("Probes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
 				}
 			}
-
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ProbeFinishedRequestValidationError{
+					field:  fmt.Sprintf("Probes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
 		}
 
 	}
 
 	if len(errors) > 0 {
-		return ProbesOfHostMultiError(errors)
+		return ProbeFinishedRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// ProbesOfHostMultiError is an error wrapping multiple validation errors
-// returned by ProbesOfHost.ValidateAll() if the designated constraints aren't met.
-type ProbesOfHostMultiError []error
+// ProbeFinishedRequestMultiError is an error wrapping multiple validation
+// errors returned by ProbeFinishedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ProbeFinishedRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ProbesOfHostMultiError) Error() string {
+func (m ProbeFinishedRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -3721,11 +3860,11 @@ func (m ProbesOfHostMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ProbesOfHostMultiError) AllErrors() []error { return m }
+func (m ProbeFinishedRequestMultiError) AllErrors() []error { return m }
 
-// ProbesOfHostValidationError is the validation error returned by
-// ProbesOfHost.Validate if the designated constraints aren't met.
-type ProbesOfHostValidationError struct {
+// ProbeFinishedRequestValidationError is the validation error returned by
+// ProbeFinishedRequest.Validate if the designated constraints aren't met.
+type ProbeFinishedRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -3733,22 +3872,24 @@ type ProbesOfHostValidationError struct {
 }
 
 // Field function returns field value.
-func (e ProbesOfHostValidationError) Field() string { return e.field }
+func (e ProbeFinishedRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ProbesOfHostValidationError) Reason() string { return e.reason }
+func (e ProbeFinishedRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ProbesOfHostValidationError) Cause() error { return e.cause }
+func (e ProbeFinishedRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ProbesOfHostValidationError) Key() bool { return e.key }
+func (e ProbeFinishedRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ProbesOfHostValidationError) ErrorName() string { return "ProbesOfHostValidationError" }
+func (e ProbeFinishedRequestValidationError) ErrorName() string {
+	return "ProbeFinishedRequestValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e ProbesOfHostValidationError) Error() string {
+func (e ProbeFinishedRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -3760,14 +3901,14 @@ func (e ProbesOfHostValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sProbesOfHost.%s: %s%s",
+		"invalid %sProbeFinishedRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ProbesOfHostValidationError{}
+var _ error = ProbeFinishedRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -3775,7 +3916,344 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ProbesOfHostValidationError{}
+} = ProbeFinishedRequestValidationError{}
+
+// Validate checks the field values on FailedProbe with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *FailedProbe) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on FailedProbe with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in FailedProbeMultiError, or
+// nil if none found.
+func (m *FailedProbe) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *FailedProbe) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetHost() == nil {
+		err := FailedProbeValidationError{
+			field:  "Host",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetHost()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, FailedProbeValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, FailedProbeValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return FailedProbeValidationError{
+				field:  "Host",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetDescription()) < 1 {
+		err := FailedProbeValidationError{
+			field:  "Description",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return FailedProbeMultiError(errors)
+	}
+
+	return nil
+}
+
+// FailedProbeMultiError is an error wrapping multiple validation errors
+// returned by FailedProbe.ValidateAll() if the designated constraints aren't met.
+type FailedProbeMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m FailedProbeMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m FailedProbeMultiError) AllErrors() []error { return m }
+
+// FailedProbeValidationError is the validation error returned by
+// FailedProbe.Validate if the designated constraints aren't met.
+type FailedProbeValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e FailedProbeValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e FailedProbeValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e FailedProbeValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e FailedProbeValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e FailedProbeValidationError) ErrorName() string { return "FailedProbeValidationError" }
+
+// Error satisfies the builtin error interface
+func (e FailedProbeValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sFailedProbe.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = FailedProbeValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = FailedProbeValidationError{}
+
+// Validate checks the field values on ProbeFailedRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ProbeFailedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ProbeFailedRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ProbeFailedRequestMultiError, or nil if none found.
+func (m *ProbeFailedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ProbeFailedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetHost() == nil {
+		err := ProbeFailedRequestValidationError{
+			field:  "Host",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetHost()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ProbeFailedRequestValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ProbeFailedRequestValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ProbeFailedRequestValidationError{
+				field:  "Host",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(m.GetFailedProbes()) < 1 {
+		err := ProbeFailedRequestValidationError{
+			field:  "FailedProbes",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	for idx, item := range m.GetFailedProbes() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ProbeFailedRequestValidationError{
+						field:  fmt.Sprintf("FailedProbes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ProbeFailedRequestValidationError{
+						field:  fmt.Sprintf("FailedProbes[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ProbeFailedRequestValidationError{
+					field:  fmt.Sprintf("FailedProbes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ProbeFailedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ProbeFailedRequestMultiError is an error wrapping multiple validation errors
+// returned by ProbeFailedRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ProbeFailedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ProbeFailedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ProbeFailedRequestMultiError) AllErrors() []error { return m }
+
+// ProbeFailedRequestValidationError is the validation error returned by
+// ProbeFailedRequest.Validate if the designated constraints aren't met.
+type ProbeFailedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ProbeFailedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ProbeFailedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ProbeFailedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ProbeFailedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ProbeFailedRequestValidationError) ErrorName() string {
+	return "ProbeFailedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ProbeFailedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sProbeFailedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ProbeFailedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ProbeFailedRequestValidationError{}
 
 // Validate checks the field values on SyncProbesRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -3799,44 +4277,146 @@ func (m *SyncProbesRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetProbesOfHost() == nil {
+	oneofRequestPresent := false
+	switch v := m.Request.(type) {
+	case *SyncProbesRequest_ProbeStartedRequest:
+		if v == nil {
+			err := SyncProbesRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetProbeStartedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SyncProbesRequestValidationError{
+						field:  "ProbeStartedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SyncProbesRequestValidationError{
+						field:  "ProbeStartedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetProbeStartedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SyncProbesRequestValidationError{
+					field:  "ProbeStartedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *SyncProbesRequest_ProbeFinishedRequest:
+		if v == nil {
+			err := SyncProbesRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetProbeFinishedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SyncProbesRequestValidationError{
+						field:  "ProbeFinishedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SyncProbesRequestValidationError{
+						field:  "ProbeFinishedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetProbeFinishedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SyncProbesRequestValidationError{
+					field:  "ProbeFinishedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *SyncProbesRequest_ProbeFailedRequest:
+		if v == nil {
+			err := SyncProbesRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetProbeFailedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, SyncProbesRequestValidationError{
+						field:  "ProbeFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, SyncProbesRequestValidationError{
+						field:  "ProbeFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetProbeFailedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return SyncProbesRequestValidationError{
+					field:  "ProbeFailedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+	if !oneofRequestPresent {
 		err := SyncProbesRequestValidationError{
-			field:  "ProbesOfHost",
+			field:  "Request",
 			reason: "value is required",
 		}
 		if !all {
 			return err
 		}
 		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetProbesOfHost()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, SyncProbesRequestValidationError{
-					field:  "ProbesOfHost",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, SyncProbesRequestValidationError{
-					field:  "ProbesOfHost",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetProbesOfHost()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return SyncProbesRequestValidationError{
-				field:  "ProbesOfHost",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
 	}
 
 	if len(errors) > 0 {
