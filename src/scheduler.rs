@@ -359,11 +359,19 @@ pub struct LeaveHostRequest {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
 }
+/// ProbeStartedRequest represents started request of SyncProbesRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ProbeStartedRequest {
+    /// Source host metadata.
+    #[prost(message, optional, tag = "1")]
+    pub host: ::core::option::Option<super::common::Host>,
+}
 /// Probe information.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Probe {
-    /// Host metadata.
+    /// Destination host metadata.
     #[prost(message, optional, tag = "1")]
     pub host: ::core::option::Option<super::common::Host>,
     /// RTT is the round-trip time sent via this pinger.
@@ -373,24 +381,58 @@ pub struct Probe {
     #[prost(message, optional, tag = "3")]
     pub created_at: ::core::option::Option<::prost_types::Timestamp>,
 }
-/// ProbesOfHost represents probes information of the host.
+/// ProbeFinishedRequest represents finished request of SyncProbesRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ProbesOfHost {
-    /// Host metadata.
+pub struct ProbeFinishedRequest {
+    /// Source host metadata.
     #[prost(message, optional, tag = "1")]
     pub host: ::core::option::Option<super::common::Host>,
     /// Probes information.
     #[prost(message, repeated, tag = "2")]
     pub probes: ::prost::alloc::vec::Vec<Probe>,
 }
+/// FailedProbe information.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FailedProbe {
+    /// Destination host metadata.
+    #[prost(message, optional, tag = "1")]
+    pub host: ::core::option::Option<super::common::Host>,
+    /// The description of probing failed.
+    #[prost(string, tag = "2")]
+    pub description: ::prost::alloc::string::String,
+}
+/// ProbeFailedRequest represents failed request of SyncProbesRequest.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ProbeFailedRequest {
+    /// Source host metadata.
+    #[prost(message, optional, tag = "1")]
+    pub host: ::core::option::Option<super::common::Host>,
+    /// Failed probes information.
+    #[prost(message, repeated, tag = "2")]
+    pub failed_probes: ::prost::alloc::vec::Vec<FailedProbe>,
+}
 /// SyncProbesRequest represents request of SyncProbes.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncProbesRequest {
-    /// Probes information of the host.
-    #[prost(message, optional, tag = "1")]
-    pub probes_of_host: ::core::option::Option<ProbesOfHost>,
+    #[prost(oneof = "sync_probes_request::Request", tags = "1, 2, 3")]
+    pub request: ::core::option::Option<sync_probes_request::Request>,
+}
+/// Nested message and enum types in `SyncProbesRequest`.
+pub mod sync_probes_request {
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Request {
+        #[prost(message, tag = "1")]
+        ProbeStartedRequest(super::ProbeStartedRequest),
+        #[prost(message, tag = "2")]
+        ProbeFinishedRequest(super::ProbeFinishedRequest),
+        #[prost(message, tag = "3")]
+        ProbeFailedRequest(super::ProbeFailedRequest),
+    }
 }
 /// SyncProbesResponse represents response of SyncProbes.
 #[allow(clippy::derive_partial_eq_without_eq)]

@@ -259,9 +259,15 @@ message LeaveHostRequest{
   string id = 1;
 }
 
+// ProbeStartedRequest represents started request of SyncProbesRequest.
+message ProbeStartedRequest {
+  // Source host metadata.
+  common.Host host = 1;
+}
+
 // Probe information.
 message Probe {
-  // Host metadata.
+  // Destination host metadata.
   common.Host host = 1;
   // RTT is the round-trip time sent via this pinger.
   google.protobuf.Duration rtt = 2;
@@ -269,18 +275,37 @@ message Probe {
   google.protobuf.Timestamp created_at = 3;
 }
 
-// ProbesOfHost represents probes information of the host.
-message ProbesOfHost {
-  // Host metadata.
+// ProbeFinishedRequest represents finished request of SyncProbesRequest.
+message ProbeFinishedRequest {
+  // Source host metadata.
   common.Host host = 1;
   // Probes information.
   repeated Probe probes = 2;
 }
 
+// FailedProbe information.
+message FailedProbe {
+  // Destination host metadata.
+  common.Host host = 1;
+  // The description of probing failed.
+  string description = 2;
+}
+
+// ProbeFailedRequest represents failed request of SyncProbesRequest.
+message ProbeFailedRequest {
+  // Source host metadata.
+  common.Host host = 1;
+  // Failed probes information.
+  repeated FailedProbe failed_probes = 2;
+}
+
 // SyncProbesRequest represents request of SyncProbes.
 message SyncProbesRequest {
-  // Probes information of the host.
-  ProbesOfHost probes_of_host = 1;
+  oneof request {
+    ProbeStartedRequest probe_started_request = 1;
+    ProbeFinishedRequest probe_finished_request = 2;
+    ProbeFailedRequest probe_failed_request = 3;
+  }
 }
 
 // SyncProbesResponse represents response of SyncProbes.
