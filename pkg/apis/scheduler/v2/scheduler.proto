@@ -267,8 +267,6 @@ message LeaveHostRequest{
 
 // ProbeStartedRequest represents started request of SyncProbesRequest.
 message ProbeStartedRequest {
-  // Source host metadata.
-  common.v2.Host host = 1 [(validate.rules).message.required = true];
 }
 
 // Probe information.
@@ -283,10 +281,8 @@ message Probe {
 
 // ProbeFinishedRequest represents finished request of SyncProbesRequest.
 message ProbeFinishedRequest {
-  // Source host metadata.
-  common.v2.Host host = 1 [(validate.rules).message.required = true];
   // Probes information.
-  repeated Probe probes = 2 [(validate.rules).repeated = {min_items: 1}];
+  repeated Probe probes = 1 [(validate.rules).repeated = {min_items: 1}];
 }
 
 // FailedProbe information.
@@ -299,20 +295,21 @@ message FailedProbe {
 
 // ProbeFailedRequest represents failed request of SyncProbesRequest.
 message ProbeFailedRequest {
-  // Source host metadata.
-  common.v2.Host host = 1 [(validate.rules).message.required = true];
   // Failed probes information.
-  repeated FailedProbe failed_probes = 2 [(validate.rules).repeated = {min_items: 1}];
+  repeated FailedProbe failed_probes = 1 [(validate.rules).repeated = {min_items: 1}];
 }
 
 // SyncProbesRequest represents request of SyncProbes.
 message SyncProbesRequest {
+  // Source host metadata.
+  common.v2.Host host = 1 [(validate.rules).message.required = true];
+
   oneof request {
     option (validate.required) = true;
 
-    ProbeStartedRequest probe_started_request = 1;
-    ProbeFinishedRequest probe_finished_request = 2;
-    ProbeFailedRequest probe_failed_request = 3;
+    ProbeStartedRequest probe_started_request = 2;
+    ProbeFinishedRequest probe_finished_request = 3;
+    ProbeFailedRequest probe_failed_request = 4;
   }
 }
 
