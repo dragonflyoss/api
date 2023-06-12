@@ -261,8 +261,6 @@ message LeaveHostRequest{
 
 // ProbeStartedRequest represents started request of SyncProbesRequest.
 message ProbeStartedRequest {
-  // Source host metadata.
-  common.Host host = 1;
 }
 
 // Probe information.
@@ -277,10 +275,8 @@ message Probe {
 
 // ProbeFinishedRequest represents finished request of SyncProbesRequest.
 message ProbeFinishedRequest {
-  // Source host metadata.
-  common.Host host = 1;
   // Probes information.
-  repeated Probe probes = 2;
+  repeated Probe probes = 1;
 }
 
 // FailedProbe information.
@@ -293,18 +289,19 @@ message FailedProbe {
 
 // ProbeFailedRequest represents failed request of SyncProbesRequest.
 message ProbeFailedRequest {
-  // Source host metadata.
-  common.Host host = 1;
   // Failed probes information.
-  repeated FailedProbe failed_probes = 2;
+  repeated FailedProbe failed_probes = 1;
 }
 
 // SyncProbesRequest represents request of SyncProbes.
 message SyncProbesRequest {
+  // Source host metadata.
+  common.Host host = 1;
+
   oneof request {
-    ProbeStartedRequest probe_started_request = 1;
-    ProbeFinishedRequest probe_finished_request = 2;
-    ProbeFailedRequest probe_failed_request = 3;
+    ProbeStartedRequest probe_started_request = 2;
+    ProbeFinishedRequest probe_finished_request = 3;
+    ProbeFailedRequest probe_failed_request = 4;
   }
 }
 
