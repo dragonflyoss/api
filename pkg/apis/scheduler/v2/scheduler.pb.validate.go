@@ -5417,9 +5417,9 @@ func (m *ProbeFailedRequest) validate(all bool) error {
 
 	var errors []error
 
-	if len(m.GetFailedProbes()) < 1 {
+	if len(m.GetProbes()) < 1 {
 		err := ProbeFailedRequestValidationError{
-			field:  "FailedProbes",
+			field:  "Probes",
 			reason: "value must contain at least 1 item(s)",
 		}
 		if !all {
@@ -5428,7 +5428,7 @@ func (m *ProbeFailedRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	for idx, item := range m.GetFailedProbes() {
+	for idx, item := range m.GetProbes() {
 		_, _ = idx, item
 
 		if all {
@@ -5436,7 +5436,7 @@ func (m *ProbeFailedRequest) validate(all bool) error {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, ProbeFailedRequestValidationError{
-						field:  fmt.Sprintf("FailedProbes[%v]", idx),
+						field:  fmt.Sprintf("Probes[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -5444,7 +5444,7 @@ func (m *ProbeFailedRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, ProbeFailedRequestValidationError{
-						field:  fmt.Sprintf("FailedProbes[%v]", idx),
+						field:  fmt.Sprintf("Probes[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -5453,7 +5453,7 @@ func (m *ProbeFailedRequest) validate(all bool) error {
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return ProbeFailedRequestValidationError{
-					field:  fmt.Sprintf("FailedProbes[%v]", idx),
+					field:  fmt.Sprintf("Probes[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
