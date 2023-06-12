@@ -402,7 +402,7 @@ pub struct FailedProbe {
 pub struct ProbeFailedRequest {
     /// Failed probes information.
     #[prost(message, repeated, tag = "1")]
-    pub failed_probes: ::prost::alloc::vec::Vec<FailedProbe>,
+    pub probes: ::prost::alloc::vec::Vec<FailedProbe>,
 }
 /// SyncProbesRequest represents request of SyncProbes.
 #[allow(clippy::derive_partial_eq_without_eq)]

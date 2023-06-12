@@ -397,7 +397,7 @@ message FailedProbe {
 // ProbeFailedRequest represents failed request of SyncProbesRequest.
 message ProbeFailedRequest {
   // Failed probes information.
-  repeated FailedProbe failed_probes = 1 [(validate.rules).repeated = {min_items: 1}];
+  repeated FailedProbe probes = 1 [(validate.rules).repeated = {min_items: 1}];
 }
 
 // SyncProbesRequest represents request of SyncProbes.
