@@ -5897,17 +5897,6 @@ func (m *SyncProbesResponse) validate(all bool) error {
 
 	}
 
-	if m.GetProbeInterval() == nil {
-		err := SyncProbesResponseValidationError{
-			field:  "ProbeInterval",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if len(errors) > 0 {
 		return SyncProbesResponseMultiError(errors)
 	}
