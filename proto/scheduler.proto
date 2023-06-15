@@ -309,8 +309,6 @@ message SyncProbesRequest {
 message SyncProbesResponse {
   // Hosts needs to be probed.
   repeated common.Host hosts = 1;
-  // Probe interval.
-  google.protobuf.Duration probe_interval = 2;
 }
 
 // Scheduler RPC Service.

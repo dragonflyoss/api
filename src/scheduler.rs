@@ -434,9 +434,6 @@ pub struct SyncProbesResponse {
     /// Hosts needs to be probed.
     #[prost(message, repeated, tag = "1")]
     pub hosts: ::prost::alloc::vec::Vec<super::common::Host>,
-    /// Probe interval.
-    #[prost(message, optional, tag = "2")]
-    pub probe_interval: ::core::option::Option<::prost_types::Duration>,
 }
 /// Generated client implementations.
 pub mod scheduler_client {
