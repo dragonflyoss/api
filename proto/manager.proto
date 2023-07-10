@@ -306,13 +306,10 @@ message ListApplicationsResponse {
 message CreateGNNRequest {
   // Protocol buffer file of model.
   bytes data = 1;
-
   // Recall of the model.
   double recall = 2;
-
   // Precision of the model.
   double precision = 3;
-
   // F1-Score of the model.
   double f1_score = 4;
 }
@@ -321,10 +318,8 @@ message CreateGNNRequest {
 message CreateMLPRequest {
   // Protocol buffer file of model.
   bytes data = 1;
-
   // MSE of the model.
   double mse = 2;
-
   // MAE of the model.
   double mae = 3;
 }
