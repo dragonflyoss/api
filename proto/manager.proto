@@ -302,6 +302,43 @@ message ListApplicationsResponse {
   repeated Application applications = 1;
 }
 
+// CreateGNNRequest represents to create GNN model request of TrainRequest.
+message CreateGNNRequest {
+  // Protocol buffer file of model.
+  bytes data = 1;
+  // Recall of the model.
+  double recall = 2;
+  // Precision of the model.
+  double precision = 3;
+  // F1-Score of the model.
+  double f1_score = 4;
+}
+
+// CreateMLPRequest represents to create MLP model request of TrainRequest.
+message CreateMLPRequest {
+  // Protocol buffer file of model.
+  bytes data = 1;
+  // MSE of the model.
+  double mse = 2;
+  // MAE of the model.
+  double mae = 3;
+}
+
+// CreateModelRequest represents request of CreateModel.
+message CreateModelRequest {
+  // Scheduler hostname.
+  string hostname = 1;
+  // Scheduler ip.
+  string ip = 2;
+  // Scheduler cluster id.
+  uint64 cluster_id = 3;
+
+  oneof request {
+    CreateGNNRequest create_gnn_request = 4;
+    CreateMLPRequest create_mlp_request = 5;
+  }
+}
+
 // KeepAliveRequest represents request of KeepAlive.
 message KeepAliveRequest {
   // Request source type.
@@ -339,6 +376,9 @@ service Manager {
 
   // List applications configuration.
   rpc ListApplications(ListApplicationsRequest)returns(ListApplicationsResponse);
+
+  // Create model and update data of model to object storage.
+  rpc CreateModel(CreateModelRequest)returns(google.protobuf.Empty);
 
   // KeepAlive with manager.
   rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
