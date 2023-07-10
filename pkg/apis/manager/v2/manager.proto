@@ -311,13 +311,13 @@ message CreateGNNRequest {
   bytes data = 1 [(validate.rules).bytes.min_len = 1];
 
   // Recall of the model.
-  float recall = 2 [(validate.rules).float = {gte: 0, lte: 1}];
+  double recall = 2 [(validate.rules).double = {gte: 0, lte: 1}];
 
   // Precision of the model.
-  float precision = 3 [(validate.rules).float = {gte: 0, lte: 1}];
+  double precision = 3 [(validate.rules).double = {gte: 0, lte: 1}];
 
   // F1-Score of the model.
-  float f1_score = 4 [(validate.rules).float = {gte: 0, lte: 1}];
+  double f1_score = 4 [(validate.rules).double = {gte: 0, lte: 1}];
 }
 
 // CreateMLPRequest represents to create MLP model request of TrainRequest.
@@ -326,10 +326,10 @@ message CreateMLPRequest {
   bytes data = 1 [(validate.rules).bytes.min_len = 1];
 
   // MSE of the model.
-  float mse = 2 [(validate.rules).float = {gte: 0}];
+  double mse = 2 [(validate.rules).double = {gte: 0}];
 
   // MAE of the model.
-  float mae = 3 [(validate.rules).float = {gte: 0}];
+  double mae = 3 [(validate.rules).double = {gte: 0}];
 }
 
 // CreateModelRequest represents request of CreateModel.
