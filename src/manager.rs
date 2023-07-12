@@ -426,10 +426,7 @@ pub struct CreateModelRequest {
     /// Scheduler ip.
     #[prost(string, tag = "2")]
     pub ip: ::prost::alloc::string::String,
-    /// Scheduler cluster id.
-    #[prost(uint64, tag = "3")]
-    pub cluster_id: u64,
-    #[prost(oneof = "create_model_request::Request", tags = "4, 5")]
+    #[prost(oneof = "create_model_request::Request", tags = "3, 4")]
     pub request: ::core::option::Option<create_model_request::Request>,
 }
 /// Nested message and enum types in `CreateModelRequest`.
@@ -437,9 +434,9 @@ pub mod create_model_request {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
-        #[prost(message, tag = "4")]
+        #[prost(message, tag = "3")]
         CreateGnnRequest(super::CreateGnnRequest),
-        #[prost(message, tag = "5")]
+        #[prost(message, tag = "4")]
         CreateMlpRequest(super::CreateMlpRequest),
     }
 }

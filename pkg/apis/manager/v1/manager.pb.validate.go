@@ -3639,17 +3639,6 @@ func (m *CreateModelRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetClusterId() < 1 {
-		err := CreateModelRequestValidationError{
-			field:  "ClusterId",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	oneofRequestPresent := false
 	switch v := m.Request.(type) {
 	case *CreateModelRequest_CreateGnnRequest:

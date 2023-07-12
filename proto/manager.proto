@@ -330,12 +330,10 @@ message CreateModelRequest {
   string hostname = 1;
   // Scheduler ip.
   string ip = 2;
-  // Scheduler cluster id.
-  uint64 cluster_id = 3;
 
   oneof request {
-    CreateGNNRequest create_gnn_request = 4;
-    CreateMLPRequest create_mlp_request = 5;
+    CreateGNNRequest create_gnn_request = 3;
+    CreateMLPRequest create_mlp_request = 4;
   }
 }
 

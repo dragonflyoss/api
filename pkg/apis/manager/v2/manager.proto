@@ -333,14 +333,12 @@ message CreateModelRequest {
   string hostname = 1 [(validate.rules).string.min_len = 1];
   // Scheduler ip.
   string ip = 2 [(validate.rules).string.ip = true];
-  // Scheduler cluster id.
-  uint64 cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
 
   oneof request {
     option (validate.required) = true;
 
-    CreateGNNRequest create_gnn_request = 4;
-    CreateMLPRequest create_mlp_request = 5;
+    CreateGNNRequest create_gnn_request = 3;
+    CreateMLPRequest create_mlp_request = 4;
   }
 }
 

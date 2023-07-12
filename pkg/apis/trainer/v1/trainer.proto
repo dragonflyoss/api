@@ -41,14 +41,12 @@ message TrainRequest {
   string hostname = 1 [(validate.rules).string.min_len = 1];
   // Scheduler ip.
   string ip = 2 [(validate.rules).string.ip = true];
-  // Scheduler cluster id.
-  uint64 cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
 
   oneof request {
     option (validate.required) = true;
 
-    TrainGNNRequest train_gnn_request = 4;
-    TrainMLPRequest train_mlp_request = 5;
+    TrainGNNRequest train_gnn_request = 3;
+    TrainMLPRequest train_mlp_request = 4;
   }
 }
 
