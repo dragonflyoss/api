@@ -2302,6 +2302,21 @@ func (m *Piece) validate(all bool) error {
 
 	}
 
+	if len(m.GetContent()) > 0 {
+
+		if len(m.GetContent()) < 1 {
+			err := PieceValidationError{
+				field:  "Content",
+				reason: "value length must be at least 1 bytes",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	// no validation rules for TrafficType
 
 	if m.GetCost() == nil {

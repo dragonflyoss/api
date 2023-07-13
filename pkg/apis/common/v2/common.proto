@@ -359,10 +359,12 @@ message Piece {
   uint64 length = 4 [(validate.rules).uint64.gt = 0];
   // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5 [(validate.rules).string = {pattern: "^(md5)|(sha256):[A-Fa-f0-9]+$", ignore_empty: true}];
+  // Piece content.
+  bytes content = 6 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
   // Traffic type.
-  TrafficType traffic_type = 6;
+  TrafficType traffic_type = 7;
   // Downloading piece costs time.
-  google.protobuf.Duration cost = 7 [(validate.rules).duration.required = true];
+  google.protobuf.Duration cost = 8 [(validate.rules).duration.required = true];
   // Piece create time.
-  google.protobuf.Timestamp created_at = 8 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 9 [(validate.rules).timestamp.required = true];
 }

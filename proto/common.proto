@@ -353,10 +353,12 @@ message Piece {
   uint64 length = 4;
   // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5;
+  // Piece content.
+  bytes content = 6;
   // Traffic type.
-  TrafficType traffic_type = 6;
+  TrafficType traffic_type = 7;
   // Downloading piece costs time.
-  google.protobuf.Duration cost = 7;
+  google.protobuf.Duration cost = 8;
   // Piece create time.
-  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp created_at = 9;
 }
