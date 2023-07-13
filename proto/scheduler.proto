@@ -168,7 +168,8 @@ message EmptyTaskResponse {
 
 // TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
 message TinyTaskResponse {
-  bytes data = 1;
+  // Tiny task content.
+  bytes content = 1;
 }
 
 // SmallTaskResponse represents small task response of AnnouncePeerResponse.

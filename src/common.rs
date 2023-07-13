@@ -373,14 +373,17 @@ pub struct Piece {
     /// Digest of the piece data, for example md5:xxx or sha256:yyy.
     #[prost(string, tag = "5")]
     pub digest: ::prost::alloc::string::String,
+    /// Piece content.
+    #[prost(bytes = "vec", tag = "6")]
+    pub content: ::prost::alloc::vec::Vec<u8>,
     /// Traffic type.
-    #[prost(enumeration = "TrafficType", tag = "6")]
+    #[prost(enumeration = "TrafficType", tag = "7")]
     pub traffic_type: i32,
     /// Downloading piece costs time.
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag = "8")]
     pub cost: ::core::option::Option<::prost_types::Duration>,
     /// Piece create time.
-    #[prost(message, optional, tag = "8")]
+    #[prost(message, optional, tag = "9")]
     pub created_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// SizeScope represents size scope of task.

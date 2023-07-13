@@ -3139,9 +3139,9 @@ func (m *TinyTaskResponse) validate(all bool) error {
 
 	var errors []error
 
-	if len(m.GetData()) < 1 {
+	if len(m.GetContent()) < 1 {
 		err := TinyTaskResponseValidationError{
-			field:  "Data",
+			field:  "Content",
 			reason: "value length must be at least 1 bytes",
 		}
 		if !all {

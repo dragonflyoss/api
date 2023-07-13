@@ -231,8 +231,9 @@ pub struct EmptyTaskResponse {}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TinyTaskResponse {
+    /// Tiny task content.
     #[prost(bytes = "vec", tag = "1")]
-    pub data: ::prost::alloc::vec::Vec<u8>,
+    pub content: ::prost::alloc::vec::Vec<u8>,
 }
 /// SmallTaskResponse represents small task response of AnnouncePeerResponse.
 ///
