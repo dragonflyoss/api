@@ -1,5 +1,5 @@
 [package]
-name = "api"
+name = "dragonfly-api"
 version = "1.9.7"
 authors = ["Gaius <gaius.qi@gmail.com>"]
 edition = "2021"
