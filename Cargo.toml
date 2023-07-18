@@ -6,6 +6,7 @@ edition = "2021"
 license = "Apache-2.0"
 homepage = "https://d7y.io"
 repository = "https://github.com/dragonflyoss/api"
+description = "Canonical location of the Dragonfly API definition"
 readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
