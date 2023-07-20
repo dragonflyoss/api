@@ -8,7 +8,7 @@ package dfdaemon
 
 import (
 	context "context"
-	v2 "d7y.io/api/pkg/apis/common/v2"
+	v2 "d7y.io/api/v2/pkg/apis/common/v2"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"

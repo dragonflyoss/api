@@ -21,7 +21,7 @@ package security;
 import "google/protobuf/duration.proto";
 import "validate/validate.proto";
 
-option go_package = "d7y.io/api/pkg/apis/security/v1;security";
+option go_package = "d7y.io/api/v2/pkg/apis/security/v1;security";
 
 // Refer: https://github.com/istio/api/blob/master/security/v1alpha1/ca.proto
 // Istio defines similar api for signing certificate, but it's not applicable in Dragonfly.

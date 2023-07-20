@@ -20,7 +20,7 @@ package errordetails;
 
 import "pkg/apis/common/v1/common.proto";
 
-option go_package = "d7y.io/api/pkg/apis/errordetails/v1;errordetails";
+option go_package = "d7y.io/api/v2/pkg/apis/errordetails/v1;errordetails";
 
 message SourceError {
   bool temporary = 1;

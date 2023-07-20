@@ -20,7 +20,7 @@ package common;
 
 import "validate/validate.proto";
 
-option go_package = "d7y.io/api/pkg/apis/common/v1;common";
+option go_package = "d7y.io/api/v2/pkg/apis/common/v1;common";
 
 // Code represents the code of the grpc api.
 enum Code {

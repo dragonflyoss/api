@@ -22,7 +22,7 @@ import "pkg/apis/common/v1/common.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
-option go_package = "d7y.io/api/pkg/apis/dfdaemon/v1;dfdaemon";
+option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v1;dfdaemon";
 
 message DownRequest{
   // Identify one downloading, the framework will fill it automatically.

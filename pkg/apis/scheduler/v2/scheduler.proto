@@ -24,7 +24,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "d7y.io/api/pkg/apis/scheduler/v2;scheduler";
+option go_package = "d7y.io/api/v2/pkg/apis/scheduler/v2;scheduler";
 
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {
