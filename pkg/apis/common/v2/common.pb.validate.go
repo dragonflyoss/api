@@ -729,6 +729,17 @@ func (m *Host) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if val := m.GetDownloadPort(); val < 1024 || val >= 65535 {
+		err := HostValidationError{
+			field:  "DownloadPort",
+			reason: "value must be inside range [1024, 65535)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	// no validation rules for Os
 
 	// no validation rules for Platform
