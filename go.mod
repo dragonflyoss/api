@@ -1,4 +1,4 @@
-module d7y.io/api
+module d7y.io/api/v2
 
 go 1.20
 
