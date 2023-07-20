@@ -117,38 +117,35 @@ pub struct Host {
     /// Port of grpc service.
     #[prost(int32, tag = "5")]
     pub port: i32,
-    /// Port of download server.
-    #[prost(int32, tag = "6")]
-    pub download_port: i32,
     /// Host OS.
-    #[prost(string, tag = "7")]
+    #[prost(string, tag = "6")]
     pub os: ::prost::alloc::string::String,
     /// Host platform.
-    #[prost(string, tag = "8")]
+    #[prost(string, tag = "7")]
     pub platform: ::prost::alloc::string::String,
     /// Host platform family.
-    #[prost(string, tag = "9")]
+    #[prost(string, tag = "8")]
     pub platform_family: ::prost::alloc::string::String,
     /// Host platform version.
-    #[prost(string, tag = "10")]
+    #[prost(string, tag = "9")]
     pub platform_version: ::prost::alloc::string::String,
     /// Host kernel version.
-    #[prost(string, tag = "11")]
+    #[prost(string, tag = "10")]
     pub kernel_version: ::prost::alloc::string::String,
     /// CPU Stat.
-    #[prost(message, optional, tag = "12")]
+    #[prost(message, optional, tag = "11")]
     pub cpu: ::core::option::Option<Cpu>,
     /// Memory Stat.
-    #[prost(message, optional, tag = "13")]
+    #[prost(message, optional, tag = "12")]
     pub memory: ::core::option::Option<Memory>,
     /// Network Stat.
-    #[prost(message, optional, tag = "14")]
+    #[prost(message, optional, tag = "13")]
     pub network: ::core::option::Option<Network>,
     /// Disk Stat.
-    #[prost(message, optional, tag = "15")]
+    #[prost(message, optional, tag = "14")]
     pub disk: ::core::option::Option<Disk>,
     /// Build information.
-    #[prost(message, optional, tag = "16")]
+    #[prost(message, optional, tag = "15")]
     pub build: ::core::option::Option<Build>,
 }
 /// CPU Stat.

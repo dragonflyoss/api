@@ -183,8 +183,6 @@ func (m *SeedPeer) validate(all bool) error {
 
 	// no validation rules for Port
 
-	// no validation rules for DownloadPort
-
 	// no validation rules for State
 
 	// no validation rules for SeedPeerClusterId
@@ -612,17 +610,6 @@ func (m *UpdateSeedPeerRequest) validate(all bool) error {
 	if val := m.GetPort(); val < 1024 || val >= 65535 {
 		err := UpdateSeedPeerRequestValidationError{
 			field:  "Port",
-			reason: "value must be inside range [1024, 65535)",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if val := m.GetDownloadPort(); val < 1024 || val >= 65535 {
-		err := UpdateSeedPeerRequestValidationError{
-			field:  "DownloadPort",
 			reason: "value must be inside range [1024, 65535)",
 		}
 		if !all {

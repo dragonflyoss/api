@@ -184,28 +184,26 @@ message Host {
   string ip = 4 [(validate.rules).string.ip = true];
   // Port of grpc service.
   int32 port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-  // Port of download server.
-  int32 download_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Host OS.
-  string os = 7;
+  string os = 6;
   // Host platform.
-  string platform = 8;
+  string platform = 7;
   // Host platform family.
-  string platform_family = 9;
+  string platform_family = 8;
   // Host platform version.
-  string platform_version = 10;
+  string platform_version = 9;
   // Host kernel version.
-  string kernel_version = 11;
+  string kernel_version = 10;
   // CPU Stat.
-  CPU cpu = 12 [(validate.rules).message.required = true];
+  CPU cpu = 11 [(validate.rules).message.required = true];
   // Memory Stat.
-  Memory memory = 13 [(validate.rules).message.required = true];
+  Memory memory = 12 [(validate.rules).message.required = true];
   // Network Stat.
-  Network network = 14 [(validate.rules).message.required = true];
+  Network network = 13 [(validate.rules).message.required = true];
   // Disk Stat.
-  Disk disk = 15 [(validate.rules).message.required = true];
+  Disk disk = 14 [(validate.rules).message.required = true];
   // Build information.
-  Build build = 16 [(validate.rules).message.required = true];
+  Build build = 15 [(validate.rules).message.required = true];
 }
 
 // CPU Stat.

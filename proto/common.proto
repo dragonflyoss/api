@@ -178,28 +178,26 @@ message Host {
   string ip = 4;
   // Port of grpc service.
   int32 port = 5;
-  // Port of download server.
-  int32 download_port = 6;
   // Host OS.
-  string os = 7;
+  string os = 6;
   // Host platform.
-  string platform = 8;
+  string platform = 7;
   // Host platform family.
-  string platform_family = 9;
+  string platform_family = 8;
   // Host platform version.
-  string platform_version = 10;
+  string platform_version = 9;
   // Host kernel version.
-  string kernel_version = 11;
+  string kernel_version = 10;
   // CPU Stat.
-  CPU cpu = 12;
+  CPU cpu = 11;
   // Memory Stat.
-  Memory memory = 13;
+  Memory memory = 12;
   // Network Stat.
-  Network network = 14;
+  Network network = 13;
   // Disk Stat.
-  Disk disk = 15;
+  Disk disk = 14;
   // Build information.
-  Build build = 16;
+  Build build = 15;
 }
 
 // CPU Stat.
