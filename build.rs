@@ -1,5 +1,6 @@
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     tonic_build::configure()
+        .file_descriptor_set_path("src/descriptor.bin")
         .build_client(true)
         .build_server(true)
         .out_dir("src")
