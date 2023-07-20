@@ -3,6 +3,7 @@ module d7y.io/api/v2
 go 1.20
 
 require (
+	d7y.io/api v1.9.9
 	github.com/envoyproxy/protoc-gen-validate v1.0.2
 	github.com/golang/mock v1.6.0
 	google.golang.org/grpc v1.58.0-dev

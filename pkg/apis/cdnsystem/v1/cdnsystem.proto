@@ -21,7 +21,7 @@ package cdnsystem;
 import "pkg/apis/common/v1/common.proto";
 import "validate/validate.proto";
 
-option go_package = "d7y.io/api/pkg/apis/cdnsystem/v1;cdnsystem";
+option go_package = "d7y.io/api/v2/pkg/apis/cdnsystem/v1;cdnsystem";
 
 message SeedRequest{
   string task_id = 1 [(validate.rules).string.min_len = 1];

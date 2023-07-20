@@ -1,3 +1,5 @@
+d7y.io/api v1.9.9 h1:A/GPCs8aAUx92qCbsRZlYcRDKj1TIf22Qk7/KM9CmIs=
+d7y.io/api v1.9.9/go.mod h1:mSUmfF1Ln6vypLIbIEOQqnDb0DdYnHe4LhaE8rftNrg=
 github.com/envoyproxy/protoc-gen-validate v1.0.2 h1:QkIBuU5k+x7/QXPvPPnWXWlCdaBFApVqftFV6k087DA=
 github.com/envoyproxy/protoc-gen-validate v1.0.2/go.mod h1:GpiZQP3dDbg4JouG/NNS7QWXpgx6x8QiMKdmN72jogE=
 github.com/golang/mock v1.6.0 h1:ErTB+efbowRARo13NNdxyJji2egdxLGQhRaY+DUumQc=

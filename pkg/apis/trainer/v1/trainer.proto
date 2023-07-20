@@ -21,7 +21,7 @@ package trainer.v1;
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
-option go_package = "d7y.io/api/pkg/apis/trainer/v1;trainer";
+option go_package = "d7y.io/api/v2/pkg/apis/trainer/v1;trainer";
 
 // TrainGNNRequest represents to train GNN model request of TrainRequest.
 message TrainGNNRequest {

@@ -22,7 +22,7 @@ import "validate/validate.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "d7y.io/api/pkg/apis/common/v2;common";
+option go_package = "d7y.io/api/v2/pkg/apis/common/v2;common";
 
 // SizeScope represents size scope of task.
 enum SizeScope {
