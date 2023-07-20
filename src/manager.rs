@@ -40,20 +40,23 @@ pub struct SeedPeer {
     /// Seed peer grpc port.
     #[prost(int32, tag = "7")]
     pub port: i32,
+    /// Seed peer download port.
+    #[prost(int32, tag = "8")]
+    pub download_port: i32,
     /// Seed peer state.
-    #[prost(string, tag = "8")]
+    #[prost(string, tag = "9")]
     pub state: ::prost::alloc::string::String,
     /// ID of the cluster to which the seed peer belongs.
-    #[prost(uint64, tag = "9")]
+    #[prost(uint64, tag = "10")]
     pub seed_peer_cluster_id: u64,
     /// Cluster to which the seed peer belongs.
-    #[prost(message, optional, tag = "10")]
+    #[prost(message, optional, tag = "11")]
     pub seed_peer_cluster: ::core::option::Option<SeedPeerCluster>,
     /// Schedulers included in seed peer.
-    #[prost(message, repeated, tag = "11")]
+    #[prost(message, repeated, tag = "12")]
     pub schedulers: ::prost::alloc::vec::Vec<Scheduler>,
     /// Seed peer object storage port.
-    #[prost(int32, tag = "12")]
+    #[prost(int32, tag = "13")]
     pub object_storage_port: i32,
 }
 /// GetSeedPeerRequest represents request of GetSeedPeer.
@@ -98,11 +101,14 @@ pub struct UpdateSeedPeerRequest {
     /// Seed peer port.
     #[prost(int32, tag = "7")]
     pub port: i32,
+    /// Seed peer download port.
+    #[prost(int32, tag = "8")]
+    pub download_port: i32,
     /// ID of the cluster to which the seed peer belongs.
-    #[prost(uint64, tag = "8")]
+    #[prost(uint64, tag = "9")]
     pub seed_peer_cluster_id: u64,
     /// Seed peer object storage port.
-    #[prost(int32, tag = "9")]
+    #[prost(int32, tag = "10")]
     pub object_storage_port: i32,
 }
 /// SeedPeerCluster represents cluster of scheduler.
