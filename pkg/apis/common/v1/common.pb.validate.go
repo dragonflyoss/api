@@ -983,40 +983,32 @@ func (m *Host) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.Location != nil {
+	if m.GetLocation() != "" {
 
-		if m.GetLocation() != "" {
-
-			if utf8.RuneCountInString(m.GetLocation()) < 1 {
-				err := HostValidationError{
-					field:  "Location",
-					reason: "value length must be at least 1 runes",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
+		if utf8.RuneCountInString(m.GetLocation()) < 1 {
+			err := HostValidationError{
+				field:  "Location",
+				reason: "value length must be at least 1 runes",
 			}
-
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
 
 	}
 
-	if m.Idc != nil {
+	if m.GetIdc() != "" {
 
-		if m.GetIdc() != "" {
-
-			if utf8.RuneCountInString(m.GetIdc()) < 1 {
-				err := HostValidationError{
-					field:  "Idc",
-					reason: "value length must be at least 1 runes",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
+		if utf8.RuneCountInString(m.GetIdc()) < 1 {
+			err := HostValidationError{
+				field:  "Idc",
+				reason: "value length must be at least 1 runes",
 			}
-
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
 
 	}

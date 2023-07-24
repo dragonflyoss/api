@@ -29,11 +29,11 @@ pub struct SeedPeer {
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
     /// Seed peer idc.
-    #[prost(string, tag = "4")]
-    pub idc: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub idc: ::core::option::Option<::prost::alloc::string::String>,
     /// Seed peer location.
-    #[prost(string, tag = "5")]
-    pub location: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub location: ::core::option::Option<::prost::alloc::string::String>,
     /// Seed peer ip.
     #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
@@ -90,11 +90,11 @@ pub struct UpdateSeedPeerRequest {
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
     /// Seed peer idc.
-    #[prost(string, tag = "4")]
-    pub idc: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub idc: ::core::option::Option<::prost::alloc::string::String>,
     /// Seed peer location.
-    #[prost(string, tag = "5")]
-    pub location: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub location: ::core::option::Option<::prost::alloc::string::String>,
     /// Seed peer ip.
     #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,

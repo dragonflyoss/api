@@ -241,11 +241,11 @@ pub struct Network {
     #[prost(uint32, tag = "2")]
     pub upload_tcp_connection_count: u32,
     /// Location path(area|country|province|city|...).
-    #[prost(string, tag = "3")]
-    pub location: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "3")]
+    pub location: ::core::option::Option<::prost::alloc::string::String>,
     /// IDC where the peer host is located
-    #[prost(string, tag = "4")]
-    pub idc: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub idc: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Disk Stat.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -287,10 +287,13 @@ pub struct Build {
     #[prost(string, tag = "2")]
     pub git_commit: ::prost::alloc::string::String,
     /// Golang version.
-    #[prost(string, tag = "3")]
-    pub go_version: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "3")]
+    pub go_version: ::core::option::Option<::prost::alloc::string::String>,
+    /// Rust version.
+    #[prost(string, optional, tag = "4")]
+    pub rust_version: ::core::option::Option<::prost::alloc::string::String>,
     /// Build platform.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "5")]
     pub platform: ::prost::alloc::string::String,
 }
 /// Download information.
