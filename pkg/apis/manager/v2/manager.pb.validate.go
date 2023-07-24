@@ -250,6 +250,14 @@ func (m *SeedPeer) validate(all bool) error {
 
 	// no validation rules for ObjectStoragePort
 
+	if m.Idc != nil {
+		// no validation rules for Idc
+	}
+
+	if m.Location != nil {
+		// no validation rules for Location
+	}
+
 	if len(errors) > 0 {
 		return SeedPeerMultiError(errors)
 	}
@@ -619,6 +627,44 @@ func (m *UpdateSeedPeerRequest) validate(all bool) error {
 				return err
 			}
 			errors = append(errors, err)
+		}
+
+	}
+
+	if m.Idc != nil {
+
+		if m.GetIdc() != "" {
+
+			if l := utf8.RuneCountInString(m.GetIdc()); l < 1 || l > 1024 {
+				err := UpdateSeedPeerRequestValidationError{
+					field:  "Idc",
+					reason: "value length must be between 1 and 1024 runes, inclusive",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Location != nil {
+
+		if m.GetLocation() != "" {
+
+			if utf8.RuneCountInString(m.GetLocation()) > 1024 {
+				err := UpdateSeedPeerRequestValidationError{
+					field:  "Location",
+					reason: "value length must be at most 1024 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
 
 	}
