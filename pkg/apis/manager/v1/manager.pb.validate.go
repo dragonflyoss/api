@@ -175,10 +175,6 @@ func (m *SeedPeer) validate(all bool) error {
 
 	// no validation rules for Type
 
-	// no validation rules for Idc
-
-	// no validation rules for Location
-
 	// no validation rules for Ip
 
 	// no validation rules for Port
@@ -568,36 +564,6 @@ func (m *UpdateSeedPeerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetIdc() != "" {
-
-		if l := utf8.RuneCountInString(m.GetIdc()); l < 1 || l > 1024 {
-			err := UpdateSeedPeerRequestValidationError{
-				field:  "Idc",
-				reason: "value length must be between 1 and 1024 runes, inclusive",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if m.GetLocation() != "" {
-
-		if utf8.RuneCountInString(m.GetLocation()) > 1024 {
-			err := UpdateSeedPeerRequestValidationError{
-				field:  "Location",
-				reason: "value length must be at most 1024 runes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if ip := net.ParseIP(m.GetIp()); ip == nil {
 		err := UpdateSeedPeerRequestValidationError{
 			field:  "Ip",
@@ -913,10 +879,6 @@ func (m *Scheduler) validate(all bool) error {
 
 	// no validation rules for Vips
 
-	// no validation rules for Idc
-
-	// no validation rules for Location
-
 	// no validation rules for Ip
 
 	// no validation rules for Port
@@ -989,6 +951,14 @@ func (m *Scheduler) validate(all bool) error {
 	}
 
 	// no validation rules for Features
+
+	if m.Idc != nil {
+		// no validation rules for Idc
+	}
+
+	if m.Location != nil {
+		// no validation rules for Location
+	}
 
 	if len(errors) > 0 {
 		return SchedulerMultiError(errors)
@@ -1319,36 +1289,6 @@ func (m *UpdateSchedulerRequest) validate(all bool) error {
 
 	}
 
-	if m.GetIdc() != "" {
-
-		if l := utf8.RuneCountInString(m.GetIdc()); l < 1 || l > 1024 {
-			err := UpdateSchedulerRequestValidationError{
-				field:  "Idc",
-				reason: "value length must be between 1 and 1024 runes, inclusive",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if m.GetLocation() != "" {
-
-		if l := utf8.RuneCountInString(m.GetLocation()); l < 1 || l > 1024 {
-			err := UpdateSchedulerRequestValidationError{
-				field:  "Location",
-				reason: "value length must be between 1 and 1024 runes, inclusive",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if len(m.GetNetConfig()) > 0 {
 
 		if len(m.GetNetConfig()) < 1 {
@@ -1384,6 +1324,44 @@ func (m *UpdateSchedulerRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+	}
+
+	if m.Idc != nil {
+
+		if m.GetIdc() != "" {
+
+			if l := utf8.RuneCountInString(m.GetIdc()); l < 1 || l > 1024 {
+				err := UpdateSchedulerRequestValidationError{
+					field:  "Idc",
+					reason: "value length must be between 1 and 1024 runes, inclusive",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Location != nil {
+
+		if m.GetLocation() != "" {
+
+			if l := utf8.RuneCountInString(m.GetLocation()); l < 1 || l > 1024 {
+				err := UpdateSchedulerRequestValidationError{
+					field:  "Location",
+					reason: "value length must be between 1 and 1024 runes, inclusive",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if len(errors) > 0 {

@@ -28,12 +28,6 @@ pub struct SeedPeer {
     /// Seed peer type.
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
-    /// Seed peer idc.
-    #[prost(string, tag = "4")]
-    pub idc: ::prost::alloc::string::String,
-    /// Seed peer location.
-    #[prost(string, tag = "5")]
-    pub location: ::prost::alloc::string::String,
     /// Seed peer ip.
     #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
@@ -89,12 +83,6 @@ pub struct UpdateSeedPeerRequest {
     /// Seed peer type.
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
-    /// Seed peer idc.
-    #[prost(string, tag = "4")]
-    pub idc: ::prost::alloc::string::String,
-    /// Seed peer location.
-    #[prost(string, tag = "5")]
-    pub location: ::prost::alloc::string::String,
     /// Seed peer ip.
     #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
@@ -145,11 +133,11 @@ pub struct Scheduler {
     #[prost(string, tag = "2")]
     pub hostname: ::prost::alloc::string::String,
     /// Scheduler idc.
-    #[prost(string, tag = "3")]
-    pub idc: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "3")]
+    pub idc: ::core::option::Option<::prost::alloc::string::String>,
     /// Scheduler location.
-    #[prost(string, tag = "4")]
-    pub location: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub location: ::core::option::Option<::prost::alloc::string::String>,
     /// Scheduler ip.
     #[prost(string, tag = "5")]
     pub ip: ::prost::alloc::string::String,
@@ -203,11 +191,11 @@ pub struct UpdateSchedulerRequest {
     #[prost(uint64, tag = "3")]
     pub scheduler_cluster_id: u64,
     /// Scheduler idc.
-    #[prost(string, tag = "4")]
-    pub idc: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub idc: ::core::option::Option<::prost::alloc::string::String>,
     /// Scheduler location.
-    #[prost(string, tag = "5")]
-    pub location: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub location: ::core::option::Option<::prost::alloc::string::String>,
     /// Scheduler ip.
     #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
