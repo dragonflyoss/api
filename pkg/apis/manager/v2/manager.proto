@@ -54,6 +54,10 @@ message SeedPeer {
   string hostname = 2;
   // Seed peer type.
   string type = 3;
+  // Seed peer idc.
+  optional string idc = 4;
+  // Seed peer location.
+  optional string location = 5;
   // Seed peer ip.
   string ip = 6;
   // Seed peer grpc port.
@@ -92,6 +96,10 @@ message UpdateSeedPeerRequest {
   string hostname = 2 [(validate.rules).string.hostname = true];
   // Seed peer type.
   string type = 3 [(validate.rules).string = {in: ["super", "strong", "weak"]}];
+  // Seed peer idc.
+  optional string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  // Seed peer location.
+  optional string location = 5 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
   // Seed peer ip.
   string ip = 6 [(validate.rules).string = {ip: true}];
   // Seed peer port.

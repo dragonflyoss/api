@@ -28,6 +28,12 @@ pub struct SeedPeer {
     /// Seed peer type.
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
+    /// Seed peer idc.
+    #[prost(string, tag = "4")]
+    pub idc: ::prost::alloc::string::String,
+    /// Seed peer location.
+    #[prost(string, tag = "5")]
+    pub location: ::prost::alloc::string::String,
     /// Seed peer ip.
     #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
@@ -83,6 +89,12 @@ pub struct UpdateSeedPeerRequest {
     /// Seed peer type.
     #[prost(string, tag = "3")]
     pub r#type: ::prost::alloc::string::String,
+    /// Seed peer idc.
+    #[prost(string, tag = "4")]
+    pub idc: ::prost::alloc::string::String,
+    /// Seed peer location.
+    #[prost(string, tag = "5")]
+    pub location: ::prost::alloc::string::String,
     /// Seed peer ip.
     #[prost(string, tag = "6")]
     pub ip: ::prost::alloc::string::String,
