@@ -51,10 +51,6 @@ message SeedPeer {
   string hostname = 2;
   // Seed peer type.
   string type = 3;
-  // Seed peer idc.
-  string idc = 4;
-  // Seed peer location.
-  string location = 5;
   // Seed peer ip.
   string ip = 6;
   // Seed peer grpc port.
@@ -93,10 +89,6 @@ message UpdateSeedPeerRequest {
   string hostname = 2;
   // Seed peer type.
   string type = 3;
-  // Seed peer idc.
-  string idc = 4;
-  // Seed peer location.
-  string location = 5;
   // Seed peer ip.
   string ip = 6;
   // Seed peer port.
@@ -132,9 +124,9 @@ message Scheduler {
   // Scheduler hostname.
   string hostname = 2;
   // Scheduler idc.
-  string idc = 3;
+  optional string idc = 3;
   // Scheduler location.
-  string location = 4;
+  optional string location = 4;
   // Scheduler ip.
   string ip = 5;
   // Scheduler grpc port.
@@ -172,9 +164,9 @@ message UpdateSchedulerRequest {
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3;
   // Scheduler idc.
-  string idc = 4;
+  optional string idc = 4;
   // Scheduler location.
-  string location = 5;
+  optional string location = 5;
   // Scheduler ip.
   string ip = 6;
   // Scheduler port.

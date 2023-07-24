@@ -54,10 +54,6 @@ message SeedPeer {
   string hostname = 2;
   // Seed peer type.
   string type = 3;
-  // Seed peer idc.
-  string idc = 4;
-  // Seed peer location.
-  string location = 5;
   // Seed peer ip.
   string ip = 6;
   // Seed peer grpc port.
@@ -96,10 +92,6 @@ message UpdateSeedPeerRequest {
   string hostname = 2 [(validate.rules).string.hostname = true];
   // Seed peer type.
   string type = 3 [(validate.rules).string = {in: ["super", "strong", "weak"]}];
-  // Seed peer idc.
-  string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // Seed peer location.
-  string location = 5 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
   // Seed peer ip.
   string ip = 6 [(validate.rules).string = {ip: true}];
   // Seed peer port.
@@ -135,9 +127,9 @@ message Scheduler {
   // Scheduler hostname.
   string hostname = 2;
   // Scheduler idc.
-  string idc = 3;
+  optional string idc = 3;
   // Scheduler location.
-  string location = 4;
+  optional string location = 4;
   // Scheduler ip.
   string ip = 5;
   // Scheduler grpc port.
@@ -175,9 +167,9 @@ message UpdateSchedulerRequest {
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Scheduler idc.
-  string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  optional string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler location.
-  string location = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  optional string location = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler ip.
   string ip = 6 [(validate.rules).string = {ip: true}];
   // Scheduler port.
