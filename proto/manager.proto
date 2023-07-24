@@ -52,9 +52,9 @@ message SeedPeer {
   // Seed peer type.
   string type = 3;
   // Seed peer idc.
-  string idc = 4;
+  optional string idc = 4;
   // Seed peer location.
-  string location = 5;
+  optional string location = 5;
   // Seed peer ip.
   string ip = 6;
   // Seed peer grpc port.
@@ -94,9 +94,9 @@ message UpdateSeedPeerRequest {
   // Seed peer type.
   string type = 3;
   // Seed peer idc.
-  string idc = 4;
+  optional string idc = 4;
   // Seed peer location.
-  string location = 5;
+  optional string location = 5;
   // Seed peer ip.
   string ip = 6;
   // Seed peer port.

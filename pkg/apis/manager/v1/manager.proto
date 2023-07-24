@@ -55,9 +55,9 @@ message SeedPeer {
   // Seed peer type.
   string type = 3;
   // Seed peer idc.
-  optional string idc = 5;
+  string idc = 5;
   // Seed peer location.
-  optional string location = 7;
+  string location = 7;
   // Seed peer ip.
   string ip = 8;
   // Seed peer grpc port.
@@ -97,9 +97,9 @@ message UpdateSeedPeerRequest {
   // Seed peer type.
   string type = 3 [(validate.rules).string = {in: ["super", "strong", "weak"]}];
   // Seed peer idc.
-  optional string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Seed peer location.
-  optional string location = 7 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
+  string location = 7 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
   // Seed peer ip.
   string ip = 8 [(validate.rules).string = {ip: true}];
   // Seed peer port.
@@ -137,9 +137,9 @@ message Scheduler {
   // Deprecated: Do not use.
   string vips = 3;
   // Scheduler idc.
-  optional string idc = 4;
+  string idc = 4;
   // Scheduler location.
-  optional string location = 5;
+  string location = 5;
   // Scheduler ip.
   string ip = 7;
   // Scheduler grpc port.
@@ -179,9 +179,9 @@ message UpdateSchedulerRequest {
   // Deprecated: Do not use.
   string vips = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler idc.
-  optional string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Scheduler location.
-  optional string location = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string location = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Deprecated: Remove net_config params.
   bytes net_config = 7 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
   // Scheduler ip.
