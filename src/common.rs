@@ -284,8 +284,8 @@ pub struct Build {
     #[prost(string, tag = "1")]
     pub git_version: ::prost::alloc::string::String,
     /// Git commit.
-    #[prost(string, tag = "2")]
-    pub git_commit: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub git_commit: ::core::option::Option<::prost::alloc::string::String>,
     /// Golang version.
     #[prost(string, optional, tag = "3")]
     pub go_version: ::core::option::Option<::prost::alloc::string::String>,
@@ -293,8 +293,8 @@ pub struct Build {
     #[prost(string, optional, tag = "4")]
     pub rust_version: ::core::option::Option<::prost::alloc::string::String>,
     /// Build platform.
-    #[prost(string, tag = "5")]
-    pub platform: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub platform: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Download information.
 #[allow(clippy::derive_partial_eq_without_eq)]

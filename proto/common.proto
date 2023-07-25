@@ -294,13 +294,13 @@ message Build {
   // Git version.
   string git_version = 1;
   // Git commit.
-  string git_commit = 2;
+  optional string git_commit = 2;
   // Golang version.
   optional string go_version = 3;
   // Rust version.
   optional string rust_version = 4;
   // Build platform.
-  string platform = 5;
+  optional string platform = 5;
 }
 
 // Download information.
