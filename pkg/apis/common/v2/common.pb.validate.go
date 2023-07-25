@@ -1553,9 +1553,13 @@ func (m *Network) validate(all bool) error {
 
 	// no validation rules for UploadTcpConnectionCount
 
-	// no validation rules for Location
+	if m.Location != nil {
+		// no validation rules for Location
+	}
 
-	// no validation rules for Idc
+	if m.Idc != nil {
+		// no validation rules for Idc
+	}
 
 	if len(errors) > 0 {
 		return NetworkMultiError(errors)
@@ -1791,9 +1795,15 @@ func (m *Build) validate(all bool) error {
 
 	// no validation rules for GitCommit
 
-	// no validation rules for GoVersion
-
 	// no validation rules for Platform
+
+	if m.GoVersion != nil {
+		// no validation rules for GoVersion
+	}
+
+	if m.RustVersion != nil {
+		// no validation rules for RustVersion
+	}
 
 	if len(errors) > 0 {
 		return BuildMultiError(errors)
