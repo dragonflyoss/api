@@ -264,9 +264,9 @@ message Network {
   // Return count of upload tcp connections opened and status is ESTABLISHED.
   uint32 upload_tcp_connection_count = 2;
   // Location path(area|country|province|city|...).
-  string location = 3;
+  optional string location = 3;
   // IDC where the peer host is located
-  string idc = 4;
+  optional string idc = 4;
 }
 
 // Disk Stat.
@@ -296,9 +296,11 @@ message Build {
   // Git commit.
   string git_commit = 2;
   // Golang version.
-  string go_version = 3;
+  optional string go_version = 3;
+  // Rust version.
+  optional string rust_version = 4;
   // Build platform.
-  string platform = 4;
+  string platform = 5;
 }
 
 // Download information.
