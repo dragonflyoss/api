@@ -1793,9 +1793,9 @@ func (m *Build) validate(all bool) error {
 
 	// no validation rules for GitVersion
 
-	// no validation rules for GitCommit
-
-	// no validation rules for Platform
+	if m.GitCommit != nil {
+		// no validation rules for GitCommit
+	}
 
 	if m.GoVersion != nil {
 		// no validation rules for GoVersion
@@ -1803,6 +1803,10 @@ func (m *Build) validate(all bool) error {
 
 	if m.RustVersion != nil {
 		// no validation rules for RustVersion
+	}
+
+	if m.Platform != nil {
+		// no validation rules for Platform
 	}
 
 	if len(errors) > 0 {
