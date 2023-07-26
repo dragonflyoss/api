@@ -191,15 +191,15 @@ message Host {
   // Host kernel version.
   string kernel_version = 11;
   // CPU Stat.
-  CPU cpu = 12;
+  // CPU cpu = 12;
   // Memory Stat.
-  Memory memory = 13;
+  // Memory memory = 13;
   // Network Stat.
-  Network network = 14;
+  // Network network = 14;
   // Disk Stat.
-  Disk disk = 15;
+  // Disk disk = 15;
   // Build information.
-  Build build = 16;
+  // Build build = 16;
 }
 
 // CPU Stat.
