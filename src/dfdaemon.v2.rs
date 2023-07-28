@@ -34,7 +34,7 @@ pub mod sync_pieces_request {
 pub struct InterestedPiecesResponse {
     /// Interested pieces of task.
     #[prost(message, repeated, tag = "1")]
-    pub pieces: ::prost::alloc::vec::Vec<super::common::Piece>,
+    pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
 }
 /// SyncPiecesResponse represents response of SyncPieces.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -58,7 +58,7 @@ pub mod sync_pieces_response {
 pub struct DownloadTaskRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
-    pub download: ::core::option::Option<super::common::Download>,
+    pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
 /// UploadTaskRequest represents request of UploadTask.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -66,7 +66,7 @@ pub struct DownloadTaskRequest {
 pub struct UploadTaskRequest {
     /// Task metadata.
     #[prost(message, optional, tag = "1")]
-    pub task: ::core::option::Option<super::common::Task>,
+    pub task: ::core::option::Option<super::super::common::v2::Task>,
 }
 /// StatTaskRequest represents request of StatTask.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -82,7 +82,7 @@ pub struct StatTaskRequest {
 pub struct StatTaskResponse {
     /// Task metadata.
     #[prost(message, optional, tag = "1")]
-    pub task: ::core::option::Option<super::common::Task>,
+    pub task: ::core::option::Option<super::super::common::v2::Task>,
 }
 /// DeleteTaskRequest represents request of DeleteTask.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -197,11 +197,11 @@ pub mod dfdaemon_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.Dfdaemon/SyncPieces",
+                "/dfdaemon.v2.Dfdaemon/SyncPieces",
             );
             let mut req = request.into_streaming_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.Dfdaemon", "SyncPieces"));
+                .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "SyncPieces"));
             self.inner.streaming(req, path, codec).await
         }
         /// DownloadTask downloads task back-to-source.
@@ -220,11 +220,11 @@ pub mod dfdaemon_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.Dfdaemon/DownloadTask",
+                "/dfdaemon.v2.Dfdaemon/DownloadTask",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.Dfdaemon", "DownloadTask"));
+                .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "DownloadTask"));
             self.inner.unary(req, path, codec).await
         }
         /// UploadTask uploads task to p2p network.
@@ -243,11 +243,11 @@ pub mod dfdaemon_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.Dfdaemon/UploadTask",
+                "/dfdaemon.v2.Dfdaemon/UploadTask",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.Dfdaemon", "UploadTask"));
+                .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "UploadTask"));
             self.inner.unary(req, path, codec).await
         }
         /// StatTask stats task information.
@@ -255,7 +255,7 @@ pub mod dfdaemon_client {
             &mut self,
             request: impl tonic::IntoRequest<super::StatTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::common::Task>,
+            tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
         > {
             self.inner
@@ -269,11 +269,11 @@ pub mod dfdaemon_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.Dfdaemon/StatTask",
+                "/dfdaemon.v2.Dfdaemon/StatTask",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.Dfdaemon", "StatTask"));
+                .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "StatTask"));
             self.inner.unary(req, path, codec).await
         }
         /// DeleteTask deletes task from p2p network.
@@ -292,11 +292,11 @@ pub mod dfdaemon_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.Dfdaemon/DeleteTask",
+                "/dfdaemon.v2.Dfdaemon/DeleteTask",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.Dfdaemon", "DeleteTask"));
+                .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "DeleteTask"));
             self.inner.unary(req, path, codec).await
         }
     }
@@ -334,7 +334,7 @@ pub mod dfdaemon_server {
             &self,
             request: tonic::Request<super::StatTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::common::Task>,
+            tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
         >;
         /// DeleteTask deletes task from p2p network.
@@ -423,7 +423,7 @@ pub mod dfdaemon_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/dfdaemon.Dfdaemon/SyncPieces" => {
+                "/dfdaemon.v2.Dfdaemon/SyncPieces" => {
                     #[allow(non_camel_case_types)]
                     struct SyncPiecesSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<
@@ -470,7 +470,7 @@ pub mod dfdaemon_server {
                     };
                     Box::pin(fut)
                 }
-                "/dfdaemon.Dfdaemon/DownloadTask" => {
+                "/dfdaemon.v2.Dfdaemon/DownloadTask" => {
                     #[allow(non_camel_case_types)]
                     struct DownloadTaskSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<
@@ -516,7 +516,7 @@ pub mod dfdaemon_server {
                     };
                     Box::pin(fut)
                 }
-                "/dfdaemon.Dfdaemon/UploadTask" => {
+                "/dfdaemon.v2.Dfdaemon/UploadTask" => {
                     #[allow(non_camel_case_types)]
                     struct UploadTaskSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<
@@ -560,12 +560,12 @@ pub mod dfdaemon_server {
                     };
                     Box::pin(fut)
                 }
-                "/dfdaemon.Dfdaemon/StatTask" => {
+                "/dfdaemon.v2.Dfdaemon/StatTask" => {
                     #[allow(non_camel_case_types)]
                     struct StatTaskSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<T: Dfdaemon> tonic::server::UnaryService<super::StatTaskRequest>
                     for StatTaskSvc<T> {
-                        type Response = super::super::common::Task;
+                        type Response = super::super::super::common::v2::Task;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
@@ -602,7 +602,7 @@ pub mod dfdaemon_server {
                     };
                     Box::pin(fut)
                 }
-                "/dfdaemon.Dfdaemon/DeleteTask" => {
+                "/dfdaemon.v2.Dfdaemon/DeleteTask" => {
                     #[allow(non_camel_case_types)]
                     struct DeleteTaskSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<
@@ -684,6 +684,6 @@ pub mod dfdaemon_server {
         }
     }
     impl<T: Dfdaemon> tonic::server::NamedService for DfdaemonServer<T> {
-        const NAME: &'static str = "dfdaemon.Dfdaemon";
+        const NAME: &'static str = "dfdaemon.v2.Dfdaemon";
     }
 }

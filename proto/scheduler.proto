@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package scheduler;
+package scheduler.v2;
 
 import "common.proto";
 import "google/protobuf/empty.proto";
@@ -26,13 +26,13 @@ import "google/protobuf/timestamp.proto";
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {
   // Download information.
-  common.Download download = 1;
+  common.v2.Download download = 1;
 }
 
 // RegisterSeedPeerRequest represents seed peer registered request of AnnouncePeerRequest.
 message RegisterSeedPeerRequest {
   // Download information.
-  common.Download download = 1;
+  common.v2.Download download = 1;
 }
 
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
@@ -76,19 +76,19 @@ message DownloadPeerBackToSourceFailedRequest {
 // DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
 message DownloadPieceFinishedRequest {
   // Piece info.
-  common.Piece piece = 1;
+  common.v2.Piece piece = 1;
 }
 
 // DownloadPieceBackToSourceFinishedRequest represents piece download back-to-source finished request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFinishedRequest {
   // Piece info.
-  common.Piece piece = 1;
+  common.v2.Piece piece = 1;
 }
 
 // DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
 message DownloadPieceFailedRequest {
   // Piece info.
-  common.Piece piece = 1;
+  common.v2.Piece piece = 1;
   // Temporary indicates whether the error is temporary.
   bool temporary = 2;
 }
@@ -118,7 +118,7 @@ message OSSResponse {
 // DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFailedRequest {
   // Piece info.
-  common.Piece piece = 1;
+  common.v2.Piece piece = 1;
 
   oneof response {
     HTTPResponse http_response = 2;
@@ -185,7 +185,7 @@ message SmallTaskResponse {
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 message NormalTaskResponse {
   // Candidate parents.
-  repeated common.Peer candidate_parents = 1;
+  repeated common.v2.Peer candidate_parents = 1;
   // Concurrent downloading piece count from the peers.
   int32 concurrent_piece_count = 2;
 }
@@ -251,7 +251,7 @@ message StatTaskRequest {
 
 // AnnounceHostRequest represents request of AnnounceHost.
 message AnnounceHostRequest {
-  common.Host host = 1;
+  common.v2.Host host = 1;
 }
 
 // LeaveHostRequest represents request of LeaveHost.
@@ -267,7 +267,7 @@ message ProbeStartedRequest {
 // Probe information.
 message Probe {
   // Destination host metadata.
-  common.Host host = 1;
+  common.v2.Host host = 1;
   // RTT is the round-trip time sent via this pinger.
   google.protobuf.Duration rtt = 2;
   // Probe create time.
@@ -283,7 +283,7 @@ message ProbeFinishedRequest {
 // FailedProbe information.
 message FailedProbe {
   // Destination host metadata.
-  common.Host host = 1;
+  common.v2.Host host = 1;
   // The description of probing failed.
   string description = 2;
 }
@@ -297,7 +297,7 @@ message ProbeFailedRequest {
 // SyncProbesRequest represents request of SyncProbes.
 message SyncProbesRequest {
   // Source host metadata.
-  common.Host host = 1;
+  common.v2.Host host = 1;
 
   oneof request {
     ProbeStartedRequest probe_started_request = 2;
@@ -309,7 +309,7 @@ message SyncProbesRequest {
 // SyncProbesResponse represents response of SyncProbes.
 message SyncProbesResponse {
   // Hosts needs to be probed.
-  repeated common.Host hosts = 1;
+  repeated common.v2.Host hosts = 1;
 }
 
 // Scheduler RPC Service.
@@ -318,7 +318,7 @@ service Scheduler{
   rpc AnnouncePeer(stream AnnouncePeerRequest) returns(stream AnnouncePeerResponse);
 
   // Checks information of peer.
-  rpc StatPeer(StatPeerRequest)returns(common.Peer);
+  rpc StatPeer(StatPeerRequest)returns(common.v2.Peer);
 
   // LeavePeer releases peer in scheduler.
   rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
@@ -328,7 +328,7 @@ service Scheduler{
   rpc ExchangePeer(ExchangePeerRequest)returns(ExchangePeerResponse);
 
   // Checks information of task.
-  rpc StatTask(StatTaskRequest)returns(common.Task);
+  rpc StatTask(StatTaskRequest)returns(common.v2.Task);
 
   // AnnounceHost announces host to scheduler.
   rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);

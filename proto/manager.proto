@@ -16,7 +16,7 @@
 
 syntax = "proto3";
 
-package manager;
+package manager.v2;
 
 import "common.proto";
 import "google/protobuf/empty.proto";
@@ -261,13 +261,13 @@ message URLPriority {
   // URL regex.
   string regex = 1;
   // URL priority value.
-  common.Priority value = 2;
+  common.v2.Priority value = 2;
 }
 
 // ApplicationPriority represents config of application priority.
 message ApplicationPriority {
   // Priority value.
-  common.Priority value = 1;
+  common.v2.Priority value = 1;
   // URL priority.
   repeated URLPriority urls = 2;
 }
