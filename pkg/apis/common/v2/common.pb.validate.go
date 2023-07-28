@@ -750,204 +750,169 @@ func (m *Host) validate(all bool) error {
 
 	// no validation rules for KernelVersion
 
-	if m.GetCpu() == nil {
-		err := HostValidationError{
-			field:  "Cpu",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	if m.Cpu != nil {
 
-	if all {
-		switch v := interface{}(m.GetCpu()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, HostValidationError{
+		if all {
+			switch v := interface{}(m.GetCpu()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Cpu",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Cpu",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetCpu()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return HostValidationError{
 					field:  "Cpu",
 					reason: "embedded message failed validation",
 					cause:  err,
-				})
+				}
 			}
-		case interface{ Validate() error }:
+		}
+
+	}
+
+	if m.Memory != nil {
+
+		if all {
+			switch v := interface{}(m.GetMemory()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Memory",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Memory",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetMemory()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				errors = append(errors, HostValidationError{
-					field:  "Cpu",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetCpu()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HostValidationError{
-				field:  "Cpu",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if m.GetMemory() == nil {
-		err := HostValidationError{
-			field:  "Memory",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetMemory()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, HostValidationError{
+				return HostValidationError{
 					field:  "Memory",
 					reason: "embedded message failed validation",
 					cause:  err,
-				})
+				}
 			}
-		case interface{ Validate() error }:
+		}
+
+	}
+
+	if m.Network != nil {
+
+		if all {
+			switch v := interface{}(m.GetNetwork()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Network",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Network",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetNetwork()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				errors = append(errors, HostValidationError{
-					field:  "Memory",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetMemory()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HostValidationError{
-				field:  "Memory",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if m.GetNetwork() == nil {
-		err := HostValidationError{
-			field:  "Network",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetNetwork()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, HostValidationError{
+				return HostValidationError{
 					field:  "Network",
 					reason: "embedded message failed validation",
 					cause:  err,
-				})
+				}
 			}
-		case interface{ Validate() error }:
+		}
+
+	}
+
+	if m.Disk != nil {
+
+		if all {
+			switch v := interface{}(m.GetDisk()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Disk",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Disk",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDisk()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				errors = append(errors, HostValidationError{
-					field:  "Network",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetNetwork()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HostValidationError{
-				field:  "Network",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if m.GetDisk() == nil {
-		err := HostValidationError{
-			field:  "Disk",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetDisk()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, HostValidationError{
+				return HostValidationError{
 					field:  "Disk",
 					reason: "embedded message failed validation",
 					cause:  err,
-				})
+				}
 			}
-		case interface{ Validate() error }:
+		}
+
+	}
+
+	if m.Build != nil {
+
+		if all {
+			switch v := interface{}(m.GetBuild()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Build",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, HostValidationError{
+						field:  "Build",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetBuild()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				errors = append(errors, HostValidationError{
-					field:  "Disk",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetDisk()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HostValidationError{
-				field:  "Disk",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if m.GetBuild() == nil {
-		err := HostValidationError{
-			field:  "Build",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetBuild()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, HostValidationError{
+				return HostValidationError{
 					field:  "Build",
 					reason: "embedded message failed validation",
 					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, HostValidationError{
-					field:  "Build",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
+				}
 			}
 		}
-	} else if v, ok := interface{}(m.GetBuild()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return HostValidationError{
-				field:  "Build",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
+
 	}
 
 	if len(errors) > 0 {
@@ -1074,44 +1039,37 @@ func (m *CPU) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetTimes() == nil {
-		err := CPUValidationError{
-			field:  "Times",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	if m.Times != nil {
 
-	if all {
-		switch v := interface{}(m.GetTimes()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CPUValidationError{
-					field:  "Times",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
+		if all {
+			switch v := interface{}(m.GetTimes()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, CPUValidationError{
+						field:  "Times",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, CPUValidationError{
+						field:  "Times",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
 			}
-		case interface{ Validate() error }:
+		} else if v, ok := interface{}(m.GetTimes()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CPUValidationError{
+				return CPUValidationError{
 					field:  "Times",
 					reason: "embedded message failed validation",
 					cause:  err,
-				})
+				}
 			}
 		}
-	} else if v, ok := interface{}(m.GetTimes()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CPUValidationError{
-				field:  "Times",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
+
 	}
 
 	if len(errors) > 0 {
