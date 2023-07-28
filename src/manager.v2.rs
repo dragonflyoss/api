@@ -329,7 +329,7 @@ pub struct UrlPriority {
     #[prost(string, tag = "1")]
     pub regex: ::prost::alloc::string::String,
     /// URL priority value.
-    #[prost(enumeration = "super::common::Priority", tag = "2")]
+    #[prost(enumeration = "super::super::common::v2::Priority", tag = "2")]
     pub value: i32,
 }
 /// ApplicationPriority represents config of application priority.
@@ -337,7 +337,7 @@ pub struct UrlPriority {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApplicationPriority {
     /// Priority value.
-    #[prost(enumeration = "super::common::Priority", tag = "1")]
+    #[prost(enumeration = "super::super::common::v2::Priority", tag = "1")]
     pub value: i32,
     /// URL priority.
     #[prost(message, repeated, tag = "2")]
@@ -592,11 +592,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/GetSeedPeer",
+                "/manager.v2.Manager/GetSeedPeer",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "GetSeedPeer"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "GetSeedPeer"));
             self.inner.unary(req, path, codec).await
         }
         /// Update SeedPeer configuration.
@@ -615,11 +615,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/UpdateSeedPeer",
+                "/manager.v2.Manager/UpdateSeedPeer",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "UpdateSeedPeer"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "UpdateSeedPeer"));
             self.inner.unary(req, path, codec).await
         }
         /// Get Scheduler and Scheduler cluster configuration.
@@ -638,11 +638,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/GetScheduler",
+                "/manager.v2.Manager/GetScheduler",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "GetScheduler"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "GetScheduler"));
             self.inner.unary(req, path, codec).await
         }
         /// Update scheduler configuration.
@@ -661,11 +661,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/UpdateScheduler",
+                "/manager.v2.Manager/UpdateScheduler",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "UpdateScheduler"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "UpdateScheduler"));
             self.inner.unary(req, path, codec).await
         }
         /// List acitve schedulers configuration.
@@ -687,11 +687,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/ListSchedulers",
+                "/manager.v2.Manager/ListSchedulers",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "ListSchedulers"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "ListSchedulers"));
             self.inner.unary(req, path, codec).await
         }
         /// Get ObjectStorage configuration.
@@ -710,11 +710,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/GetObjectStorage",
+                "/manager.v2.Manager/GetObjectStorage",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "GetObjectStorage"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "GetObjectStorage"));
             self.inner.unary(req, path, codec).await
         }
         /// List buckets configuration.
@@ -736,11 +736,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/ListBuckets",
+                "/manager.v2.Manager/ListBuckets",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "ListBuckets"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "ListBuckets"));
             self.inner.unary(req, path, codec).await
         }
         /// List applications configuration.
@@ -762,11 +762,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/ListApplications",
+                "/manager.v2.Manager/ListApplications",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "ListApplications"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "ListApplications"));
             self.inner.unary(req, path, codec).await
         }
         /// Create model and update data of model to object storage.
@@ -785,11 +785,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/CreateModel",
+                "/manager.v2.Manager/CreateModel",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("manager.Manager", "CreateModel"));
+                .insert(GrpcMethod::new("manager.v2.Manager", "CreateModel"));
             self.inner.unary(req, path, codec).await
         }
         /// KeepAlive with manager.
@@ -808,10 +808,11 @@ pub mod manager_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/manager.Manager/KeepAlive",
+                "/manager.v2.Manager/KeepAlive",
             );
             let mut req = request.into_streaming_request();
-            req.extensions_mut().insert(GrpcMethod::new("manager.Manager", "KeepAlive"));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.v2.Manager", "KeepAlive"));
             self.inner.client_streaming(req, path, codec).await
         }
     }
@@ -963,7 +964,7 @@ pub mod manager_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/manager.Manager/GetSeedPeer" => {
+                "/manager.v2.Manager/GetSeedPeer" => {
                     #[allow(non_camel_case_types)]
                     struct GetSeedPeerSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1009,7 +1010,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/UpdateSeedPeer" => {
+                "/manager.v2.Manager/UpdateSeedPeer" => {
                     #[allow(non_camel_case_types)]
                     struct UpdateSeedPeerSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1055,7 +1056,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/GetScheduler" => {
+                "/manager.v2.Manager/GetScheduler" => {
                     #[allow(non_camel_case_types)]
                     struct GetSchedulerSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1101,7 +1102,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/UpdateScheduler" => {
+                "/manager.v2.Manager/UpdateScheduler" => {
                     #[allow(non_camel_case_types)]
                     struct UpdateSchedulerSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1147,7 +1148,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/ListSchedulers" => {
+                "/manager.v2.Manager/ListSchedulers" => {
                     #[allow(non_camel_case_types)]
                     struct ListSchedulersSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1193,7 +1194,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/GetObjectStorage" => {
+                "/manager.v2.Manager/GetObjectStorage" => {
                     #[allow(non_camel_case_types)]
                     struct GetObjectStorageSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1239,7 +1240,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/ListBuckets" => {
+                "/manager.v2.Manager/ListBuckets" => {
                     #[allow(non_camel_case_types)]
                     struct ListBucketsSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1285,7 +1286,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/ListApplications" => {
+                "/manager.v2.Manager/ListApplications" => {
                     #[allow(non_camel_case_types)]
                     struct ListApplicationsSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1331,7 +1332,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/CreateModel" => {
+                "/manager.v2.Manager/CreateModel" => {
                     #[allow(non_camel_case_types)]
                     struct CreateModelSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1377,7 +1378,7 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.Manager/KeepAlive" => {
+                "/manager.v2.Manager/KeepAlive" => {
                     #[allow(non_camel_case_types)]
                     struct KeepAliveSvc<T: Manager>(pub Arc<T>);
                     impl<
@@ -1461,6 +1462,6 @@ pub mod manager_server {
         }
     }
     impl<T: Manager> tonic::server::NamedService for ManagerServer<T> {
-        const NAME: &'static str = "manager.Manager";
+        const NAME: &'static str = "manager.v2.Manager";
     }
 }

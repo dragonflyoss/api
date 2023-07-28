@@ -133,19 +133,23 @@ pub struct Host {
     #[prost(string, tag = "10")]
     pub platform_version: ::prost::alloc::string::String,
     /// Host kernel version.
-    ///
-    /// CPU Stat.
-    /// CPU cpu = 12;
-    /// Memory Stat.
-    /// Memory memory = 13;
-    /// Network Stat.
-    /// Network network = 14;
-    /// Disk Stat.
-    /// Disk disk = 15;
-    /// Build information.
-    /// Build build = 16;
     #[prost(string, tag = "11")]
     pub kernel_version: ::prost::alloc::string::String,
+    /// CPU Stat.
+    #[prost(message, optional, tag = "12")]
+    pub cpu: ::core::option::Option<Cpu>,
+    /// Memory Stat.
+    #[prost(message, optional, tag = "13")]
+    pub memory: ::core::option::Option<Memory>,
+    /// Network Stat.
+    #[prost(message, optional, tag = "14")]
+    pub network: ::core::option::Option<Network>,
+    /// Disk Stat.
+    #[prost(message, optional, tag = "15")]
+    pub disk: ::core::option::Option<Disk>,
+    /// Build information.
+    #[prost(message, optional, tag = "16")]
+    pub build: ::core::option::Option<Build>,
 }
 /// CPU Stat.
 #[allow(clippy::derive_partial_eq_without_eq)]

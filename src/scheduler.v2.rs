@@ -4,7 +4,7 @@
 pub struct RegisterPeerRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
-    pub download: ::core::option::Option<super::common::Download>,
+    pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
 /// RegisterSeedPeerRequest represents seed peer registered request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -12,7 +12,7 @@ pub struct RegisterPeerRequest {
 pub struct RegisterSeedPeerRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
-    pub download: ::core::option::Option<super::common::Download>,
+    pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
 /// DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -70,7 +70,7 @@ pub struct DownloadPeerBackToSourceFailedRequest {
 pub struct DownloadPieceFinishedRequest {
     /// Piece info.
     #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::common::Piece>,
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// DownloadPieceBackToSourceFinishedRequest represents piece download back-to-source finished request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -78,7 +78,7 @@ pub struct DownloadPieceFinishedRequest {
 pub struct DownloadPieceBackToSourceFinishedRequest {
     /// Piece info.
     #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::common::Piece>,
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -86,7 +86,7 @@ pub struct DownloadPieceBackToSourceFinishedRequest {
 pub struct DownloadPieceFailedRequest {
     /// Piece info.
     #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::common::Piece>,
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
     /// Temporary indicates whether the error is temporary.
     #[prost(bool, tag = "2")]
     pub temporary: bool,
@@ -126,7 +126,7 @@ pub struct OssResponse {}
 pub struct DownloadPieceBackToSourceFailedRequest {
     /// Piece info.
     #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::common::Piece>,
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
     #[prost(
         oneof = "download_piece_back_to_source_failed_request::Response",
         tags = "2, 3, 4, 5"
@@ -252,7 +252,7 @@ pub struct SmallTaskResponse {}
 pub struct NormalTaskResponse {
     /// Candidate parents.
     #[prost(message, repeated, tag = "1")]
-    pub candidate_parents: ::prost::alloc::vec::Vec<super::common::Peer>,
+    pub candidate_parents: ::prost::alloc::vec::Vec<super::super::common::v2::Peer>,
     /// Concurrent downloading piece count from the peers.
     #[prost(int32, tag = "2")]
     pub concurrent_piece_count: i32,
@@ -350,7 +350,7 @@ pub struct StatTaskRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnounceHostRequest {
     #[prost(message, optional, tag = "1")]
-    pub host: ::core::option::Option<super::common::Host>,
+    pub host: ::core::option::Option<super::super::common::v2::Host>,
 }
 /// LeaveHostRequest represents request of LeaveHost.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -370,7 +370,7 @@ pub struct ProbeStartedRequest {}
 pub struct Probe {
     /// Destination host metadata.
     #[prost(message, optional, tag = "1")]
-    pub host: ::core::option::Option<super::common::Host>,
+    pub host: ::core::option::Option<super::super::common::v2::Host>,
     /// RTT is the round-trip time sent via this pinger.
     #[prost(message, optional, tag = "2")]
     pub rtt: ::core::option::Option<::prost_types::Duration>,
@@ -392,7 +392,7 @@ pub struct ProbeFinishedRequest {
 pub struct FailedProbe {
     /// Destination host metadata.
     #[prost(message, optional, tag = "1")]
-    pub host: ::core::option::Option<super::common::Host>,
+    pub host: ::core::option::Option<super::super::common::v2::Host>,
     /// The description of probing failed.
     #[prost(string, tag = "2")]
     pub description: ::prost::alloc::string::String,
@@ -411,7 +411,7 @@ pub struct ProbeFailedRequest {
 pub struct SyncProbesRequest {
     /// Source host metadata.
     #[prost(message, optional, tag = "1")]
-    pub host: ::core::option::Option<super::common::Host>,
+    pub host: ::core::option::Option<super::super::common::v2::Host>,
     #[prost(oneof = "sync_probes_request::Request", tags = "2, 3, 4")]
     pub request: ::core::option::Option<sync_probes_request::Request>,
 }
@@ -434,7 +434,7 @@ pub mod sync_probes_request {
 pub struct SyncProbesResponse {
     /// Hosts needs to be probed.
     #[prost(message, repeated, tag = "1")]
-    pub hosts: ::prost::alloc::vec::Vec<super::common::Host>,
+    pub hosts: ::prost::alloc::vec::Vec<super::super::common::v2::Host>,
 }
 /// Generated client implementations.
 pub mod scheduler_client {
@@ -543,11 +543,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.Scheduler/AnnouncePeer",
+                "/scheduler.v2.Scheduler/AnnouncePeer",
             );
             let mut req = request.into_streaming_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.Scheduler", "AnnouncePeer"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "AnnouncePeer"));
             self.inner.streaming(req, path, codec).await
         }
         /// Checks information of peer.
@@ -555,7 +555,7 @@ pub mod scheduler_client {
             &mut self,
             request: impl tonic::IntoRequest<super::StatPeerRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::common::Peer>,
+            tonic::Response<super::super::super::common::v2::Peer>,
             tonic::Status,
         > {
             self.inner
@@ -569,11 +569,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.Scheduler/StatPeer",
+                "/scheduler.v2.Scheduler/StatPeer",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.Scheduler", "StatPeer"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatPeer"));
             self.inner.unary(req, path, codec).await
         }
         /// LeavePeer releases peer in scheduler.
@@ -592,11 +592,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.Scheduler/LeavePeer",
+                "/scheduler.v2.Scheduler/LeavePeer",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.Scheduler", "LeavePeer"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "LeavePeer"));
             self.inner.unary(req, path, codec).await
         }
         /// TODO exchange peer api definition.
@@ -619,11 +619,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.Scheduler/ExchangePeer",
+                "/scheduler.v2.Scheduler/ExchangePeer",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.Scheduler", "ExchangePeer"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "ExchangePeer"));
             self.inner.unary(req, path, codec).await
         }
         /// Checks information of task.
@@ -631,7 +631,7 @@ pub mod scheduler_client {
             &mut self,
             request: impl tonic::IntoRequest<super::StatTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::common::Task>,
+            tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
         > {
             self.inner
@@ -645,11 +645,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.Scheduler/StatTask",
+                "/scheduler.v2.Scheduler/StatTask",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.Scheduler", "StatTask"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatTask"));
             self.inner.unary(req, path, codec).await
         }
         /// AnnounceHost announces host to scheduler.
@@ -668,11 +668,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.Scheduler/AnnounceHost",
+                "/scheduler.v2.Scheduler/AnnounceHost",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.Scheduler", "AnnounceHost"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "AnnounceHost"));
             self.inner.unary(req, path, codec).await
         }
         /// LeaveHost releases host in scheduler.
@@ -691,11 +691,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.Scheduler/LeaveHost",
+                "/scheduler.v2.Scheduler/LeaveHost",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.Scheduler", "LeaveHost"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "LeaveHost"));
             self.inner.unary(req, path, codec).await
         }
         /// SyncProbes sync probes of the host.
@@ -717,11 +717,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.Scheduler/SyncProbes",
+                "/scheduler.v2.Scheduler/SyncProbes",
             );
             let mut req = request.into_streaming_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.Scheduler", "SyncProbes"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "SyncProbes"));
             self.inner.streaming(req, path, codec).await
         }
     }
@@ -752,7 +752,7 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::StatPeerRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::common::Peer>,
+            tonic::Response<super::super::super::common::v2::Peer>,
             tonic::Status,
         >;
         /// LeavePeer releases peer in scheduler.
@@ -774,7 +774,7 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::StatTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::common::Task>,
+            tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
         >;
         /// AnnounceHost announces host to scheduler.
@@ -879,7 +879,7 @@ pub mod scheduler_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/scheduler.Scheduler/AnnouncePeer" => {
+                "/scheduler.v2.Scheduler/AnnouncePeer" => {
                     #[allow(non_camel_case_types)]
                     struct AnnouncePeerSvc<T: Scheduler>(pub Arc<T>);
                     impl<
@@ -928,14 +928,14 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.Scheduler/StatPeer" => {
+                "/scheduler.v2.Scheduler/StatPeer" => {
                     #[allow(non_camel_case_types)]
                     struct StatPeerSvc<T: Scheduler>(pub Arc<T>);
                     impl<
                         T: Scheduler,
                     > tonic::server::UnaryService<super::StatPeerRequest>
                     for StatPeerSvc<T> {
-                        type Response = super::super::common::Peer;
+                        type Response = super::super::super::common::v2::Peer;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
@@ -972,7 +972,7 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.Scheduler/LeavePeer" => {
+                "/scheduler.v2.Scheduler/LeavePeer" => {
                     #[allow(non_camel_case_types)]
                     struct LeavePeerSvc<T: Scheduler>(pub Arc<T>);
                     impl<
@@ -1016,7 +1016,7 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.Scheduler/ExchangePeer" => {
+                "/scheduler.v2.Scheduler/ExchangePeer" => {
                     #[allow(non_camel_case_types)]
                     struct ExchangePeerSvc<T: Scheduler>(pub Arc<T>);
                     impl<
@@ -1062,14 +1062,14 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.Scheduler/StatTask" => {
+                "/scheduler.v2.Scheduler/StatTask" => {
                     #[allow(non_camel_case_types)]
                     struct StatTaskSvc<T: Scheduler>(pub Arc<T>);
                     impl<
                         T: Scheduler,
                     > tonic::server::UnaryService<super::StatTaskRequest>
                     for StatTaskSvc<T> {
-                        type Response = super::super::common::Task;
+                        type Response = super::super::super::common::v2::Task;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
@@ -1106,7 +1106,7 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.Scheduler/AnnounceHost" => {
+                "/scheduler.v2.Scheduler/AnnounceHost" => {
                     #[allow(non_camel_case_types)]
                     struct AnnounceHostSvc<T: Scheduler>(pub Arc<T>);
                     impl<
@@ -1152,7 +1152,7 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.Scheduler/LeaveHost" => {
+                "/scheduler.v2.Scheduler/LeaveHost" => {
                     #[allow(non_camel_case_types)]
                     struct LeaveHostSvc<T: Scheduler>(pub Arc<T>);
                     impl<
@@ -1196,7 +1196,7 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.Scheduler/SyncProbes" => {
+                "/scheduler.v2.Scheduler/SyncProbes" => {
                     #[allow(non_camel_case_types)]
                     struct SyncProbesSvc<T: Scheduler>(pub Arc<T>);
                     impl<
@@ -1281,6 +1281,6 @@ pub mod scheduler_server {
         }
     }
     impl<T: Scheduler> tonic::server::NamedService for SchedulerServer<T> {
-        const NAME: &'static str = "scheduler.Scheduler";
+        const NAME: &'static str = "scheduler.v2.Scheduler";
     }
 }
