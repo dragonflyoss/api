@@ -191,15 +191,15 @@ message Host {
   // Host kernel version.
   string kernel_version = 11;
   // CPU Stat.
-  CPU cpu = 12;
+  optional CPU cpu = 12;
   // Memory Stat.
-  Memory memory = 13;
+  optional Memory memory = 13;
   // Network Stat.
-  Network network = 14;
+  optional Network network = 14;
   // Disk Stat.
-  Disk disk = 15;
+  optional Disk disk = 15;
   // Build information.
-  Build build = 16;
+  optional Build build = 16;
 }
 
 // CPU Stat.
@@ -213,7 +213,7 @@ message CPU {
   // Calculates the percentage of cpu used by process.
   double process_percent = 4;
   // CPUTimes contains the amounts of time the CPU has spent performing different kinds of work.
-  CPUTimes times = 5;
+  optional CPUTimes times = 5;
 }
 
 // CPUTimes contains the amounts of time the CPU has spent performing different
