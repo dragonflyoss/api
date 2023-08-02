@@ -111,6 +111,23 @@ pub struct UpdateSeedPeerRequest {
     #[prost(int32, tag = "10")]
     pub object_storage_port: i32,
 }
+/// DeleteSeedPeerRequest represents request of DeleteSeedPeer.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteSeedPeerRequest {
+    /// Request source type.
+    #[prost(enumeration = "SourceType", tag = "1")]
+    pub source_type: i32,
+    /// Seed peer hostname.
+    #[prost(string, tag = "2")]
+    pub hostname: ::prost::alloc::string::String,
+    /// ID of the cluster to which the seed peer belongs.
+    #[prost(uint64, tag = "3")]
+    pub seed_peer_cluster_id: u64,
+    /// Seed peer ip.
+    #[prost(string, tag = "4")]
+    pub ip: ::prost::alloc::string::String,
+}
 /// SeedPeerCluster represents cluster of scheduler.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -622,6 +639,29 @@ pub mod manager_client {
                 .insert(GrpcMethod::new("manager.v2.Manager", "UpdateSeedPeer"));
             self.inner.unary(req, path, codec).await
         }
+        /// Delete SeedPeer configuration.
+        pub async fn delete_seed_peer(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteSeedPeerRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/manager.v2.Manager/DeleteSeedPeer",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.v2.Manager", "DeleteSeedPeer"));
+            self.inner.unary(req, path, codec).await
+        }
         /// Get Scheduler and Scheduler cluster configuration.
         pub async fn get_scheduler(
             &mut self,
@@ -834,6 +874,11 @@ pub mod manager_server {
             &self,
             request: tonic::Request<super::UpdateSeedPeerRequest>,
         ) -> std::result::Result<tonic::Response<super::SeedPeer>, tonic::Status>;
+        /// Delete SeedPeer configuration.
+        async fn delete_seed_peer(
+            &self,
+            request: tonic::Request<super::DeleteSeedPeerRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Get Scheduler and Scheduler cluster configuration.
         async fn get_scheduler(
             &self,
@@ -1041,6 +1086,52 @@ pub mod manager_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = UpdateSeedPeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/manager.v2.Manager/DeleteSeedPeer" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteSeedPeerSvc<T: Manager>(pub Arc<T>);
+                    impl<
+                        T: Manager,
+                    > tonic::server::UnaryService<super::DeleteSeedPeerRequest>
+                    for DeleteSeedPeerSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteSeedPeerRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                (*inner).delete_seed_peer(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = DeleteSeedPeerSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

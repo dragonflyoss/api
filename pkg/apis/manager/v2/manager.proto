@@ -112,6 +112,18 @@ message UpdateSeedPeerRequest {
   int32 object_storage_port = 10 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
 }
 
+// DeleteSeedPeerRequest represents request of DeleteSeedPeer.
+message DeleteSeedPeerRequest {
+  // Request source type.
+  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  // Seed peer hostname.
+  string hostname = 2 [(validate.rules).string.hostname = true];
+  // ID of the cluster to which the seed peer belongs.
+  uint64 seed_peer_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
+  // Seed peer ip.
+  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
+}
+
 // SeedPeerCluster represents cluster of scheduler.
 message SchedulerCluster {
   // Cluster id.
@@ -361,6 +373,9 @@ service Manager {
 
   // Update SeedPeer configuration.
   rpc UpdateSeedPeer(UpdateSeedPeerRequest) returns(SeedPeer);
+
+  // Delete SeedPeer configuration.
+  rpc DeleteSeedPeer(DeleteSeedPeerRequest) returns(google.protobuf.Empty);
 
   // Get Scheduler and Scheduler cluster configuration.
   rpc GetScheduler(GetSchedulerRequest)returns(Scheduler);
