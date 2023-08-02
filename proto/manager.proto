@@ -109,18 +109,6 @@ message UpdateSeedPeerRequest {
   int32 object_storage_port = 10;
 }
 
-// DeleteSeedPeerRequest represents request of DeleteSeedPeer.
-message DeleteSeedPeerRequest {
-  // Request source type.
-  SourceType source_type = 1;
-  // Source service hostname.
-  string hostname = 2;
-  // Source service ip.
-  string ip = 3;
-  // ID of the cluster to which the source service belongs.
-  uint64 cluster_id = 4;
-}
-
 // SeedPeerCluster represents cluster of scheduler.
 message SchedulerCluster {
   // Cluster id.
@@ -349,6 +337,18 @@ message CreateModelRequest {
   }
 }
 
+// KeepAliveRequest represents request of KeepAlive.
+message KeepAliveRequest {
+  // Request source type.
+  SourceType source_type = 1;
+  // Source service hostname.
+  string hostname = 2;
+  // ID of the cluster to which the source service belongs.
+  uint64 cluster_id = 3;
+  // Source service ip.
+  string ip = 4;
+}
+
 // Manager RPC Service.
 service Manager {
   // Get SeedPeer and SeedPeer cluster configuration.
@@ -356,9 +356,6 @@ service Manager {
 
   // Update SeedPeer configuration.
   rpc UpdateSeedPeer(UpdateSeedPeerRequest) returns(SeedPeer);
-
-  // Delete SeedPeer configuration.
-  rpc DeleteSeedPeer(DeleteSeedPeerRequest) returns(google.protobuf.Empty);
 
   // Get Scheduler and Scheduler cluster configuration.
   rpc GetScheduler(GetSchedulerRequest)returns(Scheduler);
@@ -380,4 +377,7 @@ service Manager {
 
   // Create model and update data of model to object storage.
   rpc CreateModel(CreateModelRequest)returns(google.protobuf.Empty);
+
+  // KeepAlive with manager.
+  rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
 }

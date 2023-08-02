@@ -111,23 +111,6 @@ pub struct UpdateSeedPeerRequest {
     #[prost(int32, tag = "10")]
     pub object_storage_port: i32,
 }
-/// DeleteSeedPeerRequest represents request of DeleteSeedPeer.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DeleteSeedPeerRequest {
-    /// Request source type.
-    #[prost(enumeration = "SourceType", tag = "1")]
-    pub source_type: i32,
-    /// Source service hostname.
-    #[prost(string, tag = "2")]
-    pub hostname: ::prost::alloc::string::String,
-    /// Source service ip.
-    #[prost(string, tag = "3")]
-    pub ip: ::prost::alloc::string::String,
-    /// ID of the cluster to which the source service belongs.
-    #[prost(uint64, tag = "4")]
-    pub cluster_id: u64,
-}
 /// SeedPeerCluster represents cluster of scheduler.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -457,6 +440,23 @@ pub mod create_model_request {
         CreateMlpRequest(super::CreateMlpRequest),
     }
 }
+/// KeepAliveRequest represents request of KeepAlive.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct KeepAliveRequest {
+    /// Request source type.
+    #[prost(enumeration = "SourceType", tag = "1")]
+    pub source_type: i32,
+    /// Source service hostname.
+    #[prost(string, tag = "2")]
+    pub hostname: ::prost::alloc::string::String,
+    /// ID of the cluster to which the source service belongs.
+    #[prost(uint64, tag = "3")]
+    pub cluster_id: u64,
+    /// Source service ip.
+    #[prost(string, tag = "4")]
+    pub ip: ::prost::alloc::string::String,
+}
 /// Request source type.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
@@ -620,29 +620,6 @@ pub mod manager_client {
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("manager.v2.Manager", "UpdateSeedPeer"));
-            self.inner.unary(req, path, codec).await
-        }
-        /// Delete SeedPeer configuration.
-        pub async fn delete_seed_peer(
-            &mut self,
-            request: impl tonic::IntoRequest<super::DeleteSeedPeerRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/manager.v2.Manager/DeleteSeedPeer",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("manager.v2.Manager", "DeleteSeedPeer"));
             self.inner.unary(req, path, codec).await
         }
         /// Get Scheduler and Scheduler cluster configuration.
@@ -815,6 +792,29 @@ pub mod manager_client {
                 .insert(GrpcMethod::new("manager.v2.Manager", "CreateModel"));
             self.inner.unary(req, path, codec).await
         }
+        /// KeepAlive with manager.
+        pub async fn keep_alive(
+            &mut self,
+            request: impl tonic::IntoStreamingRequest<Message = super::KeepAliveRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/manager.v2.Manager/KeepAlive",
+            );
+            let mut req = request.into_streaming_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.v2.Manager", "KeepAlive"));
+            self.inner.client_streaming(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -834,11 +834,6 @@ pub mod manager_server {
             &self,
             request: tonic::Request<super::UpdateSeedPeerRequest>,
         ) -> std::result::Result<tonic::Response<super::SeedPeer>, tonic::Status>;
-        /// Delete SeedPeer configuration.
-        async fn delete_seed_peer(
-            &self,
-            request: tonic::Request<super::DeleteSeedPeerRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Get Scheduler and Scheduler cluster configuration.
         async fn get_scheduler(
             &self,
@@ -882,6 +877,11 @@ pub mod manager_server {
         async fn create_model(
             &self,
             request: tonic::Request<super::CreateModelRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// KeepAlive with manager.
+        async fn keep_alive(
+            &self,
+            request: tonic::Request<tonic::Streaming<super::KeepAliveRequest>>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
     }
     /// Manager RPC Service.
@@ -1041,52 +1041,6 @@ pub mod manager_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = UpdateSeedPeerSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/manager.v2.Manager/DeleteSeedPeer" => {
-                    #[allow(non_camel_case_types)]
-                    struct DeleteSeedPeerSvc<T: Manager>(pub Arc<T>);
-                    impl<
-                        T: Manager,
-                    > tonic::server::UnaryService<super::DeleteSeedPeerRequest>
-                    for DeleteSeedPeerSvc<T> {
-                        type Response = ();
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::DeleteSeedPeerRequest>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                (*inner).delete_seed_peer(request).await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = DeleteSeedPeerSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -1420,6 +1374,52 @@ pub mod manager_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/manager.v2.Manager/KeepAlive" => {
+                    #[allow(non_camel_case_types)]
+                    struct KeepAliveSvc<T: Manager>(pub Arc<T>);
+                    impl<
+                        T: Manager,
+                    > tonic::server::ClientStreamingService<super::KeepAliveRequest>
+                    for KeepAliveSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                tonic::Streaming<super::KeepAliveRequest>,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move { (*inner).keep_alive(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = KeepAliveSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.client_streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)

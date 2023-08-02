@@ -112,18 +112,6 @@ message UpdateSeedPeerRequest {
   int32 object_storage_port = 10 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
 }
 
-// DeleteSeedPeerRequest represents request of DeleteSeedPeer.
-message DeleteSeedPeerRequest {
-  // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
-  // Source service hostname.
-  string hostname = 2 [(validate.rules).string.hostname = true];
-  // Source service ip.
-  string ip = 3 [(validate.rules).string = {ip: true, ignore_empty: true}];
-  // ID of the cluster to which the source service belongs.
-  uint64 cluster_id = 4 [(validate.rules).uint64 = {gte: 1}];
-}
-
 // SeedPeerCluster represents cluster of scheduler.
 message SchedulerCluster {
   // Cluster id.
@@ -354,6 +342,18 @@ message CreateModelRequest {
   }
 }
 
+// KeepAliveRequest represents request of KeepAlive.
+message KeepAliveRequest {
+  // Request source type.
+  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
+  // Source service hostname.
+  string hostname = 2 [(validate.rules).string.hostname = true];
+  // ID of the cluster to which the source service belongs.
+  uint64 cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
+  // Source service ip.
+  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
+}
+
 // Manager RPC Service.
 service Manager {
   // Get SeedPeer and SeedPeer cluster configuration.
@@ -361,9 +361,6 @@ service Manager {
 
   // Update SeedPeer configuration.
   rpc UpdateSeedPeer(UpdateSeedPeerRequest) returns(SeedPeer);
-
-  // Delete SeedPeer configuration.
-  rpc DeleteSeedPeer(DeleteSeedPeerRequest) returns(google.protobuf.Empty);
 
   // Get Scheduler and Scheduler cluster configuration.
   rpc GetScheduler(GetSchedulerRequest)returns(Scheduler);
@@ -385,4 +382,7 @@ service Manager {
 
   // Create model and update data of model to object storage.
   rpc CreateModel(CreateModelRequest)returns(google.protobuf.Empty);
+
+  // KeepAlive with manager.
+  rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
 }
