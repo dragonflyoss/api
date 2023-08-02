@@ -27,6 +27,8 @@ type ManagerClient interface {
 	GetSeedPeer(ctx context.Context, in *GetSeedPeerRequest, opts ...grpc.CallOption) (*SeedPeer, error)
 	// Update SeedPeer configuration.
 	UpdateSeedPeer(ctx context.Context, in *UpdateSeedPeerRequest, opts ...grpc.CallOption) (*SeedPeer, error)
+	// Delete SeedPeer configuration.
+	DeleteSeedPeer(ctx context.Context, in *DeleteSeedPeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Get Scheduler and Scheduler cluster configuration.
 	GetScheduler(ctx context.Context, in *GetSchedulerRequest, opts ...grpc.CallOption) (*Scheduler, error)
 	// Update scheduler configuration.
@@ -65,6 +67,15 @@ func (c *managerClient) GetSeedPeer(ctx context.Context, in *GetSeedPeerRequest,
 func (c *managerClient) UpdateSeedPeer(ctx context.Context, in *UpdateSeedPeerRequest, opts ...grpc.CallOption) (*SeedPeer, error) {
 	out := new(SeedPeer)
 	err := c.cc.Invoke(ctx, "/manager.v2.Manager/UpdateSeedPeer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *managerClient) DeleteSeedPeer(ctx context.Context, in *DeleteSeedPeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/manager.v2.Manager/DeleteSeedPeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -176,6 +187,8 @@ type ManagerServer interface {
 	GetSeedPeer(context.Context, *GetSeedPeerRequest) (*SeedPeer, error)
 	// Update SeedPeer configuration.
 	UpdateSeedPeer(context.Context, *UpdateSeedPeerRequest) (*SeedPeer, error)
+	// Delete SeedPeer configuration.
+	DeleteSeedPeer(context.Context, *DeleteSeedPeerRequest) (*emptypb.Empty, error)
 	// Get Scheduler and Scheduler cluster configuration.
 	GetScheduler(context.Context, *GetSchedulerRequest) (*Scheduler, error)
 	// Update scheduler configuration.
@@ -203,6 +216,9 @@ func (UnimplementedManagerServer) GetSeedPeer(context.Context, *GetSeedPeerReque
 }
 func (UnimplementedManagerServer) UpdateSeedPeer(context.Context, *UpdateSeedPeerRequest) (*SeedPeer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSeedPeer not implemented")
+}
+func (UnimplementedManagerServer) DeleteSeedPeer(context.Context, *DeleteSeedPeerRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSeedPeer not implemented")
 }
 func (UnimplementedManagerServer) GetScheduler(context.Context, *GetSchedulerRequest) (*Scheduler, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetScheduler not implemented")
@@ -272,6 +288,24 @@ func _Manager_UpdateSeedPeer_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ManagerServer).UpdateSeedPeer(ctx, req.(*UpdateSeedPeerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Manager_DeleteSeedPeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSeedPeerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManagerServer).DeleteSeedPeer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/manager.v2.Manager/DeleteSeedPeer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManagerServer).DeleteSeedPeer(ctx, req.(*DeleteSeedPeerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -442,6 +476,10 @@ var Manager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSeedPeer",
 			Handler:    _Manager_UpdateSeedPeer_Handler,
+		},
+		{
+			MethodName: "DeleteSeedPeer",
+			Handler:    _Manager_DeleteSeedPeer_Handler,
 		},
 		{
 			MethodName: "GetScheduler",
