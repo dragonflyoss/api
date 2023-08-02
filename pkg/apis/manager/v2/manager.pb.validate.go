@@ -785,6 +785,187 @@ var _UpdateSeedPeerRequest_Type_InLookup = map[string]struct{}{
 	"weak":   {},
 }
 
+// Validate checks the field values on DeleteSeedPeerRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteSeedPeerRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteSeedPeerRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteSeedPeerRequestMultiError, or nil if none found.
+func (m *DeleteSeedPeerRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteSeedPeerRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		err := DeleteSeedPeerRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if err := m._validateHostname(m.GetHostname()); err != nil {
+		err = DeleteSeedPeerRequestValidationError{
+			field:  "Hostname",
+			reason: "value must be a valid hostname",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetIp() != "" {
+
+		if ip := net.ParseIP(m.GetIp()); ip == nil {
+			err := DeleteSeedPeerRequestValidationError{
+				field:  "Ip",
+				reason: "value must be a valid IP address",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetClusterId() < 1 {
+		err := DeleteSeedPeerRequestValidationError{
+			field:  "ClusterId",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeleteSeedPeerRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *DeleteSeedPeerRequest) _validateHostname(host string) error {
+	s := strings.ToLower(strings.TrimSuffix(host, "."))
+
+	if len(host) > 253 {
+		return errors.New("hostname cannot exceed 253 characters")
+	}
+
+	for _, part := range strings.Split(s, ".") {
+		if l := len(part); l == 0 || l > 63 {
+			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+		}
+
+		if part[0] == '-' {
+			return errors.New("hostname parts cannot begin with hyphens")
+		}
+
+		if part[len(part)-1] == '-' {
+			return errors.New("hostname parts cannot end with hyphens")
+		}
+
+		for _, r := range part {
+			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
+				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+			}
+		}
+	}
+
+	return nil
+}
+
+// DeleteSeedPeerRequestMultiError is an error wrapping multiple validation
+// errors returned by DeleteSeedPeerRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteSeedPeerRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteSeedPeerRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteSeedPeerRequestMultiError) AllErrors() []error { return m }
+
+// DeleteSeedPeerRequestValidationError is the validation error returned by
+// DeleteSeedPeerRequest.Validate if the designated constraints aren't met.
+type DeleteSeedPeerRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteSeedPeerRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteSeedPeerRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteSeedPeerRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteSeedPeerRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteSeedPeerRequestValidationError) ErrorName() string {
+	return "DeleteSeedPeerRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteSeedPeerRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteSeedPeerRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteSeedPeerRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteSeedPeerRequestValidationError{}
+
 // Validate checks the field values on SchedulerCluster with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -3810,182 +3991,3 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CreateModelRequestValidationError{}
-
-// Validate checks the field values on KeepAliveRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *KeepAliveRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on KeepAliveRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// KeepAliveRequestMultiError, or nil if none found.
-func (m *KeepAliveRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *KeepAliveRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
-		err := KeepAliveRequestValidationError{
-			field:  "SourceType",
-			reason: "value must be one of the defined enum values",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if err := m._validateHostname(m.GetHostname()); err != nil {
-		err = KeepAliveRequestValidationError{
-			field:  "Hostname",
-			reason: "value must be a valid hostname",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetClusterId() < 1 {
-		err := KeepAliveRequestValidationError{
-			field:  "ClusterId",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetIp() != "" {
-
-		if ip := net.ParseIP(m.GetIp()); ip == nil {
-			err := KeepAliveRequestValidationError{
-				field:  "Ip",
-				reason: "value must be a valid IP address",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if len(errors) > 0 {
-		return KeepAliveRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *KeepAliveRequest) _validateHostname(host string) error {
-	s := strings.ToLower(strings.TrimSuffix(host, "."))
-
-	if len(host) > 253 {
-		return errors.New("hostname cannot exceed 253 characters")
-	}
-
-	for _, part := range strings.Split(s, ".") {
-		if l := len(part); l == 0 || l > 63 {
-			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
-		}
-
-		if part[0] == '-' {
-			return errors.New("hostname parts cannot begin with hyphens")
-		}
-
-		if part[len(part)-1] == '-' {
-			return errors.New("hostname parts cannot end with hyphens")
-		}
-
-		for _, r := range part {
-			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
-				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
-			}
-		}
-	}
-
-	return nil
-}
-
-// KeepAliveRequestMultiError is an error wrapping multiple validation errors
-// returned by KeepAliveRequest.ValidateAll() if the designated constraints
-// aren't met.
-type KeepAliveRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m KeepAliveRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m KeepAliveRequestMultiError) AllErrors() []error { return m }
-
-// KeepAliveRequestValidationError is the validation error returned by
-// KeepAliveRequest.Validate if the designated constraints aren't met.
-type KeepAliveRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e KeepAliveRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e KeepAliveRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e KeepAliveRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e KeepAliveRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e KeepAliveRequestValidationError) ErrorName() string { return "KeepAliveRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e KeepAliveRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sKeepAliveRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = KeepAliveRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = KeepAliveRequestValidationError{}
