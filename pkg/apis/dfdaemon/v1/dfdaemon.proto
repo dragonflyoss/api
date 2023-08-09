@@ -40,7 +40,7 @@ message DownRequest{
   // Disable back-to-source.
   bool disable_back_source = 6;
   // URL meta info.
-  common.UrlMeta url_meta = 7;
+  common.UrlMeta url_meta = 7 [(validate.rules).message.required = true];
   // User id.
   int64 uid = 10;
   // Group id.
@@ -68,7 +68,7 @@ message StatTaskRequest{
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
-  common.UrlMeta url_meta = 2;
+  common.UrlMeta url_meta = 2 [(validate.rules).message.required = true];
   // Check local cache only.
   bool local_only = 3;
 }
@@ -77,7 +77,7 @@ message ImportTaskRequest{
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
-  common.UrlMeta url_meta = 2;
+  common.UrlMeta url_meta = 2 [(validate.rules).message.required = true];
   // File to be imported.
   string path = 3 [(validate.rules).string.min_len = 1];
   // Task type.
@@ -94,7 +94,7 @@ message ExportTaskRequest{
   // Rate limit in bytes per second.
   double limit = 4 [(validate.rules).double.gte = 0];
   // URL meta info.
-  common.UrlMeta url_meta = 5;
+  common.UrlMeta url_meta = 5 [(validate.rules).message.required = true];
   // User id.
   int64 uid = 7;
   // Group id.
@@ -107,7 +107,7 @@ message DeleteTaskRequest{
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
-  common.UrlMeta url_meta = 2;
+  common.UrlMeta url_meta = 2 [(validate.rules).message.required = true];
 }
 
 // Daemon Client RPC Service
