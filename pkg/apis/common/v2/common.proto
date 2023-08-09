@@ -141,7 +141,7 @@ message Task {
   // Download url.
   string url = 3 [(validate.rules).string.uri = true];
   // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
-  string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fa-f0-9]{32}|sha1:[a-fa-f0-9]{40}|sha256:[a-fa-f0-9]{64}|sha512:[a-fa-f0-9]{128})$", ignore_empty: true}];
+  string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-zA-Z0-9]{32}|sha1:[a-zA-Z0-9]{40}|sha256:[a-zA-Z0-9]{64}|sha512:[a-zA-Z0-9]{128})$", ignore_empty: true}];
   // URL tag identifies different task for same url.
   string tag = 5;
   // Application of task.
@@ -314,7 +314,7 @@ message Download {
   // Download url.
   string url = 1 [(validate.rules).string.uri = true];
   // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
-  string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fa-f0-9]{32}|sha1:[a-fa-f0-9]{40}|sha256:[a-fa-f0-9]{64}|sha512:[a-fa-f0-9]{128})$", ignore_empty: true}];
+  string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-zA-Z0-9]{32}|sha1:[a-zA-Z0-9]{40}|sha256:[a-zA-Z0-9]{64}|sha512:[a-zA-Z0-9]{128})$", ignore_empty: true}];
   // Range is url range of request.
   Range range = 3;
   // Task type.
@@ -360,7 +360,7 @@ message Piece {
   // Piece length.
   uint64 length = 4 [(validate.rules).uint64.gt = 0];
   // Digest of the piece data, for example md5:xxx or sha256:yyy.
-  string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-fa-f0-9]{32}|sha1:[a-fa-f0-9]{40}|sha256:[a-fa-f0-9]{64}|sha512:[a-fa-f0-9]{128})$", ignore_empty: true}];
+  string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-zA-Z0-9]{32}|sha1:[a-zA-Z0-9]{40}|sha256:[a-zA-Z0-9]{64}|sha512:[a-zA-Z0-9]{128})$", ignore_empty: true}];
   // Piece content.
   bytes content = 6 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
   // Traffic type.
