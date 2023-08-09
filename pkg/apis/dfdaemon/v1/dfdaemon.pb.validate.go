@@ -119,6 +119,17 @@ func (m *DownRequest) validate(all bool) error {
 
 	// no validation rules for DisableBackSource
 
+	if m.GetUrlMeta() == nil {
+		err := DownRequestValidationError{
+			field:  "UrlMeta",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if all {
 		switch v := interface{}(m.GetUrlMeta()).(type) {
 		case interface{ ValidateAll() error }:
@@ -402,6 +413,17 @@ func (m *StatTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.GetUrlMeta() == nil {
+		err := StatTaskRequestValidationError{
+			field:  "UrlMeta",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if all {
 		switch v := interface{}(m.GetUrlMeta()).(type) {
 		case interface{ ValidateAll() error }:
@@ -537,6 +559,17 @@ func (m *ImportTaskRequest) validate(all bool) error {
 		err := ImportTaskRequestValidationError{
 			field:  "Url",
 			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUrlMeta() == nil {
+		err := ImportTaskRequestValidationError{
+			field:  "UrlMeta",
+			reason: "value is required",
 		}
 		if !all {
 			return err
@@ -732,6 +765,17 @@ func (m *ExportTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.GetUrlMeta() == nil {
+		err := ExportTaskRequestValidationError{
+			field:  "UrlMeta",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if all {
 		switch v := interface{}(m.GetUrlMeta()).(type) {
 		case interface{ ValidateAll() error }:
@@ -873,6 +917,17 @@ func (m *DeleteTaskRequest) validate(all bool) error {
 		err := DeleteTaskRequestValidationError{
 			field:  "Url",
 			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUrlMeta() == nil {
+		err := DeleteTaskRequestValidationError{
+			field:  "UrlMeta",
+			reason: "value is required",
 		}
 		if !all {
 			return err
