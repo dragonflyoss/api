@@ -164,7 +164,7 @@ func (m *UrlMeta) validate(all bool) error {
 		if !_UrlMeta_Digest_Pattern.MatchString(m.GetDigest()) {
 			err := UrlMetaValidationError{
 				field:  "Digest",
-				reason: "value does not match regex pattern \"^(md5)|(sha256):[A-Fa-f0-9]+$\"",
+				reason: "value does not match regex pattern \"^(md5:[a-fa-f0-9]{32}|sha1:[a-fa-f0-9]{40}|sha256:[a-fa-f0-9]{64}|sha512:[a-fa-f0-9]{128})$\"",
 			}
 			if !all {
 				return err
@@ -276,7 +276,7 @@ var _ interface {
 	ErrorName() string
 } = UrlMetaValidationError{}
 
-var _UrlMeta_Digest_Pattern = regexp.MustCompile("^(md5)|(sha256):[A-Fa-f0-9]+$")
+var _UrlMeta_Digest_Pattern = regexp.MustCompile("^(md5:[a-fa-f0-9]{32}|sha1:[a-fa-f0-9]{40}|sha256:[a-fa-f0-9]{64}|sha512:[a-fa-f0-9]{128})$")
 
 var _UrlMeta_Range_Pattern = regexp.MustCompile("^[0-9]+-[0-9]*$")
 
