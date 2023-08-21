@@ -352,9 +352,6 @@ pub struct AnnounceHostRequest {
     /// Host information.
     #[prost(message, optional, tag = "1")]
     pub host: ::core::option::Option<super::super::common::v2::Host>,
-    /// ID of the cluster to which the host belongs.
-    #[prost(uint64, tag = "2")]
-    pub scheduler_cluster_id: u64,
 }
 /// LeaveHostRequest represents request of LeaveHost.
 #[allow(clippy::derive_partial_eq_without_eq)]

@@ -200,6 +200,8 @@ message Host {
   optional Disk disk = 15;
   // Build information.
   optional Build build = 16;
+  // ID of the cluster to which the host belongs.
+  uint64 scheduler_cluster_id = 17;
 }
 
 // CPU Stat.

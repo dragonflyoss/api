@@ -258,8 +258,6 @@ message StatTaskRequest {
 message AnnounceHostRequest {
   // Host info.
   common.v2.Host host = 1 [(validate.rules).message.required = true];
-  // ID of the cluster to which the host belongs.
-  uint64 scheduler_cluster_id = 2;
 }
 
 // LeaveHostRequest represents request of LeaveHost.
