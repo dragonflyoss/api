@@ -251,7 +251,10 @@ message StatTaskRequest {
 
 // AnnounceHostRequest represents request of AnnounceHost.
 message AnnounceHostRequest {
+  // Host information.
   common.v2.Host host = 1;
+  // ID of the cluster to which the host belongs.
+  uint64 scheduler_cluster_id = 2;
 }
 
 // LeaveHostRequest represents request of LeaveHost.

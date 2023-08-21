@@ -4645,6 +4645,8 @@ func (m *AnnounceHostRequest) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for SchedulerClusterId
+
 	if len(errors) > 0 {
 		return AnnounceHostRequestMultiError(errors)
 	}

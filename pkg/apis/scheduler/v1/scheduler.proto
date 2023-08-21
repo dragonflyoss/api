@@ -265,6 +265,8 @@ message AnnounceHostRequest{
   Disk disk = 15 [(validate.rules).message.required = true];
   // Build information.
   Build build = 16 [(validate.rules).message.required = true];
+  // ID of the cluster to which the host belongs.
+  uint64 scheduler_cluster_id = 17;
 }
 
 // CPU Stat.
