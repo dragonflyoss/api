@@ -750,6 +750,8 @@ func (m *Host) validate(all bool) error {
 
 	// no validation rules for KernelVersion
 
+	// no validation rules for SchedulerClusterId
+
 	if m.Cpu != nil {
 
 		if all {

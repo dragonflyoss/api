@@ -150,6 +150,9 @@ pub struct Host {
     /// Build information.
     #[prost(message, optional, tag = "16")]
     pub build: ::core::option::Option<Build>,
+    /// ID of the cluster to which the host belongs.
+    #[prost(uint64, tag = "17")]
+    pub scheduler_cluster_id: u64,
 }
 /// CPU Stat.
 #[allow(clippy::derive_partial_eq_without_eq)]
