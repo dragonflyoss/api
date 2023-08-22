@@ -293,6 +293,9 @@ pub struct ObjectStorage {
     /// Refer to <https://github.com/aws/aws-sdk-go/blob/main/aws/config.go#L118.>
     #[prost(bool, tag = "6")]
     pub s3_force_path_style: bool,
+    /// Scheme is the scheme of the http client.
+    #[prost(string, tag = "7")]
+    pub scheme: ::prost::alloc::string::String,
 }
 /// GetObjectStorageRequest represents request of GetObjectStorage.
 #[allow(clippy::derive_partial_eq_without_eq)]

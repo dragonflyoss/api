@@ -1927,6 +1927,17 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	// no validation rules for S3ForcePathStyle
 
+	if _, ok := _ObjectStorage_Scheme_InLookup[m.GetScheme()]; !ok {
+		err := ObjectStorageValidationError{
+			field:  "Scheme",
+			reason: "value must be in list [http https]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return ObjectStorageMultiError(errors)
 	}
@@ -2004,6 +2015,11 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ObjectStorageValidationError{}
+
+var _ObjectStorage_Scheme_InLookup = map[string]struct{}{
+	"http":  {},
+	"https": {},
+}
 
 // Validate checks the field values on GetObjectStorageRequest with the rules
 // defined in the proto definition for this message. If any rules are
