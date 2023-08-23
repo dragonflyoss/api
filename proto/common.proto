@@ -202,6 +202,8 @@ message Host {
   optional Build build = 16;
   // ID of the cluster to which the host belongs.
   uint64 scheduler_cluster_id = 17;
+  // Port of object storage server.
+  int32 object_storage_port = 18;
 }
 
 // CPU Stat.
