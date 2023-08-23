@@ -153,6 +153,9 @@ pub struct Host {
     /// ID of the cluster to which the host belongs.
     #[prost(uint64, tag = "17")]
     pub scheduler_cluster_id: u64,
+    /// Port of object storage server.
+    #[prost(int32, tag = "18")]
+    pub object_storage_port: i32,
 }
 /// CPU Stat.
 #[allow(clippy::derive_partial_eq_without_eq)]

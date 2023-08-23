@@ -752,6 +752,21 @@ func (m *Host) validate(all bool) error {
 
 	// no validation rules for SchedulerClusterId
 
+	if m.GetObjectStoragePort() != 0 {
+
+		if val := m.GetObjectStoragePort(); val < 1024 || val >= 65535 {
+			err := HostValidationError{
+				field:  "ObjectStoragePort",
+				reason: "value must be inside range [1024, 65535)",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if m.Cpu != nil {
 
 		if all {
