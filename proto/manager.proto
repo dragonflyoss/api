@@ -201,12 +201,14 @@ message ListSchedulersRequest {
   string hostname = 2;
   // Source service ip.
   string ip = 3;
-  // Source service host information.
-  map<string, string> host_info = 4;
+  // Source idc.
+  optional string idc = 4;
+  // Source location.
+  optional string location = 5;
   // Dfdaemon version.
-  string version = 5;
+  string version = 6;
   // Dfdaemon commit.
-  string commit = 6;
+  string commit = 7;
 }
 
 // ListSchedulersResponse represents response of ListSchedulers.
