@@ -1725,10 +1725,6 @@ func (m *ListSchedulersRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if len(m.GetHostInfo()) > 0 {
-
-	}
-
 	if m.GetVersion() != "" {
 
 		if l := utf8.RuneCountInString(m.GetVersion()); l < 1 || l > 1024 {
@@ -1755,6 +1751,44 @@ func (m *ListSchedulersRequest) validate(all bool) error {
 				return err
 			}
 			errors = append(errors, err)
+		}
+
+	}
+
+	if m.Idc != nil {
+
+		if m.GetIdc() != "" {
+
+			if l := utf8.RuneCountInString(m.GetIdc()); l < 1 || l > 1024 {
+				err := ListSchedulersRequestValidationError{
+					field:  "Idc",
+					reason: "value length must be between 1 and 1024 runes, inclusive",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Location != nil {
+
+		if m.GetLocation() != "" {
+
+			if l := utf8.RuneCountInString(m.GetLocation()); l < 1 || l > 1024 {
+				err := ListSchedulersRequestValidationError{
+					field:  "Location",
+					reason: "value length must be between 1 and 1024 runes, inclusive",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
 
 	}

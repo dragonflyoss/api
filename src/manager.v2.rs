@@ -245,17 +245,17 @@ pub struct ListSchedulersRequest {
     /// Source service ip.
     #[prost(string, tag = "3")]
     pub ip: ::prost::alloc::string::String,
-    /// Source service host information.
-    #[prost(map = "string, string", tag = "4")]
-    pub host_info: ::std::collections::HashMap<
-        ::prost::alloc::string::String,
-        ::prost::alloc::string::String,
-    >,
+    /// Source idc.
+    #[prost(string, optional, tag = "4")]
+    pub idc: ::core::option::Option<::prost::alloc::string::String>,
+    /// Source location.
+    #[prost(string, optional, tag = "5")]
+    pub location: ::core::option::Option<::prost::alloc::string::String>,
     /// Dfdaemon version.
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "6")]
     pub version: ::prost::alloc::string::String,
     /// Dfdaemon commit.
-    #[prost(string, tag = "6")]
+    #[prost(string, tag = "7")]
     pub commit: ::prost::alloc::string::String,
 }
 /// ListSchedulersResponse represents response of ListSchedulers.
