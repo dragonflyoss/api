@@ -14,7 +14,10 @@ pub struct InterestedPiecesRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesRequest {
-    #[prost(oneof = "sync_pieces_request::Request", tags = "1, 2")]
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    #[prost(oneof = "sync_pieces_request::Request", tags = "2, 3")]
     pub request: ::core::option::Option<sync_pieces_request::Request>,
 }
 /// Nested message and enum types in `SyncPiecesRequest`.
@@ -22,9 +25,9 @@ pub mod sync_pieces_request {
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
-        #[prost(message, tag = "1")]
-        InterestedAllPiecesRequest(super::InterestedAllPiecesRequest),
         #[prost(message, tag = "2")]
+        InterestedAllPiecesRequest(super::InterestedAllPiecesRequest),
+        #[prost(message, tag = "3")]
         InterestedPiecesRequest(super::InterestedPiecesRequest),
     }
 }
