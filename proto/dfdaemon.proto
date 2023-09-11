@@ -33,9 +33,12 @@ message InterestedPiecesRequest {
 
 // SyncPiecesRequest represents request of AnnouncePeer.
 message SyncPiecesRequest{
+  // Task id.
+  string task_id = 1;
+
   oneof request {
-    InterestedAllPiecesRequest interested_all_pieces_request = 1;
-    InterestedPiecesRequest interested_pieces_request = 2;
+    InterestedAllPiecesRequest interested_all_pieces_request = 2;
+    InterestedPiecesRequest interested_pieces_request = 3;
   }
 }
 

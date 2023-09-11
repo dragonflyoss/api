@@ -272,6 +272,17 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 
 	var errors []error
 
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := SyncPiecesRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	oneofRequestPresent := false
 	switch v := m.Request.(type) {
 	case *SyncPiecesRequest_InterestedAllPiecesRequest:
