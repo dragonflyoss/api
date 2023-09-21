@@ -83,9 +83,42 @@ pub struct StatTaskRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatTaskResponse {
-    /// Task metadata.
-    #[prost(message, optional, tag = "1")]
-    pub task: ::core::option::Option<super::super::common::v2::Task>,
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    /// Task type.
+    #[prost(enumeration = "super::super::common::v2::TaskType", tag = "2")]
+    pub r#type: i32,
+    /// Download url.
+    #[prost(string, tag = "3")]
+    pub url: ::prost::alloc::string::String,
+    /// Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+    #[prost(string, optional, tag = "4")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
+    /// URL tag identifies different task for same url.
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Filter url used to generate task id.
+    #[prost(string, repeated, tag = "7")]
+    pub filters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Task request headers.
+    #[prost(map = "string, string", tag = "8")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Task piece length.
+    #[prost(int32, tag = "9")]
+    pub piece_length: i32,
+    /// Task create time.
+    #[prost(message, optional, tag = "10")]
+    pub created_at: ::core::option::Option<::prost_types::Timestamp>,
+    /// Task update time.
+    #[prost(message, optional, tag = "11")]
+    pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
 }
 /// DeleteTaskRequest represents request of DeleteTask.
 #[allow(clippy::derive_partial_eq_without_eq)]
