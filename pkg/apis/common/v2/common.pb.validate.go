@@ -1904,50 +1904,6 @@ func (m *Download) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetDigest() != "" {
-
-		if !_Download_Digest_Pattern.MatchString(m.GetDigest()) {
-			err := DownloadValidationError{
-				field:  "Digest",
-				reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	if all {
-		switch v := interface{}(m.GetRange()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, DownloadValidationError{
-					field:  "Range",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, DownloadValidationError{
-					field:  "Range",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return DownloadValidationError{
-				field:  "Range",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if _, ok := TaskType_name[int32(m.GetType())]; !ok {
 		err := DownloadValidationError{
 			field:  "Type",
@@ -1958,10 +1914,6 @@ func (m *Download) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
-
-	// no validation rules for Tag
-
-	// no validation rules for Application
 
 	if _, ok := Priority_name[int32(m.GetPriority())]; !ok {
 		err := DownloadValidationError{
@@ -2002,29 +1954,97 @@ func (m *Download) validate(all bool) error {
 
 	}
 
-	if m.GetTimeout() == nil {
-		err := DownloadValidationError{
-			field:  "Timeout",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetDownloadRateLimit() < 0 {
-		err := DownloadValidationError{
-			field:  "DownloadRateLimit",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	// no validation rules for NeedBackToSource
+
+	if m.Digest != nil {
+
+		if m.GetDigest() != "" {
+
+			if !_Download_Digest_Pattern.MatchString(m.GetDigest()) {
+				err := DownloadValidationError{
+					field:  "Digest",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Range != nil {
+
+		if all {
+			switch v := interface{}(m.GetRange()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "Range",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "Range",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadValidationError{
+					field:  "Range",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if m.Timeout != nil {
+
+		if m.GetTimeout() == nil {
+			err := DownloadValidationError{
+				field:  "Timeout",
+				reason: "value is required",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.DownloadRateLimit != nil {
+
+		if m.GetDownloadRateLimit() < 0 {
+			err := DownloadValidationError{
+				field:  "DownloadRateLimit",
+				reason: "value must be greater than or equal to 0",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
 
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)

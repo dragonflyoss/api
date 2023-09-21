@@ -281,7 +281,7 @@ func (mr *MockScheduler_AnnouncePeerClientMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockScheduler_AnnouncePeerClient) RecvMsg(m interface{}) error {
+func (m_2 *MockScheduler_AnnouncePeerClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -309,7 +309,7 @@ func (mr *MockScheduler_AnnouncePeerClientMockRecorder) Send(arg0 interface{}) *
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockScheduler_AnnouncePeerClient) SendMsg(m interface{}) error {
+func (m_2 *MockScheduler_AnnouncePeerClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -418,7 +418,7 @@ func (mr *MockScheduler_SyncProbesClientMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockScheduler_SyncProbesClient) RecvMsg(m interface{}) error {
+func (m_2 *MockScheduler_SyncProbesClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -446,7 +446,7 @@ func (mr *MockScheduler_SyncProbesClientMockRecorder) Send(arg0 interface{}) *go
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockScheduler_SyncProbesClient) SendMsg(m interface{}) error {
+func (m_2 *MockScheduler_SyncProbesClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -702,7 +702,7 @@ func (mr *MockScheduler_AnnouncePeerServerMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockScheduler_AnnouncePeerServer) RecvMsg(m interface{}) error {
+func (m_2 *MockScheduler_AnnouncePeerServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -744,7 +744,7 @@ func (mr *MockScheduler_AnnouncePeerServerMockRecorder) SendHeader(arg0 interfac
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockScheduler_AnnouncePeerServer) SendMsg(m interface{}) error {
+func (m_2 *MockScheduler_AnnouncePeerServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -836,7 +836,7 @@ func (mr *MockScheduler_SyncProbesServerMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockScheduler_SyncProbesServer) RecvMsg(m interface{}) error {
+func (m_2 *MockScheduler_SyncProbesServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -878,7 +878,7 @@ func (mr *MockScheduler_SyncProbesServerMockRecorder) SendHeader(arg0 interface{
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockScheduler_SyncProbesServer) SendMsg(m interface{}) error {
+func (m_2 *MockScheduler_SyncProbesServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)

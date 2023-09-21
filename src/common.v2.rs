@@ -310,8 +310,8 @@ pub struct Download {
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
     /// Digest of the pieces digest, for example md5:xxx or sha256:yyy.
-    #[prost(string, tag = "2")]
-    pub digest: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// Range is url range of request.
     #[prost(message, optional, tag = "3")]
     pub range: ::core::option::Option<Range>,
@@ -319,11 +319,11 @@ pub struct Download {
     #[prost(enumeration = "TaskType", tag = "4")]
     pub r#type: i32,
     /// URL tag identifies different task for same url.
-    #[prost(string, tag = "5")]
-    pub tag: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, tag = "6")]
-    pub application: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// Peer priority.
     #[prost(enumeration = "Priority", tag = "7")]
     pub priority: i32,
@@ -346,8 +346,8 @@ pub struct Download {
     #[prost(message, optional, tag = "12")]
     pub timeout: ::core::option::Option<::prost_types::Duration>,
     /// Download rate limit in bytes per second.
-    #[prost(double, tag = "13")]
-    pub download_rate_limit: f64,
+    #[prost(double, optional, tag = "13")]
+    pub download_rate_limit: ::core::option::Option<f64>,
     /// NeedBackToSource needs downloaded from source.
     #[prost(bool, tag = "14")]
     pub need_back_to_source: bool,

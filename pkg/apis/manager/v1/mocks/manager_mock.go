@@ -320,7 +320,7 @@ func (mr *MockManager_KeepAliveClientMockRecorder) Header() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockManager_KeepAliveClient) RecvMsg(m interface{}) error {
+func (m_2 *MockManager_KeepAliveClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -348,7 +348,7 @@ func (mr *MockManager_KeepAliveClientMockRecorder) Send(arg0 interface{}) *gomoc
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockManager_KeepAliveClient) SendMsg(m interface{}) error {
+func (m_2 *MockManager_KeepAliveClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -635,7 +635,7 @@ func (mr *MockManager_KeepAliveServerMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockManager_KeepAliveServer) RecvMsg(m interface{}) error {
+func (m_2 *MockManager_KeepAliveServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -677,7 +677,7 @@ func (mr *MockManager_KeepAliveServerMockRecorder) SendHeader(arg0 interface{}) 
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockManager_KeepAliveServer) SendMsg(m interface{}) error {
+func (m_2 *MockManager_KeepAliveServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)

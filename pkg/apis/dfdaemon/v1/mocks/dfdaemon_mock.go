@@ -281,7 +281,7 @@ func (mr *MockDaemon_DownloadClientMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockDaemon_DownloadClient) RecvMsg(m interface{}) error {
+func (m_2 *MockDaemon_DownloadClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -295,7 +295,7 @@ func (mr *MockDaemon_DownloadClientMockRecorder) RecvMsg(m interface{}) *gomock.
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockDaemon_DownloadClient) SendMsg(m interface{}) error {
+func (m_2 *MockDaemon_DownloadClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -404,7 +404,7 @@ func (mr *MockDaemon_SyncPieceTasksClientMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockDaemon_SyncPieceTasksClient) RecvMsg(m interface{}) error {
+func (m_2 *MockDaemon_SyncPieceTasksClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -432,7 +432,7 @@ func (mr *MockDaemon_SyncPieceTasksClientMockRecorder) Send(arg0 interface{}) *g
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockDaemon_SyncPieceTasksClient) SendMsg(m interface{}) error {
+func (m_2 *MockDaemon_SyncPieceTasksClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -673,7 +673,7 @@ func (mr *MockDaemon_DownloadServerMockRecorder) Context() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockDaemon_DownloadServer) RecvMsg(m interface{}) error {
+func (m_2 *MockDaemon_DownloadServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -715,7 +715,7 @@ func (mr *MockDaemon_DownloadServerMockRecorder) SendHeader(arg0 interface{}) *g
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockDaemon_DownloadServer) SendMsg(m interface{}) error {
+func (m_2 *MockDaemon_DownloadServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -807,7 +807,7 @@ func (mr *MockDaemon_SyncPieceTasksServerMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockDaemon_SyncPieceTasksServer) RecvMsg(m interface{}) error {
+func (m_2 *MockDaemon_SyncPieceTasksServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -849,7 +849,7 @@ func (mr *MockDaemon_SyncPieceTasksServerMockRecorder) SendHeader(arg0 interface
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockDaemon_SyncPieceTasksServer) SendMsg(m interface{}) error {
+func (m_2 *MockDaemon_SyncPieceTasksServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)

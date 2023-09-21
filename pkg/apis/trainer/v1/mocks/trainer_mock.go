@@ -140,7 +140,7 @@ func (mr *MockTrainer_TrainClientMockRecorder) Header() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockTrainer_TrainClient) RecvMsg(m interface{}) error {
+func (m_2 *MockTrainer_TrainClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -168,7 +168,7 @@ func (mr *MockTrainer_TrainClientMockRecorder) Send(arg0 interface{}) *gomock.Ca
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockTrainer_TrainClient) SendMsg(m interface{}) error {
+func (m_2 *MockTrainer_TrainClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -320,7 +320,7 @@ func (mr *MockTrainer_TrainServerMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockTrainer_TrainServer) RecvMsg(m interface{}) error {
+func (m_2 *MockTrainer_TrainServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -362,7 +362,7 @@ func (mr *MockTrainer_TrainServerMockRecorder) SendHeader(arg0 interface{}) *gom
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockTrainer_TrainServer) SendMsg(m interface{}) error {
+func (m_2 *MockTrainer_TrainServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
