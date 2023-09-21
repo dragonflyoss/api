@@ -50,14 +50,14 @@ pub struct Task {
     #[prost(string, tag = "3")]
     pub url: ::prost::alloc::string::String,
     /// Digest of the pieces digest, for example md5:xxx or sha256:yyy.
-    #[prost(string, tag = "4")]
-    pub digest: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// URL tag identifies different task for same url.
-    #[prost(string, tag = "5")]
-    pub tag: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, tag = "6")]
-    pub application: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// Filter url used to generate task id.
     #[prost(string, repeated, tag = "7")]
     pub filters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -371,8 +371,8 @@ pub struct Piece {
     #[prost(int32, tag = "1")]
     pub number: i32,
     /// Parent peer id.
-    #[prost(string, tag = "2")]
-    pub parent_id: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub parent_id: ::core::option::Option<::prost::alloc::string::String>,
     /// Piece offset.
     #[prost(uint64, tag = "3")]
     pub offset: u64,

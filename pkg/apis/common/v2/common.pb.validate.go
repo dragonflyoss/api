@@ -67,35 +67,6 @@ func (m *Peer) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if all {
-		switch v := interface{}(m.GetRange()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, PeerValidationError{
-					field:  "Range",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, PeerValidationError{
-					field:  "Range",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PeerValidationError{
-				field:  "Range",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if _, ok := Priority_name[int32(m.GetPriority())]; !ok {
 		err := PeerValidationError{
 			field:  "Priority",
@@ -282,6 +253,39 @@ func (m *Peer) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.Range != nil {
+
+		if all {
+			switch v := interface{}(m.GetRange()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PeerValidationError{
+						field:  "Range",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PeerValidationError{
+						field:  "Range",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PeerValidationError{
+					field:  "Range",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return PeerMultiError(errors)
 	}
@@ -423,25 +427,6 @@ func (m *Task) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetDigest() != "" {
-
-		if !_Task_Digest_Pattern.MatchString(m.GetDigest()) {
-			err := TaskValidationError{
-				field:  "Digest",
-				reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
-	// no validation rules for Tag
-
-	// no validation rules for Application
-
 	// no validation rules for Header
 
 	if m.GetPieceLength() < 1 {
@@ -572,6 +557,33 @@ func (m *Task) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+	}
+
+	if m.Digest != nil {
+
+		if m.GetDigest() != "" {
+
+			if !_Task_Digest_Pattern.MatchString(m.GetDigest()) {
+				err := TaskValidationError{
+					field:  "Digest",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
 	}
 
 	if len(errors) > 0 {
@@ -2259,21 +2271,6 @@ func (m *Piece) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetParentId() != "" {
-
-		if utf8.RuneCountInString(m.GetParentId()) < 1 {
-			err := PieceValidationError{
-				field:  "ParentId",
-				reason: "value length must be at least 1 runes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if m.GetOffset() < 0 {
 		err := PieceValidationError{
 			field:  "Offset",
@@ -2348,6 +2345,25 @@ func (m *Piece) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+	}
+
+	if m.ParentId != nil {
+
+		if m.GetParentId() != "" {
+
+			if utf8.RuneCountInString(m.GetParentId()) < 1 {
+				err := PieceValidationError{
+					field:  "ParentId",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if len(errors) > 0 {
