@@ -221,7 +221,7 @@ func (mr *MockDfdaemon_SyncPiecesClientMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockDfdaemon_SyncPiecesClient) RecvMsg(m interface{}) error {
+func (m_2 *MockDfdaemon_SyncPiecesClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -249,7 +249,7 @@ func (mr *MockDfdaemon_SyncPiecesClientMockRecorder) Send(arg0 interface{}) *gom
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockDfdaemon_SyncPiecesClient) SendMsg(m interface{}) error {
+func (m_2 *MockDfdaemon_SyncPiecesClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -461,7 +461,7 @@ func (mr *MockDfdaemon_SyncPiecesServerMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockDfdaemon_SyncPiecesServer) RecvMsg(m interface{}) error {
+func (m_2 *MockDfdaemon_SyncPiecesServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -503,7 +503,7 @@ func (mr *MockDfdaemon_SyncPiecesServerMockRecorder) SendHeader(arg0 interface{}
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockDfdaemon_SyncPiecesServer) SendMsg(m interface{}) error {
+func (m_2 *MockDfdaemon_SyncPiecesServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)

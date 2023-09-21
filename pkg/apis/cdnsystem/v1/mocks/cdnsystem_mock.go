@@ -180,7 +180,7 @@ func (mr *MockSeeder_ObtainSeedsClientMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockSeeder_ObtainSeedsClient) RecvMsg(m interface{}) error {
+func (m_2 *MockSeeder_ObtainSeedsClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -194,7 +194,7 @@ func (mr *MockSeeder_ObtainSeedsClientMockRecorder) RecvMsg(m interface{}) *gomo
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockSeeder_ObtainSeedsClient) SendMsg(m interface{}) error {
+func (m_2 *MockSeeder_ObtainSeedsClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -303,7 +303,7 @@ func (mr *MockSeeder_SyncPieceTasksClientMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockSeeder_SyncPieceTasksClient) RecvMsg(m interface{}) error {
+func (m_2 *MockSeeder_SyncPieceTasksClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -331,7 +331,7 @@ func (mr *MockSeeder_SyncPieceTasksClientMockRecorder) Send(arg0 interface{}) *g
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockSeeder_SyncPieceTasksClient) SendMsg(m interface{}) error {
+func (m_2 *MockSeeder_SyncPieceTasksClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -497,7 +497,7 @@ func (mr *MockSeeder_ObtainSeedsServerMockRecorder) Context() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockSeeder_ObtainSeedsServer) RecvMsg(m interface{}) error {
+func (m_2 *MockSeeder_ObtainSeedsServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -539,7 +539,7 @@ func (mr *MockSeeder_ObtainSeedsServerMockRecorder) SendHeader(arg0 interface{})
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockSeeder_ObtainSeedsServer) SendMsg(m interface{}) error {
+func (m_2 *MockSeeder_ObtainSeedsServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -631,7 +631,7 @@ func (mr *MockSeeder_SyncPieceTasksServerMockRecorder) Recv() *gomock.Call {
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockSeeder_SyncPieceTasksServer) RecvMsg(m interface{}) error {
+func (m_2 *MockSeeder_SyncPieceTasksServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -673,7 +673,7 @@ func (mr *MockSeeder_SyncPieceTasksServerMockRecorder) SendHeader(arg0 interface
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockSeeder_SyncPieceTasksServer) SendMsg(m interface{}) error {
+func (m_2 *MockSeeder_SyncPieceTasksServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)

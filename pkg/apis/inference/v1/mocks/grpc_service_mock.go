@@ -519,7 +519,7 @@ func (mr *MockGRPCInferenceService_ModelStreamInferClientMockRecorder) Recv() *g
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockGRPCInferenceService_ModelStreamInferClient) RecvMsg(m interface{}) error {
+func (m_2 *MockGRPCInferenceService_ModelStreamInferClient) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -547,7 +547,7 @@ func (mr *MockGRPCInferenceService_ModelStreamInferClientMockRecorder) Send(arg0
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockGRPCInferenceService_ModelStreamInferClient) SendMsg(m interface{}) error {
+func (m_2 *MockGRPCInferenceService_ModelStreamInferClient) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)
@@ -984,7 +984,7 @@ func (mr *MockGRPCInferenceService_ModelStreamInferServerMockRecorder) Recv() *g
 }
 
 // RecvMsg mocks base method.
-func (m_2 *MockGRPCInferenceService_ModelStreamInferServer) RecvMsg(m interface{}) error {
+func (m_2 *MockGRPCInferenceService_ModelStreamInferServer) RecvMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
 	ret0, _ := ret[0].(error)
@@ -1026,7 +1026,7 @@ func (mr *MockGRPCInferenceService_ModelStreamInferServerMockRecorder) SendHeade
 }
 
 // SendMsg mocks base method.
-func (m_2 *MockGRPCInferenceService_ModelStreamInferServer) SendMsg(m interface{}) error {
+func (m_2 *MockGRPCInferenceService_ModelStreamInferServer) SendMsg(m any) error {
 	m_2.ctrl.T.Helper()
 	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
 	ret0, _ := ret[0].(error)

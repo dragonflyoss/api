@@ -312,15 +312,15 @@ message Download {
   // Download url.
   string url = 1;
   // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
-  string digest = 2;
+  optional string digest = 2;
   // Range is url range of request.
-  Range range = 3;
+  optional Range range = 3;
   // Task type.
   TaskType type = 4;
   // URL tag identifies different task for same url.
-  string tag = 5;
+  optional string tag = 5;
   // Application of task.
-  string application = 6;
+  optional string application = 6;
   // Peer priority.
   Priority priority = 7;
   // Filter url used to generate task id.
@@ -332,9 +332,9 @@ message Download {
   // File path to be exported.
   string output_path = 11;
   // Download timeout.
-  google.protobuf.Duration timeout = 12;
+  optional google.protobuf.Duration timeout = 12;
   // Download rate limit in bytes per second.
-  double download_rate_limit = 13;
+  optional double download_rate_limit = 13;
   // NeedBackToSource needs downloaded from source.
   bool need_back_to_source = 14;
 }
