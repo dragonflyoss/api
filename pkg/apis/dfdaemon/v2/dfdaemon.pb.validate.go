@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	common "d7y.io/api/v2/pkg/apis/common/v2"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = common.TaskType(0)
 )
 
 // Validate checks the field values on InterestedAllPiecesRequest with the
@@ -1191,9 +1195,65 @@ func (m *StatTaskResponse) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetTask() == nil {
+	if utf8.RuneCountInString(m.GetId()) < 1 {
 		err := StatTaskResponseValidationError{
-			field:  "Task",
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if _, ok := common.TaskType_name[int32(m.GetType())]; !ok {
+		err := StatTaskResponseValidationError{
+			field:  "Type",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = StatTaskResponseValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := StatTaskResponseValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Header
+
+	if m.GetPieceLength() < 1 {
+		err := StatTaskResponseValidationError{
+			field:  "PieceLength",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetCreatedAt() == nil {
+		err := StatTaskResponseValidationError{
+			field:  "CreatedAt",
 			reason: "value is required",
 		}
 		if !all {
@@ -1202,33 +1262,42 @@ func (m *StatTaskResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if all {
-		switch v := interface{}(m.GetTask()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, StatTaskResponseValidationError{
-					field:  "Task",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, StatTaskResponseValidationError{
-					field:  "Task",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
+	if m.GetUpdatedAt() == nil {
+		err := StatTaskResponseValidationError{
+			field:  "UpdatedAt",
+			reason: "value is required",
 		}
-	} else if v, ok := interface{}(m.GetTask()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return StatTaskResponseValidationError{
-				field:  "Task",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
+		if !all {
+			return err
 		}
+		errors = append(errors, err)
+	}
+
+	if m.Digest != nil {
+
+		if m.GetDigest() != "" {
+
+			if !_StatTaskResponse_Digest_Pattern.MatchString(m.GetDigest()) {
+				err := StatTaskResponseValidationError{
+					field:  "Digest",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
 	}
 
 	if len(errors) > 0 {
@@ -1308,6 +1377,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = StatTaskResponseValidationError{}
+
+var _StatTaskResponse_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$")
 
 // Validate checks the field values on DeleteTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
