@@ -105,7 +105,7 @@ message Peer {
   // Peer id.
   string id = 1;
   // Range is url range of request.
-  Range range = 2;
+  optional Range range = 2;
   // Peer priority.
   Priority priority = 3;
   // Pieces of peer.
@@ -135,11 +135,11 @@ message Task {
   // Download url.
   string url = 3;
   // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
-  string digest = 4;
+  optional string digest = 4;
   // URL tag identifies different task for same url.
-  string tag = 5;
+  optional string tag = 5;
   // Application of task.
-  string application = 6;
+  optional string application = 6;
   // Filter url used to generate task id.
   repeated string filters = 7;
   // Task request headers.
@@ -352,7 +352,7 @@ message Piece {
   // Piece number.
   int32 number = 1;
   // Parent peer id.
-  string parent_id = 2;
+  optional string parent_id = 2;
   // Piece offset.
   uint64 offset = 3;
   // Piece length.
