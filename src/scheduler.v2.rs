@@ -1,4 +1,5 @@
 /// RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegisterPeerRequest {
@@ -7,6 +8,7 @@ pub struct RegisterPeerRequest {
     pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
 /// RegisterSeedPeerRequest represents seed peer registered request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegisterSeedPeerRequest {
@@ -15,10 +17,12 @@ pub struct RegisterSeedPeerRequest {
     pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
 /// DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerStartedRequest {}
 /// DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerBackToSourceStartedRequest {
@@ -27,6 +31,7 @@ pub struct DownloadPeerBackToSourceStartedRequest {
     pub description: ::prost::alloc::string::String,
 }
 /// DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerFinishedRequest {
@@ -38,6 +43,7 @@ pub struct DownloadPeerFinishedRequest {
     pub piece_count: i32,
 }
 /// DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerBackToSourceFinishedRequest {
@@ -49,6 +55,7 @@ pub struct DownloadPeerBackToSourceFinishedRequest {
     pub piece_count: i32,
 }
 /// DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerFailedRequest {
@@ -57,6 +64,7 @@ pub struct DownloadPeerFailedRequest {
     pub description: ::prost::alloc::string::String,
 }
 /// DownloadPeerBackToSourceFailedRequest represents peer download back-to-source failed request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerBackToSourceFailedRequest {
@@ -65,6 +73,7 @@ pub struct DownloadPeerBackToSourceFailedRequest {
     pub description: ::prost::alloc::string::String,
 }
 /// DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceFinishedRequest {
@@ -73,6 +82,7 @@ pub struct DownloadPieceFinishedRequest {
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// DownloadPieceBackToSourceFinishedRequest represents piece download back-to-source finished request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceBackToSourceFinishedRequest {
@@ -81,6 +91,7 @@ pub struct DownloadPieceBackToSourceFinishedRequest {
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceFailedRequest {
@@ -92,6 +103,7 @@ pub struct DownloadPieceFailedRequest {
     pub temporary: bool,
 }
 /// HTTPResponse represents http protocol response of DownloadPieceBackToSourceFailedRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HttpResponse {
@@ -109,18 +121,22 @@ pub struct HttpResponse {
     pub status: ::prost::alloc::string::String,
 }
 /// HDFSResponse represents hdfs protocol response of DownloadPieceBackToSourceFailedRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct HdfsResponse {}
 /// S3Response represents s3 protocol response of DownloadPieceBackToSourceFailedRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct S3Response {}
 /// OSSResponse represents oss protocol response of DownloadPieceBackToSourceFailedRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct OssResponse {}
 /// DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceBackToSourceFailedRequest {
@@ -137,6 +153,7 @@ pub struct DownloadPieceBackToSourceFailedRequest {
 }
 /// Nested message and enum types in `DownloadPieceBackToSourceFailedRequest`.
 pub mod download_piece_back_to_source_failed_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
@@ -151,6 +168,7 @@ pub mod download_piece_back_to_source_failed_request {
     }
 }
 /// SyncPiecesFailedRequest syncs pieces failed request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesFailedRequest {
@@ -162,6 +180,7 @@ pub struct SyncPiecesFailedRequest {
     pub description: ::prost::alloc::string::String,
 }
 /// AnnouncePeerRequest represents request of AnnouncePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerRequest {
@@ -182,6 +201,7 @@ pub struct AnnouncePeerRequest {
 }
 /// Nested message and enum types in `AnnouncePeerRequest`.
 pub mod announce_peer_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
@@ -224,10 +244,12 @@ pub mod announce_peer_request {
     }
 }
 /// EmptyTaskResponse represents empty task response of AnnouncePeerResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EmptyTaskResponse {}
 /// TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct TinyTaskResponse {
@@ -243,10 +265,12 @@ pub struct TinyTaskResponse {
 ///
 /// Candidate parent.
 /// common.Peer candidate_parent = 1;
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SmallTaskResponse {}
 /// NormalTaskResponse represents normal task response of AnnouncePeerResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NormalTaskResponse {
@@ -258,6 +282,7 @@ pub struct NormalTaskResponse {
     pub concurrent_piece_count: i32,
 }
 /// NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NeedBackToSourceResponse {
@@ -266,6 +291,7 @@ pub struct NeedBackToSourceResponse {
     pub description: ::prost::alloc::string::String,
 }
 /// AnnouncePeerResponse represents response of AnnouncePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerResponse {
@@ -274,6 +300,7 @@ pub struct AnnouncePeerResponse {
 }
 /// Nested message and enum types in `AnnouncePeerResponse`.
 pub mod announce_peer_response {
+    #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
@@ -290,6 +317,7 @@ pub mod announce_peer_response {
     }
 }
 /// StatPeerRequest represents request of StatPeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatPeerRequest {
@@ -305,6 +333,7 @@ pub struct StatPeerRequest {
 }
 /// TODO exchange peer request definition.
 /// ExchangePeerRequest represents request of ExchangePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExchangePeerRequest {
@@ -320,10 +349,12 @@ pub struct ExchangePeerRequest {
 }
 /// TODO exchange peer response definition.
 /// ExchangePeerResponse represents response of ExchangePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ExchangePeerResponse {}
 /// LeavePeerRequest represents request of LeavePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LeavePeerRequest {
@@ -338,6 +369,7 @@ pub struct LeavePeerRequest {
     pub peer_id: ::prost::alloc::string::String,
 }
 /// StatTaskRequest represents request of StatTask.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatTaskRequest {
@@ -346,6 +378,7 @@ pub struct StatTaskRequest {
     pub id: ::prost::alloc::string::String,
 }
 /// AnnounceHostRequest represents request of AnnounceHost.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnounceHostRequest {
@@ -354,6 +387,7 @@ pub struct AnnounceHostRequest {
     pub host: ::core::option::Option<super::super::common::v2::Host>,
 }
 /// LeaveHostRequest represents request of LeaveHost.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct LeaveHostRequest {
@@ -362,10 +396,12 @@ pub struct LeaveHostRequest {
     pub id: ::prost::alloc::string::String,
 }
 /// ProbeStartedRequest represents started request of SyncProbesRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProbeStartedRequest {}
 /// Probe information.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Probe {
@@ -374,12 +410,13 @@ pub struct Probe {
     pub host: ::core::option::Option<super::super::common::v2::Host>,
     /// RTT is the round-trip time sent via this pinger.
     #[prost(message, optional, tag = "2")]
-    pub rtt: ::core::option::Option<::prost_types::Duration>,
+    pub rtt: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Probe create time.
     #[prost(message, optional, tag = "3")]
-    pub created_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// ProbeFinishedRequest represents finished request of SyncProbesRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProbeFinishedRequest {
@@ -388,6 +425,7 @@ pub struct ProbeFinishedRequest {
     pub probes: ::prost::alloc::vec::Vec<Probe>,
 }
 /// FailedProbe information.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct FailedProbe {
@@ -399,6 +437,7 @@ pub struct FailedProbe {
     pub description: ::prost::alloc::string::String,
 }
 /// ProbeFailedRequest represents failed request of SyncProbesRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ProbeFailedRequest {
@@ -407,6 +446,7 @@ pub struct ProbeFailedRequest {
     pub probes: ::prost::alloc::vec::Vec<FailedProbe>,
 }
 /// SyncProbesRequest represents request of SyncProbes.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncProbesRequest {
@@ -418,6 +458,7 @@ pub struct SyncProbesRequest {
 }
 /// Nested message and enum types in `SyncProbesRequest`.
 pub mod sync_probes_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
@@ -430,6 +471,7 @@ pub mod sync_probes_request {
     }
 }
 /// SyncProbesResponse represents response of SyncProbes.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncProbesResponse {

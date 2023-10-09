@@ -1,4 +1,5 @@
 /// SeedPeerCluster represents cluster of seed peer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SeedPeerCluster {
@@ -16,6 +17,7 @@ pub struct SeedPeerCluster {
     pub config: ::prost::alloc::vec::Vec<u8>,
 }
 /// SeedPeer represents seed peer for network.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SeedPeer {
@@ -60,6 +62,7 @@ pub struct SeedPeer {
     pub object_storage_port: i32,
 }
 /// GetSeedPeerRequest represents request of GetSeedPeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSeedPeerRequest {
@@ -77,6 +80,7 @@ pub struct GetSeedPeerRequest {
     pub ip: ::prost::alloc::string::String,
 }
 /// UpdateSeedPeerRequest represents request of UpdateSeedPeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpdateSeedPeerRequest {
@@ -112,6 +116,7 @@ pub struct UpdateSeedPeerRequest {
     pub object_storage_port: i32,
 }
 /// DeleteSeedPeerRequest represents request of DeleteSeedPeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeleteSeedPeerRequest {
@@ -129,6 +134,7 @@ pub struct DeleteSeedPeerRequest {
     pub ip: ::prost::alloc::string::String,
 }
 /// SeedPeerCluster represents cluster of scheduler.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SchedulerCluster {
@@ -152,6 +158,7 @@ pub struct SchedulerCluster {
     pub scopes: ::prost::alloc::vec::Vec<u8>,
 }
 /// SeedPeerCluster represents scheduler for network.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Scheduler {
@@ -190,6 +197,7 @@ pub struct Scheduler {
     pub features: ::prost::alloc::vec::Vec<u8>,
 }
 /// GetSchedulerRequest represents request of GetScheduler.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSchedulerRequest {
@@ -207,6 +215,7 @@ pub struct GetSchedulerRequest {
     pub ip: ::prost::alloc::string::String,
 }
 /// UpdateSchedulerRequest represents request of UpdateScheduler.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpdateSchedulerRequest {
@@ -233,6 +242,7 @@ pub struct UpdateSchedulerRequest {
     pub port: i32,
 }
 /// ListSchedulersRequest represents request of ListSchedulers.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSchedulersRequest {
@@ -259,6 +269,7 @@ pub struct ListSchedulersRequest {
     pub commit: ::prost::alloc::string::String,
 }
 /// ListSchedulersResponse represents response of ListSchedulers.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSchedulersResponse {
@@ -267,6 +278,7 @@ pub struct ListSchedulersResponse {
     pub schedulers: ::prost::alloc::vec::Vec<Scheduler>,
 }
 /// ObjectStorage represents config of object storage.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ObjectStorage {
@@ -298,6 +310,7 @@ pub struct ObjectStorage {
     pub scheme: ::prost::alloc::string::String,
 }
 /// GetObjectStorageRequest represents request of GetObjectStorage.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetObjectStorageRequest {
@@ -312,6 +325,7 @@ pub struct GetObjectStorageRequest {
     pub ip: ::prost::alloc::string::String,
 }
 /// Bucket represents config of bucket.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Bucket {
@@ -320,6 +334,7 @@ pub struct Bucket {
     pub name: ::prost::alloc::string::String,
 }
 /// ListSchedulersRequest represents request of ListBuckets.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListBucketsRequest {
@@ -334,6 +349,7 @@ pub struct ListBucketsRequest {
     pub ip: ::prost::alloc::string::String,
 }
 /// ListBucketsResponse represents response of ListBuckets.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListBucketsResponse {
@@ -342,6 +358,7 @@ pub struct ListBucketsResponse {
     pub buckets: ::prost::alloc::vec::Vec<Bucket>,
 }
 /// URLPriority represents config of url priority.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UrlPriority {
@@ -353,6 +370,7 @@ pub struct UrlPriority {
     pub value: i32,
 }
 /// ApplicationPriority represents config of application priority.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ApplicationPriority {
@@ -364,6 +382,7 @@ pub struct ApplicationPriority {
     pub urls: ::prost::alloc::vec::Vec<UrlPriority>,
 }
 /// Application represents config of application.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Application {
@@ -384,6 +403,7 @@ pub struct Application {
     pub priority: ::core::option::Option<ApplicationPriority>,
 }
 /// ListApplicationsRequest represents request of ListApplications.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListApplicationsRequest {
@@ -398,6 +418,7 @@ pub struct ListApplicationsRequest {
     pub ip: ::prost::alloc::string::String,
 }
 /// ListApplicationsResponse represents response of ListApplications.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListApplicationsResponse {
@@ -406,6 +427,7 @@ pub struct ListApplicationsResponse {
     pub applications: ::prost::alloc::vec::Vec<Application>,
 }
 /// CreateGNNRequest represents to create GNN model request of TrainRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CreateGnnRequest {
@@ -423,6 +445,7 @@ pub struct CreateGnnRequest {
     pub f1_score: f64,
 }
 /// CreateMLPRequest represents to create MLP model request of TrainRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CreateMlpRequest {
@@ -437,6 +460,7 @@ pub struct CreateMlpRequest {
     pub mae: f64,
 }
 /// CreateModelRequest represents request of CreateModel.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CreateModelRequest {
@@ -451,6 +475,7 @@ pub struct CreateModelRequest {
 }
 /// Nested message and enum types in `CreateModelRequest`.
 pub mod create_model_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
@@ -461,6 +486,7 @@ pub mod create_model_request {
     }
 }
 /// KeepAliveRequest represents request of KeepAlive.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct KeepAliveRequest {
@@ -478,6 +504,7 @@ pub struct KeepAliveRequest {
     pub ip: ::prost::alloc::string::String,
 }
 /// Request source type.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum SourceType {

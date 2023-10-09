@@ -2,6 +2,7 @@
 /// Dragonfly supports peers authentication with Mutual TLS(mTLS)
 /// For mTLS, all peers need to request TLS certificates for communicating
 /// The server side may overwrite ant requested certificate filed based on its policies.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CertificateRequest {
@@ -12,9 +13,10 @@ pub struct CertificateRequest {
     pub csr: ::prost::alloc::vec::Vec<u8>,
     /// Optional: requested certificate validity period.
     #[prost(message, optional, tag = "2")]
-    pub validity_period: ::core::option::Option<::prost_types::Duration>,
+    pub validity_period: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// Certificate response type.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CertificateResponse {
