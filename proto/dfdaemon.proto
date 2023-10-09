@@ -20,7 +20,6 @@ package dfdaemon.v2;
 
 import "common.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 
 // InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
 message InterestedAllPiecesRequest {
@@ -72,32 +71,6 @@ message UploadTaskRequest {
 message StatTaskRequest {
   // Task id.
   string task_id = 1;
-}
-
-// StatTaskResponse represents response of StatTask.
-message StatTaskResponse {
-  // Task id.
-  string id = 1;
-  // Task type.
-  common.v2.TaskType type = 2;
-  // Download url.
-  string url = 3;
-  // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
-  optional string digest = 4;
-  // URL tag identifies different task for same url.
-  optional string tag = 5;
-  // Application of task.
-  optional string application = 6;
-  // Filter url used to generate task id.
-  repeated string filters = 7;
-  // Task request headers.
-  map<string, string> header = 8;
-  // Task piece length.
-  int32 piece_length = 9;
-  // Task create time.
-  google.protobuf.Timestamp created_at = 10;
-  // Task update time.
-  google.protobuf.Timestamp updated_at = 11;
 }
 
 // DeleteTaskRequest represents request of DeleteTask.
