@@ -1,8 +1,10 @@
 /// InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterestedAllPiecesRequest {}
 /// InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterestedPiecesRequest {
@@ -11,6 +13,7 @@ pub struct InterestedPiecesRequest {
     pub piece_numbers: ::prost::alloc::vec::Vec<u32>,
 }
 /// SyncPiecesRequest represents request of AnnouncePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesRequest {
@@ -22,6 +25,7 @@ pub struct SyncPiecesRequest {
 }
 /// Nested message and enum types in `SyncPiecesRequest`.
 pub mod sync_pieces_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
@@ -32,6 +36,7 @@ pub mod sync_pieces_request {
     }
 }
 /// InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterestedPiecesResponse {
@@ -40,6 +45,7 @@ pub struct InterestedPiecesResponse {
     pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
 }
 /// SyncPiecesResponse represents response of SyncPieces.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesResponse {
@@ -48,6 +54,7 @@ pub struct SyncPiecesResponse {
 }
 /// Nested message and enum types in `SyncPiecesResponse`.
 pub mod sync_pieces_response {
+    #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
@@ -56,6 +63,7 @@ pub mod sync_pieces_response {
     }
 }
 /// DownloadTaskRequest represents request of DownloadTask.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadTaskRequest {
@@ -64,6 +72,7 @@ pub struct DownloadTaskRequest {
     pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
 /// UploadTaskRequest represents request of UploadTask.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UploadTaskRequest {
@@ -72,6 +81,7 @@ pub struct UploadTaskRequest {
     pub task: ::core::option::Option<super::super::common::v2::Task>,
 }
 /// StatTaskRequest represents request of StatTask.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatTaskRequest {
@@ -80,6 +90,7 @@ pub struct StatTaskRequest {
     pub task_id: ::prost::alloc::string::String,
 }
 /// StatTaskResponse represents response of StatTask.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatTaskResponse {
@@ -115,12 +126,13 @@ pub struct StatTaskResponse {
     pub piece_length: i32,
     /// Task create time.
     #[prost(message, optional, tag = "10")]
-    pub created_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
     #[prost(message, optional, tag = "11")]
-    pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// DeleteTaskRequest represents request of DeleteTask.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeleteTaskRequest {

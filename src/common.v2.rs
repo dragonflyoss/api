@@ -1,4 +1,5 @@
 /// Peer metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Peer {
@@ -16,7 +17,7 @@ pub struct Peer {
     pub pieces: ::prost::alloc::vec::Vec<Piece>,
     /// Peer downloads costs time.
     #[prost(message, optional, tag = "5")]
-    pub cost: ::core::option::Option<::prost_types::Duration>,
+    pub cost: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Peer state.
     #[prost(string, tag = "6")]
     pub state: ::prost::alloc::string::String,
@@ -31,12 +32,13 @@ pub struct Peer {
     pub need_back_to_source: bool,
     /// Peer create time.
     #[prost(message, optional, tag = "10")]
-    pub created_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Peer update time.
     #[prost(message, optional, tag = "11")]
-    pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// Task metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Task {
@@ -93,12 +95,13 @@ pub struct Task {
     pub has_available_peer: bool,
     /// Task create time.
     #[prost(message, optional, tag = "17")]
-    pub created_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
     #[prost(message, optional, tag = "18")]
-    pub updated_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// Host metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Host {
@@ -158,6 +161,7 @@ pub struct Host {
     pub object_storage_port: i32,
 }
 /// CPU Stat.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Cpu {
@@ -179,6 +183,7 @@ pub struct Cpu {
 }
 /// CPUTimes contains the amounts of time the CPU has spent performing different
 /// kinds of work. Time units are in seconds.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct CpuTimes {
@@ -214,6 +219,7 @@ pub struct CpuTimes {
     pub guest_nice: f64,
 }
 /// Memory Stat.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Memory {
@@ -237,6 +243,7 @@ pub struct Memory {
     pub free: u64,
 }
 /// Network Stat.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Network {
@@ -254,6 +261,7 @@ pub struct Network {
     pub idc: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Disk Stat.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Disk {
@@ -283,6 +291,7 @@ pub struct Disk {
     pub inodes_used_percent: f64,
 }
 /// Build information.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Build {
@@ -303,6 +312,7 @@ pub struct Build {
     pub platform: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Download information.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Download {
@@ -344,7 +354,7 @@ pub struct Download {
     pub output_path: ::prost::alloc::string::String,
     /// Download timeout.
     #[prost(message, optional, tag = "12")]
-    pub timeout: ::core::option::Option<::prost_types::Duration>,
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Download rate limit in bytes per second.
     #[prost(double, optional, tag = "13")]
     pub download_rate_limit: ::core::option::Option<f64>,
@@ -353,6 +363,7 @@ pub struct Download {
     pub need_back_to_source: bool,
 }
 /// Range represents download range.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Range {
@@ -364,6 +375,7 @@ pub struct Range {
     pub length: i64,
 }
 /// Piece represents information of piece.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Piece {
@@ -390,12 +402,13 @@ pub struct Piece {
     pub traffic_type: i32,
     /// Downloading piece costs time.
     #[prost(message, optional, tag = "8")]
-    pub cost: ::core::option::Option<::prost_types::Duration>,
+    pub cost: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Piece create time.
     #[prost(message, optional, tag = "9")]
-    pub created_at: ::core::option::Option<::prost_types::Timestamp>,
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// SizeScope represents size scope of task.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum SizeScope {
@@ -433,6 +446,7 @@ impl SizeScope {
     }
 }
 /// TaskType represents type of task.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum TaskType {
@@ -470,6 +484,7 @@ impl TaskType {
     }
 }
 /// TrafficType represents type of traffic.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum TrafficType {
@@ -503,6 +518,7 @@ impl TrafficType {
     }
 }
 /// Priority represents priority of application.
+#[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum Priority {
