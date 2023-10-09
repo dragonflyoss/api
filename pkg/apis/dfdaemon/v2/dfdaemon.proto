@@ -20,7 +20,6 @@ package dfdaemon.v2;
 
 import "pkg/apis/common/v2/common.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v2;dfdaemon";
@@ -79,32 +78,6 @@ message UploadTaskRequest {
 message StatTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
-}
-
-// StatTaskResponse represents response of StatTask.
-message StatTaskResponse {
-  // Task id.
-  string id = 1 [(validate.rules).string.min_len = 1];
-  // Task type.
-  common.v2.TaskType type = 2 [(validate.rules).enum.defined_only = true];
-  // Download url.
-  string url = 3 [(validate.rules).string.uri = true];
-  // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
-  optional string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$", ignore_empty: true}];
-  // URL tag identifies different task for same url.
-  optional string tag = 5;
-  // Application of task.
-  optional string application = 6;
-  // Filter url used to generate task id.
-  repeated string filters = 7;
-  // Task request headers.
-  map<string, string> header = 8;
-  // Task piece length.
-  int32 piece_length = 9 [(validate.rules).int32.gte = 1];
-  // Task create time.
-  google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
-  // Task update time.
-  google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
 }
 
 // DeleteTaskRequest represents request of DeleteTask.
