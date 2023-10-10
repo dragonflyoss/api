@@ -35,6 +35,15 @@ pub mod sync_pieces_request {
         InterestedPiecesRequest(super::InterestedPiecesRequest),
     }
 }
+/// InterestedPiecesResponse represents all pieces response of SyncPiecesResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct InterestedAllPiecesResponse {
+    /// All of the pieces in task.
+    #[prost(message, repeated, tag = "1")]
+    pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
+}
 /// InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -49,7 +58,7 @@ pub struct InterestedPiecesResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesResponse {
-    #[prost(oneof = "sync_pieces_response::Response", tags = "1")]
+    #[prost(oneof = "sync_pieces_response::Response", tags = "1, 2")]
     pub response: ::core::option::Option<sync_pieces_response::Response>,
 }
 /// Nested message and enum types in `SyncPiecesResponse`.
@@ -59,6 +68,8 @@ pub mod sync_pieces_response {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
         #[prost(message, tag = "1")]
+        InterestedAllPiecesResponse(super::InterestedAllPiecesResponse),
+        #[prost(message, tag = "2")]
         InterestedPiecesResponse(super::InterestedPiecesResponse),
     }
 }

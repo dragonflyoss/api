@@ -47,6 +47,12 @@ message SyncPiecesRequest{
   }
 }
 
+// InterestedPiecesResponse represents all pieces response of SyncPiecesResponse.
+message InterestedAllPiecesResponse {
+  // All of the pieces in task.
+  repeated common.v2.Piece pieces = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+}
+
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
 message InterestedPiecesResponse {
   // Interested pieces of task.
@@ -58,7 +64,8 @@ message SyncPiecesResponse {
   oneof response {
     option (validate.required) = true;
 
-    InterestedPiecesResponse interested_pieces_response = 1;
+    InterestedAllPiecesResponse interested_all_pieces_response = 1;
+    InterestedPiecesResponse interested_pieces_response = 2;
   }
 }
 

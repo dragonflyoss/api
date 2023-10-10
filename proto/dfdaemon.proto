@@ -42,6 +42,12 @@ message SyncPiecesRequest{
   }
 }
 
+// InterestedPiecesResponse represents all pieces response of SyncPiecesResponse.
+message InterestedAllPiecesResponse {
+  // All of the pieces in task.
+  repeated common.v2.Piece pieces = 1;
+}
+
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
 message InterestedPiecesResponse {
   // Interested pieces of task.
@@ -51,7 +57,8 @@ message InterestedPiecesResponse {
 // SyncPiecesResponse represents response of SyncPieces.
 message SyncPiecesResponse {
   oneof response {
-    InterestedPiecesResponse interested_pieces_response = 1;
+    InterestedAllPiecesResponse interested_all_pieces_response = 1;
+    InterestedPiecesResponse interested_pieces_response = 2;
   }
 }
 
