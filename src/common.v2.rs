@@ -380,8 +380,8 @@ pub struct Range {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Piece {
     /// Piece number.
-    #[prost(int32, tag = "1")]
-    pub number: i32,
+    #[prost(uint32, tag = "1")]
+    pub number: u32,
     /// Parent peer id.
     #[prost(string, optional, tag = "2")]
     pub parent_id: ::core::option::Option<::prost::alloc::string::String>,
