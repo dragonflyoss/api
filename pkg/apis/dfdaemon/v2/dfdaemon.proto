@@ -49,14 +49,14 @@ message SyncPiecesRequest{
 
 // InterestedPiecesResponse represents all pieces response of SyncPiecesResponse.
 message InterestedAllPiecesResponse {
-  // All of the pieces in task.
-  repeated common.v2.Piece pieces = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // One of the pieces in task.
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
 }
 
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
 message InterestedPiecesResponse {
-  // Interested pieces of task.
-  repeated common.v2.Piece pieces = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Interested piece of task.
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
 }
 
 // SyncPiecesResponse represents response of SyncPieces.
