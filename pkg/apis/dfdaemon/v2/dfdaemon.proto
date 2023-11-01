@@ -31,7 +31,7 @@ message InterestedAllPiecesRequest {
 // InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
 message InterestedPiecesRequest {
   // Interested piece numbers.
-  repeated uint32 piece_numbers = 1 [(validate.rules).repeated = {min_items: 1}];
+  repeated int32 piece_numbers = 1 [(validate.rules).repeated = {min_items: 1}];
 }
 
 // SyncPiecesRequest represents request of AnnouncePeer.

@@ -9,8 +9,8 @@ pub struct InterestedAllPiecesRequest {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterestedPiecesRequest {
     /// Interested piece numbers.
-    #[prost(uint32, repeated, tag = "1")]
-    pub piece_numbers: ::prost::alloc::vec::Vec<u32>,
+    #[prost(int32, repeated, tag = "1")]
+    pub piece_numbers: ::prost::alloc::vec::Vec<i32>,
 }
 /// SyncPiecesRequest represents request of AnnouncePeer.
 #[derive(serde::Serialize, serde::Deserialize)]
