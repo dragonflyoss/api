@@ -24,7 +24,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DfdaemonClient interface {
-	// SyncPieces syncs pieces from the other peers.
+	// GetPieceNumbers gets piece numbers from the other peer.
+	GetPieceNumbers(ctx context.Context, in *GetPieceNumbersRequest, opts ...grpc.CallOption) (*GetPieceNumbersResponse, error)
+	// SyncPieces syncs pieces from the other peer.
 	SyncPieces(ctx context.Context, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error)
 	// DownloadTask downloads task back-to-source.
 	DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -42,6 +44,15 @@ type dfdaemonClient struct {
 
 func NewDfdaemonClient(cc grpc.ClientConnInterface) DfdaemonClient {
 	return &dfdaemonClient{cc}
+}
+
+func (c *dfdaemonClient) GetPieceNumbers(ctx context.Context, in *GetPieceNumbersRequest, opts ...grpc.CallOption) (*GetPieceNumbersResponse, error) {
+	out := new(GetPieceNumbersResponse)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.Dfdaemon/GetPieceNumbers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *dfdaemonClient) SyncPieces(ctx context.Context, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error) {
@@ -115,7 +126,9 @@ func (c *dfdaemonClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, 
 // All implementations should embed UnimplementedDfdaemonServer
 // for forward compatibility
 type DfdaemonServer interface {
-	// SyncPieces syncs pieces from the other peers.
+	// GetPieceNumbers gets piece numbers from the other peer.
+	GetPieceNumbers(context.Context, *GetPieceNumbersRequest) (*GetPieceNumbersResponse, error)
+	// SyncPieces syncs pieces from the other peer.
 	SyncPieces(Dfdaemon_SyncPiecesServer) error
 	// DownloadTask downloads task back-to-source.
 	DownloadTask(context.Context, *DownloadTaskRequest) (*emptypb.Empty, error)
@@ -131,6 +144,9 @@ type DfdaemonServer interface {
 type UnimplementedDfdaemonServer struct {
 }
 
+func (UnimplementedDfdaemonServer) GetPieceNumbers(context.Context, *GetPieceNumbersRequest) (*GetPieceNumbersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPieceNumbers not implemented")
+}
 func (UnimplementedDfdaemonServer) SyncPieces(Dfdaemon_SyncPiecesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncPieces not implemented")
 }
@@ -156,6 +172,24 @@ type UnsafeDfdaemonServer interface {
 
 func RegisterDfdaemonServer(s grpc.ServiceRegistrar, srv DfdaemonServer) {
 	s.RegisterService(&Dfdaemon_ServiceDesc, srv)
+}
+
+func _Dfdaemon_GetPieceNumbers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPieceNumbersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DfdaemonServer).GetPieceNumbers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dfdaemon.v2.Dfdaemon/GetPieceNumbers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DfdaemonServer).GetPieceNumbers(ctx, req.(*GetPieceNumbersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Dfdaemon_SyncPieces_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -263,6 +297,10 @@ var Dfdaemon_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "dfdaemon.v2.Dfdaemon",
 	HandlerType: (*DfdaemonServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetPieceNumbers",
+			Handler:    _Dfdaemon_GetPieceNumbers_Handler,
+		},
 		{
 			MethodName: "DownloadTask",
 			Handler:    _Dfdaemon_DownloadTask_Handler,
