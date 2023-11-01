@@ -35,22 +35,22 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on InterestedAllPiecesRequest with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on GetPieceNumbersRequest with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *InterestedAllPiecesRequest) Validate() error {
+func (m *GetPieceNumbersRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on InterestedAllPiecesRequest with the
-// rules defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on GetPieceNumbersRequest with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// InterestedAllPiecesRequestMultiError, or nil if none found.
-func (m *InterestedAllPiecesRequest) ValidateAll() error {
+// GetPieceNumbersRequestMultiError, or nil if none found.
+func (m *GetPieceNumbersRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *InterestedAllPiecesRequest) validate(all bool) error {
+func (m *GetPieceNumbersRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -58,19 +58,19 @@ func (m *InterestedAllPiecesRequest) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return InterestedAllPiecesRequestMultiError(errors)
+		return GetPieceNumbersRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// InterestedAllPiecesRequestMultiError is an error wrapping multiple
-// validation errors returned by InterestedAllPiecesRequest.ValidateAll() if
-// the designated constraints aren't met.
-type InterestedAllPiecesRequestMultiError []error
+// GetPieceNumbersRequestMultiError is an error wrapping multiple validation
+// errors returned by GetPieceNumbersRequest.ValidateAll() if the designated
+// constraints aren't met.
+type GetPieceNumbersRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m InterestedAllPiecesRequestMultiError) Error() string {
+func (m GetPieceNumbersRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -79,11 +79,11 @@ func (m InterestedAllPiecesRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m InterestedAllPiecesRequestMultiError) AllErrors() []error { return m }
+func (m GetPieceNumbersRequestMultiError) AllErrors() []error { return m }
 
-// InterestedAllPiecesRequestValidationError is the validation error returned
-// by InterestedAllPiecesRequest.Validate if the designated constraints aren't met.
-type InterestedAllPiecesRequestValidationError struct {
+// GetPieceNumbersRequestValidationError is the validation error returned by
+// GetPieceNumbersRequest.Validate if the designated constraints aren't met.
+type GetPieceNumbersRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -91,24 +91,24 @@ type InterestedAllPiecesRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e InterestedAllPiecesRequestValidationError) Field() string { return e.field }
+func (e GetPieceNumbersRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e InterestedAllPiecesRequestValidationError) Reason() string { return e.reason }
+func (e GetPieceNumbersRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e InterestedAllPiecesRequestValidationError) Cause() error { return e.cause }
+func (e GetPieceNumbersRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e InterestedAllPiecesRequestValidationError) Key() bool { return e.key }
+func (e GetPieceNumbersRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e InterestedAllPiecesRequestValidationError) ErrorName() string {
-	return "InterestedAllPiecesRequestValidationError"
+func (e GetPieceNumbersRequestValidationError) ErrorName() string {
+	return "GetPieceNumbersRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e InterestedAllPiecesRequestValidationError) Error() string {
+func (e GetPieceNumbersRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -120,14 +120,14 @@ func (e InterestedAllPiecesRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sInterestedAllPiecesRequest.%s: %s%s",
+		"invalid %sGetPieceNumbersRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = InterestedAllPiecesRequestValidationError{}
+var _ error = GetPieceNumbersRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -135,7 +135,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = InterestedAllPiecesRequestValidationError{}
+} = GetPieceNumbersRequestValidationError{}
 
 // Validate checks the field values on InterestedPiecesRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -285,7 +285,7 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 
 	oneofRequestPresent := false
 	switch v := m.Request.(type) {
-	case *SyncPiecesRequest_InterestedAllPiecesRequest:
+	case *SyncPiecesRequest_GetPieceNumbersRequest:
 		if v == nil {
 			err := SyncPiecesRequestValidationError{
 				field:  "Request",
@@ -299,11 +299,11 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 		oneofRequestPresent = true
 
 		if all {
-			switch v := interface{}(m.GetInterestedAllPiecesRequest()).(type) {
+			switch v := interface{}(m.GetGetPieceNumbersRequest()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, SyncPiecesRequestValidationError{
-						field:  "InterestedAllPiecesRequest",
+						field:  "GetPieceNumbersRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -311,16 +311,16 @@ func (m *SyncPiecesRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, SyncPiecesRequestValidationError{
-						field:  "InterestedAllPiecesRequest",
+						field:  "GetPieceNumbersRequest",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetInterestedAllPiecesRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetGetPieceNumbersRequest()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return SyncPiecesRequestValidationError{
-					field:  "InterestedAllPiecesRequest",
+					field:  "GetPieceNumbersRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -463,82 +463,42 @@ var _ interface {
 	ErrorName() string
 } = SyncPiecesRequestValidationError{}
 
-// Validate checks the field values on InterestedAllPiecesResponse with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on GetPieceNumbersResponse with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *InterestedAllPiecesResponse) Validate() error {
+func (m *GetPieceNumbersResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on InterestedAllPiecesResponse with the
+// ValidateAll checks the field values on GetPieceNumbersResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// InterestedAllPiecesResponseMultiError, or nil if none found.
-func (m *InterestedAllPiecesResponse) ValidateAll() error {
+// GetPieceNumbersResponseMultiError, or nil if none found.
+func (m *GetPieceNumbersResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *InterestedAllPiecesResponse) validate(all bool) error {
+func (m *GetPieceNumbersResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	if m.GetPiece() == nil {
-		err := InterestedAllPiecesResponseValidationError{
-			field:  "Piece",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetPiece()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, InterestedAllPiecesResponseValidationError{
-					field:  "Piece",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, InterestedAllPiecesResponseValidationError{
-					field:  "Piece",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return InterestedAllPiecesResponseValidationError{
-				field:  "Piece",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if len(errors) > 0 {
-		return InterestedAllPiecesResponseMultiError(errors)
+		return GetPieceNumbersResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// InterestedAllPiecesResponseMultiError is an error wrapping multiple
-// validation errors returned by InterestedAllPiecesResponse.ValidateAll() if
-// the designated constraints aren't met.
-type InterestedAllPiecesResponseMultiError []error
+// GetPieceNumbersResponseMultiError is an error wrapping multiple validation
+// errors returned by GetPieceNumbersResponse.ValidateAll() if the designated
+// constraints aren't met.
+type GetPieceNumbersResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m InterestedAllPiecesResponseMultiError) Error() string {
+func (m GetPieceNumbersResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -547,12 +507,11 @@ func (m InterestedAllPiecesResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m InterestedAllPiecesResponseMultiError) AllErrors() []error { return m }
+func (m GetPieceNumbersResponseMultiError) AllErrors() []error { return m }
 
-// InterestedAllPiecesResponseValidationError is the validation error returned
-// by InterestedAllPiecesResponse.Validate if the designated constraints
-// aren't met.
-type InterestedAllPiecesResponseValidationError struct {
+// GetPieceNumbersResponseValidationError is the validation error returned by
+// GetPieceNumbersResponse.Validate if the designated constraints aren't met.
+type GetPieceNumbersResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -560,24 +519,24 @@ type InterestedAllPiecesResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e InterestedAllPiecesResponseValidationError) Field() string { return e.field }
+func (e GetPieceNumbersResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e InterestedAllPiecesResponseValidationError) Reason() string { return e.reason }
+func (e GetPieceNumbersResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e InterestedAllPiecesResponseValidationError) Cause() error { return e.cause }
+func (e GetPieceNumbersResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e InterestedAllPiecesResponseValidationError) Key() bool { return e.key }
+func (e GetPieceNumbersResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e InterestedAllPiecesResponseValidationError) ErrorName() string {
-	return "InterestedAllPiecesResponseValidationError"
+func (e GetPieceNumbersResponseValidationError) ErrorName() string {
+	return "GetPieceNumbersResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e InterestedAllPiecesResponseValidationError) Error() string {
+func (e GetPieceNumbersResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -589,14 +548,14 @@ func (e InterestedAllPiecesResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sInterestedAllPiecesResponse.%s: %s%s",
+		"invalid %sGetPieceNumbersResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = InterestedAllPiecesResponseValidationError{}
+var _ error = GetPieceNumbersResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -604,7 +563,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = InterestedAllPiecesResponseValidationError{}
+} = GetPieceNumbersResponseValidationError{}
 
 // Validate checks the field values on InterestedPiecesResponse with the rules
 // defined in the proto definition for this message. If any rules are
@@ -772,7 +731,7 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 
 	oneofResponsePresent := false
 	switch v := m.Response.(type) {
-	case *SyncPiecesResponse_InterestedAllPiecesResponse:
+	case *SyncPiecesResponse_GetPieceNumbersResponse:
 		if v == nil {
 			err := SyncPiecesResponseValidationError{
 				field:  "Response",
@@ -786,11 +745,11 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 		oneofResponsePresent = true
 
 		if all {
-			switch v := interface{}(m.GetInterestedAllPiecesResponse()).(type) {
+			switch v := interface{}(m.GetGetPieceNumbersResponse()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, SyncPiecesResponseValidationError{
-						field:  "InterestedAllPiecesResponse",
+						field:  "GetPieceNumbersResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -798,16 +757,16 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, SyncPiecesResponseValidationError{
-						field:  "InterestedAllPiecesResponse",
+						field:  "GetPieceNumbersResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetInterestedAllPiecesResponse()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetGetPieceNumbersResponse()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return SyncPiecesResponseValidationError{
-					field:  "InterestedAllPiecesResponse",
+					field:  "GetPieceNumbersResponse",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}

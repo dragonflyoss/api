@@ -21,8 +21,8 @@ package dfdaemon.v2;
 import "common.proto";
 import "google/protobuf/empty.proto";
 
-// InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
-message InterestedAllPiecesRequest {
+// GetPieceNumbersRequest represents gets piece numbers request of SyncPiecesRequest.
+message GetPieceNumbersRequest {
 }
 
 // InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
@@ -37,15 +37,15 @@ message SyncPiecesRequest{
   string task_id = 1;
 
   oneof request {
-    InterestedAllPiecesRequest interested_all_pieces_request = 2;
+    GetPieceNumbersRequest get_piece_numbers_request = 2;
     InterestedPiecesRequest interested_pieces_request = 3;
   }
 }
 
-// InterestedPiecesResponse represents all pieces response of SyncPiecesResponse.
-message InterestedAllPiecesResponse {
-  // One of the pieces in task.
-  common.v2.Piece piece = 1;
+// GetPieceNumbersResponse represents gets piece numbers response of SyncPiecesResponse.
+message GetPieceNumbersResponse {
+  // Piece numbers.
+  repeated int32 piece_numbers = 1;
 }
 
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
@@ -57,8 +57,8 @@ message InterestedPiecesResponse {
 // SyncPiecesResponse represents response of SyncPieces.
 message SyncPiecesResponse {
   oneof response {
-    InterestedAllPiecesResponse interested_all_pieces_response = 1;
-    InterestedPiecesResponse interested_pieces_response = 2;
+    GetPieceNumbersResponse get_piece_numbers_response = 2;
+    InterestedPiecesResponse interested_pieces_response = 3;
   }
 }
 
