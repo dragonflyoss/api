@@ -362,7 +362,7 @@ message Piece {
   // Piece content.
   bytes content = 6;
   // Traffic type.
-  TrafficType traffic_type = 7;
+  optional TrafficType traffic_type = 7;
   // Downloading piece costs time.
   google.protobuf.Duration cost = 8;
   // Piece create time.
