@@ -398,8 +398,8 @@ pub struct Piece {
     #[prost(bytes = "vec", tag = "6")]
     pub content: ::prost::alloc::vec::Vec<u8>,
     /// Traffic type.
-    #[prost(enumeration = "TrafficType", tag = "7")]
-    pub traffic_type: i32,
+    #[prost(enumeration = "TrafficType", optional, tag = "7")]
+    pub traffic_type: ::core::option::Option<i32>,
     /// Downloading piece costs time.
     #[prost(message, optional, tag = "8")]
     pub cost: ::core::option::Option<::prost_wkt_types::Duration>,

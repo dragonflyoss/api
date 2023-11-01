@@ -368,7 +368,7 @@ message Piece {
   // Piece content.
   bytes content = 6 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
   // Traffic type.
-  TrafficType traffic_type = 7;
+  optional TrafficType traffic_type = 7;
   // Downloading piece costs time.
   google.protobuf.Duration cost = 8 [(validate.rules).duration.required = true];
   // Piece create time.
