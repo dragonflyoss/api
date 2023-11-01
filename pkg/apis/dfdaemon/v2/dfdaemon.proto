@@ -24,8 +24,14 @@ import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v2;dfdaemon";
 
-// GetPieceNumbersRequest represents gets piece numbers request of SyncPiecesRequest.
+// GetPieceNumbersRequest represents gets piece numbers request of GetPieceNumbers.
 message GetPieceNumbersRequest {
+}
+
+// GetPieceNumbersResponse represents gets piece numbers response of GetPieceNumbers.
+message GetPieceNumbersResponse {
+  // Piece numbers.
+  repeated int32 piece_numbers = 1;
 }
 
 // InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
@@ -42,15 +48,8 @@ message SyncPiecesRequest{
   oneof request {
     option (validate.required) = true;
 
-    GetPieceNumbersRequest get_piece_numbers_request = 2;
-    InterestedPiecesRequest interested_pieces_request = 3;
+    InterestedPiecesRequest interested_pieces_request = 2;
   }
-}
-
-// GetPieceNumbersResponse represents gets piece numbers response of SyncPiecesResponse.
-message GetPieceNumbersResponse {
-  // Piece numbers.
-  repeated int32 piece_numbers = 1;
 }
 
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
@@ -64,8 +63,7 @@ message SyncPiecesResponse {
   oneof response {
     option (validate.required) = true;
 
-    GetPieceNumbersResponse get_piece_numbers_response = 2;
-    InterestedPiecesResponse interested_pieces_response = 3;
+    InterestedPiecesResponse interested_pieces_response = 1;
   }
 }
 
@@ -95,7 +93,10 @@ message DeleteTaskRequest {
 
 // Dfdaemon RPC Service.
 service Dfdaemon {
-  // SyncPieces syncs pieces from the other peers.
+  // GetPieceNumbers gets piece numbers from the other peer.
+  rpc GetPieceNumbers(GetPieceNumbersRequest) returns(GetPieceNumbersResponse);
+
+  // SyncPieces syncs pieces from the other peer.
   rpc SyncPieces(stream SyncPiecesRequest)returns(stream SyncPiecesResponse);
 
   // DownloadTask downloads task back-to-source.

@@ -83,6 +83,26 @@ func (mr *MockDfdaemonClientMockRecorder) DownloadTask(ctx, in any, opts ...any)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadTask", reflect.TypeOf((*MockDfdaemonClient)(nil).DownloadTask), varargs...)
 }
 
+// GetPieceNumbers mocks base method.
+func (m *MockDfdaemonClient) GetPieceNumbers(ctx context.Context, in *dfdaemon.GetPieceNumbersRequest, opts ...grpc.CallOption) (*dfdaemon.GetPieceNumbersResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetPieceNumbers", varargs...)
+	ret0, _ := ret[0].(*dfdaemon.GetPieceNumbersResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPieceNumbers indicates an expected call of GetPieceNumbers.
+func (mr *MockDfdaemonClientMockRecorder) GetPieceNumbers(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPieceNumbers", reflect.TypeOf((*MockDfdaemonClient)(nil).GetPieceNumbers), varargs...)
+}
+
 // StatTask mocks base method.
 func (m *MockDfdaemonClient) StatTask(ctx context.Context, in *dfdaemon.StatTaskRequest, opts ...grpc.CallOption) (*common.Task, error) {
 	m.ctrl.T.Helper()
@@ -331,6 +351,21 @@ func (m *MockDfdaemonServer) DownloadTask(arg0 context.Context, arg1 *dfdaemon.D
 func (mr *MockDfdaemonServerMockRecorder) DownloadTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadTask", reflect.TypeOf((*MockDfdaemonServer)(nil).DownloadTask), arg0, arg1)
+}
+
+// GetPieceNumbers mocks base method.
+func (m *MockDfdaemonServer) GetPieceNumbers(arg0 context.Context, arg1 *dfdaemon.GetPieceNumbersRequest) (*dfdaemon.GetPieceNumbersResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPieceNumbers", arg0, arg1)
+	ret0, _ := ret[0].(*dfdaemon.GetPieceNumbersResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPieceNumbers indicates an expected call of GetPieceNumbers.
+func (mr *MockDfdaemonServerMockRecorder) GetPieceNumbers(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPieceNumbers", reflect.TypeOf((*MockDfdaemonServer)(nil).GetPieceNumbers), arg0, arg1)
 }
 
 // StatTask mocks base method.
