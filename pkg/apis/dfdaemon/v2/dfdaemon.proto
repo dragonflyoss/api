@@ -24,8 +24,8 @@ import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v2;dfdaemon";
 
-// InterestedAllPiecesRequest represents interested all pieces request of SyncPiecesRequest.
-message InterestedAllPiecesRequest {
+// GetPieceNumbersRequest represents gets piece numbers request of SyncPiecesRequest.
+message GetPieceNumbersRequest {
 }
 
 // InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
@@ -42,15 +42,15 @@ message SyncPiecesRequest{
   oneof request {
     option (validate.required) = true;
 
-    InterestedAllPiecesRequest interested_all_pieces_request = 2;
+    GetPieceNumbersRequest get_piece_numbers_request = 2;
     InterestedPiecesRequest interested_pieces_request = 3;
   }
 }
 
-// InterestedPiecesResponse represents all pieces response of SyncPiecesResponse.
-message InterestedAllPiecesResponse {
-  // One of the pieces in task.
-  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
+// GetPieceNumbersResponse represents gets piece numbers response of SyncPiecesResponse.
+message GetPieceNumbersResponse {
+  // Piece numbers.
+  repeated int32 piece_numbers = 1;
 }
 
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
@@ -64,8 +64,8 @@ message SyncPiecesResponse {
   oneof response {
     option (validate.required) = true;
 
-    InterestedAllPiecesResponse interested_all_pieces_response = 1;
-    InterestedPiecesResponse interested_pieces_response = 2;
+    GetPieceNumbersResponse get_piece_numbers_response = 2;
+    InterestedPiecesResponse interested_pieces_response = 3;
   }
 }
 
