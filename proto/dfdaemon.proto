@@ -44,14 +44,14 @@ message SyncPiecesRequest{
 
 // InterestedPiecesResponse represents all pieces response of SyncPiecesResponse.
 message InterestedAllPiecesResponse {
-  // All of the pieces in task.
-  repeated common.v2.Piece pieces = 1;
+  // One of the pieces in task.
+  common.v2.Piece piece = 1;
 }
 
 // InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
 message InterestedPiecesResponse {
-  // Interested pieces of task.
-  repeated common.v2.Piece pieces = 1;
+  // Interested piece of task.
+  common.v2.Piece piece = 1;
 }
 
 // SyncPiecesResponse represents response of SyncPieces.

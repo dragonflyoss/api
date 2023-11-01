@@ -40,18 +40,18 @@ pub mod sync_pieces_request {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterestedAllPiecesResponse {
-    /// All of the pieces in task.
-    #[prost(message, repeated, tag = "1")]
-    pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
+    /// One of the pieces in task.
+    #[prost(message, optional, tag = "1")]
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterestedPiecesResponse {
-    /// Interested pieces of task.
-    #[prost(message, repeated, tag = "1")]
-    pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
+    /// Interested piece of task.
+    #[prost(message, optional, tag = "1")]
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// SyncPiecesResponse represents response of SyncPieces.
 #[derive(serde::Serialize, serde::Deserialize)]
