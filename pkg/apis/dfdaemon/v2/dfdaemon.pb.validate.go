@@ -57,6 +57,17 @@ func (m *GetPieceNumbersRequest) validate(all bool) error {
 
 	var errors []error
 
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := GetPieceNumbersRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return GetPieceNumbersRequestMultiError(errors)
 	}

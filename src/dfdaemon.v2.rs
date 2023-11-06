@@ -2,7 +2,11 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GetPieceNumbersRequest {}
+pub struct GetPieceNumbersRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+}
 /// GetPieceNumbersResponse represents gets piece numbers response of GetPieceNumbers.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]

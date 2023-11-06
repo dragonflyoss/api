@@ -23,6 +23,8 @@ import "google/protobuf/empty.proto";
 
 // GetPieceNumbersRequest represents gets piece numbers request of GetPieceNumbers.
 message GetPieceNumbersRequest {
+  // Task id.
+  string task_id = 1;
 }
 
 // GetPieceNumbersResponse represents gets piece numbers response of GetPieceNumbers.
