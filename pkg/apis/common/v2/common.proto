@@ -336,7 +336,7 @@ message Download {
   // Task piece length.
   int32 piece_length = 10 [(validate.rules).int32.gte = 1];
   // File path to be exported.
-  string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
   optional google.protobuf.Duration timeout = 12 [(validate.rules).duration.required = true];
   // Download rate limit in bytes per second.

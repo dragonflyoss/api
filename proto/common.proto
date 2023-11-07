@@ -330,7 +330,7 @@ message Download {
   // Task piece length.
   int32 piece_length = 10;
   // File path to be exported.
-  string output_path = 11;
+  optional string output_path = 11;
   // Download timeout.
   optional google.protobuf.Duration timeout = 12;
   // Download rate limit in bytes per second.
