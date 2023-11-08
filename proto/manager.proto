@@ -85,6 +85,26 @@ message GetSeedPeerRequest {
   string ip = 4;
 }
 
+// ListSeedPeersRequest represents request of ListSeedPeers.
+message ListSeedPeersRequest {
+  // Request source type.
+  SourceType source_type = 1;
+  // Source service hostname.
+  string hostname = 2;
+  // Source service ip.
+  string ip = 3;
+  // Dfdaemon version.
+  string version = 4;
+  // Dfdaemon commit.
+  string commit = 5;
+}
+
+// ListSeedPeersResponse represents response of ListSeedPeers.
+message ListSeedPeersResponse {
+  // Seed peers to which the source service belongs.
+  repeated SeedPeer seed_peers = 1;
+}
+
 // UpdateSeedPeerRequest represents request of UpdateSeedPeer.
 message UpdateSeedPeerRequest {
   // Request source type.
@@ -369,6 +389,9 @@ message KeepAliveRequest {
 service Manager {
   // Get SeedPeer and SeedPeer cluster configuration.
   rpc GetSeedPeer(GetSeedPeerRequest) returns(SeedPeer);
+
+  // List acitve schedulers configuration.
+  rpc ListSeedPeers(ListSeedPeersRequest)returns(ListSeedPeersResponse);
 
   // Update SeedPeer configuration.
   rpc UpdateSeedPeer(UpdateSeedPeerRequest) returns(SeedPeer);

@@ -79,6 +79,36 @@ pub struct GetSeedPeerRequest {
     #[prost(string, tag = "4")]
     pub ip: ::prost::alloc::string::String,
 }
+/// ListSeedPeersRequest represents request of ListSeedPeers.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSeedPeersRequest {
+    /// Request source type.
+    #[prost(enumeration = "SourceType", tag = "1")]
+    pub source_type: i32,
+    /// Source service hostname.
+    #[prost(string, tag = "2")]
+    pub hostname: ::prost::alloc::string::String,
+    /// Source service ip.
+    #[prost(string, tag = "3")]
+    pub ip: ::prost::alloc::string::String,
+    /// Dfdaemon version.
+    #[prost(string, tag = "4")]
+    pub version: ::prost::alloc::string::String,
+    /// Dfdaemon commit.
+    #[prost(string, tag = "5")]
+    pub commit: ::prost::alloc::string::String,
+}
+/// ListSeedPeersResponse represents response of ListSeedPeers.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSeedPeersResponse {
+    /// Seed peers to which the source service belongs.
+    #[prost(message, repeated, tag = "1")]
+    pub seed_peers: ::prost::alloc::vec::Vec<SeedPeer>,
+}
 /// UpdateSeedPeerRequest represents request of UpdateSeedPeer.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -646,6 +676,32 @@ pub mod manager_client {
                 .insert(GrpcMethod::new("manager.v2.Manager", "GetSeedPeer"));
             self.inner.unary(req, path, codec).await
         }
+        /// List acitve schedulers configuration.
+        pub async fn list_seed_peers(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListSeedPeersRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListSeedPeersResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/manager.v2.Manager/ListSeedPeers",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.v2.Manager", "ListSeedPeers"));
+            self.inner.unary(req, path, codec).await
+        }
         /// Update SeedPeer configuration.
         pub async fn update_seed_peer(
             &mut self,
@@ -899,6 +955,14 @@ pub mod manager_server {
             &self,
             request: tonic::Request<super::GetSeedPeerRequest>,
         ) -> std::result::Result<tonic::Response<super::SeedPeer>, tonic::Status>;
+        /// List acitve schedulers configuration.
+        async fn list_seed_peers(
+            &self,
+            request: tonic::Request<super::ListSeedPeersRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListSeedPeersResponse>,
+            tonic::Status,
+        >;
         /// Update SeedPeer configuration.
         async fn update_seed_peer(
             &self,
@@ -1070,6 +1134,52 @@ pub mod manager_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = GetSeedPeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/manager.v2.Manager/ListSeedPeers" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListSeedPeersSvc<T: Manager>(pub Arc<T>);
+                    impl<
+                        T: Manager,
+                    > tonic::server::UnaryService<super::ListSeedPeersRequest>
+                    for ListSeedPeersSvc<T> {
+                        type Response = super::ListSeedPeersResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ListSeedPeersRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                (*inner).list_seed_peers(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = ListSeedPeersSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

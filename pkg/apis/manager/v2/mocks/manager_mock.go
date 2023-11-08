@@ -222,6 +222,26 @@ func (mr *MockManagerClientMockRecorder) ListSchedulers(ctx, in any, opts ...any
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSchedulers", reflect.TypeOf((*MockManagerClient)(nil).ListSchedulers), varargs...)
 }
 
+// ListSeedPeers mocks base method.
+func (m *MockManagerClient) ListSeedPeers(ctx context.Context, in *manager.ListSeedPeersRequest, opts ...grpc.CallOption) (*manager.ListSeedPeersResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListSeedPeers", varargs...)
+	ret0, _ := ret[0].(*manager.ListSeedPeersResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListSeedPeers indicates an expected call of ListSeedPeers.
+func (mr *MockManagerClientMockRecorder) ListSeedPeers(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSeedPeers", reflect.TypeOf((*MockManagerClient)(nil).ListSeedPeers), varargs...)
+}
+
 // UpdateScheduler mocks base method.
 func (m *MockManagerClient) UpdateScheduler(ctx context.Context, in *manager.UpdateSchedulerRequest, opts ...grpc.CallOption) (*manager.Scheduler, error) {
 	m.ctrl.T.Helper()
@@ -554,6 +574,21 @@ func (m *MockManagerServer) ListSchedulers(arg0 context.Context, arg1 *manager.L
 func (mr *MockManagerServerMockRecorder) ListSchedulers(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSchedulers", reflect.TypeOf((*MockManagerServer)(nil).ListSchedulers), arg0, arg1)
+}
+
+// ListSeedPeers mocks base method.
+func (m *MockManagerServer) ListSeedPeers(arg0 context.Context, arg1 *manager.ListSeedPeersRequest) (*manager.ListSeedPeersResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListSeedPeers", arg0, arg1)
+	ret0, _ := ret[0].(*manager.ListSeedPeersResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListSeedPeers indicates an expected call of ListSeedPeers.
+func (mr *MockManagerServerMockRecorder) ListSeedPeers(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListSeedPeers", reflect.TypeOf((*MockManagerServer)(nil).ListSeedPeers), arg0, arg1)
 }
 
 // UpdateScheduler mocks base method.
