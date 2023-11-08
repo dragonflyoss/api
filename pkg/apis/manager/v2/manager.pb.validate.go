@@ -516,6 +516,338 @@ var _ interface {
 	ErrorName() string
 } = GetSeedPeerRequestValidationError{}
 
+// Validate checks the field values on ListSeedPeersRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListSeedPeersRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListSeedPeersRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListSeedPeersRequestMultiError, or nil if none found.
+func (m *ListSeedPeersRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListSeedPeersRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if _, ok := SourceType_name[int32(m.GetSourceType())]; !ok {
+		err := ListSeedPeersRequestValidationError{
+			field:  "SourceType",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if err := m._validateHostname(m.GetHostname()); err != nil {
+		err = ListSeedPeersRequestValidationError{
+			field:  "Hostname",
+			reason: "value must be a valid hostname",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if ip := net.ParseIP(m.GetIp()); ip == nil {
+		err := ListSeedPeersRequestValidationError{
+			field:  "Ip",
+			reason: "value must be a valid IP address",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetVersion() != "" {
+
+		if l := utf8.RuneCountInString(m.GetVersion()); l < 1 || l > 1024 {
+			err := ListSeedPeersRequestValidationError{
+				field:  "Version",
+				reason: "value length must be between 1 and 1024 runes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetCommit() != "" {
+
+		if l := utf8.RuneCountInString(m.GetCommit()); l < 1 || l > 1024 {
+			err := ListSeedPeersRequestValidationError{
+				field:  "Commit",
+				reason: "value length must be between 1 and 1024 runes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListSeedPeersRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *ListSeedPeersRequest) _validateHostname(host string) error {
+	s := strings.ToLower(strings.TrimSuffix(host, "."))
+
+	if len(host) > 253 {
+		return errors.New("hostname cannot exceed 253 characters")
+	}
+
+	for _, part := range strings.Split(s, ".") {
+		if l := len(part); l == 0 || l > 63 {
+			return errors.New("hostname part must be non-empty and cannot exceed 63 characters")
+		}
+
+		if part[0] == '-' {
+			return errors.New("hostname parts cannot begin with hyphens")
+		}
+
+		if part[len(part)-1] == '-' {
+			return errors.New("hostname parts cannot end with hyphens")
+		}
+
+		for _, r := range part {
+			if (r < 'a' || r > 'z') && (r < '0' || r > '9') && r != '-' {
+				return fmt.Errorf("hostname parts can only contain alphanumeric characters or hyphens, got %q", string(r))
+			}
+		}
+	}
+
+	return nil
+}
+
+// ListSeedPeersRequestMultiError is an error wrapping multiple validation
+// errors returned by ListSeedPeersRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ListSeedPeersRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListSeedPeersRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListSeedPeersRequestMultiError) AllErrors() []error { return m }
+
+// ListSeedPeersRequestValidationError is the validation error returned by
+// ListSeedPeersRequest.Validate if the designated constraints aren't met.
+type ListSeedPeersRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListSeedPeersRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListSeedPeersRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListSeedPeersRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListSeedPeersRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListSeedPeersRequestValidationError) ErrorName() string {
+	return "ListSeedPeersRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListSeedPeersRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListSeedPeersRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListSeedPeersRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListSeedPeersRequestValidationError{}
+
+// Validate checks the field values on ListSeedPeersResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListSeedPeersResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListSeedPeersResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListSeedPeersResponseMultiError, or nil if none found.
+func (m *ListSeedPeersResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListSeedPeersResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetSeedPeers() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListSeedPeersResponseValidationError{
+						field:  fmt.Sprintf("SeedPeers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListSeedPeersResponseValidationError{
+						field:  fmt.Sprintf("SeedPeers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListSeedPeersResponseValidationError{
+					field:  fmt.Sprintf("SeedPeers[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListSeedPeersResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListSeedPeersResponseMultiError is an error wrapping multiple validation
+// errors returned by ListSeedPeersResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListSeedPeersResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListSeedPeersResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListSeedPeersResponseMultiError) AllErrors() []error { return m }
+
+// ListSeedPeersResponseValidationError is the validation error returned by
+// ListSeedPeersResponse.Validate if the designated constraints aren't met.
+type ListSeedPeersResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListSeedPeersResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListSeedPeersResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListSeedPeersResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListSeedPeersResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListSeedPeersResponseValidationError) ErrorName() string {
+	return "ListSeedPeersResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListSeedPeersResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListSeedPeersResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListSeedPeersResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListSeedPeersResponseValidationError{}
+
 // Validate checks the field values on UpdateSeedPeerRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
