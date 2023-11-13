@@ -348,9 +348,9 @@ message Download {
 // Range represents download range.
 message Range {
   // Start of range.
-  int64 start = 1;
+  int64 start = 1 [(validate.rules).int64.gte = 0];
   // Length of range.
-  int64 length = 2;
+  int64 length = 2 [(validate.rules).int64.gt = 0];
 }
 
 // Piece represents information of piece.

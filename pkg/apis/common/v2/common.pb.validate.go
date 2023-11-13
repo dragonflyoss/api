@@ -2162,9 +2162,27 @@ func (m *Range) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Start
+	if m.GetStart() < 0 {
+		err := RangeValidationError{
+			field:  "Start",
+			reason: "value must be greater than or equal to 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for Length
+	if m.GetLength() <= 0 {
+		err := RangeValidationError{
+			field:  "Length",
+			reason: "value must be greater than 0",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return RangeMultiError(errors)
