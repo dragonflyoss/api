@@ -93,10 +93,12 @@ message DownloadPieceBackToSourceFinishedRequest {
 
 // DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
 message DownloadPieceFailedRequest {
-  // Piece info.
-  common.v2.Piece piece = 1;
+  // Piece number.
+  int32 piece_number = 1;
+  // Parent id.
+  string parent_id = 2;
   // Temporary indicates whether the error is temporary.
-  bool temporary = 2;
+  bool temporary = 3;
 }
 
 // HTTPResponse represents http protocol response of DownloadPieceBackToSourceFailedRequest.
@@ -109,28 +111,13 @@ message HTTPResponse {
   string status = 3;
 }
 
-// HDFSResponse represents hdfs protocol response of DownloadPieceBackToSourceFailedRequest.
-message HDFSResponse {
-}
-
-// S3Response represents s3 protocol response of DownloadPieceBackToSourceFailedRequest.
-message S3Response {
-}
-
-// OSSResponse represents oss protocol response of DownloadPieceBackToSourceFailedRequest.
-message OSSResponse {
-}
-
 // DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFailedRequest {
-  // Piece info.
-  common.v2.Piece piece = 1;
+  // Piece number.
+  int32 piece_number = 1;
 
   oneof response {
     HTTPResponse http_response = 2;
-    HDFSResponse hdfs_response = 3;
-    S3Response s3_response = 4;
-    OSSResponse oss_response = 5;
   }
 }
 

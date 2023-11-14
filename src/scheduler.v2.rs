@@ -104,11 +104,14 @@ pub struct DownloadPieceBackToSourceFinishedRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceFailedRequest {
-    /// Piece info.
-    #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
+    /// Piece number.
+    #[prost(int32, tag = "1")]
+    pub piece_number: i32,
+    /// Parent id.
+    #[prost(string, tag = "2")]
+    pub parent_id: ::prost::alloc::string::String,
     /// Temporary indicates whether the error is temporary.
-    #[prost(bool, tag = "2")]
+    #[prost(bool, tag = "3")]
     pub temporary: bool,
 }
 /// HTTPResponse represents http protocol response of DownloadPieceBackToSourceFailedRequest.
@@ -129,32 +132,17 @@ pub struct HttpResponse {
     #[prost(string, tag = "3")]
     pub status: ::prost::alloc::string::String,
 }
-/// HDFSResponse represents hdfs protocol response of DownloadPieceBackToSourceFailedRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct HdfsResponse {}
-/// S3Response represents s3 protocol response of DownloadPieceBackToSourceFailedRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct S3Response {}
-/// OSSResponse represents oss protocol response of DownloadPieceBackToSourceFailedRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct OssResponse {}
 /// DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceBackToSourceFailedRequest {
-    /// Piece info.
-    #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
+    /// Piece number.
+    #[prost(int32, tag = "1")]
+    pub piece_number: i32,
     #[prost(
         oneof = "download_piece_back_to_source_failed_request::Response",
-        tags = "2, 3, 4, 5"
+        tags = "2"
     )]
     pub response: ::core::option::Option<
         download_piece_back_to_source_failed_request::Response,
@@ -168,12 +156,6 @@ pub mod download_piece_back_to_source_failed_request {
     pub enum Response {
         #[prost(message, tag = "2")]
         HttpResponse(super::HttpResponse),
-        #[prost(message, tag = "3")]
-        HdfsResponse(super::HdfsResponse),
-        #[prost(message, tag = "4")]
-        S3Response(super::S3Response),
-        #[prost(message, tag = "5")]
-        OssResponse(super::OssResponse),
     }
 }
 /// SyncPiecesFailedRequest syncs pieces failed request of AnnouncePeerRequest.
