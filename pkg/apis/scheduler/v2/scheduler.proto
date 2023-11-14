@@ -45,7 +45,13 @@ message DownloadPeerStartedRequest {
 // DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceStartedRequest {
   // The description of the back-to-source reason.
-  string description = 1 [(validate.rules).string.min_len = 1];
+  optional string description = 1 [(validate.rules).string.min_len = 1];
+}
+
+// RescheduleRequest represents reschedule request of AnnouncePeerRequest.
+message RescheduleRequest {
+  // The description of the reschedule reason.
+  optional string description = 1 [(validate.rules).string.min_len = 1];
 }
 
 // DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
@@ -67,13 +73,13 @@ message DownloadPeerBackToSourceFinishedRequest {
 // DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
 message DownloadPeerFailedRequest {
   // The description of the download failed.
-  string description = 1 [(validate.rules).string.min_len = 1];
+  optional string description = 1 [(validate.rules).string.min_len = 1];
 }
 
 // DownloadPeerBackToSourceFailedRequest represents peer download back-to-source failed request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceFailedRequest {
   // The description of the download back-to-source failed.
-  string description = 1 [(validate.rules).string.min_len = 1];
+  optional string description = 1 [(validate.rules).string.min_len = 1];
 }
 
 // DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
@@ -138,7 +144,7 @@ message SyncPiecesFailedRequest {
 	// Parent peer id.
   string parent_id = 1 [(validate.rules).string.min_len = 1];
   // The description of the error.
-  string description = 2;
+  optional string description = 2 [(validate.rules).string.min_len = 1];
 }
 
 // AnnouncePeerRequest represents request of AnnouncePeer.
@@ -157,15 +163,16 @@ message AnnouncePeerRequest {
     RegisterSeedPeerRequest register_seed_peer_request = 5;
     DownloadPeerStartedRequest download_peer_started_request = 6;
     DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 7;
-    DownloadPeerFinishedRequest download_peer_finished_request = 8;
-    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 9;
-    DownloadPeerFailedRequest download_peer_failed_request = 10;
-    DownloadPeerBackToSourceFailedRequest download_peer_back_to_source_failed_request = 11;
-    DownloadPieceFinishedRequest download_piece_finished_request = 12;
-    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 13;
-    DownloadPieceFailedRequest download_piece_failed_request = 14;
-    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 15;
-    SyncPiecesFailedRequest sync_pieces_failed_request = 16;
+    RescheduleRequest reschedule_request = 8;
+    DownloadPeerFinishedRequest download_peer_finished_request = 9;
+    DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 10;
+    DownloadPeerFailedRequest download_peer_failed_request = 11;
+    DownloadPeerBackToSourceFailedRequest download_peer_back_to_source_failed_request = 12;
+    DownloadPieceFinishedRequest download_piece_finished_request = 13;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 14;
+    DownloadPieceFailedRequest download_piece_failed_request = 15;
+    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 16;
+    SyncPiecesFailedRequest sync_pieces_failed_request = 17;
   }
 }
 
@@ -184,7 +191,7 @@ message NormalTaskResponse {
 // NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
 message NeedBackToSourceResponse {
   // The description of the back-to-source reason.
-  string description = 1 [(validate.rules).string.min_len = 1];
+  optional string description = 1 [(validate.rules).string.min_len = 1];
 }
 
 // AnnouncePeerResponse represents response of AnnouncePeer.
@@ -277,7 +284,7 @@ message FailedProbe {
   // Destination host metadata.
   common.v2.Host host = 1 [(validate.rules).message.required = true];
   // The description of probing failed.
-  string description = 2 [(validate.rules).string.min_len = 1];
+  optional string description = 2 [(validate.rules).string.min_len = 1];
 }
 
 // ProbeFailedRequest represents failed request of SyncProbesRequest.

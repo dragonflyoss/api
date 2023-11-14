@@ -27,8 +27,17 @@ pub struct DownloadPeerStartedRequest {}
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerBackToSourceStartedRequest {
     /// The description of the back-to-source reason.
-    #[prost(string, tag = "1")]
-    pub description: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// RescheduleRequest represents reschedule request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RescheduleRequest {
+    /// The description of the reschedule reason.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -60,8 +69,8 @@ pub struct DownloadPeerBackToSourceFinishedRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerFailedRequest {
     /// The description of the download failed.
-    #[prost(string, tag = "1")]
-    pub description: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPeerBackToSourceFailedRequest represents peer download back-to-source failed request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -69,8 +78,8 @@ pub struct DownloadPeerFailedRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerBackToSourceFailedRequest {
     /// The description of the download back-to-source failed.
-    #[prost(string, tag = "1")]
-    pub description: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -176,8 +185,8 @@ pub struct SyncPiecesFailedRequest {
     #[prost(string, tag = "1")]
     pub parent_id: ::prost::alloc::string::String,
     /// The description of the error.
-    #[prost(string, tag = "2")]
-    pub description: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// AnnouncePeerRequest represents request of AnnouncePeer.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -195,7 +204,7 @@ pub struct AnnouncePeerRequest {
     pub peer_id: ::prost::alloc::string::String,
     #[prost(
         oneof = "announce_peer_request::Request",
-        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16"
+        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17"
     )]
     pub request: ::core::option::Option<announce_peer_request::Request>,
 }
@@ -216,30 +225,32 @@ pub mod announce_peer_request {
             super::DownloadPeerBackToSourceStartedRequest,
         ),
         #[prost(message, tag = "8")]
-        DownloadPeerFinishedRequest(super::DownloadPeerFinishedRequest),
+        RescheduleRequest(super::RescheduleRequest),
         #[prost(message, tag = "9")]
+        DownloadPeerFinishedRequest(super::DownloadPeerFinishedRequest),
+        #[prost(message, tag = "10")]
         DownloadPeerBackToSourceFinishedRequest(
             super::DownloadPeerBackToSourceFinishedRequest,
         ),
-        #[prost(message, tag = "10")]
-        DownloadPeerFailedRequest(super::DownloadPeerFailedRequest),
         #[prost(message, tag = "11")]
+        DownloadPeerFailedRequest(super::DownloadPeerFailedRequest),
+        #[prost(message, tag = "12")]
         DownloadPeerBackToSourceFailedRequest(
             super::DownloadPeerBackToSourceFailedRequest,
         ),
-        #[prost(message, tag = "12")]
-        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
         #[prost(message, tag = "13")]
+        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
+        #[prost(message, tag = "14")]
         DownloadPieceBackToSourceFinishedRequest(
             super::DownloadPieceBackToSourceFinishedRequest,
         ),
-        #[prost(message, tag = "14")]
-        DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
         #[prost(message, tag = "15")]
+        DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
+        #[prost(message, tag = "16")]
         DownloadPieceBackToSourceFailedRequest(
             super::DownloadPieceBackToSourceFailedRequest,
         ),
-        #[prost(message, tag = "16")]
+        #[prost(message, tag = "17")]
         SyncPiecesFailedRequest(super::SyncPiecesFailedRequest),
     }
 }
@@ -266,8 +277,8 @@ pub struct NormalTaskResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NeedBackToSourceResponse {
     /// The description of the back-to-source reason.
-    #[prost(string, tag = "1")]
-    pub description: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// AnnouncePeerResponse represents response of AnnouncePeer.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -408,8 +419,8 @@ pub struct FailedProbe {
     #[prost(message, optional, tag = "1")]
     pub host: ::core::option::Option<super::super::common::v2::Host>,
     /// The description of probing failed.
-    #[prost(string, tag = "2")]
-    pub description: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// ProbeFailedRequest represents failed request of SyncProbesRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
