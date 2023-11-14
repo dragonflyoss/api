@@ -166,22 +166,6 @@ message AnnouncePeerRequest {
 message EmptyTaskResponse {
 }
 
-// TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
-message TinyTaskResponse {
-  // Tiny task content.
-  bytes content = 1;
-}
-
-// SmallTaskResponse represents small task response of AnnouncePeerResponse.
-message SmallTaskResponse {
-  // TODO Fix clippy lint PR into new version.
-  // The version of tonic needs to be upgraded,
-  // refer to https://github.com/hyperium/tonic/pull/1181.
-  // 
-  // Candidate parent.
-  // common.Peer candidate_parent = 1;
-}
-
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 message NormalTaskResponse {
   // Candidate parents.
@@ -200,10 +184,8 @@ message NeedBackToSourceResponse {
 message AnnouncePeerResponse {
   oneof response {
     EmptyTaskResponse empty_task_response = 1;
-    TinyTaskResponse tiny_task_response = 2;
-    SmallTaskResponse small_task_response = 3;
-    NormalTaskResponse normal_task_response = 4;
-    NeedBackToSourceResponse need_back_to_source_response = 5;
+    NormalTaskResponse normal_task_response = 2;
+    NeedBackToSourceResponse need_back_to_source_response = 3;
   }
 }
 
