@@ -248,27 +248,6 @@ pub mod announce_peer_request {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct EmptyTaskResponse {}
-/// TinyTaskResponse represents tiny task response of AnnouncePeerResponse.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TinyTaskResponse {
-    /// Tiny task content.
-    #[prost(bytes = "vec", tag = "1")]
-    pub content: ::prost::alloc::vec::Vec<u8>,
-}
-/// SmallTaskResponse represents small task response of AnnouncePeerResponse.
-///
-/// TODO Fix clippy lint PR into new version.
-/// The version of tonic needs to be upgraded,
-/// refer to <https://github.com/hyperium/tonic/pull/1181.>
-///
-/// Candidate parent.
-/// common.Peer candidate_parent = 1;
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SmallTaskResponse {}
 /// NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -295,7 +274,7 @@ pub struct NeedBackToSourceResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerResponse {
-    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3, 4, 5")]
+    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3")]
     pub response: ::core::option::Option<announce_peer_response::Response>,
 }
 /// Nested message and enum types in `AnnouncePeerResponse`.
@@ -307,12 +286,8 @@ pub mod announce_peer_response {
         #[prost(message, tag = "1")]
         EmptyTaskResponse(super::EmptyTaskResponse),
         #[prost(message, tag = "2")]
-        TinyTaskResponse(super::TinyTaskResponse),
-        #[prost(message, tag = "3")]
-        SmallTaskResponse(super::SmallTaskResponse),
-        #[prost(message, tag = "4")]
         NormalTaskResponse(super::NormalTaskResponse),
-        #[prost(message, tag = "5")]
+        #[prost(message, tag = "3")]
         NeedBackToSourceResponse(super::NeedBackToSourceResponse),
     }
 }
