@@ -75,6 +75,12 @@ message DownloadTaskRequest {
   common.v2.Download download = 1 [(validate.rules).message.required = true];
 }
 
+// DownloadTaskResponse represents response of DownloadTask.
+message DownloadTaskResponse {
+  // Finished piece of task.
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
+}
+
 // UploadTaskRequest represents request of UploadTask.
 message UploadTaskRequest {
   // Task metadata.
@@ -102,7 +108,7 @@ service Dfdaemon {
   rpc SyncPieces(stream SyncPiecesRequest)returns(stream SyncPiecesResponse);
 
   // DownloadTask downloads task back-to-source.
-  rpc DownloadTask(DownloadTaskRequest) returns(google.protobuf.Empty);
+  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
 
   // UploadTask uploads task to p2p network.
   rpc UploadTask(UploadTaskRequest) returns(google.protobuf.Empty);
