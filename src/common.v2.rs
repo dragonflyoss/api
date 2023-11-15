@@ -395,8 +395,8 @@ pub struct Piece {
     #[prost(string, tag = "5")]
     pub digest: ::prost::alloc::string::String,
     /// Piece content.
-    #[prost(bytes = "vec", tag = "6")]
-    pub content: ::prost::alloc::vec::Vec<u8>,
+    #[prost(bytes = "vec", optional, tag = "6")]
+    pub content: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
     /// Traffic type.
     #[prost(enumeration = "TrafficType", optional, tag = "7")]
     pub traffic_type: ::core::option::Option<i32>,

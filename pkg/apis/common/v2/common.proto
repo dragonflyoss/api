@@ -358,7 +358,7 @@ message Piece {
   // Piece number.
   int32 number = 1 [(validate.rules).int32.gte = 0];
   // Parent peer id.
-  optional string parent_id = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string parent_id = 2 [(validate.rules).string = {min_len: 1}];
   // Piece offset.
   uint64 offset = 3 [(validate.rules).uint64.gte = 0];
   // Piece length.
@@ -366,7 +366,7 @@ message Piece {
   // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$", ignore_empty: true}];
   // Piece content.
-  bytes content = 6 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
+  optional bytes content = 6 [(validate.rules).bytes = {min_len: 1}];
   // Traffic type.
   optional TrafficType traffic_type = 7;
   // Downloading piece costs time.

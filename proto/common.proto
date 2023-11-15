@@ -360,7 +360,7 @@ message Piece {
   // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5;
   // Piece content.
-  bytes content = 6;
+  optional bytes content = 6;
   // Traffic type.
   optional TrafficType traffic_type = 7;
   // Downloading piece costs time.
