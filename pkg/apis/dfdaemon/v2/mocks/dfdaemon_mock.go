@@ -64,14 +64,14 @@ func (mr *MockDfdaemonClientMockRecorder) DeleteTask(ctx, in any, opts ...any) *
 }
 
 // DownloadTask mocks base method.
-func (m *MockDfdaemonClient) DownloadTask(ctx context.Context, in *dfdaemon.DownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (m *MockDfdaemonClient) DownloadTask(ctx context.Context, in *dfdaemon.DownloadTaskRequest, opts ...grpc.CallOption) (dfdaemon.Dfdaemon_DownloadTaskClient, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "DownloadTask", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
+	ret0, _ := ret[0].(dfdaemon.Dfdaemon_DownloadTaskClient)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -300,6 +300,129 @@ func (mr *MockDfdaemon_SyncPiecesClientMockRecorder) Trailer() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockDfdaemon_SyncPiecesClient)(nil).Trailer))
 }
 
+// MockDfdaemon_DownloadTaskClient is a mock of Dfdaemon_DownloadTaskClient interface.
+type MockDfdaemon_DownloadTaskClient struct {
+	ctrl     *gomock.Controller
+	recorder *MockDfdaemon_DownloadTaskClientMockRecorder
+}
+
+// MockDfdaemon_DownloadTaskClientMockRecorder is the mock recorder for MockDfdaemon_DownloadTaskClient.
+type MockDfdaemon_DownloadTaskClientMockRecorder struct {
+	mock *MockDfdaemon_DownloadTaskClient
+}
+
+// NewMockDfdaemon_DownloadTaskClient creates a new mock instance.
+func NewMockDfdaemon_DownloadTaskClient(ctrl *gomock.Controller) *MockDfdaemon_DownloadTaskClient {
+	mock := &MockDfdaemon_DownloadTaskClient{ctrl: ctrl}
+	mock.recorder = &MockDfdaemon_DownloadTaskClientMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockDfdaemon_DownloadTaskClient) EXPECT() *MockDfdaemon_DownloadTaskClientMockRecorder {
+	return m.recorder
+}
+
+// CloseSend mocks base method.
+func (m *MockDfdaemon_DownloadTaskClient) CloseSend() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CloseSend")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CloseSend indicates an expected call of CloseSend.
+func (mr *MockDfdaemon_DownloadTaskClientMockRecorder) CloseSend() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CloseSend", reflect.TypeOf((*MockDfdaemon_DownloadTaskClient)(nil).CloseSend))
+}
+
+// Context mocks base method.
+func (m *MockDfdaemon_DownloadTaskClient) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockDfdaemon_DownloadTaskClientMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockDfdaemon_DownloadTaskClient)(nil).Context))
+}
+
+// Header mocks base method.
+func (m *MockDfdaemon_DownloadTaskClient) Header() (metadata.MD, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Header")
+	ret0, _ := ret[0].(metadata.MD)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Header indicates an expected call of Header.
+func (mr *MockDfdaemon_DownloadTaskClientMockRecorder) Header() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Header", reflect.TypeOf((*MockDfdaemon_DownloadTaskClient)(nil).Header))
+}
+
+// Recv mocks base method.
+func (m *MockDfdaemon_DownloadTaskClient) Recv() (*dfdaemon.DownloadTaskResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Recv")
+	ret0, _ := ret[0].(*dfdaemon.DownloadTaskResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recv indicates an expected call of Recv.
+func (mr *MockDfdaemon_DownloadTaskClientMockRecorder) Recv() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockDfdaemon_DownloadTaskClient)(nil).Recv))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockDfdaemon_DownloadTaskClient) RecvMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockDfdaemon_DownloadTaskClientMockRecorder) RecvMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockDfdaemon_DownloadTaskClient)(nil).RecvMsg), m)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockDfdaemon_DownloadTaskClient) SendMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockDfdaemon_DownloadTaskClientMockRecorder) SendMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockDfdaemon_DownloadTaskClient)(nil).SendMsg), m)
+}
+
+// Trailer mocks base method.
+func (m *MockDfdaemon_DownloadTaskClient) Trailer() metadata.MD {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Trailer")
+	ret0, _ := ret[0].(metadata.MD)
+	return ret0
+}
+
+// Trailer indicates an expected call of Trailer.
+func (mr *MockDfdaemon_DownloadTaskClientMockRecorder) Trailer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockDfdaemon_DownloadTaskClient)(nil).Trailer))
+}
+
 // MockDfdaemonServer is a mock of DfdaemonServer interface.
 type MockDfdaemonServer struct {
 	ctrl     *gomock.Controller
@@ -339,12 +462,11 @@ func (mr *MockDfdaemonServerMockRecorder) DeleteTask(arg0, arg1 any) *gomock.Cal
 }
 
 // DownloadTask mocks base method.
-func (m *MockDfdaemonServer) DownloadTask(arg0 context.Context, arg1 *dfdaemon.DownloadTaskRequest) (*emptypb.Empty, error) {
+func (m *MockDfdaemonServer) DownloadTask(arg0 *dfdaemon.DownloadTaskRequest, arg1 dfdaemon.Dfdaemon_DownloadTaskServer) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DownloadTask", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // DownloadTask indicates an expected call of DownloadTask.
@@ -579,4 +701,123 @@ func (m *MockDfdaemon_SyncPiecesServer) SetTrailer(arg0 metadata.MD) {
 func (mr *MockDfdaemon_SyncPiecesServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockDfdaemon_SyncPiecesServer)(nil).SetTrailer), arg0)
+}
+
+// MockDfdaemon_DownloadTaskServer is a mock of Dfdaemon_DownloadTaskServer interface.
+type MockDfdaemon_DownloadTaskServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockDfdaemon_DownloadTaskServerMockRecorder
+}
+
+// MockDfdaemon_DownloadTaskServerMockRecorder is the mock recorder for MockDfdaemon_DownloadTaskServer.
+type MockDfdaemon_DownloadTaskServerMockRecorder struct {
+	mock *MockDfdaemon_DownloadTaskServer
+}
+
+// NewMockDfdaemon_DownloadTaskServer creates a new mock instance.
+func NewMockDfdaemon_DownloadTaskServer(ctrl *gomock.Controller) *MockDfdaemon_DownloadTaskServer {
+	mock := &MockDfdaemon_DownloadTaskServer{ctrl: ctrl}
+	mock.recorder = &MockDfdaemon_DownloadTaskServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockDfdaemon_DownloadTaskServer) EXPECT() *MockDfdaemon_DownloadTaskServerMockRecorder {
+	return m.recorder
+}
+
+// Context mocks base method.
+func (m *MockDfdaemon_DownloadTaskServer) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockDfdaemon_DownloadTaskServerMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockDfdaemon_DownloadTaskServer)(nil).Context))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockDfdaemon_DownloadTaskServer) RecvMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockDfdaemon_DownloadTaskServerMockRecorder) RecvMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockDfdaemon_DownloadTaskServer)(nil).RecvMsg), m)
+}
+
+// Send mocks base method.
+func (m *MockDfdaemon_DownloadTaskServer) Send(arg0 *dfdaemon.DownloadTaskResponse) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Send", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Send indicates an expected call of Send.
+func (mr *MockDfdaemon_DownloadTaskServerMockRecorder) Send(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockDfdaemon_DownloadTaskServer)(nil).Send), arg0)
+}
+
+// SendHeader mocks base method.
+func (m *MockDfdaemon_DownloadTaskServer) SendHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SendHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendHeader indicates an expected call of SendHeader.
+func (mr *MockDfdaemon_DownloadTaskServerMockRecorder) SendHeader(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendHeader", reflect.TypeOf((*MockDfdaemon_DownloadTaskServer)(nil).SendHeader), arg0)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockDfdaemon_DownloadTaskServer) SendMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockDfdaemon_DownloadTaskServerMockRecorder) SendMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockDfdaemon_DownloadTaskServer)(nil).SendMsg), m)
+}
+
+// SetHeader mocks base method.
+func (m *MockDfdaemon_DownloadTaskServer) SetHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetHeader indicates an expected call of SetHeader.
+func (mr *MockDfdaemon_DownloadTaskServerMockRecorder) SetHeader(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHeader", reflect.TypeOf((*MockDfdaemon_DownloadTaskServer)(nil).SetHeader), arg0)
+}
+
+// SetTrailer mocks base method.
+func (m *MockDfdaemon_DownloadTaskServer) SetTrailer(arg0 metadata.MD) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetTrailer", arg0)
+}
+
+// SetTrailer indicates an expected call of SetTrailer.
+func (mr *MockDfdaemon_DownloadTaskServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockDfdaemon_DownloadTaskServer)(nil).SetTrailer), arg0)
 }

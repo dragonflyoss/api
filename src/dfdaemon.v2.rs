@@ -82,6 +82,15 @@ pub struct DownloadTaskRequest {
     #[prost(message, optional, tag = "1")]
     pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
+/// DownloadTaskResponse represents response of DownloadTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadTaskResponse {
+    /// Finished piece of task.
+    #[prost(message, optional, tag = "1")]
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
+}
 /// UploadTaskRequest represents request of UploadTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -251,7 +260,10 @@ pub mod dfdaemon_client {
         pub async fn download_task(
             &mut self,
             request: impl tonic::IntoRequest<super::DownloadTaskRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<super::DownloadTaskResponse>>,
+            tonic::Status,
+        > {
             self.inner
                 .ready()
                 .await
@@ -268,7 +280,7 @@ pub mod dfdaemon_client {
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "DownloadTask"));
-            self.inner.unary(req, path, codec).await
+            self.inner.server_streaming(req, path, codec).await
         }
         /// UploadTask uploads task to p2p network.
         pub async fn upload_task(
@@ -370,11 +382,20 @@ pub mod dfdaemon_server {
             &self,
             request: tonic::Request<tonic::Streaming<super::SyncPiecesRequest>>,
         ) -> std::result::Result<tonic::Response<Self::SyncPiecesStream>, tonic::Status>;
+        /// Server streaming response type for the DownloadTask method.
+        type DownloadTaskStream: futures_core::Stream<
+                Item = std::result::Result<super::DownloadTaskResponse, tonic::Status>,
+            >
+            + Send
+            + 'static;
         /// DownloadTask downloads task back-to-source.
         async fn download_task(
             &self,
             request: tonic::Request<super::DownloadTaskRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        ) -> std::result::Result<
+            tonic::Response<Self::DownloadTaskStream>,
+            tonic::Status,
+        >;
         /// UploadTask uploads task to p2p network.
         async fn upload_task(
             &self,
@@ -572,11 +593,12 @@ pub mod dfdaemon_server {
                     struct DownloadTaskSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<
                         T: Dfdaemon,
-                    > tonic::server::UnaryService<super::DownloadTaskRequest>
+                    > tonic::server::ServerStreamingService<super::DownloadTaskRequest>
                     for DownloadTaskSvc<T> {
-                        type Response = ();
+                        type Response = super::DownloadTaskResponse;
+                        type ResponseStream = T::DownloadTaskStream;
                         type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
+                            tonic::Response<Self::ResponseStream>,
                             tonic::Status,
                         >;
                         fn call(
@@ -608,7 +630,7 @@ pub mod dfdaemon_server {
                                 max_decoding_message_size,
                                 max_encoding_message_size,
                             );
-                        let res = grpc.unary(method, req).await;
+                        let res = grpc.server_streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
