@@ -2330,21 +2330,6 @@ func (m *Piece) validate(all bool) error {
 
 	}
 
-	if len(m.GetContent()) > 0 {
-
-		if len(m.GetContent()) < 1 {
-			err := PieceValidationError{
-				field:  "Content",
-				reason: "value length must be at least 1 bytes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	if m.GetCost() == nil {
 		err := PieceValidationError{
 			field:  "Cost",
@@ -2369,19 +2354,30 @@ func (m *Piece) validate(all bool) error {
 
 	if m.ParentId != nil {
 
-		if m.GetParentId() != "" {
-
-			if utf8.RuneCountInString(m.GetParentId()) < 1 {
-				err := PieceValidationError{
-					field:  "ParentId",
-					reason: "value length must be at least 1 runes",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
+		if utf8.RuneCountInString(m.GetParentId()) < 1 {
+			err := PieceValidationError{
+				field:  "ParentId",
+				reason: "value length must be at least 1 runes",
 			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
 
+	}
+
+	if m.Content != nil {
+
+		if len(m.GetContent()) < 1 {
+			err := PieceValidationError{
+				field:  "Content",
+				reason: "value length must be at least 1 bytes",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
 
 	}
