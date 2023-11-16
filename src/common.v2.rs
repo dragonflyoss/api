@@ -350,8 +350,8 @@ pub struct Download {
     #[prost(int32, tag = "10")]
     pub piece_length: i32,
     /// File path to be exported.
-    #[prost(string, optional, tag = "11")]
-    pub output_path: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, tag = "11")]
+    pub output_path: ::prost::alloc::string::String,
     /// Download timeout.
     #[prost(message, optional, tag = "12")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
