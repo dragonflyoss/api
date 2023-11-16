@@ -124,9 +124,9 @@ func (mr *MockDfdaemonClientMockRecorder) StatTask(ctx, in any, opts ...any) *go
 }
 
 // SyncPieces mocks base method.
-func (m *MockDfdaemonClient) SyncPieces(ctx context.Context, opts ...grpc.CallOption) (dfdaemon.Dfdaemon_SyncPiecesClient, error) {
+func (m *MockDfdaemonClient) SyncPieces(ctx context.Context, in *dfdaemon.SyncPiecesRequest, opts ...grpc.CallOption) (dfdaemon.Dfdaemon_SyncPiecesClient, error) {
 	m.ctrl.T.Helper()
-	varargs := []any{ctx}
+	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
@@ -137,9 +137,9 @@ func (m *MockDfdaemonClient) SyncPieces(ctx context.Context, opts ...grpc.CallOp
 }
 
 // SyncPieces indicates an expected call of SyncPieces.
-func (mr *MockDfdaemonClientMockRecorder) SyncPieces(ctx any, opts ...any) *gomock.Call {
+func (mr *MockDfdaemonClientMockRecorder) SyncPieces(ctx, in any, opts ...any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx}, opts...)
+	varargs := append([]any{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncPieces", reflect.TypeOf((*MockDfdaemonClient)(nil).SyncPieces), varargs...)
 }
 
@@ -256,20 +256,6 @@ func (m_2 *MockDfdaemon_SyncPiecesClient) RecvMsg(m any) error {
 func (mr *MockDfdaemon_SyncPiecesClientMockRecorder) RecvMsg(m any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockDfdaemon_SyncPiecesClient)(nil).RecvMsg), m)
-}
-
-// Send mocks base method.
-func (m *MockDfdaemon_SyncPiecesClient) Send(arg0 *dfdaemon.SyncPiecesRequest) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Send", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Send indicates an expected call of Send.
-func (mr *MockDfdaemon_SyncPiecesClientMockRecorder) Send(arg0 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockDfdaemon_SyncPiecesClient)(nil).Send), arg0)
 }
 
 // SendMsg mocks base method.
@@ -506,17 +492,17 @@ func (mr *MockDfdaemonServerMockRecorder) StatTask(arg0, arg1 any) *gomock.Call 
 }
 
 // SyncPieces mocks base method.
-func (m *MockDfdaemonServer) SyncPieces(arg0 dfdaemon.Dfdaemon_SyncPiecesServer) error {
+func (m *MockDfdaemonServer) SyncPieces(arg0 *dfdaemon.SyncPiecesRequest, arg1 dfdaemon.Dfdaemon_SyncPiecesServer) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SyncPieces", arg0)
+	ret := m.ctrl.Call(m, "SyncPieces", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // SyncPieces indicates an expected call of SyncPieces.
-func (mr *MockDfdaemonServerMockRecorder) SyncPieces(arg0 any) *gomock.Call {
+func (mr *MockDfdaemonServerMockRecorder) SyncPieces(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncPieces", reflect.TypeOf((*MockDfdaemonServer)(nil).SyncPieces), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncPieces", reflect.TypeOf((*MockDfdaemonServer)(nil).SyncPieces), arg0, arg1)
 }
 
 // UploadTask mocks base method.
@@ -604,21 +590,6 @@ func (m *MockDfdaemon_SyncPiecesServer) Context() context.Context {
 func (mr *MockDfdaemon_SyncPiecesServerMockRecorder) Context() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockDfdaemon_SyncPiecesServer)(nil).Context))
-}
-
-// Recv mocks base method.
-func (m *MockDfdaemon_SyncPiecesServer) Recv() (*dfdaemon.SyncPiecesRequest, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Recv")
-	ret0, _ := ret[0].(*dfdaemon.SyncPiecesRequest)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Recv indicates an expected call of Recv.
-func (mr *MockDfdaemon_SyncPiecesServerMockRecorder) Recv() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockDfdaemon_SyncPiecesServer)(nil).Recv))
 }
 
 // RecvMsg mocks base method.

@@ -105,7 +105,7 @@ service Dfdaemon {
   rpc GetPieceNumbers(GetPieceNumbersRequest) returns(GetPieceNumbersResponse);
 
   // SyncPieces syncs pieces from the other peer.
-  rpc SyncPieces(stream SyncPiecesRequest)returns(stream SyncPiecesResponse);
+  rpc SyncPieces(SyncPiecesRequest)returns(stream SyncPiecesResponse);
 
   // DownloadTask downloads task back-to-source.
   rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);

@@ -27,7 +27,7 @@ type DfdaemonClient interface {
 	// GetPieceNumbers gets piece numbers from the other peer.
 	GetPieceNumbers(ctx context.Context, in *GetPieceNumbersRequest, opts ...grpc.CallOption) (*GetPieceNumbersResponse, error)
 	// SyncPieces syncs pieces from the other peer.
-	SyncPieces(ctx context.Context, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error)
+	SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error)
 	// DownloadTask downloads task back-to-source.
 	DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (Dfdaemon_DownloadTaskClient, error)
 	// UploadTask uploads task to p2p network.
@@ -55,27 +55,28 @@ func (c *dfdaemonClient) GetPieceNumbers(ctx context.Context, in *GetPieceNumber
 	return out, nil
 }
 
-func (c *dfdaemonClient) SyncPieces(ctx context.Context, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error) {
+func (c *dfdaemonClient) SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (Dfdaemon_SyncPiecesClient, error) {
 	stream, err := c.cc.NewStream(ctx, &Dfdaemon_ServiceDesc.Streams[0], "/dfdaemon.v2.Dfdaemon/SyncPieces", opts...)
 	if err != nil {
 		return nil, err
 	}
 	x := &dfdaemonSyncPiecesClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
 	return x, nil
 }
 
 type Dfdaemon_SyncPiecesClient interface {
-	Send(*SyncPiecesRequest) error
 	Recv() (*SyncPiecesResponse, error)
 	grpc.ClientStream
 }
 
 type dfdaemonSyncPiecesClient struct {
 	grpc.ClientStream
-}
-
-func (x *dfdaemonSyncPiecesClient) Send(m *SyncPiecesRequest) error {
-	return x.ClientStream.SendMsg(m)
 }
 
 func (x *dfdaemonSyncPiecesClient) Recv() (*SyncPiecesResponse, error) {
@@ -152,7 +153,7 @@ type DfdaemonServer interface {
 	// GetPieceNumbers gets piece numbers from the other peer.
 	GetPieceNumbers(context.Context, *GetPieceNumbersRequest) (*GetPieceNumbersResponse, error)
 	// SyncPieces syncs pieces from the other peer.
-	SyncPieces(Dfdaemon_SyncPiecesServer) error
+	SyncPieces(*SyncPiecesRequest, Dfdaemon_SyncPiecesServer) error
 	// DownloadTask downloads task back-to-source.
 	DownloadTask(*DownloadTaskRequest, Dfdaemon_DownloadTaskServer) error
 	// UploadTask uploads task to p2p network.
@@ -170,7 +171,7 @@ type UnimplementedDfdaemonServer struct {
 func (UnimplementedDfdaemonServer) GetPieceNumbers(context.Context, *GetPieceNumbersRequest) (*GetPieceNumbersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPieceNumbers not implemented")
 }
-func (UnimplementedDfdaemonServer) SyncPieces(Dfdaemon_SyncPiecesServer) error {
+func (UnimplementedDfdaemonServer) SyncPieces(*SyncPiecesRequest, Dfdaemon_SyncPiecesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncPieces not implemented")
 }
 func (UnimplementedDfdaemonServer) DownloadTask(*DownloadTaskRequest, Dfdaemon_DownloadTaskServer) error {
@@ -216,12 +217,15 @@ func _Dfdaemon_GetPieceNumbers_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _Dfdaemon_SyncPieces_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(DfdaemonServer).SyncPieces(&dfdaemonSyncPiecesServer{stream})
+	m := new(SyncPiecesRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DfdaemonServer).SyncPieces(m, &dfdaemonSyncPiecesServer{stream})
 }
 
 type Dfdaemon_SyncPiecesServer interface {
 	Send(*SyncPiecesResponse) error
-	Recv() (*SyncPiecesRequest, error)
 	grpc.ServerStream
 }
 
@@ -231,14 +235,6 @@ type dfdaemonSyncPiecesServer struct {
 
 func (x *dfdaemonSyncPiecesServer) Send(m *SyncPiecesResponse) error {
 	return x.ServerStream.SendMsg(m)
-}
-
-func (x *dfdaemonSyncPiecesServer) Recv() (*SyncPiecesRequest, error) {
-	m := new(SyncPiecesRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
 }
 
 func _Dfdaemon_DownloadTask_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -345,7 +341,6 @@ var Dfdaemon_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "SyncPieces",
 			Handler:       _Dfdaemon_SyncPieces_Handler,
 			ServerStreams: true,
-			ClientStreams: true,
 		},
 		{
 			StreamName:    "DownloadTask",
