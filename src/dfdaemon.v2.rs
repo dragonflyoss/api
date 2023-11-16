@@ -233,7 +233,7 @@ pub mod dfdaemon_client {
         /// SyncPieces syncs pieces from the other peer.
         pub async fn sync_pieces(
             &mut self,
-            request: impl tonic::IntoStreamingRequest<Message = super::SyncPiecesRequest>,
+            request: impl tonic::IntoRequest<super::SyncPiecesRequest>,
         ) -> std::result::Result<
             tonic::Response<tonic::codec::Streaming<super::SyncPiecesResponse>>,
             tonic::Status,
@@ -251,10 +251,10 @@ pub mod dfdaemon_client {
             let path = http::uri::PathAndQuery::from_static(
                 "/dfdaemon.v2.Dfdaemon/SyncPieces",
             );
-            let mut req = request.into_streaming_request();
+            let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "SyncPieces"));
-            self.inner.streaming(req, path, codec).await
+            self.inner.server_streaming(req, path, codec).await
         }
         /// DownloadTask downloads task back-to-source.
         pub async fn download_task(
@@ -380,7 +380,7 @@ pub mod dfdaemon_server {
         /// SyncPieces syncs pieces from the other peer.
         async fn sync_pieces(
             &self,
-            request: tonic::Request<tonic::Streaming<super::SyncPiecesRequest>>,
+            request: tonic::Request<super::SyncPiecesRequest>,
         ) -> std::result::Result<tonic::Response<Self::SyncPiecesStream>, tonic::Status>;
         /// Server streaming response type for the DownloadTask method.
         type DownloadTaskStream: futures_core::Stream<
@@ -546,7 +546,7 @@ pub mod dfdaemon_server {
                     struct SyncPiecesSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<
                         T: Dfdaemon,
-                    > tonic::server::StreamingService<super::SyncPiecesRequest>
+                    > tonic::server::ServerStreamingService<super::SyncPiecesRequest>
                     for SyncPiecesSvc<T> {
                         type Response = super::SyncPiecesResponse;
                         type ResponseStream = T::SyncPiecesStream;
@@ -556,9 +556,7 @@ pub mod dfdaemon_server {
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<
-                                tonic::Streaming<super::SyncPiecesRequest>,
-                            >,
+                            request: tonic::Request<super::SyncPiecesRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).sync_pieces(request).await };
@@ -583,7 +581,7 @@ pub mod dfdaemon_server {
                                 max_decoding_message_size,
                                 max_encoding_message_size,
                             );
-                        let res = grpc.streaming(method, req).await;
+                        let res = grpc.server_streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
