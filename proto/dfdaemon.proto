@@ -70,8 +70,11 @@ message DownloadTaskRequest {
 
 // DownloadTaskResponse represents response of DownloadTask.
 message DownloadTaskResponse {
+  // Task content length.
+  int64 content_length = 1;
+
   // Finished piece of task.
-  common.v2.Piece piece = 1;
+  common.v2.Piece piece = 2;
 }
 
 // UploadTaskRequest represents request of UploadTask.

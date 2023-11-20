@@ -1000,6 +1000,8 @@ func (m *DownloadTaskResponse) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for ContentLength
+
 	if m.GetPiece() == nil {
 		err := DownloadTaskResponseValidationError{
 			field:  "Piece",
