@@ -350,7 +350,7 @@ message Range {
 // Piece represents information of piece.
 message Piece {
   // Piece number.
-  int32 number = 1;
+  uint32 number = 1;
   // Parent peer id.
   optional string parent_id = 2;
   // Piece offset.
