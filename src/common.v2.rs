@@ -70,14 +70,14 @@ pub struct Task {
         ::prost::alloc::string::String,
     >,
     /// Task piece length.
-    #[prost(int32, tag = "9")]
-    pub piece_length: i32,
+    #[prost(uint64, tag = "9")]
+    pub piece_length: u64,
     /// Task content length.
-    #[prost(int64, tag = "10")]
-    pub content_length: i64,
+    #[prost(uint64, tag = "10")]
+    pub content_length: u64,
     /// Task piece count.
-    #[prost(int32, tag = "11")]
-    pub piece_count: i32,
+    #[prost(uint32, tag = "11")]
+    pub piece_count: u32,
     /// Task size scope.
     #[prost(enumeration = "SizeScope", tag = "12")]
     pub size_scope: i32,
@@ -88,8 +88,8 @@ pub struct Task {
     #[prost(string, tag = "14")]
     pub state: ::prost::alloc::string::String,
     /// Task peer count.
-    #[prost(int32, tag = "15")]
-    pub peer_count: i32,
+    #[prost(uint32, tag = "15")]
+    pub peer_count: u32,
     /// Task contains available peer.
     #[prost(bool, tag = "16")]
     pub has_available_peer: bool,
@@ -347,8 +347,8 @@ pub struct Download {
         ::prost::alloc::string::String,
     >,
     /// Task piece length.
-    #[prost(int32, tag = "10")]
-    pub piece_length: i32,
+    #[prost(uint64, tag = "10")]
+    pub piece_length: u64,
     /// File path to be exported.
     #[prost(string, tag = "11")]
     pub output_path: ::prost::alloc::string::String,
@@ -368,11 +368,11 @@ pub struct Download {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Range {
     /// Start of range.
-    #[prost(int64, tag = "1")]
-    pub start: i64,
+    #[prost(uint64, tag = "1")]
+    pub start: u64,
     /// Length of range.
-    #[prost(int64, tag = "2")]
-    pub length: i64,
+    #[prost(uint64, tag = "2")]
+    pub length: u64,
 }
 /// Piece represents information of piece.
 #[derive(serde::Serialize, serde::Deserialize)]

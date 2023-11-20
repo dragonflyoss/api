@@ -151,11 +151,11 @@ message Task {
   // Task request headers.
   map<string, string> header = 8;
   // Task piece length.
-  int32 piece_length = 9 [(validate.rules).int32.gte = 1];
+  uint32 piece_length = 9 [(validate.rules).uint32.gte = 1];
   // Task content length.
-  int64 content_length = 10 [(validate.rules).int64.gte = 1];
+  uint64 content_length = 10;
   // Task piece count.
-  int32 piece_count = 11 [(validate.rules).int32.gte = 0];
+  uint32 piece_count = 11;
   // Task size scope.
   SizeScope size_scope = 12;
   // Pieces of task.
@@ -163,7 +163,7 @@ message Task {
   // Task state.
   string state = 14 [(validate.rules).string.min_len = 1];
   // Task peer count.
-  int32 peer_count = 15 [(validate.rules).int32.gte = 0];
+  uint32 peer_count = 15;
   // Task contains available peer.
   bool hasAvailablePeer = 16;
   // Task create time.
@@ -334,7 +334,7 @@ message Download {
   // Task request headers.
   map<string, string> header = 9;
   // Task piece length.
-  int32 piece_length = 10 [(validate.rules).int32.gte = 1];
+  uint32 piece_length = 10 [(validate.rules).uint32.gte = 1];
   // File path to be exported.
   string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
@@ -348,21 +348,21 @@ message Download {
 // Range represents download range.
 message Range {
   // Start of range.
-  int64 start = 1 [(validate.rules).int64.gte = 0];
+  uint64 start = 1;
   // Length of range.
-  int64 length = 2 [(validate.rules).int64.gt = 0];
+  uint64 length = 2;
 }
 
 // Piece represents information of piece.
 message Piece {
   // Piece number.
-  int32 number = 1 [(validate.rules).int32.gte = 0];
+  uint32 number = 1;
   // Parent peer id.
   optional string parent_id = 2 [(validate.rules).string = {min_len: 1}];
   // Piece offset.
-  uint64 offset = 3 [(validate.rules).uint64.gte = 0];
+  uint64 offset = 3;
   // Piece length.
-  uint64 length = 4 [(validate.rules).uint64.gt = 0];
+  uint64 length = 4;
   // Digest of the piece data, for example md5:xxx or sha256:yyy.
   string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$", ignore_empty: true}];
   // Piece content.

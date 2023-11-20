@@ -170,6 +170,17 @@ func (m *GetPieceNumbersResponse) validate(all bool) error {
 
 	var errors []error
 
+	if len(m.GetPieceNumbers()) < 1 {
+		err := GetPieceNumbersResponseValidationError{
+			field:  "PieceNumbers",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return GetPieceNumbersResponseMultiError(errors)
 	}

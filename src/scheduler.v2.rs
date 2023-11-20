@@ -45,11 +45,11 @@ pub struct RescheduleRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerFinishedRequest {
     /// Total content length.
-    #[prost(int64, tag = "1")]
-    pub content_length: i64,
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
     /// Total piece count.
-    #[prost(int32, tag = "2")]
-    pub piece_count: i32,
+    #[prost(uint32, tag = "2")]
+    pub piece_count: u32,
 }
 /// DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -57,11 +57,11 @@ pub struct DownloadPeerFinishedRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPeerBackToSourceFinishedRequest {
     /// Total content length.
-    #[prost(int64, tag = "1")]
-    pub content_length: i64,
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
     /// Total piece count.
-    #[prost(int32, tag = "2")]
-    pub piece_count: i32,
+    #[prost(uint32, tag = "2")]
+    pub piece_count: u32,
 }
 /// DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -105,8 +105,8 @@ pub struct DownloadPieceBackToSourceFinishedRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceFailedRequest {
     /// Piece number.
-    #[prost(int32, tag = "1")]
-    pub piece_number: i32,
+    #[prost(uint32, tag = "1")]
+    pub piece_number: u32,
     /// Parent id.
     #[prost(string, tag = "2")]
     pub parent_id: ::prost::alloc::string::String,
@@ -138,8 +138,8 @@ pub struct HttpResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceBackToSourceFailedRequest {
     /// Piece number.
-    #[prost(int32, tag = "1")]
-    pub piece_number: i32,
+    #[prost(uint32, tag = "1")]
+    pub piece_number: u32,
     #[prost(
         oneof = "download_piece_back_to_source_failed_request::Response",
         tags = "2"
@@ -250,8 +250,8 @@ pub struct NormalTaskResponse {
     #[prost(message, repeated, tag = "1")]
     pub candidate_parents: ::prost::alloc::vec::Vec<super::super::common::v2::Peer>,
     /// Concurrent downloading piece count from the peers.
-    #[prost(int32, tag = "2")]
-    pub concurrent_piece_count: i32,
+    #[prost(uint32, tag = "2")]
+    pub concurrent_piece_count: u32,
 }
 /// NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -13,8 +13,8 @@ pub struct GetPieceNumbersRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetPieceNumbersResponse {
     /// Piece numbers.
-    #[prost(int32, repeated, tag = "1")]
-    pub piece_numbers: ::prost::alloc::vec::Vec<i32>,
+    #[prost(uint32, repeated, tag = "1")]
+    pub piece_numbers: ::prost::alloc::vec::Vec<u32>,
 }
 /// InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -22,8 +22,8 @@ pub struct GetPieceNumbersResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InterestedPiecesRequest {
     /// Interested piece numbers.
-    #[prost(int32, repeated, tag = "1")]
-    pub piece_numbers: ::prost::alloc::vec::Vec<i32>,
+    #[prost(uint32, repeated, tag = "1")]
+    pub piece_numbers: ::prost::alloc::vec::Vec<u32>,
 }
 /// SyncPiecesRequest represents request of AnnouncePeer.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -88,8 +88,8 @@ pub struct DownloadTaskRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadTaskResponse {
     /// Task content length.
-    #[prost(int64, tag = "1")]
-    pub content_length: i64,
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
     /// Finished piece of task.
     #[prost(message, optional, tag = "2")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
