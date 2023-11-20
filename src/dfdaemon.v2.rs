@@ -87,8 +87,11 @@ pub struct DownloadTaskRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadTaskResponse {
+    /// Task content length.
+    #[prost(int64, tag = "1")]
+    pub content_length: i64,
     /// Finished piece of task.
-    #[prost(message, optional, tag = "1")]
+    #[prost(message, optional, tag = "2")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// UploadTaskRequest represents request of UploadTask.
