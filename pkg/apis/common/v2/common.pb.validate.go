@@ -440,27 +440,9 @@ func (m *Task) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetContentLength() < 1 {
-		err := TaskValidationError{
-			field:  "ContentLength",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for ContentLength
 
-	if m.GetPieceCount() < 0 {
-		err := TaskValidationError{
-			field:  "PieceCount",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for PieceCount
 
 	// no validation rules for SizeScope
 
@@ -524,16 +506,7 @@ func (m *Task) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetPeerCount() < 0 {
-		err := TaskValidationError{
-			field:  "PeerCount",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for PeerCount
 
 	// no validation rules for HasAvailablePeer
 
@@ -2158,27 +2131,9 @@ func (m *Range) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetStart() < 0 {
-		err := RangeValidationError{
-			field:  "Start",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Start
 
-	if m.GetLength() <= 0 {
-		err := RangeValidationError{
-			field:  "Length",
-			reason: "value must be greater than 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Length
 
 	if len(errors) > 0 {
 		return RangeMultiError(errors)
@@ -2278,38 +2233,11 @@ func (m *Piece) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetNumber() < 0 {
-		err := PieceValidationError{
-			field:  "Number",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Number
 
-	if m.GetOffset() < 0 {
-		err := PieceValidationError{
-			field:  "Offset",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Offset
 
-	if m.GetLength() <= 0 {
-		err := PieceValidationError{
-			field:  "Length",
-			reason: "value must be greater than 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Length
 
 	if m.GetDigest() != "" {
 

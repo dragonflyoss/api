@@ -681,27 +681,9 @@ func (m *DownloadPeerFinishedRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetContentLength() < 0 {
-		err := DownloadPeerFinishedRequestValidationError{
-			field:  "ContentLength",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for ContentLength
 
-	if m.GetPieceCount() < 0 {
-		err := DownloadPeerFinishedRequestValidationError{
-			field:  "PieceCount",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for PieceCount
 
 	if len(errors) > 0 {
 		return DownloadPeerFinishedRequestMultiError(errors)
@@ -808,27 +790,9 @@ func (m *DownloadPeerBackToSourceFinishedRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetContentLength() < 0 {
-		err := DownloadPeerBackToSourceFinishedRequestValidationError{
-			field:  "ContentLength",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for ContentLength
 
-	if m.GetPieceCount() < 0 {
-		err := DownloadPeerBackToSourceFinishedRequestValidationError{
-			field:  "PieceCount",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for PieceCount
 
 	if len(errors) > 0 {
 		return DownloadPeerBackToSourceFinishedRequestMultiError(errors)
@@ -1460,16 +1424,7 @@ func (m *DownloadPieceFailedRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetPieceNumber() < 0 {
-		err := DownloadPieceFailedRequestValidationError{
-			field:  "PieceNumber",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for PieceNumber
 
 	if utf8.RuneCountInString(m.GetParentId()) < 1 {
 		err := DownloadPieceFailedRequestValidationError{
@@ -1711,16 +1666,7 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetPieceNumber() < 0 {
-		err := DownloadPieceBackToSourceFailedRequestValidationError{
-			field:  "PieceNumber",
-			reason: "value must be greater than or equal to 0",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for PieceNumber
 
 	oneofResponsePresent := false
 	switch v := m.Response.(type) {

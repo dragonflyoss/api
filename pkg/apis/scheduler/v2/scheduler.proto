@@ -57,17 +57,17 @@ message RescheduleRequest {
 // DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 message DownloadPeerFinishedRequest {
   // Total content length.
-  int64 content_length = 1 [(validate.rules).int64.gte = 0];
+  uint64 content_length = 1;
   // Total piece count.
-  int32 piece_count = 2 [(validate.rules).int32.gte = 0];
+  uint32 piece_count = 2;
 }
 
 // DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceFinishedRequest {
   // Total content length.
-  int64 content_length = 1 [(validate.rules).int64.gte = 0];
+  uint64 content_length = 1;
   // Total piece count.
-  int32 piece_count = 2 [(validate.rules).int32.gte = 0];
+  uint32 piece_count = 2;
 }
 
 // DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
@@ -97,7 +97,7 @@ message DownloadPieceBackToSourceFinishedRequest {
 // DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
 message DownloadPieceFailedRequest {
   // Piece number.
-  int32 piece_number = 1 [(validate.rules).int32.gte = 0];
+  uint32 piece_number = 1;
   // Parent id.
   string parent_id = 2 [(validate.rules).string.min_len = 1];
   // Temporary indicates whether the error is temporary.
@@ -117,7 +117,7 @@ message HTTPResponse {
 // DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFailedRequest {
   // Piece number.
-  int32 piece_number = 1 [(validate.rules).int32.gte = 0];
+  uint32 piece_number = 1;
 
   oneof response {
     option (validate.required) = true;
@@ -172,7 +172,7 @@ message NormalTaskResponse {
   // Candidate parents.
   repeated common.v2.Peer candidate_parents = 1 [(validate.rules).repeated = {min_items: 1}];
   // Concurrent downloading piece count from the peers.
-  int32 concurrent_piece_count = 2 [(validate.rules).int32.gte = 1];
+  uint32 concurrent_piece_count = 2 [(validate.rules).uint32.gte = 1];
 }
 
 // NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.

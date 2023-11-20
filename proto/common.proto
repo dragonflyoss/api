@@ -145,11 +145,11 @@ message Task {
   // Task request headers.
   map<string, string> header = 8;
   // Task piece length.
-  int32 piece_length = 9;
+  uint64 piece_length = 9;
   // Task content length.
-  int64 content_length = 10;
+  uint64 content_length = 10;
   // Task piece count.
-  int32 piece_count = 11;
+  uint32 piece_count = 11;
   // Task size scope.
   SizeScope size_scope = 12;
   // Pieces of task.
@@ -157,7 +157,7 @@ message Task {
   // Task state.
   string state = 14;
   // Task peer count.
-  int32 peer_count = 15;
+  uint32 peer_count = 15;
   // Task contains available peer.
   bool hasAvailablePeer = 16;
   // Task create time.
@@ -328,7 +328,7 @@ message Download {
   // Task request headers.
   map<string, string> header = 9;
   // Task piece length.
-  int32 piece_length = 10;
+  uint64 piece_length = 10;
   // File path to be exported.
   string output_path = 11;
   // Download timeout.
@@ -342,9 +342,9 @@ message Download {
 // Range represents download range.
 message Range {
   // Start of range.
-  int64 start = 1;
+  uint64 start = 1;
   // Length of range.
-  int64 length = 2;
+  uint64 length = 2;
 }
 
 // Piece represents information of piece.
