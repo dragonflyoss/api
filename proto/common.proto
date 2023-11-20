@@ -334,7 +334,7 @@ message Download {
   // Download timeout.
   optional google.protobuf.Duration timeout = 12;
   // Download rate limit in bytes per second.
-  optional double download_rate_limit = 13;
+  optional uint64 download_rate_limit = 13;
   // NeedBackToSource needs downloaded from source.
   bool need_back_to_source = 14;
 }
