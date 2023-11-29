@@ -158,18 +158,6 @@ pub mod download_piece_back_to_source_failed_request {
         HttpResponse(super::HttpResponse),
     }
 }
-/// SyncPiecesFailedRequest syncs pieces failed request of AnnouncePeerRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SyncPiecesFailedRequest {
-    /// Parent peer id.
-    #[prost(string, tag = "1")]
-    pub parent_id: ::prost::alloc::string::String,
-    /// The description of the error.
-    #[prost(string, optional, tag = "2")]
-    pub description: ::core::option::Option<::prost::alloc::string::String>,
-}
 /// AnnouncePeerRequest represents request of AnnouncePeer.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -186,7 +174,7 @@ pub struct AnnouncePeerRequest {
     pub peer_id: ::prost::alloc::string::String,
     #[prost(
         oneof = "announce_peer_request::Request",
-        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17"
+        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16"
     )]
     pub request: ::core::option::Option<announce_peer_request::Request>,
 }
@@ -232,8 +220,6 @@ pub mod announce_peer_request {
         DownloadPieceBackToSourceFailedRequest(
             super::DownloadPieceBackToSourceFailedRequest,
         ),
-        #[prost(message, tag = "17")]
-        SyncPiecesFailedRequest(super::SyncPiecesFailedRequest),
     }
 }
 /// EmptyTaskResponse represents empty task response of AnnouncePeerResponse.

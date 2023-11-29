@@ -121,14 +121,6 @@ message DownloadPieceBackToSourceFailedRequest {
   }
 }
 
-// SyncPiecesFailedRequest syncs pieces failed request of AnnouncePeerRequest.
-message SyncPiecesFailedRequest {
-	// Parent peer id.
-  string parent_id = 1;
-  // The description of the error.
-  optional string description = 2;
-}
-
 // AnnouncePeerRequest represents request of AnnouncePeer.
 message AnnouncePeerRequest {
   // Host id.
@@ -152,7 +144,6 @@ message AnnouncePeerRequest {
     DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 14;
     DownloadPieceFailedRequest download_piece_failed_request = 15;
     DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 16;
-    SyncPiecesFailedRequest sync_pieces_failed_request = 17;
   }
 }
 
