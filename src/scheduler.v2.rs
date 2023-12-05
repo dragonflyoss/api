@@ -105,8 +105,8 @@ pub struct DownloadPieceBackToSourceFinishedRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceFailedRequest {
     /// Piece number.
-    #[prost(uint32, tag = "1")]
-    pub piece_number: u32,
+    #[prost(uint32, optional, tag = "1")]
+    pub piece_number: ::core::option::Option<u32>,
     /// Parent id.
     #[prost(string, tag = "2")]
     pub parent_id: ::prost::alloc::string::String,
@@ -138,8 +138,8 @@ pub struct HttpResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceBackToSourceFailedRequest {
     /// Piece number.
-    #[prost(uint32, tag = "1")]
-    pub piece_number: u32,
+    #[prost(uint32, optional, tag = "1")]
+    pub piece_number: ::core::option::Option<u32>,
     #[prost(
         oneof = "download_piece_back_to_source_failed_request::Response",
         tags = "2"
