@@ -1424,8 +1424,6 @@ func (m *DownloadPieceFailedRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PieceNumber
-
 	if utf8.RuneCountInString(m.GetParentId()) < 1 {
 		err := DownloadPieceFailedRequestValidationError{
 			field:  "ParentId",
@@ -1438,6 +1436,10 @@ func (m *DownloadPieceFailedRequest) validate(all bool) error {
 	}
 
 	// no validation rules for Temporary
+
+	if m.PieceNumber != nil {
+		// no validation rules for PieceNumber
+	}
 
 	if len(errors) > 0 {
 		return DownloadPieceFailedRequestMultiError(errors)
@@ -1666,8 +1668,6 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PieceNumber
-
 	oneofResponsePresent := false
 	switch v := m.Response.(type) {
 	case *DownloadPieceBackToSourceFailedRequest_HttpResponse:
@@ -1724,6 +1724,10 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+	}
+
+	if m.PieceNumber != nil {
+		// no validation rules for PieceNumber
 	}
 
 	if len(errors) > 0 {

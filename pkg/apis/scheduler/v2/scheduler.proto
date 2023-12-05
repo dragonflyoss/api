@@ -97,7 +97,7 @@ message DownloadPieceBackToSourceFinishedRequest {
 // DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
 message DownloadPieceFailedRequest {
   // Piece number.
-  uint32 piece_number = 1;
+  optional uint32 piece_number = 1;
   // Parent id.
   string parent_id = 2 [(validate.rules).string.min_len = 1];
   // Temporary indicates whether the error is temporary.
@@ -117,7 +117,7 @@ message HTTPResponse {
 // DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFailedRequest {
   // Piece number.
-  uint32 piece_number = 1;
+  optional uint32 piece_number = 1;
 
   oneof response {
     option (validate.required) = true;

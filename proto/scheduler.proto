@@ -94,7 +94,7 @@ message DownloadPieceBackToSourceFinishedRequest {
 // DownloadPieceFailedRequest downloads piece failed request of AnnouncePeerRequest.
 message DownloadPieceFailedRequest {
   // Piece number.
-  uint32 piece_number = 1;
+  optional uint32 piece_number = 1;
   // Parent id.
   string parent_id = 2;
   // Temporary indicates whether the error is temporary.
@@ -114,7 +114,7 @@ message HTTPResponse {
 // DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFailedRequest {
   // Piece number.
-  uint32 piece_number = 1;
+  optional uint32 piece_number = 1;
 
   oneof response {
     HTTPResponse http_response = 2;
