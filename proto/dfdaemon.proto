@@ -33,33 +33,19 @@ message GetPieceNumbersResponse {
   repeated uint32 piece_numbers = 1;
 }
 
-// InterestedPiecesRequest represents interested pieces request of SyncPiecesRequest.
-message InterestedPiecesRequest {
-  // Interested piece numbers.
-  repeated uint32 piece_numbers = 1;
-}
-
-// SyncPiecesRequest represents request of AnnouncePeer.
-message SyncPiecesRequest{
+// DownloadPieceRequest represents request of DownloadPiece.
+message DownloadPieceRequest{
   // Task id.
   string task_id = 1;
 
-  oneof request {
-    InterestedPiecesRequest interested_pieces_request = 2;
-  }
+  // Piece number.
+  uint32 piece_number = 2;
 }
 
-// InterestedPiecesResponse represents interested pieces response of SyncPiecesResponse.
-message InterestedPiecesResponse {
-  // Interested piece of task.
+// DownloadPieceResponse represents response of DownloadPieces.
+message DownloadPieceResponse {
+  // Piece information.
   common.v2.Piece piece = 1;
-}
-
-// SyncPiecesResponse represents response of SyncPieces.
-message SyncPiecesResponse {
-  oneof response {
-    InterestedPiecesResponse interested_pieces_response = 1;
-  }
 }
 
 // DownloadTaskRequest represents request of DownloadTask.
@@ -97,11 +83,11 @@ message DeleteTaskRequest {
 
 // Dfdaemon RPC Service.
 service Dfdaemon{
-  // GetPieceNumbers gets piece numbers from the other peer.
+  // GetPieceNumbers gets piece numbers from the remote peer.
   rpc GetPieceNumbers(GetPieceNumbersRequest) returns(GetPieceNumbersResponse);
 
-  // SyncPieces syncs pieces from the other peer.
-  rpc SyncPieces(SyncPiecesRequest)returns(stream SyncPiecesResponse);
+  // DownloadPiece downloads piece from the remote peer.
+  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
 
   // DownloadTask downloads task back-to-source.
   rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
