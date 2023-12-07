@@ -35,22 +35,22 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on GetPieceNumbersRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetPieceNumbersRequest) Validate() error {
+// Validate checks the field values on SyncPiecesRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *SyncPiecesRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetPieceNumbersRequest with the rules
+// ValidateAll checks the field values on SyncPiecesRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetPieceNumbersRequestMultiError, or nil if none found.
-func (m *GetPieceNumbersRequest) ValidateAll() error {
+// SyncPiecesRequestMultiError, or nil if none found.
+func (m *SyncPiecesRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetPieceNumbersRequest) validate(all bool) error {
+func (m *SyncPiecesRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -58,7 +58,7 @@ func (m *GetPieceNumbersRequest) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := GetPieceNumbersRequestValidationError{
+		err := SyncPiecesRequestValidationError{
 			field:  "TaskId",
 			reason: "value length must be at least 1 runes",
 		}
@@ -68,111 +68,9 @@ func (m *GetPieceNumbersRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if len(errors) > 0 {
-		return GetPieceNumbersRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// GetPieceNumbersRequestMultiError is an error wrapping multiple validation
-// errors returned by GetPieceNumbersRequest.ValidateAll() if the designated
-// constraints aren't met.
-type GetPieceNumbersRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m GetPieceNumbersRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m GetPieceNumbersRequestMultiError) AllErrors() []error { return m }
-
-// GetPieceNumbersRequestValidationError is the validation error returned by
-// GetPieceNumbersRequest.Validate if the designated constraints aren't met.
-type GetPieceNumbersRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e GetPieceNumbersRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e GetPieceNumbersRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e GetPieceNumbersRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e GetPieceNumbersRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e GetPieceNumbersRequestValidationError) ErrorName() string {
-	return "GetPieceNumbersRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e GetPieceNumbersRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sGetPieceNumbersRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = GetPieceNumbersRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = GetPieceNumbersRequestValidationError{}
-
-// Validate checks the field values on GetPieceNumbersResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetPieceNumbersResponse) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on GetPieceNumbersResponse with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// GetPieceNumbersResponseMultiError, or nil if none found.
-func (m *GetPieceNumbersResponse) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *GetPieceNumbersResponse) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if len(m.GetPieceNumbers()) < 1 {
-		err := GetPieceNumbersResponseValidationError{
-			field:  "PieceNumbers",
+	if len(m.GetInterestedPieceNumbers()) < 1 {
+		err := SyncPiecesRequestValidationError{
+			field:  "InterestedPieceNumbers",
 			reason: "value must contain at least 1 item(s)",
 		}
 		if !all {
@@ -182,19 +80,19 @@ func (m *GetPieceNumbersResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GetPieceNumbersResponseMultiError(errors)
+		return SyncPiecesRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// GetPieceNumbersResponseMultiError is an error wrapping multiple validation
-// errors returned by GetPieceNumbersResponse.ValidateAll() if the designated
-// constraints aren't met.
-type GetPieceNumbersResponseMultiError []error
+// SyncPiecesRequestMultiError is an error wrapping multiple validation errors
+// returned by SyncPiecesRequest.ValidateAll() if the designated constraints
+// aren't met.
+type SyncPiecesRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetPieceNumbersResponseMultiError) Error() string {
+func (m SyncPiecesRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -203,11 +101,11 @@ func (m GetPieceNumbersResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetPieceNumbersResponseMultiError) AllErrors() []error { return m }
+func (m SyncPiecesRequestMultiError) AllErrors() []error { return m }
 
-// GetPieceNumbersResponseValidationError is the validation error returned by
-// GetPieceNumbersResponse.Validate if the designated constraints aren't met.
-type GetPieceNumbersResponseValidationError struct {
+// SyncPiecesRequestValidationError is the validation error returned by
+// SyncPiecesRequest.Validate if the designated constraints aren't met.
+type SyncPiecesRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -215,24 +113,24 @@ type GetPieceNumbersResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetPieceNumbersResponseValidationError) Field() string { return e.field }
+func (e SyncPiecesRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetPieceNumbersResponseValidationError) Reason() string { return e.reason }
+func (e SyncPiecesRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetPieceNumbersResponseValidationError) Cause() error { return e.cause }
+func (e SyncPiecesRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetPieceNumbersResponseValidationError) Key() bool { return e.key }
+func (e SyncPiecesRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetPieceNumbersResponseValidationError) ErrorName() string {
-	return "GetPieceNumbersResponseValidationError"
+func (e SyncPiecesRequestValidationError) ErrorName() string {
+	return "SyncPiecesRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetPieceNumbersResponseValidationError) Error() string {
+func (e SyncPiecesRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -244,14 +142,14 @@ func (e GetPieceNumbersResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetPieceNumbersResponse.%s: %s%s",
+		"invalid %sSyncPiecesRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetPieceNumbersResponseValidationError{}
+var _ error = SyncPiecesRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -259,7 +157,111 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetPieceNumbersResponseValidationError{}
+} = SyncPiecesRequestValidationError{}
+
+// Validate checks the field values on SyncPiecesResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SyncPiecesResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SyncPiecesResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SyncPiecesResponseMultiError, or nil if none found.
+func (m *SyncPiecesResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SyncPiecesResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for PieceNumber
+
+	if len(errors) > 0 {
+		return SyncPiecesResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// SyncPiecesResponseMultiError is an error wrapping multiple validation errors
+// returned by SyncPiecesResponse.ValidateAll() if the designated constraints
+// aren't met.
+type SyncPiecesResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SyncPiecesResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SyncPiecesResponseMultiError) AllErrors() []error { return m }
+
+// SyncPiecesResponseValidationError is the validation error returned by
+// SyncPiecesResponse.Validate if the designated constraints aren't met.
+type SyncPiecesResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncPiecesResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncPiecesResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncPiecesResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncPiecesResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncPiecesResponseValidationError) ErrorName() string {
+	return "SyncPiecesResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SyncPiecesResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncPiecesResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncPiecesResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncPiecesResponseValidationError{}
 
 // Validate checks the field values on DownloadPieceRequest with the rules
 // defined in the proto definition for this message. If any rules are
