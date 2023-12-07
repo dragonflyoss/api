@@ -162,6 +162,8 @@ func (m *PeerTaskRequest) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for Prefetch
+
 	// no validation rules for IsMigrating
 
 	// no validation rules for TaskId
