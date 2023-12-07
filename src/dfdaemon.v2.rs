@@ -1,20 +1,23 @@
-/// GetPieceNumbersRequest represents gets piece numbers request of GetPieceNumbers.
+/// SyncPiecesRequest represents request of SyncPieces.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GetPieceNumbersRequest {
+pub struct SyncPiecesRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
+    /// Interested piece numbers.
+    #[prost(uint32, repeated, tag = "2")]
+    pub interested_piece_numbers: ::prost::alloc::vec::Vec<u32>,
 }
-/// GetPieceNumbersResponse represents gets piece numbers response of GetPieceNumbers.
+/// SyncPiecesResponse represents response of SyncPieces.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GetPieceNumbersResponse {
-    /// Piece numbers.
-    #[prost(uint32, repeated, tag = "1")]
-    pub piece_numbers: ::prost::alloc::vec::Vec<u32>,
+pub struct SyncPiecesResponse {
+    /// Exist piece number.
+    #[prost(uint32, tag = "1")]
+    pub piece_number: u32,
 }
 /// DownloadPieceRequest represents request of DownloadPiece.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -171,12 +174,12 @@ pub mod dfdaemon_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        /// GetPieceNumbers gets piece numbers from the remote peer.
-        pub async fn get_piece_numbers(
+        /// SyncPieces syncs piece metadatas from remote peer.
+        pub async fn sync_pieces(
             &mut self,
-            request: impl tonic::IntoRequest<super::GetPieceNumbersRequest>,
+            request: impl tonic::IntoRequest<super::SyncPiecesRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::GetPieceNumbersResponse>,
+            tonic::Response<tonic::codec::Streaming<super::SyncPiecesResponse>>,
             tonic::Status,
         > {
             self.inner
@@ -190,12 +193,12 @@ pub mod dfdaemon_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.v2.Dfdaemon/GetPieceNumbers",
+                "/dfdaemon.v2.Dfdaemon/SyncPieces",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "GetPieceNumbers"));
-            self.inner.unary(req, path, codec).await
+                .insert(GrpcMethod::new("dfdaemon.v2.Dfdaemon", "SyncPieces"));
+            self.inner.server_streaming(req, path, codec).await
         }
         /// DownloadPiece downloads piece from the remote peer.
         pub async fn download_piece(
@@ -330,14 +333,17 @@ pub mod dfdaemon_server {
     /// Generated trait containing gRPC methods that should be implemented for use with DfdaemonServer.
     #[async_trait]
     pub trait Dfdaemon: Send + Sync + 'static {
-        /// GetPieceNumbers gets piece numbers from the remote peer.
-        async fn get_piece_numbers(
+        /// Server streaming response type for the SyncPieces method.
+        type SyncPiecesStream: futures_core::Stream<
+                Item = std::result::Result<super::SyncPiecesResponse, tonic::Status>,
+            >
+            + Send
+            + 'static;
+        /// SyncPieces syncs piece metadatas from remote peer.
+        async fn sync_pieces(
             &self,
-            request: tonic::Request<super::GetPieceNumbersRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::GetPieceNumbersResponse>,
-            tonic::Status,
-        >;
+            request: tonic::Request<super::SyncPiecesRequest>,
+        ) -> std::result::Result<tonic::Response<Self::SyncPiecesStream>, tonic::Status>;
         /// DownloadPiece downloads piece from the remote peer.
         async fn download_piece(
             &self,
@@ -459,26 +465,25 @@ pub mod dfdaemon_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/dfdaemon.v2.Dfdaemon/GetPieceNumbers" => {
+                "/dfdaemon.v2.Dfdaemon/SyncPieces" => {
                     #[allow(non_camel_case_types)]
-                    struct GetPieceNumbersSvc<T: Dfdaemon>(pub Arc<T>);
+                    struct SyncPiecesSvc<T: Dfdaemon>(pub Arc<T>);
                     impl<
                         T: Dfdaemon,
-                    > tonic::server::UnaryService<super::GetPieceNumbersRequest>
-                    for GetPieceNumbersSvc<T> {
-                        type Response = super::GetPieceNumbersResponse;
+                    > tonic::server::ServerStreamingService<super::SyncPiecesRequest>
+                    for SyncPiecesSvc<T> {
+                        type Response = super::SyncPiecesResponse;
+                        type ResponseStream = T::SyncPiecesStream;
                         type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
+                            tonic::Response<Self::ResponseStream>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::GetPieceNumbersRequest>,
+                            request: tonic::Request<super::SyncPiecesRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                (*inner).get_piece_numbers(request).await
-                            };
+                            let fut = async move { (*inner).sync_pieces(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -489,7 +494,7 @@ pub mod dfdaemon_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = GetPieceNumbersSvc(inner);
+                        let method = SyncPiecesSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -500,7 +505,7 @@ pub mod dfdaemon_server {
                                 max_decoding_message_size,
                                 max_encoding_message_size,
                             );
-                        let res = grpc.unary(method, req).await;
+                        let res = grpc.server_streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)

@@ -21,16 +21,19 @@ package dfdaemon.v2;
 import "common.proto";
 import "google/protobuf/empty.proto";
 
-// GetPieceNumbersRequest represents gets piece numbers request of GetPieceNumbers.
-message GetPieceNumbersRequest {
+// SyncPiecesRequest represents request of SyncPieces.
+message SyncPiecesRequest {
   // Task id.
   string task_id = 1;
+
+  // Interested piece numbers.
+  repeated uint32 interested_piece_numbers = 2;
 }
 
-// GetPieceNumbersResponse represents gets piece numbers response of GetPieceNumbers.
-message GetPieceNumbersResponse {
-  // Piece numbers.
-  repeated uint32 piece_numbers = 1;
+// SyncPiecesResponse represents response of SyncPieces.
+message SyncPiecesResponse {
+  // Exist piece number.
+  uint32 piece_number = 1;
 }
 
 // DownloadPieceRequest represents request of DownloadPiece.
@@ -83,8 +86,8 @@ message DeleteTaskRequest {
 
 // Dfdaemon RPC Service.
 service Dfdaemon{
-  // GetPieceNumbers gets piece numbers from the remote peer.
-  rpc GetPieceNumbers(GetPieceNumbersRequest) returns(GetPieceNumbersResponse);
+  // SyncPieces syncs piece metadatas from remote peer.
+  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
 
   // DownloadPiece downloads piece from the remote peer.
   rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
