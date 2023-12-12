@@ -162,8 +162,6 @@ message EmptyTaskResponse {
 message NormalTaskResponse {
   // Candidate parents.
   repeated common.v2.Peer candidate_parents = 1 [(validate.rules).repeated = {min_items: 1}];
-  // Concurrent downloading piece count from the peers.
-  uint32 concurrent_piece_count = 2 [(validate.rules).uint32.gte = 1];
 }
 
 // NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.

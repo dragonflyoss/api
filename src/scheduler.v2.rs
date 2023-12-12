@@ -235,9 +235,6 @@ pub struct NormalTaskResponse {
     /// Candidate parents.
     #[prost(message, repeated, tag = "1")]
     pub candidate_parents: ::prost::alloc::vec::Vec<super::super::common::v2::Peer>,
-    /// Concurrent downloading piece count from the peers.
-    #[prost(uint32, tag = "2")]
-    pub concurrent_piece_count: u32,
 }
 /// NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
 #[derive(serde::Serialize, serde::Deserialize)]

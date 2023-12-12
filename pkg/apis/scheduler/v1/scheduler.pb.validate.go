@@ -1022,17 +1022,6 @@ func (m *PeerPacket) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetParallelCount() < 1 {
-		err := PeerPacketValidationError{
-			field:  "ParallelCount",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if all {
 		switch v := interface{}(m.GetMainPeer()).(type) {
 		case interface{ ValidateAll() error }:
