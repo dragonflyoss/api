@@ -1043,3 +1043,242 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteTaskRequestValidationError{}
+
+// Validate checks the field values on PeerMetadata with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *PeerMetadata) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PeerMetadata with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PeerMetadataMultiError, or
+// nil if none found.
+func (m *PeerMetadata) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PeerMetadata) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for TaskId
+
+	// no validation rules for PeerId
+
+	// no validation rules for State
+
+	if len(errors) > 0 {
+		return PeerMetadataMultiError(errors)
+	}
+
+	return nil
+}
+
+// PeerMetadataMultiError is an error wrapping multiple validation errors
+// returned by PeerMetadata.ValidateAll() if the designated constraints aren't met.
+type PeerMetadataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PeerMetadataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PeerMetadataMultiError) AllErrors() []error { return m }
+
+// PeerMetadataValidationError is the validation error returned by
+// PeerMetadata.Validate if the designated constraints aren't met.
+type PeerMetadataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PeerMetadataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PeerMetadataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PeerMetadataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PeerMetadataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PeerMetadataValidationError) ErrorName() string { return "PeerMetadataValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PeerMetadataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPeerMetadata.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PeerMetadataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PeerMetadataValidationError{}
+
+// Validate checks the field values on PeerExchangeData with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *PeerExchangeData) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PeerExchangeData with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PeerExchangeDataMultiError, or nil if none found.
+func (m *PeerExchangeData) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PeerExchangeData) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetPeerMetadatas() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PeerExchangeDataValidationError{
+						field:  fmt.Sprintf("PeerMetadatas[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PeerExchangeDataValidationError{
+						field:  fmt.Sprintf("PeerMetadatas[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PeerExchangeDataValidationError{
+					field:  fmt.Sprintf("PeerMetadatas[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return PeerExchangeDataMultiError(errors)
+	}
+
+	return nil
+}
+
+// PeerExchangeDataMultiError is an error wrapping multiple validation errors
+// returned by PeerExchangeData.ValidateAll() if the designated constraints
+// aren't met.
+type PeerExchangeDataMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PeerExchangeDataMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PeerExchangeDataMultiError) AllErrors() []error { return m }
+
+// PeerExchangeDataValidationError is the validation error returned by
+// PeerExchangeData.Validate if the designated constraints aren't met.
+type PeerExchangeDataValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PeerExchangeDataValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PeerExchangeDataValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PeerExchangeDataValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PeerExchangeDataValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PeerExchangeDataValidationError) ErrorName() string { return "PeerExchangeDataValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PeerExchangeDataValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPeerExchangeData.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PeerExchangeDataValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PeerExchangeDataValidationError{}

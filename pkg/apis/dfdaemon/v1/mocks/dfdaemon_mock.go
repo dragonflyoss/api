@@ -5,6 +5,7 @@
 //
 //	mockgen -destination dfdaemon_mock.go -source ../dfdaemon_grpc.pb.go -package mocks
 //
+
 // Package mocks is a generated GoMock package.
 package mocks
 
@@ -181,6 +182,26 @@ func (mr *MockDaemonClientMockRecorder) LeaveHost(ctx, in any, opts ...any) *gom
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeaveHost", reflect.TypeOf((*MockDaemonClient)(nil).LeaveHost), varargs...)
+}
+
+// PeerExchange mocks base method.
+func (m *MockDaemonClient) PeerExchange(ctx context.Context, opts ...grpc.CallOption) (dfdaemon.Daemon_PeerExchangeClient, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "PeerExchange", varargs...)
+	ret0, _ := ret[0].(dfdaemon.Daemon_PeerExchangeClient)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PeerExchange indicates an expected call of PeerExchange.
+func (mr *MockDaemonClientMockRecorder) PeerExchange(ctx any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PeerExchange", reflect.TypeOf((*MockDaemonClient)(nil).PeerExchange), varargs...)
 }
 
 // StatTask mocks base method.
@@ -483,6 +504,143 @@ func (mr *MockDaemon_SyncPieceTasksClientMockRecorder) Trailer() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockDaemon_SyncPieceTasksClient)(nil).Trailer))
 }
 
+// MockDaemon_PeerExchangeClient is a mock of Daemon_PeerExchangeClient interface.
+type MockDaemon_PeerExchangeClient struct {
+	ctrl     *gomock.Controller
+	recorder *MockDaemon_PeerExchangeClientMockRecorder
+}
+
+// MockDaemon_PeerExchangeClientMockRecorder is the mock recorder for MockDaemon_PeerExchangeClient.
+type MockDaemon_PeerExchangeClientMockRecorder struct {
+	mock *MockDaemon_PeerExchangeClient
+}
+
+// NewMockDaemon_PeerExchangeClient creates a new mock instance.
+func NewMockDaemon_PeerExchangeClient(ctrl *gomock.Controller) *MockDaemon_PeerExchangeClient {
+	mock := &MockDaemon_PeerExchangeClient{ctrl: ctrl}
+	mock.recorder = &MockDaemon_PeerExchangeClientMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockDaemon_PeerExchangeClient) EXPECT() *MockDaemon_PeerExchangeClientMockRecorder {
+	return m.recorder
+}
+
+// CloseSend mocks base method.
+func (m *MockDaemon_PeerExchangeClient) CloseSend() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CloseSend")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CloseSend indicates an expected call of CloseSend.
+func (mr *MockDaemon_PeerExchangeClientMockRecorder) CloseSend() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CloseSend", reflect.TypeOf((*MockDaemon_PeerExchangeClient)(nil).CloseSend))
+}
+
+// Context mocks base method.
+func (m *MockDaemon_PeerExchangeClient) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockDaemon_PeerExchangeClientMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockDaemon_PeerExchangeClient)(nil).Context))
+}
+
+// Header mocks base method.
+func (m *MockDaemon_PeerExchangeClient) Header() (metadata.MD, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Header")
+	ret0, _ := ret[0].(metadata.MD)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Header indicates an expected call of Header.
+func (mr *MockDaemon_PeerExchangeClientMockRecorder) Header() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Header", reflect.TypeOf((*MockDaemon_PeerExchangeClient)(nil).Header))
+}
+
+// Recv mocks base method.
+func (m *MockDaemon_PeerExchangeClient) Recv() (*dfdaemon.PeerExchangeData, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Recv")
+	ret0, _ := ret[0].(*dfdaemon.PeerExchangeData)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recv indicates an expected call of Recv.
+func (mr *MockDaemon_PeerExchangeClientMockRecorder) Recv() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockDaemon_PeerExchangeClient)(nil).Recv))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockDaemon_PeerExchangeClient) RecvMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockDaemon_PeerExchangeClientMockRecorder) RecvMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockDaemon_PeerExchangeClient)(nil).RecvMsg), m)
+}
+
+// Send mocks base method.
+func (m *MockDaemon_PeerExchangeClient) Send(arg0 *dfdaemon.PeerExchangeData) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Send", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Send indicates an expected call of Send.
+func (mr *MockDaemon_PeerExchangeClientMockRecorder) Send(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockDaemon_PeerExchangeClient)(nil).Send), arg0)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockDaemon_PeerExchangeClient) SendMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockDaemon_PeerExchangeClientMockRecorder) SendMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockDaemon_PeerExchangeClient)(nil).SendMsg), m)
+}
+
+// Trailer mocks base method.
+func (m *MockDaemon_PeerExchangeClient) Trailer() metadata.MD {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Trailer")
+	ret0, _ := ret[0].(metadata.MD)
+	return ret0
+}
+
+// Trailer indicates an expected call of Trailer.
+func (mr *MockDaemon_PeerExchangeClientMockRecorder) Trailer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockDaemon_PeerExchangeClient)(nil).Trailer))
+}
+
 // MockDaemonServer is a mock of DaemonServer interface.
 type MockDaemonServer struct {
 	ctrl     *gomock.Controller
@@ -608,6 +766,20 @@ func (m *MockDaemonServer) LeaveHost(arg0 context.Context, arg1 *emptypb.Empty) 
 func (mr *MockDaemonServerMockRecorder) LeaveHost(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeaveHost", reflect.TypeOf((*MockDaemonServer)(nil).LeaveHost), arg0, arg1)
+}
+
+// PeerExchange mocks base method.
+func (m *MockDaemonServer) PeerExchange(arg0 dfdaemon.Daemon_PeerExchangeServer) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PeerExchange", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// PeerExchange indicates an expected call of PeerExchange.
+func (mr *MockDaemonServerMockRecorder) PeerExchange(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PeerExchange", reflect.TypeOf((*MockDaemonServer)(nil).PeerExchange), arg0)
 }
 
 // StatTask mocks base method.
@@ -925,4 +1097,138 @@ func (m *MockDaemon_SyncPieceTasksServer) SetTrailer(arg0 metadata.MD) {
 func (mr *MockDaemon_SyncPieceTasksServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockDaemon_SyncPieceTasksServer)(nil).SetTrailer), arg0)
+}
+
+// MockDaemon_PeerExchangeServer is a mock of Daemon_PeerExchangeServer interface.
+type MockDaemon_PeerExchangeServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockDaemon_PeerExchangeServerMockRecorder
+}
+
+// MockDaemon_PeerExchangeServerMockRecorder is the mock recorder for MockDaemon_PeerExchangeServer.
+type MockDaemon_PeerExchangeServerMockRecorder struct {
+	mock *MockDaemon_PeerExchangeServer
+}
+
+// NewMockDaemon_PeerExchangeServer creates a new mock instance.
+func NewMockDaemon_PeerExchangeServer(ctrl *gomock.Controller) *MockDaemon_PeerExchangeServer {
+	mock := &MockDaemon_PeerExchangeServer{ctrl: ctrl}
+	mock.recorder = &MockDaemon_PeerExchangeServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockDaemon_PeerExchangeServer) EXPECT() *MockDaemon_PeerExchangeServerMockRecorder {
+	return m.recorder
+}
+
+// Context mocks base method.
+func (m *MockDaemon_PeerExchangeServer) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockDaemon_PeerExchangeServerMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockDaemon_PeerExchangeServer)(nil).Context))
+}
+
+// Recv mocks base method.
+func (m *MockDaemon_PeerExchangeServer) Recv() (*dfdaemon.PeerExchangeData, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Recv")
+	ret0, _ := ret[0].(*dfdaemon.PeerExchangeData)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recv indicates an expected call of Recv.
+func (mr *MockDaemon_PeerExchangeServerMockRecorder) Recv() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockDaemon_PeerExchangeServer)(nil).Recv))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockDaemon_PeerExchangeServer) RecvMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockDaemon_PeerExchangeServerMockRecorder) RecvMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockDaemon_PeerExchangeServer)(nil).RecvMsg), m)
+}
+
+// Send mocks base method.
+func (m *MockDaemon_PeerExchangeServer) Send(arg0 *dfdaemon.PeerExchangeData) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Send", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Send indicates an expected call of Send.
+func (mr *MockDaemon_PeerExchangeServerMockRecorder) Send(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockDaemon_PeerExchangeServer)(nil).Send), arg0)
+}
+
+// SendHeader mocks base method.
+func (m *MockDaemon_PeerExchangeServer) SendHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SendHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendHeader indicates an expected call of SendHeader.
+func (mr *MockDaemon_PeerExchangeServerMockRecorder) SendHeader(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendHeader", reflect.TypeOf((*MockDaemon_PeerExchangeServer)(nil).SendHeader), arg0)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockDaemon_PeerExchangeServer) SendMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockDaemon_PeerExchangeServerMockRecorder) SendMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockDaemon_PeerExchangeServer)(nil).SendMsg), m)
+}
+
+// SetHeader mocks base method.
+func (m *MockDaemon_PeerExchangeServer) SetHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetHeader indicates an expected call of SetHeader.
+func (mr *MockDaemon_PeerExchangeServerMockRecorder) SetHeader(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHeader", reflect.TypeOf((*MockDaemon_PeerExchangeServer)(nil).SetHeader), arg0)
+}
+
+// SetTrailer mocks base method.
+func (m *MockDaemon_PeerExchangeServer) SetTrailer(arg0 metadata.MD) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetTrailer", arg0)
+}
+
+// SetTrailer indicates an expected call of SetTrailer.
+func (mr *MockDaemon_PeerExchangeServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockDaemon_PeerExchangeServer)(nil).SetTrailer), arg0)
 }

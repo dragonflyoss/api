@@ -42,6 +42,8 @@ type DaemonClient interface {
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
 	LeaveHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Exchange peers between daemons
+	PeerExchange(ctx context.Context, opts ...grpc.CallOption) (Daemon_PeerExchangeClient, error)
 }
 
 type daemonClient struct {
@@ -178,6 +180,37 @@ func (c *daemonClient) LeaveHost(ctx context.Context, in *emptypb.Empty, opts ..
 	return out, nil
 }
 
+func (c *daemonClient) PeerExchange(ctx context.Context, opts ...grpc.CallOption) (Daemon_PeerExchangeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Daemon_ServiceDesc.Streams[2], "/dfdaemon.Daemon/PeerExchange", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &daemonPeerExchangeClient{stream}
+	return x, nil
+}
+
+type Daemon_PeerExchangeClient interface {
+	Send(*PeerExchangeData) error
+	Recv() (*PeerExchangeData, error)
+	grpc.ClientStream
+}
+
+type daemonPeerExchangeClient struct {
+	grpc.ClientStream
+}
+
+func (x *daemonPeerExchangeClient) Send(m *PeerExchangeData) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *daemonPeerExchangeClient) Recv() (*PeerExchangeData, error) {
+	m := new(PeerExchangeData)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // DaemonServer is the server API for Daemon service.
 // All implementations should embed UnimplementedDaemonServer
 // for forward compatibility
@@ -200,6 +233,8 @@ type DaemonServer interface {
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
 	LeaveHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	// Exchange peers between daemons
+	PeerExchange(Daemon_PeerExchangeServer) error
 }
 
 // UnimplementedDaemonServer should be embedded to have forward compatible implementations.
@@ -232,6 +267,9 @@ func (UnimplementedDaemonServer) DeleteTask(context.Context, *DeleteTaskRequest)
 }
 func (UnimplementedDaemonServer) LeaveHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveHost not implemented")
+}
+func (UnimplementedDaemonServer) PeerExchange(Daemon_PeerExchangeServer) error {
+	return status.Errorf(codes.Unimplemented, "method PeerExchange not implemented")
 }
 
 // UnsafeDaemonServer may be embedded to opt out of forward compatibility for this service.
@@ -418,6 +456,32 @@ func _Daemon_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Daemon_PeerExchange_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(DaemonServer).PeerExchange(&daemonPeerExchangeServer{stream})
+}
+
+type Daemon_PeerExchangeServer interface {
+	Send(*PeerExchangeData) error
+	Recv() (*PeerExchangeData, error)
+	grpc.ServerStream
+}
+
+type daemonPeerExchangeServer struct {
+	grpc.ServerStream
+}
+
+func (x *daemonPeerExchangeServer) Send(m *PeerExchangeData) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *daemonPeerExchangeServer) Recv() (*PeerExchangeData, error) {
+	m := new(PeerExchangeData)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // Daemon_ServiceDesc is the grpc.ServiceDesc for Daemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -463,6 +527,12 @@ var Daemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "SyncPieceTasks",
 			Handler:       _Daemon_SyncPieceTasks_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "PeerExchange",
+			Handler:       _Daemon_PeerExchange_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
