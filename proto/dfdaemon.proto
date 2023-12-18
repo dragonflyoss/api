@@ -51,6 +51,15 @@ message DownloadPieceResponse {
   common.v2.Piece piece = 1;
 }
 
+// DfdaemonUpload represents upload service of dfdaemon.
+service DfdaemonUpload{
+  // SyncPieces syncs piece metadatas from remote peer.
+  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
+
+  // DownloadPiece downloads piece from the remote peer.
+  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
+}
+
 // DownloadTaskRequest represents request of DownloadTask.
 message DownloadTaskRequest {
   // Download information.
@@ -84,14 +93,8 @@ message DeleteTaskRequest {
   string task_id = 1;
 }
 
-// Dfdaemon RPC Service.
-service Dfdaemon{
-  // SyncPieces syncs piece metadatas from remote peer.
-  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
-
-  // DownloadPiece downloads piece from the remote peer.
-  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
-
+// DfdaemonDownload represents download service of dfdaemon.
+service DfdaemonDownload{
   // DownloadTask downloads task back-to-source.
   rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
 
