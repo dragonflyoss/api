@@ -21,6 +21,21 @@ package dfdaemon.v2;
 import "common.proto";
 import "google/protobuf/empty.proto";
 
+// DownloadTaskRequest represents request of DownloadTask.
+message DownloadTaskRequest {
+  // Download information.
+  common.v2.Download download = 1;
+}
+
+// DownloadTaskResponse represents response of DownloadTask.
+message DownloadTaskResponse {
+  // Task content length.
+  uint64 content_length = 1;
+
+  // Finished piece of task.
+  common.v2.Piece piece = 2;
+}
+
 // SyncPiecesRequest represents request of SyncPieces.
 message SyncPiecesRequest {
   // Task id.
@@ -53,26 +68,14 @@ message DownloadPieceResponse {
 
 // DfdaemonUpload represents upload service of dfdaemon.
 service DfdaemonUpload{
+  // DownloadTask downloads task back-to-source.
+  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
+
   // SyncPieces syncs piece metadatas from remote peer.
   rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
 
   // DownloadPiece downloads piece from the remote peer.
   rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
-}
-
-// DownloadTaskRequest represents request of DownloadTask.
-message DownloadTaskRequest {
-  // Download information.
-  common.v2.Download download = 1;
-}
-
-// DownloadTaskResponse represents response of DownloadTask.
-message DownloadTaskResponse {
-  // Task content length.
-  uint64 content_length = 1;
-
-  // Finished piece of task.
-  common.v2.Piece piece = 2;
 }
 
 // UploadTaskRequest represents request of UploadTask.

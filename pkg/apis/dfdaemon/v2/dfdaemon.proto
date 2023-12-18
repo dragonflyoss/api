@@ -24,6 +24,21 @@ import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v2;dfdaemon";
 
+// DownloadTaskRequest represents request of DownloadTask.
+message DownloadTaskRequest {
+  // Download information.
+  common.v2.Download download = 1 [(validate.rules).message.required = true];
+}
+
+// DownloadTaskResponse represents response of DownloadTask.
+message DownloadTaskResponse {
+  // Task content length.
+  uint64 content_length = 1;
+
+  // Finished piece of task.
+  common.v2.Piece piece = 2 [(validate.rules).message.required = true];
+}
+
 // SyncPiecesRequest represents request of SyncPieces.
 message SyncPiecesRequest {
   // Task id.
@@ -56,26 +71,14 @@ message DownloadPieceResponse {
 
 // DfdaemonUpload represents dfdaemon upload service.
 service DfdaemonUpload {
+  // DownloadTask downloads task back-to-source.
+  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
+
   // SyncPieces syncs piece metadatas from remote peer.
   rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
 
   // DownloadPiece downloads piece from the remote peer.
   rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
-}
-
-// DownloadTaskRequest represents request of DownloadTask.
-message DownloadTaskRequest {
-  // Download information.
-  common.v2.Download download = 1 [(validate.rules).message.required = true];
-}
-
-// DownloadTaskResponse represents response of DownloadTask.
-message DownloadTaskResponse {
-  // Task content length.
-  uint64 content_length = 1;
-
-  // Finished piece of task.
-  common.v2.Piece piece = 2 [(validate.rules).message.required = true];
 }
 
 // UploadTaskRequest represents request of UploadTask.
