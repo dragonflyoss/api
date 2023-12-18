@@ -24,6 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DfdaemonUploadClient interface {
+	// DownloadTask downloads task back-to-source.
+	DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (DfdaemonUpload_DownloadTaskClient, error)
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncPiecesClient, error)
 	// DownloadPiece downloads piece from the remote peer.
@@ -38,8 +40,40 @@ func NewDfdaemonUploadClient(cc grpc.ClientConnInterface) DfdaemonUploadClient {
 	return &dfdaemonUploadClient{cc}
 }
 
+func (c *dfdaemonUploadClient) DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (DfdaemonUpload_DownloadTaskClient, error) {
+	stream, err := c.cc.NewStream(ctx, &DfdaemonUpload_ServiceDesc.Streams[0], "/dfdaemon.v2.DfdaemonUpload/DownloadTask", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &dfdaemonUploadDownloadTaskClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type DfdaemonUpload_DownloadTaskClient interface {
+	Recv() (*DownloadTaskResponse, error)
+	grpc.ClientStream
+}
+
+type dfdaemonUploadDownloadTaskClient struct {
+	grpc.ClientStream
+}
+
+func (x *dfdaemonUploadDownloadTaskClient) Recv() (*DownloadTaskResponse, error) {
+	m := new(DownloadTaskResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *dfdaemonUploadClient) SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncPiecesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &DfdaemonUpload_ServiceDesc.Streams[0], "/dfdaemon.v2.DfdaemonUpload/SyncPieces", opts...)
+	stream, err := c.cc.NewStream(ctx, &DfdaemonUpload_ServiceDesc.Streams[1], "/dfdaemon.v2.DfdaemonUpload/SyncPieces", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,6 +117,8 @@ func (c *dfdaemonUploadClient) DownloadPiece(ctx context.Context, in *DownloadPi
 // All implementations should embed UnimplementedDfdaemonUploadServer
 // for forward compatibility
 type DfdaemonUploadServer interface {
+	// DownloadTask downloads task back-to-source.
+	DownloadTask(*DownloadTaskRequest, DfdaemonUpload_DownloadTaskServer) error
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error
 	// DownloadPiece downloads piece from the remote peer.
@@ -93,6 +129,9 @@ type DfdaemonUploadServer interface {
 type UnimplementedDfdaemonUploadServer struct {
 }
 
+func (UnimplementedDfdaemonUploadServer) DownloadTask(*DownloadTaskRequest, DfdaemonUpload_DownloadTaskServer) error {
+	return status.Errorf(codes.Unimplemented, "method DownloadTask not implemented")
+}
 func (UnimplementedDfdaemonUploadServer) SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncPieces not implemented")
 }
@@ -109,6 +148,27 @@ type UnsafeDfdaemonUploadServer interface {
 
 func RegisterDfdaemonUploadServer(s grpc.ServiceRegistrar, srv DfdaemonUploadServer) {
 	s.RegisterService(&DfdaemonUpload_ServiceDesc, srv)
+}
+
+func _DfdaemonUpload_DownloadTask_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(DownloadTaskRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DfdaemonUploadServer).DownloadTask(m, &dfdaemonUploadDownloadTaskServer{stream})
+}
+
+type DfdaemonUpload_DownloadTaskServer interface {
+	Send(*DownloadTaskResponse) error
+	grpc.ServerStream
+}
+
+type dfdaemonUploadDownloadTaskServer struct {
+	grpc.ServerStream
+}
+
+func (x *dfdaemonUploadDownloadTaskServer) Send(m *DownloadTaskResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _DfdaemonUpload_SyncPieces_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -163,6 +223,11 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "DownloadTask",
+			Handler:       _DfdaemonUpload_DownloadTask_Handler,
+			ServerStreams: true,
+		},
 		{
 			StreamName:    "SyncPieces",
 			Handler:       _DfdaemonUpload_SyncPieces_Handler,

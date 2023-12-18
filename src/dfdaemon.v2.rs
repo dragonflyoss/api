@@ -1,3 +1,24 @@
+/// DownloadTaskRequest represents request of DownloadTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadTaskRequest {
+    /// Download information.
+    #[prost(message, optional, tag = "1")]
+    pub download: ::core::option::Option<super::super::common::v2::Download>,
+}
+/// DownloadTaskResponse represents response of DownloadTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadTaskResponse {
+    /// Task content length.
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
+    /// Finished piece of task.
+    #[prost(message, optional, tag = "2")]
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
+}
 /// SyncPiecesRequest represents request of SyncPieces.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -38,27 +59,6 @@ pub struct DownloadPieceRequest {
 pub struct DownloadPieceResponse {
     /// Piece information.
     #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
-}
-/// DownloadTaskRequest represents request of DownloadTask.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskRequest {
-    /// Download information.
-    #[prost(message, optional, tag = "1")]
-    pub download: ::core::option::Option<super::super::common::v2::Download>,
-}
-/// DownloadTaskResponse represents response of DownloadTask.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskResponse {
-    /// Task content length.
-    #[prost(uint64, tag = "1")]
-    pub content_length: u64,
-    /// Finished piece of task.
-    #[prost(message, optional, tag = "2")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// UploadTaskRequest represents request of UploadTask.
@@ -173,6 +173,32 @@ pub mod dfdaemon_upload_client {
         pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
+        }
+        /// DownloadTask downloads task back-to-source.
+        pub async fn download_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DownloadTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<super::DownloadTaskResponse>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/DownloadTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DownloadTask"));
+            self.inner.server_streaming(req, path, codec).await
         }
         /// SyncPieces syncs piece metadatas from remote peer.
         pub async fn sync_pieces(
@@ -421,6 +447,20 @@ pub mod dfdaemon_upload_server {
     /// Generated trait containing gRPC methods that should be implemented for use with DfdaemonUploadServer.
     #[async_trait]
     pub trait DfdaemonUpload: Send + Sync + 'static {
+        /// Server streaming response type for the DownloadTask method.
+        type DownloadTaskStream: futures_core::Stream<
+                Item = std::result::Result<super::DownloadTaskResponse, tonic::Status>,
+            >
+            + Send
+            + 'static;
+        /// DownloadTask downloads task back-to-source.
+        async fn download_task(
+            &self,
+            request: tonic::Request<super::DownloadTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<Self::DownloadTaskStream>,
+            tonic::Status,
+        >;
         /// Server streaming response type for the SyncPieces method.
         type SyncPiecesStream: futures_core::Stream<
                 Item = std::result::Result<super::SyncPiecesResponse, tonic::Status>,
@@ -521,6 +561,53 @@ pub mod dfdaemon_upload_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
+                "/dfdaemon.v2.DfdaemonUpload/DownloadTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DownloadTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::ServerStreamingService<super::DownloadTaskRequest>
+                    for DownloadTaskSvc<T> {
+                        type Response = super::DownloadTaskResponse;
+                        type ResponseStream = T::DownloadTaskStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DownloadTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                (*inner).download_task(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = DownloadTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.server_streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/dfdaemon.v2.DfdaemonUpload/SyncPieces" => {
                     #[allow(non_camel_case_types)]
                     struct SyncPiecesSvc<T: DfdaemonUpload>(pub Arc<T>);
