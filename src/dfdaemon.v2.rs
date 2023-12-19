@@ -12,11 +12,20 @@ pub struct DownloadTaskRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadTaskResponse {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
     /// Task content length.
-    #[prost(uint64, tag = "1")]
+    #[prost(uint64, tag = "4")]
     pub content_length: u64,
     /// Finished piece of task.
-    #[prost(message, optional, tag = "2")]
+    #[prost(message, optional, tag = "5")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// SyncPiecesRequest represents request of SyncPieces.
