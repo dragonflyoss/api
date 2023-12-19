@@ -44,7 +44,6 @@ message TriggerDownloadTaskResponse {
 message SyncPiecesRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
-
   // Interested piece numbers.
   repeated uint32 interested_piece_numbers = 2 [(validate.rules).repeated = {min_items: 1}];
 }
@@ -59,7 +58,6 @@ message SyncPiecesResponse {
 message DownloadPieceRequest{
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
-
   // Piece number.
   uint32 piece_number = 2;
 }
@@ -90,11 +88,16 @@ message DownloadTaskRequest {
 
 // DownloadTaskResponse represents response of DownloadTask.
 message DownloadTaskResponse {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
   // Task content length.
-  uint64 content_length = 1;
-
+  uint64 content_length = 4;
   // Finished piece of task.
-  common.v2.Piece piece = 2 [(validate.rules).message.required = true];
+  common.v2.Piece piece = 5 [(validate.rules).message.required = true];
 }
 
 // UploadTaskRequest represents request of UploadTask.
