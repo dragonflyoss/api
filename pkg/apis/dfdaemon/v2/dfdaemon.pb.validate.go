@@ -199,39 +199,6 @@ func (m *TriggerDownloadTaskResponse) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetHostId()) < 1 {
-		err := TriggerDownloadTaskResponseValidationError{
-			field:  "HostId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := TriggerDownloadTaskResponseValidationError{
-			field:  "TaskId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
-		err := TriggerDownloadTaskResponseValidationError{
-			field:  "PeerId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if len(errors) > 0 {
 		return TriggerDownloadTaskResponseMultiError(errors)
 	}

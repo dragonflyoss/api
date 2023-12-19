@@ -11,17 +11,7 @@ pub struct TriggerDownloadTaskRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TriggerDownloadTaskResponse {
-    /// Host id.
-    #[prost(string, tag = "1")]
-    pub host_id: ::prost::alloc::string::String,
-    /// Task id.
-    #[prost(string, tag = "2")]
-    pub task_id: ::prost::alloc::string::String,
-    /// Peer id.
-    #[prost(string, tag = "3")]
-    pub peer_id: ::prost::alloc::string::String,
-}
+pub struct TriggerDownloadTaskResponse {}
 /// SyncPiecesRequest represents request of SyncPieces.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
