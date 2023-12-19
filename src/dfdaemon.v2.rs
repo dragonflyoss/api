@@ -1,35 +1,17 @@
-/// DownloadTaskRequest represents request of DownloadTask.
+/// TriggerDownloadTaskRequest represents request of TriggerDownloadTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskRequest {
+pub struct TriggerDownloadTaskRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
     pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
-/// DownloadTaskStartedResponse represents task started response of DownloadTaskResponse.
+/// TriggerDownloadTaskResponse represents response of TriggerDownloadTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskStartedResponse {
-    /// Task content length.
-    #[prost(uint64, tag = "1")]
-    pub content_length: u64,
-}
-/// DownloadPieceFinishedResponse represents piece finished response of DownloadTaskResponse.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadPieceFinishedResponse {
-    /// Piece info.
-    #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
-}
-/// DownloadTaskResponse represents response of DownloadTask.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskResponse {
+pub struct TriggerDownloadTaskResponse {
     /// Host id.
     #[prost(string, tag = "1")]
     pub host_id: ::prost::alloc::string::String,
@@ -39,20 +21,6 @@ pub struct DownloadTaskResponse {
     /// Peer id.
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
-    #[prost(oneof = "download_task_response::Response", tags = "4, 5")]
-    pub response: ::core::option::Option<download_task_response::Response>,
-}
-/// Nested message and enum types in `DownloadTaskResponse`.
-pub mod download_task_response {
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Response {
-        #[prost(message, tag = "4")]
-        DownloadTaskStartedResponse(super::DownloadTaskStartedResponse),
-        #[prost(message, tag = "5")]
-        DownloadPieceFinishedResponse(super::DownloadPieceFinishedResponse),
-    }
 }
 /// SyncPiecesRequest represents request of SyncPieces.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -94,6 +62,27 @@ pub struct DownloadPieceRequest {
 pub struct DownloadPieceResponse {
     /// Piece information.
     #[prost(message, optional, tag = "1")]
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
+}
+/// DownloadTaskRequest represents request of DownloadTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadTaskRequest {
+    /// Download information.
+    #[prost(message, optional, tag = "1")]
+    pub download: ::core::option::Option<super::super::common::v2::Download>,
+}
+/// DownloadTaskResponse represents response of DownloadTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadTaskResponse {
+    /// Task content length.
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
+    /// Finished piece of task.
+    #[prost(message, optional, tag = "2")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
 }
 /// UploadTaskRequest represents request of UploadTask.
@@ -209,12 +198,12 @@ pub mod dfdaemon_upload_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        /// DownloadTask downloads task back-to-source.
-        pub async fn download_task(
+        /// TriggerDownloadTask triggers download task.
+        pub async fn trigger_download_task(
             &mut self,
-            request: impl tonic::IntoRequest<super::DownloadTaskRequest>,
+            request: impl tonic::IntoRequest<super::TriggerDownloadTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<tonic::codec::Streaming<super::DownloadTaskResponse>>,
+            tonic::Response<super::TriggerDownloadTaskResponse>,
             tonic::Status,
         > {
             self.inner
@@ -228,12 +217,14 @@ pub mod dfdaemon_upload_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.v2.DfdaemonUpload/DownloadTask",
+                "/dfdaemon.v2.DfdaemonUpload/TriggerDownloadTask",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DownloadTask"));
-            self.inner.server_streaming(req, path, codec).await
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "TriggerDownloadTask"),
+                );
+            self.inner.unary(req, path, codec).await
         }
         /// SyncPieces syncs piece metadatas from remote peer.
         pub async fn sync_pieces(
@@ -482,18 +473,12 @@ pub mod dfdaemon_upload_server {
     /// Generated trait containing gRPC methods that should be implemented for use with DfdaemonUploadServer.
     #[async_trait]
     pub trait DfdaemonUpload: Send + Sync + 'static {
-        /// Server streaming response type for the DownloadTask method.
-        type DownloadTaskStream: futures_core::Stream<
-                Item = std::result::Result<super::DownloadTaskResponse, tonic::Status>,
-            >
-            + Send
-            + 'static;
-        /// DownloadTask downloads task back-to-source.
-        async fn download_task(
+        /// TriggerDownloadTask triggers download task.
+        async fn trigger_download_task(
             &self,
-            request: tonic::Request<super::DownloadTaskRequest>,
+            request: tonic::Request<super::TriggerDownloadTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<Self::DownloadTaskStream>,
+            tonic::Response<super::TriggerDownloadTaskResponse>,
             tonic::Status,
         >;
         /// Server streaming response type for the SyncPieces method.
@@ -596,26 +581,25 @@ pub mod dfdaemon_upload_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/dfdaemon.v2.DfdaemonUpload/DownloadTask" => {
+                "/dfdaemon.v2.DfdaemonUpload/TriggerDownloadTask" => {
                     #[allow(non_camel_case_types)]
-                    struct DownloadTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    struct TriggerDownloadTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
                     impl<
                         T: DfdaemonUpload,
-                    > tonic::server::ServerStreamingService<super::DownloadTaskRequest>
-                    for DownloadTaskSvc<T> {
-                        type Response = super::DownloadTaskResponse;
-                        type ResponseStream = T::DownloadTaskStream;
+                    > tonic::server::UnaryService<super::TriggerDownloadTaskRequest>
+                    for TriggerDownloadTaskSvc<T> {
+                        type Response = super::TriggerDownloadTaskResponse;
                         type Future = BoxFuture<
-                            tonic::Response<Self::ResponseStream>,
+                            tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::DownloadTaskRequest>,
+                            request: tonic::Request<super::TriggerDownloadTaskRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                (*inner).download_task(request).await
+                                (*inner).trigger_download_task(request).await
                             };
                             Box::pin(fut)
                         }
@@ -627,7 +611,7 @@ pub mod dfdaemon_upload_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = DownloadTaskSvc(inner);
+                        let method = TriggerDownloadTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -638,7 +622,7 @@ pub mod dfdaemon_upload_server {
                                 max_decoding_message_size,
                                 max_encoding_message_size,
                             );
-                        let res = grpc.server_streaming(method, req).await;
+                        let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
