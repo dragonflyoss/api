@@ -27,10 +27,6 @@ message TriggerDownloadTaskRequest {
   common.v2.Download download = 1;
 }
 
-// TriggerDownloadTaskResponse represents response of TriggerDownloadTask.
-message TriggerDownloadTaskResponse {
-}
-
 // SyncPiecesRequest represents request of SyncPieces.
 message SyncPiecesRequest {
   // Task id.
@@ -62,7 +58,7 @@ message DownloadPieceResponse {
 // DfdaemonUpload represents upload service of dfdaemon.
 service DfdaemonUpload{
   // TriggerDownloadTask triggers download task.
-  rpc TriggerDownloadTask(TriggerDownloadTaskRequest) returns(TriggerDownloadTaskResponse);
+  rpc TriggerDownloadTask(TriggerDownloadTaskRequest) returns(google.protobuf.Empty);
 
   // SyncPieces syncs piece metadatas from remote peer.
   rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);

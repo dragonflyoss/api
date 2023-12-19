@@ -84,14 +84,14 @@ func (mr *MockDfdaemonUploadClientMockRecorder) SyncPieces(ctx, in any, opts ...
 }
 
 // TriggerDownloadTask mocks base method.
-func (m *MockDfdaemonUploadClient) TriggerDownloadTask(ctx context.Context, in *dfdaemon.TriggerDownloadTaskRequest, opts ...grpc.CallOption) (*dfdaemon.TriggerDownloadTaskResponse, error) {
+func (m *MockDfdaemonUploadClient) TriggerDownloadTask(ctx context.Context, in *dfdaemon.TriggerDownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "TriggerDownloadTask", varargs...)
-	ret0, _ := ret[0].(*dfdaemon.TriggerDownloadTaskResponse)
+	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -279,10 +279,10 @@ func (mr *MockDfdaemonUploadServerMockRecorder) SyncPieces(arg0, arg1 any) *gomo
 }
 
 // TriggerDownloadTask mocks base method.
-func (m *MockDfdaemonUploadServer) TriggerDownloadTask(arg0 context.Context, arg1 *dfdaemon.TriggerDownloadTaskRequest) (*dfdaemon.TriggerDownloadTaskResponse, error) {
+func (m *MockDfdaemonUploadServer) TriggerDownloadTask(arg0 context.Context, arg1 *dfdaemon.TriggerDownloadTaskRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "TriggerDownloadTask", arg0, arg1)
-	ret0, _ := ret[0].(*dfdaemon.TriggerDownloadTaskResponse)
+	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

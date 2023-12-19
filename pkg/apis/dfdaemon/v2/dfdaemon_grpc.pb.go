@@ -25,7 +25,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DfdaemonUploadClient interface {
 	// TriggerDownloadTask triggers download task.
-	TriggerDownloadTask(ctx context.Context, in *TriggerDownloadTaskRequest, opts ...grpc.CallOption) (*TriggerDownloadTaskResponse, error)
+	TriggerDownloadTask(ctx context.Context, in *TriggerDownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncPiecesClient, error)
 	// DownloadPiece downloads piece from the remote peer.
@@ -40,8 +40,8 @@ func NewDfdaemonUploadClient(cc grpc.ClientConnInterface) DfdaemonUploadClient {
 	return &dfdaemonUploadClient{cc}
 }
 
-func (c *dfdaemonUploadClient) TriggerDownloadTask(ctx context.Context, in *TriggerDownloadTaskRequest, opts ...grpc.CallOption) (*TriggerDownloadTaskResponse, error) {
-	out := new(TriggerDownloadTaskResponse)
+func (c *dfdaemonUploadClient) TriggerDownloadTask(ctx context.Context, in *TriggerDownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/TriggerDownloadTask", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -95,7 +95,7 @@ func (c *dfdaemonUploadClient) DownloadPiece(ctx context.Context, in *DownloadPi
 // for forward compatibility
 type DfdaemonUploadServer interface {
 	// TriggerDownloadTask triggers download task.
-	TriggerDownloadTask(context.Context, *TriggerDownloadTaskRequest) (*TriggerDownloadTaskResponse, error)
+	TriggerDownloadTask(context.Context, *TriggerDownloadTaskRequest) (*emptypb.Empty, error)
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error
 	// DownloadPiece downloads piece from the remote peer.
@@ -106,7 +106,7 @@ type DfdaemonUploadServer interface {
 type UnimplementedDfdaemonUploadServer struct {
 }
 
-func (UnimplementedDfdaemonUploadServer) TriggerDownloadTask(context.Context, *TriggerDownloadTaskRequest) (*TriggerDownloadTaskResponse, error) {
+func (UnimplementedDfdaemonUploadServer) TriggerDownloadTask(context.Context, *TriggerDownloadTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TriggerDownloadTask not implemented")
 }
 func (UnimplementedDfdaemonUploadServer) SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error {

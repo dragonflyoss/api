@@ -7,11 +7,6 @@ pub struct TriggerDownloadTaskRequest {
     #[prost(message, optional, tag = "1")]
     pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
-/// TriggerDownloadTaskResponse represents response of TriggerDownloadTask.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct TriggerDownloadTaskResponse {}
 /// SyncPiecesRequest represents request of SyncPieces.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -201,10 +196,7 @@ pub mod dfdaemon_upload_client {
         pub async fn trigger_download_task(
             &mut self,
             request: impl tonic::IntoRequest<super::TriggerDownloadTaskRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::TriggerDownloadTaskResponse>,
-            tonic::Status,
-        > {
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -476,10 +468,7 @@ pub mod dfdaemon_upload_server {
         async fn trigger_download_task(
             &self,
             request: tonic::Request<super::TriggerDownloadTaskRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::TriggerDownloadTaskResponse>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Server streaming response type for the SyncPieces method.
         type SyncPiecesStream: futures_core::Stream<
                 Item = std::result::Result<super::SyncPiecesResponse, tonic::Status>,
@@ -587,7 +576,7 @@ pub mod dfdaemon_upload_server {
                         T: DfdaemonUpload,
                     > tonic::server::UnaryService<super::TriggerDownloadTaskRequest>
                     for TriggerDownloadTaskSvc<T> {
-                        type Response = super::TriggerDownloadTaskResponse;
+                        type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
