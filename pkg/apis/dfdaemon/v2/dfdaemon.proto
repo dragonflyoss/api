@@ -32,12 +32,6 @@ message TriggerDownloadTaskRequest {
 
 // TriggerDownloadTaskResponse represents response of TriggerDownloadTask.
 message TriggerDownloadTaskResponse {
-  // Host id.
-  string host_id = 1 [(validate.rules).string.min_len = 1];
-  // Task id.
-  string task_id = 2 [(validate.rules).string.min_len = 1];
-  // Peer id.
-  string peer_id = 3 [(validate.rules).string.min_len = 1];
 }
 
 // SyncPiecesRequest represents request of SyncPieces.
