@@ -30,6 +30,18 @@ message DownloadTaskRequest {
   common.v2.Download download = 1 [(validate.rules).message.required = true];
 }
 
+// DownloadTaskStartedResponse represents task started response of DownloadTaskResponse.
+message DownloadTaskStartedResponse {
+  // Task content length.
+  uint64 content_length = 1;
+}
+
+// DownloadPieceFinishedResponse represents piece finished response of DownloadTaskResponse.
+message DownloadPieceFinishedResponse {
+  // Piece info.
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
+}
+
 // DownloadTaskResponse represents response of DownloadTask.
 message DownloadTaskResponse {
   // Host id.
@@ -41,11 +53,12 @@ message DownloadTaskResponse {
   // Peer id.
   string peer_id = 3 [(validate.rules).string.min_len = 1];
 
-  // Task content length.
-  uint64 content_length = 4;
+  oneof response {
+    option (validate.required) = true;
 
-  // Finished piece of task.
-  common.v2.Piece piece = 5 [(validate.rules).message.required = true];
+    DownloadTaskStartedResponse download_task_started_response = 4;
+    DownloadPieceFinishedResponse download_piece_finished_response = 5;
+  }
 }
 
 // SyncPiecesRequest represents request of SyncPieces.
