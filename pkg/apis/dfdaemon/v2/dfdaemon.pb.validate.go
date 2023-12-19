@@ -177,6 +177,254 @@ var _ interface {
 	ErrorName() string
 } = DownloadTaskRequestValidationError{}
 
+// Validate checks the field values on DownloadTaskStartedResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DownloadTaskStartedResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadTaskStartedResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DownloadTaskStartedResponseMultiError, or nil if none found.
+func (m *DownloadTaskStartedResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadTaskStartedResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ContentLength
+
+	if len(errors) > 0 {
+		return DownloadTaskStartedResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadTaskStartedResponseMultiError is an error wrapping multiple
+// validation errors returned by DownloadTaskStartedResponse.ValidateAll() if
+// the designated constraints aren't met.
+type DownloadTaskStartedResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadTaskStartedResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadTaskStartedResponseMultiError) AllErrors() []error { return m }
+
+// DownloadTaskStartedResponseValidationError is the validation error returned
+// by DownloadTaskStartedResponse.Validate if the designated constraints
+// aren't met.
+type DownloadTaskStartedResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadTaskStartedResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadTaskStartedResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadTaskStartedResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadTaskStartedResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadTaskStartedResponseValidationError) ErrorName() string {
+	return "DownloadTaskStartedResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadTaskStartedResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadTaskStartedResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadTaskStartedResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadTaskStartedResponseValidationError{}
+
+// Validate checks the field values on DownloadPieceFinishedResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DownloadPieceFinishedResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPieceFinishedResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// DownloadPieceFinishedResponseMultiError, or nil if none found.
+func (m *DownloadPieceFinishedResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPieceFinishedResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetPiece() == nil {
+		err := DownloadPieceFinishedResponseValidationError{
+			field:  "Piece",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetPiece()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DownloadPieceFinishedResponseValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DownloadPieceFinishedResponseValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DownloadPieceFinishedResponseValidationError{
+				field:  "Piece",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return DownloadPieceFinishedResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPieceFinishedResponseMultiError is an error wrapping multiple
+// validation errors returned by DownloadPieceFinishedResponse.ValidateAll()
+// if the designated constraints aren't met.
+type DownloadPieceFinishedResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPieceFinishedResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPieceFinishedResponseMultiError) AllErrors() []error { return m }
+
+// DownloadPieceFinishedResponseValidationError is the validation error
+// returned by DownloadPieceFinishedResponse.Validate if the designated
+// constraints aren't met.
+type DownloadPieceFinishedResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPieceFinishedResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPieceFinishedResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPieceFinishedResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPieceFinishedResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPieceFinishedResponseValidationError) ErrorName() string {
+	return "DownloadPieceFinishedResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPieceFinishedResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPieceFinishedResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPieceFinishedResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPieceFinishedResponseValidationError{}
+
 // Validate checks the field values on DownloadTaskResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -232,46 +480,104 @@ func (m *DownloadTaskResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for ContentLength
+	oneofResponsePresent := false
+	switch v := m.Response.(type) {
+	case *DownloadTaskResponse_DownloadTaskStartedResponse:
+		if v == nil {
+			err := DownloadTaskResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
 
-	if m.GetPiece() == nil {
+		if all {
+			switch v := interface{}(m.GetDownloadTaskStartedResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadTaskResponseValidationError{
+						field:  "DownloadTaskStartedResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadTaskResponseValidationError{
+						field:  "DownloadTaskStartedResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadTaskStartedResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadTaskResponseValidationError{
+					field:  "DownloadTaskStartedResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *DownloadTaskResponse_DownloadPieceFinishedResponse:
+		if v == nil {
+			err := DownloadTaskResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
+
+		if all {
+			switch v := interface{}(m.GetDownloadPieceFinishedResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadTaskResponseValidationError{
+						field:  "DownloadPieceFinishedResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadTaskResponseValidationError{
+						field:  "DownloadPieceFinishedResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadPieceFinishedResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadTaskResponseValidationError{
+					field:  "DownloadPieceFinishedResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+	if !oneofResponsePresent {
 		err := DownloadTaskResponseValidationError{
-			field:  "Piece",
+			field:  "Response",
 			reason: "value is required",
 		}
 		if !all {
 			return err
 		}
 		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetPiece()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, DownloadTaskResponseValidationError{
-					field:  "Piece",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, DownloadTaskResponseValidationError{
-					field:  "Piece",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return DownloadTaskResponseValidationError{
-				field:  "Piece",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
 	}
 
 	if len(errors) > 0 {
