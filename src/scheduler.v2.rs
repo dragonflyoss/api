@@ -7,15 +7,6 @@ pub struct RegisterPeerRequest {
     #[prost(message, optional, tag = "1")]
     pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
-/// RegisterSeedPeerRequest represents seed peer registered request of AnnouncePeerRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct RegisterSeedPeerRequest {
-    /// Download information.
-    #[prost(message, optional, tag = "1")]
-    pub download: ::core::option::Option<super::super::common::v2::Download>,
-}
 /// DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -174,7 +165,7 @@ pub struct AnnouncePeerRequest {
     pub peer_id: ::prost::alloc::string::String,
     #[prost(
         oneof = "announce_peer_request::Request",
-        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16"
+        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15"
     )]
     pub request: ::core::option::Option<announce_peer_request::Request>,
 }
@@ -187,36 +178,34 @@ pub mod announce_peer_request {
         #[prost(message, tag = "4")]
         RegisterPeerRequest(super::RegisterPeerRequest),
         #[prost(message, tag = "5")]
-        RegisterSeedPeerRequest(super::RegisterSeedPeerRequest),
-        #[prost(message, tag = "6")]
         DownloadPeerStartedRequest(super::DownloadPeerStartedRequest),
-        #[prost(message, tag = "7")]
+        #[prost(message, tag = "6")]
         DownloadPeerBackToSourceStartedRequest(
             super::DownloadPeerBackToSourceStartedRequest,
         ),
-        #[prost(message, tag = "8")]
+        #[prost(message, tag = "7")]
         RescheduleRequest(super::RescheduleRequest),
-        #[prost(message, tag = "9")]
+        #[prost(message, tag = "8")]
         DownloadPeerFinishedRequest(super::DownloadPeerFinishedRequest),
-        #[prost(message, tag = "10")]
+        #[prost(message, tag = "9")]
         DownloadPeerBackToSourceFinishedRequest(
             super::DownloadPeerBackToSourceFinishedRequest,
         ),
-        #[prost(message, tag = "11")]
+        #[prost(message, tag = "10")]
         DownloadPeerFailedRequest(super::DownloadPeerFailedRequest),
-        #[prost(message, tag = "12")]
+        #[prost(message, tag = "11")]
         DownloadPeerBackToSourceFailedRequest(
             super::DownloadPeerBackToSourceFailedRequest,
         ),
-        #[prost(message, tag = "13")]
+        #[prost(message, tag = "12")]
         DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
-        #[prost(message, tag = "14")]
+        #[prost(message, tag = "13")]
         DownloadPieceBackToSourceFinishedRequest(
             super::DownloadPieceBackToSourceFinishedRequest,
         ),
-        #[prost(message, tag = "15")]
+        #[prost(message, tag = "14")]
         DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
-        #[prost(message, tag = "16")]
+        #[prost(message, tag = "15")]
         DownloadPieceBackToSourceFailedRequest(
             super::DownloadPieceBackToSourceFailedRequest,
         ),
