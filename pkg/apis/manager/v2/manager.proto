@@ -28,8 +28,10 @@ option go_package = "d7y.io/api/v2/pkg/apis/manager/v2;manager";
 enum SourceType {
   // Scheduler service.
   SCHEDULER_SOURCE = 0;
+
   // Peer service.
   PEER_SOURCE = 1;
+
   // SeedPeer service.
   SEED_PEER_SOURCE = 2;
 }
@@ -72,8 +74,6 @@ message SeedPeer {
   SeedPeerCluster seed_peer_cluster = 11;
   // Schedulers included in seed peer.
   repeated Scheduler schedulers = 12;
-  // Seed peer object storage port.
-  int32 object_storage_port = 13;
 }
 
 // GetSeedPeerRequest represents request of GetSeedPeer.
@@ -128,8 +128,6 @@ message UpdateSeedPeerRequest {
   int32 download_port = 8 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // ID of the cluster to which the seed peer belongs.
   uint64 seed_peer_cluster_id = 9 [(validate.rules).uint64 = {gte: 1}];
-  // Seed peer object storage port.
-  int32 object_storage_port = 10 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
 }
 
 // DeleteSeedPeerRequest represents request of DeleteSeedPeer.
@@ -240,61 +238,6 @@ message ListSchedulersResponse {
   repeated Scheduler schedulers = 1;
 }
 
-// ObjectStorage represents config of object storage.
-message ObjectStorage {
-  // name is object storage name of type, it can be s3, oss or obs.
-  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
-  // Region is storage region.
-  string region = 2 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // Endpoint is datacenter endpoint.
-  string endpoint = 3 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // AccessKey is access key ID.
-  string access_key = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // SecretKey is access key secret.
-  string secret_key = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
-  // S3ForcePathStyle sets force path style for s3, true by default.
-  // Set this to `true` to force the request to use path-style addressing,
-  // i.e., `http://s3.amazonaws.com/BUCKET/KEY`. By default, the S3 client
-  // will use virtual hosted bucket addressing when possible
-  // (`http://BUCKET.s3.amazonaws.com/KEY`).
-  // Refer to https://github.com/aws/aws-sdk-go/blob/main/aws/config.go#L118.
-  bool s3_force_path_style = 6;
-  // Scheme is the scheme of the http client.
-  string scheme = 7 [(validate.rules).string = {in: ["http", "https"]}];
-}
-
-// GetObjectStorageRequest represents request of GetObjectStorage.
-message GetObjectStorageRequest {
-  // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
-  // Source service hostname.
-  string hostname = 2 [(validate.rules).string.hostname = true];
-  // Source service ip.
-  string ip = 3 [(validate.rules).string.ip = true];
-}
-
-// Bucket represents config of bucket.
-message Bucket {
-  // Bucket name.
-  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 1024}];
-}
-
-// ListSchedulersRequest represents request of ListBuckets.
-message ListBucketsRequest {
-  // Request source type.
-  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];
-  // Source service hostname.
-  string hostname = 2 [(validate.rules).string.hostname = true];
-  // Source service ip.
-  string ip = 3 [(validate.rules).string.ip = true];
-}
-
-// ListBucketsResponse represents response of ListBuckets.
-message ListBucketsResponse {
-  // Bucket configs.
-  repeated Bucket buckets = 1;
-}
-
 // URLPriority represents config of url priority.
 message URLPriority {
   // URL regex.
@@ -363,21 +306,6 @@ message CreateMLPRequest {
   double mae = 3 [(validate.rules).double = {gte: 0}];
 }
 
-// CreateModelRequest represents request of CreateModel.
-message CreateModelRequest {
-  // Scheduler hostname.
-  string hostname = 1 [(validate.rules).string.min_len = 1];
-  // Scheduler ip.
-  string ip = 2 [(validate.rules).string.ip = true];
-
-  oneof request {
-    option (validate.required) = true;
-
-    CreateGNNRequest create_gnn_request = 3;
-    CreateMLPRequest create_mlp_request = 4;
-  }
-}
-
 // KeepAliveRequest represents request of KeepAlive.
 message KeepAliveRequest {
   // Request source type.
@@ -413,17 +341,8 @@ service Manager {
   // List acitve schedulers configuration.
   rpc ListSchedulers(ListSchedulersRequest)returns(ListSchedulersResponse);
 
-  // Get ObjectStorage configuration.
-  rpc GetObjectStorage(GetObjectStorageRequest) returns(ObjectStorage);
-
-  // List buckets configuration.
-  rpc ListBuckets(ListBucketsRequest)returns(ListBucketsResponse);
-
   // List applications configuration.
   rpc ListApplications(ListApplicationsRequest)returns(ListApplicationsResponse);
-
-  // Create model and update data of model to object storage.
-  rpc CreateModel(CreateModelRequest)returns(google.protobuf.Empty);
 
   // KeepAlive with manager.
   rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);

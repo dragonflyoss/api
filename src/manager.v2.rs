@@ -57,9 +57,6 @@ pub struct SeedPeer {
     /// Schedulers included in seed peer.
     #[prost(message, repeated, tag = "12")]
     pub schedulers: ::prost::alloc::vec::Vec<Scheduler>,
-    /// Seed peer object storage port.
-    #[prost(int32, tag = "13")]
-    pub object_storage_port: i32,
 }
 /// GetSeedPeerRequest represents request of GetSeedPeer.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -141,9 +138,6 @@ pub struct UpdateSeedPeerRequest {
     /// ID of the cluster to which the seed peer belongs.
     #[prost(uint64, tag = "9")]
     pub seed_peer_cluster_id: u64,
-    /// Seed peer object storage port.
-    #[prost(int32, tag = "10")]
-    pub object_storage_port: i32,
 }
 /// DeleteSeedPeerRequest represents request of DeleteSeedPeer.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -307,86 +301,6 @@ pub struct ListSchedulersResponse {
     #[prost(message, repeated, tag = "1")]
     pub schedulers: ::prost::alloc::vec::Vec<Scheduler>,
 }
-/// ObjectStorage represents config of object storage.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ObjectStorage {
-    /// name is object storage name of type, it can be s3, oss or obs.
-    #[prost(string, tag = "1")]
-    pub name: ::prost::alloc::string::String,
-    /// Region is storage region.
-    #[prost(string, tag = "2")]
-    pub region: ::prost::alloc::string::String,
-    /// Endpoint is datacenter endpoint.
-    #[prost(string, tag = "3")]
-    pub endpoint: ::prost::alloc::string::String,
-    /// AccessKey is access key ID.
-    #[prost(string, tag = "4")]
-    pub access_key: ::prost::alloc::string::String,
-    /// SecretKey is access key secret.
-    #[prost(string, tag = "5")]
-    pub secret_key: ::prost::alloc::string::String,
-    /// S3ForcePathStyle sets force path style for s3, true by default.
-    /// Set this to `true` to force the request to use path-style addressing,
-    /// i.e., `<http://s3.amazonaws.com/BUCKET/KEY`.> By default, the S3 client
-    /// will use virtual hosted bucket addressing when possible
-    /// (`<http://BUCKET.s3.amazonaws.com/KEY`>).
-    /// Refer to <https://github.com/aws/aws-sdk-go/blob/main/aws/config.go#L118.>
-    #[prost(bool, tag = "6")]
-    pub s3_force_path_style: bool,
-    /// Scheme is the scheme of the http client.
-    #[prost(string, tag = "7")]
-    pub scheme: ::prost::alloc::string::String,
-}
-/// GetObjectStorageRequest represents request of GetObjectStorage.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GetObjectStorageRequest {
-    /// Request source type.
-    #[prost(enumeration = "SourceType", tag = "1")]
-    pub source_type: i32,
-    /// Source service hostname.
-    #[prost(string, tag = "2")]
-    pub hostname: ::prost::alloc::string::String,
-    /// Source service ip.
-    #[prost(string, tag = "3")]
-    pub ip: ::prost::alloc::string::String,
-}
-/// Bucket represents config of bucket.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Bucket {
-    /// Bucket name.
-    #[prost(string, tag = "1")]
-    pub name: ::prost::alloc::string::String,
-}
-/// ListSchedulersRequest represents request of ListBuckets.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListBucketsRequest {
-    /// Request source type.
-    #[prost(enumeration = "SourceType", tag = "1")]
-    pub source_type: i32,
-    /// Source service hostname.
-    #[prost(string, tag = "2")]
-    pub hostname: ::prost::alloc::string::String,
-    /// Source service ip.
-    #[prost(string, tag = "3")]
-    pub ip: ::prost::alloc::string::String,
-}
-/// ListBucketsResponse represents response of ListBuckets.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListBucketsResponse {
-    /// Bucket configs.
-    #[prost(message, repeated, tag = "1")]
-    pub buckets: ::prost::alloc::vec::Vec<Bucket>,
-}
 /// URLPriority represents config of url priority.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -488,32 +402,6 @@ pub struct CreateMlpRequest {
     /// MAE of the model.
     #[prost(double, tag = "3")]
     pub mae: f64,
-}
-/// CreateModelRequest represents request of CreateModel.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct CreateModelRequest {
-    /// Scheduler hostname.
-    #[prost(string, tag = "1")]
-    pub hostname: ::prost::alloc::string::String,
-    /// Scheduler ip.
-    #[prost(string, tag = "2")]
-    pub ip: ::prost::alloc::string::String,
-    #[prost(oneof = "create_model_request::Request", tags = "3, 4")]
-    pub request: ::core::option::Option<create_model_request::Request>,
-}
-/// Nested message and enum types in `CreateModelRequest`.
-pub mod create_model_request {
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Request {
-        #[prost(message, tag = "3")]
-        CreateGnnRequest(super::CreateGnnRequest),
-        #[prost(message, tag = "4")]
-        CreateMlpRequest(super::CreateMlpRequest),
-    }
 }
 /// KeepAliveRequest represents request of KeepAlive.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -820,55 +708,6 @@ pub mod manager_client {
                 .insert(GrpcMethod::new("manager.v2.Manager", "ListSchedulers"));
             self.inner.unary(req, path, codec).await
         }
-        /// Get ObjectStorage configuration.
-        pub async fn get_object_storage(
-            &mut self,
-            request: impl tonic::IntoRequest<super::GetObjectStorageRequest>,
-        ) -> std::result::Result<tonic::Response<super::ObjectStorage>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/manager.v2.Manager/GetObjectStorage",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("manager.v2.Manager", "GetObjectStorage"));
-            self.inner.unary(req, path, codec).await
-        }
-        /// List buckets configuration.
-        pub async fn list_buckets(
-            &mut self,
-            request: impl tonic::IntoRequest<super::ListBucketsRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ListBucketsResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/manager.v2.Manager/ListBuckets",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("manager.v2.Manager", "ListBuckets"));
-            self.inner.unary(req, path, codec).await
-        }
         /// List applications configuration.
         pub async fn list_applications(
             &mut self,
@@ -893,29 +732,6 @@ pub mod manager_client {
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("manager.v2.Manager", "ListApplications"));
-            self.inner.unary(req, path, codec).await
-        }
-        /// Create model and update data of model to object storage.
-        pub async fn create_model(
-            &mut self,
-            request: impl tonic::IntoRequest<super::CreateModelRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/manager.v2.Manager/CreateModel",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("manager.v2.Manager", "CreateModel"));
             self.inner.unary(req, path, codec).await
         }
         /// KeepAlive with manager.
@@ -991,19 +807,6 @@ pub mod manager_server {
             tonic::Response<super::ListSchedulersResponse>,
             tonic::Status,
         >;
-        /// Get ObjectStorage configuration.
-        async fn get_object_storage(
-            &self,
-            request: tonic::Request<super::GetObjectStorageRequest>,
-        ) -> std::result::Result<tonic::Response<super::ObjectStorage>, tonic::Status>;
-        /// List buckets configuration.
-        async fn list_buckets(
-            &self,
-            request: tonic::Request<super::ListBucketsRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ListBucketsResponse>,
-            tonic::Status,
-        >;
         /// List applications configuration.
         async fn list_applications(
             &self,
@@ -1012,11 +815,6 @@ pub mod manager_server {
             tonic::Response<super::ListApplicationsResponse>,
             tonic::Status,
         >;
-        /// Create model and update data of model to object storage.
-        async fn create_model(
-            &self,
-            request: tonic::Request<super::CreateModelRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// KeepAlive with manager.
         async fn keep_alive(
             &self,
@@ -1425,98 +1223,6 @@ pub mod manager_server {
                     };
                     Box::pin(fut)
                 }
-                "/manager.v2.Manager/GetObjectStorage" => {
-                    #[allow(non_camel_case_types)]
-                    struct GetObjectStorageSvc<T: Manager>(pub Arc<T>);
-                    impl<
-                        T: Manager,
-                    > tonic::server::UnaryService<super::GetObjectStorageRequest>
-                    for GetObjectStorageSvc<T> {
-                        type Response = super::ObjectStorage;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::GetObjectStorageRequest>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                (*inner).get_object_storage(request).await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = GetObjectStorageSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/manager.v2.Manager/ListBuckets" => {
-                    #[allow(non_camel_case_types)]
-                    struct ListBucketsSvc<T: Manager>(pub Arc<T>);
-                    impl<
-                        T: Manager,
-                    > tonic::server::UnaryService<super::ListBucketsRequest>
-                    for ListBucketsSvc<T> {
-                        type Response = super::ListBucketsResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::ListBucketsRequest>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                (*inner).list_buckets(request).await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = ListBucketsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
                 "/manager.v2.Manager/ListApplications" => {
                     #[allow(non_camel_case_types)]
                     struct ListApplicationsSvc<T: Manager>(pub Arc<T>);
@@ -1548,52 +1254,6 @@ pub mod manager_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = ListApplicationsSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/manager.v2.Manager/CreateModel" => {
-                    #[allow(non_camel_case_types)]
-                    struct CreateModelSvc<T: Manager>(pub Arc<T>);
-                    impl<
-                        T: Manager,
-                    > tonic::server::UnaryService<super::CreateModelRequest>
-                    for CreateModelSvc<T> {
-                        type Response = ();
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::CreateModelRequest>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                (*inner).create_model(request).await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = CreateModelSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

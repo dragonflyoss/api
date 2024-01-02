@@ -42,26 +42,6 @@ func (m *MockManagerClient) EXPECT() *MockManagerClientMockRecorder {
 	return m.recorder
 }
 
-// CreateModel mocks base method.
-func (m *MockManagerClient) CreateModel(ctx context.Context, in *manager.CreateModelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "CreateModel", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateModel indicates an expected call of CreateModel.
-func (mr *MockManagerClientMockRecorder) CreateModel(ctx, in any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateModel", reflect.TypeOf((*MockManagerClient)(nil).CreateModel), varargs...)
-}
-
 // DeleteSeedPeer mocks base method.
 func (m *MockManagerClient) DeleteSeedPeer(ctx context.Context, in *manager.DeleteSeedPeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -80,26 +60,6 @@ func (mr *MockManagerClientMockRecorder) DeleteSeedPeer(ctx, in any, opts ...any
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSeedPeer", reflect.TypeOf((*MockManagerClient)(nil).DeleteSeedPeer), varargs...)
-}
-
-// GetObjectStorage mocks base method.
-func (m *MockManagerClient) GetObjectStorage(ctx context.Context, in *manager.GetObjectStorageRequest, opts ...grpc.CallOption) (*manager.ObjectStorage, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "GetObjectStorage", varargs...)
-	ret0, _ := ret[0].(*manager.ObjectStorage)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetObjectStorage indicates an expected call of GetObjectStorage.
-func (mr *MockManagerClientMockRecorder) GetObjectStorage(ctx, in any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetObjectStorage", reflect.TypeOf((*MockManagerClient)(nil).GetObjectStorage), varargs...)
 }
 
 // GetScheduler mocks base method.
@@ -180,26 +140,6 @@ func (mr *MockManagerClientMockRecorder) ListApplications(ctx, in any, opts ...a
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListApplications", reflect.TypeOf((*MockManagerClient)(nil).ListApplications), varargs...)
-}
-
-// ListBuckets mocks base method.
-func (m *MockManagerClient) ListBuckets(ctx context.Context, in *manager.ListBucketsRequest, opts ...grpc.CallOption) (*manager.ListBucketsResponse, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ListBuckets", varargs...)
-	ret0, _ := ret[0].(*manager.ListBucketsResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ListBuckets indicates an expected call of ListBuckets.
-func (mr *MockManagerClientMockRecorder) ListBuckets(ctx, in any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListBuckets", reflect.TypeOf((*MockManagerClient)(nil).ListBuckets), varargs...)
 }
 
 // ListSchedulers mocks base method.
@@ -442,21 +382,6 @@ func (m *MockManagerServer) EXPECT() *MockManagerServerMockRecorder {
 	return m.recorder
 }
 
-// CreateModel mocks base method.
-func (m *MockManagerServer) CreateModel(arg0 context.Context, arg1 *manager.CreateModelRequest) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateModel", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CreateModel indicates an expected call of CreateModel.
-func (mr *MockManagerServerMockRecorder) CreateModel(arg0, arg1 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateModel", reflect.TypeOf((*MockManagerServer)(nil).CreateModel), arg0, arg1)
-}
-
 // DeleteSeedPeer mocks base method.
 func (m *MockManagerServer) DeleteSeedPeer(arg0 context.Context, arg1 *manager.DeleteSeedPeerRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -470,21 +395,6 @@ func (m *MockManagerServer) DeleteSeedPeer(arg0 context.Context, arg1 *manager.D
 func (mr *MockManagerServerMockRecorder) DeleteSeedPeer(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteSeedPeer", reflect.TypeOf((*MockManagerServer)(nil).DeleteSeedPeer), arg0, arg1)
-}
-
-// GetObjectStorage mocks base method.
-func (m *MockManagerServer) GetObjectStorage(arg0 context.Context, arg1 *manager.GetObjectStorageRequest) (*manager.ObjectStorage, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetObjectStorage", arg0, arg1)
-	ret0, _ := ret[0].(*manager.ObjectStorage)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetObjectStorage indicates an expected call of GetObjectStorage.
-func (mr *MockManagerServerMockRecorder) GetObjectStorage(arg0, arg1 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetObjectStorage", reflect.TypeOf((*MockManagerServer)(nil).GetObjectStorage), arg0, arg1)
 }
 
 // GetScheduler mocks base method.
@@ -544,21 +454,6 @@ func (m *MockManagerServer) ListApplications(arg0 context.Context, arg1 *manager
 func (mr *MockManagerServerMockRecorder) ListApplications(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListApplications", reflect.TypeOf((*MockManagerServer)(nil).ListApplications), arg0, arg1)
-}
-
-// ListBuckets mocks base method.
-func (m *MockManagerServer) ListBuckets(arg0 context.Context, arg1 *manager.ListBucketsRequest) (*manager.ListBucketsResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListBuckets", arg0, arg1)
-	ret0, _ := ret[0].(*manager.ListBucketsResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ListBuckets indicates an expected call of ListBuckets.
-func (mr *MockManagerServerMockRecorder) ListBuckets(arg0, arg1 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListBuckets", reflect.TypeOf((*MockManagerServer)(nil).ListBuckets), arg0, arg1)
 }
 
 // ListSchedulers mocks base method.
