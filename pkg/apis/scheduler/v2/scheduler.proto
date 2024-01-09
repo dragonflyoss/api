@@ -44,8 +44,11 @@ message DownloadPeerBackToSourceStartedRequest {
 
 // RescheduleRequest represents reschedule request of AnnouncePeerRequest.
 message RescheduleRequest {
+  // Candidate parent ids.
+  repeated string candidate_parent_ids = 1;
+
   // The description of the reschedule reason.
-  optional string description = 1 [(validate.rules).string.min_len = 1];
+  optional string description = 2 [(validate.rules).string.min_len = 1];
 }
 
 // DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.

@@ -26,8 +26,11 @@ pub struct DownloadPeerBackToSourceStartedRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RescheduleRequest {
+    /// Candidate parent ids.
+    #[prost(string, repeated, tag = "1")]
+    pub candidate_parent_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// The description of the reschedule reason.
-    #[prost(string, optional, tag = "1")]
+    #[prost(string, optional, tag = "2")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
