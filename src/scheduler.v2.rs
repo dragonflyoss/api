@@ -27,8 +27,8 @@ pub struct DownloadPeerBackToSourceStartedRequest {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RescheduleRequest {
     /// Candidate parent ids.
-    #[prost(string, repeated, tag = "1")]
-    pub candidate_parent_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(message, repeated, tag = "1")]
+    pub candidate_parents: ::prost::alloc::vec::Vec<super::super::common::v2::Peer>,
     /// The description of the reschedule reason.
     #[prost(string, optional, tag = "2")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
