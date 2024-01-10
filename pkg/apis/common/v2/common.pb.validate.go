@@ -1988,30 +1988,52 @@ func (m *Download) validate(all bool) error {
 
 	if m.Timeout != nil {
 
-		if m.GetTimeout() == nil {
-			err := DownloadValidationError{
-				field:  "Timeout",
-				reason: "value is required",
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
 			}
-			if !all {
-				return err
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
-			errors = append(errors, err)
 		}
 
 	}
 
 	if m.DownloadRateLimit != nil {
 
-		if m.GetDownloadRateLimit() < 0 {
-			err := DownloadValidationError{
-				field:  "DownloadRateLimit",
-				reason: "value must be greater than or equal to 0",
+		if m.GetDownloadRateLimit() != 0 {
+
+			if m.GetDownloadRateLimit() < 0 {
+				err := DownloadValidationError{
+					field:  "DownloadRateLimit",
+					reason: "value must be greater than or equal to 0",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}
@@ -2263,30 +2285,38 @@ func (m *Piece) validate(all bool) error {
 
 	if m.ParentId != nil {
 
-		if utf8.RuneCountInString(m.GetParentId()) < 1 {
-			err := PieceValidationError{
-				field:  "ParentId",
-				reason: "value length must be at least 1 runes",
+		if m.GetParentId() != "" {
+
+			if utf8.RuneCountInString(m.GetParentId()) < 1 {
+				err := PieceValidationError{
+					field:  "ParentId",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}
 
 	if m.Content != nil {
 
-		if len(m.GetContent()) < 1 {
-			err := PieceValidationError{
-				field:  "Content",
-				reason: "value length must be at least 1 bytes",
+		if len(m.GetContent()) > 0 {
+
+			if len(m.GetContent()) < 1 {
+				err := PieceValidationError{
+					field:  "Content",
+					reason: "value length must be at least 1 bytes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}
