@@ -39,7 +39,7 @@ message DownloadPeerStartedRequest {
 // DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceStartedRequest {
   // The description of the back-to-source reason.
-  optional string description = 1 [(validate.rules).string = {min_len = 1, ignore_empty: true}];
+  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // RescheduleRequest represents reschedule request of AnnouncePeerRequest.
@@ -48,7 +48,7 @@ message RescheduleRequest {
   repeated common.v2.Peer candidate_parents = 1;
 
   // The description of the reschedule reason.
-  optional string description = 2 [(validate.rules).string = {min_len = 1, ignore_empty: true}];
+  optional string description = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
@@ -70,13 +70,13 @@ message DownloadPeerBackToSourceFinishedRequest {
 // DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
 message DownloadPeerFailedRequest {
   // The description of the download failed.
-  optional string description = 1 [(validate.rules).string = {min_len = 1, ignore_empty: true}];
+  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // DownloadPeerBackToSourceFailedRequest represents peer download back-to-source failed request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceFailedRequest {
   // The description of the download back-to-source failed.
-  optional string description = 1 [(validate.rules).string = {min_len = 1, ignore_empty: true}];
+  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // DownloadPieceFinishedRequest represents piece download finished request of AnnouncePeerRequest.

@@ -2019,25 +2019,6 @@ func (m *Download) validate(all bool) error {
 
 	}
 
-	if m.DownloadRateLimit != nil {
-
-		if m.GetDownloadRateLimit() != 0 {
-
-			if m.GetDownloadRateLimit() < 0 {
-				err := DownloadValidationError{
-					field:  "DownloadRateLimit",
-					reason: "value must be greater than or equal to 0",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}

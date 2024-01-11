@@ -305,15 +305,19 @@ func (m *DownloadPeerBackToSourceStartedRequest) validate(all bool) error {
 
 	if m.Description != nil {
 
-		if utf8.RuneCountInString(m.GetDescription()) < 1 {
-			err := DownloadPeerBackToSourceStartedRequestValidationError{
-				field:  "Description",
-				reason: "value length must be at least 1 runes",
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := DownloadPeerBackToSourceStartedRequestValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}
@@ -458,15 +462,19 @@ func (m *RescheduleRequest) validate(all bool) error {
 
 	if m.Description != nil {
 
-		if utf8.RuneCountInString(m.GetDescription()) < 1 {
-			err := RescheduleRequestValidationError{
-				field:  "Description",
-				reason: "value length must be at least 1 runes",
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := RescheduleRequestValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}
@@ -792,15 +800,19 @@ func (m *DownloadPeerFailedRequest) validate(all bool) error {
 
 	if m.Description != nil {
 
-		if utf8.RuneCountInString(m.GetDescription()) < 1 {
-			err := DownloadPeerFailedRequestValidationError{
-				field:  "Description",
-				reason: "value length must be at least 1 runes",
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := DownloadPeerFailedRequestValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}
@@ -910,15 +922,19 @@ func (m *DownloadPeerBackToSourceFailedRequest) validate(all bool) error {
 
 	if m.Description != nil {
 
-		if utf8.RuneCountInString(m.GetDescription()) < 1 {
-			err := DownloadPeerBackToSourceFailedRequestValidationError{
-				field:  "Description",
-				reason: "value length must be at least 1 runes",
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := DownloadPeerBackToSourceFailedRequestValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}
@@ -2632,15 +2648,19 @@ func (m *NeedBackToSourceResponse) validate(all bool) error {
 
 	if m.Description != nil {
 
-		if utf8.RuneCountInString(m.GetDescription()) < 1 {
-			err := NeedBackToSourceResponseValidationError{
-				field:  "Description",
-				reason: "value length must be at least 1 runes",
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := NeedBackToSourceResponseValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}
@@ -4309,15 +4329,19 @@ func (m *FailedProbe) validate(all bool) error {
 
 	if m.Description != nil {
 
-		if utf8.RuneCountInString(m.GetDescription()) < 1 {
-			err := FailedProbeValidationError{
-				field:  "Description",
-				reason: "value length must be at least 1 runes",
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := FailedProbeValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
+
 		}
 
 	}

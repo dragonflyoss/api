@@ -352,11 +352,8 @@ pub struct Download {
     /// Download timeout.
     #[prost(message, optional, tag = "12")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
-    /// Download rate limit in bytes per second.
-    #[prost(uint64, optional, tag = "13")]
-    pub download_rate_limit: ::core::option::Option<u64>,
     /// NeedBackToSource needs downloaded from source.
-    #[prost(bool, tag = "14")]
+    #[prost(bool, tag = "13")]
     pub need_back_to_source: bool,
 }
 /// Range represents download range.
