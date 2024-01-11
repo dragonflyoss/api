@@ -26,7 +26,13 @@ pub struct SyncPiecesRequest {
 pub struct SyncPiecesResponse {
     /// Exist piece number.
     #[prost(uint32, tag = "1")]
-    pub piece_number: u32,
+    pub number: u32,
+    /// Piece offset.
+    #[prost(uint64, tag = "2")]
+    pub offset: u64,
+    /// Piece length.
+    #[prost(uint64, tag = "3")]
+    pub length: u64,
 }
 /// DownloadPieceRequest represents request of DownloadPiece.
 #[derive(serde::Serialize, serde::Deserialize)]

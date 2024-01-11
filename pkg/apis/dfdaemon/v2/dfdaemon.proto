@@ -41,7 +41,11 @@ message SyncPiecesRequest {
 // SyncPiecesResponse represents response of SyncPieces.
 message SyncPiecesResponse {
   // Exist piece number.
-  uint32 piece_number = 1;
+  uint32 number = 1;
+  // Piece offset.
+  uint64 offset = 2;
+  // Piece length.
+  uint64 length = 3;
 }
 
 // DownloadPieceRequest represents request of DownloadPiece.
