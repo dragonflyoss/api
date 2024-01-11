@@ -323,7 +323,11 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PieceNumber
+	// no validation rules for Number
+
+	// no validation rules for Offset
+
+	// no validation rules for Length
 
 	if len(errors) > 0 {
 		return SyncPiecesResponseMultiError(errors)
