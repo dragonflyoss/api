@@ -1909,21 +1909,6 @@ func (m *Download) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetOutputPath() != "" {
-
-		if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
-			err := DownloadValidationError{
-				field:  "OutputPath",
-				reason: "value length must be at least 1 runes",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-
-	}
-
 	// no validation rules for NeedBackToSource
 
 	if m.Digest != nil {
@@ -1984,6 +1969,25 @@ func (m *Download) validate(all bool) error {
 
 	if m.Application != nil {
 		// no validation rules for Application
+	}
+
+	if m.OutputPath != nil {
+
+		if m.GetOutputPath() != "" {
+
+			if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
+				err := DownloadValidationError{
+					field:  "OutputPath",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if m.Timeout != nil {
