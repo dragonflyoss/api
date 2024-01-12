@@ -334,7 +334,7 @@ message Download {
   // Task piece length.
   uint32 piece_length = 10 [(validate.rules).uint32.gte = 1];
   // File path to be exported.
-  string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
   optional google.protobuf.Duration timeout = 12;
   // NeedBackToSource needs downloaded from source.
