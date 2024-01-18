@@ -33,6 +33,12 @@ pub struct SyncPiecesResponse {
     /// Piece length.
     #[prost(uint64, tag = "3")]
     pub length: u64,
+    /// Task request headers.
+    #[prost(map = "string, string", tag = "4")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
 }
 /// DownloadPieceRequest represents request of DownloadPiece.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -78,9 +84,12 @@ pub struct DownloadTaskResponse {
     /// Peer id.
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
-    /// Task content length.
-    #[prost(uint64, tag = "4")]
-    pub content_length: u64,
+    /// Task request headers.
+    #[prost(map = "string, string", tag = "4")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
     /// Finished piece of task.
     #[prost(message, optional, tag = "5")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
