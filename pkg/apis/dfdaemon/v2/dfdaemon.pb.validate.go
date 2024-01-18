@@ -329,6 +329,8 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 
 	// no validation rules for Length
 
+	// no validation rules for Header
+
 	if len(errors) > 0 {
 		return SyncPiecesResponseMultiError(errors)
 	}
@@ -863,7 +865,7 @@ func (m *DownloadTaskResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for ContentLength
+	// no validation rules for Header
 
 	if m.GetPiece() == nil {
 		err := DownloadTaskResponseValidationError{
