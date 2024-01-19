@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROTOC_ALL_IMAGE=${PROTOC_ALL_IMAGE:-"namely/protoc-all:1.51_1"}
+PROTOC_ALL_IMAGE=${PROTOC_ALL_IMAGE:-"namely/protoc-all:1.51_2"}
 PROTO_PATH=pkg/apis
 LANGUAGE=go
 
