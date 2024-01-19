@@ -33,12 +33,6 @@ pub struct SyncPiecesResponse {
     /// Piece length.
     #[prost(uint64, tag = "3")]
     pub length: u64,
-    /// Task request headers.
-    #[prost(map = "string, string", tag = "4")]
-    pub header: ::std::collections::HashMap<
-        ::prost::alloc::string::String,
-        ::prost::alloc::string::String,
-    >,
 }
 /// DownloadPieceRequest represents request of DownloadPiece.
 #[derive(serde::Serialize, serde::Deserialize)]

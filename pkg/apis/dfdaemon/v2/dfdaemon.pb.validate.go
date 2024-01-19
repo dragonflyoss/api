@@ -329,8 +329,6 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 
 	// no validation rules for Length
 
-	// no validation rules for Header
-
 	if len(errors) > 0 {
 		return SyncPiecesResponseMultiError(errors)
 	}
