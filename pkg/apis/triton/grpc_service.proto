@@ -26,13 +26,13 @@
 
 syntax = "proto3";
 
-package inference.v1;
+package triton;
 
-//@@.. cpp:namespace:: inference
+//@@.. cpp:namespace:: triton
 
-import "pkg/apis/inference/v1/model_config.proto";
+import "pkg/apis/triton/model_config.proto";
 
-option go_package = "d7y.io/api/v2/pkg/apis/inference/v1;inference";
+option go_package = "d7y.io/api/v2/pkg/apis/triton;triton";
 
 //@@
 //@@.. cpp:var:: service InferenceService
