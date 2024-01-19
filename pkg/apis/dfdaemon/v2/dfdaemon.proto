@@ -46,8 +46,6 @@ message SyncPiecesResponse {
   uint64 offset = 2;
   // Piece length.
   uint64 length = 3;
-  // Task request headers.
-  map<string, string> header = 4;
 }
 
 // DownloadPieceRequest represents request of DownloadPiece.
