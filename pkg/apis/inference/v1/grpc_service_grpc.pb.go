@@ -4,7 +4,7 @@
 // - protoc             v3.21.6
 // source: pkg/apis/inference/v1/grpc_service.proto
 
-package inference
+package v1
 
 import (
 	context "context"
@@ -161,7 +161,7 @@ func NewGRPCInferenceServiceClient(cc grpc.ClientConnInterface) GRPCInferenceSer
 
 func (c *gRPCInferenceServiceClient) ServerLive(ctx context.Context, in *ServerLiveRequest, opts ...grpc.CallOption) (*ServerLiveResponse, error) {
 	out := new(ServerLiveResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/ServerLive", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/ServerLive", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -170,7 +170,7 @@ func (c *gRPCInferenceServiceClient) ServerLive(ctx context.Context, in *ServerL
 
 func (c *gRPCInferenceServiceClient) ServerReady(ctx context.Context, in *ServerReadyRequest, opts ...grpc.CallOption) (*ServerReadyResponse, error) {
 	out := new(ServerReadyResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/ServerReady", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/ServerReady", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +179,7 @@ func (c *gRPCInferenceServiceClient) ServerReady(ctx context.Context, in *Server
 
 func (c *gRPCInferenceServiceClient) ModelReady(ctx context.Context, in *ModelReadyRequest, opts ...grpc.CallOption) (*ModelReadyResponse, error) {
 	out := new(ModelReadyResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/ModelReady", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/ModelReady", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (c *gRPCInferenceServiceClient) ModelReady(ctx context.Context, in *ModelRe
 
 func (c *gRPCInferenceServiceClient) ServerMetadata(ctx context.Context, in *ServerMetadataRequest, opts ...grpc.CallOption) (*ServerMetadataResponse, error) {
 	out := new(ServerMetadataResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/ServerMetadata", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/ServerMetadata", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func (c *gRPCInferenceServiceClient) ServerMetadata(ctx context.Context, in *Ser
 
 func (c *gRPCInferenceServiceClient) ModelMetadata(ctx context.Context, in *ModelMetadataRequest, opts ...grpc.CallOption) (*ModelMetadataResponse, error) {
 	out := new(ModelMetadataResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/ModelMetadata", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/ModelMetadata", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +206,7 @@ func (c *gRPCInferenceServiceClient) ModelMetadata(ctx context.Context, in *Mode
 
 func (c *gRPCInferenceServiceClient) ModelInfer(ctx context.Context, in *ModelInferRequest, opts ...grpc.CallOption) (*ModelInferResponse, error) {
 	out := new(ModelInferResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/ModelInfer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/ModelInfer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +214,7 @@ func (c *gRPCInferenceServiceClient) ModelInfer(ctx context.Context, in *ModelIn
 }
 
 func (c *gRPCInferenceServiceClient) ModelStreamInfer(ctx context.Context, opts ...grpc.CallOption) (GRPCInferenceService_ModelStreamInferClient, error) {
-	stream, err := c.cc.NewStream(ctx, &GRPCInferenceService_ServiceDesc.Streams[0], "/inference.v1.GRPCInferenceService/ModelStreamInfer", opts...)
+	stream, err := c.cc.NewStream(ctx, &GRPCInferenceService_ServiceDesc.Streams[0], "/inference.GRPCInferenceService/ModelStreamInfer", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +246,7 @@ func (x *gRPCInferenceServiceModelStreamInferClient) Recv() (*ModelStreamInferRe
 
 func (c *gRPCInferenceServiceClient) ModelConfig(ctx context.Context, in *ModelConfigRequest, opts ...grpc.CallOption) (*ModelConfigResponse, error) {
 	out := new(ModelConfigResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/ModelConfig", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/ModelConfig", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func (c *gRPCInferenceServiceClient) ModelConfig(ctx context.Context, in *ModelC
 
 func (c *gRPCInferenceServiceClient) ModelStatistics(ctx context.Context, in *ModelStatisticsRequest, opts ...grpc.CallOption) (*ModelStatisticsResponse, error) {
 	out := new(ModelStatisticsResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/ModelStatistics", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/ModelStatistics", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -264,7 +264,7 @@ func (c *gRPCInferenceServiceClient) ModelStatistics(ctx context.Context, in *Mo
 
 func (c *gRPCInferenceServiceClient) RepositoryIndex(ctx context.Context, in *RepositoryIndexRequest, opts ...grpc.CallOption) (*RepositoryIndexResponse, error) {
 	out := new(RepositoryIndexResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/RepositoryIndex", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/RepositoryIndex", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -273,7 +273,7 @@ func (c *gRPCInferenceServiceClient) RepositoryIndex(ctx context.Context, in *Re
 
 func (c *gRPCInferenceServiceClient) RepositoryModelLoad(ctx context.Context, in *RepositoryModelLoadRequest, opts ...grpc.CallOption) (*RepositoryModelLoadResponse, error) {
 	out := new(RepositoryModelLoadResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/RepositoryModelLoad", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/RepositoryModelLoad", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +282,7 @@ func (c *gRPCInferenceServiceClient) RepositoryModelLoad(ctx context.Context, in
 
 func (c *gRPCInferenceServiceClient) RepositoryModelUnload(ctx context.Context, in *RepositoryModelUnloadRequest, opts ...grpc.CallOption) (*RepositoryModelUnloadResponse, error) {
 	out := new(RepositoryModelUnloadResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/RepositoryModelUnload", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/RepositoryModelUnload", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -291,7 +291,7 @@ func (c *gRPCInferenceServiceClient) RepositoryModelUnload(ctx context.Context, 
 
 func (c *gRPCInferenceServiceClient) SystemSharedMemoryStatus(ctx context.Context, in *SystemSharedMemoryStatusRequest, opts ...grpc.CallOption) (*SystemSharedMemoryStatusResponse, error) {
 	out := new(SystemSharedMemoryStatusResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/SystemSharedMemoryStatus", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/SystemSharedMemoryStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -300,7 +300,7 @@ func (c *gRPCInferenceServiceClient) SystemSharedMemoryStatus(ctx context.Contex
 
 func (c *gRPCInferenceServiceClient) SystemSharedMemoryRegister(ctx context.Context, in *SystemSharedMemoryRegisterRequest, opts ...grpc.CallOption) (*SystemSharedMemoryRegisterResponse, error) {
 	out := new(SystemSharedMemoryRegisterResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/SystemSharedMemoryRegister", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/SystemSharedMemoryRegister", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +309,7 @@ func (c *gRPCInferenceServiceClient) SystemSharedMemoryRegister(ctx context.Cont
 
 func (c *gRPCInferenceServiceClient) SystemSharedMemoryUnregister(ctx context.Context, in *SystemSharedMemoryUnregisterRequest, opts ...grpc.CallOption) (*SystemSharedMemoryUnregisterResponse, error) {
 	out := new(SystemSharedMemoryUnregisterResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/SystemSharedMemoryUnregister", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/SystemSharedMemoryUnregister", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +318,7 @@ func (c *gRPCInferenceServiceClient) SystemSharedMemoryUnregister(ctx context.Co
 
 func (c *gRPCInferenceServiceClient) CudaSharedMemoryStatus(ctx context.Context, in *CudaSharedMemoryStatusRequest, opts ...grpc.CallOption) (*CudaSharedMemoryStatusResponse, error) {
 	out := new(CudaSharedMemoryStatusResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/CudaSharedMemoryStatus", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/CudaSharedMemoryStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -327,7 +327,7 @@ func (c *gRPCInferenceServiceClient) CudaSharedMemoryStatus(ctx context.Context,
 
 func (c *gRPCInferenceServiceClient) CudaSharedMemoryRegister(ctx context.Context, in *CudaSharedMemoryRegisterRequest, opts ...grpc.CallOption) (*CudaSharedMemoryRegisterResponse, error) {
 	out := new(CudaSharedMemoryRegisterResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/CudaSharedMemoryRegister", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/CudaSharedMemoryRegister", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -336,7 +336,7 @@ func (c *gRPCInferenceServiceClient) CudaSharedMemoryRegister(ctx context.Contex
 
 func (c *gRPCInferenceServiceClient) CudaSharedMemoryUnregister(ctx context.Context, in *CudaSharedMemoryUnregisterRequest, opts ...grpc.CallOption) (*CudaSharedMemoryUnregisterResponse, error) {
 	out := new(CudaSharedMemoryUnregisterResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/CudaSharedMemoryUnregister", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/CudaSharedMemoryUnregister", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -345,7 +345,7 @@ func (c *gRPCInferenceServiceClient) CudaSharedMemoryUnregister(ctx context.Cont
 
 func (c *gRPCInferenceServiceClient) TraceSetting(ctx context.Context, in *TraceSettingRequest, opts ...grpc.CallOption) (*TraceSettingResponse, error) {
 	out := new(TraceSettingResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/TraceSetting", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/TraceSetting", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -354,7 +354,7 @@ func (c *gRPCInferenceServiceClient) TraceSetting(ctx context.Context, in *Trace
 
 func (c *gRPCInferenceServiceClient) LogSettings(ctx context.Context, in *LogSettingsRequest, opts ...grpc.CallOption) (*LogSettingsResponse, error) {
 	out := new(LogSettingsResponse)
-	err := c.cc.Invoke(ctx, "/inference.v1.GRPCInferenceService/LogSettings", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/inference.GRPCInferenceService/LogSettings", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -580,7 +580,7 @@ func _GRPCInferenceService_ServerLive_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/ServerLive",
+		FullMethod: "/inference.GRPCInferenceService/ServerLive",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).ServerLive(ctx, req.(*ServerLiveRequest))
@@ -598,7 +598,7 @@ func _GRPCInferenceService_ServerReady_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/ServerReady",
+		FullMethod: "/inference.GRPCInferenceService/ServerReady",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).ServerReady(ctx, req.(*ServerReadyRequest))
@@ -616,7 +616,7 @@ func _GRPCInferenceService_ModelReady_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/ModelReady",
+		FullMethod: "/inference.GRPCInferenceService/ModelReady",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).ModelReady(ctx, req.(*ModelReadyRequest))
@@ -634,7 +634,7 @@ func _GRPCInferenceService_ServerMetadata_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/ServerMetadata",
+		FullMethod: "/inference.GRPCInferenceService/ServerMetadata",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).ServerMetadata(ctx, req.(*ServerMetadataRequest))
@@ -652,7 +652,7 @@ func _GRPCInferenceService_ModelMetadata_Handler(srv interface{}, ctx context.Co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/ModelMetadata",
+		FullMethod: "/inference.GRPCInferenceService/ModelMetadata",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).ModelMetadata(ctx, req.(*ModelMetadataRequest))
@@ -670,7 +670,7 @@ func _GRPCInferenceService_ModelInfer_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/ModelInfer",
+		FullMethod: "/inference.GRPCInferenceService/ModelInfer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).ModelInfer(ctx, req.(*ModelInferRequest))
@@ -714,7 +714,7 @@ func _GRPCInferenceService_ModelConfig_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/ModelConfig",
+		FullMethod: "/inference.GRPCInferenceService/ModelConfig",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).ModelConfig(ctx, req.(*ModelConfigRequest))
@@ -732,7 +732,7 @@ func _GRPCInferenceService_ModelStatistics_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/ModelStatistics",
+		FullMethod: "/inference.GRPCInferenceService/ModelStatistics",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).ModelStatistics(ctx, req.(*ModelStatisticsRequest))
@@ -750,7 +750,7 @@ func _GRPCInferenceService_RepositoryIndex_Handler(srv interface{}, ctx context.
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/RepositoryIndex",
+		FullMethod: "/inference.GRPCInferenceService/RepositoryIndex",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).RepositoryIndex(ctx, req.(*RepositoryIndexRequest))
@@ -768,7 +768,7 @@ func _GRPCInferenceService_RepositoryModelLoad_Handler(srv interface{}, ctx cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/RepositoryModelLoad",
+		FullMethod: "/inference.GRPCInferenceService/RepositoryModelLoad",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).RepositoryModelLoad(ctx, req.(*RepositoryModelLoadRequest))
@@ -786,7 +786,7 @@ func _GRPCInferenceService_RepositoryModelUnload_Handler(srv interface{}, ctx co
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/RepositoryModelUnload",
+		FullMethod: "/inference.GRPCInferenceService/RepositoryModelUnload",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).RepositoryModelUnload(ctx, req.(*RepositoryModelUnloadRequest))
@@ -804,7 +804,7 @@ func _GRPCInferenceService_SystemSharedMemoryStatus_Handler(srv interface{}, ctx
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/SystemSharedMemoryStatus",
+		FullMethod: "/inference.GRPCInferenceService/SystemSharedMemoryStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).SystemSharedMemoryStatus(ctx, req.(*SystemSharedMemoryStatusRequest))
@@ -822,7 +822,7 @@ func _GRPCInferenceService_SystemSharedMemoryRegister_Handler(srv interface{}, c
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/SystemSharedMemoryRegister",
+		FullMethod: "/inference.GRPCInferenceService/SystemSharedMemoryRegister",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).SystemSharedMemoryRegister(ctx, req.(*SystemSharedMemoryRegisterRequest))
@@ -840,7 +840,7 @@ func _GRPCInferenceService_SystemSharedMemoryUnregister_Handler(srv interface{},
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/SystemSharedMemoryUnregister",
+		FullMethod: "/inference.GRPCInferenceService/SystemSharedMemoryUnregister",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).SystemSharedMemoryUnregister(ctx, req.(*SystemSharedMemoryUnregisterRequest))
@@ -858,7 +858,7 @@ func _GRPCInferenceService_CudaSharedMemoryStatus_Handler(srv interface{}, ctx c
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/CudaSharedMemoryStatus",
+		FullMethod: "/inference.GRPCInferenceService/CudaSharedMemoryStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).CudaSharedMemoryStatus(ctx, req.(*CudaSharedMemoryStatusRequest))
@@ -876,7 +876,7 @@ func _GRPCInferenceService_CudaSharedMemoryRegister_Handler(srv interface{}, ctx
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/CudaSharedMemoryRegister",
+		FullMethod: "/inference.GRPCInferenceService/CudaSharedMemoryRegister",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).CudaSharedMemoryRegister(ctx, req.(*CudaSharedMemoryRegisterRequest))
@@ -894,7 +894,7 @@ func _GRPCInferenceService_CudaSharedMemoryUnregister_Handler(srv interface{}, c
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/CudaSharedMemoryUnregister",
+		FullMethod: "/inference.GRPCInferenceService/CudaSharedMemoryUnregister",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).CudaSharedMemoryUnregister(ctx, req.(*CudaSharedMemoryUnregisterRequest))
@@ -912,7 +912,7 @@ func _GRPCInferenceService_TraceSetting_Handler(srv interface{}, ctx context.Con
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/TraceSetting",
+		FullMethod: "/inference.GRPCInferenceService/TraceSetting",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).TraceSetting(ctx, req.(*TraceSettingRequest))
@@ -930,7 +930,7 @@ func _GRPCInferenceService_LogSettings_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/inference.v1.GRPCInferenceService/LogSettings",
+		FullMethod: "/inference.GRPCInferenceService/LogSettings",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GRPCInferenceServiceServer).LogSettings(ctx, req.(*LogSettingsRequest))
@@ -942,7 +942,7 @@ func _GRPCInferenceService_LogSettings_Handler(srv interface{}, ctx context.Cont
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var GRPCInferenceService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "inference.v1.GRPCInferenceService",
+	ServiceName: "inference.GRPCInferenceService",
 	HandlerType: (*GRPCInferenceServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
