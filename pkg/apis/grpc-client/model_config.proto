@@ -28,11 +28,11 @@
 
 syntax = "proto3";
 
-package triton;
+package inference;
 
-option go_package = "d7y.io/api/v2/pkg/apis/triton;triton";
+option go_package = "d7y.io/api/v2/pkg/apis/grpc-client";
 
-//@@.. cpp:namespace:: triton
+//@@.. cpp:namespace:: inference
 
 //@@
 //@@.. cpp:enum:: DataType

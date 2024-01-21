@@ -12,7 +12,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	triton "d7y.io/api/v2/pkg/apis/triton"
+	triton "d7y.io/api/v2/pkg/apis/grpc-client"
 	gomock "go.uber.org/mock/gomock"
 	grpc "google.golang.org/grpc"
 	metadata "google.golang.org/grpc/metadata"
