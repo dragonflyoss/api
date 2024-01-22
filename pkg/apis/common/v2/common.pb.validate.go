@@ -427,7 +427,7 @@ func (m *Task) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Header
+	// no validation rules for RequestHeader
 
 	if m.GetPieceLength() < 1 {
 		err := TaskValidationError{
@@ -1896,7 +1896,7 @@ func (m *Download) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Header
+	// no validation rules for RequestHeader
 
 	if m.GetPieceLength() < 1 {
 		err := DownloadValidationError{
