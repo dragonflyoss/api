@@ -143,7 +143,7 @@ message Task {
   // Filter url used to generate task id.
   repeated string filters = 7;
   // Task request headers.
-  map<string, string> header = 8;
+  map<string, string> request_header = 8;
   // Task piece length.
   uint64 piece_length = 9;
   // Task content length.
@@ -324,7 +324,7 @@ message Download {
   // Filter url used to generate task id.
   repeated string filters = 8;
   // Task request headers.
-  map<string, string> header = 9;
+  map<string, string> request_header = 9;
   // Task piece length.
   uint64 piece_length = 10;
   // File path to be exported.

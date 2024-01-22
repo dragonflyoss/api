@@ -65,7 +65,7 @@ pub struct Task {
     pub filters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Task request headers.
     #[prost(map = "string, string", tag = "8")]
-    pub header: ::std::collections::HashMap<
+    pub request_header: ::std::collections::HashMap<
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
@@ -339,7 +339,7 @@ pub struct Download {
     pub filters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Task request headers.
     #[prost(map = "string, string", tag = "9")]
-    pub header: ::std::collections::HashMap<
+    pub request_header: ::std::collections::HashMap<
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
