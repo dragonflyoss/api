@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.6
-// source: pkg/apis/inference/v1/grpc_service.proto
+// source: pkg/apis/inference/grpc_service.proto
 
-package v1
+package inference
 
 import (
 	context "context"
@@ -1030,5 +1030,5 @@ var GRPCInferenceService_ServiceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
-	Metadata: "pkg/apis/inference/v1/grpc_service.proto",
+	Metadata: "pkg/apis/inference/grpc_service.proto",
 }
