@@ -78,9 +78,9 @@ pub struct DownloadTaskResponse {
     /// Peer id.
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
-    /// Task request headers.
+    /// Task response headers.
     #[prost(map = "string, string", tag = "4")]
-    pub header: ::std::collections::HashMap<
+    pub response_header: ::std::collections::HashMap<
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
