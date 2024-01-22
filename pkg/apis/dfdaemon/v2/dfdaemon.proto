@@ -88,8 +88,8 @@ message DownloadTaskResponse {
   string task_id = 2 [(validate.rules).string.min_len = 1];
   // Peer id.
   string peer_id = 3 [(validate.rules).string.min_len = 1];
-  // Task request headers.
-  map<string, string> header = 4;
+  // Task response headers.
+  map<string, string> response_header = 4;
   // Finished piece of task.
   common.v2.Piece piece = 5 [(validate.rules).message.required = true];
 }

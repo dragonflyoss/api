@@ -863,7 +863,7 @@ func (m *DownloadTaskResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Header
+	// no validation rules for ResponseHeader
 
 	if m.GetPiece() == nil {
 		err := DownloadTaskResponseValidationError{
