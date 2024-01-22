@@ -28,9 +28,9 @@
 
 syntax = "proto3";
 
-package inference.v1;
+package inference;
 
-option go_package = "d7y.io/api/v2/pkg/apis/inference/v1;inference";
+option go_package = "d7y.io/api/v2/pkg/apis/inference;inference";
 
 //@@.. cpp:namespace:: inference
 
