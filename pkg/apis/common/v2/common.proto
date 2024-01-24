@@ -140,14 +140,18 @@ message Task {
   TaskType type = 2 [(validate.rules).enum.defined_only = true];
   // Download url.
   string url = 3 [(validate.rules).string.uri = true];
-  // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+  // Digest of the task digest, for example md5:xxx or sha256:yyy.
   optional string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$", ignore_empty: true}];
   // URL tag identifies different task for same url.
   optional string tag = 5;
   // Application of task.
   optional string application = 6;
-  // Filter url used to generate task id.
-  repeated string filters = 7;
+  // Filtered query params to generate the task id.
+  // When filter is ["Signature", "Expires", "ns"], for example:
+  // http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+  // will generate the same task id.
+  // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+  repeated string filtered_query_params = 7;
   // Task request headers.
   map<string, string> request_header = 8;
   // Task piece length.
@@ -315,7 +319,7 @@ message Build {
 message Download {
   // Download url.
   string url = 1 [(validate.rules).string.uri = true];
-  // Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+  // Digest of the task digest, for example md5:xxx or sha256:yyy.
   optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$", ignore_empty: true}];
   // Range is url range of request.
   optional Range range = 3;
@@ -327,8 +331,12 @@ message Download {
   optional string application = 6;
   // Peer priority.
   Priority priority = 7 [(validate.rules).enum.defined_only = true];
-  // Filter url used to generate task id.
-  repeated string filters = 8;
+  // Filtered query params to generate the task id.
+  // When filter is ["Signature", "Expires", "ns"], for example:
+  // http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+  // will generate the same task id.
+  // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+  repeated string filtered_query_params = 8;
   // Task request headers.
   map<string, string> request_header = 9;
   // Task piece length.

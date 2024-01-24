@@ -51,7 +51,7 @@ pub struct Task {
     /// Download url.
     #[prost(string, tag = "3")]
     pub url: ::prost::alloc::string::String,
-    /// Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+    /// Digest of the task digest, for example md5:xxx or sha256:yyy.
     #[prost(string, optional, tag = "4")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// URL tag identifies different task for same url.
@@ -60,9 +60,13 @@ pub struct Task {
     /// Application of task.
     #[prost(string, optional, tag = "6")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Filter url used to generate task id.
+    /// Filtered query params to generate the task id.
+    /// When filter is ["Signature", "Expires", "ns"], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
     #[prost(string, repeated, tag = "7")]
-    pub filters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Task request headers.
     #[prost(map = "string, string", tag = "8")]
     pub request_header: ::std::collections::HashMap<
@@ -316,7 +320,7 @@ pub struct Download {
     /// Download url.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
-    /// Digest of the pieces digest, for example md5:xxx or sha256:yyy.
+    /// Digest of the task digest, for example md5:xxx or sha256:yyy.
     #[prost(string, optional, tag = "2")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// Range is url range of request.
@@ -334,9 +338,13 @@ pub struct Download {
     /// Peer priority.
     #[prost(enumeration = "Priority", tag = "7")]
     pub priority: i32,
-    /// Filter url used to generate task id.
+    /// Filtered query params to generate the task id.
+    /// When filter is ["Signature", "Expires", "ns"], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
     #[prost(string, repeated, tag = "8")]
-    pub filters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Task request headers.
     #[prost(map = "string, string", tag = "9")]
     pub request_header: ::std::collections::HashMap<
