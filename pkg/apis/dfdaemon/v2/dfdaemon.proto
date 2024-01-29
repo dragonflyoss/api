@@ -111,9 +111,9 @@ message DownloadTaskResponse {
   oneof response {
     option (validate.required) = true;
 
-    DownloadTaskStartedResponse download_task_started_request = 4;
-    DownloadTaskFinishedResponse download_task_finished_request = 5;
-    DownloadPieceFinishedResponse download_piece_finished_request = 6;
+    DownloadTaskStartedResponse download_task_started_response = 4;
+    DownloadTaskFinishedResponse download_task_finished_response = 5;
+    DownloadPieceFinishedResponse download_piece_finished_response = 6;
   }
 }
 
