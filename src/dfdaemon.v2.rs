@@ -117,11 +117,11 @@ pub mod download_task_response {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
         #[prost(message, tag = "4")]
-        DownloadTaskStartedRequest(super::DownloadTaskStartedResponse),
+        DownloadTaskStartedResponse(super::DownloadTaskStartedResponse),
         #[prost(message, tag = "5")]
-        DownloadTaskFinishedRequest(super::DownloadTaskFinishedResponse),
+        DownloadTaskFinishedResponse(super::DownloadTaskFinishedResponse),
         #[prost(message, tag = "6")]
-        DownloadPieceFinishedRequest(super::DownloadPieceFinishedResponse),
+        DownloadPieceFinishedResponse(super::DownloadPieceFinishedResponse),
     }
 }
 /// UploadTaskRequest represents request of UploadTask.
