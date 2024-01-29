@@ -80,6 +80,22 @@ message DownloadTaskRequest {
   common.v2.Download download = 1 [(validate.rules).message.required = true];
 }
 
+// DownloadTaskStartedRequest represents task download started request of DownloadTaskResponse.
+message DownloadTaskStartedRequest {
+  // Task response headers.
+  map<string, string> response_header = 1;
+}
+
+// DownloadTaskFinishedRequest represents task download finished request of DownloadTaskResponse.
+message DownloadTaskFinishedRequest {
+}
+
+// DownloadPieceFinishedRequest represents piece download finished request of DownloadTaskResponse.
+message DownloadPieceFinishedRequest {
+  // Finished piece of task.
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
+}
+
 // DownloadTaskResponse represents response of DownloadTask.
 message DownloadTaskResponse {
   // Host id.
@@ -88,10 +104,14 @@ message DownloadTaskResponse {
   string task_id = 2 [(validate.rules).string.min_len = 1];
   // Peer id.
   string peer_id = 3 [(validate.rules).string.min_len = 1];
-  // Task response headers.
-  map<string, string> response_header = 4;
-  // Finished piece of task.
-  common.v2.Piece piece = 5 [(validate.rules).message.required = true];
+
+  oneof request {
+    option (validate.required) = true;
+
+    DownloadTaskStartedRequest download_task_started_request = 4;
+    DownloadTaskFinishedRequest download_task_finished_request = 5;
+    DownloadPieceFinishedRequest download_piece_finished_request = 6;
+  }
 }
 
 // UploadTaskRequest represents request of UploadTask.
