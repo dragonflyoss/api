@@ -82,8 +82,11 @@ message DownloadTaskRequest {
 
 // DownloadTaskStartedRequest represents task download started request of DownloadTaskResponse.
 message DownloadTaskStartedRequest {
+  // Task content length.
+  uint64 content_length = 1;
+
   // Task response headers.
-  map<string, string> response_header = 1;
+  map<string, string> response_header = 2;
 }
 
 // DownloadTaskFinishedRequest represents task download finished request of DownloadTaskResponse.

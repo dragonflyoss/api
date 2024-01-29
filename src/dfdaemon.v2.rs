@@ -69,8 +69,11 @@ pub struct DownloadTaskRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadTaskStartedRequest {
+    /// Task content length.
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
     /// Task response headers.
-    #[prost(map = "string, string", tag = "1")]
+    #[prost(map = "string, string", tag = "2")]
     pub response_header: ::std::collections::HashMap<
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
