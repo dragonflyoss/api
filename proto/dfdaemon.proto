@@ -77,8 +77,8 @@ message DownloadTaskRequest {
   common.v2.Download download = 1;
 }
 
-// DownloadTaskStartedRequest represents task download started request of DownloadTaskResponse.
-message DownloadTaskStartedRequest {
+// DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
+message DownloadTaskStartedResponse {
   // Task content length.
   uint64 content_length = 1;
 
@@ -86,12 +86,12 @@ message DownloadTaskStartedRequest {
   map<string, string> response_header = 2;
 }
 
-// DownloadTaskFinishedRequest represents task download finished request of DownloadTaskResponse.
-message DownloadTaskFinishedRequest {
+// DownloadTaskFinishedResponse represents task download finished response of DownloadTaskResponse.
+message DownloadTaskFinishedResponse {
 }
 
-// DownloadPieceFinishedRequest represents piece download finished request of DownloadTaskResponse.
-message DownloadPieceFinishedRequest {
+// DownloadPieceFinishedResponse represents piece download finished response of DownloadTaskResponse.
+message DownloadPieceFinishedResponse {
   // Finished piece of task.
   common.v2.Piece piece = 1;
 }
@@ -105,10 +105,10 @@ message DownloadTaskResponse {
   // Peer id.
   string peer_id = 3;
 
-  oneof request {
-    DownloadTaskStartedRequest download_task_started_request = 4;
-    DownloadTaskFinishedRequest download_task_finished_request = 5;
-    DownloadPieceFinishedRequest download_piece_finished_request = 6;
+  oneof response {
+    DownloadTaskStartedResponse download_task_started_request = 4;
+    DownloadTaskFinishedResponse download_task_finished_request = 5;
+    DownloadPieceFinishedResponse download_piece_finished_request = 6;
   }
 }
 

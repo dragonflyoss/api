@@ -64,11 +64,11 @@ pub struct DownloadTaskRequest {
     #[prost(message, optional, tag = "1")]
     pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
-/// DownloadTaskStartedRequest represents task download started request of DownloadTaskResponse.
+/// DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskStartedRequest {
+pub struct DownloadTaskStartedResponse {
     /// Task content length.
     #[prost(uint64, tag = "1")]
     pub content_length: u64,
@@ -79,16 +79,16 @@ pub struct DownloadTaskStartedRequest {
         ::prost::alloc::string::String,
     >,
 }
-/// DownloadTaskFinishedRequest represents task download finished request of DownloadTaskResponse.
+/// DownloadTaskFinishedResponse represents task download finished response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskFinishedRequest {}
-/// DownloadPieceFinishedRequest represents piece download finished request of DownloadTaskResponse.
+pub struct DownloadTaskFinishedResponse {}
+/// DownloadPieceFinishedResponse represents piece download finished response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadPieceFinishedRequest {
+pub struct DownloadPieceFinishedResponse {
     /// Finished piece of task.
     #[prost(message, optional, tag = "1")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
@@ -107,21 +107,21 @@ pub struct DownloadTaskResponse {
     /// Peer id.
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
-    #[prost(oneof = "download_task_response::Request", tags = "4, 5, 6")]
-    pub request: ::core::option::Option<download_task_response::Request>,
+    #[prost(oneof = "download_task_response::Response", tags = "4, 5, 6")]
+    pub response: ::core::option::Option<download_task_response::Response>,
 }
 /// Nested message and enum types in `DownloadTaskResponse`.
 pub mod download_task_response {
     #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Request {
+    pub enum Response {
         #[prost(message, tag = "4")]
-        DownloadTaskStartedRequest(super::DownloadTaskStartedRequest),
+        DownloadTaskStartedRequest(super::DownloadTaskStartedResponse),
         #[prost(message, tag = "5")]
-        DownloadTaskFinishedRequest(super::DownloadTaskFinishedRequest),
+        DownloadTaskFinishedRequest(super::DownloadTaskFinishedResponse),
         #[prost(message, tag = "6")]
-        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
+        DownloadPieceFinishedRequest(super::DownloadPieceFinishedResponse),
     }
 }
 /// UploadTaskRequest represents request of UploadTask.
