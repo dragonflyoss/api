@@ -830,6 +830,8 @@ func (m *DownloadTaskStartedRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for ContentLength
+
 	// no validation rules for ResponseHeader
 
 	if len(errors) > 0 {
