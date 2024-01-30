@@ -82,8 +82,13 @@ message DownloadTaskStartedResponse {
   // Task content length.
   uint64 content_length = 1;
 
+  // Range is url range of request. If protocol is http, range
+  // is parsed from http header. If other protocol, range comes
+  // from download range field.
+  optional common.v2.Range range = 2;
+
   // Task response headers.
-  map<string, string> response_header = 2;
+  map<string, string> response_header = 3;
 }
 
 // DownloadTaskFinishedResponse represents task download finished response of DownloadTaskResponse.

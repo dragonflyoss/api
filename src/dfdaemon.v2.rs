@@ -72,8 +72,13 @@ pub struct DownloadTaskStartedResponse {
     /// Task content length.
     #[prost(uint64, tag = "1")]
     pub content_length: u64,
+    /// Range is url range of request. If protocol is http, range
+    /// is parsed from http header. If other protocol, range comes
+    /// from download range field.
+    #[prost(message, optional, tag = "2")]
+    pub range: ::core::option::Option<super::super::common::v2::Range>,
     /// Task response headers.
-    #[prost(map = "string, string", tag = "2")]
+    #[prost(map = "string, string", tag = "3")]
     pub response_header: ::std::collections::HashMap<
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
