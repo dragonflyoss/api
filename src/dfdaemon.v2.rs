@@ -83,6 +83,9 @@ pub struct DownloadTaskStartedResponse {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
+    /// Need to download pieces.
+    #[prost(message, repeated, tag = "4")]
+    pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
 }
 /// DownloadTaskFinishedResponse represents task download finished response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]

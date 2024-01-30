@@ -92,6 +92,9 @@ message DownloadTaskStartedResponse {
 
   // Task response headers.
   map<string, string> response_header = 3;
+
+  // Need to download pieces.
+  repeated common.v2.Piece pieces = 4;
 }
 
 // DownloadTaskFinishedResponse represents task download finished response of DownloadTaskResponse.
