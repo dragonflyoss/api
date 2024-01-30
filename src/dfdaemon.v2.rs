@@ -87,11 +87,6 @@ pub struct DownloadTaskStartedResponse {
     #[prost(message, repeated, tag = "4")]
     pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
 }
-/// DownloadTaskFinishedResponse represents task download finished response of DownloadTaskResponse.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskFinishedResponse {}
 /// DownloadPieceFinishedResponse represents piece download finished response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -115,7 +110,7 @@ pub struct DownloadTaskResponse {
     /// Peer id.
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
-    #[prost(oneof = "download_task_response::Response", tags = "4, 5, 6")]
+    #[prost(oneof = "download_task_response::Response", tags = "4, 5")]
     pub response: ::core::option::Option<download_task_response::Response>,
 }
 /// Nested message and enum types in `DownloadTaskResponse`.
@@ -127,8 +122,6 @@ pub mod download_task_response {
         #[prost(message, tag = "4")]
         DownloadTaskStartedResponse(super::DownloadTaskStartedResponse),
         #[prost(message, tag = "5")]
-        DownloadTaskFinishedResponse(super::DownloadTaskFinishedResponse),
-        #[prost(message, tag = "6")]
         DownloadPieceFinishedResponse(super::DownloadPieceFinishedResponse),
     }
 }

@@ -94,10 +94,6 @@ message DownloadTaskStartedResponse {
   repeated common.v2.Piece pieces = 4;
 }
 
-// DownloadTaskFinishedResponse represents task download finished response of DownloadTaskResponse.
-message DownloadTaskFinishedResponse {
-}
-
 // DownloadPieceFinishedResponse represents piece download finished response of DownloadTaskResponse.
 message DownloadPieceFinishedResponse {
   // Finished piece of task.
@@ -115,8 +111,7 @@ message DownloadTaskResponse {
 
   oneof response {
     DownloadTaskStartedResponse download_task_started_response = 4;
-    DownloadTaskFinishedResponse download_task_finished_response = 5;
-    DownloadPieceFinishedResponse download_piece_finished_response = 6;
+    DownloadPieceFinishedResponse download_piece_finished_response = 5;
   }
 }
 
