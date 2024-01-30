@@ -321,7 +321,9 @@ message Download {
   string url = 1 [(validate.rules).string.uri = true];
   // Digest of the task digest, for example md5:xxx or sha256:yyy.
   optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$", ignore_empty: true}];
-  // Range is url range of request.
+  // Range is url range of request. If protocol is http, range
+  // will set in request header. If protocol is others, range
+  // will set in range field.
   optional Range range = 3;
   // Task type.
   TaskType type = 4 [(validate.rules).enum.defined_only = true];

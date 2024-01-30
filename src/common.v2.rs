@@ -323,7 +323,9 @@ pub struct Download {
     /// Digest of the task digest, for example md5:xxx or sha256:yyy.
     #[prost(string, optional, tag = "2")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
-    /// Range is url range of request.
+    /// Range is url range of request. If protocol is http, range
+    /// will set in request header. If protocol is others, range
+    /// will set in range field.
     #[prost(message, optional, tag = "3")]
     pub range: ::core::option::Option<Range>,
     /// Task type.

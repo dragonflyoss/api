@@ -1421,7 +1421,9 @@ type Download struct {
 	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
 	// Digest of the task digest, for example md5:xxx or sha256:yyy.
 	Digest *string `protobuf:"bytes,2,opt,name=digest,proto3,oneof" json:"digest,omitempty"`
-	// Range is url range of request.
+	// Range is url range of request. If protocol is http, range
+	// will set in request header. If protocol is others, range
+	// will set in range field.
 	Range *Range `protobuf:"bytes,3,opt,name=range,proto3,oneof" json:"range,omitempty"`
 	// Task type.
 	Type TaskType `protobuf:"varint,4,opt,name=type,proto3,enum=common.v2.TaskType" json:"type,omitempty"`
