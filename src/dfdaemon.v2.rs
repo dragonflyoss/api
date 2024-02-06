@@ -152,15 +152,6 @@ pub struct DeleteTaskRequest {
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
 }
-/// LeaveHostRequest represents request of LeaveHost.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct LeaveHostRequest {
-    /// Host id.
-    #[prost(string, tag = "1")]
-    pub id: ::prost::alloc::string::String,
-}
 /// Generated client implementations.
 pub mod dfdaemon_upload_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
@@ -513,7 +504,7 @@ pub mod dfdaemon_download_client {
         /// LeaveHost releases host in scheduler.
         pub async fn leave_host(
             &mut self,
-            request: impl tonic::IntoRequest<super::LeaveHostRequest>,
+            request: impl tonic::IntoRequest<()>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
@@ -867,7 +858,7 @@ pub mod dfdaemon_download_server {
         /// LeaveHost releases host in scheduler.
         async fn leave_host(
             &self,
-            request: tonic::Request<super::LeaveHostRequest>,
+            request: tonic::Request<()>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
     }
     /// DfdaemonDownload represents download service of dfdaemon.
@@ -1132,19 +1123,14 @@ pub mod dfdaemon_download_server {
                 "/dfdaemon.v2.DfdaemonDownload/LeaveHost" => {
                     #[allow(non_camel_case_types)]
                     struct LeaveHostSvc<T: DfdaemonDownload>(pub Arc<T>);
-                    impl<
-                        T: DfdaemonDownload,
-                    > tonic::server::UnaryService<super::LeaveHostRequest>
+                    impl<T: DfdaemonDownload> tonic::server::UnaryService<()>
                     for LeaveHostSvc<T> {
                         type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::LeaveHostRequest>,
-                        ) -> Self::Future {
+                        fn call(&mut self, request: tonic::Request<()>) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move { (*inner).leave_host(request).await };
                             Box::pin(fut)

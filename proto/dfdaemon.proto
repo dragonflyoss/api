@@ -133,12 +133,6 @@ message DeleteTaskRequest {
   string task_id = 1;
 }
 
-// LeaveHostRequest represents request of LeaveHost.
-message LeaveHostRequest{
-  // Host id.
-  string id = 1;
-}
-
 // DfdaemonDownload represents download service of dfdaemon.
 service DfdaemonDownload{
   // DownloadTask downloads task back-to-source.
@@ -154,5 +148,5 @@ service DfdaemonDownload{
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
 
   // LeaveHost releases host in scheduler.
-  rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
+  rpc LeaveHost(google.protobuf.Empty)returns(google.protobuf.Empty);
 }

@@ -223,7 +223,7 @@ type DfdaemonDownloadClient interface {
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
-	LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	LeaveHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dfdaemonDownloadClient struct {
@@ -293,7 +293,7 @@ func (c *dfdaemonDownloadClient) DeleteTask(ctx context.Context, in *DeleteTaskR
 	return out, nil
 }
 
-func (c *dfdaemonDownloadClient) LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dfdaemonDownloadClient) LeaveHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/LeaveHost", in, out, opts...)
 	if err != nil {
@@ -315,7 +315,7 @@ type DfdaemonDownloadServer interface {
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
-	LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error)
+	LeaveHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 }
 
 // UnimplementedDfdaemonDownloadServer should be embedded to have forward compatible implementations.
@@ -334,7 +334,7 @@ func (UnimplementedDfdaemonDownloadServer) StatTask(context.Context, *StatTaskRe
 func (UnimplementedDfdaemonDownloadServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
 }
-func (UnimplementedDfdaemonDownloadServer) LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error) {
+func (UnimplementedDfdaemonDownloadServer) LeaveHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveHost not implemented")
 }
 
@@ -425,7 +425,7 @@ func _DfdaemonDownload_DeleteTask_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _DfdaemonDownload_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LeaveHostRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -437,7 +437,7 @@ func _DfdaemonDownload_LeaveHost_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/dfdaemon.v2.DfdaemonDownload/LeaveHost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonDownloadServer).LeaveHost(ctx, req.(*LeaveHostRequest))
+		return srv.(DfdaemonDownloadServer).LeaveHost(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

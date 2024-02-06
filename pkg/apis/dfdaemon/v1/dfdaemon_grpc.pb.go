@@ -41,7 +41,7 @@ type DaemonClient interface {
 	// Delete file from P2P cache system
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
-	LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	LeaveHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type daemonClient struct {
@@ -169,7 +169,7 @@ func (c *daemonClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, op
 	return out, nil
 }
 
-func (c *daemonClient) LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *daemonClient) LeaveHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/dfdaemon.Daemon/LeaveHost", in, out, opts...)
 	if err != nil {
@@ -199,7 +199,7 @@ type DaemonServer interface {
 	// Delete file from P2P cache system
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
-	LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error)
+	LeaveHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 }
 
 // UnimplementedDaemonServer should be embedded to have forward compatible implementations.
@@ -230,7 +230,7 @@ func (UnimplementedDaemonServer) ExportTask(context.Context, *ExportTaskRequest)
 func (UnimplementedDaemonServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
 }
-func (UnimplementedDaemonServer) LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error) {
+func (UnimplementedDaemonServer) LeaveHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LeaveHost not implemented")
 }
 
@@ -401,7 +401,7 @@ func _Daemon_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _Daemon_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LeaveHostRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -413,7 +413,7 @@ func _Daemon_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/dfdaemon.Daemon/LeaveHost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DaemonServer).LeaveHost(ctx, req.(*LeaveHostRequest))
+		return srv.(DaemonServer).LeaveHost(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
