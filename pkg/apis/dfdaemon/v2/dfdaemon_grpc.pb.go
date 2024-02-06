@@ -222,6 +222,8 @@ type DfdaemonDownloadClient interface {
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// LeaveHost releases host in scheduler.
+	LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dfdaemonDownloadClient struct {
@@ -291,6 +293,15 @@ func (c *dfdaemonDownloadClient) DeleteTask(ctx context.Context, in *DeleteTaskR
 	return out, nil
 }
 
+func (c *dfdaemonDownloadClient) LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/LeaveHost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DfdaemonDownloadServer is the server API for DfdaemonDownload service.
 // All implementations should embed UnimplementedDfdaemonDownloadServer
 // for forward compatibility
@@ -303,6 +314,8 @@ type DfdaemonDownloadServer interface {
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
+	// LeaveHost releases host in scheduler.
+	LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedDfdaemonDownloadServer should be embedded to have forward compatible implementations.
@@ -320,6 +333,9 @@ func (UnimplementedDfdaemonDownloadServer) StatTask(context.Context, *StatTaskRe
 }
 func (UnimplementedDfdaemonDownloadServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
+}
+func (UnimplementedDfdaemonDownloadServer) LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaveHost not implemented")
 }
 
 // UnsafeDfdaemonDownloadServer may be embedded to opt out of forward compatibility for this service.
@@ -408,6 +424,24 @@ func _DfdaemonDownload_DeleteTask_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DfdaemonDownload_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LeaveHostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DfdaemonDownloadServer).LeaveHost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dfdaemon.v2.DfdaemonDownload/LeaveHost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DfdaemonDownloadServer).LeaveHost(ctx, req.(*LeaveHostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DfdaemonDownload_ServiceDesc is the grpc.ServiceDesc for DfdaemonDownload service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -426,6 +460,10 @@ var DfdaemonDownload_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTask",
 			Handler:    _DfdaemonDownload_DeleteTask_Handler,
+		},
+		{
+			MethodName: "LeaveHost",
+			Handler:    _DfdaemonDownload_LeaveHost_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
