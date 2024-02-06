@@ -511,7 +511,7 @@ func (mr *MockDfdaemonDownloadClientMockRecorder) DownloadTask(ctx, in any, opts
 }
 
 // LeaveHost mocks base method.
-func (m *MockDfdaemonDownloadClient) LeaveHost(ctx context.Context, in *dfdaemon.LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (m *MockDfdaemonDownloadClient) LeaveHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
@@ -746,7 +746,7 @@ func (mr *MockDfdaemonDownloadServerMockRecorder) DownloadTask(arg0, arg1 any) *
 }
 
 // LeaveHost mocks base method.
-func (m *MockDfdaemonDownloadServer) LeaveHost(arg0 context.Context, arg1 *dfdaemon.LeaveHostRequest) (*emptypb.Empty, error) {
+func (m *MockDfdaemonDownloadServer) LeaveHost(arg0 context.Context, arg1 *emptypb.Empty) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "LeaveHost", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
