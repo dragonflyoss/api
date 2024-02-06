@@ -110,6 +110,12 @@ message DeleteTaskRequest{
   common.UrlMeta url_meta = 2 [(validate.rules).message.required = true];
 }
 
+// LeaveHostRequest represents request of LeaveHost.
+message LeaveHostRequest{
+  // Host id.
+  string id = 1 [(validate.rules).string.min_len = 1];
+}
+
 // Daemon Client RPC Service
 service Daemon{
   // Trigger client to download file
@@ -128,4 +134,6 @@ service Daemon{
   rpc ExportTask(ExportTaskRequest) returns(google.protobuf.Empty);
   // Delete file from P2P cache system
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
+  // LeaveHost releases host in scheduler.
+  rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
 }

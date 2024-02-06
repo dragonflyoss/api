@@ -40,6 +40,8 @@ type DaemonClient interface {
 	ExportTask(ctx context.Context, in *ExportTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Delete file from P2P cache system
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// LeaveHost releases host in scheduler.
+	LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type daemonClient struct {
@@ -167,6 +169,15 @@ func (c *daemonClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, op
 	return out, nil
 }
 
+func (c *daemonClient) LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/dfdaemon.Daemon/LeaveHost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DaemonServer is the server API for Daemon service.
 // All implementations should embed UnimplementedDaemonServer
 // for forward compatibility
@@ -187,6 +198,8 @@ type DaemonServer interface {
 	ExportTask(context.Context, *ExportTaskRequest) (*emptypb.Empty, error)
 	// Delete file from P2P cache system
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
+	// LeaveHost releases host in scheduler.
+	LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedDaemonServer should be embedded to have forward compatible implementations.
@@ -216,6 +229,9 @@ func (UnimplementedDaemonServer) ExportTask(context.Context, *ExportTaskRequest)
 }
 func (UnimplementedDaemonServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
+}
+func (UnimplementedDaemonServer) LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaveHost not implemented")
 }
 
 // UnsafeDaemonServer may be embedded to opt out of forward compatibility for this service.
@@ -384,6 +400,24 @@ func _Daemon_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Daemon_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LeaveHostRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DaemonServer).LeaveHost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dfdaemon.Daemon/LeaveHost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DaemonServer).LeaveHost(ctx, req.(*LeaveHostRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Daemon_ServiceDesc is the grpc.ServiceDesc for Daemon service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -414,6 +448,10 @@ var Daemon_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTask",
 			Handler:    _Daemon_DeleteTask_Handler,
+		},
+		{
+			MethodName: "LeaveHost",
+			Handler:    _Daemon_LeaveHost_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

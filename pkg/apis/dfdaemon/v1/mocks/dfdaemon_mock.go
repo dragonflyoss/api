@@ -163,6 +163,26 @@ func (mr *MockDaemonClientMockRecorder) ImportTask(ctx, in any, opts ...any) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImportTask", reflect.TypeOf((*MockDaemonClient)(nil).ImportTask), varargs...)
 }
 
+// LeaveHost mocks base method.
+func (m *MockDaemonClient) LeaveHost(ctx context.Context, in *dfdaemon.LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "LeaveHost", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LeaveHost indicates an expected call of LeaveHost.
+func (mr *MockDaemonClientMockRecorder) LeaveHost(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeaveHost", reflect.TypeOf((*MockDaemonClient)(nil).LeaveHost), varargs...)
+}
+
 // StatTask mocks base method.
 func (m *MockDaemonClient) StatTask(ctx context.Context, in *dfdaemon.StatTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -573,6 +593,21 @@ func (m *MockDaemonServer) ImportTask(arg0 context.Context, arg1 *dfdaemon.Impor
 func (mr *MockDaemonServerMockRecorder) ImportTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ImportTask", reflect.TypeOf((*MockDaemonServer)(nil).ImportTask), arg0, arg1)
+}
+
+// LeaveHost mocks base method.
+func (m *MockDaemonServer) LeaveHost(arg0 context.Context, arg1 *dfdaemon.LeaveHostRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LeaveHost", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// LeaveHost indicates an expected call of LeaveHost.
+func (mr *MockDaemonServerMockRecorder) LeaveHost(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LeaveHost", reflect.TypeOf((*MockDaemonServer)(nil).LeaveHost), arg0, arg1)
 }
 
 // StatTask mocks base method.
