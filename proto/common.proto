@@ -163,7 +163,7 @@ message Task {
   // Task peer count.
   uint32 peer_count = 15;
   // Task contains available peer.
-  bool hasAvailablePeer = 16;
+  bool has_available_peer = 16;
   // Task create time.
   google.protobuf.Timestamp created_at = 17;
   // Task update time.
@@ -343,6 +343,10 @@ message Download {
   optional google.protobuf.Duration timeout = 12;
   // NeedBackToSource needs downloaded from source.
   bool need_back_to_source = 13;
+  // certificate is the client cert with PEM format for the backend client to download back-to-source.
+  optional bytes certificate = 14;
+  // tls_verify indicates whether to verify the server's certificate for the backend client to download back-to-source.
+  bool tls_verify = 15;
 }
 
 // Range represents download range.

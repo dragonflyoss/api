@@ -365,6 +365,12 @@ pub struct Download {
     /// NeedBackToSource needs downloaded from source.
     #[prost(bool, tag = "13")]
     pub need_back_to_source: bool,
+    /// certificate is the client cert with PEM format for the backend client to download back-to-source.
+    #[prost(bytes = "vec", optional, tag = "14")]
+    pub certificate: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
+    /// tls_verify indicates whether to verify the server's certificate for the backend client to download back-to-source.
+    #[prost(bool, tag = "15")]
+    pub tls_verify: bool,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]

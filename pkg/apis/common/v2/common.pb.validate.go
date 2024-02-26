@@ -1911,6 +1911,8 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for NeedBackToSource
 
+	// no validation rules for TlsVerify
+
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {
@@ -2019,6 +2021,25 @@ func (m *Download) validate(all bool) error {
 					cause:  err,
 				}
 			}
+		}
+
+	}
+
+	if m.Certificate != nil {
+
+		if len(m.GetCertificate()) > 0 {
+
+			if len(m.GetCertificate()) < 1 {
+				err := DownloadValidationError{
+					field:  "Certificate",
+					reason: "value length must be at least 1 bytes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
 
 	}
