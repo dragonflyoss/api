@@ -140,7 +140,7 @@ pub mod download_task_response {
         #[prost(message, tag = "4")]
         DownloadTaskStartedResponse(super::DownloadTaskStartedResponse),
         #[prost(message, tag = "5")]
-        DownloadTaskFailedRequest(super::DownloadTaskFailedResponse),
+        DownloadTaskFailedResponse(super::DownloadTaskFailedResponse),
         #[prost(message, tag = "6")]
         DownloadPieceFinishedResponse(super::DownloadPieceFinishedResponse),
     }

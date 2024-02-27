@@ -125,7 +125,7 @@ message DownloadTaskResponse {
     option (validate.required) = true;
 
     DownloadTaskStartedResponse download_task_started_response = 4;
-    DownloadTaskFailedResponse download_task_failed_request = 5;
+    DownloadTaskFailedResponse download_task_failed_response = 5;
     DownloadPieceFinishedResponse download_piece_finished_response = 6;
   }
 }

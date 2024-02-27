@@ -1384,7 +1384,7 @@ func (m *DownloadTaskResponse) validate(all bool) error {
 			}
 		}
 
-	case *DownloadTaskResponse_DownloadTaskFailedRequest:
+	case *DownloadTaskResponse_DownloadTaskFailedResponse:
 		if v == nil {
 			err := DownloadTaskResponseValidationError{
 				field:  "Response",
@@ -1398,11 +1398,11 @@ func (m *DownloadTaskResponse) validate(all bool) error {
 		oneofResponsePresent = true
 
 		if all {
-			switch v := interface{}(m.GetDownloadTaskFailedRequest()).(type) {
+			switch v := interface{}(m.GetDownloadTaskFailedResponse()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, DownloadTaskResponseValidationError{
-						field:  "DownloadTaskFailedRequest",
+						field:  "DownloadTaskFailedResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1410,16 +1410,16 @@ func (m *DownloadTaskResponse) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, DownloadTaskResponseValidationError{
-						field:  "DownloadTaskFailedRequest",
+						field:  "DownloadTaskFailedResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetDownloadTaskFailedRequest()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetDownloadTaskFailedResponse()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return DownloadTaskResponseValidationError{
-					field:  "DownloadTaskFailedRequest",
+					field:  "DownloadTaskFailedResponse",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
