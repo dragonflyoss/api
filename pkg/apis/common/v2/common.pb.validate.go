@@ -70,17 +70,6 @@ func (m *HTTPResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetStatus()) < 1 {
-		err := HTTPResponseValidationError{
-			field:  "Status",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if len(errors) > 0 {
 		return HTTPResponseMultiError(errors)
 	}
