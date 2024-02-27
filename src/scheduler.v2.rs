@@ -108,24 +108,6 @@ pub struct DownloadPieceFailedRequest {
     #[prost(bool, tag = "3")]
     pub temporary: bool,
 }
-/// HTTPResponse represents http protocol response of DownloadPieceBackToSourceFailedRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct HttpResponse {
-    /// HTTP Response Header.
-    #[prost(map = "string, string", tag = "1")]
-    pub header: ::std::collections::HashMap<
-        ::prost::alloc::string::String,
-        ::prost::alloc::string::String,
-    >,
-    /// HTTP Status Code.
-    #[prost(int32, tag = "2")]
-    pub status_code: i32,
-    /// HTTP Status.
-    #[prost(string, tag = "3")]
-    pub status: ::prost::alloc::string::String,
-}
 /// DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -149,7 +131,7 @@ pub mod download_piece_back_to_source_failed_request {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
         #[prost(message, tag = "2")]
-        HttpResponse(super::HttpResponse),
+        HttpResponse(super::super::super::common::v2::HttpResponse),
     }
 }
 /// AnnouncePeerRequest represents request of AnnouncePeer.
