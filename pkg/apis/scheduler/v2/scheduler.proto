@@ -101,16 +101,6 @@ message DownloadPieceFailedRequest {
   bool temporary = 3;
 }
 
-// HTTPResponse represents http protocol response of DownloadPieceBackToSourceFailedRequest.
-message HTTPResponse {
-  // HTTP Response Header.
-  map<string, string> header = 1;
-  // HTTP Status Code.
-  int32 status_code = 2 [(validate.rules).int32 = {gte: 100, lt: 599}];
-  // HTTP Status.
-  string status = 3 [(validate.rules).string.min_len = 1];
-}
-
 // DownloadPieceBackToSourceFailedRequest downloads piece back-to-source failed request of AnnouncePeerRequest.
 message DownloadPieceBackToSourceFailedRequest {
   // Piece number.
@@ -119,7 +109,7 @@ message DownloadPieceBackToSourceFailedRequest {
   oneof response {
     option (validate.required) = true;
 
-    HTTPResponse http_response = 2;
+    common.v2.HTTPResponse http_response = 2;
   }
 }
 

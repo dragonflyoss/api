@@ -35,6 +35,129 @@ var (
 	_ = sort.Sort
 )
 
+// Validate checks the field values on HTTPResponse with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *HTTPResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HTTPResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in HTTPResponseMultiError, or
+// nil if none found.
+func (m *HTTPResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HTTPResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Header
+
+	if val := m.GetStatusCode(); val < 100 || val >= 599 {
+		err := HTTPResponseValidationError{
+			field:  "StatusCode",
+			reason: "value must be inside range [100, 599)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetStatus()) < 1 {
+		err := HTTPResponseValidationError{
+			field:  "Status",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return HTTPResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// HTTPResponseMultiError is an error wrapping multiple validation errors
+// returned by HTTPResponse.ValidateAll() if the designated constraints aren't met.
+type HTTPResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HTTPResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HTTPResponseMultiError) AllErrors() []error { return m }
+
+// HTTPResponseValidationError is the validation error returned by
+// HTTPResponse.Validate if the designated constraints aren't met.
+type HTTPResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HTTPResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HTTPResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HTTPResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HTTPResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HTTPResponseValidationError) ErrorName() string { return "HTTPResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HTTPResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHTTPResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HTTPResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HTTPResponseValidationError{}
+
 // Validate checks the field values on Peer with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error
 // encountered is returned, or nil if there are no violations.

@@ -1,3 +1,21 @@
+/// HTTPResponse represents http protocol response.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct HttpResponse {
+    /// HTTP Response Header.
+    #[prost(map = "string, string", tag = "1")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// HTTP Status Code.
+    #[prost(int32, tag = "2")]
+    pub status_code: i32,
+    /// HTTP Status.
+    #[prost(string, tag = "3")]
+    pub status: ::prost::alloc::string::String,
+}
 /// Peer metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
