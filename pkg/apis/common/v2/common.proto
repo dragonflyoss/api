@@ -112,8 +112,6 @@ message HTTPResponse {
   map<string, string> header = 1;
   // HTTP Status Code.
   int32 status_code = 2 [(validate.rules).int32 = {gte: 100, lt: 599}];
-  // HTTP Status.
-  string status = 3 [(validate.rules).string.min_len = 1];
 }
 
 // Peer metadata.

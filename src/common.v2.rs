@@ -12,9 +12,6 @@ pub struct HttpResponse {
     /// HTTP Status Code.
     #[prost(int32, tag = "2")]
     pub status_code: i32,
-    /// HTTP Status.
-    #[prost(string, tag = "3")]
-    pub status: ::prost::alloc::string::String,
 }
 /// Peer metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
