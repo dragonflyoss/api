@@ -1911,8 +1911,6 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for NeedBackToSource
 
-	// no validation rules for TlsVerify
-
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {

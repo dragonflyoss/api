@@ -345,8 +345,6 @@ message Download {
   bool need_back_to_source = 13;
   // certificate is the client cert with PEM format for the backend client to download back-to-source.
   optional bytes certificate = 14;
-  // tls_verify indicates whether to verify the server's certificate for the backend client to download back-to-source.
-  bool tls_verify = 15;
 }
 
 // Range represents download range.
