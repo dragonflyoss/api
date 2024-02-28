@@ -106,14 +106,6 @@ enum Priority {
   LEVEL6 = 6;
 }
 
-// HTTPResponse represents http protocol response.
-message HTTPResponse {
-  // HTTP Response Header.
-  map<string, string> header = 1;
-  // HTTP Status Code.
-  int32 status_code = 2 [(validate.rules).int32 = {gte: 100, lt: 599}];
-}
-
 // Peer metadata.
 message Peer {
   // Peer id.

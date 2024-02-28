@@ -9,6 +9,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .compile(
             &[
                 "proto/common.proto",
+                "proto/errordetails.proto",
                 "proto/security.proto",
                 "proto/dfdaemon.proto",
                 "proto/manager.proto",

@@ -19,6 +19,7 @@ syntax = "proto3";
 package scheduler.v2;
 
 import "pkg/apis/common/v2/common.proto";
+import "pkg/apis/errordetails/v2/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/duration.proto";
@@ -109,7 +110,7 @@ message DownloadPieceBackToSourceFailedRequest {
   oneof response {
     option (validate.required) = true;
 
-    common.v2.HTTPResponse http_response = 2;
+    errordetails.v2.HTTP http = 2;
   }
 }
 
