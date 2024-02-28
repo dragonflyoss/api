@@ -87,24 +87,6 @@ pub struct DownloadTaskStartedResponse {
     #[prost(message, repeated, tag = "4")]
     pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
 }
-/// DownloadTaskFailedResponse represents task download failed response of DownloadTaskResponse.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTaskFailedResponse {
-    #[prost(oneof = "download_task_failed_response::Response", tags = "1")]
-    pub response: ::core::option::Option<download_task_failed_response::Response>,
-}
-/// Nested message and enum types in `DownloadTaskFailedResponse`.
-pub mod download_task_failed_response {
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Response {
-        #[prost(message, tag = "1")]
-        HttpResponse(super::super::super::common::v2::HttpResponse),
-    }
-}
 /// DownloadPieceFinishedResponse represents piece download finished response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -128,7 +110,7 @@ pub struct DownloadTaskResponse {
     /// Peer id.
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
-    #[prost(oneof = "download_task_response::Response", tags = "4, 5, 6")]
+    #[prost(oneof = "download_task_response::Response", tags = "4, 5")]
     pub response: ::core::option::Option<download_task_response::Response>,
 }
 /// Nested message and enum types in `DownloadTaskResponse`.
@@ -140,8 +122,6 @@ pub mod download_task_response {
         #[prost(message, tag = "4")]
         DownloadTaskStartedResponse(super::DownloadTaskStartedResponse),
         #[prost(message, tag = "5")]
-        DownloadTaskFailedResponse(super::DownloadTaskFailedResponse),
-        #[prost(message, tag = "6")]
         DownloadPieceFinishedResponse(super::DownloadPieceFinishedResponse),
     }
 }

@@ -97,15 +97,6 @@ message DownloadTaskStartedResponse {
   repeated common.v2.Piece pieces = 4;
 }
 
-// DownloadTaskFailedResponse represents task download failed response of DownloadTaskResponse.
-message DownloadTaskFailedResponse {
-  oneof response {
-    option (validate.required) = true;
-
-    common.v2.HTTPResponse http_response = 1;
-  }
-}
-
 // DownloadPieceFinishedResponse represents piece download finished response of DownloadTaskResponse.
 message DownloadPieceFinishedResponse {
   // Finished piece of task.
@@ -125,8 +116,7 @@ message DownloadTaskResponse {
     option (validate.required) = true;
 
     DownloadTaskStartedResponse download_task_started_response = 4;
-    DownloadTaskFailedResponse download_task_failed_response = 5;
-    DownloadPieceFinishedResponse download_piece_finished_response = 6;
+    DownloadPieceFinishedResponse download_piece_finished_response = 5;
   }
 }
 

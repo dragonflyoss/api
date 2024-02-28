@@ -19,6 +19,7 @@ syntax = "proto3";
 package scheduler.v2;
 
 import "common.proto";
+import "errordetails.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
@@ -104,7 +105,7 @@ message DownloadPieceBackToSourceFailedRequest {
   optional uint32 piece_number = 1;
 
   oneof response {
-    common.v2.HTTPResponse http_response = 2;
+    errordetails.v2.HTTP http = 2;
   }
 }
 

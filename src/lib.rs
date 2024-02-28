@@ -5,6 +5,12 @@ pub mod common {
 }
 
 #[path = ""]
+pub mod errordetails {
+    #[path = "errordetails.v2.rs"]
+    pub mod v2;
+}
+
+#[path = ""]
 pub mod dfdaemon {
     #[path = "dfdaemon.v2.rs"]
     pub mod v2;
