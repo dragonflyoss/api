@@ -349,8 +349,8 @@ message Download {
   optional google.protobuf.Duration timeout = 12;
   // NeedBackToSource needs downloaded from source.
   bool need_back_to_source = 13;
-  // certificate is the client cert with PEM format for the backend client to download back-to-source.
-  optional bytes certificate = 14 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
+  // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
+  repeated bytes certificate_chain = 14 [(validate.rules).repeated.min_items = 1];
 }
 
 // Range represents download range.
