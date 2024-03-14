@@ -37,7 +37,7 @@ message PeerTaskRequest{
   string peer_id = 3 [(validate.rules).string.min_len = 1];
   // Peer host info.
   PeerHost peer_host = 4;
-  // When requesting for range, it will trigger seed peer to download entrie task.
+  // When requesting for range, it will trigger seed peer to download entire task.
   bool prefetch = 5;
   // Whether this request is caused by migration.
   bool is_migrating = 6;
