@@ -55,7 +55,7 @@ type PeerTaskRequest struct {
 	PeerId string `protobuf:"bytes,3,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
 	// Peer host info.
 	PeerHost *PeerHost `protobuf:"bytes,4,opt,name=peer_host,json=peerHost,proto3" json:"peer_host,omitempty"`
-	// When requesting for range, it will trigger seed peer to download entrie task.
+	// When requesting for range, it will trigger seed peer to download entire task.
 	Prefetch bool `protobuf:"varint,5,opt,name=prefetch,proto3" json:"prefetch,omitempty"`
 	// Whether this request is caused by migration.
 	IsMigrating bool `protobuf:"varint,6,opt,name=is_migrating,json=isMigrating,proto3" json:"is_migrating,omitempty"`
