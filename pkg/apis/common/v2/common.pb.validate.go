@@ -229,7 +229,7 @@ func (m *Peer) validate(all bool) error {
 		}
 	}
 
-	// no validation rules for NeedBackToSource
+	// no validation rules for DisableBackToSource
 
 	if m.GetCreatedAt() == nil {
 		err := PeerValidationError{
