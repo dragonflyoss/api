@@ -350,7 +350,7 @@ message Download {
   // NeedBackToSource needs downloaded from source.
   bool need_back_to_source = 13;
   // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
-  repeated bytes certificate_chain = 14 [(validate.rules).repeated.min_items = 1];
+  repeated bytes certificate_chain = 14;
 }
 
 // Range represents download range.
