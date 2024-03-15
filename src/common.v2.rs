@@ -362,11 +362,14 @@ pub struct Download {
     /// Download timeout.
     #[prost(message, optional, tag = "12")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
-    /// If download task failed, whether to disable back-to-source.
+    /// Dfdaemon will disable download back-to-source by itself, if disable_back_to_source is true.
     #[prost(bool, tag = "13")]
     pub disable_back_to_source: bool,
+    /// Scheduler will triggers peer to download back-to-source, if need_back_to_source is true.
+    #[prost(bool, tag = "14")]
+    pub need_back_to_source: bool,
     /// certificate_chain is the client certs with DER format for the backend client to download back-to-source.
-    #[prost(bytes = "vec", repeated, tag = "14")]
+    #[prost(bytes = "vec", repeated, tag = "15")]
     pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// Range represents download range.

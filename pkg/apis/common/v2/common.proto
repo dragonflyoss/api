@@ -347,10 +347,12 @@ message Download {
   optional string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
   optional google.protobuf.Duration timeout = 12;
-  // If download task failed, whether to disable back-to-source.
+  // Dfdaemon will disable download back-to-source by itself, if disable_back_to_source is true.
   bool disable_back_to_source = 13;
+  // Scheduler will triggers peer to download back-to-source, if need_back_to_source is true.
+  bool need_back_to_source = 14;
   // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
-  repeated bytes certificate_chain = 14;
+  repeated bytes certificate_chain = 15;
 }
 
 // Range represents download range.
