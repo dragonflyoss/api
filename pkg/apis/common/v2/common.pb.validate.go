@@ -229,7 +229,7 @@ func (m *Peer) validate(all bool) error {
 		}
 	}
 
-	// no validation rules for DisableBackToSource
+	// no validation rules for NeedBackToSource
 
 	if m.GetCreatedAt() == nil {
 		err := PeerValidationError{
@@ -1909,7 +1909,7 @@ func (m *Download) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for NeedBackToSource
+	// no validation rules for DisableBackToSource
 
 	if m.Digest != nil {
 
