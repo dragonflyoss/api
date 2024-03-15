@@ -124,8 +124,8 @@ message Peer {
   Task task = 7 [(validate.rules).message.required = true];
   // Host info.
   Host host = 8 [(validate.rules).message.required = true];
-  // If download task failed, whether to disable back-to-source.
-  bool disable_back_to_source = 13;
+  // NeedBackToSource needs downloaded from source.
+  bool need_back_to_source = 9;
   // Peer create time.
   google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
   // Peer update time.
@@ -347,8 +347,8 @@ message Download {
   optional string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
   optional google.protobuf.Duration timeout = 12;
-  // NeedBackToSource needs downloaded from source.
-  bool need_back_to_source = 13;
+  // If download task failed, whether to disable back-to-source.
+  bool disable_back_to_source = 13;
   // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
   repeated bytes certificate_chain = 14;
 }
