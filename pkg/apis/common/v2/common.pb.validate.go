@@ -1911,17 +1911,6 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for NeedBackToSource
 
-	if len(m.GetCertificateChain()) < 1 {
-		err := DownloadValidationError{
-			field:  "CertificateChain",
-			reason: "value must contain at least 1 item(s)",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {
