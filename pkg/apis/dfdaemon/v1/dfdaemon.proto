@@ -110,6 +110,27 @@ message DeleteTaskRequest{
   common.UrlMeta url_meta = 2 [(validate.rules).message.required = true];
 }
 
+// PeerState represents state of peer task.
+enum PeerState {
+  Unknown = 0;
+  Running = 1;
+  Success = 2;
+  Failed = 3;
+  Deleted = 4;
+}
+
+// PeerMetadata represents metadata of a peer task.
+message PeerMetadata {
+  string task_id = 1;
+  string peer_id = 2;
+  PeerState state = 3;
+}
+
+// PeerExchangeData represents metadata of peer tasks.
+message PeerExchangeData {
+  repeated PeerMetadata PeerMetadatas= 1;
+}
+
 // Daemon Client RPC Service
 service Daemon{
   // Trigger client to download file
@@ -130,4 +151,6 @@ service Daemon{
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
   // LeaveHost releases host in scheduler.
   rpc LeaveHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+  // Exchange peers between daemons
+  rpc PeerExchange(stream PeerExchangeData)returns(stream PeerExchangeData);
 }
