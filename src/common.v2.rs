@@ -371,9 +371,6 @@ pub struct Download {
     /// certificate_chain is the client certs with DER format for the backend client to download back-to-source.
     #[prost(bytes = "vec", repeated, tag = "15")]
     pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-    /// prefetch pre-downloads all pieces of the task when download task with range request.
-    #[prost(bool, tag = "16")]
-    pub prefetch: bool,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]
