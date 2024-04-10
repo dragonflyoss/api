@@ -347,6 +347,8 @@ message Download {
   bool need_back_to_source = 14;
   // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
   repeated bytes certificate_chain = 15;
+  // prefetch pre-downloads all pieces of the task when download task with range request.
+  bool prefetch = 16;
 }
 
 // Range represents download range.
