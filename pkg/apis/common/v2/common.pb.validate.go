@@ -1913,8 +1913,6 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for NeedBackToSource
 
-	// no validation rules for Prefetch
-
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {
