@@ -24,8 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DfdaemonUploadClient interface {
-	// TriggerDownloadTask triggers download task.
-	TriggerDownloadTask(ctx context.Context, in *TriggerDownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DownloadTask downloads task from p2p network.
+	DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (DfdaemonUpload_DownloadTaskClient, error)
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncPiecesClient, error)
 	// DownloadPiece downloads piece from the remote peer.
@@ -40,17 +40,40 @@ func NewDfdaemonUploadClient(cc grpc.ClientConnInterface) DfdaemonUploadClient {
 	return &dfdaemonUploadClient{cc}
 }
 
-func (c *dfdaemonUploadClient) TriggerDownloadTask(ctx context.Context, in *TriggerDownloadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/TriggerDownloadTask", in, out, opts...)
+func (c *dfdaemonUploadClient) DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (DfdaemonUpload_DownloadTaskClient, error) {
+	stream, err := c.cc.NewStream(ctx, &DfdaemonUpload_ServiceDesc.Streams[0], "/dfdaemon.v2.DfdaemonUpload/DownloadTask", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &dfdaemonUploadDownloadTaskClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type DfdaemonUpload_DownloadTaskClient interface {
+	Recv() (*DownloadTaskResponse, error)
+	grpc.ClientStream
+}
+
+type dfdaemonUploadDownloadTaskClient struct {
+	grpc.ClientStream
+}
+
+func (x *dfdaemonUploadDownloadTaskClient) Recv() (*DownloadTaskResponse, error) {
+	m := new(DownloadTaskResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *dfdaemonUploadClient) SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncPiecesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &DfdaemonUpload_ServiceDesc.Streams[0], "/dfdaemon.v2.DfdaemonUpload/SyncPieces", opts...)
+	stream, err := c.cc.NewStream(ctx, &DfdaemonUpload_ServiceDesc.Streams[1], "/dfdaemon.v2.DfdaemonUpload/SyncPieces", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -94,8 +117,8 @@ func (c *dfdaemonUploadClient) DownloadPiece(ctx context.Context, in *DownloadPi
 // All implementations should embed UnimplementedDfdaemonUploadServer
 // for forward compatibility
 type DfdaemonUploadServer interface {
-	// TriggerDownloadTask triggers download task.
-	TriggerDownloadTask(context.Context, *TriggerDownloadTaskRequest) (*emptypb.Empty, error)
+	// DownloadTask downloads task from p2p network.
+	DownloadTask(*DownloadTaskRequest, DfdaemonUpload_DownloadTaskServer) error
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error
 	// DownloadPiece downloads piece from the remote peer.
@@ -106,8 +129,8 @@ type DfdaemonUploadServer interface {
 type UnimplementedDfdaemonUploadServer struct {
 }
 
-func (UnimplementedDfdaemonUploadServer) TriggerDownloadTask(context.Context, *TriggerDownloadTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TriggerDownloadTask not implemented")
+func (UnimplementedDfdaemonUploadServer) DownloadTask(*DownloadTaskRequest, DfdaemonUpload_DownloadTaskServer) error {
+	return status.Errorf(codes.Unimplemented, "method DownloadTask not implemented")
 }
 func (UnimplementedDfdaemonUploadServer) SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncPieces not implemented")
@@ -127,22 +150,25 @@ func RegisterDfdaemonUploadServer(s grpc.ServiceRegistrar, srv DfdaemonUploadSer
 	s.RegisterService(&DfdaemonUpload_ServiceDesc, srv)
 }
 
-func _DfdaemonUpload_TriggerDownloadTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TriggerDownloadTaskRequest)
-	if err := dec(in); err != nil {
-		return nil, err
+func _DfdaemonUpload_DownloadTask_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(DownloadTaskRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
 	}
-	if interceptor == nil {
-		return srv.(DfdaemonUploadServer).TriggerDownloadTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/dfdaemon.v2.DfdaemonUpload/TriggerDownloadTask",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonUploadServer).TriggerDownloadTask(ctx, req.(*TriggerDownloadTaskRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return srv.(DfdaemonUploadServer).DownloadTask(m, &dfdaemonUploadDownloadTaskServer{stream})
+}
+
+type DfdaemonUpload_DownloadTaskServer interface {
+	Send(*DownloadTaskResponse) error
+	grpc.ServerStream
+}
+
+type dfdaemonUploadDownloadTaskServer struct {
+	grpc.ServerStream
+}
+
+func (x *dfdaemonUploadDownloadTaskServer) Send(m *DownloadTaskResponse) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _DfdaemonUpload_SyncPieces_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -192,15 +218,16 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DfdaemonUploadServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "TriggerDownloadTask",
-			Handler:    _DfdaemonUpload_TriggerDownloadTask_Handler,
-		},
-		{
 			MethodName: "DownloadPiece",
 			Handler:    _DfdaemonUpload_DownloadPiece_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "DownloadTask",
+			Handler:       _DfdaemonUpload_DownloadTask_Handler,
+			ServerStreams: true,
+		},
 		{
 			StreamName:    "SyncPieces",
 			Handler:       _DfdaemonUpload_SyncPieces_Handler,
@@ -214,7 +241,7 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DfdaemonDownloadClient interface {
-	// DownloadTask downloads task back-to-source.
+	// DownloadTask downloads task from p2p network.
 	DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (DfdaemonDownload_DownloadTaskClient, error)
 	// UploadTask uploads task to p2p network.
 	UploadTask(ctx context.Context, in *UploadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -306,7 +333,7 @@ func (c *dfdaemonDownloadClient) LeaveHost(ctx context.Context, in *emptypb.Empt
 // All implementations should embed UnimplementedDfdaemonDownloadServer
 // for forward compatibility
 type DfdaemonDownloadServer interface {
-	// DownloadTask downloads task back-to-source.
+	// DownloadTask downloads task from p2p network.
 	DownloadTask(*DownloadTaskRequest, DfdaemonDownload_DownloadTaskServer) error
 	// UploadTask uploads task to p2p network.
 	UploadTask(context.Context, *UploadTaskRequest) (*emptypb.Empty, error)
