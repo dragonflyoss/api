@@ -21,56 +21,6 @@ package dfdaemon.v2;
 import "common.proto";
 import "google/protobuf/empty.proto";
 
-// TriggerDownloadTaskRequest represents request of TriggerDownloadTask.
-message TriggerDownloadTaskRequest {
-  // Download information.
-  common.v2.Download download = 1;
-}
-
-// SyncPiecesRequest represents request of SyncPieces.
-message SyncPiecesRequest {
-  // Task id.
-  string task_id = 1;
-  // Interested piece numbers.
-  repeated uint32 interested_piece_numbers = 2;
-}
-
-// SyncPiecesResponse represents response of SyncPieces.
-message SyncPiecesResponse {
-  // Exist piece number.
-  uint32 number = 1;
-  // Piece offset.
-  uint64 offset = 2;
-  // Piece length.
-  uint64 length = 3;
-}
-
-// DownloadPieceRequest represents request of DownloadPiece.
-message DownloadPieceRequest{
-  // Task id.
-  string task_id = 1;
-  // Piece number.
-  uint32 piece_number = 2;
-}
-
-// DownloadPieceResponse represents response of DownloadPieces.
-message DownloadPieceResponse {
-  // Piece information.
-  common.v2.Piece piece = 1;
-}
-
-// DfdaemonUpload represents upload service of dfdaemon.
-service DfdaemonUpload{
-  // TriggerDownloadTask triggers download task.
-  rpc TriggerDownloadTask(TriggerDownloadTaskRequest) returns(google.protobuf.Empty);
-
-  // SyncPieces syncs piece metadatas from remote peer.
-  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
-
-  // DownloadPiece downloads piece from the remote peer.
-  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
-}
-
 // DownloadTaskRequest represents request of DownloadTask.
 message DownloadTaskRequest {
   // Download information.
@@ -115,6 +65,50 @@ message DownloadTaskResponse {
   }
 }
 
+// SyncPiecesRequest represents request of SyncPieces.
+message SyncPiecesRequest {
+  // Task id.
+  string task_id = 1;
+  // Interested piece numbers.
+  repeated uint32 interested_piece_numbers = 2;
+}
+
+// SyncPiecesResponse represents response of SyncPieces.
+message SyncPiecesResponse {
+  // Exist piece number.
+  uint32 number = 1;
+  // Piece offset.
+  uint64 offset = 2;
+  // Piece length.
+  uint64 length = 3;
+}
+
+// DownloadPieceRequest represents request of DownloadPiece.
+message DownloadPieceRequest{
+  // Task id.
+  string task_id = 1;
+  // Piece number.
+  uint32 piece_number = 2;
+}
+
+// DownloadPieceResponse represents response of DownloadPieces.
+message DownloadPieceResponse {
+  // Piece information.
+  common.v2.Piece piece = 1;
+}
+
+// DfdaemonUpload represents upload service of dfdaemon.
+service DfdaemonUpload{
+  // DownloadTask downloads task from p2p network.
+  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
+
+  // SyncPieces syncs piece metadatas from remote peer.
+  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
+
+  // DownloadPiece downloads piece from the remote peer.
+  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
+}
+
 // UploadTaskRequest represents request of UploadTask.
 message UploadTaskRequest {
   // Task metadata.
@@ -135,7 +129,7 @@ message DeleteTaskRequest {
 
 // DfdaemonDownload represents download service of dfdaemon.
 service DfdaemonDownload{
-  // DownloadTask downloads task back-to-source.
+  // DownloadTask downloads task from p2p network.
   rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
 
   // UploadTask uploads task to p2p network.
