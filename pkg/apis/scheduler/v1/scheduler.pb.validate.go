@@ -2992,27 +2992,9 @@ func (m *Memory) validate(all bool) error {
 
 	// no validation rules for Used
 
-	if val := m.GetUsedPercent(); val < 0 || val > 100 {
-		err := MemoryValidationError{
-			field:  "UsedPercent",
-			reason: "value must be inside range [0, 100]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for UsedPercent
 
-	if val := m.GetProcessUsedPercent(); val < 0 || val > 100 {
-		err := MemoryValidationError{
-			field:  "ProcessUsedPercent",
-			reason: "value must be inside range [0, 100]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for ProcessUsedPercent
 
 	// no validation rules for Free
 

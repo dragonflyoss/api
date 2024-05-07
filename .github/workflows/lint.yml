@@ -14,11 +14,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
 
       - name: Golangci lint
         uses: golangci/golangci-lint-action@v4
         with:
-          version: latest
+          version: v1.54
+          args: --verbose
 
   rust-lint:
     name: Rust Lint
