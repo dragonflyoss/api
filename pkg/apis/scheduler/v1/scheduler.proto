@@ -319,9 +319,9 @@ message Memory {
   // RAM used by programs.
   uint64 used = 3;
   // Percentage of RAM used by programs.
-  double used_percent = 4 [(validate.rules).double = {gte: 0, lte: 100}];
+  double used_percent = 4;
   // Calculates the percentage of memory used by process.
-  double process_used_percent = 5 [(validate.rules).double = {gte: 0, lte: 100}];
+  double process_used_percent = 5;
   // This is the kernel's notion of free memory.
   uint64 free = 6;
 }
