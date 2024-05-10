@@ -539,7 +539,7 @@ func (m *Task) validate(all bool) error {
 			if !_Task_Digest_Pattern.MatchString(m.GetDigest()) {
 				err := TaskValidationError{
 					field:  "Digest",
-					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$\"",
 				}
 				if !all {
 					return err
@@ -636,7 +636,7 @@ var _ interface {
 	ErrorName() string
 } = TaskValidationError{}
 
-var _Task_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$")
+var _Task_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$")
 
 // Validate checks the field values on Host with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error
@@ -1922,7 +1922,7 @@ func (m *Download) validate(all bool) error {
 			if !_Download_Digest_Pattern.MatchString(m.GetDigest()) {
 				err := DownloadValidationError{
 					field:  "Digest",
-					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$\"",
 				}
 				if !all {
 					return err
@@ -2104,7 +2104,7 @@ var _ interface {
 	ErrorName() string
 } = DownloadValidationError{}
 
-var _Download_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$")
+var _Download_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$")
 
 // Validate checks the field values on Range with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
@@ -2240,7 +2240,7 @@ func (m *Piece) validate(all bool) error {
 		if !_Piece_Digest_Pattern.MatchString(m.GetDigest()) {
 			err := PieceValidationError{
 				field:  "Digest",
-				reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
+				reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$\"",
 			}
 			if !all {
 				return err
@@ -2391,4 +2391,4 @@ var _ interface {
 	ErrorName() string
 } = PieceValidationError{}
 
-var _Piece_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$")
+var _Piece_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$")
