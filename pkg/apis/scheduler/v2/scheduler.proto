@@ -210,6 +210,14 @@ message StatTaskRequest {
   string id = 1 [(validate.rules).string.min_len = 1];
 }
 
+// LeaveTaskRequest represents request of LeaveTask.
+message LeaveTaskRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+}
+
 // AnnounceHostRequest represents request of AnnounceHost.
 message AnnounceHostRequest {
   // Host info.
@@ -293,6 +301,9 @@ service Scheduler {
 
   // Checks information of task.
   rpc StatTask(StatTaskRequest)returns(common.v2.Task);
+
+  // LeaveTask releases task in scheduler.
+  rpc LeaveTask(LeaveTaskRequest)returns(google.protobuf.Empty);
 
   // AnnounceHost announces host to scheduler.
   rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);

@@ -302,6 +302,18 @@ pub struct StatTaskRequest {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
 }
+/// LeaveTaskRequest represents request of LeaveTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct LeaveTaskRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+}
 /// AnnounceHostRequest represents request of AnnounceHost.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -620,6 +632,29 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatTask"));
             self.inner.unary(req, path, codec).await
         }
+        /// LeaveTask releases task in scheduler.
+        pub async fn leave_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::LeaveTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/LeaveTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "LeaveTask"));
+            self.inner.unary(req, path, codec).await
+        }
         /// AnnounceHost announces host to scheduler.
         pub async fn announce_host(
             &mut self,
@@ -745,6 +780,11 @@ pub mod scheduler_server {
             tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
         >;
+        /// LeaveTask releases task in scheduler.
+        async fn leave_task(
+            &self,
+            request: tonic::Request<super::LeaveTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// AnnounceHost announces host to scheduler.
         async fn announce_host(
             &self,
@@ -1059,6 +1099,50 @@ pub mod scheduler_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = StatTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/LeaveTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct LeaveTaskSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::LeaveTaskRequest>
+                    for LeaveTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::LeaveTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move { (*inner).leave_task(request).await };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = LeaveTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
