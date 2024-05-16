@@ -35,6 +35,8 @@ type SchedulerClient interface {
 	ExchangePeer(ctx context.Context, in *ExchangePeerRequest, opts ...grpc.CallOption) (*ExchangePeerResponse, error)
 	// Checks information of task.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
+	// LeaveTask releases task in scheduler.
+	LeaveTask(ctx context.Context, in *LeaveTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// AnnounceHost announces host to scheduler.
 	AnnounceHost(ctx context.Context, in *AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
@@ -118,6 +120,15 @@ func (c *schedulerClient) StatTask(ctx context.Context, in *StatTaskRequest, opt
 	return out, nil
 }
 
+func (c *schedulerClient) LeaveTask(ctx context.Context, in *LeaveTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/LeaveTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *schedulerClient) AnnounceHost(ctx context.Context, in *AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/AnnounceHost", in, out, opts...)
@@ -182,6 +193,8 @@ type SchedulerServer interface {
 	ExchangePeer(context.Context, *ExchangePeerRequest) (*ExchangePeerResponse, error)
 	// Checks information of task.
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
+	// LeaveTask releases task in scheduler.
+	LeaveTask(context.Context, *LeaveTaskRequest) (*emptypb.Empty, error)
 	// AnnounceHost announces host to scheduler.
 	AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error)
 	// LeaveHost releases host in scheduler.
@@ -208,6 +221,9 @@ func (UnimplementedSchedulerServer) ExchangePeer(context.Context, *ExchangePeerR
 }
 func (UnimplementedSchedulerServer) StatTask(context.Context, *StatTaskRequest) (*v2.Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
+}
+func (UnimplementedSchedulerServer) LeaveTask(context.Context, *LeaveTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LeaveTask not implemented")
 }
 func (UnimplementedSchedulerServer) AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AnnounceHost not implemented")
@@ -328,6 +344,24 @@ func _Scheduler_StatTask_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scheduler_LeaveTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LeaveTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).LeaveTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/LeaveTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).LeaveTask(ctx, req.(*LeaveTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Scheduler_AnnounceHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AnnounceHostRequest)
 	if err := dec(in); err != nil {
@@ -412,6 +446,10 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StatTask",
 			Handler:    _Scheduler_StatTask_Handler,
+		},
+		{
+			MethodName: "LeaveTask",
+			Handler:    _Scheduler_LeaveTask_Handler,
 		},
 		{
 			MethodName: "AnnounceHost",
