@@ -1455,7 +1455,7 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 
 	oneofResponsePresent := false
 	switch v := m.Response.(type) {
-	case *DownloadPieceBackToSourceFailedRequest_Http:
+	case *DownloadPieceBackToSourceFailedRequest_Backend:
 		if v == nil {
 			err := DownloadPieceBackToSourceFailedRequestValidationError{
 				field:  "Response",
@@ -1469,11 +1469,11 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 		oneofResponsePresent = true
 
 		if all {
-			switch v := interface{}(m.GetHttp()).(type) {
+			switch v := interface{}(m.GetBackend()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
-						field:  "Http",
+						field:  "Backend",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1481,16 +1481,16 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
-						field:  "Http",
+						field:  "Backend",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetHttp()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetBackend()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return DownloadPieceBackToSourceFailedRequestValidationError{
-					field:  "Http",
+					field:  "Backend",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}

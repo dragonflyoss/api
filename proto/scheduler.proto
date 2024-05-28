@@ -105,7 +105,7 @@ message DownloadPieceBackToSourceFailedRequest {
   optional uint32 piece_number = 1;
 
   oneof response {
-    errordetails.v2.HTTP http = 2;
+    errordetails.v2.Backend backend = 2;
   }
 }
 

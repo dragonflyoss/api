@@ -35,31 +35,33 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on HTTP with the rules defined in the proto
-// definition for this message. If any rules are violated, the first error
-// encountered is returned, or nil if there are no violations.
-func (m *HTTP) Validate() error {
+// Validate checks the field values on Backend with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Backend) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on HTTP with the rules defined in the
+// ValidateAll checks the field values on Backend with the rules defined in the
 // proto definition for this message. If any rules are violated, the result is
-// a list of violation errors wrapped in HTTPMultiError, or nil if none found.
-func (m *HTTP) ValidateAll() error {
+// a list of violation errors wrapped in BackendMultiError, or nil if none found.
+func (m *Backend) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *HTTP) validate(all bool) error {
+func (m *Backend) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
+	// no validation rules for Message
+
 	// no validation rules for Header
 
 	if val := m.GetStatusCode(); val < 100 || val >= 599 {
-		err := HTTPValidationError{
+		err := BackendValidationError{
 			field:  "StatusCode",
 			reason: "value must be inside range [100, 599)",
 		}
@@ -70,18 +72,18 @@ func (m *HTTP) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return HTTPMultiError(errors)
+		return BackendMultiError(errors)
 	}
 
 	return nil
 }
 
-// HTTPMultiError is an error wrapping multiple validation errors returned by
-// HTTP.ValidateAll() if the designated constraints aren't met.
-type HTTPMultiError []error
+// BackendMultiError is an error wrapping multiple validation errors returned
+// by Backend.ValidateAll() if the designated constraints aren't met.
+type BackendMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m HTTPMultiError) Error() string {
+func (m BackendMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -90,11 +92,11 @@ func (m HTTPMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m HTTPMultiError) AllErrors() []error { return m }
+func (m BackendMultiError) AllErrors() []error { return m }
 
-// HTTPValidationError is the validation error returned by HTTP.Validate if the
-// designated constraints aren't met.
-type HTTPValidationError struct {
+// BackendValidationError is the validation error returned by Backend.Validate
+// if the designated constraints aren't met.
+type BackendValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -102,22 +104,22 @@ type HTTPValidationError struct {
 }
 
 // Field function returns field value.
-func (e HTTPValidationError) Field() string { return e.field }
+func (e BackendValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e HTTPValidationError) Reason() string { return e.reason }
+func (e BackendValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e HTTPValidationError) Cause() error { return e.cause }
+func (e BackendValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e HTTPValidationError) Key() bool { return e.key }
+func (e BackendValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e HTTPValidationError) ErrorName() string { return "HTTPValidationError" }
+func (e BackendValidationError) ErrorName() string { return "BackendValidationError" }
 
 // Error satisfies the builtin error interface
-func (e HTTPValidationError) Error() string {
+func (e BackendValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -129,14 +131,14 @@ func (e HTTPValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sHTTP.%s: %s%s",
+		"invalid %sBackend.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = HTTPValidationError{}
+var _ error = BackendValidationError{}
 
 var _ interface {
 	Field() string
@@ -144,4 +146,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = HTTPValidationError{}
+} = BackendValidationError{}

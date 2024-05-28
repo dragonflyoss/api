@@ -131,7 +131,7 @@ pub mod download_piece_back_to_source_failed_request {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
         #[prost(message, tag = "2")]
-        Http(super::super::super::errordetails::v2::Http),
+        Backend(super::super::super::errordetails::v2::Backend),
     }
 }
 /// AnnouncePeerRequest represents request of AnnouncePeer.

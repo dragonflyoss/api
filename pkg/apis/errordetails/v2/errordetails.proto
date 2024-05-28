@@ -22,11 +22,13 @@ import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/errordetails/v2;errordetails";
 
-// HTTP is error detail for HTTP protocol.
-message HTTP {
-  // HTTP Response Header.
-  map<string, string> header = 1;
-  // HTTP Status Code.
-  int32 status_code = 2 [(validate.rules).int32 = {gte: 100, lt: 599}];
+// Backend is error detail for Backend.
+message Backend {
+  // Backend error message.
+  string message = 1;
+  // Backend HTTP response header.
+  map<string, string> header = 2;
+  // Backend HTTP status code.
+  int32 status_code = 3 [(validate.rules).int32 = {gte: 100, lt: 599}];
 }
 
