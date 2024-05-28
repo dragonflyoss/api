@@ -110,7 +110,7 @@ message DownloadPieceBackToSourceFailedRequest {
   oneof response {
     option (validate.required) = true;
 
-    errordetails.v2.HTTP http = 2;
+    errordetails.v2.Backend backend = 2;
   }
 }
 
