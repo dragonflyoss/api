@@ -62,6 +62,8 @@ message DownResult{
   bool done = 5;
   // Task output. Used in recursive download.
   string output = 6;
+  // Task content length. Available range: [-1, n), -1 indicates unknown content length.
+  int64 content_length = 7 [(validate.rules).int64.gte = -1];
 }
 
 message StatTaskRequest{
