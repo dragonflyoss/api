@@ -67,10 +67,12 @@ message DownloadTaskResponse {
 
 // SyncPiecesRequest represents request of SyncPieces.
 message SyncPiecesRequest {
+  // Host id.
+  string host_id = 1;
   // Task id.
-  string task_id = 1;
+  string task_id = 2;
   // Interested piece numbers.
-  repeated uint32 interested_piece_numbers = 2;
+  repeated uint32 interested_piece_numbers = 3;
 }
 
 // SyncPiecesResponse represents response of SyncPieces.
@@ -85,10 +87,12 @@ message SyncPiecesResponse {
 
 // DownloadPieceRequest represents request of DownloadPiece.
 message DownloadPieceRequest{
+  // Host id.
+  string host_id = 1;
   // Task id.
-  string task_id = 1;
+  string task_id = 2;
   // Piece number.
-  uint32 piece_number = 2;
+  uint32 piece_number = 3;
 }
 
 // DownloadPieceResponse represents response of DownloadPieces.

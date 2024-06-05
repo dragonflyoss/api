@@ -73,11 +73,14 @@ pub mod download_task_response {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesRequest {
-    /// Task id.
+    /// Host id.
     #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
     /// Interested piece numbers.
-    #[prost(uint32, repeated, tag = "2")]
+    #[prost(uint32, repeated, tag = "3")]
     pub interested_piece_numbers: ::prost::alloc::vec::Vec<u32>,
 }
 /// SyncPiecesResponse represents response of SyncPieces.
@@ -100,11 +103,14 @@ pub struct SyncPiecesResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPieceRequest {
-    /// Task id.
+    /// Host id.
     #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
     /// Piece number.
-    #[prost(uint32, tag = "2")]
+    #[prost(uint32, tag = "3")]
     pub piece_number: u32,
 }
 /// DownloadPieceResponse represents response of DownloadPieces.

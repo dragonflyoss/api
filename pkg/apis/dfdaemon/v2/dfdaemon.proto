@@ -72,10 +72,12 @@ message DownloadTaskResponse {
 
 // SyncPiecesRequest represents request of SyncPieces.
 message SyncPiecesRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+  string task_id = 2 [(validate.rules).string.min_len = 1];
   // Interested piece numbers.
-  repeated uint32 interested_piece_numbers = 2 [(validate.rules).repeated = {min_items: 1}];
+  repeated uint32 interested_piece_numbers = 3 [(validate.rules).repeated = {min_items: 1}];
 }
 
 // SyncPiecesResponse represents response of SyncPieces.
@@ -90,10 +92,12 @@ message SyncPiecesResponse {
 
 // DownloadPieceRequest represents request of DownloadPiece.
 message DownloadPieceRequest{
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+  string task_id = 2 [(validate.rules).string.min_len = 1];
   // Piece number.
-  uint32 piece_number = 2;
+  uint32 piece_number = 3;
 }
 
 // DownloadPieceResponse represents response of DownloadPieces.
