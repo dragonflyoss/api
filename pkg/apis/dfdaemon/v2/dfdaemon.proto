@@ -19,6 +19,7 @@ syntax = "proto3";
 package dfdaemon.v2;
 
 import "pkg/apis/common/v2/common.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
 
@@ -27,7 +28,7 @@ option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v2;dfdaemon";
 // DownloadTaskRequest represents request of DownloadTask.
 message DownloadTaskRequest {
   // Download information.
-  common.v2.Download download = 1 [(validate.rules).message.required = true];
+  common.v2.DownloadTask download_task = 1 [(validate.rules).message.required = true];
 }
 
 // DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
@@ -106,18 +107,6 @@ message DownloadPieceResponse {
   common.v2.Piece piece = 1 [(validate.rules).message.required = true];
 }
 
-// DfdaemonUpload represents dfdaemon upload service.
-service DfdaemonUpload {
-  // DownloadTask downloads task from p2p network.
-  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
-
-  // SyncPieces syncs piece metadatas from remote peer.
-  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
-
-  // DownloadPiece downloads piece from the remote peer.
-  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
-}
-
 // UploadTaskRequest represents request of UploadTask.
 message UploadTaskRequest {
   // Task metadata.
@@ -136,6 +125,93 @@ message DeleteTaskRequest {
   string task_id = 1 [(validate.rules).string.min_len = 1];
 }
 
+// DownloadCacheTaskRequest represents request of DownloadCacheTask.
+message DownloadCacheTaskRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Tag is used to distinguish different cache tasks.
+  optional string tag = 3;
+  // Application of task.
+  optional string application = 4;
+  // Task piece length.
+  uint64 piece_length = 5 [(validate.rules).uint64.gte = 1];
+  // File path to be exported.
+  string output_path = 6 [(validate.rules).string = {min_len: 1}];
+  // Download timeout.
+  optional google.protobuf.Duration timeout = 7;
+}
+
+// DownloadCacheTaskStartedResponse represents task download started response of DownloadCacheTaskResponse.
+message DownloadCacheTaskStartedResponse {}
+
+// DownloadCacheTaskResponse represents response of DownloadCacheTask.
+message DownloadCacheTaskResponse {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+
+  oneof response {
+    option (validate.required) = true;
+
+    DownloadCacheTaskStartedResponse download_cache_task_started_response = 4;
+    DownloadPieceFinishedResponse download_piece_finished_response = 5;
+  }
+}
+
+// UploadCacheTaskRequest represents request of UploadCacheTask.
+message UploadCacheTaskRequest {
+  // Upload file path of cache task.
+  string path = 1 [(validate.rules).string = {min_len: 1}];
+  // Replica count of the persistent cache task.
+  uint64 persistent_replica_count = 2 [(validate.rules).uint64.gte = 1];
+  // Tag is used to distinguish different cache tasks.
+  optional string tag = 3;
+  // Application of task.
+  optional string application = 4;
+  // Task piece length.
+  uint64 piece_length = 5 [(validate.rules).uint64.gte = 1];
+  // Download timeout.
+  optional google.protobuf.Duration timeout = 6;
+}
+
+// StatCacheTaskRequest represents request of StatCacheTask.
+message StatCacheTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// DeleteCacheTaskRequest represents request of DeleteCacheTask.
+message DeleteCacheTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// DfdaemonUpload represents dfdaemon upload service.
+service DfdaemonUpload {
+  // DownloadTask downloads task from p2p network.
+  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
+
+  // SyncPieces syncs piece metadatas from remote peer.
+  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
+
+  // DownloadPiece downloads piece from the remote peer.
+  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
+
+  // DownloadCacheTask downloads cache task from p2p network.
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+
+  // StatCacheTask stats cache task information.
+  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+
+  // DeleteCacheTask deletes cache task from p2p network.
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
+}
+
 // DfdaemonDownload represents dfdaemon download service.
 service DfdaemonDownload {
   // DownloadTask downloads task from p2p network.
@@ -152,4 +228,16 @@ service DfdaemonDownload {
 
   // LeaveHost releases host in scheduler.
   rpc LeaveHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+
+  // DownloadCacheTask downloads cache task from p2p network.
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+
+  // UploadCacheTask uploads cache task to p2p network.
+  rpc UploadCacheTask(UploadCacheTaskRequest) returns(common.v2.CacheTask);
+
+  // StatCacheTask stats cache task information.
+  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+
+  // DeleteCacheTask deletes cache task from p2p network.
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
 }
