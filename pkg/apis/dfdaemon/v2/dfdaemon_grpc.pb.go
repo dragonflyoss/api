@@ -390,8 +390,8 @@ type DfdaemonDownloadClient interface {
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// LeaveHost releases host in scheduler.
-	LeaveHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteHost releases host in scheduler.
+	DeleteHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// DownloadCacheTask downloads cache task from p2p network.
 	DownloadCacheTask(ctx context.Context, in *DownloadCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonDownload_DownloadCacheTaskClient, error)
 	// UploadCacheTask uploads cache task to p2p network.
@@ -469,9 +469,9 @@ func (c *dfdaemonDownloadClient) DeleteTask(ctx context.Context, in *DeleteTaskR
 	return out, nil
 }
 
-func (c *dfdaemonDownloadClient) LeaveHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dfdaemonDownloadClient) DeleteHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/LeaveHost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/DeleteHost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -549,8 +549,8 @@ type DfdaemonDownloadServer interface {
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
-	// LeaveHost releases host in scheduler.
-	LeaveHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	// DeleteHost releases host in scheduler.
+	DeleteHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	// DownloadCacheTask downloads cache task from p2p network.
 	DownloadCacheTask(*DownloadCacheTaskRequest, DfdaemonDownload_DownloadCacheTaskServer) error
 	// UploadCacheTask uploads cache task to p2p network.
@@ -577,8 +577,8 @@ func (UnimplementedDfdaemonDownloadServer) StatTask(context.Context, *StatTaskRe
 func (UnimplementedDfdaemonDownloadServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
 }
-func (UnimplementedDfdaemonDownloadServer) LeaveHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LeaveHost not implemented")
+func (UnimplementedDfdaemonDownloadServer) DeleteHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteHost not implemented")
 }
 func (UnimplementedDfdaemonDownloadServer) DownloadCacheTask(*DownloadCacheTaskRequest, DfdaemonDownload_DownloadCacheTaskServer) error {
 	return status.Errorf(codes.Unimplemented, "method DownloadCacheTask not implemented")
@@ -679,20 +679,20 @@ func _DfdaemonDownload_DeleteTask_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DfdaemonDownload_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DfdaemonDownload_DeleteHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DfdaemonDownloadServer).LeaveHost(ctx, in)
+		return srv.(DfdaemonDownloadServer).DeleteHost(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/dfdaemon.v2.DfdaemonDownload/LeaveHost",
+		FullMethod: "/dfdaemon.v2.DfdaemonDownload/DeleteHost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonDownloadServer).LeaveHost(ctx, req.(*emptypb.Empty))
+		return srv.(DfdaemonDownloadServer).DeleteHost(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -792,8 +792,8 @@ var DfdaemonDownload_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DfdaemonDownload_DeleteTask_Handler,
 		},
 		{
-			MethodName: "LeaveHost",
-			Handler:    _DfdaemonDownload_LeaveHost_Handler,
+			MethodName: "DeleteHost",
+			Handler:    _DfdaemonDownload_DeleteHost_Handler,
 		},
 		{
 			MethodName: "UploadCacheTask",

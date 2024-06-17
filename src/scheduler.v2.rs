@@ -256,33 +256,11 @@ pub struct StatPeerRequest {
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
 }
-/// TODO exchange peer request definition.
-/// ExchangePeerRequest represents request of ExchangePeer.
+/// DeletePeerRequest represents request of DeletePeer.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ExchangePeerRequest {
-    /// Host id.
-    #[prost(string, tag = "1")]
-    pub host_id: ::prost::alloc::string::String,
-    /// Task id.
-    #[prost(string, tag = "2")]
-    pub task_id: ::prost::alloc::string::String,
-    /// Peer id.
-    #[prost(string, tag = "3")]
-    pub peer_id: ::prost::alloc::string::String,
-}
-/// TODO exchange peer response definition.
-/// ExchangePeerResponse represents response of ExchangePeer.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ExchangePeerResponse {}
-/// LeavePeerRequest represents request of LeavePeer.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct LeavePeerRequest {
+pub struct DeletePeerRequest {
     /// Host id.
     #[prost(string, tag = "1")]
     pub host_id: ::prost::alloc::string::String,
@@ -302,11 +280,11 @@ pub struct StatTaskRequest {
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
 }
-/// LeaveTaskRequest represents request of LeaveTask.
+/// DeleteTaskRequest represents request of DeleteTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct LeaveTaskRequest {
+pub struct DeleteTaskRequest {
     /// Host id.
     #[prost(string, tag = "1")]
     pub host_id: ::prost::alloc::string::String,
@@ -323,11 +301,11 @@ pub struct AnnounceHostRequest {
     #[prost(message, optional, tag = "1")]
     pub host: ::core::option::Option<super::super::common::v2::Host>,
 }
-/// LeaveHostRequest represents request of LeaveHost.
+/// DeleteHostRequest represents request of DeleteHost.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct LeaveHostRequest {
+pub struct DeleteHostRequest {
     /// Host id.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
@@ -556,10 +534,10 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatPeer"));
             self.inner.unary(req, path, codec).await
         }
-        /// LeavePeer releases peer in scheduler.
-        pub async fn leave_peer(
+        /// DeletePeer releases peer in scheduler.
+        pub async fn delete_peer(
             &mut self,
-            request: impl tonic::IntoRequest<super::LeavePeerRequest>,
+            request: impl tonic::IntoRequest<super::DeletePeerRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
@@ -572,38 +550,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.v2.Scheduler/LeavePeer",
+                "/scheduler.v2.Scheduler/DeletePeer",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "LeavePeer"));
-            self.inner.unary(req, path, codec).await
-        }
-        /// TODO exchange peer api definition.
-        /// ExchangePeer exchanges peer information.
-        pub async fn exchange_peer(
-            &mut self,
-            request: impl tonic::IntoRequest<super::ExchangePeerRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ExchangePeerResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.v2.Scheduler/ExchangePeer",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "ExchangePeer"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeletePeer"));
             self.inner.unary(req, path, codec).await
         }
         /// Checks information of task.
@@ -632,10 +583,10 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatTask"));
             self.inner.unary(req, path, codec).await
         }
-        /// LeaveTask releases task in scheduler.
-        pub async fn leave_task(
+        /// DeleteTask releases task in scheduler.
+        pub async fn delete_task(
             &mut self,
-            request: impl tonic::IntoRequest<super::LeaveTaskRequest>,
+            request: impl tonic::IntoRequest<super::DeleteTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
@@ -648,11 +599,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.v2.Scheduler/LeaveTask",
+                "/scheduler.v2.Scheduler/DeleteTask",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "LeaveTask"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteTask"));
             self.inner.unary(req, path, codec).await
         }
         /// AnnounceHost announces host to scheduler.
@@ -678,10 +629,10 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "AnnounceHost"));
             self.inner.unary(req, path, codec).await
         }
-        /// LeaveHost releases host in scheduler.
-        pub async fn leave_host(
+        /// DeleteHost releases host in scheduler.
+        pub async fn delete_host(
             &mut self,
-            request: impl tonic::IntoRequest<super::LeaveHostRequest>,
+            request: impl tonic::IntoRequest<super::DeleteHostRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
@@ -694,11 +645,11 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.v2.Scheduler/LeaveHost",
+                "/scheduler.v2.Scheduler/DeleteHost",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "LeaveHost"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteHost"));
             self.inner.unary(req, path, codec).await
         }
         /// SyncProbes sync probes of the host.
@@ -758,20 +709,11 @@ pub mod scheduler_server {
             tonic::Response<super::super::super::common::v2::Peer>,
             tonic::Status,
         >;
-        /// LeavePeer releases peer in scheduler.
-        async fn leave_peer(
+        /// DeletePeer releases peer in scheduler.
+        async fn delete_peer(
             &self,
-            request: tonic::Request<super::LeavePeerRequest>,
+            request: tonic::Request<super::DeletePeerRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
-        /// TODO exchange peer api definition.
-        /// ExchangePeer exchanges peer information.
-        async fn exchange_peer(
-            &self,
-            request: tonic::Request<super::ExchangePeerRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ExchangePeerResponse>,
-            tonic::Status,
-        >;
         /// Checks information of task.
         async fn stat_task(
             &self,
@@ -780,20 +722,20 @@ pub mod scheduler_server {
             tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
         >;
-        /// LeaveTask releases task in scheduler.
-        async fn leave_task(
+        /// DeleteTask releases task in scheduler.
+        async fn delete_task(
             &self,
-            request: tonic::Request<super::LeaveTaskRequest>,
+            request: tonic::Request<super::DeleteTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// AnnounceHost announces host to scheduler.
         async fn announce_host(
             &self,
             request: tonic::Request<super::AnnounceHostRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
-        /// LeaveHost releases host in scheduler.
-        async fn leave_host(
+        /// DeleteHost releases host in scheduler.
+        async fn delete_host(
             &self,
-            request: tonic::Request<super::LeaveHostRequest>,
+            request: tonic::Request<super::DeleteHostRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Server streaming response type for the SyncProbes method.
         type SyncProbesStream: futures_core::Stream<
@@ -980,13 +922,13 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.v2.Scheduler/LeavePeer" => {
+                "/scheduler.v2.Scheduler/DeletePeer" => {
                     #[allow(non_camel_case_types)]
-                    struct LeavePeerSvc<T: Scheduler>(pub Arc<T>);
+                    struct DeletePeerSvc<T: Scheduler>(pub Arc<T>);
                     impl<
                         T: Scheduler,
-                    > tonic::server::UnaryService<super::LeavePeerRequest>
-                    for LeavePeerSvc<T> {
+                    > tonic::server::UnaryService<super::DeletePeerRequest>
+                    for DeletePeerSvc<T> {
                         type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
@@ -994,10 +936,10 @@ pub mod scheduler_server {
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::LeavePeerRequest>,
+                            request: tonic::Request<super::DeletePeerRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).leave_peer(request).await };
+                            let fut = async move { (*inner).delete_peer(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1008,53 +950,7 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = LeavePeerSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/scheduler.v2.Scheduler/ExchangePeer" => {
-                    #[allow(non_camel_case_types)]
-                    struct ExchangePeerSvc<T: Scheduler>(pub Arc<T>);
-                    impl<
-                        T: Scheduler,
-                    > tonic::server::UnaryService<super::ExchangePeerRequest>
-                    for ExchangePeerSvc<T> {
-                        type Response = super::ExchangePeerResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::ExchangePeerRequest>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                (*inner).exchange_peer(request).await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let inner = inner.0;
-                        let method = ExchangePeerSvc(inner);
+                        let method = DeletePeerSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -1114,13 +1010,13 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.v2.Scheduler/LeaveTask" => {
+                "/scheduler.v2.Scheduler/DeleteTask" => {
                     #[allow(non_camel_case_types)]
-                    struct LeaveTaskSvc<T: Scheduler>(pub Arc<T>);
+                    struct DeleteTaskSvc<T: Scheduler>(pub Arc<T>);
                     impl<
                         T: Scheduler,
-                    > tonic::server::UnaryService<super::LeaveTaskRequest>
-                    for LeaveTaskSvc<T> {
+                    > tonic::server::UnaryService<super::DeleteTaskRequest>
+                    for DeleteTaskSvc<T> {
                         type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
@@ -1128,10 +1024,10 @@ pub mod scheduler_server {
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::LeaveTaskRequest>,
+                            request: tonic::Request<super::DeleteTaskRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).leave_task(request).await };
+                            let fut = async move { (*inner).delete_task(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1142,7 +1038,7 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = LeaveTaskSvc(inner);
+                        let method = DeleteTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -1204,13 +1100,13 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.v2.Scheduler/LeaveHost" => {
+                "/scheduler.v2.Scheduler/DeleteHost" => {
                     #[allow(non_camel_case_types)]
-                    struct LeaveHostSvc<T: Scheduler>(pub Arc<T>);
+                    struct DeleteHostSvc<T: Scheduler>(pub Arc<T>);
                     impl<
                         T: Scheduler,
-                    > tonic::server::UnaryService<super::LeaveHostRequest>
-                    for LeaveHostSvc<T> {
+                    > tonic::server::UnaryService<super::DeleteHostRequest>
+                    for DeleteHostSvc<T> {
                         type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
@@ -1218,10 +1114,10 @@ pub mod scheduler_server {
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::LeaveHostRequest>,
+                            request: tonic::Request<super::DeleteHostRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).leave_host(request).await };
+                            let fut = async move { (*inner).delete_host(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1232,7 +1128,7 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = LeaveHostSvc(inner);
+                        let method = DeleteHostSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
