@@ -359,8 +359,8 @@ message Build {
   optional string platform = 5;
 }
 
-// DownloadTask information.
-message DownloadTask {
+// Download information.
+message Download {
   // Download url.
   string url = 1;
   // Digest of the task digest, for example :xxx or sha256:yyy.

@@ -386,11 +386,11 @@ pub struct Build {
     #[prost(string, optional, tag = "5")]
     pub platform: ::core::option::Option<::prost::alloc::string::String>,
 }
-/// DownloadTask information.
+/// Download information.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadTask {
+pub struct Download {
     /// Download url.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,

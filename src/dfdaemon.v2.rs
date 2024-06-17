@@ -5,7 +5,7 @@
 pub struct DownloadTaskRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
-    pub download_task: ::core::option::Option<super::super::common::v2::DownloadTask>,
+    pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
 /// DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
