@@ -40,6 +40,16 @@ type SchedulerClient interface {
 	DeleteHost(ctx context.Context, in *DeleteHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// SyncProbes sync probes of the host.
 	SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error)
+	// AnnounceCachePeer announces cache peer to scheduler.
+	AnnounceCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnounceCachePeerClient, error)
+	// Checks information of cache peer.
+	StatCachePeer(ctx context.Context, in *StatCachePeerRequest, opts ...grpc.CallOption) (*v2.CachePeer, error)
+	// DeleteCachePeer releases cache peer in scheduler.
+	DeleteCachePeer(ctx context.Context, in *DeleteCachePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Checks information of cache task.
+	StatCacheTask(ctx context.Context, in *StatCacheTaskRequest, opts ...grpc.CallOption) (*v2.CacheTask, error)
+	// DeleteCacheTask releases cache task in scheduler.
+	DeleteCacheTask(ctx context.Context, in *DeleteCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type schedulerClient struct {
@@ -166,6 +176,73 @@ func (x *schedulerSyncProbesClient) Recv() (*SyncProbesResponse, error) {
 	return m, nil
 }
 
+func (c *schedulerClient) AnnounceCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnounceCachePeerClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[2], "/scheduler.v2.Scheduler/AnnounceCachePeer", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &schedulerAnnounceCachePeerClient{stream}
+	return x, nil
+}
+
+type Scheduler_AnnounceCachePeerClient interface {
+	Send(*AnnounceCachePeerRequest) error
+	Recv() (*AnnounceCachePeerResponse, error)
+	grpc.ClientStream
+}
+
+type schedulerAnnounceCachePeerClient struct {
+	grpc.ClientStream
+}
+
+func (x *schedulerAnnounceCachePeerClient) Send(m *AnnounceCachePeerRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *schedulerAnnounceCachePeerClient) Recv() (*AnnounceCachePeerResponse, error) {
+	m := new(AnnounceCachePeerResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *schedulerClient) StatCachePeer(ctx context.Context, in *StatCachePeerRequest, opts ...grpc.CallOption) (*v2.CachePeer, error) {
+	out := new(v2.CachePeer)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatCachePeer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulerClient) DeleteCachePeer(ctx context.Context, in *DeleteCachePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeleteCachePeer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulerClient) StatCacheTask(ctx context.Context, in *StatCacheTaskRequest, opts ...grpc.CallOption) (*v2.CacheTask, error) {
+	out := new(v2.CacheTask)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatCacheTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulerClient) DeleteCacheTask(ctx context.Context, in *DeleteCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeleteCacheTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SchedulerServer is the server API for Scheduler service.
 // All implementations should embed UnimplementedSchedulerServer
 // for forward compatibility
@@ -186,6 +263,16 @@ type SchedulerServer interface {
 	DeleteHost(context.Context, *DeleteHostRequest) (*emptypb.Empty, error)
 	// SyncProbes sync probes of the host.
 	SyncProbes(Scheduler_SyncProbesServer) error
+	// AnnounceCachePeer announces cache peer to scheduler.
+	AnnounceCachePeer(Scheduler_AnnounceCachePeerServer) error
+	// Checks information of cache peer.
+	StatCachePeer(context.Context, *StatCachePeerRequest) (*v2.CachePeer, error)
+	// DeleteCachePeer releases cache peer in scheduler.
+	DeleteCachePeer(context.Context, *DeleteCachePeerRequest) (*emptypb.Empty, error)
+	// Checks information of cache task.
+	StatCacheTask(context.Context, *StatCacheTaskRequest) (*v2.CacheTask, error)
+	// DeleteCacheTask releases cache task in scheduler.
+	DeleteCacheTask(context.Context, *DeleteCacheTaskRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedSchedulerServer should be embedded to have forward compatible implementations.
@@ -215,6 +302,21 @@ func (UnimplementedSchedulerServer) DeleteHost(context.Context, *DeleteHostReque
 }
 func (UnimplementedSchedulerServer) SyncProbes(Scheduler_SyncProbesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncProbes not implemented")
+}
+func (UnimplementedSchedulerServer) AnnounceCachePeer(Scheduler_AnnounceCachePeerServer) error {
+	return status.Errorf(codes.Unimplemented, "method AnnounceCachePeer not implemented")
+}
+func (UnimplementedSchedulerServer) StatCachePeer(context.Context, *StatCachePeerRequest) (*v2.CachePeer, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatCachePeer not implemented")
+}
+func (UnimplementedSchedulerServer) DeleteCachePeer(context.Context, *DeleteCachePeerRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCachePeer not implemented")
+}
+func (UnimplementedSchedulerServer) StatCacheTask(context.Context, *StatCacheTaskRequest) (*v2.CacheTask, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatCacheTask not implemented")
+}
+func (UnimplementedSchedulerServer) DeleteCacheTask(context.Context, *DeleteCacheTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCacheTask not implemented")
 }
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
@@ -388,6 +490,104 @@ func (x *schedulerSyncProbesServer) Recv() (*SyncProbesRequest, error) {
 	return m, nil
 }
 
+func _Scheduler_AnnounceCachePeer_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SchedulerServer).AnnounceCachePeer(&schedulerAnnounceCachePeerServer{stream})
+}
+
+type Scheduler_AnnounceCachePeerServer interface {
+	Send(*AnnounceCachePeerResponse) error
+	Recv() (*AnnounceCachePeerRequest, error)
+	grpc.ServerStream
+}
+
+type schedulerAnnounceCachePeerServer struct {
+	grpc.ServerStream
+}
+
+func (x *schedulerAnnounceCachePeerServer) Send(m *AnnounceCachePeerResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *schedulerAnnounceCachePeerServer) Recv() (*AnnounceCachePeerRequest, error) {
+	m := new(AnnounceCachePeerRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func _Scheduler_StatCachePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatCachePeerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).StatCachePeer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/StatCachePeer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).StatCachePeer(ctx, req.(*StatCachePeerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduler_DeleteCachePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCachePeerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).DeleteCachePeer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/DeleteCachePeer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).DeleteCachePeer(ctx, req.(*DeleteCachePeerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduler_StatCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatCacheTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).StatCacheTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/StatCacheTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).StatCacheTask(ctx, req.(*StatCacheTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduler_DeleteCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCacheTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).DeleteCacheTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/DeleteCacheTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).DeleteCacheTask(ctx, req.(*DeleteCacheTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scheduler_ServiceDesc is the grpc.ServiceDesc for Scheduler service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -419,6 +619,22 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "DeleteHost",
 			Handler:    _Scheduler_DeleteHost_Handler,
 		},
+		{
+			MethodName: "StatCachePeer",
+			Handler:    _Scheduler_StatCachePeer_Handler,
+		},
+		{
+			MethodName: "DeleteCachePeer",
+			Handler:    _Scheduler_DeleteCachePeer_Handler,
+		},
+		{
+			MethodName: "StatCacheTask",
+			Handler:    _Scheduler_StatCacheTask_Handler,
+		},
+		{
+			MethodName: "DeleteCacheTask",
+			Handler:    _Scheduler_DeleteCacheTask_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
@@ -430,6 +646,12 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "SyncProbes",
 			Handler:       _Scheduler_SyncProbes_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "AnnounceCachePeer",
+			Handler:       _Scheduler_AnnounceCachePeer_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

@@ -43,8 +43,8 @@ message DownloadPeerBackToSourceStartedRequest {
   optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
-// RescheduleRequest represents reschedule request of AnnouncePeerRequest.
-message RescheduleRequest {
+// ReschedulePeerRequest represents reschedule request of AnnouncePeerRequest.
+message ReschedulePeerRequest {
   // Candidate parent ids.
   repeated common.v2.Peer candidate_parents = 1;
 
@@ -129,7 +129,7 @@ message AnnouncePeerRequest {
     RegisterPeerRequest register_peer_request = 4;
     DownloadPeerStartedRequest download_peer_started_request = 5;
     DownloadPeerBackToSourceStartedRequest download_peer_back_to_source_started_request = 6;
-    RescheduleRequest reschedule_request = 7;
+    ReschedulePeerRequest reschedule_peer_request = 7;
     DownloadPeerFinishedRequest download_peer_finished_request = 8;
     DownloadPeerBackToSourceFinishedRequest download_peer_back_to_source_finished_request = 9;
     DownloadPeerFailedRequest download_peer_failed_request = 10;
@@ -148,7 +148,7 @@ message EmptyTaskResponse {
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 message NormalTaskResponse {
   // Candidate parents.
-  repeated common.v2.Peer candidate_parents = 1 [(validate.rules).repeated = {min_items: 1}];
+  repeated common.v2.Peer candidate_parents = 1 [(validate.rules).repeated.min_items = 1];
 }
 
 // NeedBackToSourceResponse represents need back-to-source response of AnnouncePeerResponse.
@@ -191,7 +191,7 @@ message DeletePeerRequest {
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest {
   // Task id.
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string task_id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // DeleteTaskRequest represents request of DeleteTask.
@@ -211,7 +211,7 @@ message AnnounceHostRequest {
 // DeleteHostRequest represents request of DeleteHost.
 message DeleteHostRequest{
   // Host id.
-  string id = 1 [(validate.rules).string.min_len = 1];
+  string host_id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // ProbeStartedRequest represents started request of SyncProbesRequest.
@@ -268,6 +268,125 @@ message SyncProbesResponse {
   repeated common.v2.Host hosts = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
 }
 
+// RegisterCachePeerRequest represents cache peer registered request of AnnounceCachePeerRequest.
+message RegisterCachePeerRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Tag is used to distinguish different cache tasks.
+  optional string tag = 3;
+  // Application of task.
+  optional string application = 4;
+  // Task piece length.
+  uint64 piece_length = 5 [(validate.rules).uint64.gte = 1];
+  // File path to be exported.
+  string output_path = 6 [(validate.rules).string.min_len = 1];
+  // Download timeout.
+  optional google.protobuf.Duration timeout = 7;
+}
+
+// DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
+message DownloadCachePeerStartedRequest {
+}
+
+// RescheduleCachePeerRequest represents reschedule request of AnnounceCachePeerRequest.
+message RescheduleCachePeerRequest {
+  // Candidate parent ids.
+  repeated common.v2.CachePeer candidate_parents = 1;
+
+  // The description of the reschedule reason.
+  optional string description = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+}
+
+// DownloadCachePeerFinishedRequest represents cache peer download finished request of AnnounceCachePeerRequest.
+message DownloadCachePeerFinishedRequest {
+  // Total piece count.
+  uint32 piece_count = 1;
+}
+
+// DownloadCachePeerFailedRequest represents cache peer download failed request of AnnounceCachePeerRequest.
+message DownloadCachePeerFailedRequest {
+  // The description of the download failed.
+  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+}
+
+// AnnounceCachePeerRequest represents request of AnnounceCachePeer.
+message AnnounceCachePeerRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+
+  oneof request {
+    option (validate.required) = true;
+
+    RegisterCachePeerRequest register_cache_peer_request = 4;
+    DownloadCachePeerStartedRequest download_cache_peer_started_request = 5;
+    RescheduleCachePeerRequest reschedule_cache_peer_request = 6;
+    DownloadCachePeerFinishedRequest download_cache_peer_finished_request = 7;
+    DownloadCachePeerFailedRequest download_cache_peer_failed_request = 8;
+    DownloadPieceFinishedRequest download_piece_finished_request = 9;
+    DownloadPieceFailedRequest download_piece_failed_request = 10;
+  }
+}
+
+// EmptyCacheTaskResponse represents empty cache task response of AnnounceCachePeerResponse.
+message EmptyCacheTaskResponse {
+}
+
+// NormalCacheTaskResponse represents normal cache task response of AnnounceCachePeerResponse.
+message NormalCacheTaskResponse {
+  // Candidate parents.
+  repeated common.v2.CachePeer candidate_parents = 1 [(validate.rules).repeated.min_items = 1];
+}
+
+// AnnounceCachePeerResponse represents response of AnnounceCachePeer.
+message AnnounceCachePeerResponse {
+  oneof response {
+    option (validate.required) = true;
+
+    EmptyCacheTaskResponse empty_task_response = 1;
+    NormalCacheTaskResponse normal_task_response = 2;
+  }
+}
+
+// StatCachePeerRequest represents request of StatCachePeer.
+message StatCachePeerRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+}
+
+// DeleteCachePeerRequest represents request of DeleteCachePeer.
+message DeleteCachePeerRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+}
+
+// StatCacheTaskRequest represents request of StatCacheTask.
+message StatCacheTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// DeleteCacheTaskRequest represents request of DeleteCacheTask.
+message DeleteCacheTaskRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+}
+
 // Scheduler RPC Service.
 service Scheduler {
   // AnnouncePeer announces peer to scheduler.
@@ -293,4 +412,19 @@ service Scheduler {
 
   // SyncProbes sync probes of the host.
   rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);
+
+  // AnnounceCachePeer announces cache peer to scheduler.
+  rpc AnnounceCachePeer(stream AnnounceCachePeerRequest) returns(stream AnnounceCachePeerResponse);
+
+  // Checks information of cache peer.
+  rpc StatCachePeer(StatCachePeerRequest)returns(common.v2.CachePeer);
+
+  // DeleteCachePeer releases cache peer in scheduler.
+  rpc DeleteCachePeer(DeleteCachePeerRequest)returns(google.protobuf.Empty);
+
+  // Checks information of cache task.
+  rpc StatCacheTask(StatCacheTaskRequest)returns(common.v2.CacheTask);
+
+  // DeleteCacheTask releases cache task in scheduler.
+  rpc DeleteCacheTask(DeleteCacheTaskRequest)returns(google.protobuf.Empty);
 }

@@ -138,7 +138,7 @@ message DownloadCacheTaskRequest {
   // Task piece length.
   uint64 piece_length = 5 [(validate.rules).uint64.gte = 1];
   // File path to be exported.
-  string output_path = 6 [(validate.rules).string = {min_len: 1}];
+  string output_path = 6 [(validate.rules).string.min_len = 1];
   // Download timeout.
   optional google.protobuf.Duration timeout = 7;
 }
