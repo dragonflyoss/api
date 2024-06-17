@@ -365,8 +365,8 @@ message Build {
   optional string platform = 5;
 }
 
-// DownloadTask information.
-message DownloadTask {
+// Download information.
+message Download {
   // Download url.
   string url = 1 [(validate.rules).string.uri = true];
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.

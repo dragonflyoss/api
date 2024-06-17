@@ -5,7 +5,7 @@
 pub struct RegisterPeerRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
-    pub download_task: ::core::option::Option<super::super::common::v2::DownloadTask>,
+    pub download: ::core::option::Option<super::super::common::v2::Download>,
 }
 /// DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]

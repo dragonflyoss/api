@@ -30,7 +30,7 @@ option go_package = "d7y.io/api/v2/pkg/apis/scheduler/v2;scheduler";
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {
   // Download information.
-  common.v2.DownloadTask download_task = 1 [(validate.rules).message.required = true];
+  common.v2.Download download = 1 [(validate.rules).message.required = true];
 }
 
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.

@@ -25,7 +25,7 @@ import "google/protobuf/empty.proto";
 // DownloadTaskRequest represents request of DownloadTask.
 message DownloadTaskRequest {
   // Download information.
-  common.v2.DownloadTask download_task = 1;
+  common.v2.Download download = 1;
 }
 
 // DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
