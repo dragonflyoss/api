@@ -226,8 +226,8 @@ service DfdaemonDownload {
   // DeleteTask deletes task from p2p network.
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
 
-  // LeaveHost releases host in scheduler.
-  rpc LeaveHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+  // DeleteHost releases host in scheduler.
+  rpc DeleteHost(google.protobuf.Empty)returns(google.protobuf.Empty);
 
   // DownloadCacheTask downloads cache task from p2p network.
   rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);

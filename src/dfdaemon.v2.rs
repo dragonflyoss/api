@@ -649,8 +649,8 @@ pub mod dfdaemon_download_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "DeleteTask"));
             self.inner.unary(req, path, codec).await
         }
-        /// LeaveHost releases host in scheduler.
-        pub async fn leave_host(
+        /// DeleteHost releases host in scheduler.
+        pub async fn delete_host(
             &mut self,
             request: impl tonic::IntoRequest<()>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
@@ -665,11 +665,11 @@ pub mod dfdaemon_download_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.v2.DfdaemonDownload/LeaveHost",
+                "/dfdaemon.v2.DfdaemonDownload/DeleteHost",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "LeaveHost"));
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "DeleteHost"));
             self.inner.unary(req, path, codec).await
         }
         /// DownloadCacheTask downloads cache task from p2p network.
@@ -1287,8 +1287,8 @@ pub mod dfdaemon_download_server {
             &self,
             request: tonic::Request<super::DeleteTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
-        /// LeaveHost releases host in scheduler.
-        async fn leave_host(
+        /// DeleteHost releases host in scheduler.
+        async fn delete_host(
             &self,
             request: tonic::Request<()>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
@@ -1546,11 +1546,11 @@ pub mod dfdaemon_download_server {
                     };
                     Box::pin(fut)
                 }
-                "/dfdaemon.v2.DfdaemonDownload/LeaveHost" => {
+                "/dfdaemon.v2.DfdaemonDownload/DeleteHost" => {
                     #[allow(non_camel_case_types)]
-                    struct LeaveHostSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    struct DeleteHostSvc<T: DfdaemonDownload>(pub Arc<T>);
                     impl<T: DfdaemonDownload> tonic::server::UnaryService<()>
-                    for LeaveHostSvc<T> {
+                    for DeleteHostSvc<T> {
                         type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
@@ -1558,7 +1558,7 @@ pub mod dfdaemon_download_server {
                         >;
                         fn call(&mut self, request: tonic::Request<()>) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).leave_host(request).await };
+                            let fut = async move { (*inner).delete_host(request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1569,7 +1569,7 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = LeaveHostSvc(inner);
+                        let method = DeleteHostSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

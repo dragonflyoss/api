@@ -178,24 +178,8 @@ message StatPeerRequest {
   string peer_id = 3 [(validate.rules).string.min_len = 1];
 }
 
-// TODO exchange peer request definition.
-// ExchangePeerRequest represents request of ExchangePeer.
-message ExchangePeerRequest {
-  // Host id.
-  string host_id = 1 [(validate.rules).string.min_len = 1];
-  // Task id.
-  string task_id = 2 [(validate.rules).string.min_len = 1];
-  // Peer id.
-  string peer_id = 3 [(validate.rules).string.min_len = 1];
-}
-
-// TODO exchange peer response definition.
-// ExchangePeerResponse represents response of ExchangePeer.
-message ExchangePeerResponse {
-}
-
-// LeavePeerRequest represents request of LeavePeer.
-message LeavePeerRequest {
+// DeletePeerRequest represents request of DeletePeer.
+message DeletePeerRequest {
   // Host id.
   string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
@@ -210,8 +194,8 @@ message StatTaskRequest {
   string id = 1 [(validate.rules).string.min_len = 1];
 }
 
-// LeaveTaskRequest represents request of LeaveTask.
-message LeaveTaskRequest {
+// DeleteTaskRequest represents request of DeleteTask.
+message DeleteTaskRequest {
   // Host id.
   string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
@@ -224,8 +208,8 @@ message AnnounceHostRequest {
   common.v2.Host host = 1 [(validate.rules).message.required = true];
 }
 
-// LeaveHostRequest represents request of LeaveHost.
-message LeaveHostRequest{
+// DeleteHostRequest represents request of DeleteHost.
+message DeleteHostRequest{
   // Host id.
   string id = 1 [(validate.rules).string.min_len = 1];
 }
@@ -292,24 +276,20 @@ service Scheduler {
   // Checks information of peer.
   rpc StatPeer(StatPeerRequest)returns(common.v2.Peer);
 
-  // LeavePeer releases peer in scheduler.
-  rpc LeavePeer(LeavePeerRequest)returns(google.protobuf.Empty);
-
-  // TODO exchange peer api definition.
-  // ExchangePeer exchanges peer information.
-  rpc ExchangePeer(ExchangePeerRequest)returns(ExchangePeerResponse);
+  // DeletePeer releases peer in scheduler.
+  rpc DeletePeer(DeletePeerRequest)returns(google.protobuf.Empty);
 
   // Checks information of task.
   rpc StatTask(StatTaskRequest)returns(common.v2.Task);
 
-  // LeaveTask releases task in scheduler.
-  rpc LeaveTask(LeaveTaskRequest)returns(google.protobuf.Empty);
+  // DeleteTask releases task in scheduler.
+  rpc DeleteTask(DeleteTaskRequest)returns(google.protobuf.Empty);
 
   // AnnounceHost announces host to scheduler.
   rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);
 
-  // LeaveHost releases host in scheduler.
-  rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
+  // DeleteHost releases host in scheduler.
+  rpc DeleteHost(DeleteHostRequest)returns(google.protobuf.Empty);
 
   // SyncProbes sync probes of the host.
   rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);

@@ -28,19 +28,16 @@ type SchedulerClient interface {
 	AnnouncePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnouncePeerClient, error)
 	// Checks information of peer.
 	StatPeer(ctx context.Context, in *StatPeerRequest, opts ...grpc.CallOption) (*v2.Peer, error)
-	// LeavePeer releases peer in scheduler.
-	LeavePeer(ctx context.Context, in *LeavePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// TODO exchange peer api definition.
-	// ExchangePeer exchanges peer information.
-	ExchangePeer(ctx context.Context, in *ExchangePeerRequest, opts ...grpc.CallOption) (*ExchangePeerResponse, error)
+	// DeletePeer releases peer in scheduler.
+	DeletePeer(ctx context.Context, in *DeletePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// Checks information of task.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
-	// LeaveTask releases task in scheduler.
-	LeaveTask(ctx context.Context, in *LeaveTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteTask releases task in scheduler.
+	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// AnnounceHost announces host to scheduler.
 	AnnounceHost(ctx context.Context, in *AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// LeaveHost releases host in scheduler.
-	LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteHost releases host in scheduler.
+	DeleteHost(ctx context.Context, in *DeleteHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// SyncProbes sync probes of the host.
 	SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error)
 }
@@ -93,18 +90,9 @@ func (c *schedulerClient) StatPeer(ctx context.Context, in *StatPeerRequest, opt
 	return out, nil
 }
 
-func (c *schedulerClient) LeavePeer(ctx context.Context, in *LeavePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *schedulerClient) DeletePeer(ctx context.Context, in *DeletePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/LeavePeer", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *schedulerClient) ExchangePeer(ctx context.Context, in *ExchangePeerRequest, opts ...grpc.CallOption) (*ExchangePeerResponse, error) {
-	out := new(ExchangePeerResponse)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/ExchangePeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeletePeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -120,9 +108,9 @@ func (c *schedulerClient) StatTask(ctx context.Context, in *StatTaskRequest, opt
 	return out, nil
 }
 
-func (c *schedulerClient) LeaveTask(ctx context.Context, in *LeaveTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *schedulerClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/LeaveTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeleteTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -138,9 +126,9 @@ func (c *schedulerClient) AnnounceHost(ctx context.Context, in *AnnounceHostRequ
 	return out, nil
 }
 
-func (c *schedulerClient) LeaveHost(ctx context.Context, in *LeaveHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *schedulerClient) DeleteHost(ctx context.Context, in *DeleteHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/LeaveHost", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeleteHost", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -186,19 +174,16 @@ type SchedulerServer interface {
 	AnnouncePeer(Scheduler_AnnouncePeerServer) error
 	// Checks information of peer.
 	StatPeer(context.Context, *StatPeerRequest) (*v2.Peer, error)
-	// LeavePeer releases peer in scheduler.
-	LeavePeer(context.Context, *LeavePeerRequest) (*emptypb.Empty, error)
-	// TODO exchange peer api definition.
-	// ExchangePeer exchanges peer information.
-	ExchangePeer(context.Context, *ExchangePeerRequest) (*ExchangePeerResponse, error)
+	// DeletePeer releases peer in scheduler.
+	DeletePeer(context.Context, *DeletePeerRequest) (*emptypb.Empty, error)
 	// Checks information of task.
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
-	// LeaveTask releases task in scheduler.
-	LeaveTask(context.Context, *LeaveTaskRequest) (*emptypb.Empty, error)
+	// DeleteTask releases task in scheduler.
+	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
 	// AnnounceHost announces host to scheduler.
 	AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error)
-	// LeaveHost releases host in scheduler.
-	LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error)
+	// DeleteHost releases host in scheduler.
+	DeleteHost(context.Context, *DeleteHostRequest) (*emptypb.Empty, error)
 	// SyncProbes sync probes of the host.
 	SyncProbes(Scheduler_SyncProbesServer) error
 }
@@ -213,23 +198,20 @@ func (UnimplementedSchedulerServer) AnnouncePeer(Scheduler_AnnouncePeerServer) e
 func (UnimplementedSchedulerServer) StatPeer(context.Context, *StatPeerRequest) (*v2.Peer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatPeer not implemented")
 }
-func (UnimplementedSchedulerServer) LeavePeer(context.Context, *LeavePeerRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LeavePeer not implemented")
-}
-func (UnimplementedSchedulerServer) ExchangePeer(context.Context, *ExchangePeerRequest) (*ExchangePeerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExchangePeer not implemented")
+func (UnimplementedSchedulerServer) DeletePeer(context.Context, *DeletePeerRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePeer not implemented")
 }
 func (UnimplementedSchedulerServer) StatTask(context.Context, *StatTaskRequest) (*v2.Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
 }
-func (UnimplementedSchedulerServer) LeaveTask(context.Context, *LeaveTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LeaveTask not implemented")
+func (UnimplementedSchedulerServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
 }
 func (UnimplementedSchedulerServer) AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AnnounceHost not implemented")
 }
-func (UnimplementedSchedulerServer) LeaveHost(context.Context, *LeaveHostRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method LeaveHost not implemented")
+func (UnimplementedSchedulerServer) DeleteHost(context.Context, *DeleteHostRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteHost not implemented")
 }
 func (UnimplementedSchedulerServer) SyncProbes(Scheduler_SyncProbesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncProbes not implemented")
@@ -290,38 +272,20 @@ func _Scheduler_StatPeer_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_LeavePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LeavePeerRequest)
+func _Scheduler_DeletePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePeerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).LeavePeer(ctx, in)
+		return srv.(SchedulerServer).DeletePeer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/LeavePeer",
+		FullMethod: "/scheduler.v2.Scheduler/DeletePeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).LeavePeer(ctx, req.(*LeavePeerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Scheduler_ExchangePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExchangePeerRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SchedulerServer).ExchangePeer(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/ExchangePeer",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).ExchangePeer(ctx, req.(*ExchangePeerRequest))
+		return srv.(SchedulerServer).DeletePeer(ctx, req.(*DeletePeerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -344,20 +308,20 @@ func _Scheduler_StatTask_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_LeaveTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LeaveTaskRequest)
+func _Scheduler_DeleteTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTaskRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).LeaveTask(ctx, in)
+		return srv.(SchedulerServer).DeleteTask(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/LeaveTask",
+		FullMethod: "/scheduler.v2.Scheduler/DeleteTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).LeaveTask(ctx, req.(*LeaveTaskRequest))
+		return srv.(SchedulerServer).DeleteTask(ctx, req.(*DeleteTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -380,20 +344,20 @@ func _Scheduler_AnnounceHost_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_LeaveHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(LeaveHostRequest)
+func _Scheduler_DeleteHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteHostRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).LeaveHost(ctx, in)
+		return srv.(SchedulerServer).DeleteHost(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/LeaveHost",
+		FullMethod: "/scheduler.v2.Scheduler/DeleteHost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).LeaveHost(ctx, req.(*LeaveHostRequest))
+		return srv.(SchedulerServer).DeleteHost(ctx, req.(*DeleteHostRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -436,28 +400,24 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Scheduler_StatPeer_Handler,
 		},
 		{
-			MethodName: "LeavePeer",
-			Handler:    _Scheduler_LeavePeer_Handler,
-		},
-		{
-			MethodName: "ExchangePeer",
-			Handler:    _Scheduler_ExchangePeer_Handler,
+			MethodName: "DeletePeer",
+			Handler:    _Scheduler_DeletePeer_Handler,
 		},
 		{
 			MethodName: "StatTask",
 			Handler:    _Scheduler_StatTask_Handler,
 		},
 		{
-			MethodName: "LeaveTask",
-			Handler:    _Scheduler_LeaveTask_Handler,
+			MethodName: "DeleteTask",
+			Handler:    _Scheduler_DeleteTask_Handler,
 		},
 		{
 			MethodName: "AnnounceHost",
 			Handler:    _Scheduler_AnnounceHost_Handler,
 		},
 		{
-			MethodName: "LeaveHost",
-			Handler:    _Scheduler_LeaveHost_Handler,
+			MethodName: "DeleteHost",
+			Handler:    _Scheduler_DeleteHost_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
