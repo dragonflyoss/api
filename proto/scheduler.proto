@@ -27,7 +27,7 @@ import "google/protobuf/timestamp.proto";
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {
   // Download information.
-  common.v2.Download download = 1;
+  common.v2.DownloadTask download_task = 1;
 }
 
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.

@@ -363,6 +363,242 @@ var _ interface {
 	ErrorName() string
 } = PeerValidationError{}
 
+// Validate checks the field values on CachePeer with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *CachePeer) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CachePeer with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CachePeerMultiError, or nil
+// if none found.
+func (m *CachePeer) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CachePeer) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		err := CachePeerValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Persistent
+
+	if m.GetCost() == nil {
+		err := CachePeerValidationError{
+			field:  "Cost",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetState()) < 1 {
+		err := CachePeerValidationError{
+			field:  "State",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetTask() == nil {
+		err := CachePeerValidationError{
+			field:  "Task",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetTask()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, CachePeerValidationError{
+					field:  "Task",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, CachePeerValidationError{
+					field:  "Task",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetTask()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CachePeerValidationError{
+				field:  "Task",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetHost() == nil {
+		err := CachePeerValidationError{
+			field:  "Host",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetHost()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, CachePeerValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, CachePeerValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CachePeerValidationError{
+				field:  "Host",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetCreatedAt() == nil {
+		err := CachePeerValidationError{
+			field:  "CreatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUpdatedAt() == nil {
+		err := CachePeerValidationError{
+			field:  "UpdatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return CachePeerMultiError(errors)
+	}
+
+	return nil
+}
+
+// CachePeerMultiError is an error wrapping multiple validation errors returned
+// by CachePeer.ValidateAll() if the designated constraints aren't met.
+type CachePeerMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CachePeerMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CachePeerMultiError) AllErrors() []error { return m }
+
+// CachePeerValidationError is the validation error returned by
+// CachePeer.Validate if the designated constraints aren't met.
+type CachePeerValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CachePeerValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CachePeerValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CachePeerValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CachePeerValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CachePeerValidationError) ErrorName() string { return "CachePeerValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CachePeerValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCachePeer.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CachePeerValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CachePeerValidationError{}
+
 // Validate checks the field values on Task with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error
 // encountered is returned, or nil if there are no violations.
@@ -637,6 +873,207 @@ var _ interface {
 } = TaskValidationError{}
 
 var _Task_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$")
+
+// Validate checks the field values on CacheTask with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *CacheTask) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CacheTask with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CacheTaskMultiError, or nil
+// if none found.
+func (m *CacheTask) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CacheTask) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		err := CacheTaskValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPersistentReplicaCount() < 1 {
+		err := CacheTaskValidationError{
+			field:  "PersistentReplicaCount",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetReplicaCount() < 1 {
+		err := CacheTaskValidationError{
+			field:  "ReplicaCount",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if !_CacheTask_Digest_Pattern.MatchString(m.GetDigest()) {
+		err := CacheTaskValidationError{
+			field:  "Digest",
+			reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPieceLength() < 1 {
+		err := CacheTaskValidationError{
+			field:  "PieceLength",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for ContentLength
+
+	// no validation rules for PieceCount
+
+	if utf8.RuneCountInString(m.GetState()) < 1 {
+		err := CacheTaskValidationError{
+			field:  "State",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetCreatedAt() == nil {
+		err := CacheTaskValidationError{
+			field:  "CreatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUpdatedAt() == nil {
+		err := CacheTaskValidationError{
+			field:  "UpdatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if len(errors) > 0 {
+		return CacheTaskMultiError(errors)
+	}
+
+	return nil
+}
+
+// CacheTaskMultiError is an error wrapping multiple validation errors returned
+// by CacheTask.ValidateAll() if the designated constraints aren't met.
+type CacheTaskMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CacheTaskMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CacheTaskMultiError) AllErrors() []error { return m }
+
+// CacheTaskValidationError is the validation error returned by
+// CacheTask.Validate if the designated constraints aren't met.
+type CacheTaskValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CacheTaskValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CacheTaskValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CacheTaskValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CacheTaskValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CacheTaskValidationError) ErrorName() string { return "CacheTaskValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CacheTaskValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCacheTask.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CacheTaskValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CacheTaskValidationError{}
+
+var _CacheTask_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$")
 
 // Validate checks the field values on Host with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error
@@ -1831,22 +2268,22 @@ var _ interface {
 	ErrorName() string
 } = BuildValidationError{}
 
-// Validate checks the field values on Download with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
+// Validate checks the field values on DownloadTask with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *Download) Validate() error {
+func (m *DownloadTask) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on Download with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in DownloadMultiError, or nil
-// if none found.
-func (m *Download) ValidateAll() error {
+// ValidateAll checks the field values on DownloadTask with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in DownloadTaskMultiError, or
+// nil if none found.
+func (m *DownloadTask) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *Download) validate(all bool) error {
+func (m *DownloadTask) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1854,7 +2291,7 @@ func (m *Download) validate(all bool) error {
 	var errors []error
 
 	if uri, err := url.Parse(m.GetUrl()); err != nil {
-		err = DownloadValidationError{
+		err = DownloadTaskValidationError{
 			field:  "Url",
 			reason: "value must be a valid URI",
 			cause:  err,
@@ -1864,7 +2301,7 @@ func (m *Download) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	} else if !uri.IsAbs() {
-		err := DownloadValidationError{
+		err := DownloadTaskValidationError{
 			field:  "Url",
 			reason: "value must be absolute",
 		}
@@ -1875,7 +2312,7 @@ func (m *Download) validate(all bool) error {
 	}
 
 	if _, ok := TaskType_name[int32(m.GetType())]; !ok {
-		err := DownloadValidationError{
+		err := DownloadTaskValidationError{
 			field:  "Type",
 			reason: "value must be one of the defined enum values",
 		}
@@ -1886,7 +2323,7 @@ func (m *Download) validate(all bool) error {
 	}
 
 	if _, ok := Priority_name[int32(m.GetPriority())]; !ok {
-		err := DownloadValidationError{
+		err := DownloadTaskValidationError{
 			field:  "Priority",
 			reason: "value must be one of the defined enum values",
 		}
@@ -1899,7 +2336,7 @@ func (m *Download) validate(all bool) error {
 	// no validation rules for RequestHeader
 
 	if m.GetPieceLength() < 1 {
-		err := DownloadValidationError{
+		err := DownloadTaskValidationError{
 			field:  "PieceLength",
 			reason: "value must be greater than or equal to 1",
 		}
@@ -1919,8 +2356,8 @@ func (m *Download) validate(all bool) error {
 
 		if m.GetDigest() != "" {
 
-			if !_Download_Digest_Pattern.MatchString(m.GetDigest()) {
-				err := DownloadValidationError{
+			if !_DownloadTask_Digest_Pattern.MatchString(m.GetDigest()) {
+				err := DownloadTaskValidationError{
 					field:  "Digest",
 					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$\"",
 				}
@@ -1940,7 +2377,7 @@ func (m *Download) validate(all bool) error {
 			switch v := interface{}(m.GetRange()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, DownloadValidationError{
+					errors = append(errors, DownloadTaskValidationError{
 						field:  "Range",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1948,7 +2385,7 @@ func (m *Download) validate(all bool) error {
 				}
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
-					errors = append(errors, DownloadValidationError{
+					errors = append(errors, DownloadTaskValidationError{
 						field:  "Range",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -1957,7 +2394,7 @@ func (m *Download) validate(all bool) error {
 			}
 		} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return DownloadValidationError{
+				return DownloadTaskValidationError{
 					field:  "Range",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -1980,7 +2417,7 @@ func (m *Download) validate(all bool) error {
 		if m.GetOutputPath() != "" {
 
 			if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
-				err := DownloadValidationError{
+				err := DownloadTaskValidationError{
 					field:  "OutputPath",
 					reason: "value length must be at least 1 runes",
 				}
@@ -2000,7 +2437,7 @@ func (m *Download) validate(all bool) error {
 			switch v := interface{}(m.GetTimeout()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, DownloadValidationError{
+					errors = append(errors, DownloadTaskValidationError{
 						field:  "Timeout",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -2008,7 +2445,7 @@ func (m *Download) validate(all bool) error {
 				}
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
-					errors = append(errors, DownloadValidationError{
+					errors = append(errors, DownloadTaskValidationError{
 						field:  "Timeout",
 						reason: "embedded message failed validation",
 						cause:  err,
@@ -2017,7 +2454,7 @@ func (m *Download) validate(all bool) error {
 			}
 		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return DownloadValidationError{
+				return DownloadTaskValidationError{
 					field:  "Timeout",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -2028,18 +2465,18 @@ func (m *Download) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return DownloadMultiError(errors)
+		return DownloadTaskMultiError(errors)
 	}
 
 	return nil
 }
 
-// DownloadMultiError is an error wrapping multiple validation errors returned
-// by Download.ValidateAll() if the designated constraints aren't met.
-type DownloadMultiError []error
+// DownloadTaskMultiError is an error wrapping multiple validation errors
+// returned by DownloadTask.ValidateAll() if the designated constraints aren't met.
+type DownloadTaskMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m DownloadMultiError) Error() string {
+func (m DownloadTaskMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2048,11 +2485,11 @@ func (m DownloadMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m DownloadMultiError) AllErrors() []error { return m }
+func (m DownloadTaskMultiError) AllErrors() []error { return m }
 
-// DownloadValidationError is the validation error returned by
-// Download.Validate if the designated constraints aren't met.
-type DownloadValidationError struct {
+// DownloadTaskValidationError is the validation error returned by
+// DownloadTask.Validate if the designated constraints aren't met.
+type DownloadTaskValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2060,22 +2497,22 @@ type DownloadValidationError struct {
 }
 
 // Field function returns field value.
-func (e DownloadValidationError) Field() string { return e.field }
+func (e DownloadTaskValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DownloadValidationError) Reason() string { return e.reason }
+func (e DownloadTaskValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DownloadValidationError) Cause() error { return e.cause }
+func (e DownloadTaskValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DownloadValidationError) Key() bool { return e.key }
+func (e DownloadTaskValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DownloadValidationError) ErrorName() string { return "DownloadValidationError" }
+func (e DownloadTaskValidationError) ErrorName() string { return "DownloadTaskValidationError" }
 
 // Error satisfies the builtin error interface
-func (e DownloadValidationError) Error() string {
+func (e DownloadTaskValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2087,14 +2524,14 @@ func (e DownloadValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDownload.%s: %s%s",
+		"invalid %sDownloadTask.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DownloadValidationError{}
+var _ error = DownloadTaskValidationError{}
 
 var _ interface {
 	Field() string
@@ -2102,9 +2539,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DownloadValidationError{}
+} = DownloadTaskValidationError{}
 
-var _Download_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$")
+var _DownloadTask_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$")
 
 // Validate checks the field values on Range with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

@@ -37,6 +37,38 @@ pub struct Peer {
     #[prost(message, optional, tag = "11")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
+/// CachePeer metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CachePeer {
+    /// Peer id.
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    /// Persistent represents whether the cache peer is persistent.
+    /// If the cache peer is persistent, the cache peer will
+    /// not be deleted when dfdamon runs garbage collection.
+    #[prost(bool, tag = "2")]
+    pub persistent: bool,
+    /// Peer downloads costs time.
+    #[prost(message, optional, tag = "3")]
+    pub cost: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Peer state.
+    #[prost(string, tag = "4")]
+    pub state: ::prost::alloc::string::String,
+    /// Task info.
+    #[prost(message, optional, tag = "5")]
+    pub task: ::core::option::Option<CacheTask>,
+    /// Host info.
+    #[prost(message, optional, tag = "6")]
+    pub host: ::core::option::Option<Host>,
+    /// Peer create time.
+    #[prost(message, optional, tag = "7")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Peer update time.
+    #[prost(message, optional, tag = "8")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+}
 /// Task metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -51,7 +83,7 @@ pub struct Task {
     /// Download url.
     #[prost(string, tag = "3")]
     pub url: ::prost::alloc::string::String,
-    /// Digest of the task digest, for example md5:xxx or sha256:yyy.
+    /// Digest of the task digest, for example blake3:xxx or sha256:yyy.
     #[prost(string, optional, tag = "4")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// URL tag identifies different task for same url.
@@ -102,6 +134,48 @@ pub struct Task {
     pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
     #[prost(message, optional, tag = "18")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+}
+/// CacheTask metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CacheTask {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    /// Replica count of the persistent cache task.
+    #[prost(uint64, tag = "2")]
+    pub persistent_replica_count: u64,
+    /// Replica count of the cache task.
+    #[prost(uint64, tag = "3")]
+    pub replica_count: u64,
+    /// Digest of the task digest, for example blake3:xxx or sha256:yyy.
+    #[prost(string, tag = "4")]
+    pub digest: ::prost::alloc::string::String,
+    /// Tag is used to distinguish different cache tasks.
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Task piece length.
+    #[prost(uint64, tag = "7")]
+    pub piece_length: u64,
+    /// Task content length.
+    #[prost(uint64, tag = "8")]
+    pub content_length: u64,
+    /// Task piece count.
+    #[prost(uint32, tag = "9")]
+    pub piece_count: u32,
+    /// Task state.
+    #[prost(string, tag = "10")]
+    pub state: ::prost::alloc::string::String,
+    /// Task create time.
+    #[prost(message, optional, tag = "11")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task update time.
+    #[prost(message, optional, tag = "12")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// Host metadata.
@@ -312,15 +386,15 @@ pub struct Build {
     #[prost(string, optional, tag = "5")]
     pub platform: ::core::option::Option<::prost::alloc::string::String>,
 }
-/// Download information.
+/// DownloadTask information.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Download {
+pub struct DownloadTask {
     /// Download url.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
-    /// Digest of the task digest, for example md5:xxx or sha256:yyy.
+    /// Digest of the task digest, for example :xxx or sha256:yyy.
     #[prost(string, optional, tag = "2")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// Range is url range of request. If protocol is http, range
@@ -404,7 +478,7 @@ pub struct Piece {
     /// Piece length.
     #[prost(uint64, tag = "4")]
     pub length: u64,
-    /// Digest of the piece data, for example md5:xxx or sha256:yyy.
+    /// Digest of the piece data, for example blake3:xxx or sha256:yyy.
     #[prost(string, tag = "5")]
     pub digest: ::prost::alloc::string::String,
     /// Piece content.

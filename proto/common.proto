@@ -126,6 +126,28 @@ message Peer {
   google.protobuf.Timestamp updated_at = 11;
 }
 
+// CachePeer metadata.
+message CachePeer {
+  // Peer id.
+  string id = 1;
+  // Persistent represents whether the cache peer is persistent.
+  // If the cache peer is persistent, the cache peer will
+  // not be deleted when dfdamon runs garbage collection.
+  bool persistent = 2;
+  // Peer downloads costs time.
+  google.protobuf.Duration cost = 3;
+  // Peer state.
+  string state = 4;
+  // Task info.
+  CacheTask task = 5;
+  // Host info.
+  Host host = 6;
+  // Peer create time.
+  google.protobuf.Timestamp created_at = 7;
+  // Peer update time.
+  google.protobuf.Timestamp updated_at = 8;
+}
+
 // Task metadata.
 message Task {
   // Task id.
@@ -134,7 +156,7 @@ message Task {
   TaskType type = 2;
   // Download url.
   string url = 3;
-  // Digest of the task digest, for example md5:xxx or sha256:yyy.
+  // Digest of the task digest, for example blake3:xxx or sha256:yyy.
   optional string digest = 4;
   // URL tag identifies different task for same url.
   optional string tag = 5;
@@ -168,6 +190,34 @@ message Task {
   google.protobuf.Timestamp created_at = 17;
   // Task update time.
   google.protobuf.Timestamp updated_at = 18;
+}
+
+// CacheTask metadata.
+message CacheTask {
+  // Task id.
+  string id = 1;
+  // Replica count of the persistent cache task.
+  uint64 persistent_replica_count = 2;
+  // Replica count of the cache task.
+  uint64 replica_count = 3;
+  // Digest of the task digest, for example blake3:xxx or sha256:yyy.
+  string digest = 4;
+  // Tag is used to distinguish different cache tasks.
+  optional string tag = 5;
+  // Application of task.
+  optional string application = 6;
+  // Task piece length.
+  uint64 piece_length = 7;
+  // Task content length.
+  uint64 content_length = 8;
+  // Task piece count.
+  uint32 piece_count = 9;
+  // Task state.
+  string state = 10;
+  // Task create time.
+  google.protobuf.Timestamp created_at = 11;
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 12;
 }
 
 // Host metadata.
@@ -309,11 +359,11 @@ message Build {
   optional string platform = 5;
 }
 
-// Download information.
-message Download {
+// DownloadTask information.
+message DownloadTask {
   // Download url.
   string url = 1;
-  // Digest of the task digest, for example md5:xxx or sha256:yyy.
+  // Digest of the task digest, for example :xxx or sha256:yyy.
   optional string digest = 2;
   // Range is url range of request. If protocol is http, range
   // will set in request header. If protocol is others, range
@@ -369,7 +419,7 @@ message Piece {
   uint64 offset = 3;
   // Piece length.
   uint64 length = 4;
-  // Digest of the piece data, for example md5:xxx or sha256:yyy.
+  // Digest of the piece data, for example blake3:xxx or sha256:yyy.
   string digest = 5;
   // Piece content.
   optional bytes content = 6;
