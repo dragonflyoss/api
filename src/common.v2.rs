@@ -171,11 +171,14 @@ pub struct CacheTask {
     /// Task state.
     #[prost(string, tag = "10")]
     pub state: ::prost::alloc::string::String,
-    /// Task create time.
+    /// TTL of the cache task.
     #[prost(message, optional, tag = "11")]
+    pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Task create time.
+    #[prost(message, optional, tag = "12")]
     pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
-    #[prost(message, optional, tag = "12")]
+    #[prost(message, optional, tag = "13")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// Host metadata.

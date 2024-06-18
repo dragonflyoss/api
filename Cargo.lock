@@ -160,7 +160,7 @@ dependencies = [
 
 [[package]]
 name = "dragonfly-api"
-version = "2.0.121"
+version = "2.0.122"
 dependencies = [
  "prost 0.11.9",
  "prost-types 0.12.6",

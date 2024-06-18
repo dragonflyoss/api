@@ -214,10 +214,12 @@ message CacheTask {
   uint32 piece_count = 9;
   // Task state.
   string state = 10;
+  // TTL of the cache task.
+  google.protobuf.Duration ttl = 11;
   // Task create time.
-  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp created_at = 12;
   // Task update time.
-  google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Timestamp updated_at = 13;
 }
 
 // Host metadata.

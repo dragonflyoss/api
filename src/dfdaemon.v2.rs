@@ -221,8 +221,11 @@ pub struct UploadCacheTaskRequest {
     /// Task piece length.
     #[prost(uint64, tag = "5")]
     pub piece_length: u64,
-    /// Download timeout.
+    /// TTL of the cache task.
     #[prost(message, optional, tag = "6")]
+    pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Upload timeout.
+    #[prost(message, optional, tag = "7")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// StatCacheTaskRequest represents request of StatCacheTask.

@@ -564,6 +564,39 @@ pub struct DeleteCachePeerRequest {
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
 }
+/// UploadCacheTaskRequest represents request of UploadCacheTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UploadCacheTaskRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+    /// Replica count of the persistent cache task.
+    #[prost(uint64, tag = "4")]
+    pub persistent_replica_count: u64,
+    /// Tag is used to distinguish different cache tasks.
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Task piece length.
+    #[prost(uint64, tag = "7")]
+    pub piece_length: u64,
+    /// TTL of the cache task.
+    #[prost(message, optional, tag = "8")]
+    pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Upload timeout.
+    #[prost(message, optional, tag = "9")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+}
 /// StatCacheTaskRequest represents request of StatCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -946,6 +979,32 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteCachePeer"));
             self.inner.unary(req, path, codec).await
         }
+        /// UploadCacheTask uploads cache task to scheduler.
+        pub async fn upload_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UploadCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CacheTask>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/UploadCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "UploadCacheTask"));
+            self.inner.unary(req, path, codec).await
+        }
         /// Checks information of cache task.
         pub async fn stat_cache_task(
             &mut self,
@@ -1095,6 +1154,14 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::DeleteCachePeerRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// UploadCacheTask uploads cache task to scheduler.
+        async fn upload_cache_task(
+            &self,
+            request: tonic::Request<super::UploadCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CacheTask>,
+            tonic::Status,
+        >;
         /// Checks information of cache task.
         async fn stat_cache_task(
             &self,
@@ -1677,6 +1744,52 @@ pub mod scheduler_server {
                     let fut = async move {
                         let inner = inner.0;
                         let method = DeleteCachePeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/UploadCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct UploadCacheTaskSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::UploadCacheTaskRequest>
+                    for UploadCacheTaskSvc<T> {
+                        type Response = super::super::super::common::v2::CacheTask;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::UploadCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                (*inner).upload_cache_task(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = UploadCacheTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
