@@ -390,7 +390,7 @@ message UploadCacheTaskRequest {
   // Task piece length.
   uint64 piece_length = 7 [(validate.rules).uint64.gte = 1];
   // TTL of the cache task.
-  google.protobuf.Duration ttl = 8 [(validate.rules).duration = {gte.seconds: 60, lte.seconds: 604800}];
+  google.protobuf.Duration ttl = 8 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
   // Upload timeout.
   optional google.protobuf.Duration timeout = 9;
 }

@@ -303,6 +303,26 @@ func (mr *MockSchedulerClientMockRecorder) SyncProbes(ctx any, opts ...any) *gom
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncProbes", reflect.TypeOf((*MockSchedulerClient)(nil).SyncProbes), varargs...)
 }
 
+// UploadCacheTask mocks base method.
+func (m *MockSchedulerClient) UploadCacheTask(ctx context.Context, in *scheduler.UploadCacheTaskRequest, opts ...grpc.CallOption) (*common.CacheTask, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UploadCacheTask", varargs...)
+	ret0, _ := ret[0].(*common.CacheTask)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UploadCacheTask indicates an expected call of UploadCacheTask.
+func (mr *MockSchedulerClientMockRecorder) UploadCacheTask(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTask", reflect.TypeOf((*MockSchedulerClient)(nil).UploadCacheTask), varargs...)
+}
+
 // MockScheduler_AnnouncePeerClient is a mock of Scheduler_AnnouncePeerClient interface.
 type MockScheduler_AnnouncePeerClient struct {
 	ctrl     *gomock.Controller
@@ -927,6 +947,21 @@ func (m *MockSchedulerServer) SyncProbes(arg0 scheduler.Scheduler_SyncProbesServ
 func (mr *MockSchedulerServerMockRecorder) SyncProbes(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncProbes", reflect.TypeOf((*MockSchedulerServer)(nil).SyncProbes), arg0)
+}
+
+// UploadCacheTask mocks base method.
+func (m *MockSchedulerServer) UploadCacheTask(arg0 context.Context, arg1 *scheduler.UploadCacheTaskRequest) (*common.CacheTask, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UploadCacheTask", arg0, arg1)
+	ret0, _ := ret[0].(*common.CacheTask)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UploadCacheTask indicates an expected call of UploadCacheTask.
+func (mr *MockSchedulerServerMockRecorder) UploadCacheTask(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTask", reflect.TypeOf((*MockSchedulerServer)(nil).UploadCacheTask), arg0, arg1)
 }
 
 // MockUnsafeSchedulerServer is a mock of UnsafeSchedulerServer interface.

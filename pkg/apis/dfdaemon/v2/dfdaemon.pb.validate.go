@@ -2188,6 +2188,37 @@ func (m *UploadCacheTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if d := m.GetTtl(); d != nil {
+		dur, err := d.AsDuration(), d.CheckValid()
+		if err != nil {
+			err = UploadCacheTaskRequestValidationError{
+				field:  "Ttl",
+				reason: "value is not a valid duration",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else {
+
+			lte := time.Duration(604800*time.Second + 0*time.Nanosecond)
+			gte := time.Duration(60*time.Second + 0*time.Nanosecond)
+
+			if dur < gte || dur > lte {
+				err := UploadCacheTaskRequestValidationError{
+					field:  "Ttl",
+					reason: "value must be inside range [1m0s, 168h0m0s]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+	}
+
 	if m.Tag != nil {
 		// no validation rules for Tag
 	}
