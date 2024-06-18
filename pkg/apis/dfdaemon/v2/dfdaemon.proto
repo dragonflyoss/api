@@ -175,8 +175,10 @@ message UploadCacheTaskRequest {
   optional string application = 4;
   // Task piece length.
   uint64 piece_length = 5 [(validate.rules).uint64.gte = 1];
-  // Download timeout.
-  optional google.protobuf.Duration timeout = 6;
+  // TTL of the cache task.
+  google.protobuf.Duration ttl = 6 [(validate.rules).duration = {gte.seconds: 60, lte.seconds: 604800}];
+  // Upload timeout.
+  optional google.protobuf.Duration timeout = 7;
 }
 
 // StatCacheTaskRequest represents request of StatCacheTask.
