@@ -131,16 +131,20 @@ message DownloadCacheTaskRequest {
   string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
   string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Persistent represents whether the cache task is persistent.
+  // If the cache task is persistent, the cache peer will
+  // not be deleted when dfdamon runs garbage collection.
+  bool persistent = 3;
   // Tag is used to distinguish different cache tasks.
-  optional string tag = 3;
+  optional string tag = 4;
   // Application of task.
-  optional string application = 4;
+  optional string application = 5;
   // Task piece length.
-  uint64 piece_length = 5 [(validate.rules).uint64.gte = 1];
+  uint64 piece_length = 6 [(validate.rules).uint64.gte = 1];
   // File path to be exported.
-  string output_path = 6 [(validate.rules).string.min_len = 1];
+  string output_path = 7 [(validate.rules).string.min_len = 1];
   // Download timeout.
-  optional google.protobuf.Duration timeout = 7;
+  optional google.protobuf.Duration timeout = 8;
 }
 
 // DownloadCacheTaskStartedResponse represents task download started response of DownloadCacheTaskResponse.

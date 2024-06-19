@@ -1650,6 +1650,8 @@ func (m *DownloadCacheTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for Persistent
+
 	if m.GetPieceLength() < 1 {
 		err := DownloadCacheTaskRequestValidationError{
 			field:  "PieceLength",
