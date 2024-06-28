@@ -206,6 +206,8 @@ message DeleteTaskRequest {
 message AnnounceHostRequest {
   // Host info.
   common.v2.Host host = 1 [(validate.rules).message.required = true];
+  // The interval between dfdaemon announces to scheduler.
+  optional google.protobuf.Duration interval = 2;
 }
 
 // DeleteHostRequest represents request of DeleteHost.
