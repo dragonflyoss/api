@@ -300,6 +300,9 @@ pub struct AnnounceHostRequest {
     /// Host information.
     #[prost(message, optional, tag = "1")]
     pub host: ::core::option::Option<super::super::common::v2::Host>,
+    /// The interval between dfdaemon announces to scheduler.
+    #[prost(message, optional, tag = "2")]
+    pub interval: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// DeleteHostRequest represents request of DeleteHost.
 #[derive(serde::Serialize, serde::Deserialize)]
