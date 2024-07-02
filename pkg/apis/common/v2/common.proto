@@ -405,6 +405,16 @@ message Download {
   repeated bytes certificate_chain = 15;
   // prefetch pre-downloads all pieces of the task when download task with range request.
   bool prefetch = 16;
+  // Object Storage related information
+  optional ObjectStorage object_storage = 17;
+}
+
+// Object Storage related information
+message ObjectStorage {
+  // the access key that used to access the object storage service
+  string access_key_id = 1;
+  // the access secret that used to access the object storage service
+  string access_key_secret = 2;
 }
 
 // Range represents download range.
