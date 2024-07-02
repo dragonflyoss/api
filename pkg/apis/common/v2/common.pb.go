@@ -1878,9 +1878,9 @@ type ObjectStorage struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// the access key that used to access the object storage service
+	// Access key that used to access the object storage service
 	AccessKeyId string `protobuf:"bytes,1,opt,name=access_key_id,json=accessKeyId,proto3" json:"access_key_id,omitempty"`
-	// the access secret that used to access the object storage service
+	// Access secret that used to access the object storage service
 	AccessKeySecret string `protobuf:"bytes,2,opt,name=access_key_secret,json=accessKeySecret,proto3" json:"access_key_secret,omitempty"`
 }
 

@@ -407,9 +407,9 @@ message Download {
 
 // Object Storage related information
 message ObjectStorage {
-  // the access key that used to access the object storage service
+  // Access key that used to access the object storage service
   string access_key_id = 1;
-  // the access secret that used to access the object storage service
+  // Access secret that used to access the object storage service
   string access_key_secret = 2;
 }
 

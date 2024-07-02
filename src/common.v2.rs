@@ -460,10 +460,10 @@ pub struct Download {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ObjectStorage {
-    /// the access key that used to access the object storage service
+    /// Access key that used to access the object storage service
     #[prost(string, tag = "1")]
     pub access_key_id: ::prost::alloc::string::String,
-    /// the access secret that used to access the object storage service
+    /// Access secret that used to access the object storage service
     #[prost(string, tag = "2")]
     pub access_key_secret: ::prost::alloc::string::String,
 }
