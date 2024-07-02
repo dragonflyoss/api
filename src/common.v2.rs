@@ -101,8 +101,10 @@ pub struct Task {
     pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Task request headers.
     #[prost(map = "string, string", tag = "8")]
-    pub request_header:
-        ::std::collections::HashMap<::prost::alloc::string::String, ::prost::alloc::string::String>,
+    pub request_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
     /// Task piece length.
     #[prost(uint64, tag = "9")]
     pub piece_length: u64,
@@ -424,8 +426,10 @@ pub struct Download {
     pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Task request headers.
     #[prost(map = "string, string", tag = "9")]
-    pub request_header:
-        ::std::collections::HashMap<::prost::alloc::string::String, ::prost::alloc::string::String>,
+    pub request_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
     /// Task piece length.
     #[prost(uint64, tag = "10")]
     pub piece_length: u64,
@@ -448,10 +452,9 @@ pub struct Download {
     #[prost(bool, tag = "16")]
     pub prefetch: bool,
     /// Object Storage related information
-    #[prost(message, tag = "17")]
-    pub object_storage: Option<ObjectStorage>,
+    #[prost(message, optional, tag = "17")]
+    pub object_storage: ::core::option::Option<ObjectStorage>,
 }
-
 /// Object Storage related information
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -459,12 +462,11 @@ pub struct Download {
 pub struct ObjectStorage {
     /// the access key that used to access the object storage service
     #[prost(string, tag = "1")]
-    access_key_id: ::prost::alloc::string::String,
+    pub access_key_id: ::prost::alloc::string::String,
     /// the access secret that used to access the object storage service
     #[prost(string, tag = "2")]
-    access_key_secret: ::prost::alloc::string::String,
+    pub access_key_secret: ::prost::alloc::string::String,
 }
-
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -511,19 +513,8 @@ pub struct Piece {
     pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// SizeScope represents size scope of task.
-#[derive(
-    serde::Serialize,
-    serde::Deserialize,
-    Clone,
-    Copy,
-    Debug,
-    PartialEq,
-    Eq,
-    Hash,
-    PartialOrd,
-    Ord,
-    ::prost::Enumeration,
-)]
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum SizeScope {
     /// size > one piece size.
@@ -560,19 +551,8 @@ impl SizeScope {
     }
 }
 /// TaskType represents type of task.
-#[derive(
-    serde::Serialize,
-    serde::Deserialize,
-    Clone,
-    Copy,
-    Debug,
-    PartialEq,
-    Eq,
-    Hash,
-    PartialOrd,
-    Ord,
-    ::prost::Enumeration,
-)]
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum TaskType {
     /// DFDAEMON is dfdeamon type of task,
@@ -609,19 +589,8 @@ impl TaskType {
     }
 }
 /// TrafficType represents type of traffic.
-#[derive(
-    serde::Serialize,
-    serde::Deserialize,
-    Clone,
-    Copy,
-    Debug,
-    PartialEq,
-    Eq,
-    Hash,
-    PartialOrd,
-    Ord,
-    ::prost::Enumeration,
-)]
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum TrafficType {
     /// BACK_TO_SOURCE is to download traffic from the source.
@@ -654,19 +623,8 @@ impl TrafficType {
     }
 }
 /// Priority represents priority of application.
-#[derive(
-    serde::Serialize,
-    serde::Deserialize,
-    Clone,
-    Copy,
-    Debug,
-    PartialEq,
-    Eq,
-    Hash,
-    PartialOrd,
-    Ord,
-    ::prost::Enumeration,
-)]
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum Priority {
     /// LEVEL0 has no special meaning for scheduler.
