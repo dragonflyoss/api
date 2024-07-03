@@ -451,6 +451,21 @@ pub struct Download {
     /// prefetch pre-downloads all pieces of the task when download task with range request.
     #[prost(bool, tag = "16")]
     pub prefetch: bool,
+    /// Object Storage related information.
+    #[prost(message, optional, tag = "17")]
+    pub object_storage: ::core::option::Option<ObjectStorage>,
+}
+/// Object Storage related information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ObjectStorage {
+    /// Access key that used to access the object storage service.
+    #[prost(string, tag = "1")]
+    pub access_key_id: ::prost::alloc::string::String,
+    /// Access secret that used to access the object storage service.
+    #[prost(string, tag = "2")]
+    pub access_key_secret: ::prost::alloc::string::String,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]

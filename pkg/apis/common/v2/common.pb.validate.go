@@ -2464,6 +2464,39 @@ func (m *Download) validate(all bool) error {
 
 	}
 
+	if m.ObjectStorage != nil {
+
+		if all {
+			switch v := interface{}(m.GetObjectStorage()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}
@@ -2542,6 +2575,110 @@ var _ interface {
 } = DownloadValidationError{}
 
 var _Download_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$")
+
+// Validate checks the field values on ObjectStorage with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *ObjectStorage) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ObjectStorage with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ObjectStorageMultiError, or
+// nil if none found.
+func (m *ObjectStorage) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ObjectStorage) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for AccessKeyId
+
+	// no validation rules for AccessKeySecret
+
+	if len(errors) > 0 {
+		return ObjectStorageMultiError(errors)
+	}
+
+	return nil
+}
+
+// ObjectStorageMultiError is an error wrapping multiple validation errors
+// returned by ObjectStorage.ValidateAll() if the designated constraints
+// aren't met.
+type ObjectStorageMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ObjectStorageMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ObjectStorageMultiError) AllErrors() []error { return m }
+
+// ObjectStorageValidationError is the validation error returned by
+// ObjectStorage.Validate if the designated constraints aren't met.
+type ObjectStorageValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ObjectStorageValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ObjectStorageValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ObjectStorageValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ObjectStorageValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ObjectStorageValidationError) ErrorName() string { return "ObjectStorageValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ObjectStorageValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sObjectStorage.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ObjectStorageValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ObjectStorageValidationError{}
 
 // Validate checks the field values on Range with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
