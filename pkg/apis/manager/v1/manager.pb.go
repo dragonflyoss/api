@@ -758,7 +758,7 @@ func (x *SchedulerCluster) GetScopes() []byte {
 	return nil
 }
 
-// SeedPeerCluster represents scheduler for network.
+// Scheduler represents scheduler for network.
 type Scheduler struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
