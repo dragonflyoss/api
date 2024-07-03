@@ -1717,7 +1717,7 @@ type Download struct {
 	CertificateChain [][]byte `protobuf:"bytes,15,rep,name=certificate_chain,json=certificateChain,proto3" json:"certificate_chain,omitempty"`
 	// prefetch pre-downloads all pieces of the task when download task with range request.
 	Prefetch bool `protobuf:"varint,16,opt,name=prefetch,proto3" json:"prefetch,omitempty"`
-	// Object Storage related information
+	// Object Storage related information.
 	ObjectStorage *ObjectStorage `protobuf:"bytes,17,opt,name=object_storage,json=objectStorage,proto3,oneof" json:"object_storage,omitempty"`
 }
 
@@ -1872,15 +1872,15 @@ func (x *Download) GetObjectStorage() *ObjectStorage {
 	return nil
 }
 
-// Object Storage related information
+// Object Storage related information.
 type ObjectStorage struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Access key that used to access the object storage service
+	// Access key that used to access the object storage service.
 	AccessKeyId string `protobuf:"bytes,1,opt,name=access_key_id,json=accessKeyId,proto3" json:"access_key_id,omitempty"`
-	// Access secret that used to access the object storage service
+	// Access secret that used to access the object storage service.
 	AccessKeySecret string `protobuf:"bytes,2,opt,name=access_key_secret,json=accessKeySecret,proto3" json:"access_key_secret,omitempty"`
 }
 
