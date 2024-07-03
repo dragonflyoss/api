@@ -148,7 +148,7 @@ message SchedulerCluster {
   bytes scopes = 6;
 }
 
-// SeedPeerCluster represents scheduler for network.
+// Scheduler represents scheduler for network.
 message Scheduler {
   // Scheduler id.
   uint64 id = 1;
