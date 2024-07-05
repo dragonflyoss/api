@@ -5,6 +5,7 @@
 //
 //	mockgen -destination cdnsystem_mock.go -source ../cdnsystem_grpc.pb.go -package mocks
 //
+
 // Package mocks is a generated GoMock package.
 package mocks
 
