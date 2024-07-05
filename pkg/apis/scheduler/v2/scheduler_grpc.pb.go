@@ -47,7 +47,7 @@ type SchedulerClient interface {
 	// DeleteCachePeer releases cache peer in scheduler.
 	DeleteCachePeer(ctx context.Context, in *DeleteCachePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// UploadCacheTask uploads cache task to scheduler.
-	UploadCacheTask(ctx context.Context, in *UploadCacheTaskRequest, opts ...grpc.CallOption) (*v2.CacheTask, error)
+	UploadCacheTask(ctx context.Context, opts ...grpc.CallOption) (Scheduler_UploadCacheTaskClient, error)
 	// Checks information of cache task.
 	StatCacheTask(ctx context.Context, in *StatCacheTaskRequest, opts ...grpc.CallOption) (*v2.CacheTask, error)
 	// DeleteCacheTask releases cache task in scheduler.
@@ -227,13 +227,38 @@ func (c *schedulerClient) DeleteCachePeer(ctx context.Context, in *DeleteCachePe
 	return out, nil
 }
 
-func (c *schedulerClient) UploadCacheTask(ctx context.Context, in *UploadCacheTaskRequest, opts ...grpc.CallOption) (*v2.CacheTask, error) {
-	out := new(v2.CacheTask)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/UploadCacheTask", in, out, opts...)
+func (c *schedulerClient) UploadCacheTask(ctx context.Context, opts ...grpc.CallOption) (Scheduler_UploadCacheTaskClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[3], "/scheduler.v2.Scheduler/UploadCacheTask", opts...)
 	if err != nil {
 		return nil, err
 	}
-	return out, nil
+	x := &schedulerUploadCacheTaskClient{stream}
+	return x, nil
+}
+
+type Scheduler_UploadCacheTaskClient interface {
+	Send(*UploadCacheTaskRequest) error
+	CloseAndRecv() (*v2.CacheTask, error)
+	grpc.ClientStream
+}
+
+type schedulerUploadCacheTaskClient struct {
+	grpc.ClientStream
+}
+
+func (x *schedulerUploadCacheTaskClient) Send(m *UploadCacheTaskRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *schedulerUploadCacheTaskClient) CloseAndRecv() (*v2.CacheTask, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(v2.CacheTask)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *schedulerClient) StatCacheTask(ctx context.Context, in *StatCacheTaskRequest, opts ...grpc.CallOption) (*v2.CacheTask, error) {
@@ -281,7 +306,7 @@ type SchedulerServer interface {
 	// DeleteCachePeer releases cache peer in scheduler.
 	DeleteCachePeer(context.Context, *DeleteCachePeerRequest) (*emptypb.Empty, error)
 	// UploadCacheTask uploads cache task to scheduler.
-	UploadCacheTask(context.Context, *UploadCacheTaskRequest) (*v2.CacheTask, error)
+	UploadCacheTask(Scheduler_UploadCacheTaskServer) error
 	// Checks information of cache task.
 	StatCacheTask(context.Context, *StatCacheTaskRequest) (*v2.CacheTask, error)
 	// DeleteCacheTask releases cache task in scheduler.
@@ -325,8 +350,8 @@ func (UnimplementedSchedulerServer) StatCachePeer(context.Context, *StatCachePee
 func (UnimplementedSchedulerServer) DeleteCachePeer(context.Context, *DeleteCachePeerRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCachePeer not implemented")
 }
-func (UnimplementedSchedulerServer) UploadCacheTask(context.Context, *UploadCacheTaskRequest) (*v2.CacheTask, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadCacheTask not implemented")
+func (UnimplementedSchedulerServer) UploadCacheTask(Scheduler_UploadCacheTaskServer) error {
+	return status.Errorf(codes.Unimplemented, "method UploadCacheTask not implemented")
 }
 func (UnimplementedSchedulerServer) StatCacheTask(context.Context, *StatCacheTaskRequest) (*v2.CacheTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatCacheTask not implemented")
@@ -568,22 +593,30 @@ func _Scheduler_DeleteCachePeer_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_UploadCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadCacheTaskRequest)
-	if err := dec(in); err != nil {
+func _Scheduler_UploadCacheTask_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SchedulerServer).UploadCacheTask(&schedulerUploadCacheTaskServer{stream})
+}
+
+type Scheduler_UploadCacheTaskServer interface {
+	SendAndClose(*v2.CacheTask) error
+	Recv() (*UploadCacheTaskRequest, error)
+	grpc.ServerStream
+}
+
+type schedulerUploadCacheTaskServer struct {
+	grpc.ServerStream
+}
+
+func (x *schedulerUploadCacheTaskServer) SendAndClose(m *v2.CacheTask) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *schedulerUploadCacheTaskServer) Recv() (*UploadCacheTaskRequest, error) {
+	m := new(UploadCacheTaskRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
-		return srv.(SchedulerServer).UploadCacheTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/UploadCacheTask",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).UploadCacheTask(ctx, req.(*UploadCacheTaskRequest))
-	}
-	return interceptor(ctx, in, info, handler)
+	return m, nil
 }
 
 func _Scheduler_StatCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -662,10 +695,6 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Scheduler_DeleteCachePeer_Handler,
 		},
 		{
-			MethodName: "UploadCacheTask",
-			Handler:    _Scheduler_UploadCacheTask_Handler,
-		},
-		{
 			MethodName: "StatCacheTask",
 			Handler:    _Scheduler_StatCacheTask_Handler,
 		},
@@ -691,6 +720,11 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "AnnounceCachePeer",
 			Handler:       _Scheduler_AnnounceCachePeer_Handler,
 			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "UploadCacheTask",
+			Handler:       _Scheduler_UploadCacheTask_Handler,
 			ClientStreams: true,
 		},
 	},

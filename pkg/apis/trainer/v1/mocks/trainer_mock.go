@@ -5,6 +5,7 @@
 //
 //	mockgen -destination trainer_mock.go -source ../trainer_grpc.pb.go -package mocks
 //
+
 // Package mocks is a generated GoMock package.
 package mocks
 
