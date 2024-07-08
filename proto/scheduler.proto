@@ -382,12 +382,25 @@ message UploadCacheTaskStartedRequest {
 }
 
 // UploadCacheTaskFinishedRequest represents upload cache task finished request of UploadCacheTaskFinished.
-message UploadCacheTaskFinishedRequest {}
+message UploadCacheTaskFinishedRequest {
+  // Host id.
+  string host_id = 1;
+  // Task id.
+  string task_id = 2;
+  // Peer id.
+  string peer_id = 3;
+}
 
 // UploadCacheTaskFailedRequest represents upload cache task failed request of UploadCacheTaskFailed.
 message UploadCacheTaskFailedRequest {
+  // Host id.
+  string host_id = 1;
+  // Task id.
+  string task_id = 2;
+  // Peer id.
+  string peer_id = 3;
   // The description of the upload failed.
-  optional string description = 1;
+  optional string description = 4;
 }
 
 // StatCacheTaskRequest represents request of StatCacheTask.
