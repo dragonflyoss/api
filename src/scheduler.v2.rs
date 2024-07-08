@@ -604,14 +604,33 @@ pub struct UploadCacheTaskStartedRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct UploadCacheTaskFinishedRequest {}
+pub struct UploadCacheTaskFinishedRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+}
 /// UploadCacheTaskFailedRequest represents upload cache task failed request of UploadCacheTaskFailed.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UploadCacheTaskFailedRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
     /// The description of the upload failed.
-    #[prost(string, optional, tag = "1")]
+    #[prost(string, optional, tag = "4")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// StatCacheTaskRequest represents request of StatCacheTask.

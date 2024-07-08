@@ -398,12 +398,25 @@ message UploadCacheTaskStartedRequest {
 }
 
 // UploadCacheTaskFinishedRequest represents upload cache task finished request of UploadCacheTaskFinishedRequest.
-message UploadCacheTaskFinishedRequest {}
+message UploadCacheTaskFinishedRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+}
 
 // UploadCacheTaskFailedRequest represents upload cache task failed request of UploadCacheTaskFailedRequest.
 message UploadCacheTaskFailedRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
   // The description of the upload failed.
-  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string description = 4 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // StatCacheTaskRequest represents request of StatCacheTask.
