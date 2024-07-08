@@ -6668,6 +6668,39 @@ func (m *UploadCacheTaskStartedRequest) validate(all bool) error {
 
 	var errors []error
 
+	if utf8.RuneCountInString(m.GetHostId()) < 1 {
+		err := UploadCacheTaskStartedRequestValidationError{
+			field:  "HostId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := UploadCacheTaskStartedRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
+		err := UploadCacheTaskStartedRequestValidationError{
+			field:  "PeerId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if m.GetPersistentReplicaCount() < 1 {
 		err := UploadCacheTaskStartedRequestValidationError{
 			field:  "PersistentReplicaCount",
@@ -7067,283 +7100,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = UploadCacheTaskFailedRequestValidationError{}
-
-// Validate checks the field values on UploadCacheTaskRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *UploadCacheTaskRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on UploadCacheTaskRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// UploadCacheTaskRequestMultiError, or nil if none found.
-func (m *UploadCacheTaskRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *UploadCacheTaskRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if utf8.RuneCountInString(m.GetHostId()) < 1 {
-		err := UploadCacheTaskRequestValidationError{
-			field:  "HostId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := UploadCacheTaskRequestValidationError{
-			field:  "TaskId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
-		err := UploadCacheTaskRequestValidationError{
-			field:  "PeerId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	oneofRequestPresent := false
-	switch v := m.Request.(type) {
-	case *UploadCacheTaskRequest_UploadCacheTaskStartedRequest:
-		if v == nil {
-			err := UploadCacheTaskRequestValidationError{
-				field:  "Request",
-				reason: "oneof value cannot be a typed-nil",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-		oneofRequestPresent = true
-
-		if all {
-			switch v := interface{}(m.GetUploadCacheTaskStartedRequest()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, UploadCacheTaskRequestValidationError{
-						field:  "UploadCacheTaskStartedRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, UploadCacheTaskRequestValidationError{
-						field:  "UploadCacheTaskStartedRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetUploadCacheTaskStartedRequest()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return UploadCacheTaskRequestValidationError{
-					field:  "UploadCacheTaskStartedRequest",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	case *UploadCacheTaskRequest_UploadCacheTaskFinishedRequest:
-		if v == nil {
-			err := UploadCacheTaskRequestValidationError{
-				field:  "Request",
-				reason: "oneof value cannot be a typed-nil",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-		oneofRequestPresent = true
-
-		if all {
-			switch v := interface{}(m.GetUploadCacheTaskFinishedRequest()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, UploadCacheTaskRequestValidationError{
-						field:  "UploadCacheTaskFinishedRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, UploadCacheTaskRequestValidationError{
-						field:  "UploadCacheTaskFinishedRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetUploadCacheTaskFinishedRequest()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return UploadCacheTaskRequestValidationError{
-					field:  "UploadCacheTaskFinishedRequest",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	case *UploadCacheTaskRequest_UploadCacheTaskFailedRequest:
-		if v == nil {
-			err := UploadCacheTaskRequestValidationError{
-				field:  "Request",
-				reason: "oneof value cannot be a typed-nil",
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		}
-		oneofRequestPresent = true
-
-		if all {
-			switch v := interface{}(m.GetUploadCacheTaskFailedRequest()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, UploadCacheTaskRequestValidationError{
-						field:  "UploadCacheTaskFailedRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, UploadCacheTaskRequestValidationError{
-						field:  "UploadCacheTaskFailedRequest",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetUploadCacheTaskFailedRequest()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return UploadCacheTaskRequestValidationError{
-					field:  "UploadCacheTaskFailedRequest",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	default:
-		_ = v // ensures v is used
-	}
-	if !oneofRequestPresent {
-		err := UploadCacheTaskRequestValidationError{
-			field:  "Request",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return UploadCacheTaskRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// UploadCacheTaskRequestMultiError is an error wrapping multiple validation
-// errors returned by UploadCacheTaskRequest.ValidateAll() if the designated
-// constraints aren't met.
-type UploadCacheTaskRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m UploadCacheTaskRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m UploadCacheTaskRequestMultiError) AllErrors() []error { return m }
-
-// UploadCacheTaskRequestValidationError is the validation error returned by
-// UploadCacheTaskRequest.Validate if the designated constraints aren't met.
-type UploadCacheTaskRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e UploadCacheTaskRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e UploadCacheTaskRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e UploadCacheTaskRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e UploadCacheTaskRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e UploadCacheTaskRequestValidationError) ErrorName() string {
-	return "UploadCacheTaskRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e UploadCacheTaskRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sUploadCacheTaskRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = UploadCacheTaskRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = UploadCacheTaskRequestValidationError{}
 
 // Validate checks the field values on StatCacheTaskRequest with the rules
 // defined in the proto definition for this message. If any rules are
