@@ -375,47 +375,35 @@ message DeleteCachePeerRequest {
   string peer_id = 3 [(validate.rules).string.min_len = 1];
 }
 
-// UploadCacheTaskStartedRequest represents upload cache task started request of UploadCacheTaskRequest.
+// UploadCacheTaskStartedRequest represents upload cache task started request of UploadCacheTaskStartedRequest.
 message UploadCacheTaskStartedRequest {
-  // Replica count of the persistent cache task.
-  uint64 persistent_replica_count = 1 [(validate.rules).uint64.gte = 1];
-  // Tag is used to distinguish different cache tasks.
-  optional string tag = 2;
-  // Application of task.
-  optional string application = 3;
-  // Task piece length.
-  uint64 piece_length = 4 [(validate.rules).uint64.gte = 1];
-  // TTL of the cache task.
-  google.protobuf.Duration ttl = 5 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
-  // Upload timeout.
-  optional google.protobuf.Duration timeout = 6;
-}
-
-// UploadCacheTaskFinishedRequest represents upload cache task finished request of UploadCacheTaskRequest.
-message UploadCacheTaskFinishedRequest {}
-
-// UploadCacheTaskFailedRequest represents upload cache task failed request of UploadCacheTaskRequest.
-message UploadCacheTaskFailedRequest {
-  // The description of the upload failed.
-  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-}
-
-// UploadCacheTaskRequest represents request of UploadCacheTask.
-message UploadCacheTaskRequest {
   // Host id.
   string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
   string task_id = 2 [(validate.rules).string.min_len = 1];
   // Peer id.
   string peer_id = 3 [(validate.rules).string.min_len = 1];
+  // Replica count of the persistent cache task.
+  uint64 persistent_replica_count = 4 [(validate.rules).uint64.gte = 1];
+  // Tag is used to distinguish different cache tasks.
+  optional string tag = 5;
+  // Application of task.
+  optional string application = 6;
+  // Task piece length.
+  uint64 piece_length = 7 [(validate.rules).uint64.gte = 1];
+  // TTL of the cache task.
+  google.protobuf.Duration ttl = 8 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
+  // Upload timeout.
+  optional google.protobuf.Duration timeout = 9;
+}
 
-  oneof request {
-    option (validate.required) = true;
+// UploadCacheTaskFinishedRequest represents upload cache task finished request of UploadCacheTaskFinishedRequest.
+message UploadCacheTaskFinishedRequest {}
 
-    UploadCacheTaskStartedRequest upload_cache_task_started_request = 4;
-    UploadCacheTaskFinishedRequest upload_cache_task_finished_request = 5;
-    UploadCacheTaskFailedRequest upload_cache_task_failed_request = 6;
-  }
+// UploadCacheTaskFailedRequest represents upload cache task failed request of UploadCacheTaskFailedRequest.
+message UploadCacheTaskFailedRequest {
+  // The description of the upload failed.
+  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // StatCacheTaskRequest represents request of StatCacheTask.
@@ -467,8 +455,14 @@ service Scheduler {
   // DeleteCachePeer releases cache peer in scheduler.
   rpc DeleteCachePeer(DeleteCachePeerRequest)returns(google.protobuf.Empty);
 
-  // UploadCacheTask uploads cache task to scheduler.
-  rpc UploadCacheTask(stream UploadCacheTaskRequest)returns(common.v2.CacheTask);
+  // UploadCacheTaskStarted uploads cache task started to scheduler.
+  rpc UploadCacheTaskStarted(UploadCacheTaskStartedRequest)returns(google.protobuf.Empty);
+
+  // UploadCacheTaskFinished uploads cache task finished to scheduler.
+  rpc UploadCacheTaskFinished(UploadCacheTaskFinishedRequest)returns(common.v2.CacheTask);
+
+  // UploadCacheTaskFailed uploads cache task failed to scheduler.
+  rpc UploadCacheTaskFailed(UploadCacheTaskFailedRequest)returns(google.protobuf.Empty);
 
   // Checks information of cache task.
   rpc StatCacheTask(StatCacheTaskRequest)returns(common.v2.CacheTask);
