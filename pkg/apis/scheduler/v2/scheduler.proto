@@ -190,8 +190,10 @@ message DeletePeerRequest {
 
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+  string task_id = 2 [(validate.rules).string.min_len = 1];
 }
 
 // DeleteTaskRequest represents request of DeleteTask.
@@ -421,8 +423,10 @@ message UploadCacheTaskFailedRequest {
 
 // StatCacheTaskRequest represents request of StatCacheTask.
 message StatCacheTaskRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
-  string task_id = 1 [(validate.rules).string.min_len = 1];
+  string task_id = 2 [(validate.rules).string.min_len = 1];
 }
 
 // DeleteCacheTaskRequest represents request of DeleteCacheTask.

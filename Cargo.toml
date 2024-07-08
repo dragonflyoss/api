@@ -1,6 +1,6 @@
 [package]
 name = "dragonfly-api"
-version = "2.0.130"
+version = "2.0.131"
 authors = ["Gaius <gaius.qi@gmail.com>"]
 edition = "2021"
 license = "Apache-2.0"

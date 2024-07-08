@@ -276,8 +276,11 @@ pub struct DeletePeerRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatTaskRequest {
-    /// Task id.
+    /// Host id.
     #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
 }
 /// DeleteTaskRequest represents request of DeleteTask.
@@ -638,8 +641,11 @@ pub struct UploadCacheTaskFailedRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatCacheTaskRequest {
-    /// Task id.
+    /// Host id.
     #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
 }
 /// DeleteCacheTaskRequest represents request of DeleteCacheTask.
