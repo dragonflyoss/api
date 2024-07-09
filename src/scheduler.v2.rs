@@ -159,6 +159,7 @@ pub mod announce_peer_request {
     #[derive(serde::Serialize, serde::Deserialize)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
+    #[allow(clippy::large_enum_variant)]
     pub enum Request {
         #[prost(message, tag = "4")]
         RegisterPeerRequest(super::RegisterPeerRequest),
