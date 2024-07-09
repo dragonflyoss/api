@@ -466,6 +466,9 @@ pub struct ObjectStorage {
     /// Access secret that used to access the object storage service.
     #[prost(string, tag = "2")]
     pub access_key_secret: ::prost::alloc::string::String,
+    /// Security token that used to access s3 storage service.
+    #[prost(string, tag = "2")]
+    pub security_token: ::prost::alloc::string::String,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]
