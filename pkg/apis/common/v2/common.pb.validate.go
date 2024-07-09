@@ -2602,6 +2602,8 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	// no validation rules for AccessKeySecret
 
+	// no validation rules for SecurityToken
+
 	if len(errors) > 0 {
 		return ObjectStorageMultiError(errors)
 	}
