@@ -466,7 +466,7 @@ pub struct ObjectStorage {
     /// Access secret that used to access the object storage service.
     #[prost(string, tag = "2")]
     pub access_key_secret: ::prost::alloc::string::String,
-    /// Security token that used to access s3 storage service.
+    /// Session token that used to access s3 storage service.
     #[prost(string, optional, tag = "3")]
     pub session_token: ::core::option::Option<::prost::alloc::string::String>,
 }

@@ -1882,7 +1882,7 @@ type ObjectStorage struct {
 	AccessKeyId string `protobuf:"bytes,1,opt,name=access_key_id,json=accessKeyId,proto3" json:"access_key_id,omitempty"`
 	// Access secret that used to access the object storage service.
 	AccessKeySecret string `protobuf:"bytes,2,opt,name=access_key_secret,json=accessKeySecret,proto3" json:"access_key_secret,omitempty"`
-	// Security token that used to access s3 storage service.
+	// Session token that used to access s3 storage service.
 	SessionToken *string `protobuf:"bytes,3,opt,name=session_token,json=sessionToken,proto3,oneof" json:"session_token,omitempty"`
 }
 
