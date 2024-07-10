@@ -272,6 +272,15 @@ pub struct DeletePeerRequest {
     #[prost(string, tag = "3")]
     pub peer_id: ::prost::alloc::string::String,
 }
+/// AnnouncePeersRequest represents request of AnnouncePeers.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AnnouncePeersRequest {
+    /// Peers information.
+    #[prost(message, repeated, tag = "1")]
+    pub peers: ::prost::alloc::vec::Vec<super::super::common::v2::Peer>,
+}
 /// StatTaskRequest represents request of StatTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -824,6 +833,34 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeletePeer"));
             self.inner.unary(req, path, codec).await
         }
+        /// A host announces that it has the announced peers to scheduler at startup.
+        pub async fn announce_peers(
+            &mut self,
+            request: impl tonic::IntoStreamingRequest<
+                Message = super::AnnouncePeersRequest,
+            >,
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<()>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/AnnouncePeers",
+            );
+            let mut req = request.into_streaming_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "AnnouncePeers"));
+            self.inner.streaming(req, path, codec).await
+        }
         /// Checks information of task.
         pub async fn stat_task(
             &mut self,
@@ -1185,6 +1222,20 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::DeletePeerRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Server streaming response type for the AnnouncePeers method.
+        type AnnouncePeersStream: futures_core::Stream<
+                Item = std::result::Result<(), tonic::Status>,
+            >
+            + Send
+            + 'static;
+        /// A host announces that it has the announced peers to scheduler at startup.
+        async fn announce_peers(
+            &self,
+            request: tonic::Request<tonic::Streaming<super::AnnouncePeersRequest>>,
+        ) -> std::result::Result<
+            tonic::Response<Self::AnnouncePeersStream>,
+            tonic::Status,
+        >;
         /// Checks information of task.
         async fn stat_task(
             &self,
@@ -1494,6 +1545,55 @@ pub mod scheduler_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/AnnouncePeers" => {
+                    #[allow(non_camel_case_types)]
+                    struct AnnouncePeersSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::StreamingService<super::AnnouncePeersRequest>
+                    for AnnouncePeersSvc<T> {
+                        type Response = ();
+                        type ResponseStream = T::AnnouncePeersStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                tonic::Streaming<super::AnnouncePeersRequest>,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                (*inner).announce_peers(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = AnnouncePeersSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)

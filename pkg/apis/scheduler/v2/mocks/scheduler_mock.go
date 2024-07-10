@@ -104,6 +104,26 @@ func (mr *MockSchedulerClientMockRecorder) AnnouncePeer(ctx any, opts ...any) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnouncePeer", reflect.TypeOf((*MockSchedulerClient)(nil).AnnouncePeer), varargs...)
 }
 
+// AnnouncePeers mocks base method.
+func (m *MockSchedulerClient) AnnouncePeers(ctx context.Context, opts ...grpc.CallOption) (scheduler.Scheduler_AnnouncePeersClient, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AnnouncePeers", varargs...)
+	ret0, _ := ret[0].(scheduler.Scheduler_AnnouncePeersClient)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AnnouncePeers indicates an expected call of AnnouncePeers.
+func (mr *MockSchedulerClientMockRecorder) AnnouncePeers(ctx any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnouncePeers", reflect.TypeOf((*MockSchedulerClient)(nil).AnnouncePeers), varargs...)
+}
+
 // DeleteCachePeer mocks base method.
 func (m *MockSchedulerClient) DeleteCachePeer(ctx context.Context, in *scheduler.DeleteCachePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -304,24 +324,64 @@ func (mr *MockSchedulerClientMockRecorder) SyncProbes(ctx any, opts ...any) *gom
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncProbes", reflect.TypeOf((*MockSchedulerClient)(nil).SyncProbes), varargs...)
 }
 
-// UploadCacheTask mocks base method.
-func (m *MockSchedulerClient) UploadCacheTask(ctx context.Context, opts ...grpc.CallOption) (scheduler.Scheduler_UploadCacheTaskClient, error) {
+// UploadCacheTaskFailed mocks base method.
+func (m *MockSchedulerClient) UploadCacheTaskFailed(ctx context.Context, in *scheduler.UploadCacheTaskFailedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
-	varargs := []any{ctx}
+	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "UploadCacheTask", varargs...)
-	ret0, _ := ret[0].(scheduler.Scheduler_UploadCacheTaskClient)
+	ret := m.ctrl.Call(m, "UploadCacheTaskFailed", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// UploadCacheTask indicates an expected call of UploadCacheTask.
-func (mr *MockSchedulerClientMockRecorder) UploadCacheTask(ctx any, opts ...any) *gomock.Call {
+// UploadCacheTaskFailed indicates an expected call of UploadCacheTaskFailed.
+func (mr *MockSchedulerClientMockRecorder) UploadCacheTaskFailed(ctx, in any, opts ...any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTask", reflect.TypeOf((*MockSchedulerClient)(nil).UploadCacheTask), varargs...)
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTaskFailed", reflect.TypeOf((*MockSchedulerClient)(nil).UploadCacheTaskFailed), varargs...)
+}
+
+// UploadCacheTaskFinished mocks base method.
+func (m *MockSchedulerClient) UploadCacheTaskFinished(ctx context.Context, in *scheduler.UploadCacheTaskFinishedRequest, opts ...grpc.CallOption) (*common.CacheTask, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UploadCacheTaskFinished", varargs...)
+	ret0, _ := ret[0].(*common.CacheTask)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UploadCacheTaskFinished indicates an expected call of UploadCacheTaskFinished.
+func (mr *MockSchedulerClientMockRecorder) UploadCacheTaskFinished(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTaskFinished", reflect.TypeOf((*MockSchedulerClient)(nil).UploadCacheTaskFinished), varargs...)
+}
+
+// UploadCacheTaskStarted mocks base method.
+func (m *MockSchedulerClient) UploadCacheTaskStarted(ctx context.Context, in *scheduler.UploadCacheTaskStartedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UploadCacheTaskStarted", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UploadCacheTaskStarted indicates an expected call of UploadCacheTaskStarted.
+func (mr *MockSchedulerClientMockRecorder) UploadCacheTaskStarted(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTaskStarted", reflect.TypeOf((*MockSchedulerClient)(nil).UploadCacheTaskStarted), varargs...)
 }
 
 // MockScheduler_AnnouncePeerClient is a mock of Scheduler_AnnouncePeerClient interface.
@@ -459,6 +519,143 @@ func (m *MockScheduler_AnnouncePeerClient) Trailer() metadata.MD {
 func (mr *MockScheduler_AnnouncePeerClientMockRecorder) Trailer() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockScheduler_AnnouncePeerClient)(nil).Trailer))
+}
+
+// MockScheduler_AnnouncePeersClient is a mock of Scheduler_AnnouncePeersClient interface.
+type MockScheduler_AnnouncePeersClient struct {
+	ctrl     *gomock.Controller
+	recorder *MockScheduler_AnnouncePeersClientMockRecorder
+}
+
+// MockScheduler_AnnouncePeersClientMockRecorder is the mock recorder for MockScheduler_AnnouncePeersClient.
+type MockScheduler_AnnouncePeersClientMockRecorder struct {
+	mock *MockScheduler_AnnouncePeersClient
+}
+
+// NewMockScheduler_AnnouncePeersClient creates a new mock instance.
+func NewMockScheduler_AnnouncePeersClient(ctrl *gomock.Controller) *MockScheduler_AnnouncePeersClient {
+	mock := &MockScheduler_AnnouncePeersClient{ctrl: ctrl}
+	mock.recorder = &MockScheduler_AnnouncePeersClientMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockScheduler_AnnouncePeersClient) EXPECT() *MockScheduler_AnnouncePeersClientMockRecorder {
+	return m.recorder
+}
+
+// CloseSend mocks base method.
+func (m *MockScheduler_AnnouncePeersClient) CloseSend() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CloseSend")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CloseSend indicates an expected call of CloseSend.
+func (mr *MockScheduler_AnnouncePeersClientMockRecorder) CloseSend() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CloseSend", reflect.TypeOf((*MockScheduler_AnnouncePeersClient)(nil).CloseSend))
+}
+
+// Context mocks base method.
+func (m *MockScheduler_AnnouncePeersClient) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockScheduler_AnnouncePeersClientMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockScheduler_AnnouncePeersClient)(nil).Context))
+}
+
+// Header mocks base method.
+func (m *MockScheduler_AnnouncePeersClient) Header() (metadata.MD, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Header")
+	ret0, _ := ret[0].(metadata.MD)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Header indicates an expected call of Header.
+func (mr *MockScheduler_AnnouncePeersClientMockRecorder) Header() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Header", reflect.TypeOf((*MockScheduler_AnnouncePeersClient)(nil).Header))
+}
+
+// Recv mocks base method.
+func (m *MockScheduler_AnnouncePeersClient) Recv() (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Recv")
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recv indicates an expected call of Recv.
+func (mr *MockScheduler_AnnouncePeersClientMockRecorder) Recv() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockScheduler_AnnouncePeersClient)(nil).Recv))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockScheduler_AnnouncePeersClient) RecvMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockScheduler_AnnouncePeersClientMockRecorder) RecvMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockScheduler_AnnouncePeersClient)(nil).RecvMsg), m)
+}
+
+// Send mocks base method.
+func (m *MockScheduler_AnnouncePeersClient) Send(arg0 *scheduler.AnnouncePeersRequest) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Send", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Send indicates an expected call of Send.
+func (mr *MockScheduler_AnnouncePeersClientMockRecorder) Send(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockScheduler_AnnouncePeersClient)(nil).Send), arg0)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockScheduler_AnnouncePeersClient) SendMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockScheduler_AnnouncePeersClientMockRecorder) SendMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockScheduler_AnnouncePeersClient)(nil).SendMsg), m)
+}
+
+// Trailer mocks base method.
+func (m *MockScheduler_AnnouncePeersClient) Trailer() metadata.MD {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Trailer")
+	ret0, _ := ret[0].(metadata.MD)
+	return ret0
+}
+
+// Trailer indicates an expected call of Trailer.
+func (mr *MockScheduler_AnnouncePeersClientMockRecorder) Trailer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockScheduler_AnnouncePeersClient)(nil).Trailer))
 }
 
 // MockScheduler_SyncProbesClient is a mock of Scheduler_SyncProbesClient interface.
@@ -735,143 +932,6 @@ func (mr *MockScheduler_AnnounceCachePeerClientMockRecorder) Trailer() *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockScheduler_AnnounceCachePeerClient)(nil).Trailer))
 }
 
-// MockScheduler_UploadCacheTaskClient is a mock of Scheduler_UploadCacheTaskClient interface.
-type MockScheduler_UploadCacheTaskClient struct {
-	ctrl     *gomock.Controller
-	recorder *MockScheduler_UploadCacheTaskClientMockRecorder
-}
-
-// MockScheduler_UploadCacheTaskClientMockRecorder is the mock recorder for MockScheduler_UploadCacheTaskClient.
-type MockScheduler_UploadCacheTaskClientMockRecorder struct {
-	mock *MockScheduler_UploadCacheTaskClient
-}
-
-// NewMockScheduler_UploadCacheTaskClient creates a new mock instance.
-func NewMockScheduler_UploadCacheTaskClient(ctrl *gomock.Controller) *MockScheduler_UploadCacheTaskClient {
-	mock := &MockScheduler_UploadCacheTaskClient{ctrl: ctrl}
-	mock.recorder = &MockScheduler_UploadCacheTaskClientMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockScheduler_UploadCacheTaskClient) EXPECT() *MockScheduler_UploadCacheTaskClientMockRecorder {
-	return m.recorder
-}
-
-// CloseAndRecv mocks base method.
-func (m *MockScheduler_UploadCacheTaskClient) CloseAndRecv() (*common.CacheTask, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CloseAndRecv")
-	ret0, _ := ret[0].(*common.CacheTask)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CloseAndRecv indicates an expected call of CloseAndRecv.
-func (mr *MockScheduler_UploadCacheTaskClientMockRecorder) CloseAndRecv() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CloseAndRecv", reflect.TypeOf((*MockScheduler_UploadCacheTaskClient)(nil).CloseAndRecv))
-}
-
-// CloseSend mocks base method.
-func (m *MockScheduler_UploadCacheTaskClient) CloseSend() error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CloseSend")
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// CloseSend indicates an expected call of CloseSend.
-func (mr *MockScheduler_UploadCacheTaskClientMockRecorder) CloseSend() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CloseSend", reflect.TypeOf((*MockScheduler_UploadCacheTaskClient)(nil).CloseSend))
-}
-
-// Context mocks base method.
-func (m *MockScheduler_UploadCacheTaskClient) Context() context.Context {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Context")
-	ret0, _ := ret[0].(context.Context)
-	return ret0
-}
-
-// Context indicates an expected call of Context.
-func (mr *MockScheduler_UploadCacheTaskClientMockRecorder) Context() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockScheduler_UploadCacheTaskClient)(nil).Context))
-}
-
-// Header mocks base method.
-func (m *MockScheduler_UploadCacheTaskClient) Header() (metadata.MD, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Header")
-	ret0, _ := ret[0].(metadata.MD)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Header indicates an expected call of Header.
-func (mr *MockScheduler_UploadCacheTaskClientMockRecorder) Header() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Header", reflect.TypeOf((*MockScheduler_UploadCacheTaskClient)(nil).Header))
-}
-
-// RecvMsg mocks base method.
-func (m_2 *MockScheduler_UploadCacheTaskClient) RecvMsg(m any) error {
-	m_2.ctrl.T.Helper()
-	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// RecvMsg indicates an expected call of RecvMsg.
-func (mr *MockScheduler_UploadCacheTaskClientMockRecorder) RecvMsg(m any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockScheduler_UploadCacheTaskClient)(nil).RecvMsg), m)
-}
-
-// Send mocks base method.
-func (m *MockScheduler_UploadCacheTaskClient) Send(arg0 *scheduler.UploadCacheTaskRequest) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Send", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Send indicates an expected call of Send.
-func (mr *MockScheduler_UploadCacheTaskClientMockRecorder) Send(arg0 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockScheduler_UploadCacheTaskClient)(nil).Send), arg0)
-}
-
-// SendMsg mocks base method.
-func (m_2 *MockScheduler_UploadCacheTaskClient) SendMsg(m any) error {
-	m_2.ctrl.T.Helper()
-	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// SendMsg indicates an expected call of SendMsg.
-func (mr *MockScheduler_UploadCacheTaskClientMockRecorder) SendMsg(m any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockScheduler_UploadCacheTaskClient)(nil).SendMsg), m)
-}
-
-// Trailer mocks base method.
-func (m *MockScheduler_UploadCacheTaskClient) Trailer() metadata.MD {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Trailer")
-	ret0, _ := ret[0].(metadata.MD)
-	return ret0
-}
-
-// Trailer indicates an expected call of Trailer.
-func (mr *MockScheduler_UploadCacheTaskClientMockRecorder) Trailer() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockScheduler_UploadCacheTaskClient)(nil).Trailer))
-}
-
 // MockSchedulerServer is a mock of SchedulerServer interface.
 type MockSchedulerServer struct {
 	ctrl     *gomock.Controller
@@ -936,6 +996,20 @@ func (m *MockSchedulerServer) AnnouncePeer(arg0 scheduler.Scheduler_AnnouncePeer
 func (mr *MockSchedulerServerMockRecorder) AnnouncePeer(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnouncePeer", reflect.TypeOf((*MockSchedulerServer)(nil).AnnouncePeer), arg0)
+}
+
+// AnnouncePeers mocks base method.
+func (m *MockSchedulerServer) AnnouncePeers(arg0 scheduler.Scheduler_AnnouncePeersServer) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AnnouncePeers", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AnnouncePeers indicates an expected call of AnnouncePeers.
+func (mr *MockSchedulerServerMockRecorder) AnnouncePeers(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnouncePeers", reflect.TypeOf((*MockSchedulerServer)(nil).AnnouncePeers), arg0)
 }
 
 // DeleteCachePeer mocks base method.
@@ -1087,18 +1161,49 @@ func (mr *MockSchedulerServerMockRecorder) SyncProbes(arg0 any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncProbes", reflect.TypeOf((*MockSchedulerServer)(nil).SyncProbes), arg0)
 }
 
-// UploadCacheTask mocks base method.
-func (m *MockSchedulerServer) UploadCacheTask(arg0 scheduler.Scheduler_UploadCacheTaskServer) error {
+// UploadCacheTaskFailed mocks base method.
+func (m *MockSchedulerServer) UploadCacheTaskFailed(arg0 context.Context, arg1 *scheduler.UploadCacheTaskFailedRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UploadCacheTask", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "UploadCacheTaskFailed", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
-// UploadCacheTask indicates an expected call of UploadCacheTask.
-func (mr *MockSchedulerServerMockRecorder) UploadCacheTask(arg0 any) *gomock.Call {
+// UploadCacheTaskFailed indicates an expected call of UploadCacheTaskFailed.
+func (mr *MockSchedulerServerMockRecorder) UploadCacheTaskFailed(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTask", reflect.TypeOf((*MockSchedulerServer)(nil).UploadCacheTask), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTaskFailed", reflect.TypeOf((*MockSchedulerServer)(nil).UploadCacheTaskFailed), arg0, arg1)
+}
+
+// UploadCacheTaskFinished mocks base method.
+func (m *MockSchedulerServer) UploadCacheTaskFinished(arg0 context.Context, arg1 *scheduler.UploadCacheTaskFinishedRequest) (*common.CacheTask, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UploadCacheTaskFinished", arg0, arg1)
+	ret0, _ := ret[0].(*common.CacheTask)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UploadCacheTaskFinished indicates an expected call of UploadCacheTaskFinished.
+func (mr *MockSchedulerServerMockRecorder) UploadCacheTaskFinished(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTaskFinished", reflect.TypeOf((*MockSchedulerServer)(nil).UploadCacheTaskFinished), arg0, arg1)
+}
+
+// UploadCacheTaskStarted mocks base method.
+func (m *MockSchedulerServer) UploadCacheTaskStarted(arg0 context.Context, arg1 *scheduler.UploadCacheTaskStartedRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UploadCacheTaskStarted", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UploadCacheTaskStarted indicates an expected call of UploadCacheTaskStarted.
+func (mr *MockSchedulerServerMockRecorder) UploadCacheTaskStarted(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadCacheTaskStarted", reflect.TypeOf((*MockSchedulerServer)(nil).UploadCacheTaskStarted), arg0, arg1)
 }
 
 // MockUnsafeSchedulerServer is a mock of UnsafeSchedulerServer interface.
@@ -1268,6 +1373,140 @@ func (m *MockScheduler_AnnouncePeerServer) SetTrailer(arg0 metadata.MD) {
 func (mr *MockScheduler_AnnouncePeerServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockScheduler_AnnouncePeerServer)(nil).SetTrailer), arg0)
+}
+
+// MockScheduler_AnnouncePeersServer is a mock of Scheduler_AnnouncePeersServer interface.
+type MockScheduler_AnnouncePeersServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockScheduler_AnnouncePeersServerMockRecorder
+}
+
+// MockScheduler_AnnouncePeersServerMockRecorder is the mock recorder for MockScheduler_AnnouncePeersServer.
+type MockScheduler_AnnouncePeersServerMockRecorder struct {
+	mock *MockScheduler_AnnouncePeersServer
+}
+
+// NewMockScheduler_AnnouncePeersServer creates a new mock instance.
+func NewMockScheduler_AnnouncePeersServer(ctrl *gomock.Controller) *MockScheduler_AnnouncePeersServer {
+	mock := &MockScheduler_AnnouncePeersServer{ctrl: ctrl}
+	mock.recorder = &MockScheduler_AnnouncePeersServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockScheduler_AnnouncePeersServer) EXPECT() *MockScheduler_AnnouncePeersServerMockRecorder {
+	return m.recorder
+}
+
+// Context mocks base method.
+func (m *MockScheduler_AnnouncePeersServer) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockScheduler_AnnouncePeersServerMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockScheduler_AnnouncePeersServer)(nil).Context))
+}
+
+// Recv mocks base method.
+func (m *MockScheduler_AnnouncePeersServer) Recv() (*scheduler.AnnouncePeersRequest, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Recv")
+	ret0, _ := ret[0].(*scheduler.AnnouncePeersRequest)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recv indicates an expected call of Recv.
+func (mr *MockScheduler_AnnouncePeersServerMockRecorder) Recv() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockScheduler_AnnouncePeersServer)(nil).Recv))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockScheduler_AnnouncePeersServer) RecvMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockScheduler_AnnouncePeersServerMockRecorder) RecvMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockScheduler_AnnouncePeersServer)(nil).RecvMsg), m)
+}
+
+// Send mocks base method.
+func (m *MockScheduler_AnnouncePeersServer) Send(arg0 *emptypb.Empty) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Send", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Send indicates an expected call of Send.
+func (mr *MockScheduler_AnnouncePeersServerMockRecorder) Send(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockScheduler_AnnouncePeersServer)(nil).Send), arg0)
+}
+
+// SendHeader mocks base method.
+func (m *MockScheduler_AnnouncePeersServer) SendHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SendHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendHeader indicates an expected call of SendHeader.
+func (mr *MockScheduler_AnnouncePeersServerMockRecorder) SendHeader(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendHeader", reflect.TypeOf((*MockScheduler_AnnouncePeersServer)(nil).SendHeader), arg0)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockScheduler_AnnouncePeersServer) SendMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockScheduler_AnnouncePeersServerMockRecorder) SendMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockScheduler_AnnouncePeersServer)(nil).SendMsg), m)
+}
+
+// SetHeader mocks base method.
+func (m *MockScheduler_AnnouncePeersServer) SetHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetHeader indicates an expected call of SetHeader.
+func (mr *MockScheduler_AnnouncePeersServerMockRecorder) SetHeader(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHeader", reflect.TypeOf((*MockScheduler_AnnouncePeersServer)(nil).SetHeader), arg0)
+}
+
+// SetTrailer mocks base method.
+func (m *MockScheduler_AnnouncePeersServer) SetTrailer(arg0 metadata.MD) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetTrailer", arg0)
+}
+
+// SetTrailer indicates an expected call of SetTrailer.
+func (mr *MockScheduler_AnnouncePeersServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockScheduler_AnnouncePeersServer)(nil).SetTrailer), arg0)
 }
 
 // MockScheduler_SyncProbesServer is a mock of Scheduler_SyncProbesServer interface.
@@ -1536,138 +1775,4 @@ func (m *MockScheduler_AnnounceCachePeerServer) SetTrailer(arg0 metadata.MD) {
 func (mr *MockScheduler_AnnounceCachePeerServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockScheduler_AnnounceCachePeerServer)(nil).SetTrailer), arg0)
-}
-
-// MockScheduler_UploadCacheTaskServer is a mock of Scheduler_UploadCacheTaskServer interface.
-type MockScheduler_UploadCacheTaskServer struct {
-	ctrl     *gomock.Controller
-	recorder *MockScheduler_UploadCacheTaskServerMockRecorder
-}
-
-// MockScheduler_UploadCacheTaskServerMockRecorder is the mock recorder for MockScheduler_UploadCacheTaskServer.
-type MockScheduler_UploadCacheTaskServerMockRecorder struct {
-	mock *MockScheduler_UploadCacheTaskServer
-}
-
-// NewMockScheduler_UploadCacheTaskServer creates a new mock instance.
-func NewMockScheduler_UploadCacheTaskServer(ctrl *gomock.Controller) *MockScheduler_UploadCacheTaskServer {
-	mock := &MockScheduler_UploadCacheTaskServer{ctrl: ctrl}
-	mock.recorder = &MockScheduler_UploadCacheTaskServerMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockScheduler_UploadCacheTaskServer) EXPECT() *MockScheduler_UploadCacheTaskServerMockRecorder {
-	return m.recorder
-}
-
-// Context mocks base method.
-func (m *MockScheduler_UploadCacheTaskServer) Context() context.Context {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Context")
-	ret0, _ := ret[0].(context.Context)
-	return ret0
-}
-
-// Context indicates an expected call of Context.
-func (mr *MockScheduler_UploadCacheTaskServerMockRecorder) Context() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockScheduler_UploadCacheTaskServer)(nil).Context))
-}
-
-// Recv mocks base method.
-func (m *MockScheduler_UploadCacheTaskServer) Recv() (*scheduler.UploadCacheTaskRequest, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Recv")
-	ret0, _ := ret[0].(*scheduler.UploadCacheTaskRequest)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Recv indicates an expected call of Recv.
-func (mr *MockScheduler_UploadCacheTaskServerMockRecorder) Recv() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockScheduler_UploadCacheTaskServer)(nil).Recv))
-}
-
-// RecvMsg mocks base method.
-func (m_2 *MockScheduler_UploadCacheTaskServer) RecvMsg(m any) error {
-	m_2.ctrl.T.Helper()
-	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// RecvMsg indicates an expected call of RecvMsg.
-func (mr *MockScheduler_UploadCacheTaskServerMockRecorder) RecvMsg(m any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockScheduler_UploadCacheTaskServer)(nil).RecvMsg), m)
-}
-
-// SendAndClose mocks base method.
-func (m *MockScheduler_UploadCacheTaskServer) SendAndClose(arg0 *common.CacheTask) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SendAndClose", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// SendAndClose indicates an expected call of SendAndClose.
-func (mr *MockScheduler_UploadCacheTaskServerMockRecorder) SendAndClose(arg0 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendAndClose", reflect.TypeOf((*MockScheduler_UploadCacheTaskServer)(nil).SendAndClose), arg0)
-}
-
-// SendHeader mocks base method.
-func (m *MockScheduler_UploadCacheTaskServer) SendHeader(arg0 metadata.MD) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SendHeader", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// SendHeader indicates an expected call of SendHeader.
-func (mr *MockScheduler_UploadCacheTaskServerMockRecorder) SendHeader(arg0 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendHeader", reflect.TypeOf((*MockScheduler_UploadCacheTaskServer)(nil).SendHeader), arg0)
-}
-
-// SendMsg mocks base method.
-func (m_2 *MockScheduler_UploadCacheTaskServer) SendMsg(m any) error {
-	m_2.ctrl.T.Helper()
-	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// SendMsg indicates an expected call of SendMsg.
-func (mr *MockScheduler_UploadCacheTaskServerMockRecorder) SendMsg(m any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockScheduler_UploadCacheTaskServer)(nil).SendMsg), m)
-}
-
-// SetHeader mocks base method.
-func (m *MockScheduler_UploadCacheTaskServer) SetHeader(arg0 metadata.MD) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SetHeader", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// SetHeader indicates an expected call of SetHeader.
-func (mr *MockScheduler_UploadCacheTaskServerMockRecorder) SetHeader(arg0 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHeader", reflect.TypeOf((*MockScheduler_UploadCacheTaskServer)(nil).SetHeader), arg0)
-}
-
-// SetTrailer mocks base method.
-func (m *MockScheduler_UploadCacheTaskServer) SetTrailer(arg0 metadata.MD) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetTrailer", arg0)
-}
-
-// SetTrailer indicates an expected call of SetTrailer.
-func (mr *MockScheduler_UploadCacheTaskServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockScheduler_UploadCacheTaskServer)(nil).SetTrailer), arg0)
 }

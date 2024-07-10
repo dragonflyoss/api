@@ -733,7 +733,7 @@ type DownloadCacheTaskRequest struct {
 	TaskId string `protobuf:"bytes,2,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
 	// Persistent represents whether the cache task is persistent.
 	// If the cache task is persistent, the cache peer will
-	// not be deleted when dfdamon runs garbage collection.
+	// not be deleted when dfdaemon runs garbage collection.
 	Persistent bool `protobuf:"varint,3,opt,name=persistent,proto3" json:"persistent,omitempty"`
 	// Tag is used to distinguish different cache tasks.
 	Tag *string `protobuf:"bytes,4,opt,name=tag,proto3,oneof" json:"tag,omitempty"`

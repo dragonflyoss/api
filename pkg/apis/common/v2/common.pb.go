@@ -103,8 +103,8 @@ func (SizeScope) EnumDescriptor() ([]byte, []int) {
 type TaskType int32
 
 const (
-	// DFDAEMON is dfdeamon type of task,
-	// dfdeamon task is a normal p2p task.
+	// DFDAEMON is dfdaemon type of task,
+	// dfdaemon task is a normal p2p task.
 	TaskType_DFDAEMON TaskType = 0
 	// DFCACHE is dfcache type of task,
 	// dfcache task is a cache task, and the task url is fake url.
@@ -439,7 +439,7 @@ type CachePeer struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Persistent represents whether the cache peer is persistent.
 	// If the cache peer is persistent, the cache peer will
-	// not be deleted when dfdamon runs garbage collection.
+	// not be deleted when dfdaemon runs garbage collection.
 	Persistent bool `protobuf:"varint,2,opt,name=persistent,proto3" json:"persistent,omitempty"`
 	// Peer downloads costs time.
 	Cost *durationpb.Duration `protobuf:"bytes,3,opt,name=cost,proto3" json:"cost,omitempty"`

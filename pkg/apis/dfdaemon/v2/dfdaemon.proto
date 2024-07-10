@@ -133,7 +133,7 @@ message DownloadCacheTaskRequest {
   string task_id = 2 [(validate.rules).string.min_len = 1];
   // Persistent represents whether the cache task is persistent.
   // If the cache task is persistent, the cache peer will
-  // not be deleted when dfdamon runs garbage collection.
+  // not be deleted when dfdaemon runs garbage collection.
   bool persistent = 3;
   // Tag is used to distinguish different cache tasks.
   optional string tag = 4;

@@ -44,8 +44,8 @@ enum SizeScope {
 
 // TaskType represents type of task.
 enum TaskType {
-  // DFDAEMON is dfdeamon type of task,
-  // dfdeamon task is a normal p2p task.
+  // DFDAEMON is dfdaemon type of task,
+  // dfdaemon task is a normal p2p task.
   DFDAEMON = 0;
 
   // DFCACHE is dfcache type of task,
@@ -138,7 +138,7 @@ message CachePeer {
   string id = 1 [(validate.rules).string.min_len = 1];
   // Persistent represents whether the cache peer is persistent.
   // If the cache peer is persistent, the cache peer will
-  // not be deleted when dfdamon runs garbage collection.
+  // not be deleted when dfdaemon runs garbage collection.
   bool persistent = 2;
   // Peer downloads costs time.
   google.protobuf.Duration cost = 3 [(validate.rules).duration.required = true];
