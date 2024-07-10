@@ -153,7 +153,7 @@ pub struct DownloadCacheTaskRequest {
     pub task_id: ::prost::alloc::string::String,
     /// Persistent represents whether the cache task is persistent.
     /// If the cache task is persistent, the cache peer will
-    /// not be deleted when dfdamon runs garbage collection.
+    /// not be deleted when dfdaemon runs garbage collection.
     #[prost(bool, tag = "3")]
     pub persistent: bool,
     /// Tag is used to distinguish different cache tasks.

@@ -47,7 +47,7 @@ pub struct CachePeer {
     pub id: ::prost::alloc::string::String,
     /// Persistent represents whether the cache peer is persistent.
     /// If the cache peer is persistent, the cache peer will
-    /// not be deleted when dfdamon runs garbage collection.
+    /// not be deleted when dfdaemon runs garbage collection.
     #[prost(bool, tag = "2")]
     pub persistent: bool,
     /// Peer downloads costs time.
@@ -558,8 +558,8 @@ impl SizeScope {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum TaskType {
-    /// DFDAEMON is dfdeamon type of task,
-    /// dfdeamon task is a normal p2p task.
+    /// DFDAEMON is dfdaemon type of task,
+    /// dfdaemon task is a normal p2p task.
     Dfdaemon = 0,
     /// DFCACHE is dfcache type of task,
     /// dfcache task is a cache task, and the task url is fake url.

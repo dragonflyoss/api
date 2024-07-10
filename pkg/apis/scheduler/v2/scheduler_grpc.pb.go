@@ -30,6 +30,8 @@ type SchedulerClient interface {
 	StatPeer(ctx context.Context, in *StatPeerRequest, opts ...grpc.CallOption) (*v2.Peer, error)
 	// DeletePeer releases peer in scheduler.
 	DeletePeer(ctx context.Context, in *DeletePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// A host announces that it has the announced peers to scheduler at startup.
+	AnnouncePeers(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnouncePeersClient, error)
 	// Checks information of task.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
 	// DeleteTask releases task in scheduler.
@@ -115,6 +117,37 @@ func (c *schedulerClient) DeletePeer(ctx context.Context, in *DeletePeerRequest,
 	return out, nil
 }
 
+func (c *schedulerClient) AnnouncePeers(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnouncePeersClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[1], "/scheduler.v2.Scheduler/AnnouncePeers", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &schedulerAnnouncePeersClient{stream}
+	return x, nil
+}
+
+type Scheduler_AnnouncePeersClient interface {
+	Send(*AnnouncePeersRequest) error
+	Recv() (*emptypb.Empty, error)
+	grpc.ClientStream
+}
+
+type schedulerAnnouncePeersClient struct {
+	grpc.ClientStream
+}
+
+func (x *schedulerAnnouncePeersClient) Send(m *AnnouncePeersRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *schedulerAnnouncePeersClient) Recv() (*emptypb.Empty, error) {
+	m := new(emptypb.Empty)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *schedulerClient) StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
 	out := new(v2.Task)
 	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatTask", in, out, opts...)
@@ -152,7 +185,7 @@ func (c *schedulerClient) DeleteHost(ctx context.Context, in *DeleteHostRequest,
 }
 
 func (c *schedulerClient) SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[1], "/scheduler.v2.Scheduler/SyncProbes", opts...)
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[2], "/scheduler.v2.Scheduler/SyncProbes", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +216,7 @@ func (x *schedulerSyncProbesClient) Recv() (*SyncProbesResponse, error) {
 }
 
 func (c *schedulerClient) AnnounceCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnounceCachePeerClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[2], "/scheduler.v2.Scheduler/AnnounceCachePeer", opts...)
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[3], "/scheduler.v2.Scheduler/AnnounceCachePeer", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -286,6 +319,8 @@ type SchedulerServer interface {
 	StatPeer(context.Context, *StatPeerRequest) (*v2.Peer, error)
 	// DeletePeer releases peer in scheduler.
 	DeletePeer(context.Context, *DeletePeerRequest) (*emptypb.Empty, error)
+	// A host announces that it has the announced peers to scheduler at startup.
+	AnnouncePeers(Scheduler_AnnouncePeersServer) error
 	// Checks information of task.
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
 	// DeleteTask releases task in scheduler.
@@ -326,6 +361,9 @@ func (UnimplementedSchedulerServer) StatPeer(context.Context, *StatPeerRequest) 
 }
 func (UnimplementedSchedulerServer) DeletePeer(context.Context, *DeletePeerRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePeer not implemented")
+}
+func (UnimplementedSchedulerServer) AnnouncePeers(Scheduler_AnnouncePeersServer) error {
+	return status.Errorf(codes.Unimplemented, "method AnnouncePeers not implemented")
 }
 func (UnimplementedSchedulerServer) StatTask(context.Context, *StatTaskRequest) (*v2.Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
@@ -438,6 +476,32 @@ func _Scheduler_DeletePeer_Handler(srv interface{}, ctx context.Context, dec fun
 		return srv.(SchedulerServer).DeletePeer(ctx, req.(*DeletePeerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduler_AnnouncePeers_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SchedulerServer).AnnouncePeers(&schedulerAnnouncePeersServer{stream})
+}
+
+type Scheduler_AnnouncePeersServer interface {
+	Send(*emptypb.Empty) error
+	Recv() (*AnnouncePeersRequest, error)
+	grpc.ServerStream
+}
+
+type schedulerAnnouncePeersServer struct {
+	grpc.ServerStream
+}
+
+func (x *schedulerAnnouncePeersServer) Send(m *emptypb.Empty) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *schedulerAnnouncePeersServer) Recv() (*AnnouncePeersRequest, error) {
+	m := new(AnnouncePeersRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func _Scheduler_StatTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -754,6 +818,12 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "AnnouncePeer",
 			Handler:       _Scheduler_AnnouncePeer_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "AnnouncePeers",
+			Handler:       _Scheduler_AnnouncePeers_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
