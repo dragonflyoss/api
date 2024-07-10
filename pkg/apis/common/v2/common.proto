@@ -415,6 +415,8 @@ message ObjectStorage {
   string access_key_id = 1;
   // Access secret that used to access the object storage service.
   string access_key_secret = 2;
+  // Session token that used to access s3 storage service.
+  optional string session_token = 3; 
 }
 
 // Range represents download range.
