@@ -25,5 +25,5 @@ message Backend {
   // Backend HTTP response header.
   map<string, string> header = 2;
   // Backend HTTP status code.
-  int32 status_code = 3;
+  optional int32 status_code = 3;
 }
