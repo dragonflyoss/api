@@ -13,6 +13,6 @@ pub struct Backend {
         ::prost::alloc::string::String,
     >,
     /// Backend HTTP status code.
-    #[prost(int32, tag = "3")]
-    pub status_code: i32,
+    #[prost(int32, optional, tag = "3")]
+    pub status_code: ::core::option::Option<i32>,
 }

@@ -60,15 +60,23 @@ func (m *Backend) validate(all bool) error {
 
 	// no validation rules for Header
 
-	if val := m.GetStatusCode(); val < 100 || val >= 599 {
-		err := BackendValidationError{
-			field:  "StatusCode",
-			reason: "value must be inside range [100, 599)",
+	if m.StatusCode != nil {
+
+		if m.GetStatusCode() != 0 {
+
+			if val := m.GetStatusCode(); val < 100 || val >= 599 {
+				err := BackendValidationError{
+					field:  "StatusCode",
+					reason: "value must be inside range [100, 599)",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
 	if len(errors) > 0 {
