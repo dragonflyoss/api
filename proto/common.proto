@@ -407,12 +407,16 @@ message Download {
 
 // Object Storage related information.
 message ObjectStorage {
+  // Region is the region of the object storage service.
+  string region = 1;
+  // Endpoint is the endpoint of the object storage service.
+  string endpoint = 2;
   // Access key that used to access the object storage service.
-  string access_key_id = 1;
+  string access_key_id = 3;
   // Access secret that used to access the object storage service.
-  string access_key_secret = 2;
+  string access_key_secret = 4;
   // Session token that used to access s3 storage service.
-  optional string session_token = 3; 
+  optional string session_token = 5; 
 }
 
 // Range represents download range.
