@@ -2677,25 +2677,6 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	}
 
-	if m.Container != nil {
-
-		if m.GetContainer() != "" {
-
-			if utf8.RuneCountInString(m.GetContainer()) < 1 {
-				err := ObjectStorageValidationError{
-					field:  "Container",
-					reason: "value length must be at least 1 runes",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
 	if m.Credential != nil {
 
 		if m.GetCredential() != "" {
