@@ -2677,6 +2677,63 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	}
 
+	if m.Container != nil {
+
+		if m.GetContainer() != "" {
+
+			if utf8.RuneCountInString(m.GetContainer()) < 1 {
+				err := ObjectStorageValidationError{
+					field:  "Container",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Credential != nil {
+
+		if m.GetCredential() != "" {
+
+			if utf8.RuneCountInString(m.GetCredential()) < 1 {
+				err := ObjectStorageValidationError{
+					field:  "Credential",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.PredefinedAcl != nil {
+
+		if m.GetPredefinedAcl() != "" {
+
+			if utf8.RuneCountInString(m.GetPredefinedAcl()) < 1 {
+				err := ObjectStorageValidationError{
+					field:  "PredefinedAcl",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return ObjectStorageMultiError(errors)
 	}
