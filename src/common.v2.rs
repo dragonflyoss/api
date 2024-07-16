@@ -475,14 +475,11 @@ pub struct ObjectStorage {
     /// Session token that used to access s3 storage service.
     #[prost(string, optional, tag = "5")]
     pub session_token: ::core::option::Option<::prost::alloc::string::String>,
-    /// Container name that used for the Azure Blob Storage service.
-    #[prost(string, optional, tag = "6")]
-    pub container: ::core::option::Option<::prost::alloc::string::String>,
     /// Credential service account that used for the Google Cloud Storage service.
-    #[prost(string, optional, tag = "7")]
+    #[prost(string, optional, tag = "6")]
     pub credential: ::core::option::Option<::prost::alloc::string::String>,
     /// Predefined ACL that used for the Google Cloud Storage service.
-    #[prost(string, optional, tag = "8")]
+    #[prost(string, optional, tag = "7")]
     pub predefined_acl: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Range represents download range.
