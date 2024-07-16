@@ -2598,28 +2598,6 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetRegion()) < 1 {
-		err := ObjectStorageValidationError{
-			field:  "Region",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetEndpoint()) < 1 {
-		err := ObjectStorageValidationError{
-			field:  "Endpoint",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if utf8.RuneCountInString(m.GetAccessKeyId()) < 1 {
 		err := ObjectStorageValidationError{
 			field:  "AccessKeyId",
@@ -2640,6 +2618,44 @@ func (m *ObjectStorage) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+	}
+
+	if m.Region != nil {
+
+		if m.GetRegion() != "" {
+
+			if utf8.RuneCountInString(m.GetRegion()) < 1 {
+				err := ObjectStorageValidationError{
+					field:  "Region",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Endpoint != nil {
+
+		if m.GetEndpoint() != "" {
+
+			if utf8.RuneCountInString(m.GetEndpoint()) < 1 {
+				err := ObjectStorageValidationError{
+					field:  "Endpoint",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if m.SessionToken != nil {

@@ -461,11 +461,11 @@ pub struct Download {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ObjectStorage {
     /// Region is the region of the object storage service.
-    #[prost(string, tag = "1")]
-    pub region: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "1")]
+    pub region: ::core::option::Option<::prost::alloc::string::String>,
     /// Endpoint is the endpoint of the object storage service.
-    #[prost(string, tag = "2")]
-    pub endpoint: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "2")]
+    pub endpoint: ::core::option::Option<::prost::alloc::string::String>,
     /// Access key that used to access the object storage service.
     #[prost(string, tag = "3")]
     pub access_key_id: ::prost::alloc::string::String,
