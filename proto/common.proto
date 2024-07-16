@@ -417,6 +417,12 @@ message ObjectStorage {
   string access_key_secret = 4;
   // Session token that used to access s3 storage service.
   optional string session_token = 5; 
+  // Container name that used for the Azure Blob Storage service.
+  optional string container = 6;
+  // Credential service account that used for the Google Cloud Storage service.
+  optional string credential = 7;
+  // Predefined ACL that used for the Google Cloud Storage service.
+  optional string predefined_acl = 8;
 }
 
 // Range represents download range.
