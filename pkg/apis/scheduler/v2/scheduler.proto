@@ -358,8 +358,8 @@ message AnnounceCachePeerResponse {
   oneof response {
     option (validate.required) = true;
 
-    EmptyCacheTaskResponse empty_task_response = 1;
-    NormalCacheTaskResponse normal_task_response = 2;
+    EmptyCacheTaskResponse empty_cache_task_response = 1;
+    NormalCacheTaskResponse normal_cache_task_response = 2;
   }
 }
 

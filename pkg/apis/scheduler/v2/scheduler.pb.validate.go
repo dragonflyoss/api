@@ -6356,7 +6356,7 @@ func (m *AnnounceCachePeerResponse) validate(all bool) error {
 
 	oneofResponsePresent := false
 	switch v := m.Response.(type) {
-	case *AnnounceCachePeerResponse_EmptyTaskResponse:
+	case *AnnounceCachePeerResponse_EmptyCacheTaskResponse:
 		if v == nil {
 			err := AnnounceCachePeerResponseValidationError{
 				field:  "Response",
@@ -6370,11 +6370,11 @@ func (m *AnnounceCachePeerResponse) validate(all bool) error {
 		oneofResponsePresent = true
 
 		if all {
-			switch v := interface{}(m.GetEmptyTaskResponse()).(type) {
+			switch v := interface{}(m.GetEmptyCacheTaskResponse()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnounceCachePeerResponseValidationError{
-						field:  "EmptyTaskResponse",
+						field:  "EmptyCacheTaskResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -6382,23 +6382,23 @@ func (m *AnnounceCachePeerResponse) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnounceCachePeerResponseValidationError{
-						field:  "EmptyTaskResponse",
+						field:  "EmptyCacheTaskResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetEmptyTaskResponse()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetEmptyCacheTaskResponse()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnounceCachePeerResponseValidationError{
-					field:  "EmptyTaskResponse",
+					field:  "EmptyCacheTaskResponse",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
 			}
 		}
 
-	case *AnnounceCachePeerResponse_NormalTaskResponse:
+	case *AnnounceCachePeerResponse_NormalCacheTaskResponse:
 		if v == nil {
 			err := AnnounceCachePeerResponseValidationError{
 				field:  "Response",
@@ -6412,11 +6412,11 @@ func (m *AnnounceCachePeerResponse) validate(all bool) error {
 		oneofResponsePresent = true
 
 		if all {
-			switch v := interface{}(m.GetNormalTaskResponse()).(type) {
+			switch v := interface{}(m.GetNormalCacheTaskResponse()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnounceCachePeerResponseValidationError{
-						field:  "NormalTaskResponse",
+						field:  "NormalCacheTaskResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -6424,16 +6424,16 @@ func (m *AnnounceCachePeerResponse) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnounceCachePeerResponseValidationError{
-						field:  "NormalTaskResponse",
+						field:  "NormalCacheTaskResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetNormalTaskResponse()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetNormalCacheTaskResponse()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnounceCachePeerResponseValidationError{
-					field:  "NormalTaskResponse",
+					field:  "NormalCacheTaskResponse",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}

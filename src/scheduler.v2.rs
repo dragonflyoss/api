@@ -545,9 +545,9 @@ pub mod announce_cache_peer_response {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Response {
         #[prost(message, tag = "1")]
-        EmptyTaskResponse(super::EmptyCacheTaskResponse),
+        EmptyCacheTaskResponse(super::EmptyCacheTaskResponse),
         #[prost(message, tag = "2")]
-        NormalTaskResponse(super::NormalCacheTaskResponse),
+        NormalCacheTaskResponse(super::NormalCacheTaskResponse),
     }
 }
 /// StatCachePeerRequest represents request of StatCachePeer.
