@@ -1807,6 +1807,8 @@ func (m *DownloadCacheTaskStartedResponse) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for ContentLength
+
 	if len(errors) > 0 {
 		return DownloadCacheTaskStartedResponseMultiError(errors)
 	}
