@@ -145,31 +145,28 @@ pub struct DeleteTaskRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadCacheTaskRequest {
-    /// Host id.
-    #[prost(string, tag = "1")]
-    pub host_id: ::prost::alloc::string::String,
     /// Task id.
-    #[prost(string, tag = "2")]
+    #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
     /// Persistent represents whether the cache task is persistent.
     /// If the cache task is persistent, the cache peer will
     /// not be deleted when dfdaemon runs garbage collection.
-    #[prost(bool, tag = "3")]
+    #[prost(bool, tag = "2")]
     pub persistent: bool,
     /// Tag is used to distinguish different cache tasks.
-    #[prost(string, optional, tag = "4")]
+    #[prost(string, optional, tag = "3")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, optional, tag = "5")]
+    #[prost(string, optional, tag = "4")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// Task piece length.
-    #[prost(uint64, tag = "6")]
+    #[prost(uint64, tag = "5")]
     pub piece_length: u64,
     /// File path to be exported.
-    #[prost(string, tag = "7")]
+    #[prost(string, tag = "6")]
     pub output_path: ::prost::alloc::string::String,
     /// Download timeout.
-    #[prost(message, optional, tag = "8")]
+    #[prost(message, optional, tag = "7")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// DownloadCacheTaskStartedResponse represents task download started response of DownloadCacheTaskResponse.
