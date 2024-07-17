@@ -173,7 +173,11 @@ pub struct DownloadCacheTaskRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadCacheTaskStartedResponse {}
+pub struct DownloadCacheTaskStartedResponse {
+    /// Task content length.
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
+}
 /// DownloadCacheTaskResponse represents response of DownloadCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
