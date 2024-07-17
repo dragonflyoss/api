@@ -116,24 +116,22 @@ message DeleteTaskRequest {
 
 // DownloadCacheTaskRequest represents request of DownloadCacheTask.
 message DownloadCacheTaskRequest {
-  // Host id.
-  string host_id = 1;
   // Task id.
-  string task_id = 2;
+  string task_id = 1;
   // Persistent represents whether the cache task is persistent.
   // If the cache task is persistent, the cache peer will
   // not be deleted when dfdaemon runs garbage collection.
-  bool persistent = 3;
+  bool persistent = 2;
   // Tag is used to distinguish different cache tasks.
-  optional string tag = 4;
+  optional string tag = 3;
   // Application of task.
-  optional string application = 5;
+  optional string application = 4;
   // Task piece length.
-  uint64 piece_length = 6;
+  uint64 piece_length = 5;
   // File path to be exported.
-  string output_path = 7;
+  string output_path = 6;
   // Download timeout.
-  optional google.protobuf.Duration timeout = 8;
+  optional google.protobuf.Duration timeout = 7;
 }
 
 // DownloadCacheTaskStartedResponse represents task download started response of DownloadCacheTaskResponse.
