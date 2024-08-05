@@ -163,7 +163,7 @@ message Task {
   // Download url.
   string url = 3 [(validate.rules).string.uri = true];
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  optional string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$", ignore_empty: true}];
+  optional string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$", ignore_empty: true}];
   // URL tag identifies different task for same url.
   optional string tag = 5;
   // Application of task.
@@ -207,7 +207,7 @@ message CacheTask {
   // Replica count of the cache task.
   uint64 replica_count = 3 [(validate.rules).uint64.gte = 1];
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$"}];
+  string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$"}];
   // Tag is used to distinguish different cache tasks.
   optional string tag = 5;
   // Application of task.
@@ -370,7 +370,7 @@ message Download {
   // Download url.
   string url = 1 [(validate.rules).string.uri = true];
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$", ignore_empty: true}];
+  optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$", ignore_empty: true}];
   // Range is url range of request. If protocol is http, range
   // will set in request header. If protocol is others, range
   // will set in range field.
@@ -446,7 +446,7 @@ message Piece {
   // Piece length.
   uint64 length = 4;
   // Digest of the piece data, for example blake3:xxx or sha256:yyy.
-  string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64})$", ignore_empty: true}];
+  string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$", ignore_empty: true}];
   // Piece content.
   optional bytes content = 6 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
   // Traffic type.
