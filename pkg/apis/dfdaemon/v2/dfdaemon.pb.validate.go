@@ -1641,17 +1641,6 @@ func (m *DownloadCacheTaskRequest) validate(all bool) error {
 
 	// no validation rules for Persistent
 
-	if m.GetPieceLength() < 1 {
-		err := DownloadCacheTaskRequestValidationError{
-			field:  "PieceLength",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
 		err := DownloadCacheTaskRequestValidationError{
 			field:  "OutputPath",
@@ -1669,6 +1658,25 @@ func (m *DownloadCacheTaskRequest) validate(all bool) error {
 
 	if m.Application != nil {
 		// no validation rules for Application
+	}
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if m.GetPieceLength() < 1 {
+				err := DownloadCacheTaskRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be greater than or equal to 1",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if m.Timeout != nil {
@@ -2170,17 +2178,6 @@ func (m *UploadCacheTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetPieceLength() < 1 {
-		err := UploadCacheTaskRequestValidationError{
-			field:  "PieceLength",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if d := m.GetTtl(); d != nil {
 		dur, err := d.AsDuration(), d.CheckValid()
 		if err != nil {
@@ -2218,6 +2215,25 @@ func (m *UploadCacheTaskRequest) validate(all bool) error {
 
 	if m.Application != nil {
 		// no validation rules for Application
+	}
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if m.GetPieceLength() < 1 {
+				err := UploadCacheTaskRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be greater than or equal to 1",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if m.Timeout != nil {

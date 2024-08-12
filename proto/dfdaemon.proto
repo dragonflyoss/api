@@ -127,7 +127,7 @@ message DownloadCacheTaskRequest {
   // Application of task.
   optional string application = 4;
   // Task piece length.
-  uint64 piece_length = 5;
+  optional uint64 piece_length = 5;
   // File path to be exported.
   string output_path = 6;
   // Download timeout.
@@ -166,7 +166,7 @@ message UploadCacheTaskRequest {
   // Application of task.
   optional string application = 4;
   // Task piece length.
-  uint64 piece_length = 5;
+  optional uint64 piece_length = 5;
   // TTL of the cache task.
   google.protobuf.Duration ttl = 6;
   // Upload timeout.
