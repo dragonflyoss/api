@@ -432,8 +432,8 @@ pub struct Download {
         ::prost::alloc::string::String,
     >,
     /// Task piece length.
-    #[prost(uint64, tag = "10")]
-    pub piece_length: u64,
+    #[prost(uint64, optional, tag = "10")]
+    pub piece_length: ::core::option::Option<u64>,
     /// File path to be exported.
     #[prost(string, optional, tag = "11")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,

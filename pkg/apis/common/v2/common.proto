@@ -392,7 +392,7 @@ message Download {
   // Task request headers.
   map<string, string> request_header = 9;
   // Task piece length.
-  uint64 piece_length = 10 [(validate.rules).uint64.gte = 1];
+  optional uint64 piece_length = 10 [(validate.rules).uint64 = {gte: 1, ignore_empty: true}];
   // File path to be exported.
   optional string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
