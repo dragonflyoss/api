@@ -387,20 +387,22 @@ message Download {
   repeated string filtered_query_params = 8;
   // Task request headers.
   map<string, string> request_header = 9;
+  // Task piece length.
+  optional uint64 piece_length = 10;
   // File path to be exported.
-  optional string output_path = 10;
+  optional string output_path = 11;
   // Download timeout.
-  optional google.protobuf.Duration timeout = 11;
+  optional google.protobuf.Duration timeout = 12;
   // Dfdaemon will disable download back-to-source by itself, if disable_back_to_source is true.
-  bool disable_back_to_source = 12;
+  bool disable_back_to_source = 13;
   // Scheduler will triggers peer to download back-to-source, if need_back_to_source is true.
-  bool need_back_to_source = 13;
+  bool need_back_to_source = 14;
   // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
-  repeated bytes certificate_chain = 14;
+  repeated bytes certificate_chain = 15;
   // prefetch pre-downloads all pieces of the task when download task with range request.
-  bool prefetch = 15;
+  bool prefetch = 16;
   // Object Storage related information.
-  optional ObjectStorage object_storage = 16;
+  optional ObjectStorage object_storage = 17;
 }
 
 // Object Storage related information.
