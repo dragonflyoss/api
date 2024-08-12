@@ -431,26 +431,29 @@ pub struct Download {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
+    /// Task piece length.
+    #[prost(uint64, optional, tag = "10")]
+    pub piece_length: ::core::option::Option<u64>,
     /// File path to be exported.
-    #[prost(string, optional, tag = "10")]
+    #[prost(string, optional, tag = "11")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
-    #[prost(message, optional, tag = "11")]
+    #[prost(message, optional, tag = "12")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Dfdaemon will disable download back-to-source by itself, if disable_back_to_source is true.
-    #[prost(bool, tag = "12")]
+    #[prost(bool, tag = "13")]
     pub disable_back_to_source: bool,
     /// Scheduler will triggers peer to download back-to-source, if need_back_to_source is true.
-    #[prost(bool, tag = "13")]
+    #[prost(bool, tag = "14")]
     pub need_back_to_source: bool,
     /// certificate_chain is the client certs with DER format for the backend client to download back-to-source.
-    #[prost(bytes = "vec", repeated, tag = "14")]
+    #[prost(bytes = "vec", repeated, tag = "15")]
     pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
     /// prefetch pre-downloads all pieces of the task when download task with range request.
-    #[prost(bool, tag = "15")]
+    #[prost(bool, tag = "16")]
     pub prefetch: bool,
     /// Object Storage related information.
-    #[prost(message, optional, tag = "16")]
+    #[prost(message, optional, tag = "17")]
     pub object_storage: ::core::option::Option<ObjectStorage>,
 }
 /// Object Storage related information.
