@@ -1660,25 +1660,6 @@ func (m *DownloadCacheTaskRequest) validate(all bool) error {
 		// no validation rules for Application
 	}
 
-	if m.PieceLength != nil {
-
-		if m.GetPieceLength() != 0 {
-
-			if m.GetPieceLength() < 1 {
-				err := DownloadCacheTaskRequestValidationError{
-					field:  "PieceLength",
-					reason: "value must be greater than or equal to 1",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
 	if m.Timeout != nil {
 
 		if all {
@@ -2215,25 +2196,6 @@ func (m *UploadCacheTaskRequest) validate(all bool) error {
 
 	if m.Application != nil {
 		// no validation rules for Application
-	}
-
-	if m.PieceLength != nil {
-
-		if m.GetPieceLength() != 0 {
-
-			if m.GetPieceLength() < 1 {
-				err := UploadCacheTaskRequestValidationError{
-					field:  "PieceLength",
-					reason: "value must be greater than or equal to 1",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
 	}
 
 	if m.Timeout != nil {

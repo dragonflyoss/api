@@ -160,14 +160,11 @@ pub struct DownloadCacheTaskRequest {
     /// Application of task.
     #[prost(string, optional, tag = "4")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Task piece length.
-    #[prost(uint64, optional, tag = "5")]
-    pub piece_length: ::core::option::Option<u64>,
     /// File path to be exported.
-    #[prost(string, tag = "6")]
+    #[prost(string, tag = "5")]
     pub output_path: ::prost::alloc::string::String,
     /// Download timeout.
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag = "6")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// DownloadCacheTaskStartedResponse represents task download started response of DownloadCacheTaskResponse.
@@ -225,14 +222,11 @@ pub struct UploadCacheTaskRequest {
     /// Application of task.
     #[prost(string, optional, tag = "4")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Task piece length.
-    #[prost(uint64, optional, tag = "5")]
-    pub piece_length: ::core::option::Option<u64>,
     /// TTL of the cache task.
-    #[prost(message, optional, tag = "6")]
+    #[prost(message, optional, tag = "5")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Upload timeout.
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag = "6")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// StatCacheTaskRequest represents request of StatCacheTask.
