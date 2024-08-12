@@ -126,12 +126,10 @@ message DownloadCacheTaskRequest {
   optional string tag = 3;
   // Application of task.
   optional string application = 4;
-  // Task piece length.
-  optional uint64 piece_length = 5;
   // File path to be exported.
-  string output_path = 6;
+  string output_path = 5;
   // Download timeout.
-  optional google.protobuf.Duration timeout = 7;
+  optional google.protobuf.Duration timeout = 6;
 }
 
 // DownloadCacheTaskStartedResponse represents task download started response of DownloadCacheTaskResponse.
@@ -165,12 +163,10 @@ message UploadCacheTaskRequest {
   optional string tag = 3;
   // Application of task.
   optional string application = 4;
-  // Task piece length.
-  optional uint64 piece_length = 5;
   // TTL of the cache task.
-  google.protobuf.Duration ttl = 6;
+  google.protobuf.Duration ttl = 5;
   // Upload timeout.
-  optional google.protobuf.Duration timeout = 7;
+  optional google.protobuf.Duration timeout = 6;
 }
 
 // StatCacheTaskRequest represents request of StatCacheTask.

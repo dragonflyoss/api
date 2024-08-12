@@ -2401,25 +2401,6 @@ func (m *Download) validate(all bool) error {
 		// no validation rules for Application
 	}
 
-	if m.PieceLength != nil {
-
-		if m.GetPieceLength() != 0 {
-
-			if m.GetPieceLength() < 1 {
-				err := DownloadValidationError{
-					field:  "PieceLength",
-					reason: "value must be greater than or equal to 1",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
 	if m.OutputPath != nil {
 
 		if m.GetOutputPath() != "" {
