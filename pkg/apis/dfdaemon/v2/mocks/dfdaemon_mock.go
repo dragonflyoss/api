@@ -64,6 +64,26 @@ func (mr *MockDfdaemonUploadClientMockRecorder) DeleteCacheTask(ctx, in any, opt
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCacheTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).DeleteCacheTask), varargs...)
 }
 
+// DeleteTask mocks base method.
+func (m *MockDfdaemonUploadClient) DeleteTask(ctx context.Context, in *dfdaemon.DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteTask", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTask indicates an expected call of DeleteTask.
+func (mr *MockDfdaemonUploadClientMockRecorder) DeleteTask(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).DeleteTask), varargs...)
+}
+
 // DownloadCacheTask mocks base method.
 func (m *MockDfdaemonUploadClient) DownloadCacheTask(ctx context.Context, in *dfdaemon.DownloadCacheTaskRequest, opts ...grpc.CallOption) (dfdaemon.DfdaemonUpload_DownloadCacheTaskClient, error) {
 	m.ctrl.T.Helper()
@@ -142,6 +162,26 @@ func (mr *MockDfdaemonUploadClientMockRecorder) StatCacheTask(ctx, in any, opts 
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).StatCacheTask), varargs...)
+}
+
+// StatTask mocks base method.
+func (m *MockDfdaemonUploadClient) StatTask(ctx context.Context, in *dfdaemon.StatTaskRequest, opts ...grpc.CallOption) (*common.Task, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StatTask", varargs...)
+	ret0, _ := ret[0].(*common.Task)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatTask indicates an expected call of StatTask.
+func (mr *MockDfdaemonUploadClientMockRecorder) StatTask(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).StatTask), varargs...)
 }
 
 // SyncPieces mocks base method.
@@ -571,6 +611,21 @@ func (mr *MockDfdaemonUploadServerMockRecorder) DeleteCacheTask(arg0, arg1 any) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCacheTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).DeleteCacheTask), arg0, arg1)
 }
 
+// DeleteTask mocks base method.
+func (m *MockDfdaemonUploadServer) DeleteTask(arg0 context.Context, arg1 *dfdaemon.DeleteTaskRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteTask", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteTask indicates an expected call of DeleteTask.
+func (mr *MockDfdaemonUploadServerMockRecorder) DeleteTask(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).DeleteTask), arg0, arg1)
+}
+
 // DownloadCacheTask mocks base method.
 func (m *MockDfdaemonUploadServer) DownloadCacheTask(arg0 *dfdaemon.DownloadCacheTaskRequest, arg1 dfdaemon.DfdaemonUpload_DownloadCacheTaskServer) error {
 	m.ctrl.T.Helper()
@@ -627,6 +682,21 @@ func (m *MockDfdaemonUploadServer) StatCacheTask(arg0 context.Context, arg1 *dfd
 func (mr *MockDfdaemonUploadServerMockRecorder) StatCacheTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).StatCacheTask), arg0, arg1)
+}
+
+// StatTask mocks base method.
+func (m *MockDfdaemonUploadServer) StatTask(arg0 context.Context, arg1 *dfdaemon.StatTaskRequest) (*common.Task, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "StatTask", arg0, arg1)
+	ret0, _ := ret[0].(*common.Task)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatTask indicates an expected call of StatTask.
+func (mr *MockDfdaemonUploadServerMockRecorder) StatTask(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).StatTask), arg0, arg1)
 }
 
 // SyncPieces mocks base method.

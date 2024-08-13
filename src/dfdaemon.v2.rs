@@ -359,6 +359,55 @@ pub mod dfdaemon_upload_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DownloadTask"));
             self.inner.server_streaming(req, path, codec).await
         }
+        /// StatTask stats task information.
+        pub async fn stat_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/StatTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "StatTask"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// DeleteTask deletes task from p2p network.
+        pub async fn delete_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/DeleteTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DeleteTask"));
+            self.inner.unary(req, path, codec).await
+        }
         /// SyncPieces syncs piece metadatas from remote peer.
         pub async fn sync_pieces(
             &mut self,
@@ -808,6 +857,19 @@ pub mod dfdaemon_upload_server {
             tonic::Response<Self::DownloadTaskStream>,
             tonic::Status,
         >;
+        /// StatTask stats task information.
+        async fn stat_task(
+            &self,
+            request: tonic::Request<super::StatTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Status,
+        >;
+        /// DeleteTask deletes task from p2p network.
+        async fn delete_task(
+            &self,
+            request: tonic::Request<super::DeleteTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Server streaming response type for the SyncPieces method.
         type SyncPiecesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::SyncPiecesResponse, tonic::Status>,
@@ -977,6 +1039,96 @@ pub mod dfdaemon_upload_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.server_streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/StatTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<super::StatTaskRequest>
+                    for StatTaskSvc<T> {
+                        type Response = super::super::super::common::v2::Task;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::stat_task(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/DeleteTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<super::DeleteTaskRequest>
+                    for DeleteTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::delete_task(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeleteTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
