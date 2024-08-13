@@ -199,6 +199,12 @@ service DfdaemonUpload {
   // DownloadTask downloads task from p2p network.
   rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
 
+  // StatTask stats task information.
+  rpc StatTask(StatTaskRequest) returns(common.v2.Task);
+
+  // DeleteTask deletes task from p2p network.
+  rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
+
   // SyncPieces syncs piece metadatas from remote peer.
   rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
 
