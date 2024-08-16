@@ -449,12 +449,17 @@ pub struct Download {
     /// certificate_chain is the client certs with DER format for the backend client to download back-to-source.
     #[prost(bytes = "vec", repeated, tag = "15")]
     pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-    /// prefetch pre-downloads all pieces of the task when download task with range request.
+    /// Prefetch pre-downloads all pieces of the task when download task with range request.
     #[prost(bool, tag = "16")]
     pub prefetch: bool,
     /// Object Storage related information.
     #[prost(message, optional, tag = "17")]
     pub object_storage: ::core::option::Option<ObjectStorage>,
+    /// Content length of the task. If add this field, the task content length will be used the value of this field,
+    /// otherwise the dfdaemon will call the head request to get the task content length.
+    /// Set field of the task content length to skip the head request.
+    #[prost(uint64, optional, tag = "18")]
+    pub content_length: ::core::option::Option<u64>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
