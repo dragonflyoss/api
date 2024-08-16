@@ -403,10 +403,14 @@ message Download {
   bool need_back_to_source = 14;
   // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
   repeated bytes certificate_chain = 15;
-  // prefetch pre-downloads all pieces of the task when download task with range request.
+  // Prefetch pre-downloads all pieces of the task when download task with range request.
   bool prefetch = 16;
   // Object Storage related information.
   optional ObjectStorage object_storage = 17;
+  // Content length of the task. If add this field, the task content length will be used the value of this field,
+  // otherwise the dfdaemon will call the head request to get the task content length.
+  // Set field of the task content length to skip the head request.
+  optional uint64 content_length = 18;
 }
 
 // Object Storage related information.
