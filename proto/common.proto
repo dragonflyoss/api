@@ -412,9 +412,9 @@ message ObjectStorage {
   // Endpoint is the endpoint of the object storage service.
   optional string endpoint = 2;
   // Access key that used to access the object storage service.
-  string access_key_id = 3;
+  optional string access_key_id = 3;
   // Access secret that used to access the object storage service.
-  string access_key_secret = 4;
+  optional string access_key_secret = 4;
   // Session token that used to access s3 storage service.
   optional string session_token = 5; 
   // Local path to credential file for Google Cloud Storage service OAuth2 authentication.

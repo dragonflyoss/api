@@ -416,9 +416,9 @@ message ObjectStorage {
   // Endpoint is the endpoint of the object storage service.
   optional string endpoint = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Access key that used to access the object storage service.
-  string access_key_id = 3 [(validate.rules).string.min_len = 1];
+  optional string access_key_id = 3 [(validate.rules).string.min_len = 1];
   // Access secret that used to access the object storage service.
-  string access_key_secret = 4 [(validate.rules).string.min_len = 1];
+  optional string access_key_secret = 4 [(validate.rules).string.min_len = 1];
   // Session token that used to access s3 storage service.
   optional string session_token = 5 [(validate.rules).string = {min_len: 1, ignore_empty: true}]; 
   // Local path to credential file for Google Cloud Storage service OAuth2 authentication.
