@@ -407,10 +407,6 @@ message Download {
   bool prefetch = 16;
   // Object Storage related information.
   optional ObjectStorage object_storage = 17;
-  // Content length of the task. If add this field, the task content length will be used the value of this field,
-  // otherwise the dfdaemon will call the head request to get the task content length.
-  // Set field of the task content length to skip the head request.
-  optional uint64 content_length = 18;
 }
 
 // Object Storage related information.
