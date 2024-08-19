@@ -468,11 +468,11 @@ pub struct ObjectStorage {
     #[prost(string, optional, tag = "2")]
     pub endpoint: ::core::option::Option<::prost::alloc::string::String>,
     /// Access key that used to access the object storage service.
-    #[prost(string, tag = "3")]
-    pub access_key_id: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "3")]
+    pub access_key_id: ::core::option::Option<::prost::alloc::string::String>,
     /// Access secret that used to access the object storage service.
-    #[prost(string, tag = "4")]
-    pub access_key_secret: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "4")]
+    pub access_key_secret: ::core::option::Option<::prost::alloc::string::String>,
     /// Session token that used to access s3 storage service.
     #[prost(string, optional, tag = "5")]
     pub session_token: ::core::option::Option<::prost::alloc::string::String>,
