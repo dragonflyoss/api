@@ -455,11 +455,6 @@ pub struct Download {
     /// Object Storage related information.
     #[prost(message, optional, tag = "17")]
     pub object_storage: ::core::option::Option<ObjectStorage>,
-    /// Content length of the task. If add this field, the task content length will be used the value of this field,
-    /// otherwise the dfdaemon will call the head request to get the task content length.
-    /// Set field of the task content length to skip the head request.
-    #[prost(uint64, optional, tag = "18")]
-    pub content_length: ::core::option::Option<u64>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -2505,10 +2505,6 @@ func (m *Download) validate(all bool) error {
 
 	}
 
-	if m.ContentLength != nil {
-		// no validation rules for ContentLength
-	}
-
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}
