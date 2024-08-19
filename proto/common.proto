@@ -417,8 +417,8 @@ message ObjectStorage {
   string access_key_secret = 4;
   // Session token that used to access s3 storage service.
   optional string session_token = 5; 
-  // Credential service account that used for the Google Cloud Storage service.
-  optional string credential = 6;
+  // Local path to credential file for Google Cloud Storage service OAuth2 authentication.
+  optional string credential_path = 6;
   // Predefined ACL that used for the Google Cloud Storage service.
   optional string predefined_acl = 7;
 }
