@@ -2685,13 +2685,13 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	}
 
-	if m.Credential != nil {
+	if m.CredentialPath != nil {
 
-		if m.GetCredential() != "" {
+		if m.GetCredentialPath() != "" {
 
-			if utf8.RuneCountInString(m.GetCredential()) < 1 {
+			if utf8.RuneCountInString(m.GetCredentialPath()) < 1 {
 				err := ObjectStorageValidationError{
-					field:  "Credential",
+					field:  "CredentialPath",
 					reason: "value length must be at least 1 runes",
 				}
 				if !all {
