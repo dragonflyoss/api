@@ -481,8 +481,8 @@ pub mod manager_client {
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
@@ -507,7 +507,7 @@ pub mod manager_client {
             >,
             <T as tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
             ManagerClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -766,7 +766,7 @@ pub mod manager_server {
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with ManagerServer.
     #[async_trait]
-    pub trait Manager: Send + Sync + 'static {
+    pub trait Manager: std::marker::Send + std::marker::Sync + 'static {
         /// Get SeedPeer and SeedPeer cluster configuration.
         async fn get_seed_peer(
             &self,
@@ -824,14 +824,14 @@ pub mod manager_server {
     }
     /// Manager RPC Service.
     #[derive(Debug)]
-    pub struct ManagerServer<T: Manager> {
+    pub struct ManagerServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T: Manager> ManagerServer<T> {
+    impl<T> ManagerServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -885,8 +885,8 @@ pub mod manager_server {
     impl<T, B> tonic::codegen::Service<http::Request<B>> for ManagerServer<T>
     where
         T: Manager,
-        B: Body + Send + 'static,
-        B::Error: Into<StdError> + Send + 'static,
+        B: Body + std::marker::Send + 'static,
+        B::Error: Into<StdError> + std::marker::Send + 'static,
     {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
@@ -1324,7 +1324,7 @@ pub mod manager_server {
             }
         }
     }
-    impl<T: Manager> Clone for ManagerServer<T> {
+    impl<T> Clone for ManagerServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -1336,7 +1336,9 @@ pub mod manager_server {
             }
         }
     }
-    impl<T: Manager> tonic::server::NamedService for ManagerServer<T> {
-        const NAME: &'static str = "manager.v2.Manager";
+    /// Generated gRPC service name
+    pub const SERVICE_NAME: &str = "manager.v2.Manager";
+    impl<T> tonic::server::NamedService for ManagerServer<T> {
+        const NAME: &'static str = SERVICE_NAME;
     }
 }

@@ -272,8 +272,8 @@ pub mod dfdaemon_upload_client {
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
@@ -298,7 +298,7 @@ pub mod dfdaemon_upload_client {
             >,
             <T as tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
             DfdaemonUploadClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -566,8 +566,8 @@ pub mod dfdaemon_download_client {
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
@@ -592,7 +592,7 @@ pub mod dfdaemon_download_client {
             >,
             <T as tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
             DfdaemonDownloadClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -842,12 +842,12 @@ pub mod dfdaemon_upload_server {
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with DfdaemonUploadServer.
     #[async_trait]
-    pub trait DfdaemonUpload: Send + Sync + 'static {
+    pub trait DfdaemonUpload: std::marker::Send + std::marker::Sync + 'static {
         /// Server streaming response type for the DownloadTask method.
         type DownloadTaskStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::DownloadTaskResponse, tonic::Status>,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// DownloadTask downloads task from p2p network.
         async fn download_task(
@@ -874,7 +874,7 @@ pub mod dfdaemon_upload_server {
         type SyncPiecesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::SyncPiecesResponse, tonic::Status>,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// SyncPieces syncs piece metadatas from remote peer.
         async fn sync_pieces(
@@ -896,7 +896,7 @@ pub mod dfdaemon_upload_server {
                     tonic::Status,
                 >,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// DownloadCacheTask downloads cache task from p2p network.
         async fn download_cache_task(
@@ -922,14 +922,14 @@ pub mod dfdaemon_upload_server {
     }
     /// DfdaemonUpload represents upload service of dfdaemon.
     #[derive(Debug)]
-    pub struct DfdaemonUploadServer<T: DfdaemonUpload> {
+    pub struct DfdaemonUploadServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T: DfdaemonUpload> DfdaemonUploadServer<T> {
+    impl<T> DfdaemonUploadServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -983,8 +983,8 @@ pub mod dfdaemon_upload_server {
     impl<T, B> tonic::codegen::Service<http::Request<B>> for DfdaemonUploadServer<T>
     where
         T: DfdaemonUpload,
-        B: Body + Send + 'static,
-        B::Error: Into<StdError> + Send + 'static,
+        B: Body + std::marker::Send + 'static,
+        B::Error: Into<StdError> + std::marker::Send + 'static,
     {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
@@ -1382,7 +1382,7 @@ pub mod dfdaemon_upload_server {
             }
         }
     }
-    impl<T: DfdaemonUpload> Clone for DfdaemonUploadServer<T> {
+    impl<T> Clone for DfdaemonUploadServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -1394,8 +1394,10 @@ pub mod dfdaemon_upload_server {
             }
         }
     }
-    impl<T: DfdaemonUpload> tonic::server::NamedService for DfdaemonUploadServer<T> {
-        const NAME: &'static str = "dfdaemon.v2.DfdaemonUpload";
+    /// Generated gRPC service name
+    pub const SERVICE_NAME: &str = "dfdaemon.v2.DfdaemonUpload";
+    impl<T> tonic::server::NamedService for DfdaemonUploadServer<T> {
+        const NAME: &'static str = SERVICE_NAME;
     }
 }
 /// Generated server implementations.
@@ -1404,12 +1406,12 @@ pub mod dfdaemon_download_server {
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with DfdaemonDownloadServer.
     #[async_trait]
-    pub trait DfdaemonDownload: Send + Sync + 'static {
+    pub trait DfdaemonDownload: std::marker::Send + std::marker::Sync + 'static {
         /// Server streaming response type for the DownloadTask method.
         type DownloadTaskStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::DownloadTaskResponse, tonic::Status>,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// DownloadTask downloads task from p2p network.
         async fn download_task(
@@ -1444,7 +1446,7 @@ pub mod dfdaemon_download_server {
                     tonic::Status,
                 >,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// DownloadCacheTask downloads cache task from p2p network.
         async fn download_cache_task(
@@ -1478,14 +1480,14 @@ pub mod dfdaemon_download_server {
     }
     /// DfdaemonDownload represents download service of dfdaemon.
     #[derive(Debug)]
-    pub struct DfdaemonDownloadServer<T: DfdaemonDownload> {
+    pub struct DfdaemonDownloadServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T: DfdaemonDownload> DfdaemonDownloadServer<T> {
+    impl<T> DfdaemonDownloadServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -1539,8 +1541,8 @@ pub mod dfdaemon_download_server {
     impl<T, B> tonic::codegen::Service<http::Request<B>> for DfdaemonDownloadServer<T>
     where
         T: DfdaemonDownload,
-        B: Body + Send + 'static,
-        B::Error: Into<StdError> + Send + 'static,
+        B: Body + std::marker::Send + 'static,
+        B::Error: Into<StdError> + std::marker::Send + 'static,
     {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
@@ -1937,7 +1939,7 @@ pub mod dfdaemon_download_server {
             }
         }
     }
-    impl<T: DfdaemonDownload> Clone for DfdaemonDownloadServer<T> {
+    impl<T> Clone for DfdaemonDownloadServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -1949,7 +1951,9 @@ pub mod dfdaemon_download_server {
             }
         }
     }
-    impl<T: DfdaemonDownload> tonic::server::NamedService for DfdaemonDownloadServer<T> {
-        const NAME: &'static str = "dfdaemon.v2.DfdaemonDownload";
+    /// Generated gRPC service name
+    pub const SERVICE_NAME: &str = "dfdaemon.v2.DfdaemonDownload";
+    impl<T> tonic::server::NamedService for DfdaemonDownloadServer<T> {
+        const NAME: &'static str = SERVICE_NAME;
     }
 }
