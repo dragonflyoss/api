@@ -696,8 +696,8 @@ pub mod scheduler_client {
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
@@ -722,7 +722,7 @@ pub mod scheduler_client {
             >,
             <T as tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
             SchedulerClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -1195,12 +1195,12 @@ pub mod scheduler_server {
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with SchedulerServer.
     #[async_trait]
-    pub trait Scheduler: Send + Sync + 'static {
+    pub trait Scheduler: std::marker::Send + std::marker::Sync + 'static {
         /// Server streaming response type for the AnnouncePeer method.
         type AnnouncePeerStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::AnnouncePeerResponse, tonic::Status>,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// AnnouncePeer announces peer to scheduler.
         async fn announce_peer(
@@ -1227,7 +1227,7 @@ pub mod scheduler_server {
         type AnnouncePeersStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<(), tonic::Status>,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// A host announces that it has the announced peers to scheduler at startup.
         async fn announce_peers(
@@ -1264,7 +1264,7 @@ pub mod scheduler_server {
         type SyncProbesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::SyncProbesResponse, tonic::Status>,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// SyncProbes sync probes of the host.
         async fn sync_probes(
@@ -1278,7 +1278,7 @@ pub mod scheduler_server {
                     tonic::Status,
                 >,
             >
-            + Send
+            + std::marker::Send
             + 'static;
         /// AnnounceCachePeer announces cache peer to scheduler.
         async fn announce_cache_peer(
@@ -1335,14 +1335,14 @@ pub mod scheduler_server {
     }
     /// Scheduler RPC Service.
     #[derive(Debug)]
-    pub struct SchedulerServer<T: Scheduler> {
+    pub struct SchedulerServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T: Scheduler> SchedulerServer<T> {
+    impl<T> SchedulerServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -1396,8 +1396,8 @@ pub mod scheduler_server {
     impl<T, B> tonic::codegen::Service<http::Request<B>> for SchedulerServer<T>
     where
         T: Scheduler,
-        B: Body + Send + 'static,
-        B::Error: Into<StdError> + Send + 'static,
+        B: Body + std::marker::Send + 'static,
+        B::Error: Into<StdError> + std::marker::Send + 'static,
     {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
@@ -2213,7 +2213,7 @@ pub mod scheduler_server {
             }
         }
     }
-    impl<T: Scheduler> Clone for SchedulerServer<T> {
+    impl<T> Clone for SchedulerServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -2225,7 +2225,9 @@ pub mod scheduler_server {
             }
         }
     }
-    impl<T: Scheduler> tonic::server::NamedService for SchedulerServer<T> {
-        const NAME: &'static str = "scheduler.v2.Scheduler";
+    /// Generated gRPC service name
+    pub const SERVICE_NAME: &str = "scheduler.v2.Scheduler";
+    impl<T> tonic::server::NamedService for SchedulerServer<T> {
+        const NAME: &'static str = SERVICE_NAME;
     }
 }

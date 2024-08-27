@@ -6,7 +6,7 @@ LANGUAGE=go
 
 proto_modules="common/v1 common/v2 cdnsystem/v1 dfdaemon/v1 dfdaemon/v2
 errordetails/v1 errordetails/v2 manager/v1 manager/v2 scheduler/v1 scheduler/v2
-security/v1 trainer/v1 inference"
+security/v1"
 
 echo "generate protos..."
 

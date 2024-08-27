@@ -50,8 +50,8 @@ pub mod certificate_client {
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + Send,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
     {
         pub fn new(inner: T) -> Self {
             let inner = tonic::client::Grpc::new(inner);
@@ -76,7 +76,7 @@ pub mod certificate_client {
             >,
             <T as tonic::codegen::Service<
                 http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
         {
             CertificateClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -145,7 +145,7 @@ pub mod certificate_server {
     use tonic::codegen::*;
     /// Generated trait containing gRPC methods that should be implemented for use with CertificateServer.
     #[async_trait]
-    pub trait Certificate: Send + Sync + 'static {
+    pub trait Certificate: std::marker::Send + std::marker::Sync + 'static {
         /// Using provided CSR, returns a signed certificate.
         async fn issue_certificate(
             &self,
@@ -157,14 +157,14 @@ pub mod certificate_server {
     }
     /// Service for managing certificates issued by the CA.
     #[derive(Debug)]
-    pub struct CertificateServer<T: Certificate> {
+    pub struct CertificateServer<T> {
         inner: Arc<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
         max_decoding_message_size: Option<usize>,
         max_encoding_message_size: Option<usize>,
     }
-    impl<T: Certificate> CertificateServer<T> {
+    impl<T> CertificateServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -218,8 +218,8 @@ pub mod certificate_server {
     impl<T, B> tonic::codegen::Service<http::Request<B>> for CertificateServer<T>
     where
         T: Certificate,
-        B: Body + Send + 'static,
-        B::Error: Into<StdError> + Send + 'static,
+        B: Body + std::marker::Send + 'static,
+        B::Error: Into<StdError> + std::marker::Send + 'static,
     {
         type Response = http::Response<tonic::body::BoxBody>;
         type Error = std::convert::Infallible;
@@ -295,7 +295,7 @@ pub mod certificate_server {
             }
         }
     }
-    impl<T: Certificate> Clone for CertificateServer<T> {
+    impl<T> Clone for CertificateServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -307,7 +307,9 @@ pub mod certificate_server {
             }
         }
     }
-    impl<T: Certificate> tonic::server::NamedService for CertificateServer<T> {
-        const NAME: &'static str = "security.Certificate";
+    /// Generated gRPC service name
+    pub const SERVICE_NAME: &str = "security.Certificate";
+    impl<T> tonic::server::NamedService for CertificateServer<T> {
+        const NAME: &'static str = SERVICE_NAME;
     }
 }
