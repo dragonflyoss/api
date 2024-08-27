@@ -371,39 +371,6 @@ pub struct ListApplicationsResponse {
     #[prost(message, repeated, tag = "1")]
     pub applications: ::prost::alloc::vec::Vec<Application>,
 }
-/// CreateGNNRequest represents to create GNN model request of TrainRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct CreateGnnRequest {
-    /// Protocol buffer file of model.
-    #[prost(bytes = "vec", tag = "1")]
-    pub data: ::prost::alloc::vec::Vec<u8>,
-    /// Recall of the model.
-    #[prost(double, tag = "2")]
-    pub recall: f64,
-    /// Precision of the model.
-    #[prost(double, tag = "3")]
-    pub precision: f64,
-    /// F1-Score of the model.
-    #[prost(double, tag = "4")]
-    pub f1_score: f64,
-}
-/// CreateMLPRequest represents to create MLP model request of TrainRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct CreateMlpRequest {
-    /// Protocol buffer file of model.
-    #[prost(bytes = "vec", tag = "1")]
-    pub data: ::prost::alloc::vec::Vec<u8>,
-    /// MSE of the model.
-    #[prost(double, tag = "2")]
-    pub mse: f64,
-    /// MAE of the model.
-    #[prost(double, tag = "3")]
-    pub mae: f64,
-}
 /// KeepAliveRequest represents request of KeepAlive.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]

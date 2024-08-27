@@ -284,28 +284,6 @@ message ListApplicationsResponse {
   repeated Application applications = 1;
 }
 
-// CreateGNNRequest represents to create GNN model request of TrainRequest.
-message CreateGNNRequest {
-  // Protocol buffer file of model.
-  bytes data = 1 [(validate.rules).bytes.min_len = 1];
-  // Recall of the model.
-  double recall = 2 [(validate.rules).double = {gte: 0, lte: 1}];
-  // Precision of the model.
-  double precision = 3 [(validate.rules).double = {gte: 0, lte: 1}];
-  // F1-Score of the model.
-  double f1_score = 4 [(validate.rules).double = {gte: 0, lte: 1}];
-}
-
-// CreateMLPRequest represents to create MLP model request of TrainRequest.
-message CreateMLPRequest {
-  // Protocol buffer file of model.
-  bytes data = 1 [(validate.rules).bytes.min_len = 1];
-  // MSE of the model.
-  double mse = 2 [(validate.rules).double = {gte: 0}];
-  // MAE of the model.
-  double mae = 3 [(validate.rules).double = {gte: 0}];
-}
-
 // KeepAliveRequest represents request of KeepAlive.
 message KeepAliveRequest {
   // Request source type.

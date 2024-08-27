@@ -41,8 +41,6 @@ type ManagerClient interface {
 	ListBuckets(ctx context.Context, in *ListBucketsRequest, opts ...grpc.CallOption) (*ListBucketsResponse, error)
 	// List applications configuration.
 	ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error)
-	// Create model and update data of model to object storage.
-	CreateModel(ctx context.Context, in *CreateModelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// KeepAlive with manager.
 	KeepAlive(ctx context.Context, opts ...grpc.CallOption) (Manager_KeepAliveClient, error)
 }
@@ -136,15 +134,6 @@ func (c *managerClient) ListApplications(ctx context.Context, in *ListApplicatio
 	return out, nil
 }
 
-func (c *managerClient) CreateModel(ctx context.Context, in *CreateModelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/manager.Manager/CreateModel", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *managerClient) KeepAlive(ctx context.Context, opts ...grpc.CallOption) (Manager_KeepAliveClient, error) {
 	stream, err := c.cc.NewStream(ctx, &Manager_ServiceDesc.Streams[0], "/manager.Manager/KeepAlive", opts...)
 	if err != nil {
@@ -201,8 +190,6 @@ type ManagerServer interface {
 	ListBuckets(context.Context, *ListBucketsRequest) (*ListBucketsResponse, error)
 	// List applications configuration.
 	ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error)
-	// Create model and update data of model to object storage.
-	CreateModel(context.Context, *CreateModelRequest) (*emptypb.Empty, error)
 	// KeepAlive with manager.
 	KeepAlive(Manager_KeepAliveServer) error
 }
@@ -237,9 +224,6 @@ func (UnimplementedManagerServer) ListBuckets(context.Context, *ListBucketsReque
 }
 func (UnimplementedManagerServer) ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListApplications not implemented")
-}
-func (UnimplementedManagerServer) CreateModel(context.Context, *CreateModelRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateModel not implemented")
 }
 func (UnimplementedManagerServer) KeepAlive(Manager_KeepAliveServer) error {
 	return status.Errorf(codes.Unimplemented, "method KeepAlive not implemented")
@@ -418,24 +402,6 @@ func _Manager_ListApplications_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Manager_CreateModel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateModelRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ManagerServer).CreateModel(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/manager.Manager/CreateModel",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerServer).CreateModel(ctx, req.(*CreateModelRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Manager_KeepAlive_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(ManagerServer).KeepAlive(&managerKeepAliveServer{stream})
 }
@@ -504,10 +470,6 @@ var Manager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListApplications",
 			Handler:    _Manager_ListApplications_Handler,
-		},
-		{
-			MethodName: "CreateModel",
-			Handler:    _Manager_CreateModel_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
