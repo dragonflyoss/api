@@ -212,6 +212,8 @@ message UpdateSchedulerRequest {
   string ip = 6 [(validate.rules).string = {ip: true}];
   // Scheduler port.
   int32 port = 7 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  // Scheduler features.
+  repeated string features = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // ListSchedulersRequest represents request of ListSchedulers.

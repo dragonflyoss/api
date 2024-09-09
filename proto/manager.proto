@@ -209,6 +209,8 @@ message UpdateSchedulerRequest {
   string ip = 6;
   // Scheduler port.
   int32 port = 7;
+  // Scheduler features.
+  repeated string features = 8;
 }
 
 // ListSchedulersRequest represents request of ListSchedulers.
