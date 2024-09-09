@@ -265,6 +265,9 @@ pub struct UpdateSchedulerRequest {
     /// Scheduler port.
     #[prost(int32, tag = "7")]
     pub port: i32,
+    /// Scheduler features.
+    #[prost(string, repeated, tag = "8")]
+    pub features: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// ListSchedulersRequest represents request of ListSchedulers.
 #[derive(serde::Serialize, serde::Deserialize)]
