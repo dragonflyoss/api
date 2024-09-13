@@ -238,6 +238,9 @@ pub struct Host {
     /// ID of the cluster to which the host belongs.
     #[prost(uint64, tag = "17")]
     pub scheduler_cluster_id: u64,
+    /// Disable shared data for other peers.
+    #[prost(bool, tag = "18")]
+    pub disable_shared: bool,
 }
 /// CPU Stat.
 #[derive(serde::Serialize, serde::Deserialize)]
