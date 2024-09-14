@@ -1174,6 +1174,8 @@ func (m *Host) validate(all bool) error {
 
 	// no validation rules for SchedulerClusterId
 
+	// no validation rules for DisableShared
+
 	if m.Cpu != nil {
 
 		if all {

@@ -262,6 +262,8 @@ message Host {
   optional Build build = 16;
   // ID of the cluster to which the host belongs.
   uint64 scheduler_cluster_id = 17;
+  // Disable shared data for other peers.
+  bool disable_shared = 18;
 }
 
 // CPU Stat.
