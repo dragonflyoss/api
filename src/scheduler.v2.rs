@@ -318,6 +318,15 @@ pub struct AnnounceHostRequest {
     #[prost(message, optional, tag = "2")]
     pub interval: ::core::option::Option<::prost_wkt_types::Duration>,
 }
+/// ListHostsResponse represents response of ListHosts.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListHostsResponse {
+    /// Hosts info.
+    #[prost(message, repeated, tag = "1")]
+    pub hosts: ::prost::alloc::vec::Vec<super::super::common::v2::Host>,
+}
 /// DeleteHostRequest represents request of DeleteHost.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -934,6 +943,32 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "AnnounceHost"));
             self.inner.unary(req, path, codec).await
         }
+        /// ListHosts lists hosts in scheduler.
+        pub async fn list_hosts(
+            &mut self,
+            request: impl tonic::IntoRequest<()>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListHostsResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/ListHosts",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "ListHosts"));
+            self.inner.unary(req, path, codec).await
+        }
         /// DeleteHost releases host in scheduler.
         pub async fn delete_host(
             &mut self,
@@ -1255,6 +1290,14 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::AnnounceHostRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// ListHosts lists hosts in scheduler.
+        async fn list_hosts(
+            &self,
+            request: tonic::Request<()>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListHostsResponse>,
+            tonic::Status,
+        >;
         /// DeleteHost releases host in scheduler.
         async fn delete_host(
             &self,
@@ -1716,6 +1759,46 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = AnnounceHostSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/ListHosts" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListHostsSvc<T: Scheduler>(pub Arc<T>);
+                    impl<T: Scheduler> tonic::server::UnaryService<()>
+                    for ListHostsSvc<T> {
+                        type Response = super::ListHostsResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(&mut self, request: tonic::Request<()>) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::list_hosts(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ListHostsSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

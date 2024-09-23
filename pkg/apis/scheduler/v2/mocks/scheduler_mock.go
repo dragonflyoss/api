@@ -224,6 +224,26 @@ func (mr *MockSchedulerClientMockRecorder) DeleteTask(ctx, in any, opts ...any) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockSchedulerClient)(nil).DeleteTask), varargs...)
 }
 
+// ListHosts mocks base method.
+func (m *MockSchedulerClient) ListHosts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*scheduler.ListHostsResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListHosts", varargs...)
+	ret0, _ := ret[0].(*scheduler.ListHostsResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListHosts indicates an expected call of ListHosts.
+func (mr *MockSchedulerClientMockRecorder) ListHosts(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListHosts", reflect.TypeOf((*MockSchedulerClient)(nil).ListHosts), varargs...)
+}
+
 // StatCachePeer mocks base method.
 func (m *MockSchedulerClient) StatCachePeer(ctx context.Context, in *scheduler.StatCachePeerRequest, opts ...grpc.CallOption) (*common.CachePeer, error) {
 	m.ctrl.T.Helper()
@@ -1085,6 +1105,21 @@ func (m *MockSchedulerServer) DeleteTask(arg0 context.Context, arg1 *scheduler.D
 func (mr *MockSchedulerServerMockRecorder) DeleteTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteTask", reflect.TypeOf((*MockSchedulerServer)(nil).DeleteTask), arg0, arg1)
+}
+
+// ListHosts mocks base method.
+func (m *MockSchedulerServer) ListHosts(arg0 context.Context, arg1 *emptypb.Empty) (*scheduler.ListHostsResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListHosts", arg0, arg1)
+	ret0, _ := ret[0].(*scheduler.ListHostsResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListHosts indicates an expected call of ListHosts.
+func (mr *MockSchedulerServerMockRecorder) ListHosts(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListHosts", reflect.TypeOf((*MockSchedulerServer)(nil).ListHosts), arg0, arg1)
 }
 
 // StatCachePeer mocks base method.
