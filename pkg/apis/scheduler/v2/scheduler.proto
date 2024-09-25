@@ -188,12 +188,6 @@ message DeletePeerRequest {
   string peer_id = 3 [(validate.rules).string.min_len = 1];
 }
 
-// AnnouncePeersRequest represents request of AnnouncePeers.
-message AnnouncePeersRequest{
-  // Peers information.
-  repeated common.v2.Peer peers = 1 [(validate.rules).repeated.min_items = 1];
-}
-
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest {
   // Host id.
@@ -459,9 +453,6 @@ service Scheduler {
 
   // DeletePeer releases peer in scheduler.
   rpc DeletePeer(DeletePeerRequest)returns(google.protobuf.Empty);
-
-  // A host announces that it has the announced peers to scheduler at startup.
-  rpc AnnouncePeers(stream AnnouncePeersRequest) returns(stream google.protobuf.Empty);
 
   // Checks information of task.
   rpc StatTask(StatTaskRequest)returns(common.v2.Task);
