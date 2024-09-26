@@ -38,16 +38,16 @@ pub struct Peer {
     #[prost(message, optional, tag = "11")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
-/// CachePeer metadata.
+/// PersistentCachePeer metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct CachePeer {
+pub struct PersistentCachePeer {
     /// Peer id.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    /// Persistent represents whether the cache peer is persistent.
-    /// If the cache peer is persistent, the cache peer will
+    /// Persistent represents whether the persistent cache peer is persistent.
+    /// If the persistent cache peer is persistent, the persistent cache peer will
     /// not be deleted when dfdaemon runs garbage collection.
     #[prost(bool, tag = "2")]
     pub persistent: bool,
@@ -57,9 +57,9 @@ pub struct CachePeer {
     /// Peer state.
     #[prost(string, tag = "4")]
     pub state: ::prost::alloc::string::String,
-    /// Task info.
+    /// Persistent task info.
     #[prost(message, optional, tag = "5")]
-    pub task: ::core::option::Option<CacheTask>,
+    pub task: ::core::option::Option<PersistentCacheTask>,
     /// Host info.
     #[prost(message, optional, tag = "6")]
     pub host: ::core::option::Option<Host>,
@@ -137,24 +137,24 @@ pub struct Task {
     #[prost(message, optional, tag = "18")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
-/// CacheTask metadata.
+/// PersistentCacheTask metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct CacheTask {
+pub struct PersistentCacheTask {
     /// Task id.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
     /// Replica count of the persistent cache task.
     #[prost(uint64, tag = "2")]
     pub persistent_replica_count: u64,
-    /// Replica count of the cache task.
+    /// Replica count of the persistent cache task.
     #[prost(uint64, tag = "3")]
     pub replica_count: u64,
     /// Digest of the task digest, for example blake3:xxx or sha256:yyy.
     #[prost(string, tag = "4")]
     pub digest: ::prost::alloc::string::String,
-    /// Tag is used to distinguish different cache tasks.
+    /// Tag is used to distinguish different persistent cache tasks.
     #[prost(string, optional, tag = "5")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
@@ -172,7 +172,7 @@ pub struct CacheTask {
     /// Task state.
     #[prost(string, tag = "10")]
     pub state: ::prost::alloc::string::String,
-    /// TTL of the cache task.
+    /// TTL of the persistent cache task.
     #[prost(message, optional, tag = "11")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Task create time.
@@ -580,16 +580,16 @@ pub enum TaskType {
     /// task is downloaded in the P2P cluster, dfdaemon will download the task from
     /// the remote peer or local peer(local cache).
     Standard = 0,
-    /// PERSIST is persist type of task, it can import file and export file in P2P cluster.
-    /// When the persist task is imported into the P2P cluster, dfdaemon will store
+    /// PERSISTENT is persistent type of task, it can import file and export file in P2P cluster.
+    /// When the persistent task is imported into the P2P cluster, dfdaemon will store
     /// the task in the peer's disk and copy multiple replicas to remote peers to
     /// prevent data loss.
-    Persist = 1,
-    /// PERSIST_CACHE is persist cache type of task, it can import file and export file in P2P cluster.
-    /// When the persist cache task is imported into the P2P cluster, dfdaemon will store
+    Persistent = 1,
+    /// PERSISTENT_CACHE is persistent cache type of task, it can import file and export file in P2P cluster.
+    /// When the persistent cache task is imported into the P2P cluster, dfdaemon will store
     /// the task in the peer's disk and copy multiple replicas to remote peers to prevent data loss.
     /// When the expiration time is reached, task will be deleted in the P2P cluster.
-    PersistCache = 2,
+    PersistentCache = 2,
 }
 impl TaskType {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -599,16 +599,16 @@ impl TaskType {
     pub fn as_str_name(&self) -> &'static str {
         match self {
             TaskType::Standard => "STANDARD",
-            TaskType::Persist => "PERSIST",
-            TaskType::PersistCache => "PERSIST_CACHE",
+            TaskType::Persistent => "PERSISTENT",
+            TaskType::PersistentCache => "PERSISTENT_CACHE",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
             "STANDARD" => Some(Self::Standard),
-            "PERSIST" => Some(Self::Persist),
-            "PERSIST_CACHE" => Some(Self::PersistCache),
+            "PERSISTENT" => Some(Self::Persistent),
+            "PERSISTENT_CACHE" => Some(Self::PersistentCache),
             _ => None,
         }
     }

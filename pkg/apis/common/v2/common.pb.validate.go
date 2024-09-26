@@ -363,22 +363,22 @@ var _ interface {
 	ErrorName() string
 } = PeerValidationError{}
 
-// Validate checks the field values on CachePeer with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *CachePeer) Validate() error {
+// Validate checks the field values on PersistentCachePeer with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PersistentCachePeer) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CachePeer with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in CachePeerMultiError, or nil
-// if none found.
-func (m *CachePeer) ValidateAll() error {
+// ValidateAll checks the field values on PersistentCachePeer with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PersistentCachePeerMultiError, or nil if none found.
+func (m *PersistentCachePeer) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CachePeer) validate(all bool) error {
+func (m *PersistentCachePeer) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -386,7 +386,7 @@ func (m *CachePeer) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetId()) < 1 {
-		err := CachePeerValidationError{
+		err := PersistentCachePeerValidationError{
 			field:  "Id",
 			reason: "value length must be at least 1 runes",
 		}
@@ -399,7 +399,7 @@ func (m *CachePeer) validate(all bool) error {
 	// no validation rules for Persistent
 
 	if m.GetCost() == nil {
-		err := CachePeerValidationError{
+		err := PersistentCachePeerValidationError{
 			field:  "Cost",
 			reason: "value is required",
 		}
@@ -410,7 +410,7 @@ func (m *CachePeer) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetState()) < 1 {
-		err := CachePeerValidationError{
+		err := PersistentCachePeerValidationError{
 			field:  "State",
 			reason: "value length must be at least 1 runes",
 		}
@@ -421,7 +421,7 @@ func (m *CachePeer) validate(all bool) error {
 	}
 
 	if m.GetTask() == nil {
-		err := CachePeerValidationError{
+		err := PersistentCachePeerValidationError{
 			field:  "Task",
 			reason: "value is required",
 		}
@@ -435,7 +435,7 @@ func (m *CachePeer) validate(all bool) error {
 		switch v := interface{}(m.GetTask()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CachePeerValidationError{
+				errors = append(errors, PersistentCachePeerValidationError{
 					field:  "Task",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -443,7 +443,7 @@ func (m *CachePeer) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CachePeerValidationError{
+				errors = append(errors, PersistentCachePeerValidationError{
 					field:  "Task",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -452,7 +452,7 @@ func (m *CachePeer) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetTask()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CachePeerValidationError{
+			return PersistentCachePeerValidationError{
 				field:  "Task",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -461,7 +461,7 @@ func (m *CachePeer) validate(all bool) error {
 	}
 
 	if m.GetHost() == nil {
-		err := CachePeerValidationError{
+		err := PersistentCachePeerValidationError{
 			field:  "Host",
 			reason: "value is required",
 		}
@@ -475,7 +475,7 @@ func (m *CachePeer) validate(all bool) error {
 		switch v := interface{}(m.GetHost()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CachePeerValidationError{
+				errors = append(errors, PersistentCachePeerValidationError{
 					field:  "Host",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -483,7 +483,7 @@ func (m *CachePeer) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CachePeerValidationError{
+				errors = append(errors, PersistentCachePeerValidationError{
 					field:  "Host",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -492,7 +492,7 @@ func (m *CachePeer) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CachePeerValidationError{
+			return PersistentCachePeerValidationError{
 				field:  "Host",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -501,7 +501,7 @@ func (m *CachePeer) validate(all bool) error {
 	}
 
 	if m.GetCreatedAt() == nil {
-		err := CachePeerValidationError{
+		err := PersistentCachePeerValidationError{
 			field:  "CreatedAt",
 			reason: "value is required",
 		}
@@ -512,7 +512,7 @@ func (m *CachePeer) validate(all bool) error {
 	}
 
 	if m.GetUpdatedAt() == nil {
-		err := CachePeerValidationError{
+		err := PersistentCachePeerValidationError{
 			field:  "UpdatedAt",
 			reason: "value is required",
 		}
@@ -523,18 +523,19 @@ func (m *CachePeer) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return CachePeerMultiError(errors)
+		return PersistentCachePeerMultiError(errors)
 	}
 
 	return nil
 }
 
-// CachePeerMultiError is an error wrapping multiple validation errors returned
-// by CachePeer.ValidateAll() if the designated constraints aren't met.
-type CachePeerMultiError []error
+// PersistentCachePeerMultiError is an error wrapping multiple validation
+// errors returned by PersistentCachePeer.ValidateAll() if the designated
+// constraints aren't met.
+type PersistentCachePeerMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CachePeerMultiError) Error() string {
+func (m PersistentCachePeerMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -543,11 +544,11 @@ func (m CachePeerMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CachePeerMultiError) AllErrors() []error { return m }
+func (m PersistentCachePeerMultiError) AllErrors() []error { return m }
 
-// CachePeerValidationError is the validation error returned by
-// CachePeer.Validate if the designated constraints aren't met.
-type CachePeerValidationError struct {
+// PersistentCachePeerValidationError is the validation error returned by
+// PersistentCachePeer.Validate if the designated constraints aren't met.
+type PersistentCachePeerValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -555,22 +556,24 @@ type CachePeerValidationError struct {
 }
 
 // Field function returns field value.
-func (e CachePeerValidationError) Field() string { return e.field }
+func (e PersistentCachePeerValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CachePeerValidationError) Reason() string { return e.reason }
+func (e PersistentCachePeerValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CachePeerValidationError) Cause() error { return e.cause }
+func (e PersistentCachePeerValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CachePeerValidationError) Key() bool { return e.key }
+func (e PersistentCachePeerValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CachePeerValidationError) ErrorName() string { return "CachePeerValidationError" }
+func (e PersistentCachePeerValidationError) ErrorName() string {
+	return "PersistentCachePeerValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e CachePeerValidationError) Error() string {
+func (e PersistentCachePeerValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -582,14 +585,14 @@ func (e CachePeerValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCachePeer.%s: %s%s",
+		"invalid %sPersistentCachePeer.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CachePeerValidationError{}
+var _ error = PersistentCachePeerValidationError{}
 
 var _ interface {
 	Field() string
@@ -597,7 +600,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CachePeerValidationError{}
+} = PersistentCachePeerValidationError{}
 
 // Validate checks the field values on Task with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error
@@ -874,22 +877,22 @@ var _ interface {
 
 var _Task_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$")
 
-// Validate checks the field values on CacheTask with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *CacheTask) Validate() error {
+// Validate checks the field values on PersistentCacheTask with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PersistentCacheTask) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CacheTask with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in CacheTaskMultiError, or nil
-// if none found.
-func (m *CacheTask) ValidateAll() error {
+// ValidateAll checks the field values on PersistentCacheTask with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PersistentCacheTaskMultiError, or nil if none found.
+func (m *PersistentCacheTask) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CacheTask) validate(all bool) error {
+func (m *PersistentCacheTask) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -897,7 +900,7 @@ func (m *CacheTask) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetId()) < 1 {
-		err := CacheTaskValidationError{
+		err := PersistentCacheTaskValidationError{
 			field:  "Id",
 			reason: "value length must be at least 1 runes",
 		}
@@ -908,7 +911,7 @@ func (m *CacheTask) validate(all bool) error {
 	}
 
 	if m.GetPersistentReplicaCount() < 1 {
-		err := CacheTaskValidationError{
+		err := PersistentCacheTaskValidationError{
 			field:  "PersistentReplicaCount",
 			reason: "value must be greater than or equal to 1",
 		}
@@ -919,7 +922,7 @@ func (m *CacheTask) validate(all bool) error {
 	}
 
 	if m.GetReplicaCount() < 1 {
-		err := CacheTaskValidationError{
+		err := PersistentCacheTaskValidationError{
 			field:  "ReplicaCount",
 			reason: "value must be greater than or equal to 1",
 		}
@@ -929,8 +932,8 @@ func (m *CacheTask) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if !_CacheTask_Digest_Pattern.MatchString(m.GetDigest()) {
-		err := CacheTaskValidationError{
+	if !_PersistentCacheTask_Digest_Pattern.MatchString(m.GetDigest()) {
+		err := PersistentCacheTaskValidationError{
 			field:  "Digest",
 			reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$\"",
 		}
@@ -941,7 +944,7 @@ func (m *CacheTask) validate(all bool) error {
 	}
 
 	if m.GetPieceLength() < 1 {
-		err := CacheTaskValidationError{
+		err := PersistentCacheTaskValidationError{
 			field:  "PieceLength",
 			reason: "value must be greater than or equal to 1",
 		}
@@ -956,7 +959,7 @@ func (m *CacheTask) validate(all bool) error {
 	// no validation rules for PieceCount
 
 	if utf8.RuneCountInString(m.GetState()) < 1 {
-		err := CacheTaskValidationError{
+		err := PersistentCacheTaskValidationError{
 			field:  "State",
 			reason: "value length must be at least 1 runes",
 		}
@@ -967,7 +970,7 @@ func (m *CacheTask) validate(all bool) error {
 	}
 
 	if m.GetCreatedAt() == nil {
-		err := CacheTaskValidationError{
+		err := PersistentCacheTaskValidationError{
 			field:  "CreatedAt",
 			reason: "value is required",
 		}
@@ -978,7 +981,7 @@ func (m *CacheTask) validate(all bool) error {
 	}
 
 	if m.GetUpdatedAt() == nil {
-		err := CacheTaskValidationError{
+		err := PersistentCacheTaskValidationError{
 			field:  "UpdatedAt",
 			reason: "value is required",
 		}
@@ -997,18 +1000,19 @@ func (m *CacheTask) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return CacheTaskMultiError(errors)
+		return PersistentCacheTaskMultiError(errors)
 	}
 
 	return nil
 }
 
-// CacheTaskMultiError is an error wrapping multiple validation errors returned
-// by CacheTask.ValidateAll() if the designated constraints aren't met.
-type CacheTaskMultiError []error
+// PersistentCacheTaskMultiError is an error wrapping multiple validation
+// errors returned by PersistentCacheTask.ValidateAll() if the designated
+// constraints aren't met.
+type PersistentCacheTaskMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CacheTaskMultiError) Error() string {
+func (m PersistentCacheTaskMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1017,11 +1021,11 @@ func (m CacheTaskMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CacheTaskMultiError) AllErrors() []error { return m }
+func (m PersistentCacheTaskMultiError) AllErrors() []error { return m }
 
-// CacheTaskValidationError is the validation error returned by
-// CacheTask.Validate if the designated constraints aren't met.
-type CacheTaskValidationError struct {
+// PersistentCacheTaskValidationError is the validation error returned by
+// PersistentCacheTask.Validate if the designated constraints aren't met.
+type PersistentCacheTaskValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1029,22 +1033,24 @@ type CacheTaskValidationError struct {
 }
 
 // Field function returns field value.
-func (e CacheTaskValidationError) Field() string { return e.field }
+func (e PersistentCacheTaskValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CacheTaskValidationError) Reason() string { return e.reason }
+func (e PersistentCacheTaskValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CacheTaskValidationError) Cause() error { return e.cause }
+func (e PersistentCacheTaskValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CacheTaskValidationError) Key() bool { return e.key }
+func (e PersistentCacheTaskValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CacheTaskValidationError) ErrorName() string { return "CacheTaskValidationError" }
+func (e PersistentCacheTaskValidationError) ErrorName() string {
+	return "PersistentCacheTaskValidationError"
+}
 
 // Error satisfies the builtin error interface
-func (e CacheTaskValidationError) Error() string {
+func (e PersistentCacheTaskValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1056,14 +1062,14 @@ func (e CacheTaskValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCacheTask.%s: %s%s",
+		"invalid %sPersistentCacheTask.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CacheTaskValidationError{}
+var _ error = PersistentCacheTaskValidationError{}
 
 var _ interface {
 	Field() string
@@ -1071,9 +1077,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CacheTaskValidationError{}
+} = PersistentCacheTaskValidationError{}
 
-var _CacheTask_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$")
+var _PersistentCacheTask_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$")
 
 // Validate checks the field values on Host with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error

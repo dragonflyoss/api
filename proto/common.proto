@@ -45,17 +45,17 @@ enum TaskType {
   // the remote peer or local peer(local cache).
   STANDARD = 0;
 
-  // PERSIST is persist type of task, it can import file and export file in P2P cluster.
-  // When the persist task is imported into the P2P cluster, dfdaemon will store
+  // PERSISTENT is persistent type of task, it can import file and export file in P2P cluster.
+  // When the persistent task is imported into the P2P cluster, dfdaemon will store
   // the task in the peer's disk and copy multiple replicas to remote peers to
   // prevent data loss.
-  PERSIST = 1;
+  PERSISTENT = 1;
 
-  // PERSIST_CACHE is persist cache type of task, it can import file and export file in P2P cluster.
-  // When the persist cache task is imported into the P2P cluster, dfdaemon will store
+  // PERSISTENT_CACHE is persistent cache type of task, it can import file and export file in P2P cluster.
+  // When the persistent cache task is imported into the P2P cluster, dfdaemon will store
   // the task in the peer's disk and copy multiple replicas to remote peers to prevent data loss.
   // When the expiration time is reached, task will be deleted in the P2P cluster.
-  PERSIST_CACHE = 2;
+  PERSISTENT_CACHE = 2;
 }
 
 // TrafficType represents type of traffic.
@@ -132,20 +132,20 @@ message Peer {
   google.protobuf.Timestamp updated_at = 11;
 }
 
-// CachePeer metadata.
-message CachePeer {
+// PersistentCachePeer metadata.
+message PersistentCachePeer {
   // Peer id.
   string id = 1;
-  // Persistent represents whether the cache peer is persistent.
-  // If the cache peer is persistent, the cache peer will
+  // Persistent represents whether the persistent cache peer is persistent.
+  // If the persistent cache peer is persistent, the persistent cache peer will
   // not be deleted when dfdaemon runs garbage collection.
   bool persistent = 2;
   // Peer downloads costs time.
   google.protobuf.Duration cost = 3;
   // Peer state.
   string state = 4;
-  // Task info.
-  CacheTask task = 5;
+  // Persistent task info.
+  PersistentCacheTask task = 5;
   // Host info.
   Host host = 6;
   // Peer create time.
@@ -198,17 +198,17 @@ message Task {
   google.protobuf.Timestamp updated_at = 18;
 }
 
-// CacheTask metadata.
-message CacheTask {
+// PersistentCacheTask metadata.
+message PersistentCacheTask {
   // Task id.
   string id = 1;
   // Replica count of the persistent cache task.
   uint64 persistent_replica_count = 2;
-  // Replica count of the cache task.
+  // Replica count of the persistent cache task.
   uint64 replica_count = 3;
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
   string digest = 4;
-  // Tag is used to distinguish different cache tasks.
+  // Tag is used to distinguish different persistent cache tasks.
   optional string tag = 5;
   // Application of task.
   optional string application = 6;
@@ -220,7 +220,7 @@ message CacheTask {
   uint32 piece_count = 9;
   // Task state.
   string state = 10;
-  // TTL of the cache task.
+  // TTL of the persistent cache task.
   google.protobuf.Duration ttl = 11;
   // Task create time.
   google.protobuf.Timestamp created_at = 12;

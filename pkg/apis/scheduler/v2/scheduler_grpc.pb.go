@@ -42,22 +42,22 @@ type SchedulerClient interface {
 	DeleteHost(ctx context.Context, in *DeleteHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// SyncProbes sync probes of the host.
 	SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error)
-	// AnnounceCachePeer announces cache peer to scheduler.
-	AnnounceCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnounceCachePeerClient, error)
-	// Checks information of cache peer.
-	StatCachePeer(ctx context.Context, in *StatCachePeerRequest, opts ...grpc.CallOption) (*v2.CachePeer, error)
-	// DeleteCachePeer releases cache peer in scheduler.
-	DeleteCachePeer(ctx context.Context, in *DeleteCachePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// UploadCacheTaskStarted uploads cache task started to scheduler.
-	UploadCacheTaskStarted(ctx context.Context, in *UploadCacheTaskStartedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// UploadCacheTaskFinished uploads cache task finished to scheduler.
-	UploadCacheTaskFinished(ctx context.Context, in *UploadCacheTaskFinishedRequest, opts ...grpc.CallOption) (*v2.CacheTask, error)
-	// UploadCacheTaskFailed uploads cache task failed to scheduler.
-	UploadCacheTaskFailed(ctx context.Context, in *UploadCacheTaskFailedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// Checks information of cache task.
-	StatCacheTask(ctx context.Context, in *StatCacheTaskRequest, opts ...grpc.CallOption) (*v2.CacheTask, error)
-	// DeleteCacheTask releases cache task in scheduler.
-	DeleteCacheTask(ctx context.Context, in *DeleteCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
+	AnnouncePersistentCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnouncePersistentCachePeerClient, error)
+	// Checks information of persistent cache peer.
+	StatPersistentCachePeer(ctx context.Context, in *StatPersistentCachePeerRequest, opts ...grpc.CallOption) (*v2.PersistentCachePeer, error)
+	// DeletePersistentCachePeer releases persistent cache peer in scheduler.
+	DeletePersistentCachePeer(ctx context.Context, in *DeletePersistentCachePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// UploadPersistentCacheTaskStarted uploads persistent cache task started to scheduler.
+	UploadPersistentCacheTaskStarted(ctx context.Context, in *UploadPersistentCacheTaskStartedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// UploadPersistentCacheTaskFinished uploads persistent cache task finished to scheduler.
+	UploadPersistentCacheTaskFinished(ctx context.Context, in *UploadPersistentCacheTaskFinishedRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
+	// UploadPersistentCacheTaskFailed uploads persistent cache task failed to scheduler.
+	UploadPersistentCacheTaskFailed(ctx context.Context, in *UploadPersistentCacheTaskFailedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// Checks information of persistent cache task.
+	StatPersistentCacheTask(ctx context.Context, in *StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
+	// DeletePersistentCacheTask releases persistent cache task in scheduler.
+	DeletePersistentCacheTask(ctx context.Context, in *DeletePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type schedulerClient struct {
@@ -193,94 +193,94 @@ func (x *schedulerSyncProbesClient) Recv() (*SyncProbesResponse, error) {
 	return m, nil
 }
 
-func (c *schedulerClient) AnnounceCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnounceCachePeerClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[2], "/scheduler.v2.Scheduler/AnnounceCachePeer", opts...)
+func (c *schedulerClient) AnnouncePersistentCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnouncePersistentCachePeerClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[2], "/scheduler.v2.Scheduler/AnnouncePersistentCachePeer", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &schedulerAnnounceCachePeerClient{stream}
+	x := &schedulerAnnouncePersistentCachePeerClient{stream}
 	return x, nil
 }
 
-type Scheduler_AnnounceCachePeerClient interface {
-	Send(*AnnounceCachePeerRequest) error
-	Recv() (*AnnounceCachePeerResponse, error)
+type Scheduler_AnnouncePersistentCachePeerClient interface {
+	Send(*AnnouncePersistentCachePeerRequest) error
+	Recv() (*AnnouncePersistentCachePeerResponse, error)
 	grpc.ClientStream
 }
 
-type schedulerAnnounceCachePeerClient struct {
+type schedulerAnnouncePersistentCachePeerClient struct {
 	grpc.ClientStream
 }
 
-func (x *schedulerAnnounceCachePeerClient) Send(m *AnnounceCachePeerRequest) error {
+func (x *schedulerAnnouncePersistentCachePeerClient) Send(m *AnnouncePersistentCachePeerRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *schedulerAnnounceCachePeerClient) Recv() (*AnnounceCachePeerResponse, error) {
-	m := new(AnnounceCachePeerResponse)
+func (x *schedulerAnnouncePersistentCachePeerClient) Recv() (*AnnouncePersistentCachePeerResponse, error) {
+	m := new(AnnouncePersistentCachePeerResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *schedulerClient) StatCachePeer(ctx context.Context, in *StatCachePeerRequest, opts ...grpc.CallOption) (*v2.CachePeer, error) {
-	out := new(v2.CachePeer)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatCachePeer", in, out, opts...)
+func (c *schedulerClient) StatPersistentCachePeer(ctx context.Context, in *StatPersistentCachePeerRequest, opts ...grpc.CallOption) (*v2.PersistentCachePeer, error) {
+	out := new(v2.PersistentCachePeer)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatPersistentCachePeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *schedulerClient) DeleteCachePeer(ctx context.Context, in *DeleteCachePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *schedulerClient) DeletePersistentCachePeer(ctx context.Context, in *DeletePersistentCachePeerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeleteCachePeer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeletePersistentCachePeer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *schedulerClient) UploadCacheTaskStarted(ctx context.Context, in *UploadCacheTaskStartedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *schedulerClient) UploadPersistentCacheTaskStarted(ctx context.Context, in *UploadPersistentCacheTaskStartedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/UploadCacheTaskStarted", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/UploadPersistentCacheTaskStarted", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *schedulerClient) UploadCacheTaskFinished(ctx context.Context, in *UploadCacheTaskFinishedRequest, opts ...grpc.CallOption) (*v2.CacheTask, error) {
-	out := new(v2.CacheTask)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/UploadCacheTaskFinished", in, out, opts...)
+func (c *schedulerClient) UploadPersistentCacheTaskFinished(ctx context.Context, in *UploadPersistentCacheTaskFinishedRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error) {
+	out := new(v2.PersistentCacheTask)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/UploadPersistentCacheTaskFinished", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *schedulerClient) UploadCacheTaskFailed(ctx context.Context, in *UploadCacheTaskFailedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *schedulerClient) UploadPersistentCacheTaskFailed(ctx context.Context, in *UploadPersistentCacheTaskFailedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/UploadCacheTaskFailed", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/UploadPersistentCacheTaskFailed", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *schedulerClient) StatCacheTask(ctx context.Context, in *StatCacheTaskRequest, opts ...grpc.CallOption) (*v2.CacheTask, error) {
-	out := new(v2.CacheTask)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatCacheTask", in, out, opts...)
+func (c *schedulerClient) StatPersistentCacheTask(ctx context.Context, in *StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error) {
+	out := new(v2.PersistentCacheTask)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatPersistentCacheTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *schedulerClient) DeleteCacheTask(ctx context.Context, in *DeleteCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *schedulerClient) DeletePersistentCacheTask(ctx context.Context, in *DeletePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeleteCacheTask", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeletePersistentCacheTask", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -309,22 +309,22 @@ type SchedulerServer interface {
 	DeleteHost(context.Context, *DeleteHostRequest) (*emptypb.Empty, error)
 	// SyncProbes sync probes of the host.
 	SyncProbes(Scheduler_SyncProbesServer) error
-	// AnnounceCachePeer announces cache peer to scheduler.
-	AnnounceCachePeer(Scheduler_AnnounceCachePeerServer) error
-	// Checks information of cache peer.
-	StatCachePeer(context.Context, *StatCachePeerRequest) (*v2.CachePeer, error)
-	// DeleteCachePeer releases cache peer in scheduler.
-	DeleteCachePeer(context.Context, *DeleteCachePeerRequest) (*emptypb.Empty, error)
-	// UploadCacheTaskStarted uploads cache task started to scheduler.
-	UploadCacheTaskStarted(context.Context, *UploadCacheTaskStartedRequest) (*emptypb.Empty, error)
-	// UploadCacheTaskFinished uploads cache task finished to scheduler.
-	UploadCacheTaskFinished(context.Context, *UploadCacheTaskFinishedRequest) (*v2.CacheTask, error)
-	// UploadCacheTaskFailed uploads cache task failed to scheduler.
-	UploadCacheTaskFailed(context.Context, *UploadCacheTaskFailedRequest) (*emptypb.Empty, error)
-	// Checks information of cache task.
-	StatCacheTask(context.Context, *StatCacheTaskRequest) (*v2.CacheTask, error)
-	// DeleteCacheTask releases cache task in scheduler.
-	DeleteCacheTask(context.Context, *DeleteCacheTaskRequest) (*emptypb.Empty, error)
+	// AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
+	AnnouncePersistentCachePeer(Scheduler_AnnouncePersistentCachePeerServer) error
+	// Checks information of persistent cache peer.
+	StatPersistentCachePeer(context.Context, *StatPersistentCachePeerRequest) (*v2.PersistentCachePeer, error)
+	// DeletePersistentCachePeer releases persistent cache peer in scheduler.
+	DeletePersistentCachePeer(context.Context, *DeletePersistentCachePeerRequest) (*emptypb.Empty, error)
+	// UploadPersistentCacheTaskStarted uploads persistent cache task started to scheduler.
+	UploadPersistentCacheTaskStarted(context.Context, *UploadPersistentCacheTaskStartedRequest) (*emptypb.Empty, error)
+	// UploadPersistentCacheTaskFinished uploads persistent cache task finished to scheduler.
+	UploadPersistentCacheTaskFinished(context.Context, *UploadPersistentCacheTaskFinishedRequest) (*v2.PersistentCacheTask, error)
+	// UploadPersistentCacheTaskFailed uploads persistent cache task failed to scheduler.
+	UploadPersistentCacheTaskFailed(context.Context, *UploadPersistentCacheTaskFailedRequest) (*emptypb.Empty, error)
+	// Checks information of persistent cache task.
+	StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error)
+	// DeletePersistentCacheTask releases persistent cache task in scheduler.
+	DeletePersistentCacheTask(context.Context, *DeletePersistentCacheTaskRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedSchedulerServer should be embedded to have forward compatible implementations.
@@ -358,29 +358,29 @@ func (UnimplementedSchedulerServer) DeleteHost(context.Context, *DeleteHostReque
 func (UnimplementedSchedulerServer) SyncProbes(Scheduler_SyncProbesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncProbes not implemented")
 }
-func (UnimplementedSchedulerServer) AnnounceCachePeer(Scheduler_AnnounceCachePeerServer) error {
-	return status.Errorf(codes.Unimplemented, "method AnnounceCachePeer not implemented")
+func (UnimplementedSchedulerServer) AnnouncePersistentCachePeer(Scheduler_AnnouncePersistentCachePeerServer) error {
+	return status.Errorf(codes.Unimplemented, "method AnnouncePersistentCachePeer not implemented")
 }
-func (UnimplementedSchedulerServer) StatCachePeer(context.Context, *StatCachePeerRequest) (*v2.CachePeer, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StatCachePeer not implemented")
+func (UnimplementedSchedulerServer) StatPersistentCachePeer(context.Context, *StatPersistentCachePeerRequest) (*v2.PersistentCachePeer, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatPersistentCachePeer not implemented")
 }
-func (UnimplementedSchedulerServer) DeleteCachePeer(context.Context, *DeleteCachePeerRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteCachePeer not implemented")
+func (UnimplementedSchedulerServer) DeletePersistentCachePeer(context.Context, *DeletePersistentCachePeerRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePersistentCachePeer not implemented")
 }
-func (UnimplementedSchedulerServer) UploadCacheTaskStarted(context.Context, *UploadCacheTaskStartedRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadCacheTaskStarted not implemented")
+func (UnimplementedSchedulerServer) UploadPersistentCacheTaskStarted(context.Context, *UploadPersistentCacheTaskStartedRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadPersistentCacheTaskStarted not implemented")
 }
-func (UnimplementedSchedulerServer) UploadCacheTaskFinished(context.Context, *UploadCacheTaskFinishedRequest) (*v2.CacheTask, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadCacheTaskFinished not implemented")
+func (UnimplementedSchedulerServer) UploadPersistentCacheTaskFinished(context.Context, *UploadPersistentCacheTaskFinishedRequest) (*v2.PersistentCacheTask, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadPersistentCacheTaskFinished not implemented")
 }
-func (UnimplementedSchedulerServer) UploadCacheTaskFailed(context.Context, *UploadCacheTaskFailedRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadCacheTaskFailed not implemented")
+func (UnimplementedSchedulerServer) UploadPersistentCacheTaskFailed(context.Context, *UploadPersistentCacheTaskFailedRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadPersistentCacheTaskFailed not implemented")
 }
-func (UnimplementedSchedulerServer) StatCacheTask(context.Context, *StatCacheTaskRequest) (*v2.CacheTask, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StatCacheTask not implemented")
+func (UnimplementedSchedulerServer) StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatPersistentCacheTask not implemented")
 }
-func (UnimplementedSchedulerServer) DeleteCacheTask(context.Context, *DeleteCacheTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteCacheTask not implemented")
+func (UnimplementedSchedulerServer) DeletePersistentCacheTask(context.Context, *DeletePersistentCacheTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePersistentCacheTask not implemented")
 }
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
@@ -572,154 +572,154 @@ func (x *schedulerSyncProbesServer) Recv() (*SyncProbesRequest, error) {
 	return m, nil
 }
 
-func _Scheduler_AnnounceCachePeer_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(SchedulerServer).AnnounceCachePeer(&schedulerAnnounceCachePeerServer{stream})
+func _Scheduler_AnnouncePersistentCachePeer_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SchedulerServer).AnnouncePersistentCachePeer(&schedulerAnnouncePersistentCachePeerServer{stream})
 }
 
-type Scheduler_AnnounceCachePeerServer interface {
-	Send(*AnnounceCachePeerResponse) error
-	Recv() (*AnnounceCachePeerRequest, error)
+type Scheduler_AnnouncePersistentCachePeerServer interface {
+	Send(*AnnouncePersistentCachePeerResponse) error
+	Recv() (*AnnouncePersistentCachePeerRequest, error)
 	grpc.ServerStream
 }
 
-type schedulerAnnounceCachePeerServer struct {
+type schedulerAnnouncePersistentCachePeerServer struct {
 	grpc.ServerStream
 }
 
-func (x *schedulerAnnounceCachePeerServer) Send(m *AnnounceCachePeerResponse) error {
+func (x *schedulerAnnouncePersistentCachePeerServer) Send(m *AnnouncePersistentCachePeerResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *schedulerAnnounceCachePeerServer) Recv() (*AnnounceCachePeerRequest, error) {
-	m := new(AnnounceCachePeerRequest)
+func (x *schedulerAnnouncePersistentCachePeerServer) Recv() (*AnnouncePersistentCachePeerRequest, error) {
+	m := new(AnnouncePersistentCachePeerRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _Scheduler_StatCachePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StatCachePeerRequest)
+func _Scheduler_StatPersistentCachePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatPersistentCachePeerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).StatCachePeer(ctx, in)
+		return srv.(SchedulerServer).StatPersistentCachePeer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/StatCachePeer",
+		FullMethod: "/scheduler.v2.Scheduler/StatPersistentCachePeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).StatCachePeer(ctx, req.(*StatCachePeerRequest))
+		return srv.(SchedulerServer).StatPersistentCachePeer(ctx, req.(*StatPersistentCachePeerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_DeleteCachePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteCachePeerRequest)
+func _Scheduler_DeletePersistentCachePeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePersistentCachePeerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).DeleteCachePeer(ctx, in)
+		return srv.(SchedulerServer).DeletePersistentCachePeer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/DeleteCachePeer",
+		FullMethod: "/scheduler.v2.Scheduler/DeletePersistentCachePeer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).DeleteCachePeer(ctx, req.(*DeleteCachePeerRequest))
+		return srv.(SchedulerServer).DeletePersistentCachePeer(ctx, req.(*DeletePersistentCachePeerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_UploadCacheTaskStarted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadCacheTaskStartedRequest)
+func _Scheduler_UploadPersistentCacheTaskStarted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadPersistentCacheTaskStartedRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).UploadCacheTaskStarted(ctx, in)
+		return srv.(SchedulerServer).UploadPersistentCacheTaskStarted(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/UploadCacheTaskStarted",
+		FullMethod: "/scheduler.v2.Scheduler/UploadPersistentCacheTaskStarted",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).UploadCacheTaskStarted(ctx, req.(*UploadCacheTaskStartedRequest))
+		return srv.(SchedulerServer).UploadPersistentCacheTaskStarted(ctx, req.(*UploadPersistentCacheTaskStartedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_UploadCacheTaskFinished_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadCacheTaskFinishedRequest)
+func _Scheduler_UploadPersistentCacheTaskFinished_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadPersistentCacheTaskFinishedRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).UploadCacheTaskFinished(ctx, in)
+		return srv.(SchedulerServer).UploadPersistentCacheTaskFinished(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/UploadCacheTaskFinished",
+		FullMethod: "/scheduler.v2.Scheduler/UploadPersistentCacheTaskFinished",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).UploadCacheTaskFinished(ctx, req.(*UploadCacheTaskFinishedRequest))
+		return srv.(SchedulerServer).UploadPersistentCacheTaskFinished(ctx, req.(*UploadPersistentCacheTaskFinishedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_UploadCacheTaskFailed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadCacheTaskFailedRequest)
+func _Scheduler_UploadPersistentCacheTaskFailed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadPersistentCacheTaskFailedRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).UploadCacheTaskFailed(ctx, in)
+		return srv.(SchedulerServer).UploadPersistentCacheTaskFailed(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/UploadCacheTaskFailed",
+		FullMethod: "/scheduler.v2.Scheduler/UploadPersistentCacheTaskFailed",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).UploadCacheTaskFailed(ctx, req.(*UploadCacheTaskFailedRequest))
+		return srv.(SchedulerServer).UploadPersistentCacheTaskFailed(ctx, req.(*UploadPersistentCacheTaskFailedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_StatCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StatCacheTaskRequest)
+func _Scheduler_StatPersistentCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatPersistentCacheTaskRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).StatCacheTask(ctx, in)
+		return srv.(SchedulerServer).StatPersistentCacheTask(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/StatCacheTask",
+		FullMethod: "/scheduler.v2.Scheduler/StatPersistentCacheTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).StatCacheTask(ctx, req.(*StatCacheTaskRequest))
+		return srv.(SchedulerServer).StatPersistentCacheTask(ctx, req.(*StatPersistentCacheTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_DeleteCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteCacheTaskRequest)
+func _Scheduler_DeletePersistentCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePersistentCacheTaskRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).DeleteCacheTask(ctx, in)
+		return srv.(SchedulerServer).DeletePersistentCacheTask(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/DeleteCacheTask",
+		FullMethod: "/scheduler.v2.Scheduler/DeletePersistentCacheTask",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).DeleteCacheTask(ctx, req.(*DeleteCacheTaskRequest))
+		return srv.(SchedulerServer).DeletePersistentCacheTask(ctx, req.(*DeletePersistentCacheTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -760,32 +760,32 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Scheduler_DeleteHost_Handler,
 		},
 		{
-			MethodName: "StatCachePeer",
-			Handler:    _Scheduler_StatCachePeer_Handler,
+			MethodName: "StatPersistentCachePeer",
+			Handler:    _Scheduler_StatPersistentCachePeer_Handler,
 		},
 		{
-			MethodName: "DeleteCachePeer",
-			Handler:    _Scheduler_DeleteCachePeer_Handler,
+			MethodName: "DeletePersistentCachePeer",
+			Handler:    _Scheduler_DeletePersistentCachePeer_Handler,
 		},
 		{
-			MethodName: "UploadCacheTaskStarted",
-			Handler:    _Scheduler_UploadCacheTaskStarted_Handler,
+			MethodName: "UploadPersistentCacheTaskStarted",
+			Handler:    _Scheduler_UploadPersistentCacheTaskStarted_Handler,
 		},
 		{
-			MethodName: "UploadCacheTaskFinished",
-			Handler:    _Scheduler_UploadCacheTaskFinished_Handler,
+			MethodName: "UploadPersistentCacheTaskFinished",
+			Handler:    _Scheduler_UploadPersistentCacheTaskFinished_Handler,
 		},
 		{
-			MethodName: "UploadCacheTaskFailed",
-			Handler:    _Scheduler_UploadCacheTaskFailed_Handler,
+			MethodName: "UploadPersistentCacheTaskFailed",
+			Handler:    _Scheduler_UploadPersistentCacheTaskFailed_Handler,
 		},
 		{
-			MethodName: "StatCacheTask",
-			Handler:    _Scheduler_StatCacheTask_Handler,
+			MethodName: "StatPersistentCacheTask",
+			Handler:    _Scheduler_StatPersistentCacheTask_Handler,
 		},
 		{
-			MethodName: "DeleteCacheTask",
-			Handler:    _Scheduler_DeleteCacheTask_Handler,
+			MethodName: "DeletePersistentCacheTask",
+			Handler:    _Scheduler_DeletePersistentCacheTask_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -802,8 +802,8 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 		{
-			StreamName:    "AnnounceCachePeer",
-			Handler:       _Scheduler_AnnounceCachePeer_Handler,
+			StreamName:    "AnnouncePersistentCachePeer",
+			Handler:       _Scheduler_AnnouncePersistentCachePeer_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
