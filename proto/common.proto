@@ -38,18 +38,24 @@ enum SizeScope {
 
 // TaskType represents type of task.
 enum TaskType {
-  // DFDAEMON is dfdaemon type of task,
-  // dfdaemon task is a normal p2p task.
-  DFDAEMON = 0;
+  // STANDARD is standard type of task, it can download from source, remote peer and
+  // local peer(local cache). When the standard task is never downloaded in the
+  // P2P cluster, dfdaemon will download the task from the source. When the standard
+  // task is downloaded in the P2P cluster, dfdaemon will download the task from
+  // the remote peer or local peer(local cache).
+  STANDARD = 0;
 
-  // DFCACHE is dfcache type of task,
-  // dfcache task is a cache task, and the task url is fake url.
-  // It can only be used for caching and cannot be downloaded back to source.
-  DFCACHE = 1;
+  // PERSIST is persist type of task, it can import file and export file in P2P cluster.
+  // When the persist task is imported into the P2P cluster, dfdaemon will store
+  // the task in the peer's disk and copy multiple replicas to remote peers to
+  // prevent data loss.
+  PERSIST = 1;
 
-  // DFSTORE is dfstore type of task,
-  // dfstore task is a persistent task in backend.
-  DFSTORE = 2;
+  // PERSIST_CACHE is persist cache type of task, it can import file and export file in P2P cluster.
+  // When the persist cache task is imported into the P2P cluster, dfdaemon will store
+  // the task in the peer's disk and copy multiple replicas to remote peers to prevent data loss.
+  // When the expiration time is reached, task will be deleted in the P2P cluster.
+  PERSIST_CACHE = 2;
 }
 
 // TrafficType represents type of traffic.

@@ -574,16 +574,22 @@ impl SizeScope {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum TaskType {
-    /// DFDAEMON is dfdaemon type of task,
-    /// dfdaemon task is a normal p2p task.
-    Dfdaemon = 0,
-    /// DFCACHE is dfcache type of task,
-    /// dfcache task is a cache task, and the task url is fake url.
-    /// It can only be used for caching and cannot be downloaded back to source.
-    Dfcache = 1,
-    /// DFSTORE is dfstore type of task,
-    /// dfstore task is a persistent task in backend.
-    Dfstore = 2,
+    /// STANDARD is standard type of task, it can download from source, remote peer and
+    /// local peer(local cache). When the standard task is never downloaded in the
+    /// P2P cluster, dfdaemon will download the task from the source. When the standard
+    /// task is downloaded in the P2P cluster, dfdaemon will download the task from
+    /// the remote peer or local peer(local cache).
+    Standard = 0,
+    /// PERSIST is persist type of task, it can import file and export file in P2P cluster.
+    /// When the persist task is imported into the P2P cluster, dfdaemon will store
+    /// the task in the peer's disk and copy multiple replicas to remote peers to
+    /// prevent data loss.
+    Persist = 1,
+    /// PERSIST_CACHE is persist cache type of task, it can import file and export file in P2P cluster.
+    /// When the persist cache task is imported into the P2P cluster, dfdaemon will store
+    /// the task in the peer's disk and copy multiple replicas to remote peers to prevent data loss.
+    /// When the expiration time is reached, task will be deleted in the P2P cluster.
+    PersistCache = 2,
 }
 impl TaskType {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -592,17 +598,17 @@ impl TaskType {
     /// (if the ProtoBuf definition does not change) and safe for programmatic use.
     pub fn as_str_name(&self) -> &'static str {
         match self {
-            TaskType::Dfdaemon => "DFDAEMON",
-            TaskType::Dfcache => "DFCACHE",
-            TaskType::Dfstore => "DFSTORE",
+            TaskType::Standard => "STANDARD",
+            TaskType::Persist => "PERSIST",
+            TaskType::PersistCache => "PERSIST_CACHE",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
     pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
-            "DFDAEMON" => Some(Self::Dfdaemon),
-            "DFCACHE" => Some(Self::Dfcache),
-            "DFSTORE" => Some(Self::Dfstore),
+            "STANDARD" => Some(Self::Standard),
+            "PERSIST" => Some(Self::Persist),
+            "PERSIST_CACHE" => Some(Self::PersistCache),
             _ => None,
         }
     }
