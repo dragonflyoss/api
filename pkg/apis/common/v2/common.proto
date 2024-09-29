@@ -144,7 +144,8 @@ message PersistentCachePeer {
   string id = 1 [(validate.rules).string.min_len = 1];
   // Persistent represents whether the persistent cache peer is persistent.
   // If the persistent cache peer is persistent, the persistent cache peer will
-  // not be deleted when dfdaemon runs garbage collection.
+  // not be deleted when dfdaemon runs garbage collection. It only be deleted
+  // when the task is deleted by the user.
   bool persistent = 2;
   // Peer downloads costs time.
   google.protobuf.Duration cost = 3 [(validate.rules).duration.required = true];
@@ -208,9 +209,12 @@ message Task {
 message PersistentCacheTask {
   // Task id.
   string id = 1 [(validate.rules).string.min_len = 1];
-  // Replica count of the persistent cache task.
+  // Replica count of the persistent cache task. The persistent cache task will
+  // not be deleted when dfdamon runs garbage collection. It only be deleted
+  // when the task is deleted by the user.
   uint64 persistent_replica_count = 2 [(validate.rules).uint64.gte = 1];
-  // Replica count of the persistent cache task.
+  // Replica count of the cache task. If cache task is not persistent,
+  // the persistent cache task will be deleted when dfdaemon runs garbage collection.
   uint64 replica_count = 3 [(validate.rules).uint64.gte = 1];
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
   string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$"}];
