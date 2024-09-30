@@ -214,58 +214,6 @@ message DeleteHostRequest{
   string host_id = 1;
 }
 
-// ProbeStartedRequest represents started request of SyncProbesRequest.
-message ProbeStartedRequest {
-}
-
-// Probe information.
-message Probe {
-  // Destination host metadata.
-  common.v2.Host host = 1;
-  // RTT is the round-trip time sent via this pinger.
-  google.protobuf.Duration rtt = 2;
-  // Probe create time.
-  google.protobuf.Timestamp created_at = 3;
-}
-
-// ProbeFinishedRequest represents finished request of SyncProbesRequest.
-message ProbeFinishedRequest {
-  // Probes information.
-  repeated Probe probes = 1;
-}
-
-// FailedProbe information.
-message FailedProbe {
-  // Destination host metadata.
-  common.v2.Host host = 1;
-  // The description of probing failed.
-  optional string description = 2;
-}
-
-// ProbeFailedRequest represents failed request of SyncProbesRequest.
-message ProbeFailedRequest {
-  // Failed probes information.
-  repeated FailedProbe probes = 1;
-}
-
-// SyncProbesRequest represents request of SyncProbes.
-message SyncProbesRequest {
-  // Source host metadata.
-  common.v2.Host host = 1;
-
-  oneof request {
-    ProbeStartedRequest probe_started_request = 2;
-    ProbeFinishedRequest probe_finished_request = 3;
-    ProbeFailedRequest probe_failed_request = 4;
-  }
-}
-
-// SyncProbesResponse represents response of SyncProbes.
-message SyncProbesResponse {
-  // Hosts needs to be probed.
-  repeated common.v2.Host hosts = 1;
-}
-
 // RegisterPersistentCachePeerRequest represents persistent cache peer registered request of AnnouncePersistentCachePeerRequest.
 message RegisterPersistentCachePeerRequest {
   // Host id.
@@ -452,9 +400,6 @@ service Scheduler{
 
   // DeleteHost releases host in scheduler.
   rpc DeleteHost(DeleteHostRequest)returns(google.protobuf.Empty);
-
-  // SyncProbes sync probes of the host.
-  rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);
 
   // AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
   rpc AnnouncePersistentCachePeer(stream AnnouncePersistentCachePeerRequest) returns(stream AnnouncePersistentCachePeerResponse);
