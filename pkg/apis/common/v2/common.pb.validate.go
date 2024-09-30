@@ -1943,6 +1943,14 @@ func (m *Network) validate(all bool) error {
 
 	// no validation rules for UploadTcpConnectionCount
 
+	// no validation rules for DownloadRate
+
+	// no validation rules for DownloadRateLimit
+
+	// no validation rules for UploadRate
+
+	// no validation rules for UploadRateLimit
+
 	if m.Location != nil {
 		// no validation rules for Location
 	}
