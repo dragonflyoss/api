@@ -48,7 +48,8 @@ pub struct PersistentCachePeer {
     pub id: ::prost::alloc::string::String,
     /// Persistent represents whether the persistent cache peer is persistent.
     /// If the persistent cache peer is persistent, the persistent cache peer will
-    /// not be deleted when dfdaemon runs garbage collection.
+    /// not be deleted when dfdaemon runs garbage collection. It only be deleted
+    /// when the task is deleted by the user.
     #[prost(bool, tag = "2")]
     pub persistent: bool,
     /// Peer downloads costs time.
@@ -145,10 +146,13 @@ pub struct PersistentCacheTask {
     /// Task id.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
-    /// Replica count of the persistent cache task.
+    /// Replica count of the persistent cache task. The persistent cache task will
+    /// not be deleted when dfdamon runs garbage collection. It only be deleted
+    /// when the task is deleted by the user.
     #[prost(uint64, tag = "2")]
     pub persistent_replica_count: u64,
-    /// Replica count of the persistent cache task.
+    /// Replica count of the cache task. If cache task is not persistent,
+    /// the persistent cache task will be deleted when dfdaemon runs garbage collection.
     #[prost(uint64, tag = "3")]
     pub replica_count: u64,
     /// Digest of the task digest, for example blake3:xxx or sha256:yyy.
@@ -341,6 +345,18 @@ pub struct Network {
     /// IDC where the peer host is located
     #[prost(string, optional, tag = "4")]
     pub idc: ::core::option::Option<::prost::alloc::string::String>,
+    /// Download rate is received bytes per second.
+    #[prost(uint64, tag = "5")]
+    pub download_rate: u64,
+    /// Download rate is the limit of received bytes per second.
+    #[prost(uint64, tag = "6")]
+    pub download_rate_limit: u64,
+    /// Upload rate is transmitted bytes per second.
+    #[prost(uint64, tag = "7")]
+    pub upload_rate: u64,
+    /// Upload rate is the limit of transmitted bytes per second.
+    #[prost(uint64, tag = "8")]
+    pub upload_rate_limit: u64,
 }
 /// Disk Stat.
 #[derive(serde::Serialize, serde::Deserialize)]

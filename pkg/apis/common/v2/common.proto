@@ -341,6 +341,14 @@ message Network {
   optional string location = 3;
   // IDC where the peer host is located
   optional string idc = 4;
+  // Download rate is received bytes per second.
+  uint64 download_rate = 5;
+  // Download rate is the limit of received bytes per second.
+  uint64 download_rate_limit = 6;
+  // Upload rate is transmitted bytes per second.
+  uint64 upload_rate = 7;
+  // Upload rate is the limit of transmitted bytes per second.
+  uint64 upload_rate_limit = 8;
 }
 
 // Disk Stat.
