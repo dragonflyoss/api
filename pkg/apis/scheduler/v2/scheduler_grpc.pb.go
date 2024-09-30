@@ -40,8 +40,6 @@ type SchedulerClient interface {
 	ListHosts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListHostsResponse, error)
 	// DeleteHost releases host in scheduler.
 	DeleteHost(ctx context.Context, in *DeleteHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	// SyncProbes sync probes of the host.
-	SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error)
 	// AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
 	AnnouncePersistentCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnouncePersistentCachePeerClient, error)
 	// Checks information of persistent cache peer.
@@ -162,39 +160,8 @@ func (c *schedulerClient) DeleteHost(ctx context.Context, in *DeleteHostRequest,
 	return out, nil
 }
 
-func (c *schedulerClient) SyncProbes(ctx context.Context, opts ...grpc.CallOption) (Scheduler_SyncProbesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[1], "/scheduler.v2.Scheduler/SyncProbes", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &schedulerSyncProbesClient{stream}
-	return x, nil
-}
-
-type Scheduler_SyncProbesClient interface {
-	Send(*SyncProbesRequest) error
-	Recv() (*SyncProbesResponse, error)
-	grpc.ClientStream
-}
-
-type schedulerSyncProbesClient struct {
-	grpc.ClientStream
-}
-
-func (x *schedulerSyncProbesClient) Send(m *SyncProbesRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *schedulerSyncProbesClient) Recv() (*SyncProbesResponse, error) {
-	m := new(SyncProbesResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *schedulerClient) AnnouncePersistentCachePeer(ctx context.Context, opts ...grpc.CallOption) (Scheduler_AnnouncePersistentCachePeerClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[2], "/scheduler.v2.Scheduler/AnnouncePersistentCachePeer", opts...)
+	stream, err := c.cc.NewStream(ctx, &Scheduler_ServiceDesc.Streams[1], "/scheduler.v2.Scheduler/AnnouncePersistentCachePeer", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -307,8 +274,6 @@ type SchedulerServer interface {
 	ListHosts(context.Context, *emptypb.Empty) (*ListHostsResponse, error)
 	// DeleteHost releases host in scheduler.
 	DeleteHost(context.Context, *DeleteHostRequest) (*emptypb.Empty, error)
-	// SyncProbes sync probes of the host.
-	SyncProbes(Scheduler_SyncProbesServer) error
 	// AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
 	AnnouncePersistentCachePeer(Scheduler_AnnouncePersistentCachePeerServer) error
 	// Checks information of persistent cache peer.
@@ -354,9 +319,6 @@ func (UnimplementedSchedulerServer) ListHosts(context.Context, *emptypb.Empty) (
 }
 func (UnimplementedSchedulerServer) DeleteHost(context.Context, *DeleteHostRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHost not implemented")
-}
-func (UnimplementedSchedulerServer) SyncProbes(Scheduler_SyncProbesServer) error {
-	return status.Errorf(codes.Unimplemented, "method SyncProbes not implemented")
 }
 func (UnimplementedSchedulerServer) AnnouncePersistentCachePeer(Scheduler_AnnouncePersistentCachePeerServer) error {
 	return status.Errorf(codes.Unimplemented, "method AnnouncePersistentCachePeer not implemented")
@@ -544,32 +506,6 @@ func _Scheduler_DeleteHost_Handler(srv interface{}, ctx context.Context, dec fun
 		return srv.(SchedulerServer).DeleteHost(ctx, req.(*DeleteHostRequest))
 	}
 	return interceptor(ctx, in, info, handler)
-}
-
-func _Scheduler_SyncProbes_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(SchedulerServer).SyncProbes(&schedulerSyncProbesServer{stream})
-}
-
-type Scheduler_SyncProbesServer interface {
-	Send(*SyncProbesResponse) error
-	Recv() (*SyncProbesRequest, error)
-	grpc.ServerStream
-}
-
-type schedulerSyncProbesServer struct {
-	grpc.ServerStream
-}
-
-func (x *schedulerSyncProbesServer) Send(m *SyncProbesResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *schedulerSyncProbesServer) Recv() (*SyncProbesRequest, error) {
-	m := new(SyncProbesRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
 }
 
 func _Scheduler_AnnouncePersistentCachePeer_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -792,12 +728,6 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "AnnouncePeer",
 			Handler:       _Scheduler_AnnouncePeer_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "SyncProbes",
-			Handler:       _Scheduler_SyncProbes_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

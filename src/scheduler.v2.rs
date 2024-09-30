@@ -327,90 +327,6 @@ pub struct DeleteHostRequest {
     #[prost(string, tag = "1")]
     pub host_id: ::prost::alloc::string::String,
 }
-/// ProbeStartedRequest represents started request of SyncProbesRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct ProbeStartedRequest {}
-/// Probe information.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Probe {
-    /// Destination host metadata.
-    #[prost(message, optional, tag = "1")]
-    pub host: ::core::option::Option<super::super::common::v2::Host>,
-    /// RTT is the round-trip time sent via this pinger.
-    #[prost(message, optional, tag = "2")]
-    pub rtt: ::core::option::Option<::prost_wkt_types::Duration>,
-    /// Probe create time.
-    #[prost(message, optional, tag = "3")]
-    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
-}
-/// ProbeFinishedRequest represents finished request of SyncProbesRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ProbeFinishedRequest {
-    /// Probes information.
-    #[prost(message, repeated, tag = "1")]
-    pub probes: ::prost::alloc::vec::Vec<Probe>,
-}
-/// FailedProbe information.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct FailedProbe {
-    /// Destination host metadata.
-    #[prost(message, optional, tag = "1")]
-    pub host: ::core::option::Option<super::super::common::v2::Host>,
-    /// The description of probing failed.
-    #[prost(string, optional, tag = "2")]
-    pub description: ::core::option::Option<::prost::alloc::string::String>,
-}
-/// ProbeFailedRequest represents failed request of SyncProbesRequest.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ProbeFailedRequest {
-    /// Failed probes information.
-    #[prost(message, repeated, tag = "1")]
-    pub probes: ::prost::alloc::vec::Vec<FailedProbe>,
-}
-/// SyncProbesRequest represents request of SyncProbes.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SyncProbesRequest {
-    /// Source host metadata.
-    #[prost(message, optional, tag = "1")]
-    pub host: ::core::option::Option<super::super::common::v2::Host>,
-    #[prost(oneof = "sync_probes_request::Request", tags = "2, 3, 4")]
-    pub request: ::core::option::Option<sync_probes_request::Request>,
-}
-/// Nested message and enum types in `SyncProbesRequest`.
-pub mod sync_probes_request {
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Request {
-        #[prost(message, tag = "2")]
-        ProbeStartedRequest(super::ProbeStartedRequest),
-        #[prost(message, tag = "3")]
-        ProbeFinishedRequest(super::ProbeFinishedRequest),
-        #[prost(message, tag = "4")]
-        ProbeFailedRequest(super::ProbeFailedRequest),
-    }
-}
-/// SyncProbesResponse represents response of SyncProbes.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct SyncProbesResponse {
-    /// Hosts needs to be probed.
-    #[prost(message, repeated, tag = "1")]
-    pub hosts: ::prost::alloc::vec::Vec<super::super::common::v2::Host>,
-}
 /// RegisterPersistentCachePeerRequest represents persistent cache peer registered request of AnnouncePersistentCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -967,32 +883,6 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteHost"));
             self.inner.unary(req, path, codec).await
         }
-        /// SyncProbes sync probes of the host.
-        pub async fn sync_probes(
-            &mut self,
-            request: impl tonic::IntoStreamingRequest<Message = super::SyncProbesRequest>,
-        ) -> std::result::Result<
-            tonic::Response<tonic::codec::Streaming<super::SyncProbesResponse>>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.v2.Scheduler/SyncProbes",
-            );
-            let mut req = request.into_streaming_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "SyncProbes"));
-            self.inner.streaming(req, path, codec).await
-        }
         /// AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
         pub async fn announce_persistent_cache_peer(
             &mut self,
@@ -1300,17 +1190,6 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::DeleteHostRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
-        /// Server streaming response type for the SyncProbes method.
-        type SyncProbesStream: tonic::codegen::tokio_stream::Stream<
-                Item = std::result::Result<super::SyncProbesResponse, tonic::Status>,
-            >
-            + std::marker::Send
-            + 'static;
-        /// SyncProbes sync probes of the host.
-        async fn sync_probes(
-            &self,
-            request: tonic::Request<tonic::Streaming<super::SyncProbesRequest>>,
-        ) -> std::result::Result<tonic::Response<Self::SyncProbesStream>, tonic::Status>;
         /// Server streaming response type for the AnnouncePersistentCachePeer method.
         type AnnouncePersistentCachePeerStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
@@ -1806,54 +1685,6 @@ pub mod scheduler_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/scheduler.v2.Scheduler/SyncProbes" => {
-                    #[allow(non_camel_case_types)]
-                    struct SyncProbesSvc<T: Scheduler>(pub Arc<T>);
-                    impl<
-                        T: Scheduler,
-                    > tonic::server::StreamingService<super::SyncProbesRequest>
-                    for SyncProbesSvc<T> {
-                        type Response = super::SyncProbesResponse;
-                        type ResponseStream = T::SyncProbesStream;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::ResponseStream>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<
-                                tonic::Streaming<super::SyncProbesRequest>,
-                            >,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Scheduler>::sync_probes(&inner, request).await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let method = SyncProbesSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)

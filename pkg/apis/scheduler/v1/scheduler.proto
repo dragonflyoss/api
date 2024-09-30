@@ -22,8 +22,6 @@ import "pkg/apis/common/v1/common.proto";
 import "pkg/apis/errordetails/v1/errordetails.proto";
 import "validate/validate.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/duration.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/scheduler/v1;scheduler";
 
@@ -370,60 +368,6 @@ message Build {
   string platform = 4;
 }
 
-// ProbeStartedRequest represents started request of SyncProbesRequest.
-message ProbeStartedRequest {
-}
-
-// Probe information.
-message Probe {
-  // Destination host metadata.
-  common.Host host = 1 [(validate.rules).message.required = true];
-  // RTT is the round-trip time sent via this pinger.
-  google.protobuf.Duration rtt = 2 [(validate.rules).duration.required = true];
-  // Probe create time.
-  google.protobuf.Timestamp created_at = 3 [(validate.rules).timestamp.required = true];
-}
-
-// ProbeFinishedRequest represents finished request of SyncProbesRequest.
-message ProbeFinishedRequest {
-  // Probes information.
-  repeated Probe probes = 1 [(validate.rules).repeated = {min_items: 1}];
-}
-
-// FailedProbe information.
-message FailedProbe {
-  // Destination host metadata.
-  common.Host host = 1 [(validate.rules).message.required = true];
-  // The description of probing failed.
-  string description = 2 [(validate.rules).string.min_len = 1];
-}
-
-// ProbeFailedRequest represents failed request of SyncProbesRequest.
-message ProbeFailedRequest {
-  // Failed probes information.
-  repeated FailedProbe probes = 1 [(validate.rules).repeated = {min_items: 1}];
-}
-
-// SyncProbesRequest represents request of SyncProbes.
-message SyncProbesRequest {
-  // Source host metadata.
-  common.Host host = 1 [(validate.rules).message.required = true];
-
-  oneof request {
-    option (validate.required) = true;
-
-    ProbeStartedRequest probe_started_request = 2;
-    ProbeFinishedRequest probe_finished_request = 3;
-    ProbeFailedRequest probe_failed_request = 4;
-  }
-}
-
-// SyncProbesResponse represents response of SyncProbes.
-message SyncProbesResponse {
-  // Hosts needs to be probed.
-  repeated common.Host hosts = 1 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
-}
-
 // Scheduler RPC Service.
 service Scheduler{
   // RegisterPeerTask registers a peer into task.
@@ -449,7 +393,4 @@ service Scheduler{
 
   // LeaveHost makes the peers leaving from host.
   rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
-
-  // SyncProbes sync probes of the host.
-  rpc SyncProbes(stream SyncProbesRequest)returns(stream SyncProbesResponse);
 }
