@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.1.0
 	go.uber.org/mock v0.4.0
-	google.golang.org/grpc v1.67.0
+	google.golang.org/grpc v1.67.1
 	google.golang.org/protobuf v1.34.2
 )
 
