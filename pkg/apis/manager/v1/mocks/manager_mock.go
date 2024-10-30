@@ -24,6 +24,7 @@ import (
 type MockManagerClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockManagerClientMockRecorder
+	isgomock struct{}
 }
 
 // MockManagerClientMockRecorder is the mock recorder for MockManagerClient.
@@ -247,6 +248,7 @@ func (mr *MockManagerClientMockRecorder) UpdateSeedPeer(ctx, in any, opts ...any
 type MockManager_KeepAliveClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockManager_KeepAliveClientMockRecorder
+	isgomock struct{}
 }
 
 // MockManager_KeepAliveClientMockRecorder is the mock recorder for MockManager_KeepAliveClient.
@@ -384,6 +386,7 @@ func (mr *MockManager_KeepAliveClientMockRecorder) Trailer() *gomock.Call {
 type MockManagerServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockManagerServerMockRecorder
+	isgomock struct{}
 }
 
 // MockManagerServerMockRecorder is the mock recorder for MockManagerServer.
@@ -556,6 +559,7 @@ func (mr *MockManagerServerMockRecorder) UpdateSeedPeer(arg0, arg1 any) *gomock.
 type MockUnsafeManagerServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockUnsafeManagerServerMockRecorder
+	isgomock struct{}
 }
 
 // MockUnsafeManagerServerMockRecorder is the mock recorder for MockUnsafeManagerServer.
@@ -591,6 +595,7 @@ func (mr *MockUnsafeManagerServerMockRecorder) mustEmbedUnimplementedManagerServ
 type MockManager_KeepAliveServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockManager_KeepAliveServerMockRecorder
+	isgomock struct{}
 }
 
 // MockManager_KeepAliveServerMockRecorder is the mock recorder for MockManager_KeepAliveServer.

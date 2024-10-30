@@ -24,6 +24,7 @@ import (
 type MockSchedulerClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockSchedulerClientMockRecorder
+	isgomock struct{}
 }
 
 // MockSchedulerClientMockRecorder is the mock recorder for MockSchedulerClient.
@@ -207,6 +208,7 @@ func (mr *MockSchedulerClientMockRecorder) StatTask(ctx, in any, opts ...any) *g
 type MockScheduler_ReportPieceResultClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockScheduler_ReportPieceResultClientMockRecorder
+	isgomock struct{}
 }
 
 // MockScheduler_ReportPieceResultClientMockRecorder is the mock recorder for MockScheduler_ReportPieceResultClient.
@@ -344,6 +346,7 @@ func (mr *MockScheduler_ReportPieceResultClientMockRecorder) Trailer() *gomock.C
 type MockSchedulerServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockSchedulerServerMockRecorder
+	isgomock struct{}
 }
 
 // MockSchedulerServerMockRecorder is the mock recorder for MockSchedulerServer.
@@ -486,6 +489,7 @@ func (mr *MockSchedulerServerMockRecorder) StatTask(arg0, arg1 any) *gomock.Call
 type MockUnsafeSchedulerServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockUnsafeSchedulerServerMockRecorder
+	isgomock struct{}
 }
 
 // MockUnsafeSchedulerServerMockRecorder is the mock recorder for MockUnsafeSchedulerServer.
@@ -521,6 +525,7 @@ func (mr *MockUnsafeSchedulerServerMockRecorder) mustEmbedUnimplementedScheduler
 type MockScheduler_ReportPieceResultServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockScheduler_ReportPieceResultServerMockRecorder
+	isgomock struct{}
 }
 
 // MockScheduler_ReportPieceResultServerMockRecorder is the mock recorder for MockScheduler_ReportPieceResultServer.

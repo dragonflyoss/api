@@ -24,6 +24,7 @@ import (
 type MockSeederClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockSeederClientMockRecorder
+	isgomock struct{}
 }
 
 // MockSeederClientMockRecorder is the mock recorder for MockSeederClient.
@@ -107,6 +108,7 @@ func (mr *MockSeederClientMockRecorder) SyncPieceTasks(ctx any, opts ...any) *go
 type MockSeeder_ObtainSeedsClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockSeeder_ObtainSeedsClientMockRecorder
+	isgomock struct{}
 }
 
 // MockSeeder_ObtainSeedsClientMockRecorder is the mock recorder for MockSeeder_ObtainSeedsClient.
@@ -230,6 +232,7 @@ func (mr *MockSeeder_ObtainSeedsClientMockRecorder) Trailer() *gomock.Call {
 type MockSeeder_SyncPieceTasksClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockSeeder_SyncPieceTasksClientMockRecorder
+	isgomock struct{}
 }
 
 // MockSeeder_SyncPieceTasksClientMockRecorder is the mock recorder for MockSeeder_SyncPieceTasksClient.
@@ -367,6 +370,7 @@ func (mr *MockSeeder_SyncPieceTasksClientMockRecorder) Trailer() *gomock.Call {
 type MockSeederServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockSeederServerMockRecorder
+	isgomock struct{}
 }
 
 // MockSeederServerMockRecorder is the mock recorder for MockSeederServer.
@@ -433,6 +437,7 @@ func (mr *MockSeederServerMockRecorder) SyncPieceTasks(arg0 any) *gomock.Call {
 type MockUnsafeSeederServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockUnsafeSeederServerMockRecorder
+	isgomock struct{}
 }
 
 // MockUnsafeSeederServerMockRecorder is the mock recorder for MockUnsafeSeederServer.
@@ -468,6 +473,7 @@ func (mr *MockUnsafeSeederServerMockRecorder) mustEmbedUnimplementedSeederServer
 type MockSeeder_ObtainSeedsServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockSeeder_ObtainSeedsServerMockRecorder
+	isgomock struct{}
 }
 
 // MockSeeder_ObtainSeedsServerMockRecorder is the mock recorder for MockSeeder_ObtainSeedsServer.
@@ -587,6 +593,7 @@ func (mr *MockSeeder_ObtainSeedsServerMockRecorder) SetTrailer(arg0 any) *gomock
 type MockSeeder_SyncPieceTasksServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockSeeder_SyncPieceTasksServerMockRecorder
+	isgomock struct{}
 }
 
 // MockSeeder_SyncPieceTasksServerMockRecorder is the mock recorder for MockSeeder_SyncPieceTasksServer.

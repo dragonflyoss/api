@@ -25,6 +25,7 @@ import (
 type MockDaemonClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaemonClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDaemonClientMockRecorder is the mock recorder for MockDaemonClient.
@@ -248,6 +249,7 @@ func (mr *MockDaemonClientMockRecorder) SyncPieceTasks(ctx any, opts ...any) *go
 type MockDaemon_DownloadClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaemon_DownloadClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDaemon_DownloadClientMockRecorder is the mock recorder for MockDaemon_DownloadClient.
@@ -371,6 +373,7 @@ func (mr *MockDaemon_DownloadClientMockRecorder) Trailer() *gomock.Call {
 type MockDaemon_SyncPieceTasksClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaemon_SyncPieceTasksClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDaemon_SyncPieceTasksClientMockRecorder is the mock recorder for MockDaemon_SyncPieceTasksClient.
@@ -508,6 +511,7 @@ func (mr *MockDaemon_SyncPieceTasksClientMockRecorder) Trailer() *gomock.Call {
 type MockDaemon_PeerExchangeClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaemon_PeerExchangeClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDaemon_PeerExchangeClientMockRecorder is the mock recorder for MockDaemon_PeerExchangeClient.
@@ -645,6 +649,7 @@ func (mr *MockDaemon_PeerExchangeClientMockRecorder) Trailer() *gomock.Call {
 type MockDaemonServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaemonServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDaemonServerMockRecorder is the mock recorder for MockDaemonServer.
@@ -815,6 +820,7 @@ func (mr *MockDaemonServerMockRecorder) SyncPieceTasks(arg0 any) *gomock.Call {
 type MockUnsafeDaemonServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockUnsafeDaemonServerMockRecorder
+	isgomock struct{}
 }
 
 // MockUnsafeDaemonServerMockRecorder is the mock recorder for MockUnsafeDaemonServer.
@@ -850,6 +856,7 @@ func (mr *MockUnsafeDaemonServerMockRecorder) mustEmbedUnimplementedDaemonServer
 type MockDaemon_DownloadServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaemon_DownloadServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDaemon_DownloadServerMockRecorder is the mock recorder for MockDaemon_DownloadServer.
@@ -969,6 +976,7 @@ func (mr *MockDaemon_DownloadServerMockRecorder) SetTrailer(arg0 any) *gomock.Ca
 type MockDaemon_SyncPieceTasksServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaemon_SyncPieceTasksServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDaemon_SyncPieceTasksServerMockRecorder is the mock recorder for MockDaemon_SyncPieceTasksServer.
@@ -1103,6 +1111,7 @@ func (mr *MockDaemon_SyncPieceTasksServerMockRecorder) SetTrailer(arg0 any) *gom
 type MockDaemon_PeerExchangeServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaemon_PeerExchangeServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDaemon_PeerExchangeServerMockRecorder is the mock recorder for MockDaemon_PeerExchangeServer.
