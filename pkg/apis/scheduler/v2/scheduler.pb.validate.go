@@ -5741,6 +5741,17 @@ func (m *UploadPersistentCacheTaskStartedRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if !_UploadPersistentCacheTaskStartedRequest_Digest_Pattern.MatchString(m.GetDigest()) {
+		err := UploadPersistentCacheTaskStartedRequestValidationError{
+			field:  "Digest",
+			reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if m.GetPieceLength() < 1 {
 		err := UploadPersistentCacheTaskStartedRequestValidationError{
 			field:  "PieceLength",
@@ -5751,6 +5762,10 @@ func (m *UploadPersistentCacheTaskStartedRequest) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
+
+	// no validation rules for ContentLength
+
+	// no validation rules for PieceCount
 
 	if d := m.GetTtl(); d != nil {
 		dur, err := d.AsDuration(), d.CheckValid()
@@ -5789,39 +5804,6 @@ func (m *UploadPersistentCacheTaskStartedRequest) validate(all bool) error {
 
 	if m.Application != nil {
 		// no validation rules for Application
-	}
-
-	if m.Timeout != nil {
-
-		if all {
-			switch v := interface{}(m.GetTimeout()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, UploadPersistentCacheTaskStartedRequestValidationError{
-						field:  "Timeout",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, UploadPersistentCacheTaskStartedRequestValidationError{
-						field:  "Timeout",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return UploadPersistentCacheTaskStartedRequestValidationError{
-					field:  "Timeout",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
 	}
 
 	if len(errors) > 0 {
@@ -5905,6 +5887,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = UploadPersistentCacheTaskStartedRequestValidationError{}
+
+var _UploadPersistentCacheTaskStartedRequest_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]{8})$")
 
 // Validate checks the field values on UploadPersistentCacheTaskFinishedRequest
 // with the rules defined in the proto definition for this message. If any

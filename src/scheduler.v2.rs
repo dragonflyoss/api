@@ -526,21 +526,27 @@ pub struct UploadPersistentCacheTaskStartedRequest {
     /// Replica count of the persistent cache task.
     #[prost(uint64, tag = "4")]
     pub persistent_replica_count: u64,
+    /// Digest of the task digest, for example blake3:xxx or sha256:yyy.
+    #[prost(string, tag = "5")]
+    pub digest: ::prost::alloc::string::String,
     /// Tag is used to distinguish different persistent cache tasks.
-    #[prost(string, optional, tag = "5")]
+    #[prost(string, optional, tag = "6")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, optional, tag = "6")]
+    #[prost(string, optional, tag = "7")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// Task piece length.
-    #[prost(uint64, tag = "7")]
+    #[prost(uint64, tag = "8")]
     pub piece_length: u64,
+    /// Task content length.
+    #[prost(uint64, tag = "9")]
+    pub content_length: u64,
+    /// Task piece count.
+    #[prost(uint32, tag = "10")]
+    pub piece_count: u32,
     /// TTL of the persistent cache task.
-    #[prost(message, optional, tag = "8")]
+    #[prost(message, optional, tag = "11")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
-    /// Upload timeout.
-    #[prost(message, optional, tag = "9")]
-    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// UploadPersistentCacheTaskFinishedRequest represents upload persistent cache task finished request of UploadPersistentCacheTaskFinished.
 #[derive(serde::Serialize, serde::Deserialize)]

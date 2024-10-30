@@ -25,6 +25,7 @@ import (
 type MockDfdaemonUploadClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonUploadClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonUploadClientMockRecorder is the mock recorder for MockDfdaemonUploadClient.
@@ -208,6 +209,7 @@ func (mr *MockDfdaemonUploadClientMockRecorder) SyncPieces(ctx, in any, opts ...
 type MockDfdaemonUpload_DownloadTaskClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonUpload_DownloadTaskClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonUpload_DownloadTaskClientMockRecorder is the mock recorder for MockDfdaemonUpload_DownloadTaskClient.
@@ -331,6 +333,7 @@ func (mr *MockDfdaemonUpload_DownloadTaskClientMockRecorder) Trailer() *gomock.C
 type MockDfdaemonUpload_SyncPiecesClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonUpload_SyncPiecesClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonUpload_SyncPiecesClientMockRecorder is the mock recorder for MockDfdaemonUpload_SyncPiecesClient.
@@ -454,6 +457,7 @@ func (mr *MockDfdaemonUpload_SyncPiecesClientMockRecorder) Trailer() *gomock.Cal
 type MockDfdaemonUpload_DownloadPersistentCacheTaskClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonUpload_DownloadPersistentCacheTaskClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonUpload_DownloadPersistentCacheTaskClientMockRecorder is the mock recorder for MockDfdaemonUpload_DownloadPersistentCacheTaskClient.
@@ -577,6 +581,7 @@ func (mr *MockDfdaemonUpload_DownloadPersistentCacheTaskClientMockRecorder) Trai
 type MockDfdaemonUploadServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonUploadServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonUploadServerMockRecorder is the mock recorder for MockDfdaemonUploadServer.
@@ -717,6 +722,7 @@ func (mr *MockDfdaemonUploadServerMockRecorder) SyncPieces(arg0, arg1 any) *gomo
 type MockUnsafeDfdaemonUploadServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockUnsafeDfdaemonUploadServerMockRecorder
+	isgomock struct{}
 }
 
 // MockUnsafeDfdaemonUploadServerMockRecorder is the mock recorder for MockUnsafeDfdaemonUploadServer.
@@ -752,6 +758,7 @@ func (mr *MockUnsafeDfdaemonUploadServerMockRecorder) mustEmbedUnimplementedDfda
 type MockDfdaemonUpload_DownloadTaskServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonUpload_DownloadTaskServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonUpload_DownloadTaskServerMockRecorder is the mock recorder for MockDfdaemonUpload_DownloadTaskServer.
@@ -871,6 +878,7 @@ func (mr *MockDfdaemonUpload_DownloadTaskServerMockRecorder) SetTrailer(arg0 any
 type MockDfdaemonUpload_SyncPiecesServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonUpload_SyncPiecesServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonUpload_SyncPiecesServerMockRecorder is the mock recorder for MockDfdaemonUpload_SyncPiecesServer.
@@ -990,6 +998,7 @@ func (mr *MockDfdaemonUpload_SyncPiecesServerMockRecorder) SetTrailer(arg0 any) 
 type MockDfdaemonUpload_DownloadPersistentCacheTaskServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonUpload_DownloadPersistentCacheTaskServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonUpload_DownloadPersistentCacheTaskServerMockRecorder is the mock recorder for MockDfdaemonUpload_DownloadPersistentCacheTaskServer.
@@ -1109,6 +1118,7 @@ func (mr *MockDfdaemonUpload_DownloadPersistentCacheTaskServerMockRecorder) SetT
 type MockDfdaemonDownloadClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonDownloadClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonDownloadClientMockRecorder is the mock recorder for MockDfdaemonDownloadClient.
@@ -1312,6 +1322,7 @@ func (mr *MockDfdaemonDownloadClientMockRecorder) UploadTask(ctx, in any, opts .
 type MockDfdaemonDownload_DownloadTaskClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonDownload_DownloadTaskClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonDownload_DownloadTaskClientMockRecorder is the mock recorder for MockDfdaemonDownload_DownloadTaskClient.
@@ -1435,6 +1446,7 @@ func (mr *MockDfdaemonDownload_DownloadTaskClientMockRecorder) Trailer() *gomock
 type MockDfdaemonDownload_DownloadPersistentCacheTaskClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonDownload_DownloadPersistentCacheTaskClientMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonDownload_DownloadPersistentCacheTaskClientMockRecorder is the mock recorder for MockDfdaemonDownload_DownloadPersistentCacheTaskClient.
@@ -1558,6 +1570,7 @@ func (mr *MockDfdaemonDownload_DownloadPersistentCacheTaskClientMockRecorder) Tr
 type MockDfdaemonDownloadServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonDownloadServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonDownloadServerMockRecorder is the mock recorder for MockDfdaemonDownloadServer.
@@ -1714,6 +1727,7 @@ func (mr *MockDfdaemonDownloadServerMockRecorder) UploadTask(arg0, arg1 any) *go
 type MockUnsafeDfdaemonDownloadServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockUnsafeDfdaemonDownloadServerMockRecorder
+	isgomock struct{}
 }
 
 // MockUnsafeDfdaemonDownloadServerMockRecorder is the mock recorder for MockUnsafeDfdaemonDownloadServer.
@@ -1749,6 +1763,7 @@ func (mr *MockUnsafeDfdaemonDownloadServerMockRecorder) mustEmbedUnimplementedDf
 type MockDfdaemonDownload_DownloadTaskServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonDownload_DownloadTaskServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonDownload_DownloadTaskServerMockRecorder is the mock recorder for MockDfdaemonDownload_DownloadTaskServer.
@@ -1868,6 +1883,7 @@ func (mr *MockDfdaemonDownload_DownloadTaskServerMockRecorder) SetTrailer(arg0 a
 type MockDfdaemonDownload_DownloadPersistentCacheTaskServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockDfdaemonDownload_DownloadPersistentCacheTaskServerMockRecorder
+	isgomock struct{}
 }
 
 // MockDfdaemonDownload_DownloadPersistentCacheTaskServerMockRecorder is the mock recorder for MockDfdaemonDownload_DownloadPersistentCacheTaskServer.

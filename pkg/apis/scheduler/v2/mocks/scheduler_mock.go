@@ -25,6 +25,7 @@ import (
 type MockSchedulerClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockSchedulerClientMockRecorder
+	isgomock struct{}
 }
 
 // MockSchedulerClientMockRecorder is the mock recorder for MockSchedulerClient.
@@ -368,6 +369,7 @@ func (mr *MockSchedulerClientMockRecorder) UploadPersistentCacheTaskStarted(ctx,
 type MockScheduler_AnnouncePeerClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockScheduler_AnnouncePeerClientMockRecorder
+	isgomock struct{}
 }
 
 // MockScheduler_AnnouncePeerClientMockRecorder is the mock recorder for MockScheduler_AnnouncePeerClient.
@@ -505,6 +507,7 @@ func (mr *MockScheduler_AnnouncePeerClientMockRecorder) Trailer() *gomock.Call {
 type MockScheduler_AnnouncePersistentCachePeerClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockScheduler_AnnouncePersistentCachePeerClientMockRecorder
+	isgomock struct{}
 }
 
 // MockScheduler_AnnouncePersistentCachePeerClientMockRecorder is the mock recorder for MockScheduler_AnnouncePersistentCachePeerClient.
@@ -642,6 +645,7 @@ func (mr *MockScheduler_AnnouncePersistentCachePeerClientMockRecorder) Trailer()
 type MockSchedulerServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockSchedulerServerMockRecorder
+	isgomock struct{}
 }
 
 // MockSchedulerServerMockRecorder is the mock recorder for MockSchedulerServer.
@@ -903,6 +907,7 @@ func (mr *MockSchedulerServerMockRecorder) UploadPersistentCacheTaskStarted(arg0
 type MockUnsafeSchedulerServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockUnsafeSchedulerServerMockRecorder
+	isgomock struct{}
 }
 
 // MockUnsafeSchedulerServerMockRecorder is the mock recorder for MockUnsafeSchedulerServer.
@@ -938,6 +943,7 @@ func (mr *MockUnsafeSchedulerServerMockRecorder) mustEmbedUnimplementedScheduler
 type MockScheduler_AnnouncePeerServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockScheduler_AnnouncePeerServerMockRecorder
+	isgomock struct{}
 }
 
 // MockScheduler_AnnouncePeerServerMockRecorder is the mock recorder for MockScheduler_AnnouncePeerServer.
@@ -1072,6 +1078,7 @@ func (mr *MockScheduler_AnnouncePeerServerMockRecorder) SetTrailer(arg0 any) *go
 type MockScheduler_AnnouncePersistentCachePeerServer struct {
 	ctrl     *gomock.Controller
 	recorder *MockScheduler_AnnouncePersistentCachePeerServerMockRecorder
+	isgomock struct{}
 }
 
 // MockScheduler_AnnouncePersistentCachePeerServerMockRecorder is the mock recorder for MockScheduler_AnnouncePersistentCachePeerServer.
