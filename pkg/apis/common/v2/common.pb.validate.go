@@ -921,16 +921,9 @@ func (m *PersistentCacheTask) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetReplicaCount() < 1 {
-		err := PersistentCacheTaskValidationError{
-			field:  "ReplicaCount",
-			reason: "value must be greater than or equal to 1",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for CurrentPersistentReplicaCount
+
+	// no validation rules for CurrentReplicaCount
 
 	if !_PersistentCacheTask_Digest_Pattern.MatchString(m.GetDigest()) {
 		err := PersistentCacheTaskValidationError{
