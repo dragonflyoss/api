@@ -207,29 +207,33 @@ message PersistentCacheTask {
   // not be deleted when dfdamon runs garbage collection. It only be deleted
   // when the task is deleted by the user.
   uint64 persistent_replica_count = 2;
-  // Replica count of the cache task. If cache task is not persistent,
+  // Current replica count of the persistent cache task. The persistent cache task
+  // will not be deleted when dfdaemon runs garbage collection. It only be deleted
+  // when the task is deleted by the user.
+  uint64 current_persistent_replica_count = 3;
+  // Current replica count of the cache task. If cache task is not persistent,
   // the persistent cache task will be deleted when dfdaemon runs garbage collection.
-  uint64 replica_count = 3;
+  uint64 current_replica_count = 4;
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  string digest = 4;
+  string digest = 5;
   // Tag is used to distinguish different persistent cache tasks.
-  optional string tag = 5;
+  optional string tag = 6;
   // Application of task.
-  optional string application = 6;
+  optional string application = 7;
   // Task piece length.
-  uint64 piece_length = 7;
+  uint64 piece_length = 8;
   // Task content length.
-  uint64 content_length = 8;
+  uint64 content_length = 9;
   // Task piece count.
-  uint32 piece_count = 9;
+  uint32 piece_count = 10;
   // Task state.
-  string state = 10;
+  string state = 11;
   // TTL of the persistent cache task.
-  google.protobuf.Duration ttl = 11;
+  google.protobuf.Duration ttl = 12;
   // Task create time.
-  google.protobuf.Timestamp created_at = 12;
+  google.protobuf.Timestamp created_at = 13;
   // Task update time.
-  google.protobuf.Timestamp updated_at = 13;
+  google.protobuf.Timestamp updated_at = 14;
 }
 
 // Host metadata.
