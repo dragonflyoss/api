@@ -479,6 +479,9 @@ pub struct Download {
     /// Object Storage related information.
     #[prost(message, optional, tag = "17")]
     pub object_storage: ::core::option::Option<ObjectStorage>,
+    /// HDFS related information.
+    #[prost(message, optional, tag = "18")]
+    pub hdfs: ::core::option::Option<Hdfs>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -506,6 +509,15 @@ pub struct ObjectStorage {
     /// Predefined ACL that used for the Google Cloud Storage service.
     #[prost(string, optional, tag = "7")]
     pub predefined_acl: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// HDFS related information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Hdfs {
+    /// Delegation token for Web HDFS operator.
+    #[prost(string, optional, tag = "1")]
+    pub delegation_token: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]
