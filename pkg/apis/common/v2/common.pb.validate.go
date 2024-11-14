@@ -2514,6 +2514,39 @@ func (m *Download) validate(all bool) error {
 
 	}
 
+	if m.Hdfs != nil {
+
+		if all {
+			switch v := interface{}(m.GetHdfs()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHdfs()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadValidationError{
+					field:  "Hdfs",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}
@@ -2817,6 +2850,123 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ObjectStorageValidationError{}
+
+// Validate checks the field values on HDFS with the rules defined in the proto
+// definition for this message. If any rules are violated, the first error
+// encountered is returned, or nil if there are no violations.
+func (m *HDFS) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HDFS with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in HDFSMultiError, or nil if none found.
+func (m *HDFS) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HDFS) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.DelegationToken != nil {
+
+		if m.GetDelegationToken() != "" {
+
+			if utf8.RuneCountInString(m.GetDelegationToken()) < 1 {
+				err := HDFSValidationError{
+					field:  "DelegationToken",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return HDFSMultiError(errors)
+	}
+
+	return nil
+}
+
+// HDFSMultiError is an error wrapping multiple validation errors returned by
+// HDFS.ValidateAll() if the designated constraints aren't met.
+type HDFSMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HDFSMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HDFSMultiError) AllErrors() []error { return m }
+
+// HDFSValidationError is the validation error returned by HDFS.Validate if the
+// designated constraints aren't met.
+type HDFSValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HDFSValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HDFSValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HDFSValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HDFSValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HDFSValidationError) ErrorName() string { return "HDFSValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HDFSValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHDFS.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HDFSValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HDFSValidationError{}
 
 // Validate checks the field values on Range with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
