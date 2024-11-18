@@ -369,6 +369,10 @@ message Disk {
   uint64 inodes_free = 7;
   // Used percent of indoes on the data path of dragonfly directory.
   double inodes_used_percent = 8;
+  // Disk read bandwidth, in bytes per second.
+  uint64 read_bandwidth = 9;
+  // Disk write bandwidth, in bytes per second.
+  uint64 write_bandwidth = 10;
 }
 
 // Build information.
