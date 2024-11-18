@@ -392,6 +392,12 @@ pub struct Disk {
     /// Used percent of indoes on the data path of dragonfly directory.
     #[prost(double, tag = "8")]
     pub inodes_used_percent: f64,
+    /// Disk read bandwidth, in bytes per second.
+    #[prost(uint64, tag = "9")]
+    pub read_bandwidth: u64,
+    /// Disk write bandwidth, in bytes per second.
+    #[prost(uint64, tag = "10")]
+    pub write_bandwidth: u64,
 }
 /// Build information.
 #[derive(serde::Serialize, serde::Deserialize)]

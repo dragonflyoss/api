@@ -2084,6 +2084,10 @@ func (m *Disk) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for ReadBandwidth
+
+	// no validation rules for WriteBandwidth
+
 	if len(errors) > 0 {
 		return DiskMultiError(errors)
 	}
