@@ -105,6 +105,7 @@ message DownloadPieceBackToSourceFailedRequest {
 
   oneof response {
     errordetails.v2.Backend backend = 2;
+    errordetails.v2.Unknown unknown = 3;
   }
 }
 

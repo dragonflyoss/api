@@ -119,7 +119,7 @@ pub struct DownloadPieceBackToSourceFailedRequest {
     pub piece_number: ::core::option::Option<u32>,
     #[prost(
         oneof = "download_piece_back_to_source_failed_request::Response",
-        tags = "2"
+        tags = "2, 3"
     )]
     pub response: ::core::option::Option<
         download_piece_back_to_source_failed_request::Response,
@@ -133,6 +133,8 @@ pub mod download_piece_back_to_source_failed_request {
     pub enum Response {
         #[prost(message, tag = "2")]
         Backend(super::super::super::errordetails::v2::Backend),
+        #[prost(message, tag = "3")]
+        Unknown(super::super::super::errordetails::v2::Unknown),
     }
 }
 /// AnnouncePeerRequest represents request of AnnouncePeer.
