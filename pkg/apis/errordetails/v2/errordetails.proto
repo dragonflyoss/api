@@ -32,3 +32,8 @@ message Backend {
   optional int32 status_code = 3 [(validate.rules).int32 = {gte: 100, lt: 599, ignore_empty: true}];
 }
 
+// Unknown is error detail for Unknown.
+message Unknown {
+  // Unknown error message.
+  optional string message = 1;
+}

@@ -17,3 +17,12 @@ pub struct Backend {
     #[prost(int32, optional, tag = "3")]
     pub status_code: ::core::option::Option<i32>,
 }
+/// Unknown is error detail for Unknown.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Unknown {
+    /// Unknown error message.
+    #[prost(string, optional, tag = "1")]
+    pub message: ::core::option::Option<::prost::alloc::string::String>,
+}

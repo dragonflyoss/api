@@ -1497,6 +1497,48 @@ func (m *DownloadPieceBackToSourceFailedRequest) validate(all bool) error {
 			}
 		}
 
+	case *DownloadPieceBackToSourceFailedRequest_Unknown:
+		if v == nil {
+			err := DownloadPieceBackToSourceFailedRequestValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
+
+		if all {
+			switch v := interface{}(m.GetUnknown()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "Unknown",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPieceBackToSourceFailedRequestValidationError{
+						field:  "Unknown",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetUnknown()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPieceBackToSourceFailedRequestValidationError{
+					field:  "Unknown",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
 	default:
 		_ = v // ensures v is used
 	}
