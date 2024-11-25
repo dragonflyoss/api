@@ -2354,6 +2354,8 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for Prefetch
 
+	// no validation rules for IsPrefetch
+
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {

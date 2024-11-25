@@ -488,6 +488,9 @@ pub struct Download {
     /// HDFS related information.
     #[prost(message, optional, tag = "18")]
     pub hdfs: ::core::option::Option<Hdfs>,
+    /// is_prefetch is the flag to indicate whether the request is a prefetch request.
+    #[prost(bool, tag = "19")]
+    pub is_prefetch: bool,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
