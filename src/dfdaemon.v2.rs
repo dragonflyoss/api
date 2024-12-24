@@ -251,6 +251,18 @@ pub struct DeletePersistentCacheTaskRequest {
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
 }
+/// SyncHostRequest represents request of SyncHost.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SyncHostRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "2")]
+    pub peer_id: ::prost::alloc::string::String,
+}
 /// Generated client implementations.
 pub mod dfdaemon_upload_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
@@ -555,6 +567,34 @@ pub mod dfdaemon_upload_client {
                     ),
                 );
             self.inner.unary(req, path, codec).await
+        }
+        /// SyncHost sync host info from parents.
+        pub async fn sync_host(
+            &mut self,
+            request: impl tonic::IntoRequest<super::SyncHostRequest>,
+        ) -> std::result::Result<
+            tonic::Response<
+                tonic::codec::Streaming<super::super::super::common::v2::Host>,
+            >,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/SyncHost",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "SyncHost"));
+            self.inner.server_streaming(req, path, codec).await
         }
     }
 }
@@ -950,6 +990,20 @@ pub mod dfdaemon_upload_server {
             &self,
             request: tonic::Request<super::DeletePersistentCacheTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Server streaming response type for the SyncHost method.
+        type SyncHostStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<
+                    super::super::super::common::v2::Host,
+                    tonic::Status,
+                >,
+            >
+            + std::marker::Send
+            + 'static;
+        /// SyncHost sync host info from parents.
+        async fn sync_host(
+            &self,
+            request: tonic::Request<super::SyncHostRequest>,
+        ) -> std::result::Result<tonic::Response<Self::SyncHostStream>, tonic::Status>;
     }
     /// DfdaemonUpload represents upload service of dfdaemon.
     #[derive(Debug)]
@@ -1407,6 +1461,52 @@ pub mod dfdaemon_upload_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/SyncHost" => {
+                    #[allow(non_camel_case_types)]
+                    struct SyncHostSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::ServerStreamingService<super::SyncHostRequest>
+                    for SyncHostSvc<T> {
+                        type Response = super::super::super::common::v2::Host;
+                        type ResponseStream = T::SyncHostStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::SyncHostRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::sync_host(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = SyncHostSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.server_streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
