@@ -40,6 +40,8 @@ type DfdaemonUploadClient interface {
 	StatPersistentCacheTask(ctx context.Context, in *StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
 	// DeletePersistentCacheTask deletes persistent cache task from p2p network.
 	DeletePersistentCacheTask(ctx context.Context, in *DeletePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// SyncHost sync host info from parents.
+	SyncHost(ctx context.Context, in *SyncHostRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncHostClient, error)
 }
 
 type dfdaemonUploadClient struct {
@@ -191,6 +193,38 @@ func (c *dfdaemonUploadClient) DeletePersistentCacheTask(ctx context.Context, in
 	return out, nil
 }
 
+func (c *dfdaemonUploadClient) SyncHost(ctx context.Context, in *SyncHostRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncHostClient, error) {
+	stream, err := c.cc.NewStream(ctx, &DfdaemonUpload_ServiceDesc.Streams[3], "/dfdaemon.v2.DfdaemonUpload/SyncHost", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &dfdaemonUploadSyncHostClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type DfdaemonUpload_SyncHostClient interface {
+	Recv() (*v2.Host, error)
+	grpc.ClientStream
+}
+
+type dfdaemonUploadSyncHostClient struct {
+	grpc.ClientStream
+}
+
+func (x *dfdaemonUploadSyncHostClient) Recv() (*v2.Host, error) {
+	m := new(v2.Host)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // DfdaemonUploadServer is the server API for DfdaemonUpload service.
 // All implementations should embed UnimplementedDfdaemonUploadServer
 // for forward compatibility
@@ -211,6 +245,8 @@ type DfdaemonUploadServer interface {
 	StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error)
 	// DeletePersistentCacheTask deletes persistent cache task from p2p network.
 	DeletePersistentCacheTask(context.Context, *DeletePersistentCacheTaskRequest) (*emptypb.Empty, error)
+	// SyncHost sync host info from parents.
+	SyncHost(*SyncHostRequest, DfdaemonUpload_SyncHostServer) error
 }
 
 // UnimplementedDfdaemonUploadServer should be embedded to have forward compatible implementations.
@@ -240,6 +276,9 @@ func (UnimplementedDfdaemonUploadServer) StatPersistentCacheTask(context.Context
 }
 func (UnimplementedDfdaemonUploadServer) DeletePersistentCacheTask(context.Context, *DeletePersistentCacheTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePersistentCacheTask not implemented")
+}
+func (UnimplementedDfdaemonUploadServer) SyncHost(*SyncHostRequest, DfdaemonUpload_SyncHostServer) error {
+	return status.Errorf(codes.Unimplemented, "method SyncHost not implemented")
 }
 
 // UnsafeDfdaemonUploadServer may be embedded to opt out of forward compatibility for this service.
@@ -406,6 +445,27 @@ func _DfdaemonUpload_DeletePersistentCacheTask_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DfdaemonUpload_SyncHost_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SyncHostRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DfdaemonUploadServer).SyncHost(m, &dfdaemonUploadSyncHostServer{stream})
+}
+
+type DfdaemonUpload_SyncHostServer interface {
+	Send(*v2.Host) error
+	grpc.ServerStream
+}
+
+type dfdaemonUploadSyncHostServer struct {
+	grpc.ServerStream
+}
+
+func (x *dfdaemonUploadSyncHostServer) Send(m *v2.Host) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // DfdaemonUpload_ServiceDesc is the grpc.ServiceDesc for DfdaemonUpload service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -448,6 +508,11 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "DownloadPersistentCacheTask",
 			Handler:       _DfdaemonUpload_DownloadPersistentCacheTask_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "SyncHost",
+			Handler:       _DfdaemonUpload_SyncHost_Handler,
 			ServerStreams: true,
 		},
 	},
