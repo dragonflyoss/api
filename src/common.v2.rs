@@ -470,27 +470,30 @@ pub struct Download {
     /// Download timeout.
     #[prost(message, optional, tag = "12")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
-    /// Dfdaemon will disable download back-to-source by itself, if disable_back_to_source is true.
+    /// Dfdaemon cannot download the task from the source if disable_back_to_source is true.
     #[prost(bool, tag = "13")]
     pub disable_back_to_source: bool,
-    /// Scheduler will triggers peer to download back-to-source, if need_back_to_source is true.
+    /// Scheduler needs to schedule the task downloads from the source if need_back_to_source is true.
     #[prost(bool, tag = "14")]
     pub need_back_to_source: bool,
     /// certificate_chain is the client certs with DER format for the backend client to download back-to-source.
     #[prost(bytes = "vec", repeated, tag = "15")]
     pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-    /// Prefetch pre-downloads all pieces of the task when download task with range request.
+    /// Prefetch pre-downloads all pieces of the task when the download task request is a range request.
     #[prost(bool, tag = "16")]
     pub prefetch: bool,
-    /// Object Storage related information.
+    /// Object storage protocol information.
     #[prost(message, optional, tag = "17")]
     pub object_storage: ::core::option::Option<ObjectStorage>,
-    /// HDFS related information.
+    /// HDFS protocol information.
     #[prost(message, optional, tag = "18")]
     pub hdfs: ::core::option::Option<Hdfs>,
     /// is_prefetch is the flag to indicate whether the request is a prefetch request.
     #[prost(bool, tag = "19")]
     pub is_prefetch: bool,
+    /// need_piece_content is the flag to indicate whether the response needs to return piece content.
+    #[prost(bool, tag = "20")]
+    pub need_piece_content: bool,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
