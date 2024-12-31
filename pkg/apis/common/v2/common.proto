@@ -425,20 +425,22 @@ message Download {
   optional string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
   optional google.protobuf.Duration timeout = 12;
-  // Dfdaemon will disable download back-to-source by itself, if disable_back_to_source is true.
+  // Dfdaemon cannot download the task from the source if disable_back_to_source is true.
   bool disable_back_to_source = 13;
-  // Scheduler will triggers peer to download back-to-source, if need_back_to_source is true.
+  // Scheduler needs to schedule the task downloads from the source if need_back_to_source is true.
   bool need_back_to_source = 14;
   // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
   repeated bytes certificate_chain = 15;
-  // Prefetch pre-downloads all pieces of the task when download task with range request.
+  // Prefetch pre-downloads all pieces of the task when the download task request is a range request.
   bool prefetch = 16;
-  // Object Storage related information.
+  // Object storage protocol information.
   optional ObjectStorage object_storage = 17;
-  // HDFS related information.
+  // HDFS protocol information.
   optional HDFS hdfs = 18;
   // is_prefetch is the flag to indicate whether the request is a prefetch request.
   bool is_prefetch = 19;
+  // need_piece_content is the flag to indicate whether the response needs to return piece content.
+  bool need_piece_content = 20;
 }
 
 // Object Storage related information.
