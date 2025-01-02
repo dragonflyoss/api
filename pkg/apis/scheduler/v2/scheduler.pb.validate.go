@@ -3902,23 +3902,31 @@ func (m *RegisterPersistentCachePeerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
-		err := RegisterPersistentCachePeerRequestValidationError{
-			field:  "OutputPath",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if m.Tag != nil {
 		// no validation rules for Tag
 	}
 
 	if m.Application != nil {
 		// no validation rules for Application
+	}
+
+	if m.OutputPath != nil {
+
+		if m.GetOutputPath() != "" {
+
+			if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
+				err := RegisterPersistentCachePeerRequestValidationError{
+					field:  "OutputPath",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if m.Timeout != nil {
