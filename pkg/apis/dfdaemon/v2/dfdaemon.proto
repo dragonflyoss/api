@@ -138,9 +138,11 @@ message DownloadPersistentCacheTaskRequest {
   // Application of task.
   optional string application = 4;
   // File path to be exported.
-  string output_path = 5 [(validate.rules).string.min_len = 1];
+  optional string output_path = 5 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
   optional google.protobuf.Duration timeout = 6;
+  // need_piece_content is the flag to indicate whether the response needs to return piece content.
+  bool need_piece_content = 7;
 }
 
 // DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.

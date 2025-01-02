@@ -161,11 +161,14 @@ pub struct DownloadPersistentCacheTaskRequest {
     #[prost(string, optional, tag = "4")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// File path to be exported.
-    #[prost(string, tag = "5")]
-    pub output_path: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
     #[prost(message, optional, tag = "6")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// need_piece_content is the flag to indicate whether the response needs to return piece content.
+    #[prost(bool, tag = "7")]
+    pub need_piece_content: bool,
 }
 /// DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
