@@ -1642,16 +1642,7 @@ func (m *DownloadPersistentCacheTaskRequest) validate(all bool) error {
 
 	// no validation rules for Persistent
 
-	if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
-		err := DownloadPersistentCacheTaskRequestValidationError{
-			field:  "OutputPath",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for NeedPieceContent
 
 	if m.Tag != nil {
 		// no validation rules for Tag
@@ -1659,6 +1650,25 @@ func (m *DownloadPersistentCacheTaskRequest) validate(all bool) error {
 
 	if m.Application != nil {
 		// no validation rules for Application
+	}
+
+	if m.OutputPath != nil {
+
+		if m.GetOutputPath() != "" {
+
+			if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
+				err := DownloadPersistentCacheTaskRequestValidationError{
+					field:  "OutputPath",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if m.Timeout != nil {

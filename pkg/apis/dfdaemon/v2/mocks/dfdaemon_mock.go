@@ -185,6 +185,26 @@ func (mr *MockDfdaemonUploadClientMockRecorder) StatTask(ctx, in any, opts ...an
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).StatTask), varargs...)
 }
 
+// SyncHost mocks base method.
+func (m *MockDfdaemonUploadClient) SyncHost(ctx context.Context, in *dfdaemon.SyncHostRequest, opts ...grpc.CallOption) (dfdaemon.DfdaemonUpload_SyncHostClient, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SyncHost", varargs...)
+	ret0, _ := ret[0].(dfdaemon.DfdaemonUpload_SyncHostClient)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SyncHost indicates an expected call of SyncHost.
+func (mr *MockDfdaemonUploadClientMockRecorder) SyncHost(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncHost", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).SyncHost), varargs...)
+}
+
 // SyncPieces mocks base method.
 func (m *MockDfdaemonUploadClient) SyncPieces(ctx context.Context, in *dfdaemon.SyncPiecesRequest, opts ...grpc.CallOption) (dfdaemon.DfdaemonUpload_SyncPiecesClient, error) {
 	m.ctrl.T.Helper()
@@ -577,6 +597,130 @@ func (mr *MockDfdaemonUpload_DownloadPersistentCacheTaskClientMockRecorder) Trai
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockDfdaemonUpload_DownloadPersistentCacheTaskClient)(nil).Trailer))
 }
 
+// MockDfdaemonUpload_SyncHostClient is a mock of DfdaemonUpload_SyncHostClient interface.
+type MockDfdaemonUpload_SyncHostClient struct {
+	ctrl     *gomock.Controller
+	recorder *MockDfdaemonUpload_SyncHostClientMockRecorder
+	isgomock struct{}
+}
+
+// MockDfdaemonUpload_SyncHostClientMockRecorder is the mock recorder for MockDfdaemonUpload_SyncHostClient.
+type MockDfdaemonUpload_SyncHostClientMockRecorder struct {
+	mock *MockDfdaemonUpload_SyncHostClient
+}
+
+// NewMockDfdaemonUpload_SyncHostClient creates a new mock instance.
+func NewMockDfdaemonUpload_SyncHostClient(ctrl *gomock.Controller) *MockDfdaemonUpload_SyncHostClient {
+	mock := &MockDfdaemonUpload_SyncHostClient{ctrl: ctrl}
+	mock.recorder = &MockDfdaemonUpload_SyncHostClientMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockDfdaemonUpload_SyncHostClient) EXPECT() *MockDfdaemonUpload_SyncHostClientMockRecorder {
+	return m.recorder
+}
+
+// CloseSend mocks base method.
+func (m *MockDfdaemonUpload_SyncHostClient) CloseSend() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CloseSend")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CloseSend indicates an expected call of CloseSend.
+func (mr *MockDfdaemonUpload_SyncHostClientMockRecorder) CloseSend() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CloseSend", reflect.TypeOf((*MockDfdaemonUpload_SyncHostClient)(nil).CloseSend))
+}
+
+// Context mocks base method.
+func (m *MockDfdaemonUpload_SyncHostClient) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockDfdaemonUpload_SyncHostClientMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockDfdaemonUpload_SyncHostClient)(nil).Context))
+}
+
+// Header mocks base method.
+func (m *MockDfdaemonUpload_SyncHostClient) Header() (metadata.MD, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Header")
+	ret0, _ := ret[0].(metadata.MD)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Header indicates an expected call of Header.
+func (mr *MockDfdaemonUpload_SyncHostClientMockRecorder) Header() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Header", reflect.TypeOf((*MockDfdaemonUpload_SyncHostClient)(nil).Header))
+}
+
+// Recv mocks base method.
+func (m *MockDfdaemonUpload_SyncHostClient) Recv() (*common.Host, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Recv")
+	ret0, _ := ret[0].(*common.Host)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Recv indicates an expected call of Recv.
+func (mr *MockDfdaemonUpload_SyncHostClientMockRecorder) Recv() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Recv", reflect.TypeOf((*MockDfdaemonUpload_SyncHostClient)(nil).Recv))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockDfdaemonUpload_SyncHostClient) RecvMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockDfdaemonUpload_SyncHostClientMockRecorder) RecvMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockDfdaemonUpload_SyncHostClient)(nil).RecvMsg), m)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockDfdaemonUpload_SyncHostClient) SendMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockDfdaemonUpload_SyncHostClientMockRecorder) SendMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockDfdaemonUpload_SyncHostClient)(nil).SendMsg), m)
+}
+
+// Trailer mocks base method.
+func (m *MockDfdaemonUpload_SyncHostClient) Trailer() metadata.MD {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Trailer")
+	ret0, _ := ret[0].(metadata.MD)
+	return ret0
+}
+
+// Trailer indicates an expected call of Trailer.
+func (mr *MockDfdaemonUpload_SyncHostClientMockRecorder) Trailer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Trailer", reflect.TypeOf((*MockDfdaemonUpload_SyncHostClient)(nil).Trailer))
+}
+
 // MockDfdaemonUploadServer is a mock of DfdaemonUploadServer interface.
 type MockDfdaemonUploadServer struct {
 	ctrl     *gomock.Controller
@@ -702,6 +846,20 @@ func (m *MockDfdaemonUploadServer) StatTask(arg0 context.Context, arg1 *dfdaemon
 func (mr *MockDfdaemonUploadServerMockRecorder) StatTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).StatTask), arg0, arg1)
+}
+
+// SyncHost mocks base method.
+func (m *MockDfdaemonUploadServer) SyncHost(arg0 *dfdaemon.SyncHostRequest, arg1 dfdaemon.DfdaemonUpload_SyncHostServer) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SyncHost", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SyncHost indicates an expected call of SyncHost.
+func (mr *MockDfdaemonUploadServerMockRecorder) SyncHost(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncHost", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).SyncHost), arg0, arg1)
 }
 
 // SyncPieces mocks base method.
@@ -1112,6 +1270,126 @@ func (m *MockDfdaemonUpload_DownloadPersistentCacheTaskServer) SetTrailer(arg0 m
 func (mr *MockDfdaemonUpload_DownloadPersistentCacheTaskServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockDfdaemonUpload_DownloadPersistentCacheTaskServer)(nil).SetTrailer), arg0)
+}
+
+// MockDfdaemonUpload_SyncHostServer is a mock of DfdaemonUpload_SyncHostServer interface.
+type MockDfdaemonUpload_SyncHostServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockDfdaemonUpload_SyncHostServerMockRecorder
+	isgomock struct{}
+}
+
+// MockDfdaemonUpload_SyncHostServerMockRecorder is the mock recorder for MockDfdaemonUpload_SyncHostServer.
+type MockDfdaemonUpload_SyncHostServerMockRecorder struct {
+	mock *MockDfdaemonUpload_SyncHostServer
+}
+
+// NewMockDfdaemonUpload_SyncHostServer creates a new mock instance.
+func NewMockDfdaemonUpload_SyncHostServer(ctrl *gomock.Controller) *MockDfdaemonUpload_SyncHostServer {
+	mock := &MockDfdaemonUpload_SyncHostServer{ctrl: ctrl}
+	mock.recorder = &MockDfdaemonUpload_SyncHostServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockDfdaemonUpload_SyncHostServer) EXPECT() *MockDfdaemonUpload_SyncHostServerMockRecorder {
+	return m.recorder
+}
+
+// Context mocks base method.
+func (m *MockDfdaemonUpload_SyncHostServer) Context() context.Context {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Context")
+	ret0, _ := ret[0].(context.Context)
+	return ret0
+}
+
+// Context indicates an expected call of Context.
+func (mr *MockDfdaemonUpload_SyncHostServerMockRecorder) Context() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Context", reflect.TypeOf((*MockDfdaemonUpload_SyncHostServer)(nil).Context))
+}
+
+// RecvMsg mocks base method.
+func (m_2 *MockDfdaemonUpload_SyncHostServer) RecvMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "RecvMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RecvMsg indicates an expected call of RecvMsg.
+func (mr *MockDfdaemonUpload_SyncHostServerMockRecorder) RecvMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecvMsg", reflect.TypeOf((*MockDfdaemonUpload_SyncHostServer)(nil).RecvMsg), m)
+}
+
+// Send mocks base method.
+func (m *MockDfdaemonUpload_SyncHostServer) Send(arg0 *common.Host) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Send", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Send indicates an expected call of Send.
+func (mr *MockDfdaemonUpload_SyncHostServerMockRecorder) Send(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockDfdaemonUpload_SyncHostServer)(nil).Send), arg0)
+}
+
+// SendHeader mocks base method.
+func (m *MockDfdaemonUpload_SyncHostServer) SendHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SendHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendHeader indicates an expected call of SendHeader.
+func (mr *MockDfdaemonUpload_SyncHostServerMockRecorder) SendHeader(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendHeader", reflect.TypeOf((*MockDfdaemonUpload_SyncHostServer)(nil).SendHeader), arg0)
+}
+
+// SendMsg mocks base method.
+func (m_2 *MockDfdaemonUpload_SyncHostServer) SendMsg(m any) error {
+	m_2.ctrl.T.Helper()
+	ret := m_2.ctrl.Call(m_2, "SendMsg", m)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SendMsg indicates an expected call of SendMsg.
+func (mr *MockDfdaemonUpload_SyncHostServerMockRecorder) SendMsg(m any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SendMsg", reflect.TypeOf((*MockDfdaemonUpload_SyncHostServer)(nil).SendMsg), m)
+}
+
+// SetHeader mocks base method.
+func (m *MockDfdaemonUpload_SyncHostServer) SetHeader(arg0 metadata.MD) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetHeader", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetHeader indicates an expected call of SetHeader.
+func (mr *MockDfdaemonUpload_SyncHostServerMockRecorder) SetHeader(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetHeader", reflect.TypeOf((*MockDfdaemonUpload_SyncHostServer)(nil).SetHeader), arg0)
+}
+
+// SetTrailer mocks base method.
+func (m *MockDfdaemonUpload_SyncHostServer) SetTrailer(arg0 metadata.MD) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetTrailer", arg0)
+}
+
+// SetTrailer indicates an expected call of SetTrailer.
+func (mr *MockDfdaemonUpload_SyncHostServerMockRecorder) SetTrailer(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockDfdaemonUpload_SyncHostServer)(nil).SetTrailer), arg0)
 }
 
 // MockDfdaemonDownloadClient is a mock of DfdaemonDownloadClient interface.
