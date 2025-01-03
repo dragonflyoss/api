@@ -47,7 +47,7 @@ type DownloadTaskRequest struct {
 
 	// Download information.
 	Download *v2.Download `protobuf:"bytes,1,opt,name=download,proto3" json:"download,omitempty"`
-	// Dfdaemon will write the content of the task to cache, if is_preheat_request is true.
+	// is_preheat_request is used to indicate whether the request is for a preheat task.
 	IsPreheatRequest *bool `protobuf:"varint,2,opt,name=is_preheat_request,json=isPreheatRequest,proto3,oneof" json:"is_preheat_request,omitempty"`
 }
 
