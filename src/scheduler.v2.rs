@@ -350,8 +350,8 @@ pub struct RegisterPersistentCachePeerRequest {
     #[prost(uint64, tag = "5")]
     pub piece_length: u64,
     /// File path to be exported.
-    #[prost(string, tag = "6")]
-    pub output_path: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "6")]
+    pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
     #[prost(message, optional, tag = "7")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,

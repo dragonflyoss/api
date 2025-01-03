@@ -228,7 +228,7 @@ message RegisterPersistentCachePeerRequest {
   // Task piece length.
   uint64 piece_length = 5;
   // File path to be exported.
-  string output_path = 6;
+  optional string output_path = 6;
   // Download timeout.
   optional google.protobuf.Duration timeout = 7;
 }
