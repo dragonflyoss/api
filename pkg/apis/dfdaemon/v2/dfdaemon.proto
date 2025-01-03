@@ -31,7 +31,6 @@ message DownloadTaskRequest {
   common.v2.Download download = 1 [(validate.rules).message.required = true];
 
   // Dfdaemon will write the content of the task to cache, if is_preheat_request is true.
-  // Whether this is a preheat request or not.
   optional bool is_preheat_request = 2;
 }
 
