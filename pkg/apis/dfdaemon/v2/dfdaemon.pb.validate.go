@@ -97,6 +97,10 @@ func (m *DownloadTaskRequest) validate(all bool) error {
 		}
 	}
 
+	if m.IsPreheatRequest != nil {
+		// no validation rules for IsPreheatRequest
+	}
+
 	if len(errors) > 0 {
 		return DownloadTaskRequestMultiError(errors)
 	}

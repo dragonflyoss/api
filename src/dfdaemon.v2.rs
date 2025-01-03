@@ -7,6 +7,9 @@ pub struct DownloadTaskRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
     pub download: ::core::option::Option<super::super::common::v2::Download>,
+    /// Dfdaemon will write the content of the task to cache, if is_preheat_request is true.
+    #[prost(bool, optional, tag = "2")]
+    pub is_preheat_request: ::core::option::Option<bool>,
 }
 /// DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]

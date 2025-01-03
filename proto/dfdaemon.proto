@@ -26,6 +26,8 @@ import "google/protobuf/empty.proto";
 message DownloadTaskRequest {
   // Download information.
   common.v2.Download download = 1;
+  // Dfdaemon will write the content of the task to cache, if is_preheat_request is true.
+  optional bool is_preheat_request = 2;
 }
 
 // DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
