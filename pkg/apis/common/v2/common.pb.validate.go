@@ -2358,8 +2358,6 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for NeedPieceContent
 
-	// no validation rules for LoadToCache
-
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {
@@ -2555,6 +2553,10 @@ func (m *Download) validate(all bool) error {
 			}
 		}
 
+	}
+
+	if m.LoadToCache != nil {
+		// no validation rules for LoadToCache
 	}
 
 	if len(errors) > 0 {
