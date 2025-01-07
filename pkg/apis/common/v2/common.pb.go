@@ -1809,8 +1809,8 @@ type Download struct {
 	IsPrefetch bool `protobuf:"varint,19,opt,name=is_prefetch,json=isPrefetch,proto3" json:"is_prefetch,omitempty"`
 	// need_piece_content is the flag to indicate whether the response needs to return piece content.
 	NeedPieceContent bool `protobuf:"varint,20,opt,name=need_piece_content,json=needPieceContent,proto3" json:"need_piece_content,omitempty"`
-	// load_to_cache indicates whether the content downloaded will be stored in the storage cache.
-	// Storage cache is designed to store downloaded piece content from preheat tasks,
+	// load_to_cache indicates whether the content downloaded will be stored in the cache storage.
+	// Cache storage is designed to store downloaded piece content from preheat tasks,
 	// allowing other peers to access the content from memory instead of disk.
 	LoadToCache bool `protobuf:"varint,21,opt,name=load_to_cache,json=loadToCache,proto3" json:"load_to_cache,omitempty"`
 }
