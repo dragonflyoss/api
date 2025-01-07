@@ -7,9 +7,6 @@ pub struct DownloadTaskRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
     pub download: ::core::option::Option<super::super::common::v2::Download>,
-    /// is_preheat_request is used to indicate whether the request is for a preheat task.
-    #[prost(bool, optional, tag = "2")]
-    pub is_preheat_request: ::core::option::Option<bool>,
 }
 /// DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]

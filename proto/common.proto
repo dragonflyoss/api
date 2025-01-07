@@ -437,6 +437,8 @@ message Download {
   bool is_prefetch = 19;
   // need_piece_content is the flag to indicate whether the response needs to return piece content.
   bool need_piece_content = 20;
+  // load_to_cache is the flag to indicate whether the task needs to be loaded to cache if cache is enabled.
+  bool load_to_cache = 21;
 }
 
 // Object Storage related information.

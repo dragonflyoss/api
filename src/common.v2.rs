@@ -494,6 +494,9 @@ pub struct Download {
     /// need_piece_content is the flag to indicate whether the response needs to return piece content.
     #[prost(bool, tag = "20")]
     pub need_piece_content: bool,
+    /// load_to_cache is the flag to indicate whether the task needs to be loaded to cache if cache is enabled.
+    #[prost(bool, tag = "21")]
+    pub load_to_cache: bool,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]

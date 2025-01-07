@@ -29,9 +29,6 @@ option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v2;dfdaemon";
 message DownloadTaskRequest {
   // Download information.
   common.v2.Download download = 1 [(validate.rules).message.required = true];
-
-  // is_preheat_request is used to indicate whether the request is for a preheat task.
-  optional bool is_preheat_request = 2;
 }
 
 // DownloadTaskStartedResponse represents task download started response of DownloadTaskResponse.
