@@ -441,6 +441,10 @@ message Download {
   bool is_prefetch = 19;
   // need_piece_content is the flag to indicate whether the response needs to return piece content.
   bool need_piece_content = 20;
+  // load_to_cache indicates whether the content downloaded will be stored in the cache storage.
+  // Cache storage is designed to store downloaded piece content from preheat tasks, 
+  // allowing other peers to access the content from memory instead of disk.
+  bool load_to_cache = 21;
 }
 
 // Object Storage related information.
