@@ -172,17 +172,20 @@ pub mod write_persistent_cache_task_request {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct WritePersistentCacheTaskStartedRequest {
-    /// Replica count of the persistent persistent cache task.
+    /// Persistent cache task content length, it is used to calculate the piece length.
     #[prost(uint64, tag = "1")]
+    pub content_length: u64,
+    /// Replica count of the persistent persistent cache task.
+    #[prost(uint64, tag = "2")]
     pub persistent_replica_count: u64,
     /// Tag is used to distinguish different persistent cache tasks.
-    #[prost(string, optional, tag = "2")]
+    #[prost(string, optional, tag = "3")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, optional, tag = "3")]
+    #[prost(string, optional, tag = "4")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// TTL of the persistent cache task.
-    #[prost(message, optional, tag = "4")]
+    #[prost(message, optional, tag = "5")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// WritePersistentCacheTaskFinishedRequest represents task write finished request of WritePersistentCacheTaskRequest.

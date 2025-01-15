@@ -125,14 +125,16 @@ message WritePersistentCacheTaskRequest {
 
 // WritePersistentCacheTaskStartedRequest represents task write started request of WritePersistentCacheTaskRequest.
 message WritePersistentCacheTaskStartedRequest {
+  // Persistent cache task content length, it is used to calculate the piece length.
+  uint64 content_length = 1;
   // Replica count of the persistent persistent cache task.
-  uint64 persistent_replica_count = 1;
+  uint64 persistent_replica_count = 2;
   // Tag is used to distinguish different persistent cache tasks.
-  optional string tag = 2;
+  optional string tag = 3;
   // Application of task.
-  optional string application = 3;
+  optional string application = 4;
   // TTL of the persistent cache task.
-  google.protobuf.Duration ttl = 4;
+  google.protobuf.Duration ttl = 5;
 }
 
 // WritePersistentCacheTaskFinishedRequest represents task write finished request of WritePersistentCacheTaskRequest.

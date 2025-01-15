@@ -215,7 +215,7 @@ message PersistentCacheTask {
   // the persistent cache task will be deleted when dfdaemon runs garbage collection.
   uint64 current_replica_count = 4;
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  string digest = 5;
+  optional string digest = 5;
   // Tag is used to distinguish different persistent cache tasks.
   optional string tag = 6;
   // Application of task.

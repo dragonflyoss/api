@@ -1875,6 +1875,8 @@ func (m *WritePersistentCacheTaskStartedRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for ContentLength
+
 	if val := m.GetPersistentReplicaCount(); val < 1 || val > 5 {
 		err := WritePersistentCacheTaskStartedRequestValidationError{
 			field:  "PersistentReplicaCount",

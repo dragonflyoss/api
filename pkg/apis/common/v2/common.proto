@@ -221,7 +221,7 @@ message PersistentCacheTask {
   // the persistent cache task will be deleted when dfdaemon runs garbage collection.
   uint64 current_replica_count = 4;
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$"}];
+  optional string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
   // Tag is used to distinguish different persistent cache tasks.
   optional string tag = 6;
   // Application of task.

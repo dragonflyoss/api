@@ -5791,17 +5791,6 @@ func (m *UploadPersistentCacheTaskStartedRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if !_UploadPersistentCacheTaskStartedRequest_Digest_Pattern.MatchString(m.GetDigest()) {
-		err := UploadPersistentCacheTaskStartedRequestValidationError{
-			field:  "Digest",
-			reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$\"",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if m.GetPieceLength() < 1 {
 		err := UploadPersistentCacheTaskStartedRequestValidationError{
 			field:  "PieceLength",
@@ -5846,6 +5835,25 @@ func (m *UploadPersistentCacheTaskStartedRequest) validate(all bool) error {
 			}
 
 		}
+	}
+
+	if m.Digest != nil {
+
+		if m.GetDigest() != "" {
+
+			if !_UploadPersistentCacheTaskStartedRequest_Digest_Pattern.MatchString(m.GetDigest()) {
+				err := UploadPersistentCacheTaskStartedRequestValidationError{
+					field:  "Digest",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$\"",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if m.Tag != nil {

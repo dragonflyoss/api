@@ -161,8 +161,8 @@ pub struct PersistentCacheTask {
     #[prost(uint64, tag = "4")]
     pub current_replica_count: u64,
     /// Digest of the task digest, for example blake3:xxx or sha256:yyy.
-    #[prost(string, tag = "5")]
-    pub digest: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "5")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// Tag is used to distinguish different persistent cache tasks.
     #[prost(string, optional, tag = "6")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,

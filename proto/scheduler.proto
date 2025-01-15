@@ -327,7 +327,7 @@ message UploadPersistentCacheTaskStartedRequest {
   // Replica count of the persistent cache task.
   uint64 persistent_replica_count = 4;
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  string digest = 5;
+  optional string digest = 5;
   // Tag is used to distinguish different persistent cache tasks.
   optional string tag = 6;
   // Application of task.
