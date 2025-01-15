@@ -533,6 +533,10 @@ type DfdaemonDownloadClient interface {
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// DeleteHost releases host in scheduler.
 	DeleteHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// WritePersistentCacheTask writes persistent cache task to p2p network.
+	WritePersistentCacheTask(ctx context.Context, opts ...grpc.CallOption) (DfdaemonDownload_WritePersistentCacheTaskClient, error)
+	// ReadPersistentCacheTask reads persistent cache task from p2p network.
+	ReadPersistentCacheTask(ctx context.Context, in *ReadPersistentCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonDownload_ReadPersistentCacheTaskClient, error)
 	// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
 	DownloadPersistentCacheTask(ctx context.Context, in *DownloadPersistentCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonDownload_DownloadPersistentCacheTaskClient, error)
 	// UploadPersistentCacheTask uploads persistent cache task to p2p network.
@@ -619,8 +623,74 @@ func (c *dfdaemonDownloadClient) DeleteHost(ctx context.Context, in *emptypb.Emp
 	return out, nil
 }
 
+func (c *dfdaemonDownloadClient) WritePersistentCacheTask(ctx context.Context, opts ...grpc.CallOption) (DfdaemonDownload_WritePersistentCacheTaskClient, error) {
+	stream, err := c.cc.NewStream(ctx, &DfdaemonDownload_ServiceDesc.Streams[1], "/dfdaemon.v2.DfdaemonDownload/WritePersistentCacheTask", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &dfdaemonDownloadWritePersistentCacheTaskClient{stream}
+	return x, nil
+}
+
+type DfdaemonDownload_WritePersistentCacheTaskClient interface {
+	Send(*WritePersistentCacheTaskRequest) error
+	CloseAndRecv() (*WritePersistentCacheTaskResponse, error)
+	grpc.ClientStream
+}
+
+type dfdaemonDownloadWritePersistentCacheTaskClient struct {
+	grpc.ClientStream
+}
+
+func (x *dfdaemonDownloadWritePersistentCacheTaskClient) Send(m *WritePersistentCacheTaskRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *dfdaemonDownloadWritePersistentCacheTaskClient) CloseAndRecv() (*WritePersistentCacheTaskResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(WritePersistentCacheTaskResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *dfdaemonDownloadClient) ReadPersistentCacheTask(ctx context.Context, in *ReadPersistentCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonDownload_ReadPersistentCacheTaskClient, error) {
+	stream, err := c.cc.NewStream(ctx, &DfdaemonDownload_ServiceDesc.Streams[2], "/dfdaemon.v2.DfdaemonDownload/ReadPersistentCacheTask", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &dfdaemonDownloadReadPersistentCacheTaskClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type DfdaemonDownload_ReadPersistentCacheTaskClient interface {
+	Recv() (*ReadPersistentCacheTaskResponse, error)
+	grpc.ClientStream
+}
+
+type dfdaemonDownloadReadPersistentCacheTaskClient struct {
+	grpc.ClientStream
+}
+
+func (x *dfdaemonDownloadReadPersistentCacheTaskClient) Recv() (*ReadPersistentCacheTaskResponse, error) {
+	m := new(ReadPersistentCacheTaskResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *dfdaemonDownloadClient) DownloadPersistentCacheTask(ctx context.Context, in *DownloadPersistentCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonDownload_DownloadPersistentCacheTaskClient, error) {
-	stream, err := c.cc.NewStream(ctx, &DfdaemonDownload_ServiceDesc.Streams[1], "/dfdaemon.v2.DfdaemonDownload/DownloadPersistentCacheTask", opts...)
+	stream, err := c.cc.NewStream(ctx, &DfdaemonDownload_ServiceDesc.Streams[3], "/dfdaemon.v2.DfdaemonDownload/DownloadPersistentCacheTask", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -692,6 +762,10 @@ type DfdaemonDownloadServer interface {
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
 	// DeleteHost releases host in scheduler.
 	DeleteHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	// WritePersistentCacheTask writes persistent cache task to p2p network.
+	WritePersistentCacheTask(DfdaemonDownload_WritePersistentCacheTaskServer) error
+	// ReadPersistentCacheTask reads persistent cache task from p2p network.
+	ReadPersistentCacheTask(*ReadPersistentCacheTaskRequest, DfdaemonDownload_ReadPersistentCacheTaskServer) error
 	// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
 	DownloadPersistentCacheTask(*DownloadPersistentCacheTaskRequest, DfdaemonDownload_DownloadPersistentCacheTaskServer) error
 	// UploadPersistentCacheTask uploads persistent cache task to p2p network.
@@ -720,6 +794,12 @@ func (UnimplementedDfdaemonDownloadServer) DeleteTask(context.Context, *DeleteTa
 }
 func (UnimplementedDfdaemonDownloadServer) DeleteHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHost not implemented")
+}
+func (UnimplementedDfdaemonDownloadServer) WritePersistentCacheTask(DfdaemonDownload_WritePersistentCacheTaskServer) error {
+	return status.Errorf(codes.Unimplemented, "method WritePersistentCacheTask not implemented")
+}
+func (UnimplementedDfdaemonDownloadServer) ReadPersistentCacheTask(*ReadPersistentCacheTaskRequest, DfdaemonDownload_ReadPersistentCacheTaskServer) error {
+	return status.Errorf(codes.Unimplemented, "method ReadPersistentCacheTask not implemented")
 }
 func (UnimplementedDfdaemonDownloadServer) DownloadPersistentCacheTask(*DownloadPersistentCacheTaskRequest, DfdaemonDownload_DownloadPersistentCacheTaskServer) error {
 	return status.Errorf(codes.Unimplemented, "method DownloadPersistentCacheTask not implemented")
@@ -838,6 +918,53 @@ func _DfdaemonDownload_DeleteHost_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DfdaemonDownload_WritePersistentCacheTask_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(DfdaemonDownloadServer).WritePersistentCacheTask(&dfdaemonDownloadWritePersistentCacheTaskServer{stream})
+}
+
+type DfdaemonDownload_WritePersistentCacheTaskServer interface {
+	SendAndClose(*WritePersistentCacheTaskResponse) error
+	Recv() (*WritePersistentCacheTaskRequest, error)
+	grpc.ServerStream
+}
+
+type dfdaemonDownloadWritePersistentCacheTaskServer struct {
+	grpc.ServerStream
+}
+
+func (x *dfdaemonDownloadWritePersistentCacheTaskServer) SendAndClose(m *WritePersistentCacheTaskResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *dfdaemonDownloadWritePersistentCacheTaskServer) Recv() (*WritePersistentCacheTaskRequest, error) {
+	m := new(WritePersistentCacheTaskRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func _DfdaemonDownload_ReadPersistentCacheTask_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ReadPersistentCacheTaskRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DfdaemonDownloadServer).ReadPersistentCacheTask(m, &dfdaemonDownloadReadPersistentCacheTaskServer{stream})
+}
+
+type DfdaemonDownload_ReadPersistentCacheTaskServer interface {
+	Send(*ReadPersistentCacheTaskResponse) error
+	grpc.ServerStream
+}
+
+type dfdaemonDownloadReadPersistentCacheTaskServer struct {
+	grpc.ServerStream
+}
+
+func (x *dfdaemonDownloadReadPersistentCacheTaskServer) Send(m *ReadPersistentCacheTaskResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _DfdaemonDownload_DownloadPersistentCacheTask_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(DownloadPersistentCacheTaskRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -953,6 +1080,16 @@ var DfdaemonDownload_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "DownloadTask",
 			Handler:       _DfdaemonDownload_DownloadTask_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "WritePersistentCacheTask",
+			Handler:       _DfdaemonDownload_WritePersistentCacheTask_Handler,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "ReadPersistentCacheTask",
+			Handler:       _DfdaemonDownload_ReadPersistentCacheTask_Handler,
 			ServerStreams: true,
 		},
 		{
