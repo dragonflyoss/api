@@ -125,6 +125,71 @@ message DeleteTaskRequest {
   string task_id = 1 [(validate.rules).string.min_len = 1];
 }
 
+// WritePersistentCacheTaskResponse represents request of WritePersistentCacheTask.
+message WritePersistentCacheTaskRequest {
+  oneof response {
+    option (validate.required) = true;
+
+    WritePersistentCacheTaskStartedRequest write_persistent_cache_task_started_request = 1;
+    WritePersistentCacheTaskFinishedRequest write_persistent_cache_task_finished_request = 2;
+    WriteChunkRequest write_chunk_request = 3;
+  }
+}
+
+// WritePersistentCacheTaskStartedRequest represents task write started request of WritePersistentCacheTaskRequest.
+message WritePersistentCacheTaskStartedRequest {
+  // Replica count of the persistent persistent cache task.
+  uint64 persistent_replica_count = 1 [(validate.rules).uint64 = {gte: 1, lte: 5}];
+  // Tag is used to distinguish different persistent cache tasks.
+  optional string tag = 2;
+  // Application of task.
+  optional string application = 3;
+  // TTL of the persistent cache task.
+  google.protobuf.Duration ttl = 4 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
+}
+
+// WritePersistentCacheTaskFinishedRequest represents task write finished request of WritePersistentCacheTaskRequest.
+message WritePersistentCacheTaskFinishedRequest {
+}
+
+// WriteChunkRequest represents chunk write request of WritePersistentCacheTaskRequest.
+message WriteChunkRequest {
+  // Chunk content.
+  bytes content = 1 [(validate.rules).bytes = {min_len: 1}];
+}
+
+// WritePersistentCacheTaskResponse represents response of WritePersistentCacheTask.
+message WritePersistentCacheTaskResponse {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// ReadPersistentCacheTaskRequest represents request of ReadPersistentCacheTask.
+message ReadPersistentCacheTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// ReadPersistentCacheTaskResponse represents response of ReadPersistentCacheTask.
+message ReadPersistentCacheTaskResponse {
+  oneof response {
+    option (validate.required) = true;
+
+    ReadPersistentCacheTaskFinishedResponse read_persistent_cache_task_finished_response = 1;
+    ReadChunkResponse read_chunk_response = 2;
+  }
+}
+
+// ReadPersistentCacheTaskFinishedResponse represents task read finished response of ReadPersistentCacheTaskResponse.
+message ReadPersistentCacheTaskFinishedResponse {
+}
+
+// ReadChunkResponse represents chunk read response of ReadPersistentCacheTaskResponse.
+message ReadChunkResponse {
+  // Chunk content.
+  bytes content = 1 [(validate.rules).bytes = {min_len: 1}];
+}
+
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
 message DownloadPersistentCacheTaskRequest {
   // Task id.
@@ -173,15 +238,13 @@ message UploadPersistentCacheTaskRequest {
   // Upload file path of persistent cache task.
   string path = 1 [(validate.rules).string = {min_len: 1}];
   // Replica count of the persistent persistent cache task.
-  uint64 persistent_replica_count = 2 [(validate.rules).uint64.gte = 1];
+  uint64 persistent_replica_count = 2 [(validate.rules).uint64 = {gte: 1, lte: 5}];
   // Tag is used to distinguish different persistent cache tasks.
   optional string tag = 3;
   // Application of task.
   optional string application = 4;
   // TTL of the persistent cache task.
   google.protobuf.Duration ttl = 5 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
-  // Upload timeout.
-  optional google.protobuf.Duration timeout = 6;
 }
 
 // StatPersistentCacheTaskRequest represents request of StatPersistentCacheTask.
@@ -250,6 +313,12 @@ service DfdaemonDownload {
 
   // DeleteHost releases host in scheduler.
   rpc DeleteHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+
+  // WritePersistentCacheTask writes persistent cache task to p2p network.
+  rpc WritePersistentCacheTask(stream WritePersistentCacheTaskRequest) returns(WritePersistentCacheTaskResponse);
+
+  // ReadPersistentCacheTask reads persistent cache task from p2p network.
+  rpc ReadPersistentCacheTask(ReadPersistentCacheTaskRequest) returns(stream ReadPersistentCacheTaskResponse);
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
