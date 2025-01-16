@@ -334,26 +334,20 @@ pub struct DeleteHostRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegisterPersistentCachePeerRequest {
-    /// Host id.
-    #[prost(string, tag = "1")]
-    pub host_id: ::prost::alloc::string::String,
-    /// Task id.
-    #[prost(string, tag = "2")]
-    pub task_id: ::prost::alloc::string::String,
     /// Tag is used to distinguish different persistent cache tasks.
-    #[prost(string, optional, tag = "3")]
+    #[prost(string, optional, tag = "1")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, optional, tag = "4")]
+    #[prost(string, optional, tag = "2")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// Task piece length.
-    #[prost(uint64, tag = "5")]
+    #[prost(uint64, tag = "3")]
     pub piece_length: u64,
     /// File path to be exported.
-    #[prost(string, optional, tag = "6")]
+    #[prost(string, optional, tag = "4")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag = "5")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.

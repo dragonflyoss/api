@@ -3869,28 +3869,6 @@ func (m *RegisterPersistentCachePeerRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetHostId()) < 1 {
-		err := RegisterPersistentCachePeerRequestValidationError{
-			field:  "HostId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
-		err := RegisterPersistentCachePeerRequestValidationError{
-			field:  "TaskId",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if m.GetPieceLength() < 1 {
 		err := RegisterPersistentCachePeerRequestValidationError{
 			field:  "PieceLength",
