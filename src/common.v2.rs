@@ -160,35 +160,32 @@ pub struct PersistentCacheTask {
     /// the persistent cache task will be deleted when dfdaemon runs garbage collection.
     #[prost(uint64, tag = "4")]
     pub current_replica_count: u64,
-    /// Digest of the task digest, for example blake3:xxx or sha256:yyy.
-    #[prost(string, optional, tag = "5")]
-    pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// Tag is used to distinguish different persistent cache tasks.
-    #[prost(string, optional, tag = "6")]
+    #[prost(string, optional, tag = "5")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, optional, tag = "7")]
+    #[prost(string, optional, tag = "6")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// Task piece length.
-    #[prost(uint64, tag = "8")]
+    #[prost(uint64, tag = "7")]
     pub piece_length: u64,
     /// Task content length.
-    #[prost(uint64, tag = "9")]
+    #[prost(uint64, tag = "8")]
     pub content_length: u64,
     /// Task piece count.
-    #[prost(uint32, tag = "10")]
+    #[prost(uint32, tag = "9")]
     pub piece_count: u32,
     /// Task state.
-    #[prost(string, tag = "11")]
+    #[prost(string, tag = "10")]
     pub state: ::prost::alloc::string::String,
     /// TTL of the persistent cache task.
-    #[prost(message, optional, tag = "12")]
+    #[prost(message, optional, tag = "11")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Task create time.
-    #[prost(message, optional, tag = "13")]
+    #[prost(message, optional, tag = "12")]
     pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
-    #[prost(message, optional, tag = "14")]
+    #[prost(message, optional, tag = "13")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// Host metadata.
