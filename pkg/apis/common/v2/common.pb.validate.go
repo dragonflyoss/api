@@ -973,25 +973,6 @@ func (m *PersistentCacheTask) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.Digest != nil {
-
-		if m.GetDigest() != "" {
-
-			if !_PersistentCacheTask_Digest_Pattern.MatchString(m.GetDigest()) {
-				err := PersistentCacheTaskValidationError{
-					field:  "Digest",
-					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$\"",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
 	if m.Tag != nil {
 		// no validation rules for Tag
 	}
@@ -1079,8 +1060,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PersistentCacheTaskValidationError{}
-
-var _PersistentCacheTask_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$")
 
 // Validate checks the field values on Host with the rules defined in the proto
 // definition for this message. If any rules are violated, the first error

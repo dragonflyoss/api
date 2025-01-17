@@ -5815,25 +5815,6 @@ func (m *UploadPersistentCacheTaskStartedRequest) validate(all bool) error {
 		}
 	}
 
-	if m.Digest != nil {
-
-		if m.GetDigest() != "" {
-
-			if !_UploadPersistentCacheTaskStartedRequest_Digest_Pattern.MatchString(m.GetDigest()) {
-				err := UploadPersistentCacheTaskStartedRequestValidationError{
-					field:  "Digest",
-					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$\"",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
 	if m.Tag != nil {
 		// no validation rules for Tag
 	}
@@ -5923,8 +5904,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = UploadPersistentCacheTaskStartedRequestValidationError{}
-
-var _UploadPersistentCacheTaskStartedRequest_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$")
 
 // Validate checks the field values on UploadPersistentCacheTaskFinishedRequest
 // with the rules defined in the proto definition for this message. If any
