@@ -347,6 +347,9 @@ pub struct UploadPersistentCacheTaskRequest {
     /// TTL of the persistent cache task.
     #[prost(message, optional, tag = "5")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Download timeout.
+    #[prost(message, optional, tag = "6")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// StatPersistentCacheTaskRequest represents request of StatPersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
