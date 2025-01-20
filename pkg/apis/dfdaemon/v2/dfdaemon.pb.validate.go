@@ -3835,6 +3835,529 @@ var _ interface {
 	ErrorName() string
 } = DeletePersistentCacheTaskRequestValidationError{}
 
+// Validate checks the field values on SyncPersistentCachePiecesRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *SyncPersistentCachePiecesRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SyncPersistentCachePiecesRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// SyncPersistentCachePiecesRequestMultiError, or nil if none found.
+func (m *SyncPersistentCachePiecesRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SyncPersistentCachePiecesRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetHostId()) < 1 {
+		err := SyncPersistentCachePiecesRequestValidationError{
+			field:  "HostId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := SyncPersistentCachePiecesRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(m.GetInterestedPieceNumbers()) < 1 {
+		err := SyncPersistentCachePiecesRequestValidationError{
+			field:  "InterestedPieceNumbers",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SyncPersistentCachePiecesRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// SyncPersistentCachePiecesRequestMultiError is an error wrapping multiple
+// validation errors returned by
+// SyncPersistentCachePiecesRequest.ValidateAll() if the designated
+// constraints aren't met.
+type SyncPersistentCachePiecesRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SyncPersistentCachePiecesRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SyncPersistentCachePiecesRequestMultiError) AllErrors() []error { return m }
+
+// SyncPersistentCachePiecesRequestValidationError is the validation error
+// returned by SyncPersistentCachePiecesRequest.Validate if the designated
+// constraints aren't met.
+type SyncPersistentCachePiecesRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncPersistentCachePiecesRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncPersistentCachePiecesRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncPersistentCachePiecesRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncPersistentCachePiecesRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncPersistentCachePiecesRequestValidationError) ErrorName() string {
+	return "SyncPersistentCachePiecesRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SyncPersistentCachePiecesRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncPersistentCachePiecesRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncPersistentCachePiecesRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncPersistentCachePiecesRequestValidationError{}
+
+// Validate checks the field values on SyncPersistentCachePiecesResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *SyncPersistentCachePiecesResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SyncPersistentCachePiecesResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// SyncPersistentCachePiecesResponseMultiError, or nil if none found.
+func (m *SyncPersistentCachePiecesResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SyncPersistentCachePiecesResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Number
+
+	// no validation rules for Offset
+
+	// no validation rules for Length
+
+	if len(errors) > 0 {
+		return SyncPersistentCachePiecesResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// SyncPersistentCachePiecesResponseMultiError is an error wrapping multiple
+// validation errors returned by
+// SyncPersistentCachePiecesResponse.ValidateAll() if the designated
+// constraints aren't met.
+type SyncPersistentCachePiecesResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SyncPersistentCachePiecesResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SyncPersistentCachePiecesResponseMultiError) AllErrors() []error { return m }
+
+// SyncPersistentCachePiecesResponseValidationError is the validation error
+// returned by SyncPersistentCachePiecesResponse.Validate if the designated
+// constraints aren't met.
+type SyncPersistentCachePiecesResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncPersistentCachePiecesResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncPersistentCachePiecesResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncPersistentCachePiecesResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncPersistentCachePiecesResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncPersistentCachePiecesResponseValidationError) ErrorName() string {
+	return "SyncPersistentCachePiecesResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SyncPersistentCachePiecesResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncPersistentCachePiecesResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncPersistentCachePiecesResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncPersistentCachePiecesResponseValidationError{}
+
+// Validate checks the field values on DownloadPersistentCachePieceRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *DownloadPersistentCachePieceRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPersistentCachePieceRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// DownloadPersistentCachePieceRequestMultiError, or nil if none found.
+func (m *DownloadPersistentCachePieceRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPersistentCachePieceRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetHostId()) < 1 {
+		err := DownloadPersistentCachePieceRequestValidationError{
+			field:  "HostId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := DownloadPersistentCachePieceRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for PieceNumber
+
+	if len(errors) > 0 {
+		return DownloadPersistentCachePieceRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPersistentCachePieceRequestMultiError is an error wrapping multiple
+// validation errors returned by
+// DownloadPersistentCachePieceRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadPersistentCachePieceRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPersistentCachePieceRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPersistentCachePieceRequestMultiError) AllErrors() []error { return m }
+
+// DownloadPersistentCachePieceRequestValidationError is the validation error
+// returned by DownloadPersistentCachePieceRequest.Validate if the designated
+// constraints aren't met.
+type DownloadPersistentCachePieceRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPersistentCachePieceRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPersistentCachePieceRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPersistentCachePieceRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPersistentCachePieceRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPersistentCachePieceRequestValidationError) ErrorName() string {
+	return "DownloadPersistentCachePieceRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPersistentCachePieceRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPersistentCachePieceRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPersistentCachePieceRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPersistentCachePieceRequestValidationError{}
+
+// Validate checks the field values on DownloadPersistentCachePieceResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *DownloadPersistentCachePieceResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPersistentCachePieceResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// DownloadPersistentCachePieceResponseMultiError, or nil if none found.
+func (m *DownloadPersistentCachePieceResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPersistentCachePieceResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetPiece() == nil {
+		err := DownloadPersistentCachePieceResponseValidationError{
+			field:  "Piece",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetPiece()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DownloadPersistentCachePieceResponseValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DownloadPersistentCachePieceResponseValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DownloadPersistentCachePieceResponseValidationError{
+				field:  "Piece",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return DownloadPersistentCachePieceResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPersistentCachePieceResponseMultiError is an error wrapping multiple
+// validation errors returned by
+// DownloadPersistentCachePieceResponse.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadPersistentCachePieceResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPersistentCachePieceResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPersistentCachePieceResponseMultiError) AllErrors() []error { return m }
+
+// DownloadPersistentCachePieceResponseValidationError is the validation error
+// returned by DownloadPersistentCachePieceResponse.Validate if the designated
+// constraints aren't met.
+type DownloadPersistentCachePieceResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPersistentCachePieceResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPersistentCachePieceResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPersistentCachePieceResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPersistentCachePieceResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPersistentCachePieceResponseValidationError) ErrorName() string {
+	return "DownloadPersistentCachePieceResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPersistentCachePieceResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPersistentCachePieceResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPersistentCachePieceResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPersistentCachePieceResponseValidationError{}
+
 // Validate checks the field values on SyncHostRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
