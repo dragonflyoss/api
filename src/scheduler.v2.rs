@@ -34,6 +34,15 @@ pub struct ReschedulePeerRequest {
     #[prost(string, optional, tag = "2")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
+/// ReschedulePeerFailedRequest represents reschedule failed request of AnnouncePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReschedulePeerFailedRequest {
+    /// The description of the reschedule reason.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
 /// DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -153,7 +162,7 @@ pub struct AnnouncePeerRequest {
     pub peer_id: ::prost::alloc::string::String,
     #[prost(
         oneof = "announce_peer_request::Request",
-        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15"
+        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16"
     )]
     pub request: ::core::option::Option<announce_peer_request::Request>,
 }
@@ -198,6 +207,8 @@ pub mod announce_peer_request {
         DownloadPieceBackToSourceFailedRequest(
             super::DownloadPieceBackToSourceFailedRequest,
         ),
+        #[prost(message, tag = "16")]
+        ReschedulePeerFailedRequest(super::ReschedulePeerFailedRequest),
     }
 }
 /// EmptyTaskResponse represents empty task response of AnnouncePeerResponse.
@@ -369,6 +380,15 @@ pub struct ReschedulePersistentCachePeerRequest {
     #[prost(string, optional, tag = "2")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
+/// ReschedulePersistentCachePeerFailedRequest represents reschedule failed request of AnnouncePersistentCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReschedulePersistentCachePeerFailedRequest {
+    /// The description of the reschedule reason.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
 /// DownloadPersistentCachePeerFinishedRequest represents persistent cache peer download finished request of AnnouncePersistentCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -403,7 +423,7 @@ pub struct AnnouncePersistentCachePeerRequest {
     pub peer_id: ::prost::alloc::string::String,
     #[prost(
         oneof = "announce_persistent_cache_peer_request::Request",
-        tags = "4, 5, 6, 7, 8, 9, 10"
+        tags = "4, 5, 6, 7, 8, 9, 10, 11"
     )]
     pub request: ::core::option::Option<announce_persistent_cache_peer_request::Request>,
 }
@@ -435,6 +455,10 @@ pub mod announce_persistent_cache_peer_request {
         DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
         #[prost(message, tag = "10")]
         DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
+        #[prost(message, tag = "11")]
+        ReschedulePersistentCachePeerFailedRequest(
+            super::ReschedulePersistentCachePeerFailedRequest,
+        ),
     }
 }
 /// EmptyPersistentCacheTaskResponse represents empty persistent cache task response of AnnouncePersistentCachePeerResponse.
