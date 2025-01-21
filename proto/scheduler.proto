@@ -48,12 +48,6 @@ message ReschedulePeerRequest {
   optional string description = 2;
 }
 
-// ReschedulePeerFailedRequest represents reschedule failed request of AnnouncePeerRequest.
-message ReschedulePeerFailedRequest {
-  // The description of the reschedule reason.
-  optional string description = 1;
-}
-
 // DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 message DownloadPeerFinishedRequest {
   // Total content length.
@@ -137,7 +131,6 @@ message AnnouncePeerRequest {
     DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 13;
     DownloadPieceFailedRequest download_piece_failed_request = 14;
     DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 15;
-    ReschedulePeerFailedRequest reschedule_peer_failed_request = 16;
   }
 }
 
@@ -249,12 +242,6 @@ message ReschedulePersistentCachePeerRequest {
   optional string description = 2;
 }
 
-// ReschedulePersistentCachePeerFailedRequest represents reschedule failed request of AnnouncePersistentCachePeerRequest.
-message ReschedulePersistentCachePeerFailedRequest {
-  // The description of the reschedule reason.
-  optional string description = 1;
-}
-
 // DownloadPersistentCachePeerFinishedRequest represents persistent cache peer download finished request of AnnouncePersistentCachePeerRequest.
 message DownloadPersistentCachePeerFinishedRequest {
   // Total piece count.
@@ -284,7 +271,6 @@ message AnnouncePersistentCachePeerRequest {
     DownloadPersistentCachePeerFailedRequest download_persistent_cache_peer_failed_request = 8;
     DownloadPieceFinishedRequest download_piece_finished_request = 9;
     DownloadPieceFailedRequest download_piece_failed_request = 10;
-    ReschedulePersistentCachePeerFailedRequest reschedule_persistent_cache_peer_failed_request = 11;
   }
 }
 
