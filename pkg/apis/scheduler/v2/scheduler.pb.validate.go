@@ -559,6 +559,128 @@ var _ interface {
 	ErrorName() string
 } = ReschedulePeerRequestValidationError{}
 
+// Validate checks the field values on ReschedulePeerFailedRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ReschedulePeerFailedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ReschedulePeerFailedRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ReschedulePeerFailedRequestMultiError, or nil if none found.
+func (m *ReschedulePeerFailedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ReschedulePeerFailedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.Description != nil {
+
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := ReschedulePeerFailedRequestValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ReschedulePeerFailedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ReschedulePeerFailedRequestMultiError is an error wrapping multiple
+// validation errors returned by ReschedulePeerFailedRequest.ValidateAll() if
+// the designated constraints aren't met.
+type ReschedulePeerFailedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ReschedulePeerFailedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ReschedulePeerFailedRequestMultiError) AllErrors() []error { return m }
+
+// ReschedulePeerFailedRequestValidationError is the validation error returned
+// by ReschedulePeerFailedRequest.Validate if the designated constraints
+// aren't met.
+type ReschedulePeerFailedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ReschedulePeerFailedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ReschedulePeerFailedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ReschedulePeerFailedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ReschedulePeerFailedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ReschedulePeerFailedRequestValidationError) ErrorName() string {
+	return "ReschedulePeerFailedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ReschedulePeerFailedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sReschedulePeerFailedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ReschedulePeerFailedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ReschedulePeerFailedRequestValidationError{}
+
 // Validate checks the field values on DownloadPeerFinishedRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -2194,6 +2316,48 @@ func (m *AnnouncePeerRequest) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerRequestValidationError{
 					field:  "DownloadPieceBackToSourceFailedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerRequest_ReschedulePeerFailedRequest:
+		if v == nil {
+			err := AnnouncePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetReschedulePeerFailedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "ReschedulePeerFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerRequestValidationError{
+						field:  "ReschedulePeerFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetReschedulePeerFailedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerRequestValidationError{
+					field:  "ReschedulePeerFailedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -4287,6 +4451,131 @@ var _ interface {
 } = ReschedulePersistentCachePeerRequestValidationError{}
 
 // Validate checks the field values on
+// ReschedulePersistentCachePeerFailedRequest with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *ReschedulePersistentCachePeerFailedRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on
+// ReschedulePersistentCachePeerFailedRequest with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in
+// ReschedulePersistentCachePeerFailedRequestMultiError, or nil if none found.
+func (m *ReschedulePersistentCachePeerFailedRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ReschedulePersistentCachePeerFailedRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.Description != nil {
+
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := ReschedulePersistentCachePeerFailedRequestValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ReschedulePersistentCachePeerFailedRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ReschedulePersistentCachePeerFailedRequestMultiError is an error wrapping
+// multiple validation errors returned by
+// ReschedulePersistentCachePeerFailedRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ReschedulePersistentCachePeerFailedRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ReschedulePersistentCachePeerFailedRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ReschedulePersistentCachePeerFailedRequestMultiError) AllErrors() []error { return m }
+
+// ReschedulePersistentCachePeerFailedRequestValidationError is the validation
+// error returned by ReschedulePersistentCachePeerFailedRequest.Validate if
+// the designated constraints aren't met.
+type ReschedulePersistentCachePeerFailedRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ReschedulePersistentCachePeerFailedRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ReschedulePersistentCachePeerFailedRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ReschedulePersistentCachePeerFailedRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ReschedulePersistentCachePeerFailedRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ReschedulePersistentCachePeerFailedRequestValidationError) ErrorName() string {
+	return "ReschedulePersistentCachePeerFailedRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ReschedulePersistentCachePeerFailedRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sReschedulePersistentCachePeerFailedRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ReschedulePersistentCachePeerFailedRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ReschedulePersistentCachePeerFailedRequestValidationError{}
+
+// Validate checks the field values on
 // DownloadPersistentCachePeerFinishedRequest with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -4865,6 +5154,48 @@ func (m *AnnouncePersistentCachePeerRequest) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return AnnouncePersistentCachePeerRequestValidationError{
 					field:  "DownloadPieceFailedRequest",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePersistentCachePeerRequest_ReschedulePersistentCachePeerFailedRequest:
+		if v == nil {
+			err := AnnouncePersistentCachePeerRequestValidationError{
+				field:  "Request",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofRequestPresent = true
+
+		if all {
+			switch v := interface{}(m.GetReschedulePersistentCachePeerFailedRequest()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePersistentCachePeerRequestValidationError{
+						field:  "ReschedulePersistentCachePeerFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePersistentCachePeerRequestValidationError{
+						field:  "ReschedulePersistentCachePeerFailedRequest",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetReschedulePersistentCachePeerFailedRequest()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePersistentCachePeerRequestValidationError{
+					field:  "ReschedulePersistentCachePeerFailedRequest",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
