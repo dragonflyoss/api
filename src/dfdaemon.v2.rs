@@ -578,6 +578,37 @@ pub mod dfdaemon_upload_client {
                 );
             self.inner.server_streaming(req, path, codec).await
         }
+        /// UpdatePersistentCacheTask updates metadata of the persistent cache task in the peer.
+        pub async fn update_persistent_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UpdatePersistentCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/UpdatePersistentCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "dfdaemon.v2.DfdaemonUpload",
+                        "UpdatePersistentCacheTask",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         /// StatPersistentCacheTask stats persistent cache task information.
         pub async fn stat_persistent_cache_task(
             &mut self,
@@ -979,37 +1010,6 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
-        /// UpdatePersistentCacheTask updates metadata of the persistent cache task in the peer.
-        pub async fn update_persistent_cache_task(
-            &mut self,
-            request: impl tonic::IntoRequest<super::UpdatePersistentCacheTaskRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.v2.DfdaemonDownload/UpdatePersistentCacheTask",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(
-                    GrpcMethod::new(
-                        "dfdaemon.v2.DfdaemonDownload",
-                        "UpdatePersistentCacheTask",
-                    ),
-                );
-            self.inner.unary(req, path, codec).await
-        }
         /// StatPersistentCacheTask stats persistent cache task information.
         pub async fn stat_persistent_cache_task(
             &mut self,
@@ -1139,6 +1139,14 @@ pub mod dfdaemon_upload_server {
             request: tonic::Request<super::DownloadPersistentCacheTaskRequest>,
         ) -> std::result::Result<
             tonic::Response<Self::DownloadPersistentCacheTaskStream>,
+            tonic::Status,
+        >;
+        /// UpdatePersistentCacheTask updates metadata of the persistent cache task in the peer.
+        async fn update_persistent_cache_task(
+            &self,
+            request: tonic::Request<super::UpdatePersistentCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
             tonic::Status,
         >;
         /// StatPersistentCacheTask stats persistent cache task information.
@@ -1551,6 +1559,58 @@ pub mod dfdaemon_upload_server {
                     };
                     Box::pin(fut)
                 }
+                "/dfdaemon.v2.DfdaemonUpload/UpdatePersistentCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct UpdatePersistentCacheTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<
+                        super::UpdatePersistentCacheTaskRequest,
+                    > for UpdatePersistentCacheTaskSvc<T> {
+                        type Response = super::super::super::common::v2::PersistentCacheTask;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::UpdatePersistentCacheTaskRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::update_persistent_cache_task(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = UpdatePersistentCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/dfdaemon.v2.DfdaemonUpload/StatPersistentCacheTask" => {
                     #[allow(non_camel_case_types)]
                     struct StatPersistentCacheTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
@@ -1903,14 +1963,6 @@ pub mod dfdaemon_download_server {
         async fn upload_persistent_cache_task(
             &self,
             request: tonic::Request<super::UploadPersistentCacheTaskRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
-            tonic::Status,
-        >;
-        /// UpdatePersistentCacheTask updates metadata of the persistent cache task in the peer.
-        async fn update_persistent_cache_task(
-            &self,
-            request: tonic::Request<super::UpdatePersistentCacheTaskRequest>,
         ) -> std::result::Result<
             tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
             tonic::Status,
@@ -2275,58 +2327,6 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = UploadPersistentCacheTaskSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/dfdaemon.v2.DfdaemonDownload/UpdatePersistentCacheTask" => {
-                    #[allow(non_camel_case_types)]
-                    struct UpdatePersistentCacheTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
-                    impl<
-                        T: DfdaemonDownload,
-                    > tonic::server::UnaryService<
-                        super::UpdatePersistentCacheTaskRequest,
-                    > for UpdatePersistentCacheTaskSvc<T> {
-                        type Response = super::super::super::common::v2::PersistentCacheTask;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<
-                                super::UpdatePersistentCacheTaskRequest,
-                            >,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as DfdaemonDownload>::update_persistent_cache_task(
-                                        &inner,
-                                        request,
-                                    )
-                                    .await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let method = UpdatePersistentCacheTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
