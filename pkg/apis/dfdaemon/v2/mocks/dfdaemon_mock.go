@@ -266,14 +266,14 @@ func (mr *MockDfdaemonUploadClientMockRecorder) SyncPieces(ctx, in any, opts ...
 }
 
 // UpdatePersistentCacheTask mocks base method.
-func (m *MockDfdaemonUploadClient) UpdatePersistentCacheTask(ctx context.Context, in *dfdaemon.UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*common.PersistentCacheTask, error) {
+func (m *MockDfdaemonUploadClient) UpdatePersistentCacheTask(ctx context.Context, in *dfdaemon.UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "UpdatePersistentCacheTask", varargs...)
-	ret0, _ := ret[0].(*common.PersistentCacheTask)
+	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -1090,10 +1090,10 @@ func (mr *MockDfdaemonUploadServerMockRecorder) SyncPieces(arg0, arg1 any) *gomo
 }
 
 // UpdatePersistentCacheTask mocks base method.
-func (m *MockDfdaemonUploadServer) UpdatePersistentCacheTask(arg0 context.Context, arg1 *dfdaemon.UpdatePersistentCacheTaskRequest) (*common.PersistentCacheTask, error) {
+func (m *MockDfdaemonUploadServer) UpdatePersistentCacheTask(arg0 context.Context, arg1 *dfdaemon.UpdatePersistentCacheTaskRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdatePersistentCacheTask", arg0, arg1)
-	ret0, _ := ret[0].(*common.PersistentCacheTask)
+	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

@@ -37,7 +37,7 @@ type DfdaemonUploadClient interface {
 	// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
 	DownloadPersistentCacheTask(ctx context.Context, in *DownloadPersistentCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonUpload_DownloadPersistentCacheTaskClient, error)
 	// UpdatePersistentCacheTask updates metadata of the persistent cache task in the peer.
-	UpdatePersistentCacheTask(ctx context.Context, in *UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
+	UpdatePersistentCacheTask(ctx context.Context, in *UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// StatPersistentCacheTask stats persistent cache task information.
 	StatPersistentCacheTask(ctx context.Context, in *StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
 	// DeletePersistentCacheTask deletes persistent cache task from p2p network.
@@ -181,8 +181,8 @@ func (x *dfdaemonUploadDownloadPersistentCacheTaskClient) Recv() (*DownloadPersi
 	return m, nil
 }
 
-func (c *dfdaemonUploadClient) UpdatePersistentCacheTask(ctx context.Context, in *UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error) {
-	out := new(v2.PersistentCacheTask)
+func (c *dfdaemonUploadClient) UpdatePersistentCacheTask(ctx context.Context, in *UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/UpdatePersistentCacheTask", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -298,7 +298,7 @@ type DfdaemonUploadServer interface {
 	// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
 	DownloadPersistentCacheTask(*DownloadPersistentCacheTaskRequest, DfdaemonUpload_DownloadPersistentCacheTaskServer) error
 	// UpdatePersistentCacheTask updates metadata of the persistent cache task in the peer.
-	UpdatePersistentCacheTask(context.Context, *UpdatePersistentCacheTaskRequest) (*v2.PersistentCacheTask, error)
+	UpdatePersistentCacheTask(context.Context, *UpdatePersistentCacheTaskRequest) (*emptypb.Empty, error)
 	// StatPersistentCacheTask stats persistent cache task information.
 	StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error)
 	// DeletePersistentCacheTask deletes persistent cache task from p2p network.
@@ -333,7 +333,7 @@ func (UnimplementedDfdaemonUploadServer) DownloadPiece(context.Context, *Downloa
 func (UnimplementedDfdaemonUploadServer) DownloadPersistentCacheTask(*DownloadPersistentCacheTaskRequest, DfdaemonUpload_DownloadPersistentCacheTaskServer) error {
 	return status.Errorf(codes.Unimplemented, "method DownloadPersistentCacheTask not implemented")
 }
-func (UnimplementedDfdaemonUploadServer) UpdatePersistentCacheTask(context.Context, *UpdatePersistentCacheTaskRequest) (*v2.PersistentCacheTask, error) {
+func (UnimplementedDfdaemonUploadServer) UpdatePersistentCacheTask(context.Context, *UpdatePersistentCacheTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePersistentCacheTask not implemented")
 }
 func (UnimplementedDfdaemonUploadServer) StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error) {

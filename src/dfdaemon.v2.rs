@@ -582,10 +582,7 @@ pub mod dfdaemon_upload_client {
         pub async fn update_persistent_cache_task(
             &mut self,
             request: impl tonic::IntoRequest<super::UpdatePersistentCacheTaskRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
-            tonic::Status,
-        > {
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
                 .await
@@ -1145,10 +1142,7 @@ pub mod dfdaemon_upload_server {
         async fn update_persistent_cache_task(
             &self,
             request: tonic::Request<super::UpdatePersistentCacheTaskRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// StatPersistentCacheTask stats persistent cache task information.
         async fn stat_persistent_cache_task(
             &self,
@@ -1567,7 +1561,7 @@ pub mod dfdaemon_upload_server {
                     > tonic::server::UnaryService<
                         super::UpdatePersistentCacheTaskRequest,
                     > for UpdatePersistentCacheTaskSvc<T> {
-                        type Response = super::super::super::common::v2::PersistentCacheTask;
+                        type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
