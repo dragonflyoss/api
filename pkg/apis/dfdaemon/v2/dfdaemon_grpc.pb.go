@@ -36,8 +36,6 @@ type DfdaemonUploadClient interface {
 	DownloadPiece(ctx context.Context, in *DownloadPieceRequest, opts ...grpc.CallOption) (*DownloadPieceResponse, error)
 	// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
 	DownloadPersistentCacheTask(ctx context.Context, in *DownloadPersistentCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonUpload_DownloadPersistentCacheTaskClient, error)
-	// UpdatePersistentCacheTask updates metadata of the persistent cache task in the peer.
-	UpdatePersistentCacheTask(ctx context.Context, in *UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// StatPersistentCacheTask stats persistent cache task information.
 	StatPersistentCacheTask(ctx context.Context, in *StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
 	// DeletePersistentCacheTask deletes persistent cache task from p2p network.
@@ -181,15 +179,6 @@ func (x *dfdaemonUploadDownloadPersistentCacheTaskClient) Recv() (*DownloadPersi
 	return m, nil
 }
 
-func (c *dfdaemonUploadClient) UpdatePersistentCacheTask(ctx context.Context, in *UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/UpdatePersistentCacheTask", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *dfdaemonUploadClient) StatPersistentCacheTask(ctx context.Context, in *StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error) {
 	out := new(v2.PersistentCacheTask)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/StatPersistentCacheTask", in, out, opts...)
@@ -297,8 +286,6 @@ type DfdaemonUploadServer interface {
 	DownloadPiece(context.Context, *DownloadPieceRequest) (*DownloadPieceResponse, error)
 	// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
 	DownloadPersistentCacheTask(*DownloadPersistentCacheTaskRequest, DfdaemonUpload_DownloadPersistentCacheTaskServer) error
-	// UpdatePersistentCacheTask updates metadata of the persistent cache task in the peer.
-	UpdatePersistentCacheTask(context.Context, *UpdatePersistentCacheTaskRequest) (*emptypb.Empty, error)
 	// StatPersistentCacheTask stats persistent cache task information.
 	StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error)
 	// DeletePersistentCacheTask deletes persistent cache task from p2p network.
@@ -332,9 +319,6 @@ func (UnimplementedDfdaemonUploadServer) DownloadPiece(context.Context, *Downloa
 }
 func (UnimplementedDfdaemonUploadServer) DownloadPersistentCacheTask(*DownloadPersistentCacheTaskRequest, DfdaemonUpload_DownloadPersistentCacheTaskServer) error {
 	return status.Errorf(codes.Unimplemented, "method DownloadPersistentCacheTask not implemented")
-}
-func (UnimplementedDfdaemonUploadServer) UpdatePersistentCacheTask(context.Context, *UpdatePersistentCacheTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePersistentCacheTask not implemented")
 }
 func (UnimplementedDfdaemonUploadServer) StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatPersistentCacheTask not implemented")
@@ -480,24 +464,6 @@ func (x *dfdaemonUploadDownloadPersistentCacheTaskServer) Send(m *DownloadPersis
 	return x.ServerStream.SendMsg(m)
 }
 
-func _DfdaemonUpload_UpdatePersistentCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePersistentCacheTaskRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DfdaemonUploadServer).UpdatePersistentCacheTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/dfdaemon.v2.DfdaemonUpload/UpdatePersistentCacheTask",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonUploadServer).UpdatePersistentCacheTask(ctx, req.(*UpdatePersistentCacheTaskRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _DfdaemonUpload_StatPersistentCacheTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(StatPersistentCacheTaskRequest)
 	if err := dec(in); err != nil {
@@ -612,10 +578,6 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DownloadPiece",
 			Handler:    _DfdaemonUpload_DownloadPiece_Handler,
-		},
-		{
-			MethodName: "UpdatePersistentCacheTask",
-			Handler:    _DfdaemonUpload_UpdatePersistentCacheTask_Handler,
 		},
 		{
 			MethodName: "StatPersistentCacheTask",
