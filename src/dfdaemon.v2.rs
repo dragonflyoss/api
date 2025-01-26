@@ -239,13 +239,16 @@ pub struct UploadPersistentCacheTaskRequest {
 /// UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UpdatePersistentCacheTaskRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
     /// Persistent represents whether the persistent cache peer is persistent.
     /// If the persistent cache peer is persistent, the persistent cache peer will
     /// not be deleted when dfdaemon runs garbage collection. It only be deleted
     /// when the task is deleted by the user.
-    #[prost(bool, tag = "1")]
+    #[prost(bool, tag = "2")]
     pub persistent: bool,
 }
 /// StatPersistentCacheTaskRequest represents request of StatPersistentCacheTask.

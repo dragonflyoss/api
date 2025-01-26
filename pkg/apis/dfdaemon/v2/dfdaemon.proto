@@ -186,11 +186,13 @@ message UploadPersistentCacheTaskRequest {
 
 // UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.
 message UpdatePersistentCacheTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
   // Persistent represents whether the persistent cache peer is persistent.
   // If the persistent cache peer is persistent, the persistent cache peer will
   // not be deleted when dfdaemon runs garbage collection. It only be deleted
   // when the task is deleted by the user.
-  bool persistent = 1;
+  bool persistent = 2;
 }
 
 // StatPersistentCacheTaskRequest represents request of StatPersistentCacheTask.
