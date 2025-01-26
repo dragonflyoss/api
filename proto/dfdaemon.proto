@@ -250,9 +250,6 @@ service DfdaemonUpload{
   // StatPersistentCacheTask stats persistent cache task information.
   rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
 
-  // DeletePersistentCacheTask deletes persistent cache task from p2p network.
-  rpc DeletePersistentCacheTask(DeletePersistentCacheTaskRequest) returns(google.protobuf.Empty);
-
   // SyncPersistentCachePieces syncs persistent cache pieces from remote peer.
   rpc SyncPersistentCachePieces(SyncPersistentCachePiecesRequest) returns(stream SyncPersistentCachePiecesResponse);
 
