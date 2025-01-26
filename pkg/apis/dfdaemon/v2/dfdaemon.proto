@@ -143,6 +143,8 @@ message DownloadPersistentCacheTaskRequest {
   optional google.protobuf.Duration timeout = 6;
   // need_piece_content is the flag to indicate whether the response needs to return piece content.
   bool need_piece_content = 7;
+  // is_replicated is the flag to indicate whether the task is replicated.
+  bool is_replicated = 8;
 }
 
 // DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.

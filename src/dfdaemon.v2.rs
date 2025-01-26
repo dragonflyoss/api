@@ -169,6 +169,9 @@ pub struct DownloadPersistentCacheTaskRequest {
     /// need_piece_content is the flag to indicate whether the response needs to return piece content.
     #[prost(bool, tag = "7")]
     pub need_piece_content: bool,
+    /// is_replicated is the flag to indicate whether the task is replicated.
+    #[prost(bool, tag = "8")]
+    pub is_replicated: bool,
 }
 /// DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
