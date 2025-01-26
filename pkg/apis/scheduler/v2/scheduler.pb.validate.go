@@ -3869,6 +3869,8 @@ func (m *RegisterPersistentCachePeerRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for Persistent
+
 	if m.GetPieceLength() < 1 {
 		err := RegisterPersistentCachePeerRequestValidationError{
 			field:  "PieceLength",

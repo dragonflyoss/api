@@ -217,16 +217,20 @@ message DeleteHostRequest{
 
 // RegisterPersistentCachePeerRequest represents persistent cache peer registered request of AnnouncePersistentCachePeerRequest.
 message RegisterPersistentCachePeerRequest {
+  // Persistent represents whether the persistent cache task is persistent.
+  // If the persistent cache task is persistent, the persistent cache peer will
+  // not be deleted when dfdaemon runs garbage collection.
+  bool persistent = 1;
   // Tag is used to distinguish different persistent cache tasks.
-  optional string tag = 1;
+  optional string tag = 2;
   // Application of task.
-  optional string application = 2;
+  optional string application = 3;
   // Task piece length.
-  uint64 piece_length = 3;
+  uint64 piece_length = 4;
   // File path to be exported.
-  optional string output_path = 4;
+  optional string output_path = 5;
   // Download timeout.
-  optional google.protobuf.Duration timeout = 5;
+  optional google.protobuf.Duration timeout = 6;
 }
 
 // DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.
