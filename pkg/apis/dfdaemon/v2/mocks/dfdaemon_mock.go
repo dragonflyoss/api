@@ -265,6 +265,26 @@ func (mr *MockDfdaemonUploadClientMockRecorder) SyncPieces(ctx, in any, opts ...
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncPieces", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).SyncPieces), varargs...)
 }
 
+// UpdatePersistentCacheTask mocks base method.
+func (m *MockDfdaemonUploadClient) UpdatePersistentCacheTask(ctx context.Context, in *dfdaemon.UpdatePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdatePersistentCacheTask", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdatePersistentCacheTask indicates an expected call of UpdatePersistentCacheTask.
+func (mr *MockDfdaemonUploadClientMockRecorder) UpdatePersistentCacheTask(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdatePersistentCacheTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).UpdatePersistentCacheTask), varargs...)
+}
+
 // MockDfdaemonUpload_DownloadTaskClient is a mock of DfdaemonUpload_DownloadTaskClient interface.
 type MockDfdaemonUpload_DownloadTaskClient struct {
 	ctrl     *gomock.Controller
@@ -1067,6 +1087,21 @@ func (m *MockDfdaemonUploadServer) SyncPieces(arg0 *dfdaemon.SyncPiecesRequest, 
 func (mr *MockDfdaemonUploadServerMockRecorder) SyncPieces(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SyncPieces", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).SyncPieces), arg0, arg1)
+}
+
+// UpdatePersistentCacheTask mocks base method.
+func (m *MockDfdaemonUploadServer) UpdatePersistentCacheTask(arg0 context.Context, arg1 *dfdaemon.UpdatePersistentCacheTaskRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdatePersistentCacheTask", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdatePersistentCacheTask indicates an expected call of UpdatePersistentCacheTask.
+func (mr *MockDfdaemonUploadServerMockRecorder) UpdatePersistentCacheTask(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdatePersistentCacheTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).UpdatePersistentCacheTask), arg0, arg1)
 }
 
 // MockUnsafeDfdaemonUploadServer is a mock of UnsafeDfdaemonUploadServer interface.

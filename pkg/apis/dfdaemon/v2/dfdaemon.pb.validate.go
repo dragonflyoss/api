@@ -1644,8 +1644,6 @@ func (m *DownloadPersistentCacheTaskRequest) validate(all bool) error {
 
 	// no validation rules for NeedPieceContent
 
-	// no validation rules for IsReplicated
-
 	if m.Tag != nil {
 		// no validation rules for Tag
 	}
@@ -2332,6 +2330,113 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = UploadPersistentCacheTaskRequestValidationError{}
+
+// Validate checks the field values on UpdatePersistentCacheTaskRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *UpdatePersistentCacheTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdatePersistentCacheTaskRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// UpdatePersistentCacheTaskRequestMultiError, or nil if none found.
+func (m *UpdatePersistentCacheTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdatePersistentCacheTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Persistent
+
+	if len(errors) > 0 {
+		return UpdatePersistentCacheTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdatePersistentCacheTaskRequestMultiError is an error wrapping multiple
+// validation errors returned by
+// UpdatePersistentCacheTaskRequest.ValidateAll() if the designated
+// constraints aren't met.
+type UpdatePersistentCacheTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdatePersistentCacheTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdatePersistentCacheTaskRequestMultiError) AllErrors() []error { return m }
+
+// UpdatePersistentCacheTaskRequestValidationError is the validation error
+// returned by UpdatePersistentCacheTaskRequest.Validate if the designated
+// constraints aren't met.
+type UpdatePersistentCacheTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdatePersistentCacheTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdatePersistentCacheTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdatePersistentCacheTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdatePersistentCacheTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdatePersistentCacheTaskRequestValidationError) ErrorName() string {
+	return "UpdatePersistentCacheTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdatePersistentCacheTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdatePersistentCacheTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdatePersistentCacheTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdatePersistentCacheTaskRequestValidationError{}
 
 // Validate checks the field values on StatPersistentCacheTaskRequest with the
 // rules defined in the proto definition for this message. If any rules are

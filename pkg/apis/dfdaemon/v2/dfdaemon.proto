@@ -143,8 +143,6 @@ message DownloadPersistentCacheTaskRequest {
   optional google.protobuf.Duration timeout = 6;
   // need_piece_content is the flag to indicate whether the response needs to return piece content.
   bool need_piece_content = 7;
-  // is_replicated is the flag to indicate whether the task is replicated.
-  bool is_replicated = 8;
 }
 
 // DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.
@@ -184,6 +182,15 @@ message UploadPersistentCacheTaskRequest {
   google.protobuf.Duration ttl = 5 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
   // Download timeout.
   optional google.protobuf.Duration timeout = 6;
+}
+
+// UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.
+message UpdatePersistentCacheTaskRequest {
+  // Persistent represents whether the persistent cache peer is persistent.
+  // If the persistent cache peer is persistent, the persistent cache peer will
+  // not be deleted when dfdaemon runs garbage collection. It only be deleted
+  // when the task is deleted by the user.
+  bool persistent = 1;
 }
 
 // StatPersistentCacheTaskRequest represents request of StatPersistentCacheTask.
@@ -261,6 +268,9 @@ service DfdaemonUpload {
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
+
+  // UpdatePersistentCacheTask updates metadate of thr persistent cache task in p2p network.
+  rpc UpdatePersistentCacheTask(UpdatePersistentCacheTaskRequest) returns(google.protobuf.Empty);
 
   // StatPersistentCacheTask stats persistent cache task information.
   rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
