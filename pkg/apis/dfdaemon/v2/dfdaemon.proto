@@ -170,18 +170,22 @@ message DownloadPersistentCacheTaskResponse {
 
 // UploadPersistentCacheTaskRequest represents request of UploadPersistentCacheTask.
 message UploadPersistentCacheTaskRequest {
+  // Task id can specify the task id of the persistent cache task, its length must be 64 bytes.
+  // If task_id is none, dfdaemon will generate the new task id based on the file content, tag
+  // and application by wyhash algorithm.
+  optional string task_id = 1 [(validate.rules).string = {len: 64, ignore_empty: true}];
   // Upload file path of persistent cache task.
-  string path = 1 [(validate.rules).string = {min_len: 1}];
+  string path = 2 [(validate.rules).string = {min_len: 1}];
   // Replica count of the persistent persistent cache task.
-  uint64 persistent_replica_count = 2 [(validate.rules).uint64 = {gte: 1, lte: 5}];
+  uint64 persistent_replica_count = 3 [(validate.rules).uint64 = {gte: 1, lte: 5}];
   // Tag is used to distinguish different persistent cache tasks.
-  optional string tag = 3;
+  optional string tag = 4;
   // Application of task.
-  optional string application = 4;
+  optional string application = 5;
   // TTL of the persistent cache task.
-  google.protobuf.Duration ttl = 5 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
+  google.protobuf.Duration ttl = 6 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
   // Download timeout.
-  optional google.protobuf.Duration timeout = 6;
+  optional google.protobuf.Duration timeout = 7;
 }
 
 // UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.

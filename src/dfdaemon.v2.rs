@@ -217,23 +217,28 @@ pub mod download_persistent_cache_task_response {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UploadPersistentCacheTaskRequest {
+    /// Task id can specify the task id of the persistent cache task, its length must be 64 bytes.
+    /// If task_id is none, dfdaemon will generate the new task id based on the file content, tag
+    /// and application by wyhash algorithm.
+    #[prost(string, optional, tag = "1")]
+    pub task_id: ::core::option::Option<::prost::alloc::string::String>,
     /// Upload file path of persistent cache task.
-    #[prost(string, tag = "1")]
+    #[prost(string, tag = "2")]
     pub path: ::prost::alloc::string::String,
     /// Replica count of the persistent persistent cache task.
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag = "3")]
     pub persistent_replica_count: u64,
     /// Tag is used to distinguish different persistent cache tasks.
-    #[prost(string, optional, tag = "3")]
+    #[prost(string, optional, tag = "4")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, optional, tag = "4")]
+    #[prost(string, optional, tag = "5")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// TTL of the persistent cache task.
-    #[prost(message, optional, tag = "5")]
+    #[prost(message, optional, tag = "6")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Download timeout.
-    #[prost(message, optional, tag = "6")]
+    #[prost(message, optional, tag = "7")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.
