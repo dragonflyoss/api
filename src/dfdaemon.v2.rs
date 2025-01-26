@@ -597,6 +597,34 @@ pub mod dfdaemon_upload_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        /// DeletePersistentCacheTask deletes persistent cache task from p2p network.
+        pub async fn delete_persistent_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeletePersistentCacheTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/DeletePersistentCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "dfdaemon.v2.DfdaemonUpload",
+                        "DeletePersistentCacheTask",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         /// SyncPersistentCachePieces syncs persistent cache pieces from remote peer.
         pub async fn sync_persistent_cache_pieces(
             &mut self,
@@ -970,34 +998,6 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
-        /// DeletePersistentCacheTask deletes persistent cache task from p2p network.
-        pub async fn delete_persistent_cache_task(
-            &mut self,
-            request: impl tonic::IntoRequest<super::DeletePersistentCacheTaskRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.v2.DfdaemonDownload/DeletePersistentCacheTask",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(
-                    GrpcMethod::new(
-                        "dfdaemon.v2.DfdaemonDownload",
-                        "DeletePersistentCacheTask",
-                    ),
-                );
-            self.inner.unary(req, path, codec).await
-        }
     }
 }
 /// Generated server implementations.
@@ -1078,6 +1078,11 @@ pub mod dfdaemon_upload_server {
             tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
             tonic::Status,
         >;
+        /// DeletePersistentCacheTask deletes persistent cache task from p2p network.
+        async fn delete_persistent_cache_task(
+            &self,
+            request: tonic::Request<super::DeletePersistentCacheTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Server streaming response type for the SyncPersistentCachePieces method.
         type SyncPersistentCachePiecesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
@@ -1526,6 +1531,58 @@ pub mod dfdaemon_upload_server {
                     };
                     Box::pin(fut)
                 }
+                "/dfdaemon.v2.DfdaemonUpload/DeletePersistentCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeletePersistentCacheTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<
+                        super::DeletePersistentCacheTaskRequest,
+                    > for DeletePersistentCacheTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::DeletePersistentCacheTaskRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::delete_persistent_cache_task(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeletePersistentCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/dfdaemon.v2.DfdaemonUpload/SyncPersistentCachePieces" => {
                     #[allow(non_camel_case_types)]
                     struct SyncPersistentCachePiecesSvc<T: DfdaemonUpload>(pub Arc<T>);
@@ -1787,11 +1844,6 @@ pub mod dfdaemon_download_server {
             tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
             tonic::Status,
         >;
-        /// DeletePersistentCacheTask deletes persistent cache task from p2p network.
-        async fn delete_persistent_cache_task(
-            &self,
-            request: tonic::Request<super::DeletePersistentCacheTaskRequest>,
-        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
     }
     /// DfdaemonDownload represents download service of dfdaemon.
     #[derive(Debug)]
@@ -2190,58 +2242,6 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StatPersistentCacheTaskSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/dfdaemon.v2.DfdaemonDownload/DeletePersistentCacheTask" => {
-                    #[allow(non_camel_case_types)]
-                    struct DeletePersistentCacheTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
-                    impl<
-                        T: DfdaemonDownload,
-                    > tonic::server::UnaryService<
-                        super::DeletePersistentCacheTaskRequest,
-                    > for DeletePersistentCacheTaskSvc<T> {
-                        type Response = ();
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<
-                                super::DeletePersistentCacheTaskRequest,
-                            >,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as DfdaemonDownload>::delete_persistent_cache_task(
-                                        &inner,
-                                        request,
-                                    )
-                                    .await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let method = DeletePersistentCacheTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

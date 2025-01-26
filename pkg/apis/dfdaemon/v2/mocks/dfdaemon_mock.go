@@ -1749,26 +1749,6 @@ func (mr *MockDfdaemonDownloadClientMockRecorder) DeleteHost(ctx, in any, opts .
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteHost", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).DeleteHost), varargs...)
 }
 
-// DeletePersistentCacheTask mocks base method.
-func (m *MockDfdaemonDownloadClient) DeletePersistentCacheTask(ctx context.Context, in *dfdaemon.DeletePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DeletePersistentCacheTask", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeletePersistentCacheTask indicates an expected call of DeletePersistentCacheTask.
-func (mr *MockDfdaemonDownloadClientMockRecorder) DeletePersistentCacheTask(ctx, in any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePersistentCacheTask", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).DeletePersistentCacheTask), varargs...)
-}
-
 // DeleteTask mocks base method.
 func (m *MockDfdaemonDownloadClient) DeleteTask(ctx context.Context, in *dfdaemon.DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -2194,21 +2174,6 @@ func (m *MockDfdaemonDownloadServer) DeleteHost(arg0 context.Context, arg1 *empt
 func (mr *MockDfdaemonDownloadServerMockRecorder) DeleteHost(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteHost", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).DeleteHost), arg0, arg1)
-}
-
-// DeletePersistentCacheTask mocks base method.
-func (m *MockDfdaemonDownloadServer) DeletePersistentCacheTask(arg0 context.Context, arg1 *dfdaemon.DeletePersistentCacheTaskRequest) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeletePersistentCacheTask", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DeletePersistentCacheTask indicates an expected call of DeletePersistentCacheTask.
-func (mr *MockDfdaemonDownloadServerMockRecorder) DeletePersistentCacheTask(arg0, arg1 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePersistentCacheTask", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).DeletePersistentCacheTask), arg0, arg1)
 }
 
 // DeleteTask mocks base method.
