@@ -17,7 +17,7 @@ all: help
 # Run code lint
 lint: markdownlint
 	@echo "Begin to golangci-lint."
-	@golangci-lint run
+	@./hack/golanglint.sh
 .PHONY: lint
 
 # Run markdown lint

@@ -122,6 +122,9 @@ pub struct DownloadPieceResponse {
     /// Piece information.
     #[prost(message, optional, tag = "1")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
+    /// Piece digest.
+    #[prost(string, optional, tag = "2")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// StatTaskRequest represents request of StatTask.
 #[derive(serde::Serialize, serde::Deserialize)]
