@@ -5801,12 +5801,12 @@ func (m *UploadPersistentCacheTaskStartedRequest) validate(all bool) error {
 		} else {
 
 			lte := time.Duration(604800*time.Second + 0*time.Nanosecond)
-			gte := time.Duration(60*time.Second + 0*time.Nanosecond)
+			gte := time.Duration(300*time.Second + 0*time.Nanosecond)
 
 			if dur < gte || dur > lte {
 				err := UploadPersistentCacheTaskStartedRequestValidationError{
 					field:  "Ttl",
-					reason: "value must be inside range [1m0s, 168h0m0s]",
+					reason: "value must be inside range [5m0s, 168h0m0s]",
 				}
 				if !all {
 					return err

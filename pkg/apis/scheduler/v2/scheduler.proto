@@ -350,7 +350,7 @@ message UploadPersistentCacheTaskStartedRequest {
   // Task piece count.
   uint32 piece_count = 9;
   // TTL of the persistent cache task.
-  google.protobuf.Duration ttl = 10 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
+  google.protobuf.Duration ttl = 10 [(validate.rules).duration = {gte:{seconds: 300}, lte:{seconds: 604800}}];
 }
 
 // UploadPersistentCacheTaskFinishedRequest represents upload persistent cache task finished request of UploadPersistentCacheTaskFinishedRequest.
