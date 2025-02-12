@@ -951,6 +951,17 @@ func (m *PersistentCacheTask) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.GetTtl() == nil {
+		err := PersistentCacheTaskValidationError{
+			field:  "Ttl",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if m.GetCreatedAt() == nil {
 		err := PersistentCacheTaskValidationError{
 			field:  "CreatedAt",
