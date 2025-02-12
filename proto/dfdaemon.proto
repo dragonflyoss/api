@@ -100,6 +100,8 @@ message DownloadPieceRequest{
 message DownloadPieceResponse {
   // Piece information.
   common.v2.Piece piece = 1;
+  // Piece digest.
+  optional string digest = 2;
 }
 
 // StatTaskRequest represents request of StatTask.
