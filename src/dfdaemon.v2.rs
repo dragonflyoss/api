@@ -122,7 +122,7 @@ pub struct DownloadPieceResponse {
     /// Piece information.
     #[prost(message, optional, tag = "1")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
-    /// Piece digest.
+    /// Piece metadata digest, it is used to verify the integrity of the piece metadata.
     #[prost(string, optional, tag = "2")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
 }
@@ -330,6 +330,9 @@ pub struct DownloadPersistentCachePieceResponse {
     /// Piece information.
     #[prost(message, optional, tag = "1")]
     pub piece: ::core::option::Option<super::super::common::v2::Piece>,
+    /// Piece metadata digest, it is used to verify the integrity of the piece metadata.
+    #[prost(string, optional, tag = "2")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// SyncHostRequest represents request of SyncHost.
 #[derive(serde::Serialize, serde::Deserialize)]

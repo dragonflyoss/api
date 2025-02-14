@@ -105,7 +105,7 @@ message DownloadPieceRequest{
 message DownloadPieceResponse {
   // Piece information.
   common.v2.Piece piece = 1 [(validate.rules).message.required = true];
-  // Piece digest.
+  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
   optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
 }
 
@@ -247,6 +247,8 @@ message DownloadPersistentCachePieceRequest{
 message DownloadPersistentCachePieceResponse {
   // Piece information.
   common.v2.Piece piece = 1 [(validate.rules).message.required = true];
+  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
+  optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
 }
 
 // SyncHostRequest represents request of SyncHost.

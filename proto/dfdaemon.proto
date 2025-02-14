@@ -100,7 +100,7 @@ message DownloadPieceRequest{
 message DownloadPieceResponse {
   // Piece information.
   common.v2.Piece piece = 1;
-  // Piece digest.
+  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
   optional string digest = 2;
 }
 
@@ -234,6 +234,8 @@ message DownloadPersistentCachePieceRequest{
 message DownloadPersistentCachePieceResponse {
   // Piece information.
   common.v2.Piece piece = 1;
+  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
+  optional string digest = 2;
 }
 
 // SyncHostRequest represents request of SyncHost.
