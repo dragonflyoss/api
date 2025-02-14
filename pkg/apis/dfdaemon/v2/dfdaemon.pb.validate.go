@@ -3161,6 +3161,25 @@ func (m *DownloadPersistentCachePieceResponse) validate(all bool) error {
 		}
 	}
 
+	if m.Digest != nil {
+
+		if m.GetDigest() != "" {
+
+			if !_DownloadPersistentCachePieceResponse_Digest_Pattern.MatchString(m.GetDigest()) {
+				err := DownloadPersistentCachePieceResponseValidationError{
+					field:  "Digest",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$\"",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return DownloadPersistentCachePieceResponseMultiError(errors)
 	}
@@ -3242,6 +3261,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DownloadPersistentCachePieceResponseValidationError{}
+
+var _DownloadPersistentCachePieceResponse_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$")
 
 // Validate checks the field values on SyncHostRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
