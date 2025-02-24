@@ -345,7 +345,7 @@ pub struct RegisterPersistentCachePeerRequest {
     /// Application of task.
     #[prost(string, optional, tag = "3")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Task piece length.
+    /// Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
     #[prost(uint64, tag = "4")]
     pub piece_length: u64,
     /// File path to be exported.
@@ -533,7 +533,7 @@ pub struct UploadPersistentCacheTaskStartedRequest {
     /// Application of task.
     #[prost(string, optional, tag = "6")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Task piece length.
+    /// Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
     #[prost(uint64, tag = "7")]
     pub piece_length: u64,
     /// Task content length.

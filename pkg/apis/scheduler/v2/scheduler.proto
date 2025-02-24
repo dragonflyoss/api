@@ -234,8 +234,8 @@ message RegisterPersistentCachePeerRequest {
   optional string tag = 2;
   // Application of task.
   optional string application = 3;
-  // Task piece length.
-  uint64 piece_length = 4 [(validate.rules).uint64.gte = 1];
+  // Task piece length, the value needs to be greater than or equal to 4194304(4MiB)
+  uint64 piece_length = 4 [(validate.rules).uint64.gte = 4194304];
   // File path to be exported.
   optional string output_path = 5 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
@@ -343,8 +343,8 @@ message UploadPersistentCacheTaskStartedRequest {
   optional string tag = 5;
   // Application of task.
   optional string application = 6;
-  // Task piece length.
-  uint64 piece_length = 7 [(validate.rules).uint64.gte = 1];
+  // Task piece length, the value needs to be greater than or equal to 4194304(4MiB)
+  uint64 piece_length = 7 [(validate.rules).uint64.gte = 4194304];
   // Task content length.
   uint64 content_length = 8;
   // Task piece count.

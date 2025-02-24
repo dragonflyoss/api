@@ -184,8 +184,8 @@ message UploadPersistentCacheTaskRequest {
   optional string tag = 4;
   // Application of the persistent cache task.
   optional string application = 5;
-  // Piece length of the persistent cache task.
-  optional uint64 piece_length = 6;
+  // Piece length of the persistent cache task, the value needs to be greater than or equal to 4194304(4MiB).
+  optional uint64 piece_length = 6 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];
   // TTL of the persistent cache task.
   google.protobuf.Duration ttl = 7 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
   // Download timeout.

@@ -171,7 +171,7 @@ message UploadPersistentCacheTaskRequest {
   optional string tag = 4;
   // Application of the persistent cache task.
   optional string application = 5;
-  // Piece length of the persistent cache task.
+  // Piece length of the persistent cache task, the value needs to be greater than or equal to 4194304(4MiB).
   optional uint64 piece_length = 6;
   // TTL of the persistent cache task.
   google.protobuf.Duration ttl = 7;
