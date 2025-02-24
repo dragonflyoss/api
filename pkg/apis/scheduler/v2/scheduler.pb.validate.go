@@ -3871,10 +3871,10 @@ func (m *RegisterPersistentCachePeerRequest) validate(all bool) error {
 
 	// no validation rules for Persistent
 
-	if m.GetPieceLength() < 1 {
+	if m.GetPieceLength() < 4194304 {
 		err := RegisterPersistentCachePeerRequestValidationError{
 			field:  "PieceLength",
-			reason: "value must be greater than or equal to 1",
+			reason: "value must be greater than or equal to 4194304",
 		}
 		if !all {
 			return err
@@ -5771,10 +5771,10 @@ func (m *UploadPersistentCacheTaskStartedRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetPieceLength() < 1 {
+	if m.GetPieceLength() < 4194304 {
 		err := UploadPersistentCacheTaskStartedRequestValidationError{
 			field:  "PieceLength",
-			reason: "value must be greater than or equal to 1",
+			reason: "value must be greater than or equal to 4194304",
 		}
 		if !all {
 			return err

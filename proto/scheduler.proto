@@ -225,7 +225,7 @@ message RegisterPersistentCachePeerRequest {
   optional string tag = 2;
   // Application of task.
   optional string application = 3;
-  // Task piece length.
+  // Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
   uint64 piece_length = 4;
   // File path to be exported.
   optional string output_path = 5;
@@ -330,7 +330,7 @@ message UploadPersistentCacheTaskStartedRequest {
   optional string tag = 5;
   // Application of task.
   optional string application = 6;
-  // Task piece length.
+  // Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
   uint64 piece_length = 7;
   // Task content length.
   uint64 content_length = 8;

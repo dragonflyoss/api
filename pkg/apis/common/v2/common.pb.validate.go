@@ -668,10 +668,10 @@ func (m *Task) validate(all bool) error {
 
 	// no validation rules for RequestHeader
 
-	if m.GetPieceLength() < 1 {
+	if m.GetPieceLength() < 4194304 {
 		err := TaskValidationError{
 			field:  "PieceLength",
-			reason: "value must be greater than or equal to 1",
+			reason: "value must be greater than or equal to 4194304",
 		}
 		if !all {
 			return err
@@ -925,10 +925,10 @@ func (m *PersistentCacheTask) validate(all bool) error {
 
 	// no validation rules for CurrentReplicaCount
 
-	if m.GetPieceLength() < 1 {
+	if m.GetPieceLength() < 4194304 {
 		err := PersistentCacheTaskValidationError{
 			field:  "PieceLength",
-			reason: "value must be greater than or equal to 1",
+			reason: "value must be greater than or equal to 4194304",
 		}
 		if !all {
 			return err
@@ -2422,10 +2422,10 @@ func (m *Download) validate(all bool) error {
 
 		if m.GetPieceLength() != 0 {
 
-			if m.GetPieceLength() < 1 {
+			if m.GetPieceLength() < 4194304 {
 				err := DownloadValidationError{
 					field:  "PieceLength",
-					reason: "value must be greater than or equal to 1",
+					reason: "value must be greater than or equal to 4194304",
 				}
 				if !all {
 					return err

@@ -237,7 +237,7 @@ pub struct UploadPersistentCacheTaskRequest {
     /// Application of the persistent cache task.
     #[prost(string, optional, tag = "5")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Piece length of the persistent cache task.
+    /// Piece length of the persistent cache task, the value needs to be greater than or equal to 4194304(4MiB).
     #[prost(uint64, optional, tag = "6")]
     pub piece_length: ::core::option::Option<u64>,
     /// TTL of the persistent cache task.

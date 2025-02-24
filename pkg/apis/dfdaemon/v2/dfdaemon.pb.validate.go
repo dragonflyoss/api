@@ -2258,7 +2258,22 @@ func (m *UploadPersistentCacheTaskRequest) validate(all bool) error {
 	}
 
 	if m.PieceLength != nil {
-		// no validation rules for PieceLength
+
+		if m.GetPieceLength() != 0 {
+
+			if m.GetPieceLength() < 4194304 {
+				err := UploadPersistentCacheTaskRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be greater than or equal to 4194304",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if m.Timeout != nil {
