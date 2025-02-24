@@ -169,12 +169,14 @@ message UploadPersistentCacheTaskRequest {
   uint64 persistent_replica_count = 3;
   // Tag is used to distinguish different persistent cache tasks.
   optional string tag = 4;
-  // Application of task.
+  // Application of the persistent cache task.
   optional string application = 5;
+  // Piece length of the persistent cache task.
+  optional uint64 piece_length = 6;
   // TTL of the persistent cache task.
-  google.protobuf.Duration ttl = 6;
+  google.protobuf.Duration ttl = 7;
   // Download timeout.
-  optional google.protobuf.Duration timeout = 7;
+  optional google.protobuf.Duration timeout = 8;
 }
 
 // UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.

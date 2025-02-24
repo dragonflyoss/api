@@ -2257,6 +2257,10 @@ func (m *UploadPersistentCacheTaskRequest) validate(all bool) error {
 		// no validation rules for Application
 	}
 
+	if m.PieceLength != nil {
+		// no validation rules for PieceLength
+	}
+
 	if m.Timeout != nil {
 
 		if all {
