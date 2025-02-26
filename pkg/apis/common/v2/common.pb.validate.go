@@ -668,17 +668,6 @@ func (m *Task) validate(all bool) error {
 
 	// no validation rules for RequestHeader
 
-	if m.GetPieceLength() < 4194304 {
-		err := TaskValidationError{
-			field:  "PieceLength",
-			reason: "value must be greater than or equal to 4194304",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	// no validation rules for ContentLength
 
 	// no validation rules for PieceCount

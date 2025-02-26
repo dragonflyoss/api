@@ -177,26 +177,24 @@ message Task {
   repeated string filtered_query_params = 7;
   // Task request headers.
   map<string, string> request_header = 8;
-  // Task piece length.
-  uint64 piece_length = 9;
   // Task content length.
-  uint64 content_length = 10;
+  uint64 content_length = 9;
   // Task piece count.
-  uint32 piece_count = 11;
+  uint32 piece_count = 10;
   // Task size scope.
-  SizeScope size_scope = 12;
+  SizeScope size_scope = 11;
   // Pieces of task.
-  repeated Piece pieces = 13;
+  repeated Piece pieces = 12;
   // Task state.
-  string state = 14;
+  string state = 13;
   // Task peer count.
-  uint32 peer_count = 15;
+  uint32 peer_count = 14;
   // Task contains available peer.
-  bool has_available_peer = 16;
+  bool has_available_peer = 15;
   // Task create time.
-  google.protobuf.Timestamp created_at = 17;
+  google.protobuf.Timestamp created_at = 16;
   // Task update time.
-  google.protobuf.Timestamp updated_at = 18;
+  google.protobuf.Timestamp updated_at = 17;
 }
 
 // PersistentCacheTask metadata.
