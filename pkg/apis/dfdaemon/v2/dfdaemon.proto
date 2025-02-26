@@ -109,12 +109,6 @@ message DownloadPieceResponse {
   optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
 }
 
-// UploadTaskRequest represents request of UploadTask.
-message UploadTaskRequest {
-  // Task metadata.
-  common.v2.Task task = 1 [(validate.rules).message.required = true];
-}
-
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest {
   // Task id.
@@ -304,9 +298,6 @@ service DfdaemonUpload {
 service DfdaemonDownload {
   // DownloadTask downloads task from p2p network.
   rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
-
-  // UploadTask uploads task to p2p network.
-  rpc UploadTask(UploadTaskRequest) returns(google.protobuf.Empty);
 
   // StatTask stats task information.
   rpc StatTask(StatTaskRequest) returns(common.v2.Task);

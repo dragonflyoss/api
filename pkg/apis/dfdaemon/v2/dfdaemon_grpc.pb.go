@@ -666,8 +666,6 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 type DfdaemonDownloadClient interface {
 	// DownloadTask downloads task from p2p network.
 	DownloadTask(ctx context.Context, in *DownloadTaskRequest, opts ...grpc.CallOption) (DfdaemonDownload_DownloadTaskClient, error)
-	// UploadTask uploads task to p2p network.
-	UploadTask(ctx context.Context, in *UploadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// StatTask stats task information.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
 	// DeleteTask deletes task from p2p network.
@@ -720,15 +718,6 @@ func (x *dfdaemonDownloadDownloadTaskClient) Recv() (*DownloadTaskResponse, erro
 		return nil, err
 	}
 	return m, nil
-}
-
-func (c *dfdaemonDownloadClient) UploadTask(ctx context.Context, in *UploadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/UploadTask", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *dfdaemonDownloadClient) StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
@@ -814,8 +803,6 @@ func (c *dfdaemonDownloadClient) StatPersistentCacheTask(ctx context.Context, in
 type DfdaemonDownloadServer interface {
 	// DownloadTask downloads task from p2p network.
 	DownloadTask(*DownloadTaskRequest, DfdaemonDownload_DownloadTaskServer) error
-	// UploadTask uploads task to p2p network.
-	UploadTask(context.Context, *UploadTaskRequest) (*emptypb.Empty, error)
 	// StatTask stats task information.
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
 	// DeleteTask deletes task from p2p network.
@@ -836,9 +823,6 @@ type UnimplementedDfdaemonDownloadServer struct {
 
 func (UnimplementedDfdaemonDownloadServer) DownloadTask(*DownloadTaskRequest, DfdaemonDownload_DownloadTaskServer) error {
 	return status.Errorf(codes.Unimplemented, "method DownloadTask not implemented")
-}
-func (UnimplementedDfdaemonDownloadServer) UploadTask(context.Context, *UploadTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadTask not implemented")
 }
 func (UnimplementedDfdaemonDownloadServer) StatTask(context.Context, *StatTaskRequest) (*v2.Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
@@ -889,24 +873,6 @@ type dfdaemonDownloadDownloadTaskServer struct {
 
 func (x *dfdaemonDownloadDownloadTaskServer) Send(m *DownloadTaskResponse) error {
 	return x.ServerStream.SendMsg(m)
-}
-
-func _DfdaemonDownload_UploadTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadTaskRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DfdaemonDownloadServer).UploadTask(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/dfdaemon.v2.DfdaemonDownload/UploadTask",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonDownloadServer).UploadTask(ctx, req.(*UploadTaskRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _DfdaemonDownload_StatTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -1027,10 +993,6 @@ var DfdaemonDownload_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "dfdaemon.v2.DfdaemonDownload",
 	HandlerType: (*DfdaemonDownloadServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "UploadTask",
-			Handler:    _DfdaemonDownload_UploadTask_Handler,
-		},
 		{
 			MethodName: "StatTask",
 			Handler:    _DfdaemonDownload_StatTask_Handler,

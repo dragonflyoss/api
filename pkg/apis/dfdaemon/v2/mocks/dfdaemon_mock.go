@@ -1904,26 +1904,6 @@ func (mr *MockDfdaemonDownloadClientMockRecorder) UploadPersistentCacheTask(ctx,
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadPersistentCacheTask", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).UploadPersistentCacheTask), varargs...)
 }
 
-// UploadTask mocks base method.
-func (m *MockDfdaemonDownloadClient) UploadTask(ctx context.Context, in *dfdaemon.UploadTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UploadTask", varargs...)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UploadTask indicates an expected call of UploadTask.
-func (mr *MockDfdaemonDownloadClientMockRecorder) UploadTask(ctx, in any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadTask", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).UploadTask), varargs...)
-}
-
 // MockDfdaemonDownload_DownloadTaskClient is a mock of DfdaemonDownload_DownloadTaskClient interface.
 type MockDfdaemonDownload_DownloadTaskClient struct {
 	ctrl     *gomock.Controller
@@ -2297,21 +2277,6 @@ func (m *MockDfdaemonDownloadServer) UploadPersistentCacheTask(arg0 context.Cont
 func (mr *MockDfdaemonDownloadServerMockRecorder) UploadPersistentCacheTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadPersistentCacheTask", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).UploadPersistentCacheTask), arg0, arg1)
-}
-
-// UploadTask mocks base method.
-func (m *MockDfdaemonDownloadServer) UploadTask(arg0 context.Context, arg1 *dfdaemon.UploadTaskRequest) (*emptypb.Empty, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UploadTask", arg0, arg1)
-	ret0, _ := ret[0].(*emptypb.Empty)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UploadTask indicates an expected call of UploadTask.
-func (mr *MockDfdaemonDownloadServerMockRecorder) UploadTask(arg0, arg1 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UploadTask", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).UploadTask), arg0, arg1)
 }
 
 // MockUnsafeDfdaemonDownloadServer is a mock of UnsafeDfdaemonDownloadServer interface.

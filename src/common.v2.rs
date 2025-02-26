@@ -107,35 +107,32 @@ pub struct Task {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
-    /// Task piece length.
-    #[prost(uint64, tag = "9")]
-    pub piece_length: u64,
     /// Task content length.
-    #[prost(uint64, tag = "10")]
+    #[prost(uint64, tag = "9")]
     pub content_length: u64,
     /// Task piece count.
-    #[prost(uint32, tag = "11")]
+    #[prost(uint32, tag = "10")]
     pub piece_count: u32,
     /// Task size scope.
-    #[prost(enumeration = "SizeScope", tag = "12")]
+    #[prost(enumeration = "SizeScope", tag = "11")]
     pub size_scope: i32,
     /// Pieces of task.
-    #[prost(message, repeated, tag = "13")]
+    #[prost(message, repeated, tag = "12")]
     pub pieces: ::prost::alloc::vec::Vec<Piece>,
     /// Task state.
-    #[prost(string, tag = "14")]
+    #[prost(string, tag = "13")]
     pub state: ::prost::alloc::string::String,
     /// Task peer count.
-    #[prost(uint32, tag = "15")]
+    #[prost(uint32, tag = "14")]
     pub peer_count: u32,
     /// Task contains available peer.
-    #[prost(bool, tag = "16")]
+    #[prost(bool, tag = "15")]
     pub has_available_peer: bool,
     /// Task create time.
-    #[prost(message, optional, tag = "17")]
+    #[prost(message, optional, tag = "16")]
     pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
-    #[prost(message, optional, tag = "18")]
+    #[prost(message, optional, tag = "17")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// PersistentCacheTask metadata.
