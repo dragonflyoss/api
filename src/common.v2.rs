@@ -458,7 +458,17 @@ pub struct Download {
     /// Task piece length.
     #[prost(uint64, optional, tag = "10")]
     pub piece_length: ::core::option::Option<u64>,
-    /// File path to be exported.
+    /// File path to be downloaded. Once the download completes, the system attempts to create a hard link
+    /// from this location to the output path.
+    ///
+    /// Scenarios:
+    /// 1. If destination already exists:
+    ///     a. When source and destination share device and inode (same file): Operation completes successfully.
+    ///     b. When source and destination differ in device or inode: Returns error to prevent overwriting existing file.
+    ///
+    /// 2. If destination does not exist:
+    ///     a. System attempts to create a hard link from source to destination.
+    ///     b. If hard linking fails (typically due to cross-filesystem limitations), falls back to copying the file.
     #[prost(string, optional, tag = "11")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
@@ -493,6 +503,17 @@ pub struct Download {
     /// allowing other peers to access the content from memory instead of disk.
     #[prost(bool, tag = "21")]
     pub load_to_cache: bool,
+    /// force_hard_link controls the file delivery strategy:
+    ///
+    /// If force_hard_link is true:
+    ///    - Creates a hard link to the output path BEFORE starting the download.
+    ///    - Allows concurrent reading of the file (via hard link) while download proceeds.
+    ///    - Fails if output path already exists (to prevent existing file corruption).
+    ///
+    /// This option enables safe access to the file during download, as readers interact
+    /// with the hard-linked copy while the original file receives download content.
+    #[prost(bool, tag = "22")]
+    pub force_hard_link: bool,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
