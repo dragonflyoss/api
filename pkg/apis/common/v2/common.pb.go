@@ -1780,17 +1780,10 @@ type Download struct {
 	RequestHeader map[string]string `protobuf:"bytes,9,rep,name=request_header,json=requestHeader,proto3" json:"request_header,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
 	// Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
 	PieceLength *uint64 `protobuf:"varint,10,opt,name=piece_length,json=pieceLength,proto3,oneof" json:"piece_length,omitempty"`
-	// File path to be downloaded. Once the download completes, the system attempts to create a hard link
-	// from this location to the output path.
-	//
-	// Scenarios:
-	//  1. If destination already exists:
-	//     a. When source and destination share device and inode (same file): Operation completes successfully.
-	//     b. When source and destination differ in device or inode: Returns error to prevent overwriting existing file.
-	//
-	//  2. If destination does not exist:
-	//     a. System attempts to create a hard link from source to destination.
-	//     b. If hard linking fails (typically due to cross-filesystem limitations), falls back to copying the file.
+	// File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
+	// Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
+	// it will copy the file to the output path after the download is completed.
+	// For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
 	OutputPath *string `protobuf:"bytes,11,opt,name=output_path,json=outputPath,proto3,oneof" json:"output_path,omitempty"`
 	// Download timeout.
 	Timeout *durationpb.Duration `protobuf:"bytes,12,opt,name=timeout,proto3,oneof" json:"timeout,omitempty"`
@@ -1814,15 +1807,8 @@ type Download struct {
 	// Cache storage is designed to store downloaded piece content from preheat tasks,
 	// allowing other peers to access the content from memory instead of disk.
 	LoadToCache bool `protobuf:"varint,21,opt,name=load_to_cache,json=loadToCache,proto3" json:"load_to_cache,omitempty"`
-	// force_hard_link controls the file delivery strategy:
-	//
-	// If force_hard_link is true:
-	//   - Creates a hard link to the output path BEFORE starting the download.
-	//   - Allows concurrent reading of the file (via hard link) while download proceeds.
-	//   - Fails if output path already exists (to prevent existing file corruption).
-	//
-	// This option enables safe access to the file during download, as readers interact
-	// with the hard-linked copy while the original file receives download content.
+	// force_hard_link is the flag to indicate whether the download file must be hard linked to the output path.
+	// For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
 	ForceHardLink bool `protobuf:"varint,22,opt,name=force_hard_link,json=forceHardLink,proto3" json:"force_hard_link,omitempty"`
 }
 
