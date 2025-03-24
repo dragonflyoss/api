@@ -2554,3 +2554,122 @@ func (mr *MockDfdaemonDownload_DownloadPersistentCacheTaskServerMockRecorder) Se
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetTrailer", reflect.TypeOf((*MockDfdaemonDownload_DownloadPersistentCacheTaskServer)(nil).SetTrailer), arg0)
 }
+
+// MockIBVerbsConnectionClient is a mock of IBVerbsConnectionClient interface.
+type MockIBVerbsConnectionClient struct {
+	ctrl     *gomock.Controller
+	recorder *MockIBVerbsConnectionClientMockRecorder
+	isgomock struct{}
+}
+
+// MockIBVerbsConnectionClientMockRecorder is the mock recorder for MockIBVerbsConnectionClient.
+type MockIBVerbsConnectionClientMockRecorder struct {
+	mock *MockIBVerbsConnectionClient
+}
+
+// NewMockIBVerbsConnectionClient creates a new mock instance.
+func NewMockIBVerbsConnectionClient(ctrl *gomock.Controller) *MockIBVerbsConnectionClient {
+	mock := &MockIBVerbsConnectionClient{ctrl: ctrl}
+	mock.recorder = &MockIBVerbsConnectionClientMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIBVerbsConnectionClient) EXPECT() *MockIBVerbsConnectionClientMockRecorder {
+	return m.recorder
+}
+
+// ExchangeQueuePairEndpoint mocks base method.
+func (m *MockIBVerbsConnectionClient) ExchangeQueuePairEndpoint(ctx context.Context, in *dfdaemon.ExchangeQueuePairEndpointRequest, opts ...grpc.CallOption) (*dfdaemon.ExchangeQueuePairEndpointResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ExchangeQueuePairEndpoint", varargs...)
+	ret0, _ := ret[0].(*dfdaemon.ExchangeQueuePairEndpointResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ExchangeQueuePairEndpoint indicates an expected call of ExchangeQueuePairEndpoint.
+func (mr *MockIBVerbsConnectionClientMockRecorder) ExchangeQueuePairEndpoint(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangeQueuePairEndpoint", reflect.TypeOf((*MockIBVerbsConnectionClient)(nil).ExchangeQueuePairEndpoint), varargs...)
+}
+
+// MockIBVerbsConnectionServer is a mock of IBVerbsConnectionServer interface.
+type MockIBVerbsConnectionServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockIBVerbsConnectionServerMockRecorder
+	isgomock struct{}
+}
+
+// MockIBVerbsConnectionServerMockRecorder is the mock recorder for MockIBVerbsConnectionServer.
+type MockIBVerbsConnectionServerMockRecorder struct {
+	mock *MockIBVerbsConnectionServer
+}
+
+// NewMockIBVerbsConnectionServer creates a new mock instance.
+func NewMockIBVerbsConnectionServer(ctrl *gomock.Controller) *MockIBVerbsConnectionServer {
+	mock := &MockIBVerbsConnectionServer{ctrl: ctrl}
+	mock.recorder = &MockIBVerbsConnectionServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockIBVerbsConnectionServer) EXPECT() *MockIBVerbsConnectionServerMockRecorder {
+	return m.recorder
+}
+
+// ExchangeQueuePairEndpoint mocks base method.
+func (m *MockIBVerbsConnectionServer) ExchangeQueuePairEndpoint(arg0 context.Context, arg1 *dfdaemon.ExchangeQueuePairEndpointRequest) (*dfdaemon.ExchangeQueuePairEndpointResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ExchangeQueuePairEndpoint", arg0, arg1)
+	ret0, _ := ret[0].(*dfdaemon.ExchangeQueuePairEndpointResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ExchangeQueuePairEndpoint indicates an expected call of ExchangeQueuePairEndpoint.
+func (mr *MockIBVerbsConnectionServerMockRecorder) ExchangeQueuePairEndpoint(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangeQueuePairEndpoint", reflect.TypeOf((*MockIBVerbsConnectionServer)(nil).ExchangeQueuePairEndpoint), arg0, arg1)
+}
+
+// MockUnsafeIBVerbsConnectionServer is a mock of UnsafeIBVerbsConnectionServer interface.
+type MockUnsafeIBVerbsConnectionServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockUnsafeIBVerbsConnectionServerMockRecorder
+	isgomock struct{}
+}
+
+// MockUnsafeIBVerbsConnectionServerMockRecorder is the mock recorder for MockUnsafeIBVerbsConnectionServer.
+type MockUnsafeIBVerbsConnectionServerMockRecorder struct {
+	mock *MockUnsafeIBVerbsConnectionServer
+}
+
+// NewMockUnsafeIBVerbsConnectionServer creates a new mock instance.
+func NewMockUnsafeIBVerbsConnectionServer(ctrl *gomock.Controller) *MockUnsafeIBVerbsConnectionServer {
+	mock := &MockUnsafeIBVerbsConnectionServer{ctrl: ctrl}
+	mock.recorder = &MockUnsafeIBVerbsConnectionServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockUnsafeIBVerbsConnectionServer) EXPECT() *MockUnsafeIBVerbsConnectionServerMockRecorder {
+	return m.recorder
+}
+
+// mustEmbedUnimplementedIBVerbsConnectionServer mocks base method.
+func (m *MockUnsafeIBVerbsConnectionServer) mustEmbedUnimplementedIBVerbsConnectionServer() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "mustEmbedUnimplementedIBVerbsConnectionServer")
+}
+
+// mustEmbedUnimplementedIBVerbsConnectionServer indicates an expected call of mustEmbedUnimplementedIBVerbsConnectionServer.
+func (mr *MockUnsafeIBVerbsConnectionServerMockRecorder) mustEmbedUnimplementedIBVerbsConnectionServer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "mustEmbedUnimplementedIBVerbsConnectionServer", reflect.TypeOf((*MockUnsafeIBVerbsConnectionServer)(nil).mustEmbedUnimplementedIBVerbsConnectionServer))
+}

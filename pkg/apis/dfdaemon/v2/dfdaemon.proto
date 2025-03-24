@@ -255,6 +255,28 @@ message SyncHostRequest {
   string peer_id = 2 [(validate.rules).string.min_len = 1];
 }
 
+// QueuePairEndpoint represents information of the queue pair endpoint.
+message QueuePairEndpoint {
+  // Number of the queue pair.
+  uint32 num = 1;
+  // Local identifier of the context.
+  uint32 lid = 2;
+  // Global identifier of the context.
+  bytes gid = 3 [(validate.rules).bytes.len = 16];
+}
+
+// ExchangeQueuePairEndpoint represents request of ExchangeQueuePairEndpoint.
+message ExchangeQueuePairEndpointRequest {
+  // Information of the source's queue pair endpoint.
+  QueuePairEndpoint endpoint = 1 [(validate.rules).message.required = true];
+}
+
+// ExchangeQueuePairEndpointResponse represents response of ExchangeQueuePairEndpoint.
+message ExchangeQueuePairEndpointResponse {
+  // Information of the destination's queue pair endpoint.
+  QueuePairEndpoint endpoint = 1 [(validate.rules).message.required = true];
+}
+
 // DfdaemonUpload represents dfdaemon upload service.
 service DfdaemonUpload {
   // DownloadTask downloads task from p2p network.
@@ -316,4 +338,10 @@ service DfdaemonDownload {
 
   // StatPersistentCacheTask stats persistent cache task information.
   rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
+}
+
+// IBVerbsConnection represents service to support connection between InfiniBand verbs peers.
+service IBVerbsConnection {
+  // ExchangeQueuePairEndpoint exchanges the information of the queue pair endpoint between the source and the destination.
+  rpc ExchangeQueuePairEndpoint(ExchangeQueuePairEndpointRequest) returns(ExchangeQueuePairEndpointResponse);
 }
