@@ -3263,22 +3263,22 @@ var _ interface {
 	ErrorName() string
 } = SyncHostRequestValidationError{}
 
-// Validate checks the field values on QueuePairEndpoint with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *QueuePairEndpoint) Validate() error {
+// Validate checks the field values on IBVerbsQueuePairEndpoint with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *IBVerbsQueuePairEndpoint) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on QueuePairEndpoint with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on IBVerbsQueuePairEndpoint with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// QueuePairEndpointMultiError, or nil if none found.
-func (m *QueuePairEndpoint) ValidateAll() error {
+// IBVerbsQueuePairEndpointMultiError, or nil if none found.
+func (m *IBVerbsQueuePairEndpoint) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *QueuePairEndpoint) validate(all bool) error {
+func (m *IBVerbsQueuePairEndpoint) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -3290,7 +3290,7 @@ func (m *QueuePairEndpoint) validate(all bool) error {
 	// no validation rules for Lid
 
 	if len(m.GetGid()) != 16 {
-		err := QueuePairEndpointValidationError{
+		err := IBVerbsQueuePairEndpointValidationError{
 			field:  "Gid",
 			reason: "value length must be 16 bytes",
 		}
@@ -3301,19 +3301,19 @@ func (m *QueuePairEndpoint) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return QueuePairEndpointMultiError(errors)
+		return IBVerbsQueuePairEndpointMultiError(errors)
 	}
 
 	return nil
 }
 
-// QueuePairEndpointMultiError is an error wrapping multiple validation errors
-// returned by QueuePairEndpoint.ValidateAll() if the designated constraints
-// aren't met.
-type QueuePairEndpointMultiError []error
+// IBVerbsQueuePairEndpointMultiError is an error wrapping multiple validation
+// errors returned by IBVerbsQueuePairEndpoint.ValidateAll() if the designated
+// constraints aren't met.
+type IBVerbsQueuePairEndpointMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m QueuePairEndpointMultiError) Error() string {
+func (m IBVerbsQueuePairEndpointMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -3322,11 +3322,11 @@ func (m QueuePairEndpointMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m QueuePairEndpointMultiError) AllErrors() []error { return m }
+func (m IBVerbsQueuePairEndpointMultiError) AllErrors() []error { return m }
 
-// QueuePairEndpointValidationError is the validation error returned by
-// QueuePairEndpoint.Validate if the designated constraints aren't met.
-type QueuePairEndpointValidationError struct {
+// IBVerbsQueuePairEndpointValidationError is the validation error returned by
+// IBVerbsQueuePairEndpoint.Validate if the designated constraints aren't met.
+type IBVerbsQueuePairEndpointValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -3334,24 +3334,24 @@ type QueuePairEndpointValidationError struct {
 }
 
 // Field function returns field value.
-func (e QueuePairEndpointValidationError) Field() string { return e.field }
+func (e IBVerbsQueuePairEndpointValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e QueuePairEndpointValidationError) Reason() string { return e.reason }
+func (e IBVerbsQueuePairEndpointValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e QueuePairEndpointValidationError) Cause() error { return e.cause }
+func (e IBVerbsQueuePairEndpointValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e QueuePairEndpointValidationError) Key() bool { return e.key }
+func (e IBVerbsQueuePairEndpointValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e QueuePairEndpointValidationError) ErrorName() string {
-	return "QueuePairEndpointValidationError"
+func (e IBVerbsQueuePairEndpointValidationError) ErrorName() string {
+	return "IBVerbsQueuePairEndpointValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e QueuePairEndpointValidationError) Error() string {
+func (e IBVerbsQueuePairEndpointValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -3363,14 +3363,14 @@ func (e QueuePairEndpointValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sQueuePairEndpoint.%s: %s%s",
+		"invalid %sIBVerbsQueuePairEndpoint.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = QueuePairEndpointValidationError{}
+var _ error = IBVerbsQueuePairEndpointValidationError{}
 
 var _ interface {
 	Field() string
@@ -3378,170 +3378,26 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = QueuePairEndpointValidationError{}
+} = IBVerbsQueuePairEndpointValidationError{}
 
-// Validate checks the field values on ExchangeQueuePairEndpointRequest with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, the first error encountered is returned, or nil if there are
-// no violations.
-func (m *ExchangeQueuePairEndpointRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ExchangeQueuePairEndpointRequest with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, the result is a list of violation errors wrapped in
-// ExchangeQueuePairEndpointRequestMultiError, or nil if none found.
-func (m *ExchangeQueuePairEndpointRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *ExchangeQueuePairEndpointRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if m.GetEndpoint() == nil {
-		err := ExchangeQueuePairEndpointRequestValidationError{
-			field:  "Endpoint",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetEndpoint()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExchangeQueuePairEndpointRequestValidationError{
-					field:  "Endpoint",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ExchangeQueuePairEndpointRequestValidationError{
-					field:  "Endpoint",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetEndpoint()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ExchangeQueuePairEndpointRequestValidationError{
-				field:  "Endpoint",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if len(errors) > 0 {
-		return ExchangeQueuePairEndpointRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// ExchangeQueuePairEndpointRequestMultiError is an error wrapping multiple
-// validation errors returned by
-// ExchangeQueuePairEndpointRequest.ValidateAll() if the designated
-// constraints aren't met.
-type ExchangeQueuePairEndpointRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m ExchangeQueuePairEndpointRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m ExchangeQueuePairEndpointRequestMultiError) AllErrors() []error { return m }
-
-// ExchangeQueuePairEndpointRequestValidationError is the validation error
-// returned by ExchangeQueuePairEndpointRequest.Validate if the designated
-// constraints aren't met.
-type ExchangeQueuePairEndpointRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ExchangeQueuePairEndpointRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ExchangeQueuePairEndpointRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ExchangeQueuePairEndpointRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ExchangeQueuePairEndpointRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ExchangeQueuePairEndpointRequestValidationError) ErrorName() string {
-	return "ExchangeQueuePairEndpointRequestValidationError"
-}
-
-// Error satisfies the builtin error interface
-func (e ExchangeQueuePairEndpointRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sExchangeQueuePairEndpointRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ExchangeQueuePairEndpointRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ExchangeQueuePairEndpointRequestValidationError{}
-
-// Validate checks the field values on ExchangeQueuePairEndpointResponse with
-// the rules defined in the proto definition for this message. If any rules
-// are violated, the first error encountered is returned, or nil if there are
-// no violations.
-func (m *ExchangeQueuePairEndpointResponse) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ExchangeQueuePairEndpointResponse
+// Validate checks the field values on ExchangeIBVerbsQueuePairEndpointRequest
 // with the rules defined in the proto definition for this message. If any
-// rules are violated, the result is a list of violation errors wrapped in
-// ExchangeQueuePairEndpointResponseMultiError, or nil if none found.
-func (m *ExchangeQueuePairEndpointResponse) ValidateAll() error {
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *ExchangeIBVerbsQueuePairEndpointRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on
+// ExchangeIBVerbsQueuePairEndpointRequest with the rules defined in the proto
+// definition for this message. If any rules are violated, the result is a
+// list of violation errors wrapped in
+// ExchangeIBVerbsQueuePairEndpointRequestMultiError, or nil if none found.
+func (m *ExchangeIBVerbsQueuePairEndpointRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ExchangeQueuePairEndpointResponse) validate(all bool) error {
+func (m *ExchangeIBVerbsQueuePairEndpointRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -3549,7 +3405,7 @@ func (m *ExchangeQueuePairEndpointResponse) validate(all bool) error {
 	var errors []error
 
 	if m.GetEndpoint() == nil {
-		err := ExchangeQueuePairEndpointResponseValidationError{
+		err := ExchangeIBVerbsQueuePairEndpointRequestValidationError{
 			field:  "Endpoint",
 			reason: "value is required",
 		}
@@ -3563,7 +3419,7 @@ func (m *ExchangeQueuePairEndpointResponse) validate(all bool) error {
 		switch v := interface{}(m.GetEndpoint()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExchangeQueuePairEndpointResponseValidationError{
+				errors = append(errors, ExchangeIBVerbsQueuePairEndpointRequestValidationError{
 					field:  "Endpoint",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -3571,7 +3427,7 @@ func (m *ExchangeQueuePairEndpointResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExchangeQueuePairEndpointResponseValidationError{
+				errors = append(errors, ExchangeIBVerbsQueuePairEndpointRequestValidationError{
 					field:  "Endpoint",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -3580,7 +3436,7 @@ func (m *ExchangeQueuePairEndpointResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetEndpoint()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExchangeQueuePairEndpointResponseValidationError{
+			return ExchangeIBVerbsQueuePairEndpointRequestValidationError{
 				field:  "Endpoint",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -3589,20 +3445,20 @@ func (m *ExchangeQueuePairEndpointResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return ExchangeQueuePairEndpointResponseMultiError(errors)
+		return ExchangeIBVerbsQueuePairEndpointRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// ExchangeQueuePairEndpointResponseMultiError is an error wrapping multiple
-// validation errors returned by
-// ExchangeQueuePairEndpointResponse.ValidateAll() if the designated
+// ExchangeIBVerbsQueuePairEndpointRequestMultiError is an error wrapping
+// multiple validation errors returned by
+// ExchangeIBVerbsQueuePairEndpointRequest.ValidateAll() if the designated
 // constraints aren't met.
-type ExchangeQueuePairEndpointResponseMultiError []error
+type ExchangeIBVerbsQueuePairEndpointRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ExchangeQueuePairEndpointResponseMultiError) Error() string {
+func (m ExchangeIBVerbsQueuePairEndpointRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -3611,12 +3467,12 @@ func (m ExchangeQueuePairEndpointResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ExchangeQueuePairEndpointResponseMultiError) AllErrors() []error { return m }
+func (m ExchangeIBVerbsQueuePairEndpointRequestMultiError) AllErrors() []error { return m }
 
-// ExchangeQueuePairEndpointResponseValidationError is the validation error
-// returned by ExchangeQueuePairEndpointResponse.Validate if the designated
-// constraints aren't met.
-type ExchangeQueuePairEndpointResponseValidationError struct {
+// ExchangeIBVerbsQueuePairEndpointRequestValidationError is the validation
+// error returned by ExchangeIBVerbsQueuePairEndpointRequest.Validate if the
+// designated constraints aren't met.
+type ExchangeIBVerbsQueuePairEndpointRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -3624,24 +3480,24 @@ type ExchangeQueuePairEndpointResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e ExchangeQueuePairEndpointResponseValidationError) Field() string { return e.field }
+func (e ExchangeIBVerbsQueuePairEndpointRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ExchangeQueuePairEndpointResponseValidationError) Reason() string { return e.reason }
+func (e ExchangeIBVerbsQueuePairEndpointRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ExchangeQueuePairEndpointResponseValidationError) Cause() error { return e.cause }
+func (e ExchangeIBVerbsQueuePairEndpointRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ExchangeQueuePairEndpointResponseValidationError) Key() bool { return e.key }
+func (e ExchangeIBVerbsQueuePairEndpointRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ExchangeQueuePairEndpointResponseValidationError) ErrorName() string {
-	return "ExchangeQueuePairEndpointResponseValidationError"
+func (e ExchangeIBVerbsQueuePairEndpointRequestValidationError) ErrorName() string {
+	return "ExchangeIBVerbsQueuePairEndpointRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ExchangeQueuePairEndpointResponseValidationError) Error() string {
+func (e ExchangeIBVerbsQueuePairEndpointRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -3653,14 +3509,14 @@ func (e ExchangeQueuePairEndpointResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sExchangeQueuePairEndpointResponse.%s: %s%s",
+		"invalid %sExchangeIBVerbsQueuePairEndpointRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ExchangeQueuePairEndpointResponseValidationError{}
+var _ error = ExchangeIBVerbsQueuePairEndpointRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -3668,4 +3524,150 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ExchangeQueuePairEndpointResponseValidationError{}
+} = ExchangeIBVerbsQueuePairEndpointRequestValidationError{}
+
+// Validate checks the field values on ExchangeIBVerbsQueuePairEndpointResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *ExchangeIBVerbsQueuePairEndpointResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on
+// ExchangeIBVerbsQueuePairEndpointResponse with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in
+// ExchangeIBVerbsQueuePairEndpointResponseMultiError, or nil if none found.
+func (m *ExchangeIBVerbsQueuePairEndpointResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ExchangeIBVerbsQueuePairEndpointResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetEndpoint() == nil {
+		err := ExchangeIBVerbsQueuePairEndpointResponseValidationError{
+			field:  "Endpoint",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetEndpoint()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ExchangeIBVerbsQueuePairEndpointResponseValidationError{
+					field:  "Endpoint",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ExchangeIBVerbsQueuePairEndpointResponseValidationError{
+					field:  "Endpoint",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetEndpoint()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ExchangeIBVerbsQueuePairEndpointResponseValidationError{
+				field:  "Endpoint",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return ExchangeIBVerbsQueuePairEndpointResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ExchangeIBVerbsQueuePairEndpointResponseMultiError is an error wrapping
+// multiple validation errors returned by
+// ExchangeIBVerbsQueuePairEndpointResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ExchangeIBVerbsQueuePairEndpointResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ExchangeIBVerbsQueuePairEndpointResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ExchangeIBVerbsQueuePairEndpointResponseMultiError) AllErrors() []error { return m }
+
+// ExchangeIBVerbsQueuePairEndpointResponseValidationError is the validation
+// error returned by ExchangeIBVerbsQueuePairEndpointResponse.Validate if the
+// designated constraints aren't met.
+type ExchangeIBVerbsQueuePairEndpointResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ExchangeIBVerbsQueuePairEndpointResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ExchangeIBVerbsQueuePairEndpointResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ExchangeIBVerbsQueuePairEndpointResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ExchangeIBVerbsQueuePairEndpointResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ExchangeIBVerbsQueuePairEndpointResponseValidationError) ErrorName() string {
+	return "ExchangeIBVerbsQueuePairEndpointResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ExchangeIBVerbsQueuePairEndpointResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sExchangeIBVerbsQueuePairEndpointResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ExchangeIBVerbsQueuePairEndpointResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ExchangeIBVerbsQueuePairEndpointResponseValidationError{}

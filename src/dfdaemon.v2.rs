@@ -349,11 +349,11 @@ pub struct SyncHostRequest {
     #[prost(string, tag = "2")]
     pub peer_id: ::prost::alloc::string::String,
 }
-/// QueuePairEndpoint represents information of the queue pair endpoint.
+/// IBVerbsQueuePairEndpoint represents queue pair endpoint of IBVerbs.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct QueuePairEndpoint {
+pub struct IbVerbsQueuePairEndpoint {
     /// Number of the queue pair.
     #[prost(uint32, tag = "1")]
     pub num: u32,
@@ -364,23 +364,23 @@ pub struct QueuePairEndpoint {
     #[prost(bytes = "vec", tag = "3")]
     pub gid: ::prost::alloc::vec::Vec<u8>,
 }
-/// ExchangeQueuePairEndpoint represents request of ExchangeQueuePairEndpoint.
+/// ExchangeIBVerbsQueuePairEndpointRequest represents request of ExchangeIBVerbsQueuePairEndpoint.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ExchangeQueuePairEndpointRequest {
-    /// Information of the source's queue pair endpoint.
+pub struct ExchangeIbVerbsQueuePairEndpointRequest {
+    /// Information of the source's queue pair endpoint of IBVerbs.
     #[prost(message, optional, tag = "1")]
-    pub endpoint: ::core::option::Option<QueuePairEndpoint>,
+    pub endpoint: ::core::option::Option<IbVerbsQueuePairEndpoint>,
 }
-/// ExchangeQueuePairEndpointResponse represents response of ExchangeQueuePairEndpoint.
+/// ExchangeIBVerbsQueuePairEndpointResponse represents response of ExchangeIBVerbsQueuePairEndpoint.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ExchangeQueuePairEndpointResponse {
-    /// Information of the destination's queue pair endpoint.
+pub struct ExchangeIbVerbsQueuePairEndpointResponse {
+    /// Information of the destination's queue pair endpoint of IBVerbs.
     #[prost(message, optional, tag = "1")]
-    pub endpoint: ::core::option::Option<QueuePairEndpoint>,
+    pub endpoint: ::core::option::Option<IbVerbsQueuePairEndpoint>,
 }
 /// Generated client implementations.
 pub mod dfdaemon_upload_client {
@@ -1088,100 +1088,14 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
-    }
-}
-/// Generated client implementations.
-pub mod ib_verbs_connection_client {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
-    use tonic::codegen::http::Uri;
-    /// IBVerbsConnection represents service to support connection between InfiniBand verbs peers.
-    #[derive(Debug, Clone)]
-    pub struct IbVerbsConnectionClient<T> {
-        inner: tonic::client::Grpc<T>,
-    }
-    impl IbVerbsConnectionClient<tonic::transport::Channel> {
-        /// Attempt to create a new client by connecting to a given endpoint.
-        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
-        where
-            D: TryInto<tonic::transport::Endpoint>,
-            D::Error: Into<StdError>,
-        {
-            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
-            Ok(Self::new(conn))
-        }
-    }
-    impl<T> IbVerbsConnectionClient<T>
-    where
-        T: tonic::client::GrpcService<tonic::body::BoxBody>,
-        T::Error: Into<StdError>,
-        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
-        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
-    {
-        pub fn new(inner: T) -> Self {
-            let inner = tonic::client::Grpc::new(inner);
-            Self { inner }
-        }
-        pub fn with_origin(inner: T, origin: Uri) -> Self {
-            let inner = tonic::client::Grpc::with_origin(inner, origin);
-            Self { inner }
-        }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> IbVerbsConnectionClient<InterceptedService<T, F>>
-        where
-            F: tonic::service::Interceptor,
-            T::ResponseBody: Default,
-            T: tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-                Response = http::Response<
-                    <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
-                >,
-            >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
-        {
-            IbVerbsConnectionClient::new(InterceptedService::new(inner, interceptor))
-        }
-        /// Compress requests with the given encoding.
-        ///
-        /// This requires the server to support it otherwise it might respond with an
-        /// error.
-        #[must_use]
-        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
-            self.inner = self.inner.send_compressed(encoding);
-            self
-        }
-        /// Enable decompressing responses.
-        #[must_use]
-        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
-            self.inner = self.inner.accept_compressed(encoding);
-            self
-        }
-        /// Limits the maximum size of a decoded message.
-        ///
-        /// Default: `4MB`
-        #[must_use]
-        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
-            self.inner = self.inner.max_decoding_message_size(limit);
-            self
-        }
-        /// Limits the maximum size of an encoded message.
-        ///
-        /// Default: `usize::MAX`
-        #[must_use]
-        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
-            self.inner = self.inner.max_encoding_message_size(limit);
-            self
-        }
-        /// ExchangeQueuePairEndpoint exchanges the information of the queue pair endpoint between the source and the destination.
-        pub async fn exchange_queue_pair_endpoint(
+        /// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
+        pub async fn exchange_ib_verbs_queue_pair_endpoint(
             &mut self,
-            request: impl tonic::IntoRequest<super::ExchangeQueuePairEndpointRequest>,
+            request: impl tonic::IntoRequest<
+                super::ExchangeIbVerbsQueuePairEndpointRequest,
+            >,
         ) -> std::result::Result<
-            tonic::Response<super::ExchangeQueuePairEndpointResponse>,
+            tonic::Response<super::ExchangeIbVerbsQueuePairEndpointResponse>,
             tonic::Status,
         > {
             self.inner
@@ -1195,14 +1109,14 @@ pub mod ib_verbs_connection_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.v2.IBVerbsConnection/ExchangeQueuePairEndpoint",
+                "/dfdaemon.v2.DfdaemonDownload/ExchangeIBVerbsQueuePairEndpoint",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
                     GrpcMethod::new(
-                        "dfdaemon.v2.IBVerbsConnection",
-                        "ExchangeQueuePairEndpoint",
+                        "dfdaemon.v2.DfdaemonDownload",
+                        "ExchangeIBVerbsQueuePairEndpoint",
                     ),
                 );
             self.inner.unary(req, path, codec).await
@@ -2110,6 +2024,14 @@ pub mod dfdaemon_download_server {
             tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
             tonic::Status,
         >;
+        /// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
+        async fn exchange_ib_verbs_queue_pair_endpoint(
+            &self,
+            request: tonic::Request<super::ExchangeIbVerbsQueuePairEndpointRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ExchangeIbVerbsQueuePairEndpointResponse>,
+            tonic::Status,
+        >;
     }
     /// DfdaemonDownload represents download service of dfdaemon.
     #[derive(Debug)]
@@ -2523,146 +2445,17 @@ pub mod dfdaemon_download_server {
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", tonic::Code::Unimplemented as i32)
-                                .header(
-                                    http::header::CONTENT_TYPE,
-                                    tonic::metadata::GRPC_CONTENT_TYPE,
-                                )
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
-            }
-        }
-    }
-    impl<T> Clone for DfdaemonDownloadServer<T> {
-        fn clone(&self) -> Self {
-            let inner = self.inner.clone();
-            Self {
-                inner,
-                accept_compression_encodings: self.accept_compression_encodings,
-                send_compression_encodings: self.send_compression_encodings,
-                max_decoding_message_size: self.max_decoding_message_size,
-                max_encoding_message_size: self.max_encoding_message_size,
-            }
-        }
-    }
-    /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "dfdaemon.v2.DfdaemonDownload";
-    impl<T> tonic::server::NamedService for DfdaemonDownloadServer<T> {
-        const NAME: &'static str = SERVICE_NAME;
-    }
-}
-/// Generated server implementations.
-pub mod ib_verbs_connection_server {
-    #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with IbVerbsConnectionServer.
-    #[async_trait]
-    pub trait IbVerbsConnection: std::marker::Send + std::marker::Sync + 'static {
-        /// ExchangeQueuePairEndpoint exchanges the information of the queue pair endpoint between the source and the destination.
-        async fn exchange_queue_pair_endpoint(
-            &self,
-            request: tonic::Request<super::ExchangeQueuePairEndpointRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ExchangeQueuePairEndpointResponse>,
-            tonic::Status,
-        >;
-    }
-    /// IBVerbsConnection represents service to support connection between InfiniBand verbs peers.
-    #[derive(Debug)]
-    pub struct IbVerbsConnectionServer<T> {
-        inner: Arc<T>,
-        accept_compression_encodings: EnabledCompressionEncodings,
-        send_compression_encodings: EnabledCompressionEncodings,
-        max_decoding_message_size: Option<usize>,
-        max_encoding_message_size: Option<usize>,
-    }
-    impl<T> IbVerbsConnectionServer<T> {
-        pub fn new(inner: T) -> Self {
-            Self::from_arc(Arc::new(inner))
-        }
-        pub fn from_arc(inner: Arc<T>) -> Self {
-            Self {
-                inner,
-                accept_compression_encodings: Default::default(),
-                send_compression_encodings: Default::default(),
-                max_decoding_message_size: None,
-                max_encoding_message_size: None,
-            }
-        }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
-        where
-            F: tonic::service::Interceptor,
-        {
-            InterceptedService::new(Self::new(inner), interceptor)
-        }
-        /// Enable decompressing requests with the given encoding.
-        #[must_use]
-        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
-            self.accept_compression_encodings.enable(encoding);
-            self
-        }
-        /// Compress responses with the given encoding, if the client supports it.
-        #[must_use]
-        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
-            self.send_compression_encodings.enable(encoding);
-            self
-        }
-        /// Limits the maximum size of a decoded message.
-        ///
-        /// Default: `4MB`
-        #[must_use]
-        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
-            self.max_decoding_message_size = Some(limit);
-            self
-        }
-        /// Limits the maximum size of an encoded message.
-        ///
-        /// Default: `usize::MAX`
-        #[must_use]
-        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
-            self.max_encoding_message_size = Some(limit);
-            self
-        }
-    }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for IbVerbsConnectionServer<T>
-    where
-        T: IbVerbsConnection,
-        B: Body + std::marker::Send + 'static,
-        B::Error: Into<StdError> + std::marker::Send + 'static,
-    {
-        type Response = http::Response<tonic::body::BoxBody>;
-        type Error = std::convert::Infallible;
-        type Future = BoxFuture<Self::Response, Self::Error>;
-        fn poll_ready(
-            &mut self,
-            _cx: &mut Context<'_>,
-        ) -> Poll<std::result::Result<(), Self::Error>> {
-            Poll::Ready(Ok(()))
-        }
-        fn call(&mut self, req: http::Request<B>) -> Self::Future {
-            match req.uri().path() {
-                "/dfdaemon.v2.IBVerbsConnection/ExchangeQueuePairEndpoint" => {
+                "/dfdaemon.v2.DfdaemonDownload/ExchangeIBVerbsQueuePairEndpoint" => {
                     #[allow(non_camel_case_types)]
-                    struct ExchangeQueuePairEndpointSvc<T: IbVerbsConnection>(
+                    struct ExchangeIBVerbsQueuePairEndpointSvc<T: DfdaemonDownload>(
                         pub Arc<T>,
                     );
                     impl<
-                        T: IbVerbsConnection,
+                        T: DfdaemonDownload,
                     > tonic::server::UnaryService<
-                        super::ExchangeQueuePairEndpointRequest,
-                    > for ExchangeQueuePairEndpointSvc<T> {
-                        type Response = super::ExchangeQueuePairEndpointResponse;
+                        super::ExchangeIbVerbsQueuePairEndpointRequest,
+                    > for ExchangeIBVerbsQueuePairEndpointSvc<T> {
+                        type Response = super::ExchangeIbVerbsQueuePairEndpointResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
@@ -2670,12 +2463,12 @@ pub mod ib_verbs_connection_server {
                         fn call(
                             &mut self,
                             request: tonic::Request<
-                                super::ExchangeQueuePairEndpointRequest,
+                                super::ExchangeIbVerbsQueuePairEndpointRequest,
                             >,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as IbVerbsConnection>::exchange_queue_pair_endpoint(
+                                <T as DfdaemonDownload>::exchange_ib_verbs_queue_pair_endpoint(
                                         &inner,
                                         request,
                                     )
@@ -2690,7 +2483,7 @@ pub mod ib_verbs_connection_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let method = ExchangeQueuePairEndpointSvc(inner);
+                        let method = ExchangeIBVerbsQueuePairEndpointSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -2724,7 +2517,7 @@ pub mod ib_verbs_connection_server {
             }
         }
     }
-    impl<T> Clone for IbVerbsConnectionServer<T> {
+    impl<T> Clone for DfdaemonDownloadServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -2737,8 +2530,8 @@ pub mod ib_verbs_connection_server {
         }
     }
     /// Generated gRPC service name
-    pub const SERVICE_NAME: &str = "dfdaemon.v2.IBVerbsConnection";
-    impl<T> tonic::server::NamedService for IbVerbsConnectionServer<T> {
+    pub const SERVICE_NAME: &str = "dfdaemon.v2.DfdaemonDownload";
+    impl<T> tonic::server::NamedService for DfdaemonDownloadServer<T> {
         const NAME: &'static str = SERVICE_NAME;
     }
 }
