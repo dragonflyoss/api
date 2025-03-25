@@ -807,6 +807,39 @@ pub mod dfdaemon_upload_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "SyncHost"));
             self.inner.server_streaming(req, path, codec).await
         }
+        /// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
+        pub async fn exchange_ib_verbs_queue_pair_endpoint(
+            &mut self,
+            request: impl tonic::IntoRequest<
+                super::ExchangeIbVerbsQueuePairEndpointRequest,
+            >,
+        ) -> std::result::Result<
+            tonic::Response<super::ExchangeIbVerbsQueuePairEndpointResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/ExchangeIBVerbsQueuePairEndpoint",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "dfdaemon.v2.DfdaemonUpload",
+                        "ExchangeIBVerbsQueuePairEndpoint",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated client implementations.
@@ -1088,39 +1121,6 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
-        /// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
-        pub async fn exchange_ib_verbs_queue_pair_endpoint(
-            &mut self,
-            request: impl tonic::IntoRequest<
-                super::ExchangeIbVerbsQueuePairEndpointRequest,
-            >,
-        ) -> std::result::Result<
-            tonic::Response<super::ExchangeIbVerbsQueuePairEndpointResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.v2.DfdaemonDownload/ExchangeIBVerbsQueuePairEndpoint",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(
-                    GrpcMethod::new(
-                        "dfdaemon.v2.DfdaemonDownload",
-                        "ExchangeIBVerbsQueuePairEndpoint",
-                    ),
-                );
-            self.inner.unary(req, path, codec).await
-        }
     }
 }
 /// Generated server implementations.
@@ -1250,6 +1250,14 @@ pub mod dfdaemon_upload_server {
             &self,
             request: tonic::Request<super::SyncHostRequest>,
         ) -> std::result::Result<tonic::Response<Self::SyncHostStream>, tonic::Status>;
+        /// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
+        async fn exchange_ib_verbs_queue_pair_endpoint(
+            &self,
+            request: tonic::Request<super::ExchangeIbVerbsQueuePairEndpointRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ExchangeIbVerbsQueuePairEndpointResponse>,
+            tonic::Status,
+        >;
     }
     /// DfdaemonUpload represents upload service of dfdaemon.
     #[derive(Debug)]
@@ -1916,6 +1924,60 @@ pub mod dfdaemon_upload_server {
                     };
                     Box::pin(fut)
                 }
+                "/dfdaemon.v2.DfdaemonUpload/ExchangeIBVerbsQueuePairEndpoint" => {
+                    #[allow(non_camel_case_types)]
+                    struct ExchangeIBVerbsQueuePairEndpointSvc<T: DfdaemonUpload>(
+                        pub Arc<T>,
+                    );
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<
+                        super::ExchangeIbVerbsQueuePairEndpointRequest,
+                    > for ExchangeIBVerbsQueuePairEndpointSvc<T> {
+                        type Response = super::ExchangeIbVerbsQueuePairEndpointResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::ExchangeIbVerbsQueuePairEndpointRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::exchange_ib_verbs_queue_pair_endpoint(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ExchangeIBVerbsQueuePairEndpointSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 _ => {
                     Box::pin(async move {
                         Ok(
@@ -2022,14 +2084,6 @@ pub mod dfdaemon_download_server {
             request: tonic::Request<super::StatPersistentCacheTaskRequest>,
         ) -> std::result::Result<
             tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
-            tonic::Status,
-        >;
-        /// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
-        async fn exchange_ib_verbs_queue_pair_endpoint(
-            &self,
-            request: tonic::Request<super::ExchangeIbVerbsQueuePairEndpointRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ExchangeIbVerbsQueuePairEndpointResponse>,
             tonic::Status,
         >;
     }
@@ -2430,60 +2484,6 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StatPersistentCacheTaskSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/dfdaemon.v2.DfdaemonDownload/ExchangeIBVerbsQueuePairEndpoint" => {
-                    #[allow(non_camel_case_types)]
-                    struct ExchangeIBVerbsQueuePairEndpointSvc<T: DfdaemonDownload>(
-                        pub Arc<T>,
-                    );
-                    impl<
-                        T: DfdaemonDownload,
-                    > tonic::server::UnaryService<
-                        super::ExchangeIbVerbsQueuePairEndpointRequest,
-                    > for ExchangeIBVerbsQueuePairEndpointSvc<T> {
-                        type Response = super::ExchangeIbVerbsQueuePairEndpointResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<
-                                super::ExchangeIbVerbsQueuePairEndpointRequest,
-                            >,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as DfdaemonDownload>::exchange_ib_verbs_queue_pair_endpoint(
-                                        &inner,
-                                        request,
-                                    )
-                                    .await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let method = ExchangeIBVerbsQueuePairEndpointSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

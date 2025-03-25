@@ -165,6 +165,26 @@ func (mr *MockDfdaemonUploadClientMockRecorder) DownloadTask(ctx, in any, opts .
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).DownloadTask), varargs...)
 }
 
+// ExchangeIBVerbsQueuePairEndpoint mocks base method.
+func (m *MockDfdaemonUploadClient) ExchangeIBVerbsQueuePairEndpoint(ctx context.Context, in *dfdaemon.ExchangeIBVerbsQueuePairEndpointRequest, opts ...grpc.CallOption) (*dfdaemon.ExchangeIBVerbsQueuePairEndpointResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ExchangeIBVerbsQueuePairEndpoint", varargs...)
+	ret0, _ := ret[0].(*dfdaemon.ExchangeIBVerbsQueuePairEndpointResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ExchangeIBVerbsQueuePairEndpoint indicates an expected call of ExchangeIBVerbsQueuePairEndpoint.
+func (mr *MockDfdaemonUploadClientMockRecorder) ExchangeIBVerbsQueuePairEndpoint(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangeIBVerbsQueuePairEndpoint", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).ExchangeIBVerbsQueuePairEndpoint), varargs...)
+}
+
 // StatPersistentCacheTask mocks base method.
 func (m *MockDfdaemonUploadClient) StatPersistentCacheTask(ctx context.Context, in *dfdaemon.StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*common.PersistentCacheTask, error) {
 	m.ctrl.T.Helper()
@@ -1017,6 +1037,21 @@ func (mr *MockDfdaemonUploadServerMockRecorder) DownloadTask(arg0, arg1 any) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).DownloadTask), arg0, arg1)
 }
 
+// ExchangeIBVerbsQueuePairEndpoint mocks base method.
+func (m *MockDfdaemonUploadServer) ExchangeIBVerbsQueuePairEndpoint(arg0 context.Context, arg1 *dfdaemon.ExchangeIBVerbsQueuePairEndpointRequest) (*dfdaemon.ExchangeIBVerbsQueuePairEndpointResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ExchangeIBVerbsQueuePairEndpoint", arg0, arg1)
+	ret0, _ := ret[0].(*dfdaemon.ExchangeIBVerbsQueuePairEndpointResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ExchangeIBVerbsQueuePairEndpoint indicates an expected call of ExchangeIBVerbsQueuePairEndpoint.
+func (mr *MockDfdaemonUploadServerMockRecorder) ExchangeIBVerbsQueuePairEndpoint(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangeIBVerbsQueuePairEndpoint", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).ExchangeIBVerbsQueuePairEndpoint), arg0, arg1)
+}
+
 // StatPersistentCacheTask mocks base method.
 func (m *MockDfdaemonUploadServer) StatPersistentCacheTask(arg0 context.Context, arg1 *dfdaemon.StatPersistentCacheTaskRequest) (*common.PersistentCacheTask, error) {
 	m.ctrl.T.Helper()
@@ -1844,26 +1879,6 @@ func (mr *MockDfdaemonDownloadClientMockRecorder) DownloadTask(ctx, in any, opts
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadTask", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).DownloadTask), varargs...)
 }
 
-// ExchangeIBVerbsQueuePairEndpoint mocks base method.
-func (m *MockDfdaemonDownloadClient) ExchangeIBVerbsQueuePairEndpoint(ctx context.Context, in *dfdaemon.ExchangeIBVerbsQueuePairEndpointRequest, opts ...grpc.CallOption) (*dfdaemon.ExchangeIBVerbsQueuePairEndpointResponse, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "ExchangeIBVerbsQueuePairEndpoint", varargs...)
-	ret0, _ := ret[0].(*dfdaemon.ExchangeIBVerbsQueuePairEndpointResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ExchangeIBVerbsQueuePairEndpoint indicates an expected call of ExchangeIBVerbsQueuePairEndpoint.
-func (mr *MockDfdaemonDownloadClientMockRecorder) ExchangeIBVerbsQueuePairEndpoint(ctx, in any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangeIBVerbsQueuePairEndpoint", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).ExchangeIBVerbsQueuePairEndpoint), varargs...)
-}
-
 // StatPersistentCacheTask mocks base method.
 func (m *MockDfdaemonDownloadClient) StatPersistentCacheTask(ctx context.Context, in *dfdaemon.StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*common.PersistentCacheTask, error) {
 	m.ctrl.T.Helper()
@@ -2252,21 +2267,6 @@ func (m *MockDfdaemonDownloadServer) DownloadTask(arg0 *dfdaemon.DownloadTaskReq
 func (mr *MockDfdaemonDownloadServerMockRecorder) DownloadTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadTask", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).DownloadTask), arg0, arg1)
-}
-
-// ExchangeIBVerbsQueuePairEndpoint mocks base method.
-func (m *MockDfdaemonDownloadServer) ExchangeIBVerbsQueuePairEndpoint(arg0 context.Context, arg1 *dfdaemon.ExchangeIBVerbsQueuePairEndpointRequest) (*dfdaemon.ExchangeIBVerbsQueuePairEndpointResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ExchangeIBVerbsQueuePairEndpoint", arg0, arg1)
-	ret0, _ := ret[0].(*dfdaemon.ExchangeIBVerbsQueuePairEndpointResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ExchangeIBVerbsQueuePairEndpoint indicates an expected call of ExchangeIBVerbsQueuePairEndpoint.
-func (mr *MockDfdaemonDownloadServerMockRecorder) ExchangeIBVerbsQueuePairEndpoint(arg0, arg1 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangeIBVerbsQueuePairEndpoint", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).ExchangeIBVerbsQueuePairEndpoint), arg0, arg1)
 }
 
 // StatPersistentCacheTask mocks base method.

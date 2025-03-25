@@ -307,6 +307,9 @@ service DfdaemonUpload {
 
   // SyncHost sync host info from parents.
   rpc SyncHost(SyncHostRequest) returns (stream common.v2.Host);
+
+  // ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
+  rpc ExchangeIBVerbsQueuePairEndpoint(ExchangeIBVerbsQueuePairEndpointRequest) returns(ExchangeIBVerbsQueuePairEndpointResponse);
 }
 
 // DfdaemonDownload represents download service of dfdaemon.
@@ -331,7 +334,4 @@ service DfdaemonDownload {
 
   // StatPersistentCacheTask stats persistent cache task information.
   rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
-
-  // ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
-  rpc ExchangeIBVerbsQueuePairEndpoint(ExchangeIBVerbsQueuePairEndpointRequest) returns(ExchangeIBVerbsQueuePairEndpointResponse);
 }

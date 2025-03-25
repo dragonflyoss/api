@@ -48,6 +48,8 @@ type DfdaemonUploadClient interface {
 	DownloadPersistentCachePiece(ctx context.Context, in *DownloadPersistentCachePieceRequest, opts ...grpc.CallOption) (*DownloadPersistentCachePieceResponse, error)
 	// SyncHost sync host info from parents.
 	SyncHost(ctx context.Context, in *SyncHostRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncHostClient, error)
+	// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
+	ExchangeIBVerbsQueuePairEndpoint(ctx context.Context, in *ExchangeIBVerbsQueuePairEndpointRequest, opts ...grpc.CallOption) (*ExchangeIBVerbsQueuePairEndpointResponse, error)
 }
 
 type dfdaemonUploadClient struct {
@@ -281,6 +283,15 @@ func (x *dfdaemonUploadSyncHostClient) Recv() (*v2.Host, error) {
 	return m, nil
 }
 
+func (c *dfdaemonUploadClient) ExchangeIBVerbsQueuePairEndpoint(ctx context.Context, in *ExchangeIBVerbsQueuePairEndpointRequest, opts ...grpc.CallOption) (*ExchangeIBVerbsQueuePairEndpointResponse, error) {
+	out := new(ExchangeIBVerbsQueuePairEndpointResponse)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/ExchangeIBVerbsQueuePairEndpoint", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DfdaemonUploadServer is the server API for DfdaemonUpload service.
 // All implementations should embed UnimplementedDfdaemonUploadServer
 // for forward compatibility
@@ -309,6 +320,8 @@ type DfdaemonUploadServer interface {
 	DownloadPersistentCachePiece(context.Context, *DownloadPersistentCachePieceRequest) (*DownloadPersistentCachePieceResponse, error)
 	// SyncHost sync host info from parents.
 	SyncHost(*SyncHostRequest, DfdaemonUpload_SyncHostServer) error
+	// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
+	ExchangeIBVerbsQueuePairEndpoint(context.Context, *ExchangeIBVerbsQueuePairEndpointRequest) (*ExchangeIBVerbsQueuePairEndpointResponse, error)
 }
 
 // UnimplementedDfdaemonUploadServer should be embedded to have forward compatible implementations.
@@ -350,6 +363,9 @@ func (UnimplementedDfdaemonUploadServer) DownloadPersistentCachePiece(context.Co
 }
 func (UnimplementedDfdaemonUploadServer) SyncHost(*SyncHostRequest, DfdaemonUpload_SyncHostServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncHost not implemented")
+}
+func (UnimplementedDfdaemonUploadServer) ExchangeIBVerbsQueuePairEndpoint(context.Context, *ExchangeIBVerbsQueuePairEndpointRequest) (*ExchangeIBVerbsQueuePairEndpointResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExchangeIBVerbsQueuePairEndpoint not implemented")
 }
 
 // UnsafeDfdaemonUploadServer may be embedded to opt out of forward compatibility for this service.
@@ -594,6 +610,24 @@ func (x *dfdaemonUploadSyncHostServer) Send(m *v2.Host) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _DfdaemonUpload_ExchangeIBVerbsQueuePairEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExchangeIBVerbsQueuePairEndpointRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DfdaemonUploadServer).ExchangeIBVerbsQueuePairEndpoint(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dfdaemon.v2.DfdaemonUpload/ExchangeIBVerbsQueuePairEndpoint",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DfdaemonUploadServer).ExchangeIBVerbsQueuePairEndpoint(ctx, req.(*ExchangeIBVerbsQueuePairEndpointRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DfdaemonUpload_ServiceDesc is the grpc.ServiceDesc for DfdaemonUpload service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -628,6 +662,10 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DownloadPersistentCachePiece",
 			Handler:    _DfdaemonUpload_DownloadPersistentCachePiece_Handler,
+		},
+		{
+			MethodName: "ExchangeIBVerbsQueuePairEndpoint",
+			Handler:    _DfdaemonUpload_ExchangeIBVerbsQueuePairEndpoint_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
@@ -678,8 +716,6 @@ type DfdaemonDownloadClient interface {
 	UploadPersistentCacheTask(ctx context.Context, in *UploadPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
 	// StatPersistentCacheTask stats persistent cache task information.
 	StatPersistentCacheTask(ctx context.Context, in *StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
-	// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
-	ExchangeIBVerbsQueuePairEndpoint(ctx context.Context, in *ExchangeIBVerbsQueuePairEndpointRequest, opts ...grpc.CallOption) (*ExchangeIBVerbsQueuePairEndpointResponse, error)
 }
 
 type dfdaemonDownloadClient struct {
@@ -799,15 +835,6 @@ func (c *dfdaemonDownloadClient) StatPersistentCacheTask(ctx context.Context, in
 	return out, nil
 }
 
-func (c *dfdaemonDownloadClient) ExchangeIBVerbsQueuePairEndpoint(ctx context.Context, in *ExchangeIBVerbsQueuePairEndpointRequest, opts ...grpc.CallOption) (*ExchangeIBVerbsQueuePairEndpointResponse, error) {
-	out := new(ExchangeIBVerbsQueuePairEndpointResponse)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/ExchangeIBVerbsQueuePairEndpoint", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // DfdaemonDownloadServer is the server API for DfdaemonDownload service.
 // All implementations should embed UnimplementedDfdaemonDownloadServer
 // for forward compatibility
@@ -826,8 +853,6 @@ type DfdaemonDownloadServer interface {
 	UploadPersistentCacheTask(context.Context, *UploadPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error)
 	// StatPersistentCacheTask stats persistent cache task information.
 	StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error)
-	// ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
-	ExchangeIBVerbsQueuePairEndpoint(context.Context, *ExchangeIBVerbsQueuePairEndpointRequest) (*ExchangeIBVerbsQueuePairEndpointResponse, error)
 }
 
 // UnimplementedDfdaemonDownloadServer should be embedded to have forward compatible implementations.
@@ -854,9 +879,6 @@ func (UnimplementedDfdaemonDownloadServer) UploadPersistentCacheTask(context.Con
 }
 func (UnimplementedDfdaemonDownloadServer) StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatPersistentCacheTask not implemented")
-}
-func (UnimplementedDfdaemonDownloadServer) ExchangeIBVerbsQueuePairEndpoint(context.Context, *ExchangeIBVerbsQueuePairEndpointRequest) (*ExchangeIBVerbsQueuePairEndpointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ExchangeIBVerbsQueuePairEndpoint not implemented")
 }
 
 // UnsafeDfdaemonDownloadServer may be embedded to opt out of forward compatibility for this service.
@@ -1002,24 +1024,6 @@ func _DfdaemonDownload_StatPersistentCacheTask_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DfdaemonDownload_ExchangeIBVerbsQueuePairEndpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExchangeIBVerbsQueuePairEndpointRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DfdaemonDownloadServer).ExchangeIBVerbsQueuePairEndpoint(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/dfdaemon.v2.DfdaemonDownload/ExchangeIBVerbsQueuePairEndpoint",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonDownloadServer).ExchangeIBVerbsQueuePairEndpoint(ctx, req.(*ExchangeIBVerbsQueuePairEndpointRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // DfdaemonDownload_ServiceDesc is the grpc.ServiceDesc for DfdaemonDownload service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1046,10 +1050,6 @@ var DfdaemonDownload_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StatPersistentCacheTask",
 			Handler:    _DfdaemonDownload_StatPersistentCacheTask_Handler,
-		},
-		{
-			MethodName: "ExchangeIBVerbsQueuePairEndpoint",
-			Handler:    _DfdaemonDownload_ExchangeIBVerbsQueuePairEndpoint_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
