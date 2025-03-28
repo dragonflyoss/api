@@ -1523,6 +1523,8 @@ func (m *DownloadPersistentCacheTaskRequest) validate(all bool) error {
 
 	// no validation rules for NeedPieceContent
 
+	// no validation rules for ForceHardLink
+
 	if m.Tag != nil {
 		// no validation rules for Tag
 	}
