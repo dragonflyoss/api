@@ -163,7 +163,10 @@ pub struct DownloadPersistentCacheTaskRequest {
     /// Application of task.
     #[prost(string, optional, tag = "4")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// File path to be exported.
+    /// File path to be exported. If output_path is set, the exported file will be saved to the specified path.
+    /// Dfdaemon will try to create hard link to the output path before starting the export. If hard link creation fails,
+    /// it will copy the file to the output path after the export is completed.
+    /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
     #[prost(string, optional, tag = "5")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
@@ -172,6 +175,10 @@ pub struct DownloadPersistentCacheTaskRequest {
     /// need_piece_content is the flag to indicate whether the response needs to return piece content.
     #[prost(bool, tag = "7")]
     pub need_piece_content: bool,
+    /// force_hard_link is the flag to indicate whether the exported file must be hard linked to the output path.
+    /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
+    #[prost(bool, tag = "8")]
+    pub force_hard_link: bool,
 }
 /// DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
