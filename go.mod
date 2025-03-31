@@ -1,12 +1,11 @@
 module d7y.io/api/v2
 
 go 1.23.0
-
 require (
 	github.com/envoyproxy/protoc-gen-validate v1.2.1
 	go.uber.org/mock v0.4.0
 	google.golang.org/grpc v1.71.0
-	google.golang.org/protobuf v1.36.5
+	google.golang.org/protobuf v1.36.6
 )
 
 require (
