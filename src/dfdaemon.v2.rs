@@ -227,11 +227,13 @@ pub mod download_persistent_cache_task_response {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UploadPersistentCacheTaskRequest {
-    /// Task id can specify the task id of the persistent cache task, its length must be 64 bytes.
-    /// If task_id is none, dfdaemon will generate the new task id based on the file content, tag
-    /// and application by wyhash algorithm.
+    /// content_for_calculating_task_id is the content used to calculate the task id.
+    /// If content_for_calculating_task_id is set, use its value to calculate the task ID.
+    /// Otherwise, calculate the task ID based on the file content, tag and application by crc32 algorithm`.
     #[prost(string, optional, tag = "1")]
-    pub task_id: ::core::option::Option<::prost::alloc::string::String>,
+    pub content_for_calculating_task_id: ::core::option::Option<
+        ::prost::alloc::string::String,
+    >,
     /// Upload file path of persistent cache task.
     #[prost(string, tag = "2")]
     pub path: ::prost::alloc::string::String,

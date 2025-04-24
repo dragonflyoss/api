@@ -502,7 +502,7 @@ pub struct Download {
     pub force_hard_link: bool,
     /// content_for_calculating_task_id is the content used to calculate the task id.
     /// If content_for_calculating_task_id is set, use its value to calculate the task ID.
-    /// Otherwise, calculate the task ID based on `url`, `piece_length`, `tag`, `application`, and `filtered_query_params`.
+    /// Otherwise, calculate the task ID based on url, piece_length, tag, application, and filtered_query_params.
     #[prost(string, optional, tag = "23")]
     pub content_for_calculating_task_id: ::core::option::Option<
         ::prost::alloc::string::String,

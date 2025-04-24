@@ -1812,7 +1812,7 @@ type Download struct {
 	ForceHardLink bool `protobuf:"varint,22,opt,name=force_hard_link,json=forceHardLink,proto3" json:"force_hard_link,omitempty"`
 	// content_for_calculating_task_id is the content used to calculate the task id.
 	// If content_for_calculating_task_id is set, use its value to calculate the task ID.
-	// Otherwise, calculate the task ID based on `url`, `piece_length`, `tag`, `application`, and `filtered_query_params`.
+	// Otherwise, calculate the task ID based on url, piece_length, tag, application, and filtered_query_params.
 	ContentForCalculatingTaskId *string `protobuf:"bytes,23,opt,name=content_for_calculating_task_id,json=contentForCalculatingTaskId,proto3,oneof" json:"content_for_calculating_task_id,omitempty"`
 }
 
