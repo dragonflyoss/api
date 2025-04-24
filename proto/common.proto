@@ -443,6 +443,10 @@ message Download {
   // force_hard_link is the flag to indicate whether the download file must be hard linked to the output path.
   // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
   bool force_hard_link = 22;
+  // content_for_calculating_task_id is the content used to calculate the task id.
+  // If content_for_calculating_task_id is set, use its value to calculate the task ID.
+  // Otherwise, calculate the task ID based on `url`, `tag`, `application`, and `filtered_query_params`.
+  optional string content_for_calculating_task_id = 23;
 }
 
 // Object Storage related information.

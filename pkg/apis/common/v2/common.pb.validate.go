@@ -2546,6 +2546,10 @@ func (m *Download) validate(all bool) error {
 
 	}
 
+	if m.ContentForCalculatingTaskId != nil {
+		// no validation rules for ContentForCalculatingTaskId
+	}
+
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}
