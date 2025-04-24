@@ -2089,24 +2089,8 @@ func (m *UploadPersistentCacheTaskRequest) validate(all bool) error {
 		}
 	}
 
-	if m.TaskId != nil {
-
-		if m.GetTaskId() != "" {
-
-			if utf8.RuneCountInString(m.GetTaskId()) != 64 {
-				err := UploadPersistentCacheTaskRequestValidationError{
-					field:  "TaskId",
-					reason: "value length must be 64 runes",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-
-			}
-
-		}
-
+	if m.ContentForCalculatingTaskId != nil {
+		// no validation rules for ContentForCalculatingTaskId
 	}
 
 	if m.Tag != nil {
