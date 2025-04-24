@@ -500,6 +500,13 @@ pub struct Download {
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
     #[prost(bool, tag = "22")]
     pub force_hard_link: bool,
+    /// content_for_calculating_task_id is the content used to calculate the task id.
+    /// If content_for_calculating_task_id is set, use its value to calculate the task ID.
+    /// Otherwise, calculate the task ID based on `url`, `tag`, `application`, and `filtered_query_params`.
+    #[prost(string, optional, tag = "23")]
+    pub content_for_calculating_task_id: ::core::option::Option<
+        ::prost::alloc::string::String,
+    >,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
