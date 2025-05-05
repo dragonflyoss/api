@@ -18,10 +18,9 @@ jobs:
           fetch-depth: '0'
 
       - name: Golangci lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v8
         with:
-          version: v1.54
-          args: --verbose
+          version: v2.1.6
 
   rust-lint:
     name: Rust Lint
