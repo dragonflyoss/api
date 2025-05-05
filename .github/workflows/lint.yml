@@ -20,8 +20,7 @@ jobs:
       - name: Golangci lint
         uses: golangci/golangci-lint-action@v8
         with:
-          version: v1.54
-          args: --verbose
+          version: v2.1.6
 
   rust-lint:
     name: Rust Lint
