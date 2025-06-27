@@ -1585,6 +1585,10 @@ func (m *DownloadPersistentCacheTaskRequest) validate(all bool) error {
 
 	}
 
+	if m.Digest != nil {
+		// no validation rules for Digest
+	}
+
 	if len(errors) > 0 {
 		return DownloadPersistentCacheTaskRequestMultiError(errors)
 	}

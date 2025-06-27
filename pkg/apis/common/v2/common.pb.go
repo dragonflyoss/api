@@ -562,7 +562,12 @@ type Task struct {
 	Type TaskType `protobuf:"varint,2,opt,name=type,proto3,enum=common.v2.TaskType" json:"type,omitempty"`
 	// Download url.
 	Url string `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
-	// Digest of the task digest, for example blake3:xxx or sha256:yyy.
+	// Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
+	// Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
+	// Returns an error if the computed digest mismatches the expected value.
+	//
+	// Performance
+	// Digest calculation increases processing time. Enable only when data integrity verification is critical.
 	Digest *string `protobuf:"bytes,4,opt,name=digest,proto3,oneof" json:"digest,omitempty"`
 	// URL tag identifies different task for same url.
 	Tag *string `protobuf:"bytes,5,opt,name=tag,proto3,oneof" json:"tag,omitempty"`

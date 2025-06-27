@@ -85,7 +85,12 @@ pub struct Task {
     /// Download url.
     #[prost(string, tag = "3")]
     pub url: ::prost::alloc::string::String,
-    /// Digest of the task digest, for example blake3:xxx or sha256:yyy.
+    /// Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
+    /// Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
+    /// Returns an error if the computed digest mismatches the expected value.
+    ///
+    /// Performance
+    /// Digest calculation increases processing time. Enable only when data integrity verification is critical.
     #[prost(string, optional, tag = "4")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// URL tag identifies different task for same url.
