@@ -179,6 +179,14 @@ pub struct DownloadPersistentCacheTaskRequest {
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
     #[prost(bool, tag = "8")]
     pub force_hard_link: bool,
+    /// Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
+    /// Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
+    /// Returns an error if the computed digest mismatches the expected value.
+    ///
+    /// Performance
+    /// Digest calculation increases processing time. Enable only when data integrity verification is critical.
+    #[prost(string, optional, tag = "9")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
