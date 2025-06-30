@@ -192,7 +192,7 @@ dependencies = [
 name = "dragonfly-api"
 version = "2.1.40"
 dependencies = [
- "prost 0.13.5",
+ "prost 0.14.1",
  "prost-types 0.14.1",
  "prost-wkt-types",
  "serde",
