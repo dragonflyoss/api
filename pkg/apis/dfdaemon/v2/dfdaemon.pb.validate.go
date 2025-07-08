@@ -1372,6 +1372,491 @@ var _ interface {
 	ErrorName() string
 } = StatTaskRequestValidationError{}
 
+// Validate checks the field values on ListTaskEntriesRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListTaskEntriesRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListTaskEntriesRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListTaskEntriesRequestMultiError, or nil if none found.
+func (m *ListTaskEntriesRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListTaskEntriesRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := ListTaskEntriesRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Url
+
+	// no validation rules for RequestHeader
+
+	if m.Timeout != nil {
+
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListTaskEntriesRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListTaskEntriesRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListTaskEntriesRequestValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.ObjectStorage != nil {
+
+		if all {
+			switch v := interface{}(m.GetObjectStorage()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListTaskEntriesRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListTaskEntriesRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListTaskEntriesRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.Hdfs != nil {
+
+		if all {
+			switch v := interface{}(m.GetHdfs()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListTaskEntriesRequestValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListTaskEntriesRequestValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHdfs()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListTaskEntriesRequestValidationError{
+					field:  "Hdfs",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListTaskEntriesRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListTaskEntriesRequestMultiError is an error wrapping multiple validation
+// errors returned by ListTaskEntriesRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ListTaskEntriesRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListTaskEntriesRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListTaskEntriesRequestMultiError) AllErrors() []error { return m }
+
+// ListTaskEntriesRequestValidationError is the validation error returned by
+// ListTaskEntriesRequest.Validate if the designated constraints aren't met.
+type ListTaskEntriesRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListTaskEntriesRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListTaskEntriesRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListTaskEntriesRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListTaskEntriesRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListTaskEntriesRequestValidationError) ErrorName() string {
+	return "ListTaskEntriesRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListTaskEntriesRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListTaskEntriesRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListTaskEntriesRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListTaskEntriesRequestValidationError{}
+
+// Validate checks the field values on ListTaskEntriesResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListTaskEntriesResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListTaskEntriesResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListTaskEntriesResponseMultiError, or nil if none found.
+func (m *ListTaskEntriesResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListTaskEntriesResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	// no validation rules for ContentLength
+
+	// no validation rules for ResponseHeader
+
+	for idx, item := range m.GetEntries() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListTaskEntriesResponseValidationError{
+						field:  fmt.Sprintf("Entries[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListTaskEntriesResponseValidationError{
+						field:  fmt.Sprintf("Entries[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListTaskEntriesResponseValidationError{
+					field:  fmt.Sprintf("Entries[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.StatusCode != nil {
+
+		if m.GetStatusCode() != 0 {
+
+			if val := m.GetStatusCode(); val < 100 || val >= 599 {
+				err := ListTaskEntriesResponseValidationError{
+					field:  "StatusCode",
+					reason: "value must be inside range [100, 599)",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ErrorMessage != nil {
+		// no validation rules for ErrorMessage
+	}
+
+	if len(errors) > 0 {
+		return ListTaskEntriesResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListTaskEntriesResponseMultiError is an error wrapping multiple validation
+// errors returned by ListTaskEntriesResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListTaskEntriesResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListTaskEntriesResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListTaskEntriesResponseMultiError) AllErrors() []error { return m }
+
+// ListTaskEntriesResponseValidationError is the validation error returned by
+// ListTaskEntriesResponse.Validate if the designated constraints aren't met.
+type ListTaskEntriesResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListTaskEntriesResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListTaskEntriesResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListTaskEntriesResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListTaskEntriesResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListTaskEntriesResponseValidationError) ErrorName() string {
+	return "ListTaskEntriesResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListTaskEntriesResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListTaskEntriesResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListTaskEntriesResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListTaskEntriesResponseValidationError{}
+
+// Validate checks the field values on Entry with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Entry) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Entry with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in EntryMultiError, or nil if none found.
+func (m *Entry) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Entry) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Url
+
+	// no validation rules for ContentLength
+
+	// no validation rules for IsDir
+
+	if len(errors) > 0 {
+		return EntryMultiError(errors)
+	}
+
+	return nil
+}
+
+// EntryMultiError is an error wrapping multiple validation errors returned by
+// Entry.ValidateAll() if the designated constraints aren't met.
+type EntryMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m EntryMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m EntryMultiError) AllErrors() []error { return m }
+
+// EntryValidationError is the validation error returned by Entry.Validate if
+// the designated constraints aren't met.
+type EntryValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EntryValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EntryValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EntryValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EntryValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EntryValidationError) ErrorName() string { return "EntryValidationError" }
+
+// Error satisfies the builtin error interface
+func (e EntryValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEntry.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EntryValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EntryValidationError{}
+
 // Validate checks the field values on DeleteTaskRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.

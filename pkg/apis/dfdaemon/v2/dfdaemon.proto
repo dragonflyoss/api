@@ -115,6 +115,50 @@ message StatTaskRequest {
   string task_id = 1 [(validate.rules).string.min_len = 1];
 }
 
+// ListTaskEntriesRequest represents request of ListTaskEntries.
+message ListTaskEntriesRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // URL to be listed the entries.
+  string url = 2;
+  // HTTP header to be sent with the request.
+  map<string, string> request_header = 3;
+  // List timeout.
+  optional google.protobuf.Duration timeout = 4;
+  // certificate_chain is the client certs with DER format for the backend client to list the entries.
+  repeated bytes certificate_chain = 5;
+  // Object storage protocol information.
+  optional common.v2.ObjectStorage object_storage = 6;
+  // HDFS protocol information.
+  optional common.v2.HDFS hdfs = 7;
+}
+
+// ListTaskEntriesResponse represents response of ListTaskEntries.
+message ListTaskEntriesResponse {
+  // Success is the success of the response.
+  bool success = 1;
+  // Content length is the content length of the response
+  uint64 content_length = 2;
+  // HTTP header to be sent with the request.
+  map<string, string> response_header = 3;
+  // Backend HTTP status code.
+  optional int32 status_code = 4 [(validate.rules).int32 = {gte: 100, lt: 599, ignore_empty: true}];
+  /// Entries is the information of the entries in the directory.
+  repeated Entry entries = 5;
+  /// Error message is the error message of the response.
+  optional string error_message = 6;
+}
+
+// Entry represents an entry in a directory.
+message Entry {
+  // URL of the entry.
+  string url = 1;
+  // Size of the entry.
+  uint64 content_length = 2;
+  // Is directory or not.
+  bool is_dir = 3;
+}
+
 // DeleteTaskRequest represents request of DeleteTask.
 message DeleteTaskRequest {
   // Task id.
@@ -339,6 +383,9 @@ service DfdaemonDownload {
 
   // StatTask stats task information.
   rpc StatTask(StatTaskRequest) returns(common.v2.Task);
+
+  // ListTaskEntries lists task entries for downloading directory.
+  rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
 
   // DeleteTask deletes task from p2p network.
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);

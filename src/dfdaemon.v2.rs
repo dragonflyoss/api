@@ -135,6 +135,78 @@ pub struct StatTaskRequest {
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
 }
+/// ListTaskEntriesRequest represents request of ListTaskEntries.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListTaskEntriesRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// URL to be listed the entries.
+    #[prost(string, tag = "2")]
+    pub url: ::prost::alloc::string::String,
+    /// HTTP header to be sent with the request.
+    #[prost(map = "string, string", tag = "3")]
+    pub request_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// List timeout.
+    #[prost(message, optional, tag = "4")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// certificate_chain is the client certs with DER format for the backend client to list the entries.
+    #[prost(bytes = "vec", repeated, tag = "5")]
+    pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// Object storage protocol information.
+    #[prost(message, optional, tag = "6")]
+    pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
+    /// HDFS protocol information.
+    #[prost(message, optional, tag = "7")]
+    pub hdfs: ::core::option::Option<super::super::common::v2::Hdfs>,
+}
+/// ListTaskEntriesResponse represents response of ListTaskEntries.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListTaskEntriesResponse {
+    /// Success is the success of the response.
+    #[prost(bool, tag = "1")]
+    pub success: bool,
+    /// Content length is the content length of the response
+    #[prost(uint64, tag = "2")]
+    pub content_length: u64,
+    /// HTTP header to be sent with the request.
+    #[prost(map = "string, string", tag = "3")]
+    pub response_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Backend HTTP status code.
+    #[prost(int32, optional, tag = "4")]
+    pub status_code: ::core::option::Option<i32>,
+    /// / Entries is the information of the entries in the directory.
+    #[prost(message, repeated, tag = "5")]
+    pub entries: ::prost::alloc::vec::Vec<Entry>,
+    /// / Error message is the error message of the response.
+    #[prost(string, optional, tag = "6")]
+    pub error_message: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// Entry represents an entry in a directory.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Entry {
+    /// URL of the entry.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// Size of the entry.
+    #[prost(uint64, tag = "2")]
+    pub content_length: u64,
+    /// Is directory or not.
+    #[prost(bool, tag = "3")]
+    pub is_dir: bool,
+}
 /// DeleteTaskRequest represents request of DeleteTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -995,6 +1067,34 @@ pub mod dfdaemon_download_client {
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "StatTask"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// ListTaskEntries lists task entries for downloading directory.
+        pub async fn list_task_entries(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListTaskEntriesRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListTaskEntriesResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/ListTaskEntries",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "ListTaskEntries"),
+                );
             self.inner.unary(req, path, codec).await
         }
         /// DeleteTask deletes task from p2p network.
@@ -2060,6 +2160,14 @@ pub mod dfdaemon_download_server {
             tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
         >;
+        /// ListTaskEntries lists task entries for downloading directory.
+        async fn list_task_entries(
+            &self,
+            request: tonic::Request<super::ListTaskEntriesRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListTaskEntriesResponse>,
+            tonic::Status,
+        >;
         /// DeleteTask deletes task from p2p network.
         async fn delete_task(
             &self,
@@ -2258,6 +2366,52 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StatTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/ListTaskEntries" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListTaskEntriesSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::ListTaskEntriesRequest>
+                    for ListTaskEntriesSvc<T> {
+                        type Response = super::ListTaskEntriesResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ListTaskEntriesRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::list_task_entries(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ListTaskEntriesSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
