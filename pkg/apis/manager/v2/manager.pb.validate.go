@@ -1836,6 +1836,8 @@ func (m *UpdateSchedulerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for Config
+
 	if m.Idc != nil {
 
 		if m.GetIdc() != "" {

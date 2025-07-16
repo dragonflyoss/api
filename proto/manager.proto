@@ -211,6 +211,8 @@ message UpdateSchedulerRequest {
   int32 port = 7;
   // Scheduler features.
   repeated string features = 8;
+  // Scheduler Configuration.
+  bytes config = 9;
 }
 
 // ListSchedulersRequest represents request of ListSchedulers.
