@@ -130,18 +130,14 @@ message ListTaskEntriesRequest {
 
 // ListTaskEntriesResponse represents response of ListTaskEntries.
 message ListTaskEntriesResponse {
-  // Success is the success of the response.
-  bool success = 1;
   // Content length is the content length of the response
-  uint64 content_length = 2;
+  uint64 content_length = 1;
   // HTTP header to be sent with the request.
-  map<string, string> response_header = 3;
+  map<string, string> response_header = 2;
   // Backend HTTP status code.
-  optional int32 status_code = 4;
+  optional int32 status_code = 3;
   /// Entries is the information of the entries in the directory.
-  repeated Entry entries = 5;
-  /// Error message is the error message of the response.
-  optional string error_message = 6;
+  repeated Entry entries = 4;
 }
 
 // Entry represents an entry in a directory.

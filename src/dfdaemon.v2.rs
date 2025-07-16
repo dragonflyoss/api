@@ -170,27 +170,21 @@ pub struct ListTaskEntriesRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListTaskEntriesResponse {
-    /// Success is the success of the response.
-    #[prost(bool, tag = "1")]
-    pub success: bool,
     /// Content length is the content length of the response
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag = "1")]
     pub content_length: u64,
     /// HTTP header to be sent with the request.
-    #[prost(map = "string, string", tag = "3")]
+    #[prost(map = "string, string", tag = "2")]
     pub response_header: ::std::collections::HashMap<
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
     /// Backend HTTP status code.
-    #[prost(int32, optional, tag = "4")]
+    #[prost(int32, optional, tag = "3")]
     pub status_code: ::core::option::Option<i32>,
     /// / Entries is the information of the entries in the directory.
-    #[prost(message, repeated, tag = "5")]
+    #[prost(message, repeated, tag = "4")]
     pub entries: ::prost::alloc::vec::Vec<Entry>,
-    /// / Error message is the error message of the response.
-    #[prost(string, optional, tag = "6")]
-    pub error_message: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Entry represents an entry in a directory.
 #[derive(serde::Serialize, serde::Deserialize)]

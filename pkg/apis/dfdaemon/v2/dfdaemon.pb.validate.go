@@ -1610,8 +1610,6 @@ func (m *ListTaskEntriesResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Success
-
 	// no validation rules for ContentLength
 
 	// no validation rules for ResponseHeader
@@ -1667,10 +1665,6 @@ func (m *ListTaskEntriesResponse) validate(all bool) error {
 
 		}
 
-	}
-
-	if m.ErrorMessage != nil {
-		// no validation rules for ErrorMessage
 	}
 
 	if len(errors) > 0 {
