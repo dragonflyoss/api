@@ -268,6 +268,9 @@ pub struct UpdateSchedulerRequest {
     /// Scheduler features.
     #[prost(string, repeated, tag = "8")]
     pub features: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Scheduler Configuration.
+    #[prost(bytes = "vec", tag = "9")]
+    pub config: ::prost::alloc::vec::Vec<u8>,
 }
 /// ListSchedulersRequest represents request of ListSchedulers.
 #[derive(serde::Serialize, serde::Deserialize)]

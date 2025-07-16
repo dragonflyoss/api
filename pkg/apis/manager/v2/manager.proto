@@ -214,6 +214,8 @@ message UpdateSchedulerRequest {
   int32 port = 7 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
   // Scheduler features.
   repeated string features = 8;
+  // Scheduler configuration.
+  bytes config = 9;
 }
 
 // ListSchedulersRequest represents request of ListSchedulers.
