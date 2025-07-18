@@ -234,6 +234,8 @@ message ListSchedulersRequest {
   string version = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Dfdaemon commit.
   string commit = 7 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  // ID of the cluster to which the scheduler belongs.
+  uint64 scheduler_cluster_id = 8;
 }
 
 // ListSchedulersResponse represents response of ListSchedulers.

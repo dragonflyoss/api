@@ -2072,6 +2072,8 @@ func (m *ListSchedulersRequest) validate(all bool) error {
 
 	}
 
+	// no validation rules for SchedulerClusterId
+
 	if m.Idc != nil {
 
 		if m.GetIdc() != "" {

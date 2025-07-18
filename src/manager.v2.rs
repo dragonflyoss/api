@@ -298,6 +298,9 @@ pub struct ListSchedulersRequest {
     /// Dfdaemon commit.
     #[prost(string, tag = "7")]
     pub commit: ::prost::alloc::string::String,
+    /// ID of the cluster to which the scheduler belongs.
+    #[prost(uint64, tag = "8")]
+    pub scheduler_cluster_id: u64,
 }
 /// ListSchedulersResponse represents response of ListSchedulers.
 #[derive(serde::Serialize, serde::Deserialize)]
