@@ -231,6 +231,8 @@ message ListSchedulersRequest {
   string version = 6;
   // Dfdaemon commit.
   string commit = 7;
+  // ID of the cluster to which the scheduler belongs.
+  uint64 scheduler_cluster_id = 8;
 }
 
 // ListSchedulersResponse represents response of ListSchedulers.
