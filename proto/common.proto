@@ -452,6 +452,10 @@ message Download {
   // If content_for_calculating_task_id is set, use its value to calculate the task ID.
   // Otherwise, calculate the task ID based on url, piece_length, tag, application, and filtered_query_params.
   optional string content_for_calculating_task_id = 23;
+  // remote_ip represents the IP address of the client initiating the download request.
+  // For proxy requests, it is set to the IP address of the request source.
+  // For dfget requests, it is set to the IP address of the dfget.
+  optional string remote_ip = 24;
 }
 
 // Object Storage related information.

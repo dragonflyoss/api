@@ -2068,6 +2068,25 @@ func (m *DownloadPersistentCacheTaskRequest) validate(all bool) error {
 		// no validation rules for Digest
 	}
 
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := DownloadPersistentCacheTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return DownloadPersistentCacheTaskRequestMultiError(errors)
 	}
@@ -2636,6 +2655,25 @@ func (m *UploadPersistentCacheTaskRequest) validate(all bool) error {
 
 	}
 
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := UploadPersistentCacheTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return UploadPersistentCacheTaskRequestMultiError(errors)
 	}
@@ -2867,6 +2905,25 @@ func (m *StatPersistentCacheTaskRequest) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := StatPersistentCacheTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if len(errors) > 0 {

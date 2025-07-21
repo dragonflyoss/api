@@ -512,6 +512,11 @@ pub struct Download {
     pub content_for_calculating_task_id: ::core::option::Option<
         ::prost::alloc::string::String,
     >,
+    /// remote_ip represents the IP address of the client initiating the download request.
+    /// For proxy requests, it is set to the IP address of the request source.
+    /// For dfget requests, it is set to the IP address of the dfget.
+    #[prost(string, optional, tag = "24")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]

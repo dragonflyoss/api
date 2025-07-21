@@ -253,6 +253,9 @@ pub struct DownloadPersistentCacheTaskRequest {
     /// Digest calculation increases processing time. Enable only when data integrity verification is critical.
     #[prost(string, optional, tag = "9")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
+    /// Remote IP represents the IP address of the dfcache initiating the download request.
+    #[prost(string, optional, tag = "10")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -329,6 +332,9 @@ pub struct UploadPersistentCacheTaskRequest {
     /// Download timeout.
     #[prost(message, optional, tag = "8")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Remote IP represents the IP address of the dfcache initiating the upload request.
+    #[prost(string, optional, tag = "9")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -353,6 +359,9 @@ pub struct StatPersistentCacheTaskRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the dfcache initiating the upload request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DeletePersistentCacheTaskRequest represents request of DeletePersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]

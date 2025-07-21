@@ -192,6 +192,8 @@ message DownloadPersistentCacheTaskRequest {
   // Performance
   // Digest calculation increases processing time. Enable only when data integrity verification is critical.
   optional string digest = 9;
+  // Remote IP represents the IP address of the dfcache initiating the download request.
+  optional string remote_ip = 10 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
 // DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.
@@ -237,6 +239,8 @@ message UploadPersistentCacheTaskRequest {
   google.protobuf.Duration ttl = 7 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
   // Download timeout.
   optional google.protobuf.Duration timeout = 8;
+  // Remote IP represents the IP address of the dfcache initiating the upload request.
+  optional string remote_ip = 9 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
 // UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.
@@ -254,6 +258,8 @@ message UpdatePersistentCacheTaskRequest {
 message StatPersistentCacheTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Remote IP represents the IP address of the dfcache initiating the stat request.
+  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
 // DeletePersistentCacheTaskRequest represents request of DeletePersistentCacheTask.
