@@ -2550,6 +2550,25 @@ func (m *Download) validate(all bool) error {
 		// no validation rules for ContentForCalculatingTaskId
 	}
 
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := DownloadValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}
