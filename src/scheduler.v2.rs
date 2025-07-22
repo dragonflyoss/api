@@ -329,6 +329,235 @@ pub struct DeleteHostRequest {
     #[prost(string, tag = "1")]
     pub host_id: ::prost::alloc::string::String,
 }
+/// RegisterCachePeerRequest represents cache peer registered request of AnnounceCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RegisterCachePeerRequest {
+    /// Download information.
+    #[prost(message, optional, tag = "1")]
+    pub download: ::core::option::Option<super::super::common::v2::Download>,
+}
+/// DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct DownloadCachePeerStartedRequest {}
+/// DownloadCachePeerBackToSourceStartedRequest represents cache peer download back-to-source started request of AnnounceCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadCachePeerBackToSourceStartedRequest {
+    /// The description of the back-to-source reason.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// RescheduleCachePeerRequest represents reschedule request of AnnounceCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RescheduleCachePeerRequest {
+    /// Candidate parent ids.
+    #[prost(message, repeated, tag = "1")]
+    pub candidate_parents: ::prost::alloc::vec::Vec<super::super::common::v2::CachePeer>,
+    /// The description of the reschedule reason.
+    #[prost(string, optional, tag = "2")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// DownloadCachePeerFinishedRequest represents cache peer download finished request of AnnounceCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct DownloadCachePeerFinishedRequest {
+    /// Total content length.
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
+    /// Total piece count.
+    #[prost(uint32, tag = "2")]
+    pub piece_count: u32,
+}
+/// DownloadCachePeerBackToSourceFinishedRequest represents cache peer download back-to-source finished request of AnnounceCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct DownloadCachePeerBackToSourceFinishedRequest {
+    /// Total content length.
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
+    /// Total piece count.
+    #[prost(uint32, tag = "2")]
+    pub piece_count: u32,
+}
+/// DownloadCachePeerFailedRequest represents cache peer download failed request of AnnounceCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadCachePeerFailedRequest {
+    /// The description of the download failed.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// DownloadCachePeerBackToSourceFailedRequest represents cache peer download back-to-source failed request of AnnounceCachePeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadCachePeerBackToSourceFailedRequest {
+    /// The description of the download back-to-source failed.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// AnnounceCachePeerRequest represents request of AnnounceCachePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AnnounceCachePeerRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+    #[prost(
+        oneof = "announce_cache_peer_request::Request",
+        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15"
+    )]
+    pub request: ::core::option::Option<announce_cache_peer_request::Request>,
+}
+/// Nested message and enum types in `AnnounceCachePeerRequest`.
+pub mod announce_cache_peer_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Request {
+        #[prost(message, tag = "4")]
+        RegisterCachePeerRequest(super::RegisterCachePeerRequest),
+        #[prost(message, tag = "5")]
+        DownloadCachePeerStartedRequest(super::DownloadCachePeerStartedRequest),
+        #[prost(message, tag = "6")]
+        DownloadCachePeerBackToSourceStartedRequest(
+            super::DownloadCachePeerBackToSourceStartedRequest,
+        ),
+        #[prost(message, tag = "7")]
+        RescheduleCachePeerRequest(super::RescheduleCachePeerRequest),
+        #[prost(message, tag = "8")]
+        DownloadCachePeerFinishedRequest(super::DownloadCachePeerFinishedRequest),
+        #[prost(message, tag = "9")]
+        DownloadCachePeerBackToSourceFinishedRequest(
+            super::DownloadCachePeerBackToSourceFinishedRequest,
+        ),
+        #[prost(message, tag = "10")]
+        DownloadCachePeerFailedRequest(super::DownloadCachePeerFailedRequest),
+        #[prost(message, tag = "11")]
+        DownloadCachePeerBackToSourceFailedRequest(
+            super::DownloadCachePeerBackToSourceFailedRequest,
+        ),
+        #[prost(message, tag = "12")]
+        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
+        #[prost(message, tag = "13")]
+        DownloadPieceBackToSourceFinishedRequest(
+            super::DownloadPieceBackToSourceFinishedRequest,
+        ),
+        #[prost(message, tag = "14")]
+        DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
+        #[prost(message, tag = "15")]
+        DownloadPieceBackToSourceFailedRequest(
+            super::DownloadPieceBackToSourceFailedRequest,
+        ),
+    }
+}
+/// EmptyCacheTaskResponse represents empty cache task response of AnnounceCachePeerResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct EmptyCacheTaskResponse {}
+/// NormalCacheTaskResponse represents normal cache task response of AnnounceCachePeerResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NormalCacheTaskResponse {
+    /// Candidate parents.
+    #[prost(message, repeated, tag = "1")]
+    pub candidate_parents: ::prost::alloc::vec::Vec<super::super::common::v2::CachePeer>,
+}
+/// AnnounceCachePeerResponse represents response of AnnounceCachePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AnnounceCachePeerResponse {
+    #[prost(oneof = "announce_cache_peer_response::Response", tags = "1, 2, 3")]
+    pub response: ::core::option::Option<announce_cache_peer_response::Response>,
+}
+/// Nested message and enum types in `AnnounceCachePeerResponse`.
+pub mod announce_cache_peer_response {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "1")]
+        EmptyCacheTaskResponse(super::EmptyCacheTaskResponse),
+        #[prost(message, tag = "2")]
+        NormalCacheTaskResponse(super::NormalCacheTaskResponse),
+        #[prost(message, tag = "3")]
+        NeedBackToSourceResponse(super::NeedBackToSourceResponse),
+    }
+}
+/// StatCachePeerRequest represents request of StatCachePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatCachePeerRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+}
+/// DeleteCachePeerRequest represents request of DeleteCachePeer.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteCachePeerRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+}
+/// StatCacheTaskRequest represents request of StatCacheTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatCacheTaskRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+}
+/// DeleteCacheTaskRequest represents request of DeleteCacheTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteCacheTaskRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+}
 /// RegisterPersistentCachePeerRequest represents persistent cache peer registered request of AnnouncePersistentCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -887,6 +1116,132 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteHost"));
             self.inner.unary(req, path, codec).await
         }
+        /// AnnounceCachePeer announces cache peer to scheduler.
+        pub async fn announce_cache_peer(
+            &mut self,
+            request: impl tonic::IntoStreamingRequest<
+                Message = super::AnnounceCachePeerRequest,
+            >,
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<super::AnnounceCachePeerResponse>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/AnnounceCachePeer",
+            );
+            let mut req = request.into_streaming_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "AnnounceCachePeer"));
+            self.inner.streaming(req, path, codec).await
+        }
+        /// Checks information of cache peer.
+        pub async fn stat_cache_peer(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatCachePeerRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CachePeer>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/StatCachePeer",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatCachePeer"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// DeletCacheePeer releases cache peer in scheduler.
+        pub async fn delete_cache_peer(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteCachePeerRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/DeleteCachePeer",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteCachePeer"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// Checks information of cache task.
+        pub async fn stat_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CacheTask>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/StatCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatCacheTask"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// DeleteCacheTask releases cache task in scheduler.
+        pub async fn delete_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteCacheTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/DeleteCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteCacheTask"));
+            self.inner.unary(req, path, codec).await
+        }
         /// AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
         pub async fn announce_persistent_cache_peer(
             &mut self,
@@ -1193,6 +1548,49 @@ pub mod scheduler_server {
         async fn delete_host(
             &self,
             request: tonic::Request<super::DeleteHostRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Server streaming response type for the AnnounceCachePeer method.
+        type AnnounceCachePeerStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<
+                    super::AnnounceCachePeerResponse,
+                    tonic::Status,
+                >,
+            >
+            + std::marker::Send
+            + 'static;
+        /// AnnounceCachePeer announces cache peer to scheduler.
+        async fn announce_cache_peer(
+            &self,
+            request: tonic::Request<tonic::Streaming<super::AnnounceCachePeerRequest>>,
+        ) -> std::result::Result<
+            tonic::Response<Self::AnnounceCachePeerStream>,
+            tonic::Status,
+        >;
+        /// Checks information of cache peer.
+        async fn stat_cache_peer(
+            &self,
+            request: tonic::Request<super::StatCachePeerRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CachePeer>,
+            tonic::Status,
+        >;
+        /// DeletCacheePeer releases cache peer in scheduler.
+        async fn delete_cache_peer(
+            &self,
+            request: tonic::Request<super::DeleteCachePeerRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Checks information of cache task.
+        async fn stat_cache_task(
+            &self,
+            request: tonic::Request<super::StatCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CacheTask>,
+            tonic::Status,
+        >;
+        /// DeleteCacheTask releases cache task in scheduler.
+        async fn delete_cache_task(
+            &self,
+            request: tonic::Request<super::DeleteCacheTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Server streaming response type for the AnnouncePersistentCachePeer method.
         type AnnouncePersistentCachePeerStream: tonic::codegen::tokio_stream::Stream<
@@ -1678,6 +2076,234 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeleteHostSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/AnnounceCachePeer" => {
+                    #[allow(non_camel_case_types)]
+                    struct AnnounceCachePeerSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::StreamingService<super::AnnounceCachePeerRequest>
+                    for AnnounceCachePeerSvc<T> {
+                        type Response = super::AnnounceCachePeerResponse;
+                        type ResponseStream = T::AnnounceCachePeerStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                tonic::Streaming<super::AnnounceCachePeerRequest>,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::announce_cache_peer(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = AnnounceCachePeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/StatCachePeer" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatCachePeerSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::StatCachePeerRequest>
+                    for StatCachePeerSvc<T> {
+                        type Response = super::super::super::common::v2::CachePeer;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatCachePeerRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::stat_cache_peer(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatCachePeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/DeleteCachePeer" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteCachePeerSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::DeleteCachePeerRequest>
+                    for DeleteCachePeerSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteCachePeerRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::delete_cache_peer(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeleteCachePeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/StatCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatCacheTaskSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::StatCacheTaskRequest>
+                    for StatCacheTaskSvc<T> {
+                        type Response = super::super::super::common::v2::CacheTask;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::stat_cache_task(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/DeleteCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteCacheTaskSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::DeleteCacheTaskRequest>
+                    for DeleteCacheTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::delete_cache_task(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeleteCacheTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

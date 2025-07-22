@@ -38,6 +38,45 @@ pub struct Peer {
     #[prost(message, optional, tag = "11")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
+/// CachePeer metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CachePeer {
+    /// Peer id.
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    /// Range is url range of request.
+    #[prost(message, optional, tag = "2")]
+    pub range: ::core::option::Option<Range>,
+    /// Peer priority.
+    #[prost(enumeration = "Priority", tag = "3")]
+    pub priority: i32,
+    /// Pieces of peer.
+    #[prost(message, repeated, tag = "4")]
+    pub pieces: ::prost::alloc::vec::Vec<Piece>,
+    /// Peer downloads costs time.
+    #[prost(message, optional, tag = "5")]
+    pub cost: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Peer state.
+    #[prost(string, tag = "6")]
+    pub state: ::prost::alloc::string::String,
+    /// Cache Task info.
+    #[prost(message, optional, tag = "7")]
+    pub task: ::core::option::Option<CacheTask>,
+    /// Host info.
+    #[prost(message, optional, tag = "8")]
+    pub host: ::core::option::Option<Host>,
+    /// NeedBackToSource needs downloaded from source.
+    #[prost(bool, tag = "9")]
+    pub need_back_to_source: bool,
+    /// Peer create time.
+    #[prost(message, optional, tag = "10")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Peer update time.
+    #[prost(message, optional, tag = "11")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+}
 /// PersistentCachePeer metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -76,6 +115,75 @@ pub struct PersistentCachePeer {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Task {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    /// Task type.
+    #[prost(enumeration = "TaskType", tag = "2")]
+    pub r#type: i32,
+    /// Download url.
+    #[prost(string, tag = "3")]
+    pub url: ::prost::alloc::string::String,
+    /// Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
+    /// Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
+    /// Returns an error if the computed digest mismatches the expected value.
+    ///
+    /// Performance
+    /// Digest calculation increases processing time. Enable only when data integrity verification is critical.
+    #[prost(string, optional, tag = "4")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
+    /// URL tag identifies different task for same url.
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Filtered query params to generate the task id.
+    /// When filter is \["Signature", "Expires", "ns"\], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+    #[prost(string, repeated, tag = "7")]
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Task request headers.
+    #[prost(map = "string, string", tag = "8")]
+    pub request_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Task content length.
+    #[prost(uint64, tag = "9")]
+    pub content_length: u64,
+    /// Task piece count.
+    #[prost(uint32, tag = "10")]
+    pub piece_count: u32,
+    /// Task size scope.
+    #[prost(enumeration = "SizeScope", tag = "11")]
+    pub size_scope: i32,
+    /// Pieces of task.
+    #[prost(message, repeated, tag = "12")]
+    pub pieces: ::prost::alloc::vec::Vec<Piece>,
+    /// Task state.
+    #[prost(string, tag = "13")]
+    pub state: ::prost::alloc::string::String,
+    /// Task peer count.
+    #[prost(uint32, tag = "14")]
+    pub peer_count: u32,
+    /// Task contains available peer.
+    #[prost(bool, tag = "15")]
+    pub has_available_peer: bool,
+    /// Task create time.
+    #[prost(message, optional, tag = "16")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task update time.
+    #[prost(message, optional, tag = "17")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+}
+/// CacheTask metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CacheTask {
     /// Task id.
     #[prost(string, tag = "1")]
     pub id: ::prost::alloc::string::String,
@@ -499,8 +607,7 @@ pub struct Download {
     /// load_to_cache indicates whether the content downloaded will be stored in the cache storage.
     /// Cache storage is designed to store downloaded piece content from preheat tasks,
     /// allowing other peers to access the content from memory instead of disk.
-    #[prost(bool, tag = "21")]
-    pub load_to_cache: bool,
+    /// bool load_to_cache = 21;
     /// force_hard_link is the flag to indicate whether the download file must be hard linked to the output path.
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
     #[prost(bool, tag = "22")]
@@ -658,6 +765,9 @@ pub enum TaskType {
     /// the task in the peer's disk and copy multiple replicas to remote peers to prevent data loss.
     /// When the expiration time is reached, task will be deleted in the P2P cluster.
     PersistentCache = 2,
+    /// CACHE is cache type of task, it can import file and export file in P2P cluster.
+    /// When the cache task is imported into the P2P cluster, dfdaemon will download the cache task from the cache of remote peer.
+    Cache = 3,
 }
 impl TaskType {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -669,6 +779,7 @@ impl TaskType {
             TaskType::Standard => "STANDARD",
             TaskType::Persistent => "PERSISTENT",
             TaskType::PersistentCache => "PERSISTENT_CACHE",
+            TaskType::Cache => "CACHE",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -677,6 +788,7 @@ impl TaskType {
             "STANDARD" => Some(Self::Standard),
             "PERSISTENT" => Some(Self::Persistent),
             "PERSISTENT_CACHE" => Some(Self::PersistentCache),
+            "CACHE" => Some(Self::Cache),
             _ => None,
         }
     }

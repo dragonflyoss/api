@@ -167,6 +167,96 @@ message DeleteTaskRequest {
   optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
+// DownloadCacheTaskRequest represents request of DownloadCacheTask.
+message DownloadCacheTaskRequest {
+  // Download information.
+  common.v2.Download download = 1 [(validate.rules).message.required = true];
+}
+
+// DownloadCacheTaskStartedResponse represents cache task download started response of DownloadCacheTaskResponse.
+message DownloadCacheTaskStartedResponse {
+  // Task content length.
+  uint64 content_length = 1;
+
+  // Range is url range of request. If protocol is http, range
+  // is parsed from http header. If other protocol, range comes
+  // from download range field.
+  optional common.v2.Range range = 2;
+
+  // Task response headers.
+  map<string, string> response_header = 3;
+
+  // Need to download pieces.
+  repeated common.v2.Piece pieces = 4;
+}
+
+// DownloadCacheTaskResponse represents response of DownloadCacheTask.
+message DownloadCacheTaskResponse {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+
+  oneof response {
+    option (validate.required) = true;
+
+    DownloadCacheTaskStartedResponse download_cache_task_started_response = 4;
+    DownloadPieceFinishedResponse download_piece_finished_response = 5;
+  }
+}
+
+// SyncCachePiecesRequest represents request of SyncCachePieces.
+message SyncCachePiecesRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Interested piece numbers.
+  repeated uint32 interested_cache_piece_numbers = 3 [(validate.rules).repeated = {min_items: 1}];
+}
+
+// SyncCachePiecesResponse represents response of SyncCachePieces.
+message SyncCachePiecesResponse {
+  // Exist piece number.
+  uint32 number = 1;
+  // Piece offset.
+  uint64 offset = 2;
+  // Piece length.
+  uint64 length = 3;
+}
+
+// DownloadCachePieceRequest represents request of DownloadCachePiece.
+message DownloadCachePieceRequest{
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Piece number.
+  uint32 piece_number = 3;
+}
+
+// DownloadCachePieceResponse represents response of DownloadCachePieces.
+message DownloadCachePieceResponse {
+  // Piece information.
+  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
+  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
+  optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
+}
+
+// StatCacheTaskRequest represents request of StatCacheTask.
+message StatCacheTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
+// DeleteCacheTaskRequest represents request of DeleteCacheTask.
+message DeleteCacheTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+}
+
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
 message DownloadPersistentCacheTaskRequest {
   // Task id.
@@ -363,6 +453,21 @@ service DfdaemonUpload {
   // DownloadPiece downloads piece from the remote peer.
   rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
 
+  // DownloadCacheTask downloads cache task from p2p network.
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+
+  // StatCacheTask stats cache task information.
+  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+
+  // DeleteCacheTask deletes cache task from p2p network.
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
+
+  // SyncCachePieces syncs cache piece metadatas from remote peer.
+  rpc SyncCachePieces(SyncCachePiecesRequest) returns(stream SyncCachePiecesResponse);
+
+  // DownloadCachePiece downloads cache piece from the remote peer.
+  rpc DownloadCachePiece(DownloadCachePieceRequest)returns(DownloadCachePieceResponse);
+
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
 
@@ -404,6 +509,15 @@ service DfdaemonDownload {
 
   // DeleteHost releases host in scheduler.
   rpc DeleteHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+
+  // DownloadCacheTask downloads cache task from p2p network.
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+
+  // StatCacheTask stats cache task information.
+  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+
+  // DeleteCacheTask deletes cache task from p2p network.
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
