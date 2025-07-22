@@ -3514,25 +3514,6 @@ func (m *DownloadPersistentCachePieceRequest) validate(all bool) error {
 
 	// no validation rules for PieceNumber
 
-	if m.RemoteIp != nil {
-
-		if m.GetRemoteIp() != "" {
-
-			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
-				err := DownloadPersistentCachePieceRequestValidationError{
-					field:  "RemoteIp",
-					reason: "value must be a valid IP address",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
 	if len(errors) > 0 {
 		return DownloadPersistentCachePieceRequestMultiError(errors)
 	}

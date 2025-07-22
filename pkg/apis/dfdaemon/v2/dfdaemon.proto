@@ -306,8 +306,6 @@ message DownloadPersistentCachePieceRequest{
   string task_id = 2 [(validate.rules).string.min_len = 1];
   // Piece number.
   uint32 piece_number = 3;
-  // Remote IP represents the IP address of the client initiating the download request.
-  optional string remote_ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
 // DownloadPersistentCachePieceResponse represents response of DownloadPersistentCachePieces.

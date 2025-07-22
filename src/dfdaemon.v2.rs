@@ -431,9 +431,6 @@ pub struct DownloadPersistentCachePieceRequest {
     /// Piece number.
     #[prost(uint32, tag = "3")]
     pub piece_number: u32,
-    /// Remote IP represents the IP address of the client initiating the download request.
-    #[prost(string, optional, tag = "4")]
-    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPersistentCachePieceResponse represents response of DownloadPersistentCachePieces.
 #[derive(serde::Serialize, serde::Deserialize)]
