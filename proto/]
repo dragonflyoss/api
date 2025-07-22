@@ -158,8 +158,6 @@ message Entry {
 message DeleteTaskRequest {
   // Task id.
   string task_id = 1;
-  // Remote IP represents the IP address of the client initiating the delete request.
-  optional string remote_ip = 2;
 }
 
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
@@ -193,7 +191,7 @@ message DownloadPersistentCacheTaskRequest {
   // Performance
   // Digest calculation increases processing time. Enable only when data integrity verification is critical.
   optional string digest = 9;
-  // Remote IP represents the IP address of the client initiating the download request.
+  // Remote IP represents the IP address of the dfcache initiating the download request.
   optional string remote_ip = 10;
 }
 
@@ -238,7 +236,7 @@ message UploadPersistentCacheTaskRequest {
   google.protobuf.Duration ttl = 7;
   // Download timeout.
   optional google.protobuf.Duration timeout = 8;
-  // Remote IP represents the IP address of the client initiating the upload request.
+  // Remote IP represents the IP address of the dfcache initiating the upload request.
   optional string remote_ip = 9;
 }
 

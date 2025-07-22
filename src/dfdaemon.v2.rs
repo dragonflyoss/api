@@ -134,6 +134,9 @@ pub struct StatTaskRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the stat request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// ListTaskEntriesRequest represents request of ListTaskEntries.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -164,6 +167,9 @@ pub struct ListTaskEntriesRequest {
     /// HDFS protocol information.
     #[prost(message, optional, tag = "7")]
     pub hdfs: ::core::option::Option<super::super::common::v2::Hdfs>,
+    /// Remote IP represents the IP address of the client initiating the list request.
+    #[prost(string, optional, tag = "8")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// ListTaskEntriesResponse represents response of ListTaskEntries.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -209,6 +215,9 @@ pub struct DeleteTaskRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the delete request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -253,7 +262,7 @@ pub struct DownloadPersistentCacheTaskRequest {
     /// Digest calculation increases processing time. Enable only when data integrity verification is critical.
     #[prost(string, optional, tag = "9")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
-    /// Remote IP represents the IP address of the dfcache initiating the download request.
+    /// Remote IP represents the IP address of the client initiating the download request.
     #[prost(string, optional, tag = "10")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
@@ -332,7 +341,7 @@ pub struct UploadPersistentCacheTaskRequest {
     /// Download timeout.
     #[prost(message, optional, tag = "8")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
-    /// Remote IP represents the IP address of the dfcache initiating the upload request.
+    /// Remote IP represents the IP address of the client initiating the upload request.
     #[prost(string, optional, tag = "9")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
@@ -350,6 +359,9 @@ pub struct UpdatePersistentCacheTaskRequest {
     /// when the task is deleted by the user.
     #[prost(bool, tag = "2")]
     pub persistent: bool,
+    /// Remote IP represents the IP address of the client initiating the list request.
+    #[prost(string, optional, tag = "3")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// StatPersistentCacheTaskRequest represents request of StatPersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -359,7 +371,7 @@ pub struct StatPersistentCacheTaskRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
-    /// Remote IP represents the IP address of the dfcache initiating the upload request.
+    /// Remote IP represents the IP address of the client initiating the stat request.
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
@@ -371,6 +383,9 @@ pub struct DeletePersistentCacheTaskRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the delete request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// SyncPersistentCachePiecesRequest represents request of SyncPersistentCachePieces.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -416,6 +431,9 @@ pub struct DownloadPersistentCachePieceRequest {
     /// Piece number.
     #[prost(uint32, tag = "3")]
     pub piece_number: u32,
+    /// Remote IP represents the IP address of the client initiating the download request.
+    #[prost(string, optional, tag = "4")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPersistentCachePieceResponse represents response of DownloadPersistentCachePieces.
 #[derive(serde::Serialize, serde::Deserialize)]
