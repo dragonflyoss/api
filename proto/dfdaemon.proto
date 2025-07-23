@@ -43,6 +43,9 @@ message DownloadTaskStartedResponse {
 
   // Need to download pieces.
   repeated common.v2.Piece pieces = 4;
+
+  // is_finished indicates whether the download task is finished.
+  bool is_finished = 5;
 }
 
 // DownloadPieceFinishedResponse represents piece download finished response of DownloadTaskResponse.
@@ -243,6 +246,9 @@ message DownloadCacheTaskStartedResponse {
 
   // Need to download pieces.
   repeated common.v2.Piece pieces = 4;
+
+  // is_finished indicates whether the download task is finished.
+  bool is_finished = 5;
 }
 
 // DownloadCacheTaskResponse represents response of DownloadCacheTask.

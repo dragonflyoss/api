@@ -30,6 +30,9 @@ pub struct DownloadTaskStartedResponse {
     /// Need to download pieces.
     #[prost(message, repeated, tag = "4")]
     pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
+    /// is_finished indicates whether the download task is finished.
+    #[prost(bool, tag = "5")]
+    pub is_finished: bool,
 }
 /// DownloadPieceFinishedResponse represents piece download finished response of DownloadTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -337,6 +340,9 @@ pub struct DownloadCacheTaskStartedResponse {
     /// Need to download pieces.
     #[prost(message, repeated, tag = "4")]
     pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
+    /// is_finished indicates whether the download task is finished.
+    #[prost(bool, tag = "5")]
+    pub is_finished: bool,
 }
 /// DownloadCacheTaskResponse represents response of DownloadCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]

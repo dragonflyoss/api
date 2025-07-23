@@ -241,6 +241,8 @@ func (m *DownloadTaskStartedResponse) validate(all bool) error {
 
 	}
 
+	// no validation rules for IsFinished
+
 	if m.Range != nil {
 
 		if all {
@@ -2466,6 +2468,8 @@ func (m *DownloadCacheTaskStartedResponse) validate(all bool) error {
 		}
 
 	}
+
+	// no validation rules for IsFinished
 
 	if m.Range != nil {
 
