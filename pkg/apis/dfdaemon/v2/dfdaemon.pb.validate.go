@@ -1294,6 +1294,8 @@ func (m *StatTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for LocalOnly
+
 	if m.RemoteIp != nil {
 
 		if m.GetRemoteIp() != "" {
