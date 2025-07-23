@@ -1602,8 +1602,63 @@ type RegisterCachePeerRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Download information.
-	Download *v2.CacheDownload `protobuf:"bytes,1,opt,name=download,proto3" json:"download,omitempty"`
+	// Download url.
+	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
+	// Digest of the task digest, for example blake3:xxx or sha256:yyy.
+	Digest *string `protobuf:"bytes,2,opt,name=digest,proto3,oneof" json:"digest,omitempty"`
+	// Range is url range of request. If protocol is http, range
+	// will set in request header. If protocol is others, range
+	// will set in range field.
+	Range *v2.Range `protobuf:"bytes,3,opt,name=range,proto3,oneof" json:"range,omitempty"`
+	// Task type.
+	Type v2.TaskType `protobuf:"varint,4,opt,name=type,proto3,enum=common.v2.TaskType" json:"type,omitempty"`
+	// URL tag identifies different task for same url.
+	Tag *string `protobuf:"bytes,5,opt,name=tag,proto3,oneof" json:"tag,omitempty"`
+	// Application of task.
+	Application *string `protobuf:"bytes,6,opt,name=application,proto3,oneof" json:"application,omitempty"`
+	// Peer priority.
+	Priority v2.Priority `protobuf:"varint,7,opt,name=priority,proto3,enum=common.v2.Priority" json:"priority,omitempty"`
+	// Filtered query params to generate the task id.
+	// When filter is ["Signature", "Expires", "ns"], for example:
+	// http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+	// will generate the same task id.
+	// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+	FilteredQueryParams []string `protobuf:"bytes,8,rep,name=filtered_query_params,json=filteredQueryParams,proto3" json:"filtered_query_params,omitempty"`
+	// Task request headers.
+	RequestHeader map[string]string `protobuf:"bytes,9,rep,name=request_header,json=requestHeader,proto3" json:"request_header,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	// Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
+	PieceLength *uint64 `protobuf:"varint,10,opt,name=piece_length,json=pieceLength,proto3,oneof" json:"piece_length,omitempty"`
+	// File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
+	// Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
+	// it will copy the file to the output path after the download is completed.
+	// For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
+	OutputPath *string `protobuf:"bytes,11,opt,name=output_path,json=outputPath,proto3,oneof" json:"output_path,omitempty"`
+	// Download timeout.
+	Timeout *durationpb.Duration `protobuf:"bytes,12,opt,name=timeout,proto3,oneof" json:"timeout,omitempty"`
+	// Dfdaemon cannot download the task from the source if disable_back_to_source is true.
+	DisableBackToSource bool `protobuf:"varint,13,opt,name=disable_back_to_source,json=disableBackToSource,proto3" json:"disable_back_to_source,omitempty"`
+	// Scheduler needs to schedule the task downloads from the source if need_back_to_source is true.
+	NeedBackToSource bool `protobuf:"varint,14,opt,name=need_back_to_source,json=needBackToSource,proto3" json:"need_back_to_source,omitempty"`
+	// certificate_chain is the client certs with DER format for the backend client to download back-to-source.
+	CertificateChain [][]byte `protobuf:"bytes,15,rep,name=certificate_chain,json=certificateChain,proto3" json:"certificate_chain,omitempty"`
+	// Prefetch pre-downloads all pieces of the task when the download task request is a range request.
+	Prefetch bool `protobuf:"varint,16,opt,name=prefetch,proto3" json:"prefetch,omitempty"`
+	// Object storage protocol information.
+	ObjectStorage *v2.ObjectStorage `protobuf:"bytes,17,opt,name=object_storage,json=objectStorage,proto3,oneof" json:"object_storage,omitempty"`
+	// HDFS protocol information.
+	Hdfs *v2.HDFS `protobuf:"bytes,18,opt,name=hdfs,proto3,oneof" json:"hdfs,omitempty"`
+	// is_prefetch is the flag to indicate whether the request is a prefetch request.
+	IsPrefetch bool `protobuf:"varint,19,opt,name=is_prefetch,json=isPrefetch,proto3" json:"is_prefetch,omitempty"`
+	// need_piece_content is the flag to indicate whether the response needs to return piece content.
+	NeedPieceContent bool `protobuf:"varint,20,opt,name=need_piece_content,json=needPieceContent,proto3" json:"need_piece_content,omitempty"`
+	// content_for_calculating_task_id is the content used to calculate the task id.
+	// If content_for_calculating_task_id is set, use its value to calculate the task ID.
+	// Otherwise, calculate the task ID based on url, piece_length, tag, application, and filtered_query_params.
+	ContentForCalculatingTaskId *string `protobuf:"bytes,21,opt,name=content_for_calculating_task_id,json=contentForCalculatingTaskId,proto3,oneof" json:"content_for_calculating_task_id,omitempty"`
+	// remote_ip represents the IP address of the client initiating the download request.
+	// For proxy requests, it is set to the IP address of the request source.
+	// For dfget requests, it is set to the IP address of the dfget.
+	RemoteIp *string `protobuf:"bytes,22,opt,name=remote_ip,json=remoteIp,proto3,oneof" json:"remote_ip,omitempty"`
 }
 
 func (x *RegisterCachePeerRequest) Reset() {
@@ -1638,11 +1693,158 @@ func (*RegisterCachePeerRequest) Descriptor() ([]byte, []int) {
 	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP(), []int{24}
 }
 
-func (x *RegisterCachePeerRequest) GetDownload() *v2.CacheDownload {
+func (x *RegisterCachePeerRequest) GetUrl() string {
 	if x != nil {
-		return x.Download
+		return x.Url
+	}
+	return ""
+}
+
+func (x *RegisterCachePeerRequest) GetDigest() string {
+	if x != nil && x.Digest != nil {
+		return *x.Digest
+	}
+	return ""
+}
+
+func (x *RegisterCachePeerRequest) GetRange() *v2.Range {
+	if x != nil {
+		return x.Range
 	}
 	return nil
+}
+
+func (x *RegisterCachePeerRequest) GetType() v2.TaskType {
+	if x != nil {
+		return x.Type
+	}
+	return v2.TaskType(0)
+}
+
+func (x *RegisterCachePeerRequest) GetTag() string {
+	if x != nil && x.Tag != nil {
+		return *x.Tag
+	}
+	return ""
+}
+
+func (x *RegisterCachePeerRequest) GetApplication() string {
+	if x != nil && x.Application != nil {
+		return *x.Application
+	}
+	return ""
+}
+
+func (x *RegisterCachePeerRequest) GetPriority() v2.Priority {
+	if x != nil {
+		return x.Priority
+	}
+	return v2.Priority(0)
+}
+
+func (x *RegisterCachePeerRequest) GetFilteredQueryParams() []string {
+	if x != nil {
+		return x.FilteredQueryParams
+	}
+	return nil
+}
+
+func (x *RegisterCachePeerRequest) GetRequestHeader() map[string]string {
+	if x != nil {
+		return x.RequestHeader
+	}
+	return nil
+}
+
+func (x *RegisterCachePeerRequest) GetPieceLength() uint64 {
+	if x != nil && x.PieceLength != nil {
+		return *x.PieceLength
+	}
+	return 0
+}
+
+func (x *RegisterCachePeerRequest) GetOutputPath() string {
+	if x != nil && x.OutputPath != nil {
+		return *x.OutputPath
+	}
+	return ""
+}
+
+func (x *RegisterCachePeerRequest) GetTimeout() *durationpb.Duration {
+	if x != nil {
+		return x.Timeout
+	}
+	return nil
+}
+
+func (x *RegisterCachePeerRequest) GetDisableBackToSource() bool {
+	if x != nil {
+		return x.DisableBackToSource
+	}
+	return false
+}
+
+func (x *RegisterCachePeerRequest) GetNeedBackToSource() bool {
+	if x != nil {
+		return x.NeedBackToSource
+	}
+	return false
+}
+
+func (x *RegisterCachePeerRequest) GetCertificateChain() [][]byte {
+	if x != nil {
+		return x.CertificateChain
+	}
+	return nil
+}
+
+func (x *RegisterCachePeerRequest) GetPrefetch() bool {
+	if x != nil {
+		return x.Prefetch
+	}
+	return false
+}
+
+func (x *RegisterCachePeerRequest) GetObjectStorage() *v2.ObjectStorage {
+	if x != nil {
+		return x.ObjectStorage
+	}
+	return nil
+}
+
+func (x *RegisterCachePeerRequest) GetHdfs() *v2.HDFS {
+	if x != nil {
+		return x.Hdfs
+	}
+	return nil
+}
+
+func (x *RegisterCachePeerRequest) GetIsPrefetch() bool {
+	if x != nil {
+		return x.IsPrefetch
+	}
+	return false
+}
+
+func (x *RegisterCachePeerRequest) GetNeedPieceContent() bool {
+	if x != nil {
+		return x.NeedPieceContent
+	}
+	return false
+}
+
+func (x *RegisterCachePeerRequest) GetContentForCalculatingTaskId() string {
+	if x != nil && x.ContentForCalculatingTaskId != nil {
+		return *x.ContentForCalculatingTaskId
+	}
+	return ""
+}
+
+func (x *RegisterCachePeerRequest) GetRemoteIp() string {
+	if x != nil && x.RemoteIp != nil {
+		return *x.RemoteIp
+	}
+	return ""
 }
 
 // DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
@@ -4147,13 +4349,100 @@ var file_pkg_apis_scheduler_v2_scheduler_proto_rawDesc = []byte{
 	0x73, 0x74, 0x73, 0x22, 0x35, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x48, 0x6f, 0x73,
 	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x07, 0x68, 0x6f, 0x73, 0x74,
 	0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02,
-	0x10, 0x01, 0x52, 0x06, 0x68, 0x6f, 0x73, 0x74, 0x49, 0x64, 0x22, 0x5a, 0x0a, 0x18, 0x52, 0x65,
-	0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43, 0x61, 0x63, 0x68, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x3e, 0x0a, 0x08, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x6f,
-	0x61, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
-	0x6e, 0x2e, 0x76, 0x32, 0x2e, 0x43, 0x61, 0x63, 0x68, 0x65, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f,
-	0x61, 0x64, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x8a, 0x01, 0x02, 0x10, 0x01, 0x52, 0x08, 0x64, 0x6f,
-	0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x22, 0x21, 0x0a, 0x1f, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f,
+	0x10, 0x01, 0x52, 0x06, 0x68, 0x6f, 0x73, 0x74, 0x49, 0x64, 0x22, 0xc9, 0x0b, 0x0a, 0x18, 0x52,
+	0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43, 0x61, 0x63, 0x68, 0x65, 0x50, 0x65, 0x65, 0x72,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x03, 0x75, 0x72, 0x6c, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0x88, 0x01, 0x01, 0x52, 0x03,
+	0x75, 0x72, 0x6c, 0x12, 0xb0, 0x01, 0x0a, 0x06, 0x64, 0x69, 0x67, 0x65, 0x73, 0x74, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x42, 0x92, 0x01, 0xfa, 0x42, 0x8e, 0x01, 0x72, 0x8b, 0x01, 0x32, 0x85,
+	0x01, 0x5e, 0x28, 0x6d, 0x64, 0x35, 0x3a, 0x5b, 0x61, 0x2d, 0x66, 0x41, 0x2d, 0x46, 0x30, 0x2d,
+	0x39, 0x5d, 0x7b, 0x33, 0x32, 0x7d, 0x7c, 0x73, 0x68, 0x61, 0x31, 0x3a, 0x5b, 0x61, 0x2d, 0x66,
+	0x41, 0x2d, 0x46, 0x30, 0x2d, 0x39, 0x5d, 0x7b, 0x34, 0x30, 0x7d, 0x7c, 0x73, 0x68, 0x61, 0x32,
+	0x35, 0x36, 0x3a, 0x5b, 0x61, 0x2d, 0x66, 0x41, 0x2d, 0x46, 0x30, 0x2d, 0x39, 0x5d, 0x7b, 0x36,
+	0x34, 0x7d, 0x7c, 0x73, 0x68, 0x61, 0x35, 0x31, 0x32, 0x3a, 0x5b, 0x61, 0x2d, 0x66, 0x41, 0x2d,
+	0x46, 0x30, 0x2d, 0x39, 0x5d, 0x7b, 0x31, 0x32, 0x38, 0x7d, 0x7c, 0x62, 0x6c, 0x61, 0x6b, 0x65,
+	0x33, 0x3a, 0x5b, 0x61, 0x2d, 0x66, 0x41, 0x2d, 0x46, 0x30, 0x2d, 0x39, 0x5d, 0x7b, 0x36, 0x34,
+	0x7d, 0x7c, 0x63, 0x72, 0x63, 0x33, 0x32, 0x3a, 0x5b, 0x61, 0x2d, 0x66, 0x41, 0x2d, 0x46, 0x30,
+	0x2d, 0x39, 0x5d, 0x2b, 0x29, 0x24, 0xd0, 0x01, 0x01, 0x48, 0x00, 0x52, 0x06, 0x64, 0x69, 0x67,
+	0x65, 0x73, 0x74, 0x88, 0x01, 0x01, 0x12, 0x2b, 0x0a, 0x05, 0x72, 0x61, 0x6e, 0x67, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x76,
+	0x32, 0x2e, 0x52, 0x61, 0x6e, 0x67, 0x65, 0x48, 0x01, 0x52, 0x05, 0x72, 0x61, 0x6e, 0x67, 0x65,
+	0x88, 0x01, 0x01, 0x12, 0x31, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x0e, 0x32, 0x13, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x76, 0x32, 0x2e, 0x54, 0x61,
+	0x73, 0x6b, 0x54, 0x79, 0x70, 0x65, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x82, 0x01, 0x02, 0x10, 0x01,
+	0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x15, 0x0a, 0x03, 0x74, 0x61, 0x67, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x09, 0x48, 0x02, 0x52, 0x03, 0x74, 0x61, 0x67, 0x88, 0x01, 0x01, 0x12, 0x25, 0x0a,
+	0x0b, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x09, 0x48, 0x03, 0x52, 0x0b, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x88, 0x01, 0x01, 0x12, 0x39, 0x0a, 0x08, 0x70, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79,
+	0x18, 0x07, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x13, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e,
+	0x76, 0x32, 0x2e, 0x50, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x42, 0x08, 0xfa, 0x42, 0x05,
+	0x82, 0x01, 0x02, 0x10, 0x01, 0x52, 0x08, 0x70, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x12,
+	0x32, 0x0a, 0x15, 0x66, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x65, 0x64, 0x5f, 0x71, 0x75, 0x65, 0x72,
+	0x79, 0x5f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x08, 0x20, 0x03, 0x28, 0x09, 0x52, 0x13,
+	0x66, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x65, 0x64, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72,
+	0x61, 0x6d, 0x73, 0x12, 0x60, 0x0a, 0x0e, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x5f, 0x68,
+	0x65, 0x61, 0x64, 0x65, 0x72, 0x18, 0x09, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x39, 0x2e, 0x73, 0x63,
+	0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x2e, 0x76, 0x32, 0x2e, 0x52, 0x65, 0x67, 0x69, 0x73,
+	0x74, 0x65, 0x72, 0x43, 0x61, 0x63, 0x68, 0x65, 0x50, 0x65, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x2e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x48, 0x65, 0x61, 0x64, 0x65,
+	0x72, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x0d, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x48,
+	0x65, 0x61, 0x64, 0x65, 0x72, 0x12, 0x34, 0x0a, 0x0c, 0x70, 0x69, 0x65, 0x63, 0x65, 0x5f, 0x6c,
+	0x65, 0x6e, 0x67, 0x74, 0x68, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x04, 0x42, 0x0c, 0xfa, 0x42, 0x09,
+	0x32, 0x07, 0x28, 0x80, 0x80, 0x80, 0x02, 0x40, 0x01, 0x48, 0x04, 0x52, 0x0b, 0x70, 0x69, 0x65,
+	0x63, 0x65, 0x4c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x88, 0x01, 0x01, 0x12, 0x30, 0x0a, 0x0b, 0x6f,
+	0x75, 0x74, 0x70, 0x75, 0x74, 0x5f, 0x70, 0x61, 0x74, 0x68, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09,
+	0x42, 0x0a, 0xfa, 0x42, 0x07, 0x72, 0x05, 0x10, 0x01, 0xd0, 0x01, 0x01, 0x48, 0x05, 0x52, 0x0a,
+	0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x50, 0x61, 0x74, 0x68, 0x88, 0x01, 0x01, 0x12, 0x38, 0x0a,
+	0x07, 0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19,
+	0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66,
+	0x2e, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x48, 0x06, 0x52, 0x07, 0x74, 0x69, 0x6d,
+	0x65, 0x6f, 0x75, 0x74, 0x88, 0x01, 0x01, 0x12, 0x33, 0x0a, 0x16, 0x64, 0x69, 0x73, 0x61, 0x62,
+	0x6c, 0x65, 0x5f, 0x62, 0x61, 0x63, 0x6b, 0x5f, 0x74, 0x6f, 0x5f, 0x73, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x08, 0x52, 0x13, 0x64, 0x69, 0x73, 0x61, 0x62, 0x6c, 0x65,
+	0x42, 0x61, 0x63, 0x6b, 0x54, 0x6f, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x2d, 0x0a, 0x13,
+	0x6e, 0x65, 0x65, 0x64, 0x5f, 0x62, 0x61, 0x63, 0x6b, 0x5f, 0x74, 0x6f, 0x5f, 0x73, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x18, 0x0e, 0x20, 0x01, 0x28, 0x08, 0x52, 0x10, 0x6e, 0x65, 0x65, 0x64, 0x42,
+	0x61, 0x63, 0x6b, 0x54, 0x6f, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x2b, 0x0a, 0x11, 0x63,
+	0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65, 0x5f, 0x63, 0x68, 0x61, 0x69, 0x6e,
+	0x18, 0x0f, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x10, 0x63, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63,
+	0x61, 0x74, 0x65, 0x43, 0x68, 0x61, 0x69, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x72, 0x65, 0x66,
+	0x65, 0x74, 0x63, 0x68, 0x18, 0x10, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x70, 0x72, 0x65, 0x66,
+	0x65, 0x74, 0x63, 0x68, 0x12, 0x44, 0x0a, 0x0e, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x5f, 0x73,
+	0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x18, 0x11, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x63,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x76, 0x32, 0x2e, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x53,
+	0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x48, 0x07, 0x52, 0x0d, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74,
+	0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x88, 0x01, 0x01, 0x12, 0x28, 0x0a, 0x04, 0x68, 0x64,
+	0x66, 0x73, 0x18, 0x12, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x2e, 0x76, 0x32, 0x2e, 0x48, 0x44, 0x46, 0x53, 0x48, 0x08, 0x52, 0x04, 0x68, 0x64, 0x66,
+	0x73, 0x88, 0x01, 0x01, 0x12, 0x1f, 0x0a, 0x0b, 0x69, 0x73, 0x5f, 0x70, 0x72, 0x65, 0x66, 0x65,
+	0x74, 0x63, 0x68, 0x18, 0x13, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x69, 0x73, 0x50, 0x72, 0x65,
+	0x66, 0x65, 0x74, 0x63, 0x68, 0x12, 0x2c, 0x0a, 0x12, 0x6e, 0x65, 0x65, 0x64, 0x5f, 0x70, 0x69,
+	0x65, 0x63, 0x65, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x18, 0x14, 0x20, 0x01, 0x28,
+	0x08, 0x52, 0x10, 0x6e, 0x65, 0x65, 0x64, 0x50, 0x69, 0x65, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x74,
+	0x65, 0x6e, 0x74, 0x12, 0x49, 0x0a, 0x1f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x5f, 0x66,
+	0x6f, 0x72, 0x5f, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x5f, 0x74,
+	0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x18, 0x15, 0x20, 0x01, 0x28, 0x09, 0x48, 0x09, 0x52, 0x1b,
+	0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x46, 0x6f, 0x72, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c,
+	0x61, 0x74, 0x69, 0x6e, 0x67, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x88, 0x01, 0x01, 0x12, 0x2c,
+	0x0a, 0x09, 0x72, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x5f, 0x69, 0x70, 0x18, 0x16, 0x20, 0x01, 0x28,
+	0x09, 0x42, 0x0a, 0xfa, 0x42, 0x07, 0x72, 0x05, 0x70, 0x01, 0xd0, 0x01, 0x01, 0x48, 0x0a, 0x52,
+	0x08, 0x72, 0x65, 0x6d, 0x6f, 0x74, 0x65, 0x49, 0x70, 0x88, 0x01, 0x01, 0x1a, 0x40, 0x0a, 0x12,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x48, 0x65, 0x61, 0x64, 0x65, 0x72, 0x45, 0x6e, 0x74,
+	0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x09,
+	0x0a, 0x07, 0x5f, 0x64, 0x69, 0x67, 0x65, 0x73, 0x74, 0x42, 0x08, 0x0a, 0x06, 0x5f, 0x72, 0x61,
+	0x6e, 0x67, 0x65, 0x42, 0x06, 0x0a, 0x04, 0x5f, 0x74, 0x61, 0x67, 0x42, 0x0e, 0x0a, 0x0c, 0x5f,
+	0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x0f, 0x0a, 0x0d, 0x5f,
+	0x70, 0x69, 0x65, 0x63, 0x65, 0x5f, 0x6c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x42, 0x0e, 0x0a, 0x0c,
+	0x5f, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x5f, 0x70, 0x61, 0x74, 0x68, 0x42, 0x0a, 0x0a, 0x08,
+	0x5f, 0x74, 0x69, 0x6d, 0x65, 0x6f, 0x75, 0x74, 0x42, 0x11, 0x0a, 0x0f, 0x5f, 0x6f, 0x62, 0x6a,
+	0x65, 0x63, 0x74, 0x5f, 0x73, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x42, 0x07, 0x0a, 0x05, 0x5f,
+	0x68, 0x64, 0x66, 0x73, 0x42, 0x22, 0x0a, 0x20, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74,
+	0x5f, 0x66, 0x6f, 0x72, 0x5f, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x69, 0x6e, 0x67,
+	0x5f, 0x74, 0x61, 0x73, 0x6b, 0x5f, 0x69, 0x64, 0x42, 0x0c, 0x0a, 0x0a, 0x5f, 0x72, 0x65, 0x6d,
+	0x6f, 0x74, 0x65, 0x5f, 0x69, 0x70, 0x22, 0x21, 0x0a, 0x1f, 0x44, 0x6f, 0x77, 0x6e, 0x6c, 0x6f,
 	0x61, 0x64, 0x43, 0x61, 0x63, 0x68, 0x65, 0x50, 0x65, 0x65, 0x72, 0x53, 0x74, 0x61, 0x72, 0x74,
 	0x65, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x70, 0x0a, 0x2b, 0x44, 0x6f, 0x77,
 	0x6e, 0x6c, 0x6f, 0x61, 0x64, 0x43, 0x61, 0x63, 0x68, 0x65, 0x50, 0x65, 0x65, 0x72, 0x42, 0x61,
@@ -4738,7 +5027,7 @@ func file_pkg_apis_scheduler_v2_scheduler_proto_rawDescGZIP() []byte {
 	return file_pkg_apis_scheduler_v2_scheduler_proto_rawDescData
 }
 
-var file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 56)
+var file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes = make([]protoimpl.MessageInfo, 57)
 var file_pkg_apis_scheduler_v2_scheduler_proto_goTypes = []interface{}{
 	(*RegisterPeerRequest)(nil),                          // 0: scheduler.v2.RegisterPeerRequest
 	(*DownloadPeerStartedRequest)(nil),                   // 1: scheduler.v2.DownloadPeerStartedRequest
@@ -4796,28 +5085,33 @@ var file_pkg_apis_scheduler_v2_scheduler_proto_goTypes = []interface{}{
 	(*UploadPersistentCacheTaskFailedRequest)(nil),       // 53: scheduler.v2.UploadPersistentCacheTaskFailedRequest
 	(*StatPersistentCacheTaskRequest)(nil),               // 54: scheduler.v2.StatPersistentCacheTaskRequest
 	(*DeletePersistentCacheTaskRequest)(nil),             // 55: scheduler.v2.DeletePersistentCacheTaskRequest
-	(*v2.Download)(nil),                                  // 56: common.v2.Download
-	(*v2.Peer)(nil),                                      // 57: common.v2.Peer
-	(*v2.Piece)(nil),                                     // 58: common.v2.Piece
-	(*v21.Backend)(nil),                                  // 59: errordetails.v2.Backend
-	(*v21.Unknown)(nil),                                  // 60: errordetails.v2.Unknown
-	(*v2.Host)(nil),                                      // 61: common.v2.Host
-	(*durationpb.Duration)(nil),                          // 62: google.protobuf.Duration
-	(*v2.CacheDownload)(nil),                             // 63: common.v2.CacheDownload
-	(*v2.CachePeer)(nil),                                 // 64: common.v2.CachePeer
-	(*v2.PersistentCachePeer)(nil),                       // 65: common.v2.PersistentCachePeer
-	(*emptypb.Empty)(nil),                                // 66: google.protobuf.Empty
-	(*v2.Task)(nil),                                      // 67: common.v2.Task
-	(*v2.CacheTask)(nil),                                 // 68: common.v2.CacheTask
-	(*v2.PersistentCacheTask)(nil),                       // 69: common.v2.PersistentCacheTask
+	nil,                                                  // 56: scheduler.v2.RegisterCachePeerRequest.RequestHeaderEntry
+	(*v2.Download)(nil),                                  // 57: common.v2.Download
+	(*v2.Peer)(nil),                                      // 58: common.v2.Peer
+	(*v2.Piece)(nil),                                     // 59: common.v2.Piece
+	(*v21.Backend)(nil),                                  // 60: errordetails.v2.Backend
+	(*v21.Unknown)(nil),                                  // 61: errordetails.v2.Unknown
+	(*v2.Host)(nil),                                      // 62: common.v2.Host
+	(*durationpb.Duration)(nil),                          // 63: google.protobuf.Duration
+	(*v2.Range)(nil),                                     // 64: common.v2.Range
+	(v2.TaskType)(0),                                     // 65: common.v2.TaskType
+	(v2.Priority)(0),                                     // 66: common.v2.Priority
+	(*v2.ObjectStorage)(nil),                             // 67: common.v2.ObjectStorage
+	(*v2.HDFS)(nil),                                      // 68: common.v2.HDFS
+	(*v2.CachePeer)(nil),                                 // 69: common.v2.CachePeer
+	(*v2.PersistentCachePeer)(nil),                       // 70: common.v2.PersistentCachePeer
+	(*emptypb.Empty)(nil),                                // 71: google.protobuf.Empty
+	(*v2.Task)(nil),                                      // 72: common.v2.Task
+	(*v2.CacheTask)(nil),                                 // 73: common.v2.CacheTask
+	(*v2.PersistentCacheTask)(nil),                       // 74: common.v2.PersistentCacheTask
 }
 var file_pkg_apis_scheduler_v2_scheduler_proto_depIdxs = []int32{
-	56, // 0: scheduler.v2.RegisterPeerRequest.download:type_name -> common.v2.Download
-	57, // 1: scheduler.v2.ReschedulePeerRequest.candidate_parents:type_name -> common.v2.Peer
-	58, // 2: scheduler.v2.DownloadPieceFinishedRequest.piece:type_name -> common.v2.Piece
-	58, // 3: scheduler.v2.DownloadPieceBackToSourceFinishedRequest.piece:type_name -> common.v2.Piece
-	59, // 4: scheduler.v2.DownloadPieceBackToSourceFailedRequest.backend:type_name -> errordetails.v2.Backend
-	60, // 5: scheduler.v2.DownloadPieceBackToSourceFailedRequest.unknown:type_name -> errordetails.v2.Unknown
+	57, // 0: scheduler.v2.RegisterPeerRequest.download:type_name -> common.v2.Download
+	58, // 1: scheduler.v2.ReschedulePeerRequest.candidate_parents:type_name -> common.v2.Peer
+	59, // 2: scheduler.v2.DownloadPieceFinishedRequest.piece:type_name -> common.v2.Piece
+	59, // 3: scheduler.v2.DownloadPieceBackToSourceFinishedRequest.piece:type_name -> common.v2.Piece
+	60, // 4: scheduler.v2.DownloadPieceBackToSourceFailedRequest.backend:type_name -> errordetails.v2.Backend
+	61, // 5: scheduler.v2.DownloadPieceBackToSourceFailedRequest.unknown:type_name -> errordetails.v2.Unknown
 	0,  // 6: scheduler.v2.AnnouncePeerRequest.register_peer_request:type_name -> scheduler.v2.RegisterPeerRequest
 	1,  // 7: scheduler.v2.AnnouncePeerRequest.download_peer_started_request:type_name -> scheduler.v2.DownloadPeerStartedRequest
 	2,  // 8: scheduler.v2.AnnouncePeerRequest.download_peer_back_to_source_started_request:type_name -> scheduler.v2.DownloadPeerBackToSourceStartedRequest
@@ -4830,91 +5124,97 @@ var file_pkg_apis_scheduler_v2_scheduler_proto_depIdxs = []int32{
 	9,  // 15: scheduler.v2.AnnouncePeerRequest.download_piece_back_to_source_finished_request:type_name -> scheduler.v2.DownloadPieceBackToSourceFinishedRequest
 	10, // 16: scheduler.v2.AnnouncePeerRequest.download_piece_failed_request:type_name -> scheduler.v2.DownloadPieceFailedRequest
 	11, // 17: scheduler.v2.AnnouncePeerRequest.download_piece_back_to_source_failed_request:type_name -> scheduler.v2.DownloadPieceBackToSourceFailedRequest
-	57, // 18: scheduler.v2.NormalTaskResponse.candidate_parents:type_name -> common.v2.Peer
+	58, // 18: scheduler.v2.NormalTaskResponse.candidate_parents:type_name -> common.v2.Peer
 	13, // 19: scheduler.v2.AnnouncePeerResponse.empty_task_response:type_name -> scheduler.v2.EmptyTaskResponse
 	14, // 20: scheduler.v2.AnnouncePeerResponse.normal_task_response:type_name -> scheduler.v2.NormalTaskResponse
 	15, // 21: scheduler.v2.AnnouncePeerResponse.need_back_to_source_response:type_name -> scheduler.v2.NeedBackToSourceResponse
-	61, // 22: scheduler.v2.AnnounceHostRequest.host:type_name -> common.v2.Host
-	62, // 23: scheduler.v2.AnnounceHostRequest.interval:type_name -> google.protobuf.Duration
-	61, // 24: scheduler.v2.ListHostsResponse.hosts:type_name -> common.v2.Host
-	63, // 25: scheduler.v2.RegisterCachePeerRequest.download:type_name -> common.v2.CacheDownload
-	64, // 26: scheduler.v2.RescheduleCachePeerRequest.candidate_parents:type_name -> common.v2.CachePeer
-	24, // 27: scheduler.v2.AnnounceCachePeerRequest.register_cache_peer_request:type_name -> scheduler.v2.RegisterCachePeerRequest
-	25, // 28: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_started_request:type_name -> scheduler.v2.DownloadCachePeerStartedRequest
-	26, // 29: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_back_to_source_started_request:type_name -> scheduler.v2.DownloadCachePeerBackToSourceStartedRequest
-	27, // 30: scheduler.v2.AnnounceCachePeerRequest.reschedule_cache_peer_request:type_name -> scheduler.v2.RescheduleCachePeerRequest
-	28, // 31: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_finished_request:type_name -> scheduler.v2.DownloadCachePeerFinishedRequest
-	29, // 32: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_back_to_source_finished_request:type_name -> scheduler.v2.DownloadCachePeerBackToSourceFinishedRequest
-	30, // 33: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_failed_request:type_name -> scheduler.v2.DownloadCachePeerFailedRequest
-	31, // 34: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_back_to_source_failed_request:type_name -> scheduler.v2.DownloadCachePeerBackToSourceFailedRequest
-	8,  // 35: scheduler.v2.AnnounceCachePeerRequest.download_piece_finished_request:type_name -> scheduler.v2.DownloadPieceFinishedRequest
-	9,  // 36: scheduler.v2.AnnounceCachePeerRequest.download_piece_back_to_source_finished_request:type_name -> scheduler.v2.DownloadPieceBackToSourceFinishedRequest
-	10, // 37: scheduler.v2.AnnounceCachePeerRequest.download_piece_failed_request:type_name -> scheduler.v2.DownloadPieceFailedRequest
-	11, // 38: scheduler.v2.AnnounceCachePeerRequest.download_piece_back_to_source_failed_request:type_name -> scheduler.v2.DownloadPieceBackToSourceFailedRequest
-	64, // 39: scheduler.v2.NormalCacheTaskResponse.candidate_parents:type_name -> common.v2.CachePeer
-	33, // 40: scheduler.v2.AnnounceCachePeerResponse.empty_cache_task_response:type_name -> scheduler.v2.EmptyCacheTaskResponse
-	34, // 41: scheduler.v2.AnnounceCachePeerResponse.normal_cache_task_response:type_name -> scheduler.v2.NormalCacheTaskResponse
-	15, // 42: scheduler.v2.AnnounceCachePeerResponse.need_back_to_source_response:type_name -> scheduler.v2.NeedBackToSourceResponse
-	62, // 43: scheduler.v2.RegisterPersistentCachePeerRequest.timeout:type_name -> google.protobuf.Duration
-	65, // 44: scheduler.v2.ReschedulePersistentCachePeerRequest.candidate_parents:type_name -> common.v2.PersistentCachePeer
-	40, // 45: scheduler.v2.AnnouncePersistentCachePeerRequest.register_persistent_cache_peer_request:type_name -> scheduler.v2.RegisterPersistentCachePeerRequest
-	41, // 46: scheduler.v2.AnnouncePersistentCachePeerRequest.download_persistent_cache_peer_started_request:type_name -> scheduler.v2.DownloadPersistentCachePeerStartedRequest
-	42, // 47: scheduler.v2.AnnouncePersistentCachePeerRequest.reschedule_persistent_cache_peer_request:type_name -> scheduler.v2.ReschedulePersistentCachePeerRequest
-	43, // 48: scheduler.v2.AnnouncePersistentCachePeerRequest.download_persistent_cache_peer_finished_request:type_name -> scheduler.v2.DownloadPersistentCachePeerFinishedRequest
-	44, // 49: scheduler.v2.AnnouncePersistentCachePeerRequest.download_persistent_cache_peer_failed_request:type_name -> scheduler.v2.DownloadPersistentCachePeerFailedRequest
-	8,  // 50: scheduler.v2.AnnouncePersistentCachePeerRequest.download_piece_finished_request:type_name -> scheduler.v2.DownloadPieceFinishedRequest
-	10, // 51: scheduler.v2.AnnouncePersistentCachePeerRequest.download_piece_failed_request:type_name -> scheduler.v2.DownloadPieceFailedRequest
-	65, // 52: scheduler.v2.NormalPersistentCacheTaskResponse.candidate_parents:type_name -> common.v2.PersistentCachePeer
-	46, // 53: scheduler.v2.AnnouncePersistentCachePeerResponse.empty_persistent_cache_task_response:type_name -> scheduler.v2.EmptyPersistentCacheTaskResponse
-	47, // 54: scheduler.v2.AnnouncePersistentCachePeerResponse.normal_persistent_cache_task_response:type_name -> scheduler.v2.NormalPersistentCacheTaskResponse
-	62, // 55: scheduler.v2.UploadPersistentCacheTaskStartedRequest.ttl:type_name -> google.protobuf.Duration
-	12, // 56: scheduler.v2.Scheduler.AnnouncePeer:input_type -> scheduler.v2.AnnouncePeerRequest
-	17, // 57: scheduler.v2.Scheduler.StatPeer:input_type -> scheduler.v2.StatPeerRequest
-	18, // 58: scheduler.v2.Scheduler.DeletePeer:input_type -> scheduler.v2.DeletePeerRequest
-	19, // 59: scheduler.v2.Scheduler.StatTask:input_type -> scheduler.v2.StatTaskRequest
-	20, // 60: scheduler.v2.Scheduler.DeleteTask:input_type -> scheduler.v2.DeleteTaskRequest
-	21, // 61: scheduler.v2.Scheduler.AnnounceHost:input_type -> scheduler.v2.AnnounceHostRequest
-	66, // 62: scheduler.v2.Scheduler.ListHosts:input_type -> google.protobuf.Empty
-	23, // 63: scheduler.v2.Scheduler.DeleteHost:input_type -> scheduler.v2.DeleteHostRequest
-	32, // 64: scheduler.v2.Scheduler.AnnounceCachePeer:input_type -> scheduler.v2.AnnounceCachePeerRequest
-	36, // 65: scheduler.v2.Scheduler.StatCachePeer:input_type -> scheduler.v2.StatCachePeerRequest
-	37, // 66: scheduler.v2.Scheduler.DeleteCachePeer:input_type -> scheduler.v2.DeleteCachePeerRequest
-	38, // 67: scheduler.v2.Scheduler.StatCacheTask:input_type -> scheduler.v2.StatCacheTaskRequest
-	39, // 68: scheduler.v2.Scheduler.DeleteCacheTask:input_type -> scheduler.v2.DeleteCacheTaskRequest
-	45, // 69: scheduler.v2.Scheduler.AnnouncePersistentCachePeer:input_type -> scheduler.v2.AnnouncePersistentCachePeerRequest
-	49, // 70: scheduler.v2.Scheduler.StatPersistentCachePeer:input_type -> scheduler.v2.StatPersistentCachePeerRequest
-	50, // 71: scheduler.v2.Scheduler.DeletePersistentCachePeer:input_type -> scheduler.v2.DeletePersistentCachePeerRequest
-	51, // 72: scheduler.v2.Scheduler.UploadPersistentCacheTaskStarted:input_type -> scheduler.v2.UploadPersistentCacheTaskStartedRequest
-	52, // 73: scheduler.v2.Scheduler.UploadPersistentCacheTaskFinished:input_type -> scheduler.v2.UploadPersistentCacheTaskFinishedRequest
-	53, // 74: scheduler.v2.Scheduler.UploadPersistentCacheTaskFailed:input_type -> scheduler.v2.UploadPersistentCacheTaskFailedRequest
-	54, // 75: scheduler.v2.Scheduler.StatPersistentCacheTask:input_type -> scheduler.v2.StatPersistentCacheTaskRequest
-	55, // 76: scheduler.v2.Scheduler.DeletePersistentCacheTask:input_type -> scheduler.v2.DeletePersistentCacheTaskRequest
-	16, // 77: scheduler.v2.Scheduler.AnnouncePeer:output_type -> scheduler.v2.AnnouncePeerResponse
-	57, // 78: scheduler.v2.Scheduler.StatPeer:output_type -> common.v2.Peer
-	66, // 79: scheduler.v2.Scheduler.DeletePeer:output_type -> google.protobuf.Empty
-	67, // 80: scheduler.v2.Scheduler.StatTask:output_type -> common.v2.Task
-	66, // 81: scheduler.v2.Scheduler.DeleteTask:output_type -> google.protobuf.Empty
-	66, // 82: scheduler.v2.Scheduler.AnnounceHost:output_type -> google.protobuf.Empty
-	22, // 83: scheduler.v2.Scheduler.ListHosts:output_type -> scheduler.v2.ListHostsResponse
-	66, // 84: scheduler.v2.Scheduler.DeleteHost:output_type -> google.protobuf.Empty
-	35, // 85: scheduler.v2.Scheduler.AnnounceCachePeer:output_type -> scheduler.v2.AnnounceCachePeerResponse
-	64, // 86: scheduler.v2.Scheduler.StatCachePeer:output_type -> common.v2.CachePeer
-	66, // 87: scheduler.v2.Scheduler.DeleteCachePeer:output_type -> google.protobuf.Empty
-	68, // 88: scheduler.v2.Scheduler.StatCacheTask:output_type -> common.v2.CacheTask
-	66, // 89: scheduler.v2.Scheduler.DeleteCacheTask:output_type -> google.protobuf.Empty
-	48, // 90: scheduler.v2.Scheduler.AnnouncePersistentCachePeer:output_type -> scheduler.v2.AnnouncePersistentCachePeerResponse
-	65, // 91: scheduler.v2.Scheduler.StatPersistentCachePeer:output_type -> common.v2.PersistentCachePeer
-	66, // 92: scheduler.v2.Scheduler.DeletePersistentCachePeer:output_type -> google.protobuf.Empty
-	66, // 93: scheduler.v2.Scheduler.UploadPersistentCacheTaskStarted:output_type -> google.protobuf.Empty
-	69, // 94: scheduler.v2.Scheduler.UploadPersistentCacheTaskFinished:output_type -> common.v2.PersistentCacheTask
-	66, // 95: scheduler.v2.Scheduler.UploadPersistentCacheTaskFailed:output_type -> google.protobuf.Empty
-	69, // 96: scheduler.v2.Scheduler.StatPersistentCacheTask:output_type -> common.v2.PersistentCacheTask
-	66, // 97: scheduler.v2.Scheduler.DeletePersistentCacheTask:output_type -> google.protobuf.Empty
-	77, // [77:98] is the sub-list for method output_type
-	56, // [56:77] is the sub-list for method input_type
-	56, // [56:56] is the sub-list for extension type_name
-	56, // [56:56] is the sub-list for extension extendee
-	0,  // [0:56] is the sub-list for field type_name
+	62, // 22: scheduler.v2.AnnounceHostRequest.host:type_name -> common.v2.Host
+	63, // 23: scheduler.v2.AnnounceHostRequest.interval:type_name -> google.protobuf.Duration
+	62, // 24: scheduler.v2.ListHostsResponse.hosts:type_name -> common.v2.Host
+	64, // 25: scheduler.v2.RegisterCachePeerRequest.range:type_name -> common.v2.Range
+	65, // 26: scheduler.v2.RegisterCachePeerRequest.type:type_name -> common.v2.TaskType
+	66, // 27: scheduler.v2.RegisterCachePeerRequest.priority:type_name -> common.v2.Priority
+	56, // 28: scheduler.v2.RegisterCachePeerRequest.request_header:type_name -> scheduler.v2.RegisterCachePeerRequest.RequestHeaderEntry
+	63, // 29: scheduler.v2.RegisterCachePeerRequest.timeout:type_name -> google.protobuf.Duration
+	67, // 30: scheduler.v2.RegisterCachePeerRequest.object_storage:type_name -> common.v2.ObjectStorage
+	68, // 31: scheduler.v2.RegisterCachePeerRequest.hdfs:type_name -> common.v2.HDFS
+	69, // 32: scheduler.v2.RescheduleCachePeerRequest.candidate_parents:type_name -> common.v2.CachePeer
+	24, // 33: scheduler.v2.AnnounceCachePeerRequest.register_cache_peer_request:type_name -> scheduler.v2.RegisterCachePeerRequest
+	25, // 34: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_started_request:type_name -> scheduler.v2.DownloadCachePeerStartedRequest
+	26, // 35: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_back_to_source_started_request:type_name -> scheduler.v2.DownloadCachePeerBackToSourceStartedRequest
+	27, // 36: scheduler.v2.AnnounceCachePeerRequest.reschedule_cache_peer_request:type_name -> scheduler.v2.RescheduleCachePeerRequest
+	28, // 37: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_finished_request:type_name -> scheduler.v2.DownloadCachePeerFinishedRequest
+	29, // 38: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_back_to_source_finished_request:type_name -> scheduler.v2.DownloadCachePeerBackToSourceFinishedRequest
+	30, // 39: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_failed_request:type_name -> scheduler.v2.DownloadCachePeerFailedRequest
+	31, // 40: scheduler.v2.AnnounceCachePeerRequest.download_cache_peer_back_to_source_failed_request:type_name -> scheduler.v2.DownloadCachePeerBackToSourceFailedRequest
+	8,  // 41: scheduler.v2.AnnounceCachePeerRequest.download_piece_finished_request:type_name -> scheduler.v2.DownloadPieceFinishedRequest
+	9,  // 42: scheduler.v2.AnnounceCachePeerRequest.download_piece_back_to_source_finished_request:type_name -> scheduler.v2.DownloadPieceBackToSourceFinishedRequest
+	10, // 43: scheduler.v2.AnnounceCachePeerRequest.download_piece_failed_request:type_name -> scheduler.v2.DownloadPieceFailedRequest
+	11, // 44: scheduler.v2.AnnounceCachePeerRequest.download_piece_back_to_source_failed_request:type_name -> scheduler.v2.DownloadPieceBackToSourceFailedRequest
+	69, // 45: scheduler.v2.NormalCacheTaskResponse.candidate_parents:type_name -> common.v2.CachePeer
+	33, // 46: scheduler.v2.AnnounceCachePeerResponse.empty_cache_task_response:type_name -> scheduler.v2.EmptyCacheTaskResponse
+	34, // 47: scheduler.v2.AnnounceCachePeerResponse.normal_cache_task_response:type_name -> scheduler.v2.NormalCacheTaskResponse
+	15, // 48: scheduler.v2.AnnounceCachePeerResponse.need_back_to_source_response:type_name -> scheduler.v2.NeedBackToSourceResponse
+	63, // 49: scheduler.v2.RegisterPersistentCachePeerRequest.timeout:type_name -> google.protobuf.Duration
+	70, // 50: scheduler.v2.ReschedulePersistentCachePeerRequest.candidate_parents:type_name -> common.v2.PersistentCachePeer
+	40, // 51: scheduler.v2.AnnouncePersistentCachePeerRequest.register_persistent_cache_peer_request:type_name -> scheduler.v2.RegisterPersistentCachePeerRequest
+	41, // 52: scheduler.v2.AnnouncePersistentCachePeerRequest.download_persistent_cache_peer_started_request:type_name -> scheduler.v2.DownloadPersistentCachePeerStartedRequest
+	42, // 53: scheduler.v2.AnnouncePersistentCachePeerRequest.reschedule_persistent_cache_peer_request:type_name -> scheduler.v2.ReschedulePersistentCachePeerRequest
+	43, // 54: scheduler.v2.AnnouncePersistentCachePeerRequest.download_persistent_cache_peer_finished_request:type_name -> scheduler.v2.DownloadPersistentCachePeerFinishedRequest
+	44, // 55: scheduler.v2.AnnouncePersistentCachePeerRequest.download_persistent_cache_peer_failed_request:type_name -> scheduler.v2.DownloadPersistentCachePeerFailedRequest
+	8,  // 56: scheduler.v2.AnnouncePersistentCachePeerRequest.download_piece_finished_request:type_name -> scheduler.v2.DownloadPieceFinishedRequest
+	10, // 57: scheduler.v2.AnnouncePersistentCachePeerRequest.download_piece_failed_request:type_name -> scheduler.v2.DownloadPieceFailedRequest
+	70, // 58: scheduler.v2.NormalPersistentCacheTaskResponse.candidate_parents:type_name -> common.v2.PersistentCachePeer
+	46, // 59: scheduler.v2.AnnouncePersistentCachePeerResponse.empty_persistent_cache_task_response:type_name -> scheduler.v2.EmptyPersistentCacheTaskResponse
+	47, // 60: scheduler.v2.AnnouncePersistentCachePeerResponse.normal_persistent_cache_task_response:type_name -> scheduler.v2.NormalPersistentCacheTaskResponse
+	63, // 61: scheduler.v2.UploadPersistentCacheTaskStartedRequest.ttl:type_name -> google.protobuf.Duration
+	12, // 62: scheduler.v2.Scheduler.AnnouncePeer:input_type -> scheduler.v2.AnnouncePeerRequest
+	17, // 63: scheduler.v2.Scheduler.StatPeer:input_type -> scheduler.v2.StatPeerRequest
+	18, // 64: scheduler.v2.Scheduler.DeletePeer:input_type -> scheduler.v2.DeletePeerRequest
+	19, // 65: scheduler.v2.Scheduler.StatTask:input_type -> scheduler.v2.StatTaskRequest
+	20, // 66: scheduler.v2.Scheduler.DeleteTask:input_type -> scheduler.v2.DeleteTaskRequest
+	21, // 67: scheduler.v2.Scheduler.AnnounceHost:input_type -> scheduler.v2.AnnounceHostRequest
+	71, // 68: scheduler.v2.Scheduler.ListHosts:input_type -> google.protobuf.Empty
+	23, // 69: scheduler.v2.Scheduler.DeleteHost:input_type -> scheduler.v2.DeleteHostRequest
+	32, // 70: scheduler.v2.Scheduler.AnnounceCachePeer:input_type -> scheduler.v2.AnnounceCachePeerRequest
+	36, // 71: scheduler.v2.Scheduler.StatCachePeer:input_type -> scheduler.v2.StatCachePeerRequest
+	37, // 72: scheduler.v2.Scheduler.DeleteCachePeer:input_type -> scheduler.v2.DeleteCachePeerRequest
+	38, // 73: scheduler.v2.Scheduler.StatCacheTask:input_type -> scheduler.v2.StatCacheTaskRequest
+	39, // 74: scheduler.v2.Scheduler.DeleteCacheTask:input_type -> scheduler.v2.DeleteCacheTaskRequest
+	45, // 75: scheduler.v2.Scheduler.AnnouncePersistentCachePeer:input_type -> scheduler.v2.AnnouncePersistentCachePeerRequest
+	49, // 76: scheduler.v2.Scheduler.StatPersistentCachePeer:input_type -> scheduler.v2.StatPersistentCachePeerRequest
+	50, // 77: scheduler.v2.Scheduler.DeletePersistentCachePeer:input_type -> scheduler.v2.DeletePersistentCachePeerRequest
+	51, // 78: scheduler.v2.Scheduler.UploadPersistentCacheTaskStarted:input_type -> scheduler.v2.UploadPersistentCacheTaskStartedRequest
+	52, // 79: scheduler.v2.Scheduler.UploadPersistentCacheTaskFinished:input_type -> scheduler.v2.UploadPersistentCacheTaskFinishedRequest
+	53, // 80: scheduler.v2.Scheduler.UploadPersistentCacheTaskFailed:input_type -> scheduler.v2.UploadPersistentCacheTaskFailedRequest
+	54, // 81: scheduler.v2.Scheduler.StatPersistentCacheTask:input_type -> scheduler.v2.StatPersistentCacheTaskRequest
+	55, // 82: scheduler.v2.Scheduler.DeletePersistentCacheTask:input_type -> scheduler.v2.DeletePersistentCacheTaskRequest
+	16, // 83: scheduler.v2.Scheduler.AnnouncePeer:output_type -> scheduler.v2.AnnouncePeerResponse
+	58, // 84: scheduler.v2.Scheduler.StatPeer:output_type -> common.v2.Peer
+	71, // 85: scheduler.v2.Scheduler.DeletePeer:output_type -> google.protobuf.Empty
+	72, // 86: scheduler.v2.Scheduler.StatTask:output_type -> common.v2.Task
+	71, // 87: scheduler.v2.Scheduler.DeleteTask:output_type -> google.protobuf.Empty
+	71, // 88: scheduler.v2.Scheduler.AnnounceHost:output_type -> google.protobuf.Empty
+	22, // 89: scheduler.v2.Scheduler.ListHosts:output_type -> scheduler.v2.ListHostsResponse
+	71, // 90: scheduler.v2.Scheduler.DeleteHost:output_type -> google.protobuf.Empty
+	35, // 91: scheduler.v2.Scheduler.AnnounceCachePeer:output_type -> scheduler.v2.AnnounceCachePeerResponse
+	69, // 92: scheduler.v2.Scheduler.StatCachePeer:output_type -> common.v2.CachePeer
+	71, // 93: scheduler.v2.Scheduler.DeleteCachePeer:output_type -> google.protobuf.Empty
+	73, // 94: scheduler.v2.Scheduler.StatCacheTask:output_type -> common.v2.CacheTask
+	71, // 95: scheduler.v2.Scheduler.DeleteCacheTask:output_type -> google.protobuf.Empty
+	48, // 96: scheduler.v2.Scheduler.AnnouncePersistentCachePeer:output_type -> scheduler.v2.AnnouncePersistentCachePeerResponse
+	70, // 97: scheduler.v2.Scheduler.StatPersistentCachePeer:output_type -> common.v2.PersistentCachePeer
+	71, // 98: scheduler.v2.Scheduler.DeletePersistentCachePeer:output_type -> google.protobuf.Empty
+	71, // 99: scheduler.v2.Scheduler.UploadPersistentCacheTaskStarted:output_type -> google.protobuf.Empty
+	74, // 100: scheduler.v2.Scheduler.UploadPersistentCacheTaskFinished:output_type -> common.v2.PersistentCacheTask
+	71, // 101: scheduler.v2.Scheduler.UploadPersistentCacheTaskFailed:output_type -> google.protobuf.Empty
+	74, // 102: scheduler.v2.Scheduler.StatPersistentCacheTask:output_type -> common.v2.PersistentCacheTask
+	71, // 103: scheduler.v2.Scheduler.DeletePersistentCacheTask:output_type -> google.protobuf.Empty
+	83, // [83:104] is the sub-list for method output_type
+	62, // [62:83] is the sub-list for method input_type
+	62, // [62:62] is the sub-list for extension type_name
+	62, // [62:62] is the sub-list for extension extendee
+	0,  // [0:62] is the sub-list for field type_name
 }
 
 func init() { file_pkg_apis_scheduler_v2_scheduler_proto_init() }
@@ -5626,6 +5926,7 @@ func file_pkg_apis_scheduler_v2_scheduler_proto_init() {
 		(*AnnouncePeerResponse_NeedBackToSourceResponse)(nil),
 	}
 	file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[21].OneofWrappers = []interface{}{}
+	file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[24].OneofWrappers = []interface{}{}
 	file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[26].OneofWrappers = []interface{}{}
 	file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[27].OneofWrappers = []interface{}{}
 	file_pkg_apis_scheduler_v2_scheduler_proto_msgTypes[30].OneofWrappers = []interface{}{}
@@ -5673,7 +5974,7 @@ func file_pkg_apis_scheduler_v2_scheduler_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pkg_apis_scheduler_v2_scheduler_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   56,
+			NumMessages:   57,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

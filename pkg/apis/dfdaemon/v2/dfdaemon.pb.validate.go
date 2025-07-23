@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	common "d7y.io/api/v2/pkg/apis/common/v2"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = common.Priority(0)
 )
 
 // Validate checks the field values on DownloadTaskRequest with the rules
@@ -2045,10 +2049,20 @@ func (m *DownloadCacheTaskRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetDownload() == nil {
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = DownloadCacheTaskRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
 		err := DownloadCacheTaskRequestValidationError{
-			field:  "Download",
-			reason: "value is required",
+			field:  "Url",
+			reason: "value must be absolute",
 		}
 		if !all {
 			return err
@@ -2056,33 +2070,258 @@ func (m *DownloadCacheTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if all {
-		switch v := interface{}(m.GetDownload()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, DownloadCacheTaskRequestValidationError{
-					field:  "Download",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
+	if _, ok := common.TaskType_name[int32(m.GetType())]; !ok {
+		err := DownloadCacheTaskRequestValidationError{
+			field:  "Type",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if _, ok := common.Priority_name[int32(m.GetPriority())]; !ok {
+		err := DownloadCacheTaskRequestValidationError{
+			field:  "Priority",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for RequestHeader
+
+	// no validation rules for DisableBackToSource
+
+	// no validation rules for NeedBackToSource
+
+	// no validation rules for Prefetch
+
+	// no validation rules for IsPrefetch
+
+	// no validation rules for NeedPieceContent
+
+	if m.Digest != nil {
+
+		if m.GetDigest() != "" {
+
+			if !_DownloadCacheTaskRequest_Digest_Pattern.MatchString(m.GetDigest()) {
+				err := DownloadCacheTaskRequestValidationError{
+					field:  "Digest",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$\"",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
 			}
-		case interface{ Validate() error }:
+
+		}
+
+	}
+
+	if m.Range != nil {
+
+		if all {
+			switch v := interface{}(m.GetRange()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadCacheTaskRequestValidationError{
+						field:  "Range",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadCacheTaskRequestValidationError{
+						field:  "Range",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetRange()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				errors = append(errors, DownloadCacheTaskRequestValidationError{
-					field:  "Download",
+				return DownloadCacheTaskRequestValidationError{
+					field:  "Range",
 					reason: "embedded message failed validation",
 					cause:  err,
-				})
+				}
 			}
 		}
-	} else if v, ok := interface{}(m.GetDownload()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return DownloadCacheTaskRequestValidationError{
-				field:  "Download",
-				reason: "embedded message failed validation",
-				cause:  err,
+
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if m.GetPieceLength() < 4194304 {
+				err := DownloadCacheTaskRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be greater than or equal to 4194304",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.OutputPath != nil {
+
+		if m.GetOutputPath() != "" {
+
+			if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
+				err := DownloadCacheTaskRequestValidationError{
+					field:  "OutputPath",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Timeout != nil {
+
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadCacheTaskRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadCacheTaskRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadCacheTaskRequestValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
+
+	}
+
+	if m.ObjectStorage != nil {
+
+		if all {
+			switch v := interface{}(m.GetObjectStorage()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadCacheTaskRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadCacheTaskRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadCacheTaskRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.Hdfs != nil {
+
+		if all {
+			switch v := interface{}(m.GetHdfs()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadCacheTaskRequestValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadCacheTaskRequestValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHdfs()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadCacheTaskRequestValidationError{
+					field:  "Hdfs",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.ContentForCalculatingTaskId != nil {
+		// no validation rules for ContentForCalculatingTaskId
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := DownloadCacheTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if len(errors) > 0 {
@@ -2164,6 +2403,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DownloadCacheTaskRequestValidationError{}
+
+var _DownloadCacheTaskRequest_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$")
 
 // Validate checks the field values on DownloadCacheTaskStartedResponse with
 // the rules defined in the proto definition for this message. If any rules
