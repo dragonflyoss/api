@@ -336,7 +336,7 @@ pub struct DeleteHostRequest {
 pub struct RegisterCachePeerRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
-    pub download: ::core::option::Option<super::super::common::v2::Download>,
+    pub download: ::core::option::Option<super::super::common::v2::CacheDownload>,
 }
 /// DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]

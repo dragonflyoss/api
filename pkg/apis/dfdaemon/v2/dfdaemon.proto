@@ -170,7 +170,7 @@ message DeleteTaskRequest {
 // DownloadCacheTaskRequest represents request of DownloadCacheTask.
 message DownloadCacheTaskRequest {
   // Download information.
-  common.v2.Download download = 1 [(validate.rules).message.required = true];
+  common.v2.CacheDownload download = 1 [(validate.rules).message.required = true];
 }
 
 // DownloadCacheTaskStartedResponse represents cache task download started response of DownloadCacheTaskResponse.

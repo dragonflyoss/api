@@ -226,7 +226,7 @@ pub struct DeleteTaskRequest {
 pub struct DownloadCacheTaskRequest {
     /// Download information.
     #[prost(message, optional, tag = "1")]
-    pub download: ::core::option::Option<super::super::common::v2::Download>,
+    pub download: ::core::option::Option<super::super::common::v2::CacheDownload>,
 }
 /// DownloadCacheTaskStartedResponse represents cache task download started response of DownloadCacheTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]

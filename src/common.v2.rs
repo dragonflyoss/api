@@ -604,10 +604,6 @@ pub struct Download {
     /// need_piece_content is the flag to indicate whether the response needs to return piece content.
     #[prost(bool, tag = "20")]
     pub need_piece_content: bool,
-    /// load_to_cache indicates whether the content downloaded will be stored in the cache storage.
-    /// Cache storage is designed to store downloaded piece content from preheat tasks,
-    /// allowing other peers to access the content from memory instead of disk.
-    /// bool load_to_cache = 21;
     /// force_hard_link is the flag to indicate whether the download file must be hard linked to the output path.
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
     #[prost(bool, tag = "22")]
@@ -623,6 +619,96 @@ pub struct Download {
     /// For proxy requests, it is set to the IP address of the request source.
     /// For dfget requests, it is set to the IP address of the dfget.
     #[prost(string, optional, tag = "24")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// CacheDownload information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct CacheDownload {
+    /// Download url.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// Digest of the task digest, for example :xxx or sha256:yyy.
+    #[prost(string, optional, tag = "2")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
+    /// Range is url range of request. If protocol is http, range
+    /// will set in request header. If protocol is others, range
+    /// will set in range field.
+    #[prost(message, optional, tag = "3")]
+    pub range: ::core::option::Option<Range>,
+    /// Task type.
+    #[prost(enumeration = "TaskType", tag = "4")]
+    pub r#type: i32,
+    /// URL tag identifies different task for same url.
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Peer priority.
+    #[prost(enumeration = "Priority", tag = "7")]
+    pub priority: i32,
+    /// Filtered query params to generate the task id.
+    /// When filter is \["Signature", "Expires", "ns"\], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+    #[prost(string, repeated, tag = "8")]
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Task request headers.
+    #[prost(map = "string, string", tag = "9")]
+    pub request_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Task piece length.
+    #[prost(uint64, optional, tag = "10")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
+    /// Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
+    /// it will copy the file to the output path after the download is completed.
+    /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
+    #[prost(string, optional, tag = "11")]
+    pub output_path: ::core::option::Option<::prost::alloc::string::String>,
+    /// Download timeout.
+    #[prost(message, optional, tag = "12")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Dfdaemon cannot download the task from the source if disable_back_to_source is true.
+    #[prost(bool, tag = "13")]
+    pub disable_back_to_source: bool,
+    /// Scheduler needs to schedule the task downloads from the source if need_back_to_source is true.
+    #[prost(bool, tag = "14")]
+    pub need_back_to_source: bool,
+    /// certificate_chain is the client certs with DER format for the backend client to download back-to-source.
+    #[prost(bytes = "vec", repeated, tag = "15")]
+    pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// Prefetch pre-downloads all pieces of the task when the download task request is a range request.
+    #[prost(bool, tag = "16")]
+    pub prefetch: bool,
+    /// Object storage protocol information.
+    #[prost(message, optional, tag = "17")]
+    pub object_storage: ::core::option::Option<ObjectStorage>,
+    /// HDFS protocol information.
+    #[prost(message, optional, tag = "18")]
+    pub hdfs: ::core::option::Option<Hdfs>,
+    /// is_prefetch is the flag to indicate whether the request is a prefetch request.
+    #[prost(bool, tag = "19")]
+    pub is_prefetch: bool,
+    /// need_piece_content is the flag to indicate whether the response needs to return piece content.
+    #[prost(bool, tag = "20")]
+    pub need_piece_content: bool,
+    /// content_for_calculating_task_id is the content used to calculate the task id.
+    /// If content_for_calculating_task_id is set, use its value to calculate the task ID.
+    /// Otherwise, calculate the task ID based on url, piece_length, tag, application, and filtered_query_params.
+    #[prost(string, optional, tag = "21")]
+    pub content_for_calculating_task_id: ::core::option::Option<
+        ::prost::alloc::string::String,
+    >,
+    /// remote_ip represents the IP address of the client initiating the download request.
+    /// For proxy requests, it is set to the IP address of the request source.
+    /// For dfget requests, it is set to the IP address of the dfget.
+    #[prost(string, optional, tag = "22")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Object Storage related information.
@@ -753,7 +839,7 @@ pub enum TaskType {
     /// local peer(local cache). When the standard task is never downloaded in the
     /// P2P cluster, dfdaemon will download the task from the source. When the standard
     /// task is downloaded in the P2P cluster, dfdaemon will download the task from
-    /// the remote peer or local peer(local cache).
+    /// the remote peer or local peer(local cache), where peers use disk storage to store tasks.
     Standard = 0,
     /// PERSISTENT is persistent type of task, it can import file and export file in P2P cluster.
     /// When the persistent task is imported into the P2P cluster, dfdaemon will store
@@ -765,8 +851,11 @@ pub enum TaskType {
     /// the task in the peer's disk and copy multiple replicas to remote peers to prevent data loss.
     /// When the expiration time is reached, task will be deleted in the P2P cluster.
     PersistentCache = 2,
-    /// CACHE is cache type of task, it can import file and export file in P2P cluster.
-    /// When the cache task is imported into the P2P cluster, dfdaemon will download the cache task from the cache of remote peer.
+    /// CACHE is cache type of task, it can download from source, remote peer and
+    /// local peer(local cache). When the cache task is never downloaded in the
+    /// P2P cluster, dfdaemon will download the cache task from the source. When the cache
+    /// task is downloaded in the P2P cluster, dfdaemon will download the cache task from
+    /// the remote peer or local peer(local cache), where peers use memory storage to store cache tasks.
     Cache = 3,
 }
 impl TaskType {

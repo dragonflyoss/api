@@ -218,7 +218,7 @@ message DeleteHostRequest{
 // RegisterCachePeerRequest represents cache peer registered request of AnnounceCachePeerRequest.
 message RegisterCachePeerRequest {
   // Download information.
-  common.v2.Download download = 1;
+  common.v2.CacheDownload download = 1;
 }
 
 // DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
