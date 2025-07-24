@@ -7,6 +7,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             "scheduler.v2.AnnouncePeerRequest.request",
             "#[allow(clippy::large_enum_variant)]",
         )
+        .type_attribute(
+            "scheduler.v2.AnnounceCachePeerRequest.request",
+            "#[allow(clippy::large_enum_variant)]",
+        )
         .extern_path(".google.protobuf.Timestamp", "::prost_wkt_types::Timestamp")
         .extern_path(".google.protobuf.Duration", "::prost_wkt_types::Duration")
         .out_dir("src")

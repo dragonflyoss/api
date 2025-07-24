@@ -510,6 +510,7 @@ pub struct AnnounceCachePeerRequest {
 /// Nested message and enum types in `AnnounceCachePeerRequest`.
 pub mod announce_cache_peer_request {
     #[derive(serde::Serialize, serde::Deserialize)]
+    #[allow(clippy::large_enum_variant)]
     #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Request {
