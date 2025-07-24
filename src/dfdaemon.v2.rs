@@ -228,6 +228,235 @@ pub struct DeleteTaskRequest {
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
+/// DownloadCacheTaskRequest represents request of DownloadCacheTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadCacheTaskRequest {
+    /// Download url.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// Digest of the task digest, for example :xxx or sha256:yyy.
+    #[prost(string, optional, tag = "2")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
+    /// Range is url range of request. If protocol is http, range
+    /// will set in request header. If protocol is others, range
+    /// will set in range field.
+    #[prost(message, optional, tag = "3")]
+    pub range: ::core::option::Option<super::super::common::v2::Range>,
+    /// Task type.
+    #[prost(enumeration = "super::super::common::v2::TaskType", tag = "4")]
+    pub r#type: i32,
+    /// URL tag identifies different task for same url.
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Peer priority.
+    #[prost(enumeration = "super::super::common::v2::Priority", tag = "7")]
+    pub priority: i32,
+    /// Filtered query params to generate the task id.
+    /// When filter is \["Signature", "Expires", "ns"\], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+    #[prost(string, repeated, tag = "8")]
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Task request headers.
+    #[prost(map = "string, string", tag = "9")]
+    pub request_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Task piece length.
+    #[prost(uint64, optional, tag = "10")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
+    /// Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
+    /// it will copy the file to the output path after the download is completed.
+    /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
+    #[prost(string, optional, tag = "11")]
+    pub output_path: ::core::option::Option<::prost::alloc::string::String>,
+    /// Download timeout.
+    #[prost(message, optional, tag = "12")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Dfdaemon cannot download the task from the source if disable_back_to_source is true.
+    #[prost(bool, tag = "13")]
+    pub disable_back_to_source: bool,
+    /// Scheduler needs to schedule the task downloads from the source if need_back_to_source is true.
+    #[prost(bool, tag = "14")]
+    pub need_back_to_source: bool,
+    /// certificate_chain is the client certs with DER format for the backend client to download back-to-source.
+    #[prost(bytes = "vec", repeated, tag = "15")]
+    pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// Prefetch pre-downloads all pieces of the task when the download task request is a range request.
+    #[prost(bool, tag = "16")]
+    pub prefetch: bool,
+    /// Object storage protocol information.
+    #[prost(message, optional, tag = "17")]
+    pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
+    /// HDFS protocol information.
+    #[prost(message, optional, tag = "18")]
+    pub hdfs: ::core::option::Option<super::super::common::v2::Hdfs>,
+    /// is_prefetch is the flag to indicate whether the request is a prefetch request.
+    #[prost(bool, tag = "19")]
+    pub is_prefetch: bool,
+    /// need_piece_content is the flag to indicate whether the response needs to return piece content.
+    #[prost(bool, tag = "20")]
+    pub need_piece_content: bool,
+    /// content_for_calculating_task_id is the content used to calculate the task id.
+    /// If content_for_calculating_task_id is set, use its value to calculate the task ID.
+    /// Otherwise, calculate the task ID based on url, piece_length, tag, application, and filtered_query_params.
+    #[prost(string, optional, tag = "21")]
+    pub content_for_calculating_task_id: ::core::option::Option<
+        ::prost::alloc::string::String,
+    >,
+    /// remote_ip represents the IP address of the client initiating the download request.
+    /// For proxy requests, it is set to the IP address of the request source.
+    /// For dfget requests, it is set to the IP address of the dfget.
+    #[prost(string, optional, tag = "22")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// DownloadCacheTaskStartedResponse represents cache task download started response of DownloadCacheTaskResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadCacheTaskStartedResponse {
+    /// Task content length.
+    #[prost(uint64, tag = "1")]
+    pub content_length: u64,
+    /// Range is url range of request. If protocol is http, range
+    /// is parsed from http header. If other protocol, range comes
+    /// from download range field.
+    #[prost(message, optional, tag = "2")]
+    pub range: ::core::option::Option<super::super::common::v2::Range>,
+    /// Task response headers.
+    #[prost(map = "string, string", tag = "3")]
+    pub response_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Need to download pieces.
+    #[prost(message, repeated, tag = "4")]
+    pub pieces: ::prost::alloc::vec::Vec<super::super::common::v2::Piece>,
+    /// is_finished indicates whether the download task is finished.
+    #[prost(bool, tag = "5")]
+    pub is_finished: bool,
+}
+/// DownloadCacheTaskResponse represents response of DownloadCacheTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadCacheTaskResponse {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+    #[prost(oneof = "download_cache_task_response::Response", tags = "4, 5")]
+    pub response: ::core::option::Option<download_cache_task_response::Response>,
+}
+/// Nested message and enum types in `DownloadCacheTaskResponse`.
+pub mod download_cache_task_response {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "4")]
+        DownloadCacheTaskStartedResponse(super::DownloadCacheTaskStartedResponse),
+        #[prost(message, tag = "5")]
+        DownloadPieceFinishedResponse(super::DownloadPieceFinishedResponse),
+    }
+}
+/// SyncCachePiecesRequest represents request of SyncCachePieces.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct SyncCachePiecesRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Interested piece numbers.
+    #[prost(uint32, repeated, tag = "3")]
+    pub interested_cache_piece_numbers: ::prost::alloc::vec::Vec<u32>,
+}
+/// SyncCachePiecesResponse represents response of SyncCachePieces.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct SyncCachePiecesResponse {
+    /// Exist piece number.
+    #[prost(uint32, tag = "1")]
+    pub number: u32,
+    /// Piece offset.
+    #[prost(uint64, tag = "2")]
+    pub offset: u64,
+    /// Piece length.
+    #[prost(uint64, tag = "3")]
+    pub length: u64,
+}
+/// DownloadCachePieceRequest represents request of DownloadCachePiece.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadCachePieceRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Piece number.
+    #[prost(uint32, tag = "3")]
+    pub piece_number: u32,
+}
+/// DownloadCachePieceResponse represents response of DownloadCachePieces.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadCachePieceResponse {
+    /// Piece information.
+    #[prost(message, optional, tag = "1")]
+    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
+    /// Piece metadata digest, it is used to verify the integrity of the piece metadata.
+    #[prost(string, optional, tag = "2")]
+    pub digest: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// StatCacheTaskRequest represents request of StatCacheTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatCacheTaskRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the stat request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+    /// local_only specifies whether to query task information from local client only.
+    /// If true, the query will be restricted to the local client.
+    /// By default (false), the query may be forwarded to the scheduler
+    /// for a cluster-wide search.
+    #[prost(bool, tag = "3")]
+    pub local_only: bool,
+}
+/// DeleteCacheTaskRequest represents request of DeleteCacheTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteCacheTaskRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+}
 /// DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -711,6 +940,141 @@ pub mod dfdaemon_upload_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DownloadPiece"));
             self.inner.unary(req, path, codec).await
         }
+        /// DownloadCacheTask downloads cache task from p2p network.
+        pub async fn download_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DownloadCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<super::DownloadCacheTaskResponse>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/DownloadCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DownloadCacheTask"),
+                );
+            self.inner.server_streaming(req, path, codec).await
+        }
+        /// StatCacheTask stats cache task information.
+        pub async fn stat_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CacheTask>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/StatCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "StatCacheTask"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// DeleteCacheTask deletes cache task from p2p network.
+        pub async fn delete_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteCacheTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/DeleteCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DeleteCacheTask"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// SyncCachePieces syncs cache piece metadatas from remote peer.
+        pub async fn sync_cache_pieces(
+            &mut self,
+            request: impl tonic::IntoRequest<super::SyncCachePiecesRequest>,
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<super::SyncCachePiecesResponse>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/SyncCachePieces",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "SyncCachePieces"),
+                );
+            self.inner.server_streaming(req, path, codec).await
+        }
+        /// DownloadCachePiece downloads cache piece from the remote peer.
+        pub async fn download_cache_piece(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DownloadCachePieceRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DownloadCachePieceResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/DownloadCachePiece",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DownloadCachePiece"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         /// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
         pub async fn download_persistent_cache_task(
             &mut self,
@@ -1170,6 +1534,87 @@ pub mod dfdaemon_download_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "DeleteHost"));
             self.inner.unary(req, path, codec).await
         }
+        /// DownloadCacheTask downloads cache task from p2p network.
+        pub async fn download_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DownloadCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<super::DownloadCacheTaskResponse>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/DownloadCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "DownloadCacheTask"),
+                );
+            self.inner.server_streaming(req, path, codec).await
+        }
+        /// StatCacheTask stats cache task information.
+        pub async fn stat_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CacheTask>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/StatCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "StatCacheTask"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// DeleteCacheTask deletes cache task from p2p network.
+        pub async fn delete_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteCacheTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/DeleteCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "DeleteCacheTask"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         /// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
         pub async fn download_persistent_cache_task(
             &mut self,
@@ -1318,6 +1763,58 @@ pub mod dfdaemon_upload_server {
             request: tonic::Request<super::DownloadPieceRequest>,
         ) -> std::result::Result<
             tonic::Response<super::DownloadPieceResponse>,
+            tonic::Status,
+        >;
+        /// Server streaming response type for the DownloadCacheTask method.
+        type DownloadCacheTaskStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<
+                    super::DownloadCacheTaskResponse,
+                    tonic::Status,
+                >,
+            >
+            + std::marker::Send
+            + 'static;
+        /// DownloadCacheTask downloads cache task from p2p network.
+        async fn download_cache_task(
+            &self,
+            request: tonic::Request<super::DownloadCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<Self::DownloadCacheTaskStream>,
+            tonic::Status,
+        >;
+        /// StatCacheTask stats cache task information.
+        async fn stat_cache_task(
+            &self,
+            request: tonic::Request<super::StatCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CacheTask>,
+            tonic::Status,
+        >;
+        /// DeleteCacheTask deletes cache task from p2p network.
+        async fn delete_cache_task(
+            &self,
+            request: tonic::Request<super::DeleteCacheTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Server streaming response type for the SyncCachePieces method.
+        type SyncCachePiecesStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<super::SyncCachePiecesResponse, tonic::Status>,
+            >
+            + std::marker::Send
+            + 'static;
+        /// SyncCachePieces syncs cache piece metadatas from remote peer.
+        async fn sync_cache_pieces(
+            &self,
+            request: tonic::Request<super::SyncCachePiecesRequest>,
+        ) -> std::result::Result<
+            tonic::Response<Self::SyncCachePiecesStream>,
+            tonic::Status,
+        >;
+        /// DownloadCachePiece downloads cache piece from the remote peer.
+        async fn download_cache_piece(
+            &self,
+            request: tonic::Request<super::DownloadCachePieceRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DownloadCachePieceResponse>,
             tonic::Status,
         >;
         /// Server streaming response type for the DownloadPersistentCacheTask method.
@@ -1692,6 +2189,240 @@ pub mod dfdaemon_upload_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DownloadPieceSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/DownloadCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DownloadCacheTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::ServerStreamingService<
+                        super::DownloadCacheTaskRequest,
+                    > for DownloadCacheTaskSvc<T> {
+                        type Response = super::DownloadCacheTaskResponse;
+                        type ResponseStream = T::DownloadCacheTaskStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DownloadCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::download_cache_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DownloadCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.server_streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/StatCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatCacheTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<super::StatCacheTaskRequest>
+                    for StatCacheTaskSvc<T> {
+                        type Response = super::super::super::common::v2::CacheTask;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::stat_cache_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/DeleteCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteCacheTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<super::DeleteCacheTaskRequest>
+                    for DeleteCacheTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::delete_cache_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeleteCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/SyncCachePieces" => {
+                    #[allow(non_camel_case_types)]
+                    struct SyncCachePiecesSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::ServerStreamingService<
+                        super::SyncCachePiecesRequest,
+                    > for SyncCachePiecesSvc<T> {
+                        type Response = super::SyncCachePiecesResponse;
+                        type ResponseStream = T::SyncCachePiecesStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::SyncCachePiecesRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::sync_cache_pieces(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = SyncCachePiecesSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.server_streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/DownloadCachePiece" => {
+                    #[allow(non_camel_case_types)]
+                    struct DownloadCachePieceSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<super::DownloadCachePieceRequest>
+                    for DownloadCachePieceSvc<T> {
+                        type Response = super::DownloadCachePieceResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DownloadCachePieceRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::download_cache_piece(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DownloadCachePieceSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -2205,6 +2936,36 @@ pub mod dfdaemon_download_server {
             &self,
             request: tonic::Request<()>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Server streaming response type for the DownloadCacheTask method.
+        type DownloadCacheTaskStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<
+                    super::DownloadCacheTaskResponse,
+                    tonic::Status,
+                >,
+            >
+            + std::marker::Send
+            + 'static;
+        /// DownloadCacheTask downloads cache task from p2p network.
+        async fn download_cache_task(
+            &self,
+            request: tonic::Request<super::DownloadCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<Self::DownloadCacheTaskStream>,
+            tonic::Status,
+        >;
+        /// StatCacheTask stats cache task information.
+        async fn stat_cache_task(
+            &self,
+            request: tonic::Request<super::StatCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::CacheTask>,
+            tonic::Status,
+        >;
+        /// DeleteCacheTask deletes cache task from p2p network.
+        async fn delete_cache_task(
+            &self,
+            request: tonic::Request<super::DeleteCacheTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Server streaming response type for the DownloadPersistentCacheTask method.
         type DownloadPersistentCacheTaskStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
@@ -2524,6 +3285,149 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeleteHostSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/DownloadCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DownloadCacheTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::ServerStreamingService<
+                        super::DownloadCacheTaskRequest,
+                    > for DownloadCacheTaskSvc<T> {
+                        type Response = super::DownloadCacheTaskResponse;
+                        type ResponseStream = T::DownloadCacheTaskStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DownloadCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::download_cache_task(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DownloadCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.server_streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/StatCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatCacheTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::StatCacheTaskRequest>
+                    for StatCacheTaskSvc<T> {
+                        type Response = super::super::super::common::v2::CacheTask;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::stat_cache_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/DeleteCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteCacheTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::DeleteCacheTaskRequest>
+                    for DeleteCacheTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteCacheTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::delete_cache_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeleteCacheTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

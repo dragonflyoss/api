@@ -48,7 +48,7 @@ enum TaskType {
   // local peer(local cache). When the standard task is never downloaded in the
   // P2P cluster, dfdaemon will download the task from the source. When the standard
   // task is downloaded in the P2P cluster, dfdaemon will download the task from
-  // the remote peer or local peer(local cache).
+  // the remote peer or local peer(local cache), where peers use disk storage to store tasks.
   STANDARD = 0;
 
   // PERSISTENT is persistent type of task, it can import file and export file in P2P cluster.
@@ -57,11 +57,18 @@ enum TaskType {
   // prevent data loss.
   PERSISTENT = 1;
 
-  // PERSIST_CACHE is persistent cache type of task, it can import file and export file in P2P cluster.
+  // PERSISTENT_CACHE is persistent cache type of task, it can import file and export file in P2P cluster.
   // When the persistent cache task is imported into the P2P cluster, dfdaemon will store
   // the task in the peer's disk and copy multiple replicas to remote peers to prevent data loss.
   // When the expiration time is reached, task will be deleted in the P2P cluster.
   PERSISTENT_CACHE = 2;
+
+  // CACHE is cache type of task, it can download from source, remote peer and
+  // local peer(local cache). When the cache task is never downloaded in the
+  // P2P cluster, dfdaemon will download the cache task from the source. When the cache
+  // task is downloaded in the P2P cluster, dfdaemon will download the cache task from
+  // the remote peer or local peer(local cache), where peers use memory storage to store cache tasks.
+  CACHE = 3;
 }
 
 // TrafficType represents type of traffic.
@@ -138,6 +145,32 @@ message Peer {
   google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
 }
 
+// CachePeer metadata.
+message CachePeer {
+  // Peer id.
+  string id = 1 [(validate.rules).string.min_len = 1];
+  // Range is url range of request.
+  optional Range range = 2;
+  // Peer priority.
+  Priority priority = 3 [(validate.rules).enum.defined_only = true];
+  // Pieces of peer.
+  repeated Piece pieces = 4 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Peer downloads costs time.
+  google.protobuf.Duration cost = 5 [(validate.rules).duration.required = true];
+  // Peer state.
+  string state = 6 [(validate.rules).string.min_len = 1];
+  // CacheTask info.
+  CacheTask task = 7 [(validate.rules).message.required = true];
+  // Host info.
+  Host host = 8 [(validate.rules).message.required = true];
+  // NeedBackToSource needs downloaded from source.
+  bool need_back_to_source = 9;
+  // Peer create time.
+  google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
+  // Peer update time.
+  google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
+}
+
 // PersistentCachePeer metadata.
 message PersistentCachePeer {
   // Peer id.
@@ -163,6 +196,53 @@ message PersistentCachePeer {
 
 // Task metadata.
 message Task {
+  // Task id.
+  string id = 1 [(validate.rules).string.min_len = 1];
+  // Task type.
+  TaskType type = 2 [(validate.rules).enum.defined_only = true];
+  // Download url.
+  string url = 3 [(validate.rules).string.uri = true];
+  // Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
+  // Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
+  // Returns an error if the computed digest mismatches the expected value.
+  //
+  // Performance
+  // Digest calculation increases processing time. Enable only when data integrity verification is critical.
+  optional string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
+  // URL tag identifies different task for same url.
+  optional string tag = 5;
+  // Application of task.
+  optional string application = 6;
+  // Filtered query params to generate the task id.
+  // When filter is ["Signature", "Expires", "ns"], for example:
+  // http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+  // will generate the same task id.
+  // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+  repeated string filtered_query_params = 7;
+  // Task request headers.
+  map<string, string> request_header = 8;
+  // Task content length.
+  uint64 content_length = 9;
+  // Task piece count.
+  uint32 piece_count = 10;
+  // Task size scope.
+  SizeScope size_scope = 11;
+  // Pieces of task.
+  repeated Piece pieces = 12 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  // Task state.
+  string state = 13 [(validate.rules).string.min_len = 1];
+  // Task peer count.
+  uint32 peer_count = 14;
+  // Task contains available peer.
+  bool has_available_peer = 15;
+  // Task create time.
+  google.protobuf.Timestamp created_at = 16 [(validate.rules).timestamp.required = true];
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 17 [(validate.rules).timestamp.required = true];
+}
+
+// CacheTask metadata.
+message CacheTask {
   // Task id.
   string id = 1 [(validate.rules).string.min_len = 1];
   // Task type.
@@ -447,10 +527,6 @@ message Download {
   bool is_prefetch = 19;
   // need_piece_content is the flag to indicate whether the response needs to return piece content.
   bool need_piece_content = 20;
-  // load_to_cache indicates whether the content downloaded will be stored in the cache storage.
-  // Cache storage is designed to store downloaded piece content from preheat tasks, 
-  // allowing other peers to access the content from memory instead of disk.
-  bool load_to_cache = 21;
   // force_hard_link is the flag to indicate whether the download file must be hard linked to the output path.
   // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
   bool force_hard_link = 22;
@@ -462,6 +538,9 @@ message Download {
   // For proxy requests, it is set to the IP address of the request source.
   // For dfget requests, it is set to the IP address of the dfget.
   optional string remote_ip = 24 [(validate.rules).string = {ip: true, ignore_empty: true}];
+
+  reserved 21;
+  reserved "load_to_cache";
 }
 
 // Object Storage related information.

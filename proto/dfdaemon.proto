@@ -170,6 +170,159 @@ message DeleteTaskRequest {
   optional string remote_ip = 2;
 }
 
+// DownloadCacheTaskRequest represents request of DownloadCacheTask.
+message DownloadCacheTaskRequest {
+  // Download url.
+  string url = 1;
+  // Digest of the task digest, for example :xxx or sha256:yyy.
+  optional string digest = 2;
+  // Range is url range of request. If protocol is http, range
+  // will set in request header. If protocol is others, range
+  // will set in range field.
+  optional common.v2.Range range = 3;
+  // Task type.
+  common.v2.TaskType type = 4;
+  // URL tag identifies different task for same url.
+  optional string tag = 5;
+  // Application of task.
+  optional string application = 6;
+  // Peer priority.
+  common.v2.Priority priority = 7;
+  // Filtered query params to generate the task id.
+  // When filter is ["Signature", "Expires", "ns"], for example:
+  // http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+  // will generate the same task id.
+  // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+  repeated string filtered_query_params = 8;
+  // Task request headers.
+  map<string, string> request_header = 9;
+  // Task piece length.
+  optional uint64 piece_length = 10;
+  // File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
+  // Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
+  // it will copy the file to the output path after the download is completed.
+  // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
+  optional string output_path = 11;
+  // Download timeout.
+  optional google.protobuf.Duration timeout = 12;
+  // Dfdaemon cannot download the task from the source if disable_back_to_source is true.
+  bool disable_back_to_source = 13;
+  // Scheduler needs to schedule the task downloads from the source if need_back_to_source is true.
+  bool need_back_to_source = 14;
+  // certificate_chain is the client certs with DER format for the backend client to download back-to-source.
+  repeated bytes certificate_chain = 15;
+  // Prefetch pre-downloads all pieces of the task when the download task request is a range request.
+  bool prefetch = 16;
+  // Object storage protocol information.
+  optional common.v2.ObjectStorage object_storage = 17;
+  // HDFS protocol information.
+  optional common.v2.HDFS hdfs = 18;
+  // is_prefetch is the flag to indicate whether the request is a prefetch request.
+  bool is_prefetch = 19;
+  // need_piece_content is the flag to indicate whether the response needs to return piece content.
+  bool need_piece_content = 20;
+  // content_for_calculating_task_id is the content used to calculate the task id.
+  // If content_for_calculating_task_id is set, use its value to calculate the task ID.
+  // Otherwise, calculate the task ID based on url, piece_length, tag, application, and filtered_query_params.
+  optional string content_for_calculating_task_id = 21;
+  // remote_ip represents the IP address of the client initiating the download request.
+  // For proxy requests, it is set to the IP address of the request source.
+  // For dfget requests, it is set to the IP address of the dfget.
+  optional string remote_ip = 22;
+}
+
+// DownloadCacheTaskStartedResponse represents cache task download started response of DownloadCacheTaskResponse.
+message DownloadCacheTaskStartedResponse {
+  // Task content length.
+  uint64 content_length = 1;
+
+  // Range is url range of request. If protocol is http, range
+  // is parsed from http header. If other protocol, range comes
+  // from download range field.
+  optional common.v2.Range range = 2;
+
+  // Task response headers.
+  map<string, string> response_header = 3;
+
+  // Need to download pieces.
+  repeated common.v2.Piece pieces = 4;
+
+  // is_finished indicates whether the download task is finished.
+  bool is_finished = 5;
+}
+
+// DownloadCacheTaskResponse represents response of DownloadCacheTask.
+message DownloadCacheTaskResponse {
+  // Host id.
+  string host_id = 1;
+  // Task id.
+  string task_id = 2;
+  // Peer id.
+  string peer_id = 3;
+
+  oneof response {
+    DownloadCacheTaskStartedResponse download_cache_task_started_response = 4;
+    DownloadPieceFinishedResponse download_piece_finished_response = 5;
+  }
+}
+
+// SyncCachePiecesRequest represents request of SyncCachePieces.
+message SyncCachePiecesRequest {
+  // Host id.
+  string host_id = 1;
+  // Task id.
+  string task_id = 2;
+  // Interested piece numbers.
+  repeated uint32 interested_cache_piece_numbers = 3;
+}
+
+// SyncCachePiecesResponse represents response of SyncCachePieces.
+message SyncCachePiecesResponse {
+  // Exist piece number.
+  uint32 number = 1;
+  // Piece offset.
+  uint64 offset = 2;
+  // Piece length.
+  uint64 length = 3;
+}
+
+// DownloadCachePieceRequest represents request of DownloadCachePiece.
+message DownloadCachePieceRequest{
+  // Host id.
+  string host_id = 1;
+  // Task id.
+  string task_id = 2;
+  // Piece number.
+  uint32 piece_number = 3;
+}
+
+// DownloadCachePieceResponse represents response of DownloadCachePieces.
+message DownloadCachePieceResponse {
+  // Piece information.
+  common.v2.Piece piece = 1;
+  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
+  optional string digest = 2;
+}
+
+// StatCacheTaskRequest represents request of StatCacheTask.
+message StatCacheTaskRequest {
+  // Task id.
+  string task_id = 1;
+  // Remote IP represents the IP address of the client initiating the stat request.
+  optional string remote_ip = 2;
+  // local_only specifies whether to query task information from local client only.
+  // If true, the query will be restricted to the local client.
+  // By default (false), the query may be forwarded to the scheduler
+  // for a cluster-wide search.
+  bool local_only = 3;
+}
+
+// DeleteCacheTaskRequest represents request of DeleteCacheTask.
+message DeleteCacheTaskRequest {
+  // Task id.
+  string task_id = 1;
+}
+
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
 message DownloadPersistentCacheTaskRequest {
   // Task id.
@@ -364,6 +517,21 @@ service DfdaemonUpload {
   // DownloadPiece downloads piece from the remote peer.
   rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
 
+  // DownloadCacheTask downloads cache task from p2p network.
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+
+  // StatCacheTask stats cache task information.
+  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+
+  // DeleteCacheTask deletes cache task from p2p network.
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
+
+  // SyncCachePieces syncs cache piece metadatas from remote peer.
+  rpc SyncCachePieces(SyncCachePiecesRequest) returns(stream SyncCachePiecesResponse);
+
+  // DownloadCachePiece downloads cache piece from the remote peer.
+  rpc DownloadCachePiece(DownloadCachePieceRequest)returns(DownloadCachePieceResponse);
+
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
 
@@ -405,6 +573,15 @@ service DfdaemonDownload {
 
   // DeleteHost releases host in scheduler.
   rpc DeleteHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+
+   // DownloadCacheTask downloads cache task from p2p network.
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+
+  // StatCacheTask stats cache task information.
+  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+
+  // DeleteCacheTask deletes cache task from p2p network.
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
