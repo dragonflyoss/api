@@ -66,6 +66,23 @@ type SchedulerClient interface {
 	StatPersistentCacheTask(ctx context.Context, in *StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*v2.PersistentCacheTask, error)
 	// DeletePersistentCacheTask releases persistent cache task in scheduler.
 	DeletePersistentCacheTask(ctx context.Context, in *DeletePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// PreheatImage synchronously resolves an image manifest and triggers an asynchronous preheat task.
+	//
+	// This is a blocking call. The RPC will not return until the server has completed the
+	// initial synchronous work: resolving the image manifest and preparing all layer URLs.
+	//
+	// After this call successfully returns, a scheduler on the server begins the actual
+	// preheating process, instructing peers to download the layers in the background.
+	//
+	// A successful response (google.protobuf.Empty) confirms that the preparation is complete
+	// and the asynchronous download task has been scheduled.
+	PreheatImage(ctx context.Context, in *PreheatImageRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// StatImage provides detailed status for a container image's distribution in peers.
+	//
+	// This is a blocking call that first resolves the image manifest and then queries
+	// all peers to collect the image's download state across the network.
+	// The response includes both layer information and the status on each peer.
+	StatImage(ctx context.Context, in *StatImageRequest, opts ...grpc.CallOption) (*StatImageResponse, error)
 }
 
 type schedulerClient struct {
@@ -331,6 +348,24 @@ func (c *schedulerClient) DeletePersistentCacheTask(ctx context.Context, in *Del
 	return out, nil
 }
 
+func (c *schedulerClient) PreheatImage(ctx context.Context, in *PreheatImageRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/PreheatImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulerClient) StatImage(ctx context.Context, in *StatImageRequest, opts ...grpc.CallOption) (*StatImageResponse, error) {
+	out := new(StatImageResponse)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatImage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SchedulerServer is the server API for Scheduler service.
 // All implementations should embed UnimplementedSchedulerServer
 // for forward compatibility
@@ -377,6 +412,23 @@ type SchedulerServer interface {
 	StatPersistentCacheTask(context.Context, *StatPersistentCacheTaskRequest) (*v2.PersistentCacheTask, error)
 	// DeletePersistentCacheTask releases persistent cache task in scheduler.
 	DeletePersistentCacheTask(context.Context, *DeletePersistentCacheTaskRequest) (*emptypb.Empty, error)
+	// PreheatImage synchronously resolves an image manifest and triggers an asynchronous preheat task.
+	//
+	// This is a blocking call. The RPC will not return until the server has completed the
+	// initial synchronous work: resolving the image manifest and preparing all layer URLs.
+	//
+	// After this call successfully returns, a scheduler on the server begins the actual
+	// preheating process, instructing peers to download the layers in the background.
+	//
+	// A successful response (google.protobuf.Empty) confirms that the preparation is complete
+	// and the asynchronous download task has been scheduled.
+	PreheatImage(context.Context, *PreheatImageRequest) (*emptypb.Empty, error)
+	// StatImage provides detailed status for a container image's distribution in peers.
+	//
+	// This is a blocking call that first resolves the image manifest and then queries
+	// all peers to collect the image's download state across the network.
+	// The response includes both layer information and the status on each peer.
+	StatImage(context.Context, *StatImageRequest) (*StatImageResponse, error)
 }
 
 // UnimplementedSchedulerServer should be embedded to have forward compatible implementations.
@@ -445,6 +497,12 @@ func (UnimplementedSchedulerServer) StatPersistentCacheTask(context.Context, *St
 }
 func (UnimplementedSchedulerServer) DeletePersistentCacheTask(context.Context, *DeletePersistentCacheTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePersistentCacheTask not implemented")
+}
+func (UnimplementedSchedulerServer) PreheatImage(context.Context, *PreheatImageRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PreheatImage not implemented")
+}
+func (UnimplementedSchedulerServer) StatImage(context.Context, *StatImageRequest) (*StatImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatImage not implemented")
 }
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
@@ -860,6 +918,42 @@ func _Scheduler_DeletePersistentCacheTask_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scheduler_PreheatImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PreheatImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).PreheatImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/PreheatImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).PreheatImage(ctx, req.(*PreheatImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduler_StatImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).StatImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/StatImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).StatImage(ctx, req.(*StatImageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scheduler_ServiceDesc is the grpc.ServiceDesc for Scheduler service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -938,6 +1032,14 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePersistentCacheTask",
 			Handler:    _Scheduler_DeletePersistentCacheTask_Handler,
+		},
+		{
+			MethodName: "PreheatImage",
+			Handler:    _Scheduler_PreheatImage_Handler,
+		},
+		{
+			MethodName: "StatImage",
+			Handler:    _Scheduler_StatImage_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

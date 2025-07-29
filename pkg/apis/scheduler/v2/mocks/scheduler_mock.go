@@ -285,6 +285,26 @@ func (mr *MockSchedulerClientMockRecorder) ListHosts(ctx, in any, opts ...any) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListHosts", reflect.TypeOf((*MockSchedulerClient)(nil).ListHosts), varargs...)
 }
 
+// PreheatImage mocks base method.
+func (m *MockSchedulerClient) PreheatImage(ctx context.Context, in *scheduler.PreheatImageRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "PreheatImage", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PreheatImage indicates an expected call of PreheatImage.
+func (mr *MockSchedulerClientMockRecorder) PreheatImage(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PreheatImage", reflect.TypeOf((*MockSchedulerClient)(nil).PreheatImage), varargs...)
+}
+
 // StatCachePeer mocks base method.
 func (m *MockSchedulerClient) StatCachePeer(ctx context.Context, in *scheduler.StatCachePeerRequest, opts ...grpc.CallOption) (*common.CachePeer, error) {
 	m.ctrl.T.Helper()
@@ -323,6 +343,26 @@ func (mr *MockSchedulerClientMockRecorder) StatCacheTask(ctx, in any, opts ...an
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockSchedulerClient)(nil).StatCacheTask), varargs...)
+}
+
+// StatImage mocks base method.
+func (m *MockSchedulerClient) StatImage(ctx context.Context, in *scheduler.StatImageRequest, opts ...grpc.CallOption) (*scheduler.StatImageResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StatImage", varargs...)
+	ret0, _ := ret[0].(*scheduler.StatImageResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatImage indicates an expected call of StatImage.
+func (mr *MockSchedulerClientMockRecorder) StatImage(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatImage", reflect.TypeOf((*MockSchedulerClient)(nil).StatImage), varargs...)
 }
 
 // StatPeer mocks base method.
@@ -1080,6 +1120,21 @@ func (mr *MockSchedulerServerMockRecorder) ListHosts(arg0, arg1 any) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListHosts", reflect.TypeOf((*MockSchedulerServer)(nil).ListHosts), arg0, arg1)
 }
 
+// PreheatImage mocks base method.
+func (m *MockSchedulerServer) PreheatImage(arg0 context.Context, arg1 *scheduler.PreheatImageRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PreheatImage", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PreheatImage indicates an expected call of PreheatImage.
+func (mr *MockSchedulerServerMockRecorder) PreheatImage(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PreheatImage", reflect.TypeOf((*MockSchedulerServer)(nil).PreheatImage), arg0, arg1)
+}
+
 // StatCachePeer mocks base method.
 func (m *MockSchedulerServer) StatCachePeer(arg0 context.Context, arg1 *scheduler.StatCachePeerRequest) (*common.CachePeer, error) {
 	m.ctrl.T.Helper()
@@ -1108,6 +1163,21 @@ func (m *MockSchedulerServer) StatCacheTask(arg0 context.Context, arg1 *schedule
 func (mr *MockSchedulerServerMockRecorder) StatCacheTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockSchedulerServer)(nil).StatCacheTask), arg0, arg1)
+}
+
+// StatImage mocks base method.
+func (m *MockSchedulerServer) StatImage(arg0 context.Context, arg1 *scheduler.StatImageRequest) (*scheduler.StatImageResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "StatImage", arg0, arg1)
+	ret0, _ := ret[0].(*scheduler.StatImageResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatImage indicates an expected call of StatImage.
+func (mr *MockSchedulerServerMockRecorder) StatImage(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatImage", reflect.TypeOf((*MockSchedulerServer)(nil).StatImage), arg0, arg1)
 }
 
 // StatPeer mocks base method.

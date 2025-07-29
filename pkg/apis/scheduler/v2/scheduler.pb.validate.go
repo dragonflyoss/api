@@ -9354,3 +9354,1060 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeletePersistentCacheTaskRequestValidationError{}
+
+// Validate checks the field values on PreheatImageRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PreheatImageRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PreheatImageRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PreheatImageRequestMultiError, or nil if none found.
+func (m *PreheatImageRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PreheatImageRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = PreheatImageRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := PreheatImageRequestValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Header
+
+	if !_PreheatImageRequest_Scope_Pattern.MatchString(m.GetScope()) {
+		err := PreheatImageRequestValidationError{
+			field:  "Scope",
+			reason: "value does not match regex pattern \"^(single_seed_peer|all_seed_peers|all_peers)$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
+				err := PreheatImageRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be inside range [4194304, 67108864]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if m.Username != nil {
+		// no validation rules for Username
+	}
+
+	if m.Password != nil {
+		// no validation rules for Password
+	}
+
+	if m.Platform != nil {
+		// no validation rules for Platform
+	}
+
+	if m.Percentage != nil {
+
+		if m.GetPercentage() != 0 {
+
+			if val := m.GetPercentage(); val < 1 || val > 100 {
+				err := PreheatImageRequestValidationError{
+					field:  "Percentage",
+					reason: "value must be inside range [1, 100]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Count != nil {
+
+		if m.GetCount() != 0 {
+
+			if val := m.GetCount(); val < 1 || val > 200 {
+				err := PreheatImageRequestValidationError{
+					field:  "Count",
+					reason: "value must be inside range [1, 200]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ConcurrentTaskCount != nil {
+
+		if m.GetConcurrentTaskCount() != 0 {
+
+			if val := m.GetConcurrentTaskCount(); val < 1 || val > 100 {
+				err := PreheatImageRequestValidationError{
+					field:  "ConcurrentTaskCount",
+					reason: "value must be inside range [1, 100]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ConcurrentPeerCount != nil {
+
+		if m.GetConcurrentPeerCount() != 0 {
+
+			if val := m.GetConcurrentPeerCount(); val < 1 || val > 1000 {
+				err := PreheatImageRequestValidationError{
+					field:  "ConcurrentPeerCount",
+					reason: "value must be inside range [1, 1000]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Timeout != nil {
+
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PreheatImageRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PreheatImageRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PreheatImageRequestValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return PreheatImageRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// PreheatImageRequestMultiError is an error wrapping multiple validation
+// errors returned by PreheatImageRequest.ValidateAll() if the designated
+// constraints aren't met.
+type PreheatImageRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PreheatImageRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PreheatImageRequestMultiError) AllErrors() []error { return m }
+
+// PreheatImageRequestValidationError is the validation error returned by
+// PreheatImageRequest.Validate if the designated constraints aren't met.
+type PreheatImageRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PreheatImageRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PreheatImageRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PreheatImageRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PreheatImageRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PreheatImageRequestValidationError) ErrorName() string {
+	return "PreheatImageRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PreheatImageRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPreheatImageRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PreheatImageRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PreheatImageRequestValidationError{}
+
+var _PreheatImageRequest_Scope_Pattern = regexp.MustCompile("^(single_seed_peer|all_seed_peers|all_peers)$")
+
+// Validate checks the field values on StatImageRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *StatImageRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatImageRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// StatImageRequestMultiError, or nil if none found.
+func (m *StatImageRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatImageRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = StatImageRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := StatImageRequestValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Header
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
+				err := StatImageRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be inside range [4194304, 67108864]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if m.Username != nil {
+		// no validation rules for Username
+	}
+
+	if m.Password != nil {
+		// no validation rules for Password
+	}
+
+	if m.Platform != nil {
+		// no validation rules for Platform
+	}
+
+	if m.ConcurrentLayerCount != nil {
+
+		if m.GetConcurrentLayerCount() != 0 {
+
+			if val := m.GetConcurrentLayerCount(); val < 1 || val > 100 {
+				err := StatImageRequestValidationError{
+					field:  "ConcurrentLayerCount",
+					reason: "value must be inside range [1, 100]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ConcurrentPeerCount != nil {
+
+		if m.GetConcurrentPeerCount() != 0 {
+
+			if val := m.GetConcurrentPeerCount(); val < 1 || val > 1000 {
+				err := StatImageRequestValidationError{
+					field:  "ConcurrentPeerCount",
+					reason: "value must be inside range [1, 1000]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatImageRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatImageRequestMultiError is an error wrapping multiple validation errors
+// returned by StatImageRequest.ValidateAll() if the designated constraints
+// aren't met.
+type StatImageRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatImageRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatImageRequestMultiError) AllErrors() []error { return m }
+
+// StatImageRequestValidationError is the validation error returned by
+// StatImageRequest.Validate if the designated constraints aren't met.
+type StatImageRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatImageRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatImageRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatImageRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatImageRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatImageRequestValidationError) ErrorName() string { return "StatImageRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e StatImageRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatImageRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatImageRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatImageRequestValidationError{}
+
+// Validate checks the field values on StatImageResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *StatImageResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatImageResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// StatImageResponseMultiError, or nil if none found.
+func (m *StatImageResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatImageResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetImage()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, StatImageResponseValidationError{
+					field:  "Image",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, StatImageResponseValidationError{
+					field:  "Image",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetImage()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return StatImageResponseValidationError{
+				field:  "Image",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for idx, item := range m.GetPeers() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatImageResponseValidationError{
+						field:  fmt.Sprintf("Peers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatImageResponseValidationError{
+						field:  fmt.Sprintf("Peers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatImageResponseValidationError{
+					field:  fmt.Sprintf("Peers[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatImageResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatImageResponseMultiError is an error wrapping multiple validation errors
+// returned by StatImageResponse.ValidateAll() if the designated constraints
+// aren't met.
+type StatImageResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatImageResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatImageResponseMultiError) AllErrors() []error { return m }
+
+// StatImageResponseValidationError is the validation error returned by
+// StatImageResponse.Validate if the designated constraints aren't met.
+type StatImageResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatImageResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatImageResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatImageResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatImageResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatImageResponseValidationError) ErrorName() string {
+	return "StatImageResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e StatImageResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatImageResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatImageResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatImageResponseValidationError{}
+
+// Validate checks the field values on PeerImage with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *PeerImage) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PeerImage with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PeerImageMultiError, or nil
+// if none found.
+func (m *PeerImage) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PeerImage) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if ip := net.ParseIP(m.GetIp()); ip == nil {
+		err := PeerImageValidationError{
+			field:  "Ip",
+			reason: "value must be a valid IP address",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		err := PeerImageValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	for idx, item := range m.GetCachedLayers() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PeerImageValidationError{
+						field:  fmt.Sprintf("CachedLayers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PeerImageValidationError{
+						field:  fmt.Sprintf("CachedLayers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PeerImageValidationError{
+					field:  fmt.Sprintf("CachedLayers[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return PeerImageMultiError(errors)
+	}
+
+	return nil
+}
+
+// PeerImageMultiError is an error wrapping multiple validation errors returned
+// by PeerImage.ValidateAll() if the designated constraints aren't met.
+type PeerImageMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PeerImageMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PeerImageMultiError) AllErrors() []error { return m }
+
+// PeerImageValidationError is the validation error returned by
+// PeerImage.Validate if the designated constraints aren't met.
+type PeerImageValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PeerImageValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PeerImageValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PeerImageValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PeerImageValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PeerImageValidationError) ErrorName() string { return "PeerImageValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PeerImageValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPeerImage.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PeerImageValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PeerImageValidationError{}
+
+// Validate checks the field values on Image with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Image) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Image with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in ImageMultiError, or nil if none found.
+func (m *Image) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Image) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetLayers() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ImageValidationError{
+						field:  fmt.Sprintf("Layers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ImageValidationError{
+						field:  fmt.Sprintf("Layers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ImageValidationError{
+					field:  fmt.Sprintf("Layers[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ImageMultiError(errors)
+	}
+
+	return nil
+}
+
+// ImageMultiError is an error wrapping multiple validation errors returned by
+// Image.ValidateAll() if the designated constraints aren't met.
+type ImageMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ImageMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ImageMultiError) AllErrors() []error { return m }
+
+// ImageValidationError is the validation error returned by Image.Validate if
+// the designated constraints aren't met.
+type ImageValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ImageValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ImageValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ImageValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ImageValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ImageValidationError) ErrorName() string { return "ImageValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ImageValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sImage.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ImageValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ImageValidationError{}
+
+// Validate checks the field values on Layer with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Layer) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Layer with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in LayerMultiError, or nil if none found.
+func (m *Layer) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Layer) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = LayerValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := LayerValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return LayerMultiError(errors)
+	}
+
+	return nil
+}
+
+// LayerMultiError is an error wrapping multiple validation errors returned by
+// Layer.ValidateAll() if the designated constraints aren't met.
+type LayerMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m LayerMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m LayerMultiError) AllErrors() []error { return m }
+
+// LayerValidationError is the validation error returned by Layer.Validate if
+// the designated constraints aren't met.
+type LayerValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e LayerValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e LayerValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e LayerValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e LayerValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e LayerValidationError) ErrorName() string { return "LayerValidationError" }
+
+// Error satisfies the builtin error interface
+func (e LayerValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sLayer.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = LayerValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = LayerValidationError{}
