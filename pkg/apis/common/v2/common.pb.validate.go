@@ -1508,10 +1508,10 @@ func (m *PersistentCacheTask) validate(all bool) error {
 
 	// no validation rules for CurrentReplicaCount
 
-	if m.GetPieceLength() < 4194304 {
+	if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
 		err := PersistentCacheTaskValidationError{
 			field:  "PieceLength",
-			reason: "value must be greater than or equal to 4194304",
+			reason: "value must be inside range [4194304, 67108864]",
 		}
 		if !all {
 			return err
@@ -3005,10 +3005,10 @@ func (m *Download) validate(all bool) error {
 
 		if m.GetPieceLength() != 0 {
 
-			if m.GetPieceLength() < 4194304 {
+			if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
 				err := DownloadValidationError{
 					field:  "PieceLength",
-					reason: "value must be greater than or equal to 4194304",
+					reason: "value must be inside range [4194304, 67108864]",
 				}
 				if !all {
 					return err

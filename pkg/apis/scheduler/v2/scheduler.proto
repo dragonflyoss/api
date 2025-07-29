@@ -583,6 +583,133 @@ message DeletePersistentCacheTaskRequest {
   string task_id = 2 [(validate.rules).string.min_len = 1];
 }
 
+// PreheatImageRequest represents request of PreheatImage.
+message PreheatImageRequest {
+  // URL is the image manifest url for preheating.
+  string url = 1 [(validate.rules).string.uri = true];
+	// Piece Length is the piece length(bytes) for downloading file. The value needs to
+	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+	// the piece length will be calculated according to the file size.
+  optional uint64 piece_length = 2 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864, ignore_empty: true}];
+	// Tag is the tag for preheating.
+  optional string tag = 3;
+	// Application is the application string for preheating.
+  optional string application = 4;
+  // Filtered query params to generate the task id.
+  // When filter is ["Signature", "Expires", "ns"], for example:
+  // http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+  // will generate the same task id.
+  // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+  repeated string filtered_query_params = 5;
+	// Header is the http headers for authentication.
+  map<string, string> header = 6;
+	// Username is the username for authentication.
+  optional string username = 7;
+	// Password is the password for authentication.
+  optional string password = 8;
+  // Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
+  optional string platform = 9;
+  // Scope is the scope for preheating, it can be one of the following values:
+  // - single_seed_peer: preheat from a single seed peer.
+  // - all_seed_peers: preheat from all seed peers.
+  // - all_peers: preheat from all available peers.
+  string scope = 10 [(validate.rules).string.pattern = "^(single_seed_peer|all_seed_peers|all_peers)$"];
+	// IPs is a list of specific peer IPs for preheating.
+	// This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
+	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  repeated string ips = 11 [(validate.rules).string = {ip: true, min_len: 0, max_len: 100}];
+	// Percentage is the percentage of available peers to preheat.
+	// This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
+	// It must be a value between 1 and 100 (inclusive) if provided.
+	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  optional uint32 percentage = 12 [(validate.rules).uint32 = {gte: 1, lte: 100, ignore_empty: true}];
+	// Count is the desired number of peers to preheat.
+	// This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
+	// It must be a value between 1 and 200 (inclusive) if provided.
+	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  optional uint32 count = 13 [(validate.rules).uint32 = {gte: 1, lte: 200, ignore_empty: true}];
+	// ConcurrentTaskCount specifies the maximum number of tasks (e.g., image layers) to preheat concurrently.
+	// For example, if preheating 100 layers with ConcurrentTaskCount set to 10, up to 10 layers are processed simultaneously.
+	// If ConcurrentPeerCount is 10 for 1000 peers, each layer is preheated by 10 peers concurrently.
+	// Default is 8, maximum is 100.
+  optional int64 concurrent_task_count = 14 [(validate.rules).int64 = {gte: 1, lte: 100, ignore_empty: true}];
+	// ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task (e.g., an image layer).
+	// For example, if preheating a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
+	// Default is 500, maximum is 1000.
+  optional int64 concurrent_peer_count = 15 [(validate.rules).int64 = {gte: 1, lte: 1000, ignore_empty: true}];
+	// Timeout is the timeout for preheating, default is 60 minutes.
+  optional google.protobuf.Duration timeout = 16;
+}
+
+// StatImageRequest represents request of StatImage.
+message StatImageRequest {
+  // URL is the image manifest url for preheating.
+  string url = 1 [(validate.rules).string.uri = true];
+	// Piece Length is the piece length(bytes) for downloading file. The value needs to
+	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+	// the piece length will be calculated according to the file size.
+  optional uint64 piece_length = 2 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864, ignore_empty: true}];
+	// Tag is the tag for preheating.
+  optional string tag = 3;
+	// Application is the application string for preheating.
+  optional string application = 4;
+  // Filtered query params to generate the task id.
+  // When filter is ["Signature", "Expires", "ns"], for example:
+  // http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+  // will generate the same task id.
+  // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+  repeated string filtered_query_params = 5;
+	// Header is the http headers for authentication.
+  map<string, string> header = 6;
+	// Username is the username for authentication.
+  optional string username = 7;
+	// Password is the password for authentication.
+  optional string password = 8;
+  // Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
+  optional string platform = 9;
+	// ConcurrentLayerCount specifies the maximum number of layers to get concurrently.
+	// For example, if stat 100 layers with ConcurrentLayerCount set to 10, up to 10 layers are processed simultaneously.
+	// If ConcurrentPeerCount is 10 for 1000 peers, each layer is stated by 10 peers concurrently.
+	// Default is 8, maximum is 100.
+  optional int64 concurrent_layer_count = 10 [(validate.rules).int64 = {gte: 1, lte: 100, ignore_empty: true}];
+	// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task (e.g., an image layer).
+	// For example, if stat a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
+	// Default is 500, maximum is 1000.
+  optional int64 concurrent_peer_count = 11 [(validate.rules).int64 = {gte: 1, lte: 1000, ignore_empty: true}];
+}
+
+// StatImageResponse represents response of StatImage.
+message StatImageResponse {
+	// Image is the image information.
+	Image image = 1;
+	// Peers is the peers that have downloaded the image.
+	repeated PeerImage peers = 2;
+}
+
+// PeerImage represents a peer in the get image job.
+message PeerImage {
+	// IP is the IP address of the peer.
+  string ip = 1 [(validate.rules).string.ip = true];
+	// Hostname is the hostname of the peer.
+  string hostname = 2 [(validate.rules).string.min_len = 1];
+	// CachedLayers is the list of layers that the peer has downloaded.
+  repeated Layer cached_layers = 3;
+}
+
+// Image represents the image information.
+message Image {
+  // Layers is the list of layers of the image.
+  repeated Layer layers = 1;
+}
+
+// Layer represents a layer of the image.
+message Layer {
+	// URL is the URL of the layer.
+  string url = 1 [(validate.rules).string.uri = true];
+}
+
 // Scheduler RPC Service.
 service Scheduler {
   // AnnouncePeer announces peer to scheduler.
@@ -647,4 +774,23 @@ service Scheduler {
 
   // DeletePersistentCacheTask releases persistent cache task in scheduler.
   rpc DeletePersistentCacheTask(DeletePersistentCacheTaskRequest)returns(google.protobuf.Empty);
+
+  // PreheatImage synchronously resolves an image manifest and triggers an asynchronous preheat task.
+  //
+  // This is a blocking call. The RPC will not return until the server has completed the
+  // initial synchronous work: resolving the image manifest and preparing all layer URLs.
+  //
+  // After this call successfully returns, a scheduler on the server begins the actual
+  // preheating process, instructing peers to download the layers in the background.
+  //
+  // A successful response (google.protobuf.Empty) confirms that the preparation is complete
+  // and the asynchronous download task has been scheduled.
+  rpc PreheatImage(PreheatImageRequest)returns(google.protobuf.Empty);
+
+  // StatImage provides detailed status for a container image's distribution in peers.
+  //
+  // This is a blocking call that first resolves the image manifest and then queries
+  // all peers to collect the image's download state across the network.
+  // The response includes both layer information and the status on each peer.
+  rpc StatImage(StatImageRequest)returns(StatImageResponse);
 }

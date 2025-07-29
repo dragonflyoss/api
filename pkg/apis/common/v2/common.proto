@@ -308,7 +308,7 @@ message PersistentCacheTask {
   // Application of task.
   optional string application = 6;
   // Task piece length.
-  uint64 piece_length = 7 [(validate.rules).uint64.gte = 4194304];
+  uint64 piece_length = 7 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864}];
   // Task content length.
   uint64 content_length = 8;
   // Task piece count.
@@ -502,8 +502,11 @@ message Download {
   repeated string filtered_query_params = 8;
   // Task request headers.
   map<string, string> request_header = 9;
-  // Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
-  optional uint64 piece_length = 10 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];
+	// Piece Length is the piece length(bytes) for downloading file. The value needs to
+	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+	// the piece length will be calculated according to the file size.
+  optional uint64 piece_length = 10 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864, ignore_empty: true}];
   // File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
   // Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
   // it will copy the file to the output path after the download is completed.
