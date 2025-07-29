@@ -914,6 +914,185 @@ pub struct DeletePersistentCacheTaskRequest {
     #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
 }
+/// PreheatImageRequest represents request of PreheatImage.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PreheatImageRequest {
+    /// URL is the image manifest url for preheating.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// Piece Length is the piece length(bytes) for downloading file. The value needs to
+    /// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+    /// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+    /// the piece length will be calculated according to the file size.
+    #[prost(uint64, optional, tag = "2")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// Tag is the tag for preheating.
+    #[prost(string, optional, tag = "3")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application is the application string for preheating.
+    #[prost(string, optional, tag = "4")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Filtered query params to generate the task id.
+    /// When filter is \["Signature", "Expires", "ns"\], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+    #[prost(string, repeated, tag = "5")]
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Header is the http headers for authentication.
+    #[prost(map = "string, string", tag = "6")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Username is the username for authentication.
+    #[prost(string, optional, tag = "7")]
+    pub username: ::core::option::Option<::prost::alloc::string::String>,
+    /// Password is the password for authentication.
+    #[prost(string, optional, tag = "8")]
+    pub password: ::core::option::Option<::prost::alloc::string::String>,
+    /// Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
+    #[prost(string, optional, tag = "9")]
+    pub platform: ::core::option::Option<::prost::alloc::string::String>,
+    /// Scope is the scope for preheating, it can be one of the following values:
+    /// - single_seed_peer: preheat from a single seed peer.
+    /// - all_peers: preheat from all available peers.
+    /// - all_seed_peers: preheat from all seed peers.
+    #[prost(string, tag = "10")]
+    pub scope: ::prost::alloc::string::String,
+    /// IPs is a list of specific peer IPs for preheating.
+    /// This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
+    /// Applies to 'all_peers' and 'all_seed_peers' scopes.
+    #[prost(string, repeated, tag = "11")]
+    pub ips: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Percentage is the percentage of available peers to preheat.
+    /// This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
+    /// It must be a value between 1 and 100 (inclusive) if provided.
+    /// Applies to 'all_peers' and 'all_seed_peers' scopes.
+    #[prost(uint32, optional, tag = "12")]
+    pub percentage: ::core::option::Option<u32>,
+    /// Count is the desired number of peers to preheat.
+    /// This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
+    /// It must be a value between 1 and 200 (inclusive) if provided.
+    /// Applies to 'all_peers' and 'all_seed_peers' scopes.
+    #[prost(uint32, optional, tag = "13")]
+    pub count: ::core::option::Option<u32>,
+    /// ConcurrentTaskCount specifies the maximum number of tasks (e.g., image layers) to preheat concurrently.
+    /// For example, if preheating 100 layers with ConcurrentTaskCount set to 10, up to 10 layers are processed simultaneously.
+    /// If ConcurrentPeerCount is 10 for 1000 peers, each layer is preheated by 10 peers concurrently.
+    /// Default is 8, maximum is 100.
+    #[prost(int64, optional, tag = "14")]
+    pub concurrent_task_count: ::core::option::Option<i64>,
+    /// ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task (e.g., an image layer).
+    /// For example, if preheating a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
+    /// Default is 500, maximum is 1000.
+    #[prost(int64, optional, tag = "15")]
+    pub concurrent_peer_count: ::core::option::Option<i64>,
+    /// Timeout is the timeout for preheating, default is 60 minutes.
+    #[prost(message, optional, tag = "16")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+}
+/// StatImageRequest represents request of StatImage.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatImageRequest {
+    /// URL is the image manifest url for preheating.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// Piece Length is the piece length(bytes) for downloading file. The value needs to
+    /// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+    /// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+    /// the piece length will be calculated according to the file size.
+    #[prost(uint64, optional, tag = "2")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// Tag is the tag for preheating.
+    #[prost(string, optional, tag = "3")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application is the application string for preheating.
+    #[prost(string, optional, tag = "4")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Filtered query params to generate the task id.
+    /// When filter is \["Signature", "Expires", "ns"\], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+    #[prost(string, repeated, tag = "5")]
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Header is the http headers for authentication.
+    #[prost(map = "string, string", tag = "6")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Username is the username for authentication.
+    #[prost(string, optional, tag = "7")]
+    pub username: ::core::option::Option<::prost::alloc::string::String>,
+    /// Password is the password for authentication.
+    #[prost(string, optional, tag = "8")]
+    pub password: ::core::option::Option<::prost::alloc::string::String>,
+    /// Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
+    #[prost(string, optional, tag = "9")]
+    pub platform: ::core::option::Option<::prost::alloc::string::String>,
+    /// ConcurrentLayerCount specifies the maximum number of layers to get concurrently.
+    /// For example, if stat 100 layers with ConcurrentLayerCount set to 10, up to 10 layers are processed simultaneously.
+    /// If ConcurrentPeerCount is 10 for 1000 peers, each layer is stated by 10 peers concurrently.
+    /// Default is 8, maximum is 100.
+    #[prost(int64, optional, tag = "10")]
+    pub concurrent_layer_count: ::core::option::Option<i64>,
+    /// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task (e.g., an image layer).
+    /// For example, if stat a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
+    /// Default is 500, maximum is 1000.
+    #[prost(int64, optional, tag = "11")]
+    pub concurrent_peer_count: ::core::option::Option<i64>,
+}
+/// StatImageResponse represents response of StatImage.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatImageResponse {
+    /// Image is the image information.
+    #[prost(message, optional, tag = "1")]
+    pub image: ::core::option::Option<Image>,
+    /// Peers is the peers that have downloaded the image.
+    #[prost(message, repeated, tag = "2")]
+    pub peers: ::prost::alloc::vec::Vec<PeerImage>,
+}
+/// PeerImage represents a peer in the get image job.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PeerImage {
+    /// IP is the IP address of the peer.
+    #[prost(string, tag = "1")]
+    pub ip: ::prost::alloc::string::String,
+    /// Hostname is the hostname of the peer.
+    #[prost(string, tag = "2")]
+    pub hostname: ::prost::alloc::string::String,
+    /// CachedLayers is the list of layers that the peer has downloaded.
+    #[prost(message, repeated, tag = "3")]
+    pub cached_layers: ::prost::alloc::vec::Vec<Layer>,
+}
+/// Image represents the image information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Image {
+    /// Layers is the list of layers of the image.
+    #[prost(message, repeated, tag = "1")]
+    pub layers: ::prost::alloc::vec::Vec<Layer>,
+}
+/// Layer represents a layer of the image.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Layer {
+    /// URL is the URL of the layer.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+}
 /// Generated client implementations.
 pub mod scheduler_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
@@ -1564,6 +1743,68 @@ pub mod scheduler_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        /// PreheatImage synchronously resolves an image manifest and triggers an asynchronous preheat task.
+        ///
+        /// This is a blocking call. The RPC will not return until the server has completed the
+        /// initial synchronous work: resolving the image manifest and preparing all layer URLs.
+        ///
+        /// After this call successfully returns, a scheduler on the server begins the actual
+        /// preheating process, instructing peers to download the layers in the background.
+        ///
+        /// A successful response (google.protobuf.Empty) confirms that the preparation is complete
+        /// and the asynchronous download task has been scheduled.
+        pub async fn preheat_image(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PreheatImageRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/PreheatImage",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "PreheatImage"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// StatImage provides detailed status for a container image's distribution in peers.
+        ///
+        /// This is a blocking call that first resolves the image manifest and then queries
+        /// all peers to collect the image's download state across the network.
+        /// The response includes both layer information and the status on each peer.
+        pub async fn stat_image(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatImageRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StatImageResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/StatImage",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatImage"));
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -1737,6 +1978,32 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::DeletePersistentCacheTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// PreheatImage synchronously resolves an image manifest and triggers an asynchronous preheat task.
+        ///
+        /// This is a blocking call. The RPC will not return until the server has completed the
+        /// initial synchronous work: resolving the image manifest and preparing all layer URLs.
+        ///
+        /// After this call successfully returns, a scheduler on the server begins the actual
+        /// preheating process, instructing peers to download the layers in the background.
+        ///
+        /// A successful response (google.protobuf.Empty) confirms that the preparation is complete
+        /// and the asynchronous download task has been scheduled.
+        async fn preheat_image(
+            &self,
+            request: tonic::Request<super::PreheatImageRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// StatImage provides detailed status for a container image's distribution in peers.
+        ///
+        /// This is a blocking call that first resolves the image manifest and then queries
+        /// all peers to collect the image's download state across the network.
+        /// The response includes both layer information and the status on each peer.
+        async fn stat_image(
+            &self,
+            request: tonic::Request<super::StatImageRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StatImageResponse>,
+            tonic::Status,
+        >;
     }
     /// Scheduler RPC Service.
     #[derive(Debug)]
@@ -2803,6 +3070,96 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeletePersistentCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/PreheatImage" => {
+                    #[allow(non_camel_case_types)]
+                    struct PreheatImageSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::PreheatImageRequest>
+                    for PreheatImageSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PreheatImageRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::preheat_image(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = PreheatImageSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/StatImage" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatImageSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::StatImageRequest>
+                    for StatImageSvc<T> {
+                        type Response = super::StatImageResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatImageRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::stat_image(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatImageSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
