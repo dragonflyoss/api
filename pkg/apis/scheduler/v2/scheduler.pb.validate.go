@@ -9411,6 +9411,19 @@ func (m *PreheatImageRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if _, ok := common.Priority_name[int32(m.GetPriority())]; !ok {
+		err := PreheatImageRequestValidationError{
+			field:  "Priority",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for InsecureSkipVerify
+
 	if m.PieceLength != nil {
 
 		if m.GetPieceLength() != 0 {

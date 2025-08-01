@@ -993,6 +993,15 @@ pub struct PreheatImageRequest {
     /// Timeout is the timeout for preheating, default is 60 minutes.
     #[prost(message, optional, tag = "16")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Preheat priority.
+    #[prost(enumeration = "super::super::common::v2::Priority", tag = "17")]
+    pub priority: i32,
+    /// certificate_chain is the client certs with DER format for the backend client.
+    #[prost(bytes = "vec", repeated, tag = "18")]
+    pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// insecure_skip_verify indicates whether to skip TLS verification.
+    #[prost(bool, tag = "19")]
+    pub insecure_skip_verify: bool,
 }
 /// StatImageRequest represents request of StatImage.
 #[derive(serde::Serialize, serde::Deserialize)]

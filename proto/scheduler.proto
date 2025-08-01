@@ -622,6 +622,12 @@ message PreheatImageRequest {
   optional int64 concurrent_peer_count = 15;
 	// Timeout is the timeout for preheating, default is 60 minutes.
   optional google.protobuf.Duration timeout = 16;
+  // Preheat priority.
+  common.v2.Priority priority = 17;
+  // certificate_chain is the client certs with DER format for the backend client.
+  repeated bytes certificate_chain = 18;
+  // insecure_skip_verify indicates whether to skip TLS verification.
+  bool insecure_skip_verify = 19;
 }
 
 // StatImageRequest represents request of StatImage.
