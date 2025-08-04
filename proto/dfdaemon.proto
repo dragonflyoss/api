@@ -321,6 +321,8 @@ message StatCacheTaskRequest {
 message DeleteCacheTaskRequest {
   // Task id.
   string task_id = 1;
+  // Remote IP represents the IP address of the client initiating the delete request.
+  optional string remote_ip = 2;
 }
 
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.

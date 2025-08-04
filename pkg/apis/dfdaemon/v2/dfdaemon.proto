@@ -328,6 +328,8 @@ message StatCacheTaskRequest {
 message DeleteCacheTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Remote IP represents the IP address of the client initiating the delete request.
+  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.

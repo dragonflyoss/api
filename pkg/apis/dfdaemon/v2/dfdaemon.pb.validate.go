@@ -3520,6 +3520,25 @@ func (m *DeleteCacheTaskRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := DeleteCacheTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return DeleteCacheTaskRequestMultiError(errors)
 	}
