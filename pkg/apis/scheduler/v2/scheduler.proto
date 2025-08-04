@@ -638,7 +638,7 @@ message PreheatImageRequest {
 	// For example, if preheating a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
 	// Default is 500, maximum is 1000.
   optional int64 concurrent_peer_count = 15 [(validate.rules).int64 = {gte: 1, lte: 1000, ignore_empty: true}];
-	// Timeout is the timeout for preheating, default is 60 minutes.
+	// Timeout is the timeout for preheating, default is 30 minutes.
   optional google.protobuf.Duration timeout = 16;
   // Preheat priority.
   common.v2.Priority priority = 17 [(validate.rules).enum.defined_only = true];
@@ -684,6 +684,12 @@ message StatImageRequest {
 	// For example, if stat a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
 	// Default is 500, maximum is 1000.
   optional int64 concurrent_peer_count = 11 [(validate.rules).int64 = {gte: 1, lte: 1000, ignore_empty: true}];
+	// Timeout is the timeout for preheating, default is 30 minutes.
+  optional google.protobuf.Duration timeout = 12;
+  // certificate_chain is the client certs with DER format for the backend client.
+  repeated bytes certificate_chain = 13;
+  // insecure_skip_verify indicates whether to skip TLS verification.
+  bool insecure_skip_verify = 14;
 }
 
 // StatImageResponse represents response of StatImage.

@@ -990,7 +990,7 @@ pub struct PreheatImageRequest {
     /// Default is 500, maximum is 1000.
     #[prost(int64, optional, tag = "15")]
     pub concurrent_peer_count: ::core::option::Option<i64>,
-    /// Timeout is the timeout for preheating, default is 60 minutes.
+    /// Timeout is the timeout for preheating, default is 30 minutes.
     #[prost(message, optional, tag = "16")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Preheat priority.
@@ -1056,6 +1056,15 @@ pub struct StatImageRequest {
     /// Default is 500, maximum is 1000.
     #[prost(int64, optional, tag = "11")]
     pub concurrent_peer_count: ::core::option::Option<i64>,
+    /// Timeout is the timeout for preheating, default is 30 minutes.
+    #[prost(message, optional, tag = "12")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// certificate_chain is the client certs with DER format for the backend client.
+    #[prost(bytes = "vec", repeated, tag = "13")]
+    pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// insecure_skip_verify indicates whether to skip TLS verification.
+    #[prost(bool, tag = "14")]
+    pub insecure_skip_verify: bool,
 }
 /// StatImageResponse represents response of StatImage.
 #[derive(serde::Serialize, serde::Deserialize)]
