@@ -9699,6 +9699,8 @@ func (m *StatImageRequest) validate(all bool) error {
 
 	// no validation rules for Header
 
+	// no validation rules for InsecureSkipVerify
+
 	if m.PieceLength != nil {
 
 		if m.GetPieceLength() != 0 {
@@ -9772,6 +9774,39 @@ func (m *StatImageRequest) validate(all bool) error {
 				errors = append(errors, err)
 			}
 
+		}
+
+	}
+
+	if m.Timeout != nil {
+
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatImageRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatImageRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatImageRequestValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
 		}
 
 	}
