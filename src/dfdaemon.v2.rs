@@ -456,6 +456,9 @@ pub struct DeleteCacheTaskRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the delete request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
