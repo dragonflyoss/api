@@ -457,18 +457,18 @@ pub struct Network {
     /// IDC where the peer host is located
     #[prost(string, optional, tag = "4")]
     pub idc: ::core::option::Option<::prost::alloc::string::String>,
-    /// Download rate is received bytes per second.
-    #[prost(uint64, tag = "5")]
-    pub download_rate: u64,
-    /// Download rate is the limit of received bytes per second.
-    #[prost(uint64, tag = "6")]
-    pub download_rate_limit: u64,
-    /// Upload rate is transmitted bytes per second.
-    #[prost(uint64, tag = "7")]
-    pub upload_rate: u64,
-    /// Upload rate is the limit of transmitted bytes per second.
-    #[prost(uint64, tag = "8")]
-    pub upload_rate_limit: u64,
+    /// Maximum bandwidth of the network interface, in bps (bits per second).
+    #[prost(uint64, tag = "9")]
+    pub max_rx_bandwidth: u64,
+    /// Receive bandwidth of the network interface, in bps (bits per second).
+    #[prost(uint64, tag = "10")]
+    pub rx_bandwidth: u64,
+    /// Maximum bandwidth of the network interface for transmission, in bps (bits per second).
+    #[prost(uint64, tag = "11")]
+    pub max_tx_bandwidth: u64,
+    /// Transmit bandwidth of the network interface, in bps (bits per second).
+    #[prost(uint64, tag = "12")]
+    pub tx_bandwidth: u64,
 }
 /// Disk Stat.
 #[derive(serde::Serialize, serde::Deserialize)]

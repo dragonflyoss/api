@@ -422,14 +422,23 @@ message Network {
   optional string location = 3;
   // IDC where the peer host is located
   optional string idc = 4;
-  // Download rate is received bytes per second.
-  uint64 download_rate = 5;
-  // Download rate is the limit of received bytes per second.
-  uint64 download_rate_limit = 6;
-  // Upload rate is transmitted bytes per second.
-  uint64 upload_rate = 7;
-  // Upload rate is the limit of transmitted bytes per second.
-  uint64 upload_rate_limit = 8;
+  // Maximum bandwidth of the network interface, in bps (bits per second).
+  uint64 max_rx_bandwidth = 9;
+  // Receive bandwidth of the network interface, in bps (bits per second).
+  uint64 rx_bandwidth = 10;
+  // Maximum bandwidth of the network interface for transmission, in bps (bits per second).
+  uint64 max_tx_bandwidth = 11;
+  // Transmit bandwidth of the network interface, in bps (bits per second).
+  uint64 tx_bandwidth = 12;
+
+  reserved 5;
+  reserved "download_rate";
+  reserved 6;
+  reserved "download_rate_limit";
+  reserved 7;
+  reserved "upload_rate";
+  reserved 8;
+  reserved "upload_rate_limit";
 }
 
 // Disk Stat.
