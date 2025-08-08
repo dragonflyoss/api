@@ -431,11 +431,11 @@ message Network {
   // Maximum bandwidth of the network interface, in bps (bits per second).
   uint64 max_rx_bandwidth = 9;
   // Receive bandwidth of the network interface, in bps (bits per second).
-  uint64 rx_bandwidth = 10;
+  optional uint64 rx_bandwidth = 10;
   // Maximum bandwidth of the network interface for transmission, in bps (bits per second).
   uint64 max_tx_bandwidth = 11;
   // Transmit bandwidth of the network interface, in bps (bits per second).
-  uint64 tx_bandwidth = 12;
+  optional uint64 tx_bandwidth = 12;
 
   reserved 5;
   reserved "download_rate";
