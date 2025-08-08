@@ -461,14 +461,14 @@ pub struct Network {
     #[prost(uint64, tag = "9")]
     pub max_rx_bandwidth: u64,
     /// Receive bandwidth of the network interface, in bps (bits per second).
-    #[prost(uint64, tag = "10")]
-    pub rx_bandwidth: u64,
+    #[prost(uint64, optional, tag = "10")]
+    pub rx_bandwidth: ::core::option::Option<u64>,
     /// Maximum bandwidth of the network interface for transmission, in bps (bits per second).
     #[prost(uint64, tag = "11")]
     pub max_tx_bandwidth: u64,
     /// Transmit bandwidth of the network interface, in bps (bits per second).
-    #[prost(uint64, tag = "12")]
-    pub tx_bandwidth: u64,
+    #[prost(uint64, optional, tag = "12")]
+    pub tx_bandwidth: ::core::option::Option<u64>,
 }
 /// Disk Stat.
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -2519,11 +2519,7 @@ func (m *Network) validate(all bool) error {
 
 	// no validation rules for MaxRxBandwidth
 
-	// no validation rules for RxBandwidth
-
 	// no validation rules for MaxTxBandwidth
-
-	// no validation rules for TxBandwidth
 
 	if m.Location != nil {
 		// no validation rules for Location
@@ -2531,6 +2527,14 @@ func (m *Network) validate(all bool) error {
 
 	if m.Idc != nil {
 		// no validation rules for Idc
+	}
+
+	if m.RxBandwidth != nil {
+		// no validation rules for RxBandwidth
+	}
+
+	if m.TxBandwidth != nil {
+		// no validation rules for TxBandwidth
 	}
 
 	if len(errors) > 0 {
