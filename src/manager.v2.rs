@@ -398,6 +398,30 @@ pub struct KeepAliveRequest {
     #[prost(string, tag = "4")]
     pub ip: ::prost::alloc::string::String,
 }
+/// RequestEncryptionKeyRequest represents request of RequestEncryptionKey.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RequestEncryptionKeyRequest {
+    /// Request source type.
+    #[prost(enumeration = "SourceType", tag = "1")]
+    pub source_type: i32,
+    /// Source service hostname.
+    #[prost(string, tag = "2")]
+    pub hostname: ::prost::alloc::string::String,
+    /// Source service ip.
+    #[prost(string, tag = "3")]
+    pub ip: ::prost::alloc::string::String,
+}
+/// RequestEncryptionKeyResponse represents response of RequestEncryptionKey.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RequestEncryptionKeyResponse {
+    /// Encryption key provided by manager.
+    #[prost(bytes = "vec", tag = "1")]
+    pub encryption_key: ::prost::alloc::vec::Vec<u8>,
+}
 /// Request source type.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -734,6 +758,32 @@ pub mod manager_client {
                 .insert(GrpcMethod::new("manager.v2.Manager", "KeepAlive"));
             self.inner.client_streaming(req, path, codec).await
         }
+        /// Request encryption key from manager.
+        pub async fn request_encryption_key(
+            &mut self,
+            request: impl tonic::IntoRequest<super::RequestEncryptionKeyRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::RequestEncryptionKeyResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/manager.v2.Manager/RequestEncryptionKey",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("manager.v2.Manager", "RequestEncryptionKey"));
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -797,6 +847,14 @@ pub mod manager_server {
             &self,
             request: tonic::Request<tonic::Streaming<super::KeepAliveRequest>>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Request encryption key from manager.
+        async fn request_encryption_key(
+            &self,
+            request: tonic::Request<super::RequestEncryptionKeyRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::RequestEncryptionKeyResponse>,
+            tonic::Status,
+        >;
     }
     /// Manager RPC Service.
     #[derive(Debug)]
@@ -1278,6 +1336,52 @@ pub mod manager_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.client_streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/manager.v2.Manager/RequestEncryptionKey" => {
+                    #[allow(non_camel_case_types)]
+                    struct RequestEncryptionKeySvc<T: Manager>(pub Arc<T>);
+                    impl<
+                        T: Manager,
+                    > tonic::server::UnaryService<super::RequestEncryptionKeyRequest>
+                    for RequestEncryptionKeySvc<T> {
+                        type Response = super::RequestEncryptionKeyResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::RequestEncryptionKeyRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Manager>::request_encryption_key(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = RequestEncryptionKeySvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)
