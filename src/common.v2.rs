@@ -357,6 +357,9 @@ pub struct Host {
     /// Disable shared data for other peers.
     #[prost(bool, tag = "18")]
     pub disable_shared: bool,
+    /// Port of proxy server.
+    #[prost(int32, tag = "19")]
+    pub proxy_port: i32,
 }
 /// CPU Stat.
 #[derive(serde::Serialize, serde::Deserialize)]

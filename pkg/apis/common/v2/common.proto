@@ -361,6 +361,8 @@ message Host {
   uint64 scheduler_cluster_id = 17;
   // Disable shared data for other peers.
   bool disable_shared = 18;
+  // Port of proxy server.
+  int32 proxy_port = 19;
 }
 
 // CPU Stat.
