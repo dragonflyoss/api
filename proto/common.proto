@@ -56,7 +56,7 @@ enum TaskType {
   // the task in the peer's disk and copy multiple replicas to remote peers to prevent data loss.
   // When the expiration time is reached, task will be deleted in the P2P cluster.
   PERSISTENT_CACHE = 2;
-  
+
   // CACHE is cache type of task, it can download from source, remote peer and
   // local peer(local cache). When the cache task is never downloaded in the
   // P2P cluster, dfdaemon will download the cache task from the source. When the cache
@@ -355,6 +355,8 @@ message Host {
   uint64 scheduler_cluster_id = 17;
   // Disable shared data for other peers.
   bool disable_shared = 18;
+  // Port of proxy server.
+  int32 proxy_port = 19;
 }
 
 // CPU Stat.

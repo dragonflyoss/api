@@ -1756,6 +1756,8 @@ func (m *Host) validate(all bool) error {
 
 	// no validation rules for DisableShared
 
+	// no validation rules for ProxyPort
+
 	if m.Cpu != nil {
 
 		if all {
