@@ -680,6 +680,17 @@ func (m *PeerHost) validate(all bool) error {
 
 	// no validation rules for Idc
 
+	if val := m.GetProxyPort(); val < 1024 || val >= 65535 {
+		err := PeerHostValidationError{
+			field:  "ProxyPort",
+			reason: "value must be inside range [1024, 65535)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return PeerHostMultiError(errors)
 	}
@@ -2495,6 +2506,21 @@ func (m *AnnounceHostRequest) validate(all bool) error {
 		if val := m.GetObjectStoragePort(); val < 1024 || val >= 65535 {
 			err := AnnounceHostRequestValidationError{
 				field:  "ObjectStoragePort",
+				reason: "value must be inside range [1024, 65535)",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetProxyPort() != 0 {
+
+		if val := m.GetProxyPort(); val < 1024 || val >= 65535 {
+			err := AnnounceHostRequestValidationError{
+				field:  "ProxyPort",
 				reason: "value must be inside range [1024, 65535)",
 			}
 			if !all {
