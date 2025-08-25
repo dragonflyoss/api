@@ -57,7 +57,7 @@ enum Code {
   // Scheduler response error 5000-5999.
   SchedError = 5000;
   // Client should try to download from source.
-  SchedNeedBackSource = 5001; 
+  SchedNeedBackSource = 5001;
   // Client should disconnect from scheduler.
   SchedPeerGone = 5002;
   // Peer not found in scheduler.
@@ -245,4 +245,6 @@ message Host {
   string location = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // IDC where the peer host is located.
   string idc = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // Port of proxy server.
+  int32 proxy_port = 9 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
 }
