@@ -89,6 +89,8 @@ message PeerHost{
   string location = 7;
   // IDC where the peer host is located
   string idc = 8;
+  // Port of proxy server.
+  int32 proxy_port = 9 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
 }
 
 // PieceResult represents request of ReportPieceResult.
@@ -267,6 +269,8 @@ message AnnounceHostRequest{
   uint64 scheduler_cluster_id = 17;
   // Port of object storage server.
   int32 object_storage_port = 18 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  // Port of proxy server.
+  int32 proxy_port = 19 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
 }
 
 // CPU Stat.
