@@ -3393,6 +3393,25 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	}
 
+	if m.SecurityToken != nil {
+
+		if m.GetSecurityToken() != "" {
+
+			if utf8.RuneCountInString(m.GetSecurityToken()) < 1 {
+				err := ObjectStorageValidationError{
+					field:  "SecurityToken",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return ObjectStorageMultiError(errors)
 	}
