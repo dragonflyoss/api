@@ -3462,7 +3462,31 @@ func (m *RequestEncryptionKeyResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for EncryptionKey
+	if _, ok := EncryptionStatus_name[int32(m.GetStatus())]; !ok {
+		err := RequestEncryptionKeyResponseValidationError{
+			field:  "Status",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.EncryptionKey != nil {
+
+		if l := len(m.GetEncryptionKey()); l < 32 || l > 1024 {
+			err := RequestEncryptionKeyResponseValidationError{
+				field:  "EncryptionKey",
+				reason: "value length must be between 32 and 1024 bytes, inclusive",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
 
 	if len(errors) > 0 {
 		return RequestEncryptionKeyResponseMultiError(errors)

@@ -418,9 +418,12 @@ pub struct RequestEncryptionKeyRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RequestEncryptionKeyResponse {
-    /// Encryption key provided by manager.
-    #[prost(bytes = "vec", tag = "1")]
-    pub encryption_key: ::prost::alloc::vec::Vec<u8>,
+    /// Encryption status.
+    #[prost(enumeration = "EncryptionStatus", tag = "1")]
+    pub status: i32,
+    /// Encryption key provided by manager (only present when status is ENCRYPTION_ENABLED).
+    #[prost(bytes = "vec", optional, tag = "2")]
+    pub encryption_key: ::core::option::Option<::prost::alloc::vec::Vec<u8>>,
 }
 /// Request source type.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -452,6 +455,36 @@ impl SourceType {
             "SCHEDULER_SOURCE" => Some(Self::SchedulerSource),
             "PEER_SOURCE" => Some(Self::PeerSource),
             "SEED_PEER_SOURCE" => Some(Self::SeedPeerSource),
+            _ => None,
+        }
+    }
+}
+/// Encryption status enumeration.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum EncryptionStatus {
+    /// Encryption is not enabled.
+    EncryptionDisabled = 0,
+    /// Encryption is enabled and key is provided.
+    EncryptionEnabled = 1,
+}
+impl EncryptionStatus {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            EncryptionStatus::EncryptionDisabled => "ENCRYPTION_DISABLED",
+            EncryptionStatus::EncryptionEnabled => "ENCRYPTION_ENABLED",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "ENCRYPTION_DISABLED" => Some(Self::EncryptionDisabled),
+            "ENCRYPTION_ENABLED" => Some(Self::EncryptionEnabled),
             _ => None,
         }
     }

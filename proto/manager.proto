@@ -309,10 +309,20 @@ message RequestEncryptionKeyRequest {
   string ip = 3;
 }
 
+// Encryption status enumeration.
+enum EncryptionStatus {
+  // Encryption is not enabled.
+  ENCRYPTION_DISABLED = 0;
+  // Encryption is enabled and key is provided.
+  ENCRYPTION_ENABLED = 1;
+}
+
 // RequestEncryptionKeyResponse represents response of RequestEncryptionKey.
 message RequestEncryptionKeyResponse {
-  // Encryption key provided by manager.
-  bytes encryption_key = 1;
+  // Encryption status.
+  EncryptionStatus status = 1;
+  // Encryption key provided by manager (only present when status is ENCRYPTION_ENABLED).
+  optional bytes encryption_key = 2;
 }
 
 // Manager RPC Service.

@@ -312,10 +312,20 @@ message RequestEncryptionKeyRequest {
   string ip = 3 [(validate.rules).string.ip = true];  
 }  
 
+// Encryption status enumeration.
+enum EncryptionStatus {
+  // Encryption is not enabled.
+  ENCRYPTION_DISABLED = 0;
+  // Encryption is enabled and key is provided.
+  ENCRYPTION_ENABLED = 1;
+}
+
 // RequestEncryptionKeyResponse represents response of RequestEncryptionKey.
 message RequestEncryptionKeyResponse {
-  // Encryption key provided by manager.
-  bytes encryption_key = 1;
+  // Encryption status.
+  EncryptionStatus status = 1 [(validate.rules).enum.defined_only = true];
+  // Encryption key provided by manager (only present when status is ENCRYPTION_ENABLED).
+  optional bytes encryption_key = 2 [(validate.rules).bytes = {min_len: 32, max_len: 1024}];
 }
 
 // Manager RPC Service.
