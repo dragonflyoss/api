@@ -552,6 +552,8 @@ message Download {
   // For proxy requests, it is set to the IP address of the request source.
   // For dfget requests, it is set to the IP address of the dfget.
   optional string remote_ip = 24 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+  optional uint32 concurrent_piece_count = 25;
 
   reserved 21;
   reserved "load_to_cache";
