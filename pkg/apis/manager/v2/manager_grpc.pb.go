@@ -41,6 +41,8 @@ type ManagerClient interface {
 	ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error)
 	// KeepAlive with manager.
 	KeepAlive(ctx context.Context, opts ...grpc.CallOption) (Manager_KeepAliveClient, error)
+	// Request encryption key from manager.
+	RequestEncryptionKey(ctx context.Context, in *RequestEncryptionKeyRequest, opts ...grpc.CallOption) (*RequestEncryptionKeyResponse, error)
 }
 
 type managerClient struct {
@@ -157,6 +159,15 @@ func (x *managerKeepAliveClient) CloseAndRecv() (*emptypb.Empty, error) {
 	return m, nil
 }
 
+func (c *managerClient) RequestEncryptionKey(ctx context.Context, in *RequestEncryptionKeyRequest, opts ...grpc.CallOption) (*RequestEncryptionKeyResponse, error) {
+	out := new(RequestEncryptionKeyResponse)
+	err := c.cc.Invoke(ctx, "/manager.v2.Manager/RequestEncryptionKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ManagerServer is the server API for Manager service.
 // All implementations should embed UnimplementedManagerServer
 // for forward compatibility
@@ -179,6 +190,8 @@ type ManagerServer interface {
 	ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error)
 	// KeepAlive with manager.
 	KeepAlive(Manager_KeepAliveServer) error
+	// Request encryption key from manager.
+	RequestEncryptionKey(context.Context, *RequestEncryptionKeyRequest) (*RequestEncryptionKeyResponse, error)
 }
 
 // UnimplementedManagerServer should be embedded to have forward compatible implementations.
@@ -211,6 +224,9 @@ func (UnimplementedManagerServer) ListApplications(context.Context, *ListApplica
 }
 func (UnimplementedManagerServer) KeepAlive(Manager_KeepAliveServer) error {
 	return status.Errorf(codes.Unimplemented, "method KeepAlive not implemented")
+}
+func (UnimplementedManagerServer) RequestEncryptionKey(context.Context, *RequestEncryptionKeyRequest) (*RequestEncryptionKeyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RequestEncryptionKey not implemented")
 }
 
 // UnsafeManagerServer may be embedded to opt out of forward compatibility for this service.
@@ -394,6 +410,24 @@ func (x *managerKeepAliveServer) Recv() (*KeepAliveRequest, error) {
 	return m, nil
 }
 
+func _Manager_RequestEncryptionKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RequestEncryptionKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ManagerServer).RequestEncryptionKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/manager.v2.Manager/RequestEncryptionKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ManagerServer).RequestEncryptionKey(ctx, req.(*RequestEncryptionKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Manager_ServiceDesc is the grpc.ServiceDesc for Manager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -432,6 +466,10 @@ var Manager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListApplications",
 			Handler:    _Manager_ListApplications_Handler,
+		},
+		{
+			MethodName: "RequestEncryptionKey",
+			Handler:    _Manager_RequestEncryptionKey_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -302,6 +302,32 @@ message KeepAliveRequest {
   string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
+// RequestEncryptionKeyRequest represents request of RequestEncryptionKey.  
+message RequestEncryptionKeyRequest {  
+  // Request source type.  
+  SourceType source_type = 1 [(validate.rules).enum.defined_only = true];  
+  // Source service hostname.  
+  string hostname = 2 [(validate.rules).string.hostname = true];  
+  // Source service ip.  
+  string ip = 3 [(validate.rules).string.ip = true];  
+}  
+
+// Encryption status enumeration.
+enum EncryptionStatus {
+  // Encryption is not enabled.
+  ENCRYPTION_DISABLED = 0;
+  // Encryption is enabled and key is provided.
+  ENCRYPTION_ENABLED = 1;
+}
+
+// RequestEncryptionKeyResponse represents response of RequestEncryptionKey.
+message RequestEncryptionKeyResponse {
+  // Encryption status.
+  EncryptionStatus status = 1 [(validate.rules).enum.defined_only = true];
+  // Encryption key provided by manager (only present when status is ENCRYPTION_ENABLED).
+  optional bytes encryption_key = 2 [(validate.rules).bytes = {min_len: 32, max_len: 1024}];
+}
+
 // Manager RPC Service.
 service Manager {
   // Get SeedPeer and SeedPeer cluster configuration.
@@ -330,4 +356,7 @@ service Manager {
 
   // KeepAlive with manager.
   rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
+
+  // Request encryption key from manager.
+  rpc RequestEncryptionKey(RequestEncryptionKeyRequest) returns(RequestEncryptionKeyResponse);
 }
