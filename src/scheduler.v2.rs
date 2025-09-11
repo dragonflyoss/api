@@ -418,6 +418,9 @@ pub struct RegisterCachePeerRequest {
     /// For dfget requests, it is set to the IP address of the dfget.
     #[prost(string, optional, tag = "22")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+    /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+    #[prost(uint32, optional, tag = "23")]
+    pub concurrent_piece_count: ::core::option::Option<u32>,
 }
 /// DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -665,6 +668,9 @@ pub struct RegisterPersistentCachePeerRequest {
     /// Download timeout.
     #[prost(message, optional, tag = "6")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+    #[prost(uint32, optional, tag = "7")]
+    pub concurrent_piece_count: ::core::option::Option<u32>,
 }
 /// DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]

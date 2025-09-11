@@ -274,6 +274,8 @@ message RegisterCachePeerRequest {
   // For proxy requests, it is set to the IP address of the request source.
   // For dfget requests, it is set to the IP address of the dfget.
   optional string remote_ip = 22;
+  // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+  optional uint32 concurrent_piece_count = 23;
 }
 
 // DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
@@ -418,6 +420,8 @@ message RegisterPersistentCachePeerRequest {
   optional string output_path = 5;
   // Download timeout.
   optional google.protobuf.Duration timeout = 6;
+  // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+  optional uint32 concurrent_piece_count = 7;
 }
 
 // DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.

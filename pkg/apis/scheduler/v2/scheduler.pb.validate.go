@@ -4147,6 +4147,10 @@ func (m *RegisterCachePeerRequest) validate(all bool) error {
 
 	}
 
+	if m.ConcurrentPieceCount != nil {
+		// no validation rules for ConcurrentPieceCount
+	}
+
 	if len(errors) > 0 {
 		return RegisterCachePeerRequestMultiError(errors)
 	}
@@ -6839,6 +6843,10 @@ func (m *RegisterPersistentCachePeerRequest) validate(all bool) error {
 			}
 		}
 
+	}
+
+	if m.ConcurrentPieceCount != nil {
+		// no validation rules for ConcurrentPieceCount
 	}
 
 	if len(errors) > 0 {
