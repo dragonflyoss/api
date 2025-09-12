@@ -253,6 +253,8 @@ func (m *Peer) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for ConcurrentPieceCount
+
 	if m.Range != nil {
 
 		if all {
@@ -582,6 +584,8 @@ func (m *CachePeer) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for ConcurrentPieceCount
+
 	if m.Range != nil {
 
 		if all {
@@ -850,6 +854,8 @@ func (m *PersistentCachePeer) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
+
+	// no validation rules for ConcurrentPieceCount
 
 	if len(errors) > 0 {
 		return PersistentCachePeerMultiError(errors)
