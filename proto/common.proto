@@ -137,6 +137,8 @@ message Peer {
   google.protobuf.Timestamp created_at = 10;
   // Peer update time.
   google.protobuf.Timestamp updated_at = 11;
+  // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+  optional uint32 concurrent_piece_count = 12;
 }
 
 // CachePeer metadata.
@@ -163,6 +165,8 @@ message CachePeer {
   google.protobuf.Timestamp created_at = 10;
   // Peer update time.
   google.protobuf.Timestamp updated_at = 11;
+  // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+  optional uint32 concurrent_piece_count = 12;
 }
 
 // PersistentCachePeer metadata.
@@ -186,6 +190,8 @@ message PersistentCachePeer {
   google.protobuf.Timestamp created_at = 7;
   // Peer update time.
   google.protobuf.Timestamp updated_at = 8;
+  // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+  optional uint32 concurrent_piece_count = 9;
 }
 
 // Task metadata.
@@ -543,7 +549,7 @@ message Download {
   // For proxy requests, it is set to the IP address of the request source.
   // For dfget requests, it is set to the IP address of the dfget.
   optional string remote_ip = 24;
-  // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+  // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
   optional uint32 concurrent_piece_count = 25;
 
   reserved 21;

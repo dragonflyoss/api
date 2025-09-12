@@ -143,6 +143,8 @@ message Peer {
   google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
   // Peer update time.
   google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
+  // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+  uint32 concurrent_piece_count = 12;
 }
 
 // CachePeer metadata.
@@ -169,6 +171,8 @@ message CachePeer {
   google.protobuf.Timestamp created_at = 10 [(validate.rules).timestamp.required = true];
   // Peer update time.
   google.protobuf.Timestamp updated_at = 11 [(validate.rules).timestamp.required = true];
+  // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+  uint32 concurrent_piece_count = 12;
 }
 
 // PersistentCachePeer metadata.
@@ -192,6 +196,8 @@ message PersistentCachePeer {
   google.protobuf.Timestamp created_at = 7 [(validate.rules).timestamp.required = true];
   // Peer update time.
   google.protobuf.Timestamp updated_at = 8 [(validate.rules).timestamp.required = true];
+  // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+  uint32 concurrent_piece_count = 9;
 }
 
 // Task metadata.

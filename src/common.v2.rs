@@ -37,6 +37,9 @@ pub struct Peer {
     /// Peer update time.
     #[prost(message, optional, tag = "11")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+    #[prost(uint32, optional, tag = "12")]
+    pub concurrent_piece_count: ::core::option::Option<u32>,
 }
 /// CachePeer metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -76,6 +79,9 @@ pub struct CachePeer {
     /// Peer update time.
     #[prost(message, optional, tag = "11")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+    #[prost(uint32, optional, tag = "12")]
+    pub concurrent_piece_count: ::core::option::Option<u32>,
 }
 /// PersistentCachePeer metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -109,6 +115,9 @@ pub struct PersistentCachePeer {
     /// Peer update time.
     #[prost(message, optional, tag = "8")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+    #[prost(uint32, optional, tag = "9")]
+    pub concurrent_piece_count: ::core::option::Option<u32>,
 }
 /// Task metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -623,7 +632,7 @@ pub struct Download {
     /// For dfget requests, it is set to the IP address of the dfget.
     #[prost(string, optional, tag = "24")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
-    /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+    /// ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
     #[prost(uint32, optional, tag = "25")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
 }
