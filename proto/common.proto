@@ -335,34 +335,38 @@ message Host {
   string ip = 4;
   // Port of grpc service.
   int32 port = 5;
+  // Port of tcp service.
+  int32 tcp_port = 6;
+  // Port of quic service.
+  int32 quic_port = 7;
   // Port of download server.
-  int32 download_port = 6;
+  int32 download_port = 8;
   // Host OS.
-  string os = 7;
+  string os = 9;
   // Host platform.
-  string platform = 8;
+  string platform = 10;
   // Host platform family.
-  string platform_family = 9;
+  string platform_family = 11;
   // Host platform version.
-  string platform_version = 10;
+  string platform_version = 12;
   // Host kernel version.
-  string kernel_version = 11;
+  string kernel_version = 13;
   // CPU Stat.
-  optional CPU cpu = 12;
+  optional CPU cpu = 14;
   // Memory Stat.
-  optional Memory memory = 13;
+  optional Memory memory = 15;
   // Network Stat.
-  optional Network network = 14;
+  optional Network network = 16;
   // Disk Stat.
-  optional Disk disk = 15;
+  optional Disk disk = 17;
   // Build information.
-  optional Build build = 16;
+  optional Build build = 18;
   // ID of the cluster to which the host belongs.
-  uint64 scheduler_cluster_id = 17;
+  uint64 scheduler_cluster_id = 19;
   // Disable shared data for other peers.
-  bool disable_shared = 18;
+  bool disable_shared = 20;
   // Port of proxy server.
-  int32 proxy_port = 19;
+  int32 proxy_port = 21;
 }
 
 // CPU Stat.
