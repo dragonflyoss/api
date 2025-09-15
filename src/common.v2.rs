@@ -369,12 +369,12 @@ pub struct Host {
     /// Port of proxy server.
     #[prost(int32, tag = "19")]
     pub proxy_port: i32,
-    /// Port of tcp service.
+    /// Port of tcp download service.
     #[prost(int32, tag = "20")]
-    pub tcp_port: i32,
-    /// Port of quic service.
+    pub download_tcp_port: i32,
+    /// Port of quic download service.
     #[prost(int32, tag = "21")]
-    pub quic_port: i32,
+    pub download_quic_port: i32,
 }
 /// CPU Stat.
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -1764,9 +1764,9 @@ func (m *Host) validate(all bool) error {
 
 	// no validation rules for ProxyPort
 
-	if val := m.GetTcpPort(); val < 1024 || val >= 65535 {
+	if val := m.GetDownloadTcpPort(); val < 1024 || val >= 65535 {
 		err := HostValidationError{
-			field:  "TcpPort",
+			field:  "DownloadTcpPort",
 			reason: "value must be inside range [1024, 65535)",
 		}
 		if !all {
@@ -1775,9 +1775,9 @@ func (m *Host) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if val := m.GetQuicPort(); val < 1024 || val >= 65535 {
+	if val := m.GetDownloadQuicPort(); val < 1024 || val >= 65535 {
 		err := HostValidationError{
-			field:  "QuicPort",
+			field:  "DownloadQuicPort",
 			reason: "value must be inside range [1024, 65535)",
 		}
 		if !all {
