@@ -92,6 +92,10 @@ message SyncPiecesResponse {
   uint64 offset = 2;
   // Piece length.
   uint64 length = 3;
+  // Download protocol, such as grpc, tcp, quic, and rdma.
+  string download_protocol = 4 [(validate.rules).string = {in: ["grpc", "tcp", "quic", "rdma"]}];
+  // Download port, which is used to indicate the port of the peer.
+  int32 download_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
 }
 
 // DownloadPieceRequest represents request of DownloadPiece.

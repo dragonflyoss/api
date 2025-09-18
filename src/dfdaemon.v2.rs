@@ -90,7 +90,7 @@ pub struct SyncPiecesRequest {
 /// SyncPiecesResponse represents response of SyncPieces.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPiecesResponse {
     /// Exist piece number.
     #[prost(uint32, tag = "1")]
@@ -101,6 +101,12 @@ pub struct SyncPiecesResponse {
     /// Piece length.
     #[prost(uint64, tag = "3")]
     pub length: u64,
+    /// Download protocol, such as grpc, tcp, quic, and rdma.
+    #[prost(string, tag = "4")]
+    pub download_protocol: ::prost::alloc::string::String,
+    /// Download port, which is used to indicate the port of the peer.
+    #[prost(int32, tag = "5")]
+    pub download_port: i32,
 }
 /// DownloadPieceRequest represents request of DownloadPiece.
 #[derive(serde::Serialize, serde::Deserialize)]
