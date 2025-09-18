@@ -909,6 +909,17 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if ip := net.ParseIP(m.GetDownloadIp()); ip == nil {
+		err := SyncPiecesResponseValidationError{
+			field:  "DownloadIp",
+			reason: "value must be a valid IP address",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if val := m.GetDownloadPort(); val < 1024 || val >= 65535 {
 		err := SyncPiecesResponseValidationError{
 			field:  "DownloadPort",

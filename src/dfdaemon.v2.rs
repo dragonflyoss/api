@@ -104,8 +104,13 @@ pub struct SyncPiecesResponse {
     /// Download protocol, such as grpc, tcp, quic, and rdma.
     #[prost(string, tag = "4")]
     pub download_protocol: ::prost::alloc::string::String,
-    /// Download port, which is used to indicate the port of the peer.
-    #[prost(int32, tag = "5")]
+    /// Download IP, which is used to indicate the IP address of the peer. If protocol is rdma,
+    /// the IP is used to exchange the queue pair endpoint of IBVerbs.
+    #[prost(string, tag = "5")]
+    pub download_ip: ::prost::alloc::string::String,
+    /// Download port, which is used to indicate the port of the peer. If protocol is rdma,
+    /// the port is used to exchange the queue pair endpoint of IBVerbs.
+    #[prost(int32, tag = "6")]
     pub download_port: i32,
 }
 /// DownloadPieceRequest represents request of DownloadPiece.
