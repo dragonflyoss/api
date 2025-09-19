@@ -657,7 +657,7 @@ pub struct SyncPersistentCachePiecesRequest {
 /// SyncPersistentCachePiecesResponse represents response of SyncPersistentCachePieces.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+#[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SyncPersistentCachePiecesResponse {
     /// Exist piece number.
     #[prost(uint32, tag = "1")]
@@ -668,6 +668,17 @@ pub struct SyncPersistentCachePiecesResponse {
     /// Piece length.
     #[prost(uint64, tag = "3")]
     pub length: u64,
+    /// Download protocol, such as grpc, tcp, quic, and rdma.
+    #[prost(string, tag = "4")]
+    pub download_protocol: ::prost::alloc::string::String,
+    /// Download IP, which is used to indicate the IP address of the peer. If protocol is rdma,
+    /// the IP is used to exchange the queue pair endpoint of IBVerbs.
+    #[prost(string, tag = "5")]
+    pub download_ip: ::prost::alloc::string::String,
+    /// Download port, which is used to indicate the port of the peer. If protocol is rdma,
+    /// the port is used to exchange the queue pair endpoint of IBVerbs.
+    #[prost(int32, tag = "6")]
+    pub download_port: i32,
 }
 /// DownloadPersistentCachePieceRequest represents request of DownloadPersistentCachePiece.
 #[derive(serde::Serialize, serde::Deserialize)]
