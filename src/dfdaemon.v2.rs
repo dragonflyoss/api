@@ -101,17 +101,16 @@ pub struct SyncPiecesResponse {
     /// Piece length.
     #[prost(uint64, tag = "3")]
     pub length: u64,
-    /// Download protocol, such as grpc, tcp, quic, and rdma.
-    #[prost(string, tag = "4")]
-    pub download_protocol: ::prost::alloc::string::String,
-    /// Download IP, which is used to indicate the IP address of the peer. If protocol is rdma,
+    /// IP is used to indicate the IP address of the peer. If protocol is rdma,
     /// the IP is used to exchange the queue pair endpoint of IBVerbs.
-    #[prost(string, tag = "5")]
-    pub download_ip: ::prost::alloc::string::String,
-    /// Download port, which is used to indicate the port of the peer. If protocol is rdma,
-    /// the port is used to exchange the queue pair endpoint of IBVerbs.
-    #[prost(int32, tag = "6")]
-    pub download_port: i32,
+    #[prost(string, tag = "4")]
+    pub ip: ::prost::alloc::string::String,
+    /// TCP port is used to indicate the tcp server port of the peer.
+    #[prost(int32, optional, tag = "5")]
+    pub tcp_port: ::core::option::Option<i32>,
+    /// QUIC port is used to indicate the quic server port of the peer.
+    #[prost(int32, optional, tag = "6")]
+    pub quic_port: ::core::option::Option<i32>,
 }
 /// DownloadPieceRequest represents request of DownloadPiece.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -668,17 +667,16 @@ pub struct SyncPersistentCachePiecesResponse {
     /// Piece length.
     #[prost(uint64, tag = "3")]
     pub length: u64,
-    /// Download protocol, such as grpc, tcp, quic, and rdma.
-    #[prost(string, tag = "4")]
-    pub download_protocol: ::prost::alloc::string::String,
-    /// Download IP, which is used to indicate the IP address of the peer. If protocol is rdma,
+    /// IP is used to indicate the IP address of the peer. If protocol is rdma,
     /// the IP is used to exchange the queue pair endpoint of IBVerbs.
-    #[prost(string, tag = "5")]
-    pub download_ip: ::prost::alloc::string::String,
-    /// Download port, which is used to indicate the port of the peer. If protocol is rdma,
-    /// the port is used to exchange the queue pair endpoint of IBVerbs.
-    #[prost(int32, tag = "6")]
-    pub download_port: i32,
+    #[prost(string, tag = "4")]
+    pub ip: ::prost::alloc::string::String,
+    /// TCP port is used to indicate the tcp server port of the peer.
+    #[prost(int32, optional, tag = "5")]
+    pub tcp_port: ::core::option::Option<i32>,
+    /// QUIC port is used to indicate the quic server port of the peer.
+    #[prost(int32, optional, tag = "6")]
+    pub quic_port: ::core::option::Option<i32>,
 }
 /// DownloadPersistentCachePieceRequest represents request of DownloadPersistentCachePiece.
 #[derive(serde::Serialize, serde::Deserialize)]

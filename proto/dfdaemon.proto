@@ -87,14 +87,13 @@ message SyncPiecesResponse {
   uint64 offset = 2;
   // Piece length.
   uint64 length = 3;
-  // Download protocol, such as grpc, tcp, quic, and rdma.
-  string download_protocol = 4;
-  // Download IP, which is used to indicate the IP address of the peer. If protocol is rdma,
+  // IP is used to indicate the IP address of the peer. If protocol is rdma,
   // the IP is used to exchange the queue pair endpoint of IBVerbs.
-  string download_ip = 5;
-  // Download port, which is used to indicate the port of the peer. If protocol is rdma,
-  // the port is used to exchange the queue pair endpoint of IBVerbs.
-  int32 download_port = 6;
+  string ip = 4;
+  // TCP port is used to indicate the tcp server port of the peer.
+  optional int32 tcp_port = 5;
+  // QUIC port is used to indicate the quic server port of the peer.
+  optional int32 quic_port = 6;
 }
 
 // DownloadPieceRequest represents request of DownloadPiece.
@@ -460,14 +459,13 @@ message SyncPersistentCachePiecesResponse {
   uint64 offset = 2;
   // Piece length.
   uint64 length = 3;
-  // Download protocol, such as grpc, tcp, quic, and rdma.
-  string download_protocol = 4;
-  // Download IP, which is used to indicate the IP address of the peer. If protocol is rdma,
+  // IP is used to indicate the IP address of the peer. If protocol is rdma,
   // the IP is used to exchange the queue pair endpoint of IBVerbs.
-  string download_ip = 5;
-  // Download port, which is used to indicate the port of the peer. If protocol is rdma,
-  // the port is used to exchange the queue pair endpoint of IBVerbs.
-  int32 download_port = 6;
+  string ip = 4;
+  // TCP port is used to indicate the tcp server port of the peer.
+  optional int32 tcp_port = 5;
+  // QUIC port is used to indicate the quic server port of the peer.
+  optional int32 quic_port = 6;
 }
 
 // DownloadPersistentCachePieceRequest represents request of DownloadPersistentCachePiece.
