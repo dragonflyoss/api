@@ -898,20 +898,9 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 
 	// no validation rules for Length
 
-	if _, ok := _SyncPiecesResponse_DownloadProtocol_InLookup[m.GetDownloadProtocol()]; !ok {
+	if ip := net.ParseIP(m.GetIp()); ip == nil {
 		err := SyncPiecesResponseValidationError{
-			field:  "DownloadProtocol",
-			reason: "value must be in list [grpc tcp quic rdma]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if ip := net.ParseIP(m.GetDownloadIp()); ip == nil {
-		err := SyncPiecesResponseValidationError{
-			field:  "DownloadIp",
+			field:  "Ip",
 			reason: "value must be a valid IP address",
 		}
 		if !all {
@@ -920,15 +909,42 @@ func (m *SyncPiecesResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if val := m.GetDownloadPort(); val < 1024 || val >= 65535 {
-		err := SyncPiecesResponseValidationError{
-			field:  "DownloadPort",
-			reason: "value must be inside range [1024, 65535)",
+	if m.TcpPort != nil {
+
+		if m.GetTcpPort() != 0 {
+
+			if val := m.GetTcpPort(); val < 1024 || val >= 65535 {
+				err := SyncPiecesResponseValidationError{
+					field:  "TcpPort",
+					reason: "value must be inside range [1024, 65535)",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
-		if !all {
-			return err
+
+	}
+
+	if m.QuicPort != nil {
+
+		if m.GetQuicPort() != 0 {
+
+			if val := m.GetQuicPort(); val < 1024 || val >= 65535 {
+				err := SyncPiecesResponseValidationError{
+					field:  "QuicPort",
+					reason: "value must be inside range [1024, 65535)",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
-		errors = append(errors, err)
+
 	}
 
 	if len(errors) > 0 {
@@ -1010,13 +1026,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SyncPiecesResponseValidationError{}
-
-var _SyncPiecesResponse_DownloadProtocol_InLookup = map[string]struct{}{
-	"grpc": {},
-	"tcp":  {},
-	"quic": {},
-	"rdma": {},
-}
 
 // Validate checks the field values on DownloadPieceRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -5023,20 +5032,9 @@ func (m *SyncPersistentCachePiecesResponse) validate(all bool) error {
 
 	// no validation rules for Length
 
-	if _, ok := _SyncPersistentCachePiecesResponse_DownloadProtocol_InLookup[m.GetDownloadProtocol()]; !ok {
+	if ip := net.ParseIP(m.GetIp()); ip == nil {
 		err := SyncPersistentCachePiecesResponseValidationError{
-			field:  "DownloadProtocol",
-			reason: "value must be in list [grpc tcp quic rdma]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if ip := net.ParseIP(m.GetDownloadIp()); ip == nil {
-		err := SyncPersistentCachePiecesResponseValidationError{
-			field:  "DownloadIp",
+			field:  "Ip",
 			reason: "value must be a valid IP address",
 		}
 		if !all {
@@ -5045,15 +5043,42 @@ func (m *SyncPersistentCachePiecesResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if val := m.GetDownloadPort(); val < 1024 || val >= 65535 {
-		err := SyncPersistentCachePiecesResponseValidationError{
-			field:  "DownloadPort",
-			reason: "value must be inside range [1024, 65535)",
+	if m.TcpPort != nil {
+
+		if m.GetTcpPort() != 0 {
+
+			if val := m.GetTcpPort(); val < 1024 || val >= 65535 {
+				err := SyncPersistentCachePiecesResponseValidationError{
+					field:  "TcpPort",
+					reason: "value must be inside range [1024, 65535)",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
-		if !all {
-			return err
+
+	}
+
+	if m.QuicPort != nil {
+
+		if m.GetQuicPort() != 0 {
+
+			if val := m.GetQuicPort(); val < 1024 || val >= 65535 {
+				err := SyncPersistentCachePiecesResponseValidationError{
+					field:  "QuicPort",
+					reason: "value must be inside range [1024, 65535)",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
-		errors = append(errors, err)
+
 	}
 
 	if len(errors) > 0 {
@@ -5137,13 +5162,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = SyncPersistentCachePiecesResponseValidationError{}
-
-var _SyncPersistentCachePiecesResponse_DownloadProtocol_InLookup = map[string]struct{}{
-	"grpc": {},
-	"tcp":  {},
-	"quic": {},
-	"rdma": {},
-}
 
 // Validate checks the field values on DownloadPersistentCachePieceRequest with
 // the rules defined in the proto definition for this message. If any rules
