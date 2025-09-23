@@ -311,6 +311,15 @@ pub struct AnnounceHostRequest {
     #[prost(message, optional, tag = "2")]
     pub interval: ::core::option::Option<::prost_wkt_types::Duration>,
 }
+/// ListHostsRequest represents request of ListHosts.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct ListHostsRequest {
+    /// Type to filter hosts.
+    #[prost(uint32, optional, tag = "1")]
+    pub r#type: ::core::option::Option<u32>,
+}
 /// ListHostsResponse represents response of ListHosts.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1355,7 +1364,7 @@ pub mod scheduler_client {
         /// ListHosts lists hosts in scheduler.
         pub async fn list_hosts(
             &mut self,
-            request: impl tonic::IntoRequest<()>,
+            request: impl tonic::IntoRequest<super::ListHostsRequest>,
         ) -> std::result::Result<
             tonic::Response<super::ListHostsResponse>,
             tonic::Status,
@@ -1886,7 +1895,7 @@ pub mod scheduler_server {
         /// ListHosts lists hosts in scheduler.
         async fn list_hosts(
             &self,
-            request: tonic::Request<()>,
+            request: tonic::Request<super::ListHostsRequest>,
         ) -> std::result::Result<
             tonic::Response<super::ListHostsResponse>,
             tonic::Status,
@@ -2382,14 +2391,19 @@ pub mod scheduler_server {
                 "/scheduler.v2.Scheduler/ListHosts" => {
                     #[allow(non_camel_case_types)]
                     struct ListHostsSvc<T: Scheduler>(pub Arc<T>);
-                    impl<T: Scheduler> tonic::server::UnaryService<()>
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::ListHostsRequest>
                     for ListHostsSvc<T> {
                         type Response = super::ListHostsResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
-                        fn call(&mut self, request: tonic::Request<()>) -> Self::Future {
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ListHostsRequest>,
+                        ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
                                 <T as Scheduler>::list_hosts(&inner, request).await
