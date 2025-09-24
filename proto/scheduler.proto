@@ -203,6 +203,12 @@ message AnnounceHostRequest {
   optional google.protobuf.Duration interval = 2;
 }
 
+// ListHostsRequest represents request of ListHosts.
+message ListHostsRequest {
+    // Type to filter hosts.
+    optional uint32 type = 1;
+}
+
 // ListHostsResponse represents response of ListHosts.
 message ListHostsResponse {
   // Hosts info.
@@ -729,7 +735,7 @@ service Scheduler {
   rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);
 
   // ListHosts lists hosts in scheduler.
-  rpc ListHosts(google.protobuf.Empty)returns(ListHostsResponse);
+  rpc ListHosts(ListHostsRequest)returns(ListHostsResponse);
 
   // DeleteHost releases host in scheduler.
   rpc DeleteHost(DeleteHostRequest)returns(google.protobuf.Empty);

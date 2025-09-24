@@ -266,7 +266,7 @@ func (mr *MockSchedulerClientMockRecorder) DeleteTask(ctx, in any, opts ...any) 
 }
 
 // ListHosts mocks base method.
-func (m *MockSchedulerClient) ListHosts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*scheduler.ListHostsResponse, error) {
+func (m *MockSchedulerClient) ListHosts(ctx context.Context, in *scheduler.ListHostsRequest, opts ...grpc.CallOption) (*scheduler.ListHostsResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
@@ -1106,7 +1106,7 @@ func (mr *MockSchedulerServerMockRecorder) DeleteTask(arg0, arg1 any) *gomock.Ca
 }
 
 // ListHosts mocks base method.
-func (m *MockSchedulerServer) ListHosts(arg0 context.Context, arg1 *emptypb.Empty) (*scheduler.ListHostsResponse, error) {
+func (m *MockSchedulerServer) ListHosts(arg0 context.Context, arg1 *scheduler.ListHostsRequest) (*scheduler.ListHostsResponse, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListHosts", arg0, arg1)
 	ret0, _ := ret[0].(*scheduler.ListHostsResponse)

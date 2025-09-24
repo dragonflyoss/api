@@ -37,7 +37,7 @@ type SchedulerClient interface {
 	// AnnounceHost announces host to scheduler.
 	AnnounceHost(ctx context.Context, in *AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// ListHosts lists hosts in scheduler.
-	ListHosts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListHostsResponse, error)
+	ListHosts(ctx context.Context, in *ListHostsRequest, opts ...grpc.CallOption) (*ListHostsResponse, error)
 	// DeleteHost releases host in scheduler.
 	DeleteHost(ctx context.Context, in *DeleteHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// AnnounceCachePeer announces cache peer to scheduler.
@@ -169,7 +169,7 @@ func (c *schedulerClient) AnnounceHost(ctx context.Context, in *AnnounceHostRequ
 	return out, nil
 }
 
-func (c *schedulerClient) ListHosts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ListHostsResponse, error) {
+func (c *schedulerClient) ListHosts(ctx context.Context, in *ListHostsRequest, opts ...grpc.CallOption) (*ListHostsResponse, error) {
 	out := new(ListHostsResponse)
 	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/ListHosts", in, out, opts...)
 	if err != nil {
@@ -383,7 +383,7 @@ type SchedulerServer interface {
 	// AnnounceHost announces host to scheduler.
 	AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error)
 	// ListHosts lists hosts in scheduler.
-	ListHosts(context.Context, *emptypb.Empty) (*ListHostsResponse, error)
+	ListHosts(context.Context, *ListHostsRequest) (*ListHostsResponse, error)
 	// DeleteHost releases host in scheduler.
 	DeleteHost(context.Context, *DeleteHostRequest) (*emptypb.Empty, error)
 	// AnnounceCachePeer announces cache peer to scheduler.
@@ -453,7 +453,7 @@ func (UnimplementedSchedulerServer) DeleteTask(context.Context, *DeleteTaskReque
 func (UnimplementedSchedulerServer) AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AnnounceHost not implemented")
 }
-func (UnimplementedSchedulerServer) ListHosts(context.Context, *emptypb.Empty) (*ListHostsResponse, error) {
+func (UnimplementedSchedulerServer) ListHosts(context.Context, *ListHostsRequest) (*ListHostsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListHosts not implemented")
 }
 func (UnimplementedSchedulerServer) DeleteHost(context.Context, *DeleteHostRequest) (*emptypb.Empty, error) {
@@ -633,7 +633,7 @@ func _Scheduler_AnnounceHost_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _Scheduler_ListHosts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(ListHostsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -645,7 +645,7 @@ func _Scheduler_ListHosts_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/scheduler.v2.Scheduler/ListHosts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).ListHosts(ctx, req.(*emptypb.Empty))
+		return srv.(SchedulerServer).ListHosts(ctx, req.(*ListHostsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
