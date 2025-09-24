@@ -560,6 +560,8 @@ message Download {
   optional string remote_ip = 24 [(validate.rules).string = {ip: true, ignore_empty: true}];
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
   optional uint32 concurrent_piece_count = 25;
+  // Overwrite indicates whether to overwrite the existing file at output path.
+  bool overwrite = 26;
 
   reserved 21;
   reserved "load_to_cache";

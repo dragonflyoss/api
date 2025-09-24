@@ -2953,6 +2953,8 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for ForceHardLink
 
+	// no validation rules for Overwrite
+
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {

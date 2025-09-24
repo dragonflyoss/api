@@ -241,6 +241,8 @@ message DownloadCacheTaskRequest {
   // For proxy requests, it is set to the IP address of the request source.
   // For dfget requests, it is set to the IP address of the dfget.
   optional string remote_ip = 22 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  // Overwrite indicates whether to overwrite the existing file at output path.
+  bool overwrite = 23;
 }
 
 // DownloadCacheTaskStartedResponse represents cache task download started response of DownloadCacheTaskResponse.
@@ -372,6 +374,8 @@ message DownloadPersistentCacheTaskRequest {
   optional string digest = 9;
   // Remote IP represents the IP address of the client initiating the download request.
   optional string remote_ip = 10 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  // Overwrite indicates whether to overwrite the existing file at output path.
+  bool overwrite = 11;
 }
 
 // DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.

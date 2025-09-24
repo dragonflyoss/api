@@ -327,6 +327,9 @@ pub struct DownloadCacheTaskRequest {
     /// For dfget requests, it is set to the IP address of the dfget.
     #[prost(string, optional, tag = "22")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+    /// Overwrite indicates whether to overwrite the existing file at output path.
+    #[prost(bool, tag = "23")]
+    pub overwrite: bool,
 }
 /// DownloadCacheTaskStartedResponse represents cache task download started response of DownloadCacheTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -516,6 +519,9 @@ pub struct DownloadPersistentCacheTaskRequest {
     /// Remote IP represents the IP address of the client initiating the download request.
     #[prost(string, optional, tag = "10")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+    /// Overwrite indicates whether to overwrite the existing file at output path.
+    #[prost(bool, tag = "11")]
+    pub overwrite: bool,
 }
 /// DownloadPersistentCacheTaskStartedResponse represents task download started response of DownloadPersistentCacheTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
