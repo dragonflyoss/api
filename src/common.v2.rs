@@ -635,6 +635,9 @@ pub struct Download {
     /// ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
     #[prost(uint32, optional, tag = "25")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
+    /// Overwrite indicates whether to overwrite the existing file at output path.
+    #[prost(bool, tag = "26")]
+    pub overwrite: bool,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
