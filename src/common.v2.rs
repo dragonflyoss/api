@@ -864,11 +864,11 @@ pub enum Priority {
     /// When the task is not downloaded for the first time, it is scheduled normally.
     Level3 = 3,
     /// LEVEL4 represents when the task is downloaded for the first time,
-    /// the weak peer is first triggered to back-to-source.
+    /// the super peer is first triggered to back-to-source.
     /// When the task is not downloaded for the first time, it is scheduled normally.
     Level4 = 4,
     /// LEVEL5 represents when the task is downloaded for the first time,
-    /// the strong peer is first triggered to back-to-source.
+    /// the super peer is first triggered to back-to-source.
     /// When the task is not downloaded for the first time, it is scheduled normally.
     Level5 = 5,
     /// LEVEL6 represents when the task is downloaded for the first time,

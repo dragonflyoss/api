@@ -894,7 +894,7 @@ func (m *UpdateSeedPeerRequest) validate(all bool) error {
 	if _, ok := _UpdateSeedPeerRequest_Type_InLookup[m.GetType()]; !ok {
 		err := UpdateSeedPeerRequestValidationError{
 			field:  "Type",
-			reason: "value must be in list [super strong weak]",
+			reason: "value must be in list [super]",
 		}
 		if !all {
 			return err
@@ -1095,9 +1095,7 @@ var _ interface {
 } = UpdateSeedPeerRequestValidationError{}
 
 var _UpdateSeedPeerRequest_Type_InLookup = map[string]struct{}{
-	"super":  {},
-	"strong": {},
-	"weak":   {},
+	"super": {},
 }
 
 // Validate checks the field values on DeleteSeedPeerRequest with the rules
