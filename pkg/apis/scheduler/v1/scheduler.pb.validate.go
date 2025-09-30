@@ -2237,7 +2237,7 @@ func (m *AnnounceHostRequest) validate(all bool) error {
 	if _, ok := _AnnounceHostRequest_Type_InLookup[m.GetType()]; !ok {
 		err := AnnounceHostRequestValidationError{
 			field:  "Type",
-			reason: "value must be in list [normal super strong weak]",
+			reason: "value must be in list [normal super]",
 		}
 		if !all {
 			return err
@@ -2614,8 +2614,6 @@ var _ interface {
 var _AnnounceHostRequest_Type_InLookup = map[string]struct{}{
 	"normal": {},
 	"super":  {},
-	"strong": {},
-	"weak":   {},
 }
 
 // Validate checks the field values on CPU with the rules defined in the proto

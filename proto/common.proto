@@ -98,12 +98,12 @@ enum Priority {
   LEVEL3 = 3;
 
   // LEVEL4 represents when the task is downloaded for the first time,
-  // the weak peer is first triggered to back-to-source.
+  // the super peer is first triggered to back-to-source.
   // When the task is not downloaded for the first time, it is scheduled normally.
   LEVEL4 = 4;
 
   // LEVEL5 represents when the task is downloaded for the first time,
-  // the strong peer is first triggered to back-to-source.
+  // the super peer is first triggered to back-to-source.
   // When the task is not downloaded for the first time, it is scheduled normally.
   LEVEL5 = 5;
 

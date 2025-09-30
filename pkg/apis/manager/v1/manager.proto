@@ -115,7 +115,7 @@ message UpdateSeedPeerRequest {
   // Seed peer hostname.
   string hostname = 2 [(validate.rules).string.hostname = true];
   // Seed peer type.
-  string type = 3 [(validate.rules).string = {in: ["super", "strong", "weak"]}];
+  string type = 3 [(validate.rules).string = {in: ["super"]}];
   // Seed peer idc.
   string idc = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
   // Seed peer location.

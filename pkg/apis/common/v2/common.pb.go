@@ -242,11 +242,11 @@ const (
 	// When the task is not downloaded for the first time, it is scheduled normally.
 	Priority_LEVEL3 Priority = 3
 	// LEVEL4 represents when the task is downloaded for the first time,
-	// the weak peer is first triggered to back-to-source.
+	// the super peer is first triggered to back-to-source.
 	// When the task is not downloaded for the first time, it is scheduled normally.
 	Priority_LEVEL4 Priority = 4
 	// LEVEL5 represents when the task is downloaded for the first time,
-	// the strong peer is first triggered to back-to-source.
+	// the super peer is first triggered to back-to-source.
 	// When the task is not downloaded for the first time, it is scheduled normally.
 	Priority_LEVEL5 Priority = 5
 	// LEVEL6 represents when the task is downloaded for the first time,

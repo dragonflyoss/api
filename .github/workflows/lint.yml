@@ -30,15 +30,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Install protobuf-compiler
-        run: sudo apt-get install protobuf-compiler
-
-      - name: Install toolchain
-        uses: actions-rs/toolchain@v1
+      - name: Rust cache
+        uses: Swatinem/rust-cache@v2
         with:
-          profile: minimal
-          toolchain: stable
-          override: true
+          cache-on-failure: true
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v2
+        with:
+          repo-token: ${{ secrets.GH_TOKEN }}
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+          toolchain: 1.85.0
 
       - name: Run cargo check
         uses: actions-rs/cargo@v1
