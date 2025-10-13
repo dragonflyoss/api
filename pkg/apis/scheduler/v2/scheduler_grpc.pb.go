@@ -83,6 +83,23 @@ type SchedulerClient interface {
 	// all peers to collect the image's download state across the network.
 	// The response includes both layer information and the status on each peer.
 	StatImage(ctx context.Context, in *StatImageRequest, opts ...grpc.CallOption) (*StatImageResponse, error)
+	// PreheatFile synchronously resolves a file URL and triggers an asynchronous preheat task.
+	//
+	// This is a blocking call. The RPC will not return until the server has completed the
+	// initial synchronous work: resolving the file URL.
+	//
+	// After this call successfully returns, a scheduler on the server begins the actual
+	// preheating process, instructing peers to download the file in the background.
+	//
+	// A successful response (google.protobuf.Empty) confirms that the preparation is complete
+	// and the asynchronous download task has been scheduled.
+	PreheatFile(ctx context.Context, in *PreheatFileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// StatFile provides detailed status for a file's distribution in peers.
+	//
+	// This is a blocking call that first resolves the file URL and then queries
+	// all peers to collect the file's download state across the network.
+	// The response includes both file information and the status on each peer.
+	StatFile(ctx context.Context, in *StatFileRequest, opts ...grpc.CallOption) (*StatFileResponse, error)
 }
 
 type schedulerClient struct {
@@ -366,6 +383,24 @@ func (c *schedulerClient) StatImage(ctx context.Context, in *StatImageRequest, o
 	return out, nil
 }
 
+func (c *schedulerClient) PreheatFile(ctx context.Context, in *PreheatFileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/PreheatFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulerClient) StatFile(ctx context.Context, in *StatFileRequest, opts ...grpc.CallOption) (*StatFileResponse, error) {
+	out := new(StatFileResponse)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SchedulerServer is the server API for Scheduler service.
 // All implementations should embed UnimplementedSchedulerServer
 // for forward compatibility
@@ -429,6 +464,23 @@ type SchedulerServer interface {
 	// all peers to collect the image's download state across the network.
 	// The response includes both layer information and the status on each peer.
 	StatImage(context.Context, *StatImageRequest) (*StatImageResponse, error)
+	// PreheatFile synchronously resolves a file URL and triggers an asynchronous preheat task.
+	//
+	// This is a blocking call. The RPC will not return until the server has completed the
+	// initial synchronous work: resolving the file URL.
+	//
+	// After this call successfully returns, a scheduler on the server begins the actual
+	// preheating process, instructing peers to download the file in the background.
+	//
+	// A successful response (google.protobuf.Empty) confirms that the preparation is complete
+	// and the asynchronous download task has been scheduled.
+	PreheatFile(context.Context, *PreheatFileRequest) (*emptypb.Empty, error)
+	// StatFile provides detailed status for a file's distribution in peers.
+	//
+	// This is a blocking call that first resolves the file URL and then queries
+	// all peers to collect the file's download state across the network.
+	// The response includes both file information and the status on each peer.
+	StatFile(context.Context, *StatFileRequest) (*StatFileResponse, error)
 }
 
 // UnimplementedSchedulerServer should be embedded to have forward compatible implementations.
@@ -503,6 +555,12 @@ func (UnimplementedSchedulerServer) PreheatImage(context.Context, *PreheatImageR
 }
 func (UnimplementedSchedulerServer) StatImage(context.Context, *StatImageRequest) (*StatImageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatImage not implemented")
+}
+func (UnimplementedSchedulerServer) PreheatFile(context.Context, *PreheatFileRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PreheatFile not implemented")
+}
+func (UnimplementedSchedulerServer) StatFile(context.Context, *StatFileRequest) (*StatFileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatFile not implemented")
 }
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
@@ -954,6 +1012,42 @@ func _Scheduler_StatImage_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scheduler_PreheatFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PreheatFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).PreheatFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/PreheatFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).PreheatFile(ctx, req.(*PreheatFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduler_StatFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatFileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).StatFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/StatFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).StatFile(ctx, req.(*StatFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scheduler_ServiceDesc is the grpc.ServiceDesc for Scheduler service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1040,6 +1134,14 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StatImage",
 			Handler:    _Scheduler_StatImage_Handler,
+		},
+		{
+			MethodName: "PreheatFile",
+			Handler:    _Scheduler_PreheatFile_Handler,
+		},
+		{
+			MethodName: "StatFile",
+			Handler:    _Scheduler_StatFile_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -1126,6 +1126,177 @@ pub struct Layer {
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
 }
+/// PreheatFileRequest represents request of PreheatFile.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PreheatFileRequest {
+    /// URL is the file url for preheating.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// Piece Length is the piece length(bytes) for downloading file. The value needs to
+    /// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+    /// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+    /// the piece length will be calculated according to the file size.
+    #[prost(uint64, optional, tag = "2")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// Tag is the tag for preheating.
+    #[prost(string, optional, tag = "3")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application is the application string for preheating.
+    #[prost(string, optional, tag = "4")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Filtered query params to generate the task id.
+    /// When filter is \["Signature", "Expires", "ns"\], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+    #[prost(string, repeated, tag = "5")]
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Header is the http headers for authentication.
+    #[prost(map = "string, string", tag = "6")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Scope is the scope for preheating, it can be one of the following values:
+    /// - single_seed_peer: preheat from a single seed peer.
+    /// - all_peers: preheat from all available peers.
+    /// - all_seed_peers: preheat from all seed peers.
+    #[prost(string, tag = "7")]
+    pub scope: ::prost::alloc::string::String,
+    /// IPs is a list of specific peer IPs for preheating.
+    /// This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
+    /// Applies to 'all_peers' and 'all_seed_peers' scopes.
+    #[prost(string, repeated, tag = "8")]
+    pub ips: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Percentage is the percentage of available peers to preheat.
+    /// This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
+    /// It must be a value between 1 and 100 (inclusive) if provided.
+    /// Applies to 'all_peers' and 'all_seed_peers' scopes.
+    #[prost(uint32, optional, tag = "9")]
+    pub percentage: ::core::option::Option<u32>,
+    /// Count is the desired number of peers to preheat.
+    /// This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
+    /// It must be a value between 1 and 200 (inclusive) if provided.
+    /// Applies to 'all_peers' and 'all_seed_peers' scopes.
+    #[prost(uint32, optional, tag = "10")]
+    pub count: ::core::option::Option<u32>,
+    /// ConcurrentTaskCount specifies the maximum number of tasks to preheat concurrently.
+    /// For example, if preheating 100 files with ConcurrentTaskCount set to 10, up to 10 files are processed simultaneously.
+    /// If ConcurrentPeerCount is 10 for 1000 peers, each file is preheated by 10 peers concurrently.
+    /// Default is 8, maximum is 100.
+    #[prost(int64, optional, tag = "11")]
+    pub concurrent_task_count: ::core::option::Option<i64>,
+    /// ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task.
+    /// For example, if preheating a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
+    /// Default is 500, maximum is 1000.
+    #[prost(int64, optional, tag = "12")]
+    pub concurrent_peer_count: ::core::option::Option<i64>,
+    /// Timeout is the timeout for preheating, default is 30 minutes.
+    #[prost(message, optional, tag = "13")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Preheat priority.
+    #[prost(enumeration = "super::super::common::v2::Priority", tag = "14")]
+    pub priority: i32,
+    /// certificate_chain is the client certs with DER format for the backend client.
+    #[prost(bytes = "vec", repeated, tag = "15")]
+    pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// insecure_skip_verify indicates whether to skip TLS verification.
+    #[prost(bool, tag = "16")]
+    pub insecure_skip_verify: bool,
+    /// Object storage protocol information.
+    #[prost(message, optional, tag = "17")]
+    pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
+}
+/// StatFileRequest represents request of StatFile.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatFileRequest {
+    /// URL is the file url for stat.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// Piece Length is the piece length(bytes) for downloading file. The value needs to
+    /// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+    /// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+    /// the piece length will be calculated according to the file size.
+    #[prost(uint64, optional, tag = "2")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// Tag is the tag for stat.
+    #[prost(string, optional, tag = "3")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application is the application string for stat.
+    #[prost(string, optional, tag = "4")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Filtered query params to generate the task id.
+    /// When filter is \["Signature", "Expires", "ns"\], for example:
+    /// <http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io> and <http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io>
+    /// will generate the same task id.
+    /// Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+    #[prost(string, repeated, tag = "5")]
+    pub filtered_query_params: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Header is the http headers for authentication.
+    #[prost(map = "string, string", tag = "6")]
+    pub header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Username is the username for authentication.
+    /// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task.
+    /// For example, if stat a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
+    /// Default is 500, maximum is 1000.
+    #[prost(int64, optional, tag = "7")]
+    pub concurrent_peer_count: ::core::option::Option<i64>,
+    /// Timeout is the timeout for stat, default is 30 minutes.
+    #[prost(message, optional, tag = "8")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// certificate_chain is the client certs with DER format for the backend client.
+    #[prost(bytes = "vec", repeated, tag = "9")]
+    pub certificate_chain: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// insecure_skip_verify indicates whether to skip TLS verification.
+    #[prost(bool, tag = "10")]
+    pub insecure_skip_verify: bool,
+    /// Object storage protocol information.
+    #[prost(message, optional, tag = "11")]
+    pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
+}
+/// StatFileResponse represents response of StatFile.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatFileResponse {
+    /// File is the file information.
+    #[prost(message, optional, tag = "1")]
+    pub file: ::core::option::Option<File>,
+    /// Peers is the peers that have downloaded the file.
+    #[prost(message, repeated, tag = "2")]
+    pub peers: ::prost::alloc::vec::Vec<PeerFile>,
+}
+/// PeerFile represents a peer in the get file job.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PeerFile {
+    /// IP is the IP address of the peer.
+    #[prost(string, tag = "1")]
+    pub ip: ::prost::alloc::string::String,
+    /// Hostname is the hostname of the peer.
+    #[prost(string, tag = "2")]
+    pub hostname: ::prost::alloc::string::String,
+    /// CachedFile is the file that the peer has downloaded.
+    #[prost(message, optional, tag = "3")]
+    pub cached_file: ::core::option::Option<File>,
+}
+/// File represents the file information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct File {
+    /// URL is the URL of the file.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+}
 /// Generated client implementations.
 pub mod scheduler_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
@@ -1838,6 +2009,68 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatImage"));
             self.inner.unary(req, path, codec).await
         }
+        /// PreheatFile synchronously resolves a file URL and triggers an asynchronous preheat task.
+        ///
+        /// This is a blocking call. The RPC will not return until the server has completed the
+        /// initial synchronous work: resolving the file URL.
+        ///
+        /// After this call successfully returns, a scheduler on the server begins the actual
+        /// preheating process, instructing peers to download the file in the background.
+        ///
+        /// A successful response (google.protobuf.Empty) confirms that the preparation is complete
+        /// and the asynchronous download task has been scheduled.
+        pub async fn preheat_file(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PreheatFileRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/PreheatFile",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "PreheatFile"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// StatFile provides detailed status for a file's distribution in peers.
+        ///
+        /// This is a blocking call that first resolves the file URL and then queries
+        /// all peers to collect the file's download state across the network.
+        /// The response includes both file information and the status on each peer.
+        pub async fn stat_file(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatFileRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StatFileResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/StatFile",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatFile"));
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -2035,6 +2268,32 @@ pub mod scheduler_server {
             request: tonic::Request<super::StatImageRequest>,
         ) -> std::result::Result<
             tonic::Response<super::StatImageResponse>,
+            tonic::Status,
+        >;
+        /// PreheatFile synchronously resolves a file URL and triggers an asynchronous preheat task.
+        ///
+        /// This is a blocking call. The RPC will not return until the server has completed the
+        /// initial synchronous work: resolving the file URL.
+        ///
+        /// After this call successfully returns, a scheduler on the server begins the actual
+        /// preheating process, instructing peers to download the file in the background.
+        ///
+        /// A successful response (google.protobuf.Empty) confirms that the preparation is complete
+        /// and the asynchronous download task has been scheduled.
+        async fn preheat_file(
+            &self,
+            request: tonic::Request<super::PreheatFileRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// StatFile provides detailed status for a file's distribution in peers.
+        ///
+        /// This is a blocking call that first resolves the file URL and then queries
+        /// all peers to collect the file's download state across the network.
+        /// The response includes both file information and the status on each peer.
+        async fn stat_file(
+            &self,
+            request: tonic::Request<super::StatFileRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StatFileResponse>,
             tonic::Status,
         >;
     }
@@ -3198,6 +3457,96 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StatImageSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/PreheatFile" => {
+                    #[allow(non_camel_case_types)]
+                    struct PreheatFileSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::PreheatFileRequest>
+                    for PreheatFileSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PreheatFileRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::preheat_file(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = PreheatFileSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/StatFile" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatFileSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::StatFileRequest>
+                    for StatFileSvc<T> {
+                        type Response = super::StatFileResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatFileRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::stat_file(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatFileSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
