@@ -735,12 +735,12 @@ message Layer {
 // PreheatFileRequest represents request of PreheatFile.
 message PreheatFileRequest {
   // URL is the file url for preheating.
-  string url = 1;
+  string url = 1 [(validate.rules).string.uri = true];
 	// Piece Length is the piece length(bytes) for downloading file. The value needs to
 	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
 	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
 	// the piece length will be calculated according to the file size.
-  optional uint64 piece_length = 2;
+  optional uint64 piece_length = 2 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864, ignore_empty: true}];
 	// Tag is the tag for preheating.
   optional string tag = 3;
 	// Application is the application string for preheating.
@@ -757,7 +757,7 @@ message PreheatFileRequest {
   // - single_seed_peer: preheat from a single seed peer.
   // - all_peers: preheat from all available peers.
   // - all_seed_peers: preheat from all seed peers.
-  string scope = 7;
+  string scope = 7 [(validate.rules).string.pattern = "^(single_seed_peer|all_seed_peers|all_peers)$"];
 	// IPs is a list of specific peer IPs for preheating.
 	// This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
 	// Applies to 'all_peers' and 'all_seed_peers' scopes.
@@ -766,42 +766,44 @@ message PreheatFileRequest {
 	// This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
 	// It must be a value between 1 and 100 (inclusive) if provided.
 	// Applies to 'all_peers' and 'all_seed_peers' scopes.
-  optional uint32 percentage = 9;
+  optional uint32 percentage = 9 [(validate.rules).uint32 = {gte: 1, lte: 100, ignore_empty: true}];
 	// Count is the desired number of peers to preheat.
 	// This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
 	// It must be a value between 1 and 200 (inclusive) if provided.
 	// Applies to 'all_peers' and 'all_seed_peers' scopes.
-  optional uint32 count = 10;
+  optional uint32 count = 10 [(validate.rules).uint32 = {gte: 1, lte: 200, ignore_empty: true}];
 	// ConcurrentTaskCount specifies the maximum number of tasks to preheat concurrently.
 	// For example, if preheating 100 files with ConcurrentTaskCount set to 10, up to 10 files are processed simultaneously.
 	// If ConcurrentPeerCount is 10 for 1000 peers, each file is preheated by 10 peers concurrently.
 	// Default is 8, maximum is 100.
-  optional int64 concurrent_task_count = 11;
+  optional int64 concurrent_task_count = 11 [(validate.rules).int64 = {gte: 1, lte: 100, ignore_empty: true}];
 	// ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task.
 	// For example, if preheating a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
 	// Default is 500, maximum is 1000.
-  optional int64 concurrent_peer_count = 12;
+  optional int64 concurrent_peer_count = 12 [(validate.rules).int64 = {gte: 1, lte: 1000, ignore_empty: true}];
 	// Timeout is the timeout for preheating, default is 30 minutes.
   optional google.protobuf.Duration timeout = 13;
   // Preheat priority.
-  common.v2.Priority priority = 14;
+  common.v2.Priority priority = 14 [(validate.rules).enum.defined_only = true];
   // certificate_chain is the client certs with DER format for the backend client.
   repeated bytes certificate_chain = 15;
   // insecure_skip_verify indicates whether to skip TLS verification.
   bool insecure_skip_verify = 16;
   // Object storage protocol information.
   optional common.v2.ObjectStorage object_storage = 17;
+  // HDFS protocol information.
+  optional common.v2.HDFS hdfs = 18;
 }
 
 // StatFileRequest represents request of StatFile.
 message StatFileRequest {
   // URL is the file url for stat.
-  string url = 1;
+  string url = 1 [(validate.rules).string.uri = true];
 	// Piece Length is the piece length(bytes) for downloading file. The value needs to
 	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
 	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
 	// the piece length will be calculated according to the file size.
-  optional uint64 piece_length = 2;
+  optional uint64 piece_length = 2 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864, ignore_empty: true}];
 	// Tag is the tag for stat.
   optional string tag = 3;
 	// Application is the application string for stat.
@@ -814,11 +816,10 @@ message StatFileRequest {
   repeated string filtered_query_params = 5;
 	// Header is the http headers for authentication.
   map<string, string> header = 6;
-	// Username is the username for authentication.
 	// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task.
 	// For example, if stat a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
 	// Default is 500, maximum is 1000.
-  optional int64 concurrent_peer_count = 7;
+  optional int64 concurrent_peer_count = 7 [(validate.rules).int64 = {gte: 1, lte: 1000, ignore_empty: true}];
 	// Timeout is the timeout for stat, default is 30 minutes.
   optional google.protobuf.Duration timeout = 8;
   // certificate_chain is the client certs with DER format for the backend client.
@@ -827,14 +828,14 @@ message StatFileRequest {
   bool insecure_skip_verify = 10;
   // Object storage protocol information.
   optional common.v2.ObjectStorage object_storage = 11;
+  // HDFS protocol information.
+  optional common.v2.HDFS hdfs = 12;
 }
 
 // StatFileResponse represents response of StatFile.
 message StatFileResponse {
-	// File is the file information.
-	File file = 1;
 	// Peers is the peers that have downloaded the file.
-	repeated PeerFile peers = 2;
+	repeated PeerFile peers = 1;
 }
 
 // PeerFile represents a peer in the get file job.
@@ -843,14 +844,6 @@ message PeerFile {
   string ip = 1;
 	// Hostname is the hostname of the peer.
   string hostname = 2;
-	// CachedFile is the file that the peer has downloaded.
-  File cached_file = 3;
-}
-
-// File represents the file information.
-message File {
-  // URL is the URL of the file.
-  string url = 1;
 }
 
 // Scheduler RPC Service.

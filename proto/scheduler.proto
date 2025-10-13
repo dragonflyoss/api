@@ -773,6 +773,8 @@ message PreheatFileRequest {
   bool insecure_skip_verify = 16;
   // Object storage protocol information.
   optional common.v2.ObjectStorage object_storage = 17;
+  // HDFS protocol information.
+  optional common.v2.HDFS hdfs = 18;
 }
 
 // StatFileRequest represents request of StatFile.
@@ -796,7 +798,6 @@ message StatFileRequest {
   repeated string filtered_query_params = 5;
 	// Header is the http headers for authentication.
   map<string, string> header = 6;
-	// Username is the username for authentication.
 	// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task.
 	// For example, if stat a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
 	// Default is 500, maximum is 1000.
@@ -809,14 +810,14 @@ message StatFileRequest {
   bool insecure_skip_verify = 10;
   // Object storage protocol information.
   optional common.v2.ObjectStorage object_storage = 11;
+  // HDFS protocol information.
+  optional common.v2.HDFS hdfs = 12;
 }
 
 // StatFileResponse represents response of StatFile.
 message StatFileResponse {
-	// File is the file information.
-	File file = 1;
 	// Peers is the peers that have downloaded the file.
-	repeated PeerFile peers = 2;
+	repeated PeerFile peers = 1;
 }
 
 // PeerFile represents a peer in the get file job.
@@ -825,14 +826,6 @@ message PeerFile {
   string ip = 1;
 	// Hostname is the hostname of the peer.
   string hostname = 2;
-	// CachedFile is the file that the peer has downloaded.
-  File cached_file = 3;
-}
-
-// File represents the file information.
-message File {
-  // URL is the URL of the file.
-  string url = 1;
 }
 
 // Scheduler RPC Service.

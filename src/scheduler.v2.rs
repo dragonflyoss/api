@@ -1208,6 +1208,9 @@ pub struct PreheatFileRequest {
     /// Object storage protocol information.
     #[prost(message, optional, tag = "17")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
+    /// HDFS protocol information.
+    #[prost(message, optional, tag = "18")]
+    pub hdfs: ::core::option::Option<super::super::common::v2::Hdfs>,
 }
 /// StatFileRequest represents request of StatFile.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1242,7 +1245,6 @@ pub struct StatFileRequest {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
-    /// Username is the username for authentication.
     /// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task.
     /// For example, if stat a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
     /// Default is 500, maximum is 1000.
@@ -1260,17 +1262,17 @@ pub struct StatFileRequest {
     /// Object storage protocol information.
     #[prost(message, optional, tag = "11")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
+    /// HDFS protocol information.
+    #[prost(message, optional, tag = "12")]
+    pub hdfs: ::core::option::Option<super::super::common::v2::Hdfs>,
 }
 /// StatFileResponse represents response of StatFile.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct StatFileResponse {
-    /// File is the file information.
-    #[prost(message, optional, tag = "1")]
-    pub file: ::core::option::Option<File>,
     /// Peers is the peers that have downloaded the file.
-    #[prost(message, repeated, tag = "2")]
+    #[prost(message, repeated, tag = "1")]
     pub peers: ::prost::alloc::vec::Vec<PeerFile>,
 }
 /// PeerFile represents a peer in the get file job.
@@ -1284,18 +1286,6 @@ pub struct PeerFile {
     /// Hostname is the hostname of the peer.
     #[prost(string, tag = "2")]
     pub hostname: ::prost::alloc::string::String,
-    /// CachedFile is the file that the peer has downloaded.
-    #[prost(message, optional, tag = "3")]
-    pub cached_file: ::core::option::Option<File>,
-}
-/// File represents the file information.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct File {
-    /// URL is the URL of the file.
-    #[prost(string, tag = "1")]
-    pub url: ::prost::alloc::string::String,
 }
 /// Generated client implementations.
 pub mod scheduler_client {
