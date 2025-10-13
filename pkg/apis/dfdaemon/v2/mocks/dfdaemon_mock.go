@@ -245,6 +245,26 @@ func (mr *MockDfdaemonUploadClientMockRecorder) ExchangeIBVerbsQueuePairEndpoint
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangeIBVerbsQueuePairEndpoint", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).ExchangeIBVerbsQueuePairEndpoint), varargs...)
 }
 
+// ListTaskEntries mocks base method.
+func (m *MockDfdaemonUploadClient) ListTaskEntries(ctx context.Context, in *dfdaemon.ListTaskEntriesRequest, opts ...grpc.CallOption) (*dfdaemon.ListTaskEntriesResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListTaskEntries", varargs...)
+	ret0, _ := ret[0].(*dfdaemon.ListTaskEntriesResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListTaskEntries indicates an expected call of ListTaskEntries.
+func (mr *MockDfdaemonUploadClientMockRecorder) ListTaskEntries(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTaskEntries", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).ListTaskEntries), varargs...)
+}
+
 // StatCacheTask mocks base method.
 func (m *MockDfdaemonUploadClient) StatCacheTask(ctx context.Context, in *dfdaemon.StatCacheTaskRequest, opts ...grpc.CallOption) (*common.CacheTask, error) {
 	m.ctrl.T.Helper()
@@ -1442,6 +1462,21 @@ func (m *MockDfdaemonUploadServer) ExchangeIBVerbsQueuePairEndpoint(arg0 context
 func (mr *MockDfdaemonUploadServerMockRecorder) ExchangeIBVerbsQueuePairEndpoint(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExchangeIBVerbsQueuePairEndpoint", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).ExchangeIBVerbsQueuePairEndpoint), arg0, arg1)
+}
+
+// ListTaskEntries mocks base method.
+func (m *MockDfdaemonUploadServer) ListTaskEntries(arg0 context.Context, arg1 *dfdaemon.ListTaskEntriesRequest) (*dfdaemon.ListTaskEntriesResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListTaskEntries", arg0, arg1)
+	ret0, _ := ret[0].(*dfdaemon.ListTaskEntriesResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListTaskEntries indicates an expected call of ListTaskEntries.
+func (mr *MockDfdaemonUploadServerMockRecorder) ListTaskEntries(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTaskEntries", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).ListTaskEntries), arg0, arg1)
 }
 
 // StatCacheTask mocks base method.
