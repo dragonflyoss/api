@@ -528,6 +528,9 @@ service DfdaemonUpload {
   // StatTask stats task information.
   rpc StatTask(StatTaskRequest) returns(common.v2.Task);
 
+  // ListTaskEntries lists task entries for downloading directory.
+  rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
+
   // DeleteTask deletes task from p2p network.
   rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
 
