@@ -732,6 +732,120 @@ message Layer {
   string url = 1 [(validate.rules).string.uri = true];
 }
 
+// PreheatFileRequest represents request of PreheatFile.
+message PreheatFileRequest {
+  // URL is the file url for preheating.
+  string url = 1 [(validate.rules).string.uri = true];
+	// Piece Length is the piece length(bytes) for downloading file. The value needs to
+	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+	// the piece length will be calculated according to the file size.
+  optional uint64 piece_length = 2 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864, ignore_empty: true}];
+	// Tag is the tag for preheating.
+  optional string tag = 3;
+	// Application is the application string for preheating.
+  optional string application = 4;
+  // Filtered query params to generate the task id.
+  // When filter is ["Signature", "Expires", "ns"], for example:
+  // http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+  // will generate the same task id.
+  // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+  repeated string filtered_query_params = 5;
+	// Header is the http headers for authentication.
+  map<string, string> header = 6;
+  // Scope is the scope for preheating, it can be one of the following values:
+  // - single_seed_peer: preheat from a single seed peer.
+  // - all_peers: preheat from all available peers.
+  // - all_seed_peers: preheat from all seed peers.
+  string scope = 7 [(validate.rules).string.pattern = "^(single_seed_peer|all_seed_peers|all_peers)$"];
+	// IPs is a list of specific peer IPs for preheating.
+	// This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
+	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  repeated string ips = 8;
+	// Percentage is the percentage of available peers to preheat.
+	// This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
+	// It must be a value between 1 and 100 (inclusive) if provided.
+	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  optional uint32 percentage = 9 [(validate.rules).uint32 = {gte: 1, lte: 100, ignore_empty: true}];
+	// Count is the desired number of peers to preheat.
+	// This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
+	// It must be a value between 1 and 200 (inclusive) if provided.
+	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  optional uint32 count = 10 [(validate.rules).uint32 = {gte: 1, lte: 200, ignore_empty: true}];
+	// ConcurrentTaskCount specifies the maximum number of tasks to preheat concurrently.
+	// For example, if preheating 100 files with ConcurrentTaskCount set to 10, up to 10 files are processed simultaneously.
+	// If ConcurrentPeerCount is 10 for 1000 peers, each file is preheated by 10 peers concurrently.
+	// Default is 8, maximum is 100.
+  optional int64 concurrent_task_count = 11 [(validate.rules).int64 = {gte: 1, lte: 100, ignore_empty: true}];
+	// ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task.
+	// For example, if preheating a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
+	// Default is 500, maximum is 1000.
+  optional int64 concurrent_peer_count = 12 [(validate.rules).int64 = {gte: 1, lte: 1000, ignore_empty: true}];
+	// Timeout is the timeout for preheating, default is 30 minutes.
+  optional google.protobuf.Duration timeout = 13;
+  // Preheat priority.
+  common.v2.Priority priority = 14 [(validate.rules).enum.defined_only = true];
+  // certificate_chain is the client certs with DER format for the backend client.
+  repeated bytes certificate_chain = 15;
+  // insecure_skip_verify indicates whether to skip TLS verification.
+  bool insecure_skip_verify = 16;
+  // Object storage protocol information.
+  optional common.v2.ObjectStorage object_storage = 17;
+  // HDFS protocol information.
+  optional common.v2.HDFS hdfs = 18;
+}
+
+// StatFileRequest represents request of StatFile.
+message StatFileRequest {
+  // URL is the file url for stat.
+  string url = 1 [(validate.rules).string.uri = true];
+	// Piece Length is the piece length(bytes) for downloading file. The value needs to
+	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+	// the piece length will be calculated according to the file size.
+  optional uint64 piece_length = 2 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864, ignore_empty: true}];
+	// Tag is the tag for stat.
+  optional string tag = 3;
+	// Application is the application string for stat.
+  optional string application = 4;
+  // Filtered query params to generate the task id.
+  // When filter is ["Signature", "Expires", "ns"], for example:
+  // http://example.com/xyz?Expires=e1&Signature=s1&ns=docker.io and http://example.com/xyz?Expires=e2&Signature=s2&ns=docker.io
+  // will generate the same task id.
+  // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
+  repeated string filtered_query_params = 5;
+	// Header is the http headers for authentication.
+  map<string, string> header = 6;
+	// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task.
+	// For example, if stat a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
+	// Default is 500, maximum is 1000.
+  optional int64 concurrent_peer_count = 7 [(validate.rules).int64 = {gte: 1, lte: 1000, ignore_empty: true}];
+	// Timeout is the timeout for stat, default is 30 minutes.
+  optional google.protobuf.Duration timeout = 8;
+  // certificate_chain is the client certs with DER format for the backend client.
+  repeated bytes certificate_chain = 9;
+  // insecure_skip_verify indicates whether to skip TLS verification.
+  bool insecure_skip_verify = 10;
+  // Object storage protocol information.
+  optional common.v2.ObjectStorage object_storage = 11;
+  // HDFS protocol information.
+  optional common.v2.HDFS hdfs = 12;
+}
+
+// StatFileResponse represents response of StatFile.
+message StatFileResponse {
+	// Peers is the peers that have downloaded the file.
+	repeated PeerFile peers = 1;
+}
+
+// PeerFile represents a peer in the get file job.
+message PeerFile {
+	// IP is the IP address of the peer.
+  string ip = 1;
+	// Hostname is the hostname of the peer.
+  string hostname = 2;
+}
+
 // Scheduler RPC Service.
 service Scheduler {
   // AnnouncePeer announces peer to scheduler.
@@ -815,4 +929,23 @@ service Scheduler {
   // all peers to collect the image's download state across the network.
   // The response includes both layer information and the status on each peer.
   rpc StatImage(StatImageRequest)returns(StatImageResponse);
+  
+  // PreheatFile synchronously resolves a file URL and triggers an asynchronous preheat task.
+  //
+  // This is a blocking call. The RPC will not return until the server has completed the
+  // initial synchronous work: resolving the file URL.
+  //
+  // After this call successfully returns, a scheduler on the server begins the actual
+  // preheating process, instructing peers to download the file in the background.
+  //
+  // A successful response (google.protobuf.Empty) confirms that the preparation is complete
+  // and the asynchronous download task has been scheduled.
+  rpc PreheatFile(PreheatFileRequest)returns(google.protobuf.Empty);
+
+  // StatFile provides detailed status for a file's distribution in peers.
+  //
+  // This is a blocking call that first resolves the file URL and then queries
+  // all peers to collect the file's download state across the network.
+  // The response includes both file information and the status on each peer.
+  rpc StatFile(StatFileRequest)returns(StatFileResponse);
 }

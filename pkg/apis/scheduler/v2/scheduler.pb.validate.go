@@ -10571,3 +10571,863 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = LayerValidationError{}
+
+// Validate checks the field values on PreheatFileRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *PreheatFileRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PreheatFileRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// PreheatFileRequestMultiError, or nil if none found.
+func (m *PreheatFileRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PreheatFileRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = PreheatFileRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := PreheatFileRequestValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Header
+
+	if !_PreheatFileRequest_Scope_Pattern.MatchString(m.GetScope()) {
+		err := PreheatFileRequestValidationError{
+			field:  "Scope",
+			reason: "value does not match regex pattern \"^(single_seed_peer|all_seed_peers|all_peers)$\"",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if _, ok := common.Priority_name[int32(m.GetPriority())]; !ok {
+		err := PreheatFileRequestValidationError{
+			field:  "Priority",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for InsecureSkipVerify
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
+				err := PreheatFileRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be inside range [4194304, 67108864]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if m.Percentage != nil {
+
+		if m.GetPercentage() != 0 {
+
+			if val := m.GetPercentage(); val < 1 || val > 100 {
+				err := PreheatFileRequestValidationError{
+					field:  "Percentage",
+					reason: "value must be inside range [1, 100]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Count != nil {
+
+		if m.GetCount() != 0 {
+
+			if val := m.GetCount(); val < 1 || val > 200 {
+				err := PreheatFileRequestValidationError{
+					field:  "Count",
+					reason: "value must be inside range [1, 200]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ConcurrentTaskCount != nil {
+
+		if m.GetConcurrentTaskCount() != 0 {
+
+			if val := m.GetConcurrentTaskCount(); val < 1 || val > 100 {
+				err := PreheatFileRequestValidationError{
+					field:  "ConcurrentTaskCount",
+					reason: "value must be inside range [1, 100]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ConcurrentPeerCount != nil {
+
+		if m.GetConcurrentPeerCount() != 0 {
+
+			if val := m.GetConcurrentPeerCount(); val < 1 || val > 1000 {
+				err := PreheatFileRequestValidationError{
+					field:  "ConcurrentPeerCount",
+					reason: "value must be inside range [1, 1000]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Timeout != nil {
+
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PreheatFileRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PreheatFileRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PreheatFileRequestValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.ObjectStorage != nil {
+
+		if all {
+			switch v := interface{}(m.GetObjectStorage()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PreheatFileRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PreheatFileRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PreheatFileRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.Hdfs != nil {
+
+		if all {
+			switch v := interface{}(m.GetHdfs()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, PreheatFileRequestValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, PreheatFileRequestValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHdfs()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return PreheatFileRequestValidationError{
+					field:  "Hdfs",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return PreheatFileRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// PreheatFileRequestMultiError is an error wrapping multiple validation errors
+// returned by PreheatFileRequest.ValidateAll() if the designated constraints
+// aren't met.
+type PreheatFileRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PreheatFileRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PreheatFileRequestMultiError) AllErrors() []error { return m }
+
+// PreheatFileRequestValidationError is the validation error returned by
+// PreheatFileRequest.Validate if the designated constraints aren't met.
+type PreheatFileRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PreheatFileRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PreheatFileRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PreheatFileRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PreheatFileRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PreheatFileRequestValidationError) ErrorName() string {
+	return "PreheatFileRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e PreheatFileRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPreheatFileRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PreheatFileRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PreheatFileRequestValidationError{}
+
+var _PreheatFileRequest_Scope_Pattern = regexp.MustCompile("^(single_seed_peer|all_seed_peers|all_peers)$")
+
+// Validate checks the field values on StatFileRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *StatFileRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatFileRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// StatFileRequestMultiError, or nil if none found.
+func (m *StatFileRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatFileRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = StatFileRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
+		err := StatFileRequestValidationError{
+			field:  "Url",
+			reason: "value must be absolute",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Header
+
+	// no validation rules for InsecureSkipVerify
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
+				err := StatFileRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be inside range [4194304, 67108864]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if m.ConcurrentPeerCount != nil {
+
+		if m.GetConcurrentPeerCount() != 0 {
+
+			if val := m.GetConcurrentPeerCount(); val < 1 || val > 1000 {
+				err := StatFileRequestValidationError{
+					field:  "ConcurrentPeerCount",
+					reason: "value must be inside range [1, 1000]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Timeout != nil {
+
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatFileRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatFileRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatFileRequestValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.ObjectStorage != nil {
+
+		if all {
+			switch v := interface{}(m.GetObjectStorage()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatFileRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatFileRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatFileRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.Hdfs != nil {
+
+		if all {
+			switch v := interface{}(m.GetHdfs()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatFileRequestValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatFileRequestValidationError{
+						field:  "Hdfs",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHdfs()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatFileRequestValidationError{
+					field:  "Hdfs",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatFileRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatFileRequestMultiError is an error wrapping multiple validation errors
+// returned by StatFileRequest.ValidateAll() if the designated constraints
+// aren't met.
+type StatFileRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatFileRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatFileRequestMultiError) AllErrors() []error { return m }
+
+// StatFileRequestValidationError is the validation error returned by
+// StatFileRequest.Validate if the designated constraints aren't met.
+type StatFileRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatFileRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatFileRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatFileRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatFileRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatFileRequestValidationError) ErrorName() string { return "StatFileRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e StatFileRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatFileRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatFileRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatFileRequestValidationError{}
+
+// Validate checks the field values on StatFileResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *StatFileResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatFileResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// StatFileResponseMultiError, or nil if none found.
+func (m *StatFileResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatFileResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetPeers() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatFileResponseValidationError{
+						field:  fmt.Sprintf("Peers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatFileResponseValidationError{
+						field:  fmt.Sprintf("Peers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatFileResponseValidationError{
+					field:  fmt.Sprintf("Peers[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatFileResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatFileResponseMultiError is an error wrapping multiple validation errors
+// returned by StatFileResponse.ValidateAll() if the designated constraints
+// aren't met.
+type StatFileResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatFileResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatFileResponseMultiError) AllErrors() []error { return m }
+
+// StatFileResponseValidationError is the validation error returned by
+// StatFileResponse.Validate if the designated constraints aren't met.
+type StatFileResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatFileResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatFileResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatFileResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatFileResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatFileResponseValidationError) ErrorName() string { return "StatFileResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e StatFileResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatFileResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatFileResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatFileResponseValidationError{}
+
+// Validate checks the field values on PeerFile with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *PeerFile) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PeerFile with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PeerFileMultiError, or nil
+// if none found.
+func (m *PeerFile) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PeerFile) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Ip
+
+	// no validation rules for Hostname
+
+	if len(errors) > 0 {
+		return PeerFileMultiError(errors)
+	}
+
+	return nil
+}
+
+// PeerFileMultiError is an error wrapping multiple validation errors returned
+// by PeerFile.ValidateAll() if the designated constraints aren't met.
+type PeerFileMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PeerFileMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PeerFileMultiError) AllErrors() []error { return m }
+
+// PeerFileValidationError is the validation error returned by
+// PeerFile.Validate if the designated constraints aren't met.
+type PeerFileValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PeerFileValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PeerFileValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PeerFileValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PeerFileValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PeerFileValidationError) ErrorName() string { return "PeerFileValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PeerFileValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPeerFile.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PeerFileValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PeerFileValidationError{}
