@@ -285,6 +285,26 @@ func (mr *MockSchedulerClientMockRecorder) ListHosts(ctx, in any, opts ...any) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListHosts", reflect.TypeOf((*MockSchedulerClient)(nil).ListHosts), varargs...)
 }
 
+// PreheatFile mocks base method.
+func (m *MockSchedulerClient) PreheatFile(ctx context.Context, in *scheduler.PreheatFileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "PreheatFile", varargs...)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PreheatFile indicates an expected call of PreheatFile.
+func (mr *MockSchedulerClientMockRecorder) PreheatFile(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PreheatFile", reflect.TypeOf((*MockSchedulerClient)(nil).PreheatFile), varargs...)
+}
+
 // PreheatImage mocks base method.
 func (m *MockSchedulerClient) PreheatImage(ctx context.Context, in *scheduler.PreheatImageRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -343,6 +363,26 @@ func (mr *MockSchedulerClientMockRecorder) StatCacheTask(ctx, in any, opts ...an
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockSchedulerClient)(nil).StatCacheTask), varargs...)
+}
+
+// StatFile mocks base method.
+func (m *MockSchedulerClient) StatFile(ctx context.Context, in *scheduler.StatFileRequest, opts ...grpc.CallOption) (*scheduler.StatFileResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StatFile", varargs...)
+	ret0, _ := ret[0].(*scheduler.StatFileResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatFile indicates an expected call of StatFile.
+func (mr *MockSchedulerClientMockRecorder) StatFile(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatFile", reflect.TypeOf((*MockSchedulerClient)(nil).StatFile), varargs...)
 }
 
 // StatImage mocks base method.
@@ -1120,6 +1160,21 @@ func (mr *MockSchedulerServerMockRecorder) ListHosts(arg0, arg1 any) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListHosts", reflect.TypeOf((*MockSchedulerServer)(nil).ListHosts), arg0, arg1)
 }
 
+// PreheatFile mocks base method.
+func (m *MockSchedulerServer) PreheatFile(arg0 context.Context, arg1 *scheduler.PreheatFileRequest) (*emptypb.Empty, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PreheatFile", arg0, arg1)
+	ret0, _ := ret[0].(*emptypb.Empty)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// PreheatFile indicates an expected call of PreheatFile.
+func (mr *MockSchedulerServerMockRecorder) PreheatFile(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PreheatFile", reflect.TypeOf((*MockSchedulerServer)(nil).PreheatFile), arg0, arg1)
+}
+
 // PreheatImage mocks base method.
 func (m *MockSchedulerServer) PreheatImage(arg0 context.Context, arg1 *scheduler.PreheatImageRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -1163,6 +1218,21 @@ func (m *MockSchedulerServer) StatCacheTask(arg0 context.Context, arg1 *schedule
 func (mr *MockSchedulerServerMockRecorder) StatCacheTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockSchedulerServer)(nil).StatCacheTask), arg0, arg1)
+}
+
+// StatFile mocks base method.
+func (m *MockSchedulerServer) StatFile(arg0 context.Context, arg1 *scheduler.StatFileRequest) (*scheduler.StatFileResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "StatFile", arg0, arg1)
+	ret0, _ := ret[0].(*scheduler.StatFileResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatFile indicates an expected call of StatFile.
+func (mr *MockSchedulerServerMockRecorder) StatFile(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatFile", reflect.TypeOf((*MockSchedulerServer)(nil).StatFile), arg0, arg1)
 }
 
 // StatImage mocks base method.

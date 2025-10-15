@@ -585,10 +585,6 @@ func (m *DownloadPeerFinishedRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ContentLength
-
-	// no validation rules for PieceCount
-
 	if len(errors) > 0 {
 		return DownloadPeerFinishedRequestMultiError(errors)
 	}
@@ -693,10 +689,6 @@ func (m *DownloadPeerBackToSourceFinishedRequest) validate(all bool) error {
 	}
 
 	var errors []error
-
-	// no validation rules for ContentLength
-
-	// no validation rules for PieceCount
 
 	if len(errors) > 0 {
 		return DownloadPeerBackToSourceFinishedRequestMultiError(errors)
@@ -4255,6 +4247,14 @@ func (m *RegisterCachePeerRequest) validate(all bool) error {
 		// no validation rules for ConcurrentPieceCount
 	}
 
+	if m.ContentLength != nil {
+		// no validation rules for ContentLength
+	}
+
+	if m.PieceCount != nil {
+		// no validation rules for PieceCount
+	}
+
 	if len(errors) > 0 {
 		return RegisterCachePeerRequestMultiError(errors)
 	}
@@ -4743,10 +4743,6 @@ func (m *DownloadCachePeerFinishedRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ContentLength
-
-	// no validation rules for PieceCount
-
 	if len(errors) > 0 {
 		return DownloadCachePeerFinishedRequestMultiError(errors)
 	}
@@ -4852,10 +4848,6 @@ func (m *DownloadCachePeerBackToSourceFinishedRequest) validate(all bool) error 
 	}
 
 	var errors []error
-
-	// no validation rules for ContentLength
-
-	// no validation rules for PieceCount
 
 	if len(errors) > 0 {
 		return DownloadCachePeerBackToSourceFinishedRequestMultiError(errors)
@@ -6953,6 +6945,10 @@ func (m *RegisterPersistentCachePeerRequest) validate(all bool) error {
 		// no validation rules for ConcurrentPieceCount
 	}
 
+	if m.PieceCount != nil {
+		// no validation rules for PieceCount
+	}
+
 	if len(errors) > 0 {
 		return RegisterPersistentCachePeerRequestMultiError(errors)
 	}
@@ -7322,8 +7318,6 @@ func (m *DownloadPersistentCachePeerFinishedRequest) validate(all bool) error {
 	}
 
 	var errors []error
-
-	// no validation rules for PieceCount
 
 	if len(errors) > 0 {
 		return DownloadPersistentCachePeerFinishedRequestMultiError(errors)
