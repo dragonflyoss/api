@@ -50,18 +50,20 @@ message ReschedulePeerRequest {
 
 // DownloadPeerFinishedRequest represents peer download finished request of AnnouncePeerRequest.
 message DownloadPeerFinishedRequest {
-  // Total content length.
-  uint64 content_length = 1;
-  // Total piece count.
-  uint32 piece_count = 2;
+  reserved 1;
+  reserved "content_length";
+
+  reserved 2;
+  reserved "piece_count";
 }
 
 // DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceFinishedRequest {
-  // Total content length.
-  uint64 content_length = 1;
-  // Total piece count.
-  uint32 piece_count = 2;
+  reserved 1;
+  reserved "content_length";
+
+  reserved 2;
+  reserved "piece_count";
 }
 
 // DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
@@ -282,6 +284,10 @@ message RegisterCachePeerRequest {
   optional string remote_ip = 22;
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
   optional uint32 concurrent_piece_count = 23;
+  // Task content length.
+  optional uint64 content_length = 24;
+  // Task piece count.
+  optional uint64 piece_count = 25;
 }
 
 // DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
@@ -304,18 +310,20 @@ message RescheduleCachePeerRequest {
 
 // DownloadCachePeerFinishedRequest represents cache peer download finished request of AnnounceCachePeerRequest.
 message DownloadCachePeerFinishedRequest {
-  // Total content length.
-  uint64 content_length = 1;
-  // Total piece count.
-  uint32 piece_count = 2;
+  reserved 1;
+  reserved "content_length";
+
+  reserved 2;
+  reserved "piece_count";
 }
 
 // DownloadCachePeerBackToSourceFinishedRequest represents cache peer download back-to-source finished request of AnnounceCachePeerRequest.
 message DownloadCachePeerBackToSourceFinishedRequest {
-  // Total content length.
-  uint64 content_length = 1;
-  // Total piece count.
-  uint32 piece_count = 2;
+  reserved 1;
+  reserved "content_length";
+
+  reserved 2;
+  reserved "piece_count";
 }
 
 // DownloadCachePeerFailedRequest represents cache peer download failed request of AnnounceCachePeerRequest.
@@ -428,6 +436,8 @@ message RegisterPersistentCachePeerRequest {
   optional google.protobuf.Duration timeout = 6;
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
   optional uint32 concurrent_piece_count = 7;
+  // Task piece count.
+  optional uint64 piece_count = 8;
 }
 
 // DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.
@@ -445,8 +455,8 @@ message ReschedulePersistentCachePeerRequest {
 
 // DownloadPersistentCachePeerFinishedRequest represents persistent cache peer download finished request of AnnouncePersistentCachePeerRequest.
 message DownloadPersistentCachePeerFinishedRequest {
-  // Total piece count.
-  uint32 piece_count = 1;
+  reserved 1;
+  reserved "piece_count";
 }
 
 // DownloadPersistentCachePeerFailedRequest represents persistent cache peer download failed request of AnnouncePersistentCachePeerRequest.

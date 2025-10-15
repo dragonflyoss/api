@@ -38,26 +38,12 @@ pub struct ReschedulePeerRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadPeerFinishedRequest {
-    /// Total content length.
-    #[prost(uint64, tag = "1")]
-    pub content_length: u64,
-    /// Total piece count.
-    #[prost(uint32, tag = "2")]
-    pub piece_count: u32,
-}
+pub struct DownloadPeerFinishedRequest {}
 /// DownloadPeerBackToSourceFinishedRequest represents peer download back-to-source finished request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadPeerBackToSourceFinishedRequest {
-    /// Total content length.
-    #[prost(uint64, tag = "1")]
-    pub content_length: u64,
-    /// Total piece count.
-    #[prost(uint32, tag = "2")]
-    pub piece_count: u32,
-}
+pub struct DownloadPeerBackToSourceFinishedRequest {}
 /// DownloadPeerFailedRequest represents peer download failed request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -430,6 +416,12 @@ pub struct RegisterCachePeerRequest {
     /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
     #[prost(uint32, optional, tag = "23")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
+    /// Task content length.
+    #[prost(uint64, optional, tag = "24")]
+    pub content_length: ::core::option::Option<u64>,
+    /// Task piece count.
+    #[prost(uint64, optional, tag = "25")]
+    pub piece_count: ::core::option::Option<u64>,
 }
 /// DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -461,26 +453,12 @@ pub struct RescheduleCachePeerRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadCachePeerFinishedRequest {
-    /// Total content length.
-    #[prost(uint64, tag = "1")]
-    pub content_length: u64,
-    /// Total piece count.
-    #[prost(uint32, tag = "2")]
-    pub piece_count: u32,
-}
+pub struct DownloadCachePeerFinishedRequest {}
 /// DownloadCachePeerBackToSourceFinishedRequest represents cache peer download back-to-source finished request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadCachePeerBackToSourceFinishedRequest {
-    /// Total content length.
-    #[prost(uint64, tag = "1")]
-    pub content_length: u64,
-    /// Total piece count.
-    #[prost(uint32, tag = "2")]
-    pub piece_count: u32,
-}
+pub struct DownloadCachePeerBackToSourceFinishedRequest {}
 /// DownloadCachePeerFailedRequest represents cache peer download failed request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -680,6 +658,9 @@ pub struct RegisterPersistentCachePeerRequest {
     /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
     #[prost(uint32, optional, tag = "7")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
+    /// Task piece count.
+    #[prost(uint64, optional, tag = "8")]
+    pub piece_count: ::core::option::Option<u64>,
 }
 /// DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -704,11 +685,7 @@ pub struct ReschedulePersistentCachePeerRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadPersistentCachePeerFinishedRequest {
-    /// Total piece count.
-    #[prost(uint32, tag = "1")]
-    pub piece_count: u32,
-}
+pub struct DownloadPersistentCachePeerFinishedRequest {}
 /// DownloadPersistentCachePeerFailedRequest represents persistent cache peer download failed request of AnnouncePersistentCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]

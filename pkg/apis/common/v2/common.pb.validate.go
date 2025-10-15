@@ -3179,6 +3179,14 @@ func (m *Download) validate(all bool) error {
 		// no validation rules for ConcurrentPieceCount
 	}
 
+	if m.ContentLength != nil {
+		// no validation rules for ContentLength
+	}
+
+	if m.PieceCount != nil {
+		// no validation rules for PieceCount
+	}
+
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}

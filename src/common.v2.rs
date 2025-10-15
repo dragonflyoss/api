@@ -638,6 +638,12 @@ pub struct Download {
     /// Overwrite indicates whether to overwrite the existing file at output path.
     #[prost(bool, tag = "26")]
     pub overwrite: bool,
+    /// Task content length.
+    #[prost(uint64, optional, tag = "27")]
+    pub content_length: ::core::option::Option<u64>,
+    /// Task piece count.
+    #[prost(uint64, optional, tag = "28")]
+    pub piece_count: ::core::option::Option<u64>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
