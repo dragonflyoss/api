@@ -451,7 +451,7 @@ message RegisterPersistentCachePeerRequest {
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
   optional uint32 concurrent_piece_count = 7;
   // Task piece count.
-  optional uint64 piece_count = 8;
+  uint64 piece_count = 8;
 }
 
 // DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.

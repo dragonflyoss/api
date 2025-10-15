@@ -659,8 +659,8 @@ pub struct RegisterPersistentCachePeerRequest {
     #[prost(uint32, optional, tag = "7")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
     /// Task piece count.
-    #[prost(uint64, optional, tag = "8")]
-    pub piece_count: ::core::option::Option<u64>,
+    #[prost(uint64, tag = "8")]
+    pub piece_count: u64,
 }
 /// DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]

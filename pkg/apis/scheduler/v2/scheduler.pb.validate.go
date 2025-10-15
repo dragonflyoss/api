@@ -6881,6 +6881,8 @@ func (m *RegisterPersistentCachePeerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	// no validation rules for PieceCount
+
 	if m.Tag != nil {
 		// no validation rules for Tag
 	}
@@ -6943,10 +6945,6 @@ func (m *RegisterPersistentCachePeerRequest) validate(all bool) error {
 
 	if m.ConcurrentPieceCount != nil {
 		// no validation rules for ConcurrentPieceCount
-	}
-
-	if m.PieceCount != nil {
-		// no validation rules for PieceCount
 	}
 
 	if len(errors) > 0 {
