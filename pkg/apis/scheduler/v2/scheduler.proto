@@ -297,11 +297,11 @@ message RegisterCachePeerRequest {
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
   optional uint32 concurrent_piece_count = 23;
   // Actual piece length by calculating based on the piece_length field and content length.
-  uint64 actual_piece_length = 24;
+  optional uint64 actual_piece_length = 24;
   // Actual content length by getting from the backend.
-  uint64 actual_content_length = 25;
+  optional uint64 actual_content_length = 25;
   // Actual piece count by calculating.
-  uint64 actual_piece_count = 26;
+  optional uint64 actual_piece_count = 26;
 }
 
 // DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.

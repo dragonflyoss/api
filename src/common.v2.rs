@@ -642,14 +642,14 @@ pub struct Download {
     #[prost(bool, tag = "26")]
     pub overwrite: bool,
     /// Actual piece length by calculating based on the piece_length field and content length.
-    #[prost(uint64, tag = "27")]
-    pub actual_piece_length: u64,
+    #[prost(uint64, optional, tag = "27")]
+    pub actual_piece_length: ::core::option::Option<u64>,
     /// Actual content length by getting from the backend.
-    #[prost(uint64, tag = "28")]
-    pub actual_content_length: u64,
+    #[prost(uint64, optional, tag = "28")]
+    pub actual_content_length: ::core::option::Option<u64>,
     /// Actual piece count by calculating.
-    #[prost(uint64, tag = "29")]
-    pub actual_piece_count: u64,
+    #[prost(uint64, optional, tag = "29")]
+    pub actual_piece_count: ::core::option::Option<u64>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
