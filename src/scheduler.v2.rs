@@ -12,7 +12,17 @@ pub struct RegisterPeerRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadPeerStartedRequest {}
+pub struct DownloadPeerStartedRequest {
+    /// Task piece length.
+    #[prost(uint64, tag = "1")]
+    pub piece_length: u64,
+    /// Task content length.
+    #[prost(uint64, tag = "2")]
+    pub content_length: u64,
+    /// Task piece count.
+    #[prost(uint64, tag = "3")]
+    pub piece_count: u64,
+}
 /// DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -416,18 +426,22 @@ pub struct RegisterCachePeerRequest {
     /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
     #[prost(uint32, optional, tag = "23")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
-    /// Task content length.
-    #[prost(uint64, optional, tag = "24")]
-    pub content_length: ::core::option::Option<u64>,
-    /// Task piece count.
-    #[prost(uint64, optional, tag = "25")]
-    pub piece_count: ::core::option::Option<u64>,
 }
 /// DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadCachePeerStartedRequest {}
+pub struct DownloadCachePeerStartedRequest {
+    /// Task piece length.
+    #[prost(uint64, tag = "1")]
+    pub piece_length: u64,
+    /// Task content length.
+    #[prost(uint64, tag = "2")]
+    pub content_length: u64,
+    /// Task piece count.
+    #[prost(uint64, tag = "3")]
+    pub piece_count: u64,
+}
 /// DownloadCachePeerBackToSourceStartedRequest represents cache peer download back-to-source started request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]

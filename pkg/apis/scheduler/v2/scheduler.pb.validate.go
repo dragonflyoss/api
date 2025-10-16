@@ -203,6 +203,12 @@ func (m *DownloadPeerStartedRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for PieceLength
+
+	// no validation rules for ContentLength
+
+	// no validation rules for PieceCount
+
 	if len(errors) > 0 {
 		return DownloadPeerStartedRequestMultiError(errors)
 	}
@@ -4247,14 +4253,6 @@ func (m *RegisterCachePeerRequest) validate(all bool) error {
 		// no validation rules for ConcurrentPieceCount
 	}
 
-	if m.ContentLength != nil {
-		// no validation rules for ContentLength
-	}
-
-	if m.PieceCount != nil {
-		// no validation rules for PieceCount
-	}
-
 	if len(errors) > 0 {
 		return RegisterCachePeerRequestMultiError(errors)
 	}
@@ -4358,6 +4356,12 @@ func (m *DownloadCachePeerStartedRequest) validate(all bool) error {
 	}
 
 	var errors []error
+
+	// no validation rules for PieceLength
+
+	// no validation rules for ContentLength
+
+	// no validation rules for PieceCount
 
 	if len(errors) > 0 {
 		return DownloadCachePeerStartedRequestMultiError(errors)
