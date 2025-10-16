@@ -580,7 +580,10 @@ pub struct Download {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
-    /// Task piece length.
+    /// Piece Length is the piece length(bytes) for downloading file. The value needs to
+    /// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+    /// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+    /// the piece length will be calculated according to the file size.
     #[prost(uint64, optional, tag = "10")]
     pub piece_length: ::core::option::Option<u64>,
     /// File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
@@ -638,6 +641,15 @@ pub struct Download {
     /// Overwrite indicates whether to overwrite the existing file at output path.
     #[prost(bool, tag = "26")]
     pub overwrite: bool,
+    /// Actual piece length by calculating based on the piece_length field and content length.
+    #[prost(uint64, tag = "27")]
+    pub actual_piece_length: u64,
+    /// Actual content length by getting from the backend.
+    #[prost(uint64, tag = "28")]
+    pub actual_content_length: u64,
+    /// Actual piece count by calculating.
+    #[prost(uint64, tag = "29")]
+    pub actual_piece_count: u64,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]

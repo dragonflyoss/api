@@ -32,12 +32,6 @@ message RegisterPeerRequest {
 
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
 message DownloadPeerStartedRequest {
-  // Task piece length.
-  uint64 piece_length = 1;
-  // Task content length.
-  uint64 content_length = 2;
-  // Task piece count.
-  uint64 piece_count = 3;
 }
 
 // DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
@@ -255,7 +249,10 @@ message RegisterCachePeerRequest {
   repeated string filtered_query_params = 8;
   // Task request headers.
   map<string, string> request_header = 9;
-  // Task piece length.
+	// Piece Length is the piece length(bytes) for downloading file. The value needs to
+	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+	// the piece length will be calculated according to the file size.
   optional uint64 piece_length = 10;
   // File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
   // Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
@@ -290,16 +287,16 @@ message RegisterCachePeerRequest {
   optional string remote_ip = 22;
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
   optional uint32 concurrent_piece_count = 23;
+  // Actual piece length by calculating based on the piece_length field and content length.
+  uint64 actual_piece_length = 24;
+  // Actual content length by getting from the backend.
+  uint64 actual_content_length = 25;
+  // Actual piece count by calculating.
+  uint64 actual_piece_count = 26;
 }
 
 // DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
 message DownloadCachePeerStartedRequest {
-  // Task piece length.
-  uint64 piece_length = 1;
-  // Task content length.
-  uint64 content_length = 2;
-  // Task piece count.
-  uint64 piece_count = 3;
 }
 
 // DownloadCachePeerBackToSourceStartedRequest represents cache peer download back-to-source started request of AnnounceCachePeerRequest.
