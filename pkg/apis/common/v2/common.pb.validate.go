@@ -2955,6 +2955,12 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for Overwrite
 
+	// no validation rules for ActualPieceLength
+
+	// no validation rules for ActualContentLength
+
+	// no validation rules for ActualPieceCount
+
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {

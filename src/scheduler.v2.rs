@@ -12,17 +12,7 @@ pub struct RegisterPeerRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadPeerStartedRequest {
-    /// Task piece length.
-    #[prost(uint64, tag = "1")]
-    pub piece_length: u64,
-    /// Task content length.
-    #[prost(uint64, tag = "2")]
-    pub content_length: u64,
-    /// Task piece count.
-    #[prost(uint64, tag = "3")]
-    pub piece_count: u64,
-}
+pub struct DownloadPeerStartedRequest {}
 /// DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -375,7 +365,10 @@ pub struct RegisterCachePeerRequest {
         ::prost::alloc::string::String,
         ::prost::alloc::string::String,
     >,
-    /// Task piece length.
+    /// Piece Length is the piece length(bytes) for downloading file. The value needs to
+    /// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+    /// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+    /// the piece length will be calculated according to the file size.
     #[prost(uint64, optional, tag = "10")]
     pub piece_length: ::core::option::Option<u64>,
     /// File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
@@ -426,22 +419,21 @@ pub struct RegisterCachePeerRequest {
     /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
     #[prost(uint32, optional, tag = "23")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
+    /// Actual piece length by calculating based on the piece_length field and content length.
+    #[prost(uint64, tag = "24")]
+    pub actual_piece_length: u64,
+    /// Actual content length by getting from the backend.
+    #[prost(uint64, tag = "25")]
+    pub actual_content_length: u64,
+    /// Actual piece count by calculating.
+    #[prost(uint64, tag = "26")]
+    pub actual_piece_count: u64,
 }
 /// DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct DownloadCachePeerStartedRequest {
-    /// Task piece length.
-    #[prost(uint64, tag = "1")]
-    pub piece_length: u64,
-    /// Task content length.
-    #[prost(uint64, tag = "2")]
-    pub content_length: u64,
-    /// Task piece count.
-    #[prost(uint64, tag = "3")]
-    pub piece_count: u64,
-}
+pub struct DownloadCachePeerStartedRequest {}
 /// DownloadCachePeerBackToSourceStartedRequest represents cache peer download back-to-source started request of AnnounceCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]

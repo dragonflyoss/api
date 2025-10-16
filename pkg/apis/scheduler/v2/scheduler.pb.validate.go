@@ -203,12 +203,6 @@ func (m *DownloadPeerStartedRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for PieceLength
-
-	// no validation rules for ContentLength
-
-	// no validation rules for PieceCount
-
 	if len(errors) > 0 {
 		return DownloadPeerStartedRequestMultiError(errors)
 	}
@@ -4029,6 +4023,12 @@ func (m *RegisterCachePeerRequest) validate(all bool) error {
 
 	// no validation rules for NeedPieceContent
 
+	// no validation rules for ActualPieceLength
+
+	// no validation rules for ActualContentLength
+
+	// no validation rules for ActualPieceCount
+
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {
@@ -4093,10 +4093,10 @@ func (m *RegisterCachePeerRequest) validate(all bool) error {
 
 		if m.GetPieceLength() != 0 {
 
-			if m.GetPieceLength() < 4194304 {
+			if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
 				err := RegisterCachePeerRequestValidationError{
 					field:  "PieceLength",
-					reason: "value must be greater than or equal to 4194304",
+					reason: "value must be inside range [4194304, 67108864]",
 				}
 				if !all {
 					return err
@@ -4356,12 +4356,6 @@ func (m *DownloadCachePeerStartedRequest) validate(all bool) error {
 	}
 
 	var errors []error
-
-	// no validation rules for PieceLength
-
-	// no validation rules for ContentLength
-
-	// no validation rules for PieceCount
 
 	if len(errors) > 0 {
 		return DownloadCachePeerStartedRequestMultiError(errors)
