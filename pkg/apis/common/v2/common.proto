@@ -562,10 +562,6 @@ message Download {
   optional uint32 concurrent_piece_count = 25;
   // Overwrite indicates whether to overwrite the existing file at output path.
   bool overwrite = 26;
-  // Task content length.
-  optional uint64 content_length = 27;
-  // Task piece count.
-  optional uint64 piece_count = 28;
 
   reserved 21;
   reserved "load_to_cache";
