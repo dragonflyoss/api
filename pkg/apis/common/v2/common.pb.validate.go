@@ -2955,12 +2955,6 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for Overwrite
 
-	// no validation rules for ActualPieceLength
-
-	// no validation rules for ActualContentLength
-
-	// no validation rules for ActualPieceCount
-
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {
@@ -3183,6 +3177,18 @@ func (m *Download) validate(all bool) error {
 
 	if m.ConcurrentPieceCount != nil {
 		// no validation rules for ConcurrentPieceCount
+	}
+
+	if m.ActualPieceLength != nil {
+		// no validation rules for ActualPieceLength
+	}
+
+	if m.ActualContentLength != nil {
+		// no validation rules for ActualContentLength
+	}
+
+	if m.ActualPieceCount != nil {
+		// no validation rules for ActualPieceCount
 	}
 
 	if len(errors) > 0 {
