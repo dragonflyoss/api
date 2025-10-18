@@ -677,6 +677,9 @@ pub struct ObjectStorage {
     /// Predefined ACL that used for the Google Cloud Storage service.
     #[prost(string, optional, tag = "7")]
     pub predefined_acl: ::core::option::Option<::prost::alloc::string::String>,
+    /// Temporary STS security token for accessing OSS.
+    #[prost(string, optional, tag = "8")]
+    pub security_token: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// HDFS related information.
 #[derive(serde::Serialize, serde::Deserialize)]

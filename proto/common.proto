@@ -583,6 +583,8 @@ message ObjectStorage {
   optional string credential_path = 6;
   // Predefined ACL that used for the Google Cloud Storage service.
   optional string predefined_acl = 7;
+  // Temporary STS security token for accessing OSS.
+  optional string security_token = 8;
 }
 
 // HDFS related information.
