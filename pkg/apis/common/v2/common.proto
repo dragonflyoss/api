@@ -589,6 +589,8 @@ message ObjectStorage {
   optional string credential_path = 6 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Predefined ACL that used for the Google Cloud Storage service.
   optional string predefined_acl = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // Temporary STS security token for accessing OSS.
+  optional string security_token = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // HDFS related information.
