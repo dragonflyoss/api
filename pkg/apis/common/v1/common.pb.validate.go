@@ -1013,16 +1013,7 @@ func (m *Host) validate(all bool) error {
 
 	}
 
-	if val := m.GetProxyPort(); val < 1024 || val >= 65535 {
-		err := HostValidationError{
-			field:  "ProxyPort",
-			reason: "value must be inside range [1024, 65535)",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for ProxyPort
 
 	if len(errors) > 0 {
 		return HostMultiError(errors)
