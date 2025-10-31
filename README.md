@@ -16,7 +16,7 @@ please contact [dragonfly maintainers](https://github.com/dragonflyoss/dragonfly
 Join the conversation and help the community grow. Here are the ways to get involved:
 
 - **Slack Channel**: [#dragonfly](https://cloud-native.slack.com/messages/dragonfly/) on [CNCF Slack](https://slack.cncf.io/)
-- **Github Discussions**: [Dragonfly Discussion Forum][discussion]
+- **Github Discussions**: [Dragonfly Discussion Forum](https://github.com/dragonflyoss/dragonfly/discussions)
 - **Developer Group**: <dragonfly-developers@googlegroups.com>
 - **Mailing Lists**:
   - **Developers**: <dragonfly-developers@googlegroups.com>
