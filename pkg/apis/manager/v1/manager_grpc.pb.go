@@ -35,10 +35,6 @@ type ManagerClient interface {
 	UpdateScheduler(ctx context.Context, in *UpdateSchedulerRequest, opts ...grpc.CallOption) (*Scheduler, error)
 	// List acitve schedulers configuration.
 	ListSchedulers(ctx context.Context, in *ListSchedulersRequest, opts ...grpc.CallOption) (*ListSchedulersResponse, error)
-	// Get ObjectStorage configuration.
-	GetObjectStorage(ctx context.Context, in *GetObjectStorageRequest, opts ...grpc.CallOption) (*ObjectStorage, error)
-	// List buckets configuration.
-	ListBuckets(ctx context.Context, in *ListBucketsRequest, opts ...grpc.CallOption) (*ListBucketsResponse, error)
 	// List applications configuration.
 	ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error)
 	// KeepAlive with manager.
@@ -107,24 +103,6 @@ func (c *managerClient) ListSchedulers(ctx context.Context, in *ListSchedulersRe
 	return out, nil
 }
 
-func (c *managerClient) GetObjectStorage(ctx context.Context, in *GetObjectStorageRequest, opts ...grpc.CallOption) (*ObjectStorage, error) {
-	out := new(ObjectStorage)
-	err := c.cc.Invoke(ctx, "/manager.Manager/GetObjectStorage", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *managerClient) ListBuckets(ctx context.Context, in *ListBucketsRequest, opts ...grpc.CallOption) (*ListBucketsResponse, error) {
-	out := new(ListBucketsResponse)
-	err := c.cc.Invoke(ctx, "/manager.Manager/ListBuckets", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *managerClient) ListApplications(ctx context.Context, in *ListApplicationsRequest, opts ...grpc.CallOption) (*ListApplicationsResponse, error) {
 	out := new(ListApplicationsResponse)
 	err := c.cc.Invoke(ctx, "/manager.Manager/ListApplications", in, out, opts...)
@@ -184,10 +162,6 @@ type ManagerServer interface {
 	UpdateScheduler(context.Context, *UpdateSchedulerRequest) (*Scheduler, error)
 	// List acitve schedulers configuration.
 	ListSchedulers(context.Context, *ListSchedulersRequest) (*ListSchedulersResponse, error)
-	// Get ObjectStorage configuration.
-	GetObjectStorage(context.Context, *GetObjectStorageRequest) (*ObjectStorage, error)
-	// List buckets configuration.
-	ListBuckets(context.Context, *ListBucketsRequest) (*ListBucketsResponse, error)
 	// List applications configuration.
 	ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error)
 	// KeepAlive with manager.
@@ -215,12 +189,6 @@ func (UnimplementedManagerServer) UpdateScheduler(context.Context, *UpdateSchedu
 }
 func (UnimplementedManagerServer) ListSchedulers(context.Context, *ListSchedulersRequest) (*ListSchedulersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSchedulers not implemented")
-}
-func (UnimplementedManagerServer) GetObjectStorage(context.Context, *GetObjectStorageRequest) (*ObjectStorage, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetObjectStorage not implemented")
-}
-func (UnimplementedManagerServer) ListBuckets(context.Context, *ListBucketsRequest) (*ListBucketsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListBuckets not implemented")
 }
 func (UnimplementedManagerServer) ListApplications(context.Context, *ListApplicationsRequest) (*ListApplicationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListApplications not implemented")
@@ -348,42 +316,6 @@ func _Manager_ListSchedulers_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Manager_GetObjectStorage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetObjectStorageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ManagerServer).GetObjectStorage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/manager.Manager/GetObjectStorage",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerServer).GetObjectStorage(ctx, req.(*GetObjectStorageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Manager_ListBuckets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListBucketsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ManagerServer).ListBuckets(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/manager.Manager/ListBuckets",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ManagerServer).ListBuckets(ctx, req.(*ListBucketsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Manager_ListApplications_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListApplicationsRequest)
 	if err := dec(in); err != nil {
@@ -458,14 +390,6 @@ var Manager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListSchedulers",
 			Handler:    _Manager_ListSchedulers_Handler,
-		},
-		{
-			MethodName: "GetObjectStorage",
-			Handler:    _Manager_GetObjectStorage_Handler,
-		},
-		{
-			MethodName: "ListBuckets",
-			Handler:    _Manager_ListBuckets_Handler,
 		},
 		{
 			MethodName: "ListApplications",
