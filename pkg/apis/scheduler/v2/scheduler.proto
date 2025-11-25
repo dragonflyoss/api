@@ -808,8 +808,8 @@ message PreheatFileRequest {
   optional common.v2.ObjectStorage object_storage = 17;
   // HDFS protocol information.
   optional common.v2.HDFS hdfs = 18;
-  // output_path is the path to use the preheated file/directory.
-  string output_path = 19 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // output_path is the path to preheat the file or directory to destination.
+  optional string output_path = 19 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
 }
 
 // StatFileRequest represents request of StatFile.
