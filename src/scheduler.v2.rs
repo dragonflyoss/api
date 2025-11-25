@@ -1194,9 +1194,9 @@ pub struct PreheatFileRequest {
     /// HDFS protocol information.
     #[prost(message, optional, tag = "18")]
     pub hdfs: ::core::option::Option<super::super::common::v2::Hdfs>,
-    /// output_path is the path to use the preheated file/directory.
-    #[prost(string, tag = "19")]
-    pub output_path: ::prost::alloc::string::String,
+    /// output_path is the path to preheat the file or directory to destination.
+    #[prost(string, optional, tag = "19")]
+    pub output_path: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// StatFileRequest represents request of StatFile.
 #[derive(serde::Serialize, serde::Deserialize)]
