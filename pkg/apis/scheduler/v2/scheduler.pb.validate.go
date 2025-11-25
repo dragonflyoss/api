@@ -10637,6 +10637,21 @@ func (m *PreheatFileRequest) validate(all bool) error {
 
 	// no validation rules for InsecureSkipVerify
 
+	if m.GetOutputPath() != "" {
+
+		if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
+			err := PreheatFileRequestValidationError{
+				field:  "OutputPath",
+				reason: "value length must be at least 1 runes",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if m.PieceLength != nil {
 
 		if m.GetPieceLength() != 0 {
