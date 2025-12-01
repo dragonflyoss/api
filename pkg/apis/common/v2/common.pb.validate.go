@@ -696,6 +696,247 @@ var _ interface {
 	ErrorName() string
 } = CachePeerValidationError{}
 
+// Validate checks the field values on PersistentPeer with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *PersistentPeer) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PersistentPeer with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PersistentPeerMultiError,
+// or nil if none found.
+func (m *PersistentPeer) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PersistentPeer) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		err := PersistentPeerValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Persistent
+
+	if m.GetCost() == nil {
+		err := PersistentPeerValidationError{
+			field:  "Cost",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetState()) < 1 {
+		err := PersistentPeerValidationError{
+			field:  "State",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetTask() == nil {
+		err := PersistentPeerValidationError{
+			field:  "Task",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetTask()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, PersistentPeerValidationError{
+					field:  "Task",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, PersistentPeerValidationError{
+					field:  "Task",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetTask()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PersistentPeerValidationError{
+				field:  "Task",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetHost() == nil {
+		err := PersistentPeerValidationError{
+			field:  "Host",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetHost()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, PersistentPeerValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, PersistentPeerValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PersistentPeerValidationError{
+				field:  "Host",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetCreatedAt() == nil {
+		err := PersistentPeerValidationError{
+			field:  "CreatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUpdatedAt() == nil {
+		err := PersistentPeerValidationError{
+			field:  "UpdatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.ConcurrentPieceCount != nil {
+		// no validation rules for ConcurrentPieceCount
+	}
+
+	if len(errors) > 0 {
+		return PersistentPeerMultiError(errors)
+	}
+
+	return nil
+}
+
+// PersistentPeerMultiError is an error wrapping multiple validation errors
+// returned by PersistentPeer.ValidateAll() if the designated constraints
+// aren't met.
+type PersistentPeerMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PersistentPeerMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PersistentPeerMultiError) AllErrors() []error { return m }
+
+// PersistentPeerValidationError is the validation error returned by
+// PersistentPeer.Validate if the designated constraints aren't met.
+type PersistentPeerValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PersistentPeerValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PersistentPeerValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PersistentPeerValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PersistentPeerValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PersistentPeerValidationError) ErrorName() string { return "PersistentPeerValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PersistentPeerValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPersistentPeer.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PersistentPeerValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PersistentPeerValidationError{}
+
 // Validate checks the field values on PersistentCachePeer with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -1465,6 +1706,250 @@ var _ interface {
 } = CacheTaskValidationError{}
 
 var _CacheTask_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$")
+
+// Validate checks the field values on PersistentTask with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *PersistentTask) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on PersistentTask with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in PersistentTaskMultiError,
+// or nil if none found.
+func (m *PersistentTask) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *PersistentTask) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetId()) < 1 {
+		err := PersistentTaskValidationError{
+			field:  "Id",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetPersistentReplicaCount() < 1 {
+		err := PersistentTaskValidationError{
+			field:  "PersistentReplicaCount",
+			reason: "value must be greater than or equal to 1",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for CurrentPersistentReplicaCount
+
+	// no validation rules for CurrentReplicaCount
+
+	if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
+		err := PersistentTaskValidationError{
+			field:  "PieceLength",
+			reason: "value must be inside range [4194304, 67108864]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for ContentLength
+
+	// no validation rules for PieceCount
+
+	if utf8.RuneCountInString(m.GetState()) < 1 {
+		err := PersistentTaskValidationError{
+			field:  "State",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
+		err := PersistentTaskValidationError{
+			field:  "ObjectStorageKey",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetObjectStorage() == nil {
+		err := PersistentTaskValidationError{
+			field:  "ObjectStorage",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetObjectStorage()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, PersistentTaskValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, PersistentTaskValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PersistentTaskValidationError{
+				field:  "ObjectStorage",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.GetTtl() == nil {
+		err := PersistentTaskValidationError{
+			field:  "Ttl",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetCreatedAt() == nil {
+		err := PersistentTaskValidationError{
+			field:  "CreatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUpdatedAt() == nil {
+		err := PersistentTaskValidationError{
+			field:  "UpdatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if len(errors) > 0 {
+		return PersistentTaskMultiError(errors)
+	}
+
+	return nil
+}
+
+// PersistentTaskMultiError is an error wrapping multiple validation errors
+// returned by PersistentTask.ValidateAll() if the designated constraints
+// aren't met.
+type PersistentTaskMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m PersistentTaskMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m PersistentTaskMultiError) AllErrors() []error { return m }
+
+// PersistentTaskValidationError is the validation error returned by
+// PersistentTask.Validate if the designated constraints aren't met.
+type PersistentTaskValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PersistentTaskValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PersistentTaskValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PersistentTaskValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PersistentTaskValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PersistentTaskValidationError) ErrorName() string { return "PersistentTaskValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PersistentTaskValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPersistentTask.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PersistentTaskValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PersistentTaskValidationError{}
 
 // Validate checks the field values on PersistentCacheTask with the rules
 // defined in the proto definition for this message. If any rules are

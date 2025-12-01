@@ -437,6 +437,211 @@ message DeleteCacheTaskRequest {
   string task_id = 2 [(validate.rules).string.min_len = 1];
 }
 
+// RegisterPersistentPeerRequest represents persistent peer registered request of AnnouncePersistentPeerRequest.
+message RegisterPersistentPeerRequest {
+  // This is the key of the object storage where the persistent task will be stored,
+  // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+  // object_storage.endpoint and object_storage.region must be unique, because
+  // the persistent task cannot be overwritten once it is uploaded.
+  string object_storage_key = 1 [(validate.rules).string.min_len = 1];
+    // Object storage protocol information.
+  common.v2.ObjectStorage object_storage = 2 [(validate.rules).message.required = true];
+  // Persistent represents whether the persistent task is persistent.
+  // If the persistent task is persistent, the persistent peer will
+  // not be deleted when dfdaemon runs garbage collection.
+  bool persistent = 3;
+  // Tag is used to distinguish different persistent tasks.
+  optional string tag = 4;
+  // Application of task.
+  optional string application = 5;
+  // Task piece length, the value needs to be greater than or equal to 4194304(4MiB)
+  uint64 piece_length = 6 [(validate.rules).uint64.gte = 4194304];
+  // File path to be exported.
+  optional string output_path = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  // Download timeout.
+  optional google.protobuf.Duration timeout = 8;
+  // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+  optional uint32 concurrent_piece_count = 9;
+  // Task piece count.
+  uint64 piece_count = 10;
+}
+
+// DownloadPersistentPeerStartedRequest represents persistent peer download started request of AnnouncePersistentPeerRequest.
+message DownloadPersistentPeerStartedRequest {
+}
+
+// DownloadPersistentPeerBackToSourceStartedRequest represents cache peer download back-to-source started request of AnnouncePersistentPeerRequest.
+message DownloadPersistentPeerBackToSourceStartedRequest {
+  // The description of the back-to-source reason.
+  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+}
+
+// ReschedulePersistentPeerRequest represents reschedule request of AnnouncePersistentPeerRequest.
+message ReschedulePersistentPeerRequest {
+  // Candidate parent ids.
+  repeated common.v2.PersistentPeer candidate_parents = 1;
+
+  // The description of the reschedule reason.
+  optional string description = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+}
+
+// DownloadPersistentPeerFinishedRequest represents persistent peer download finished request of AnnouncePersistentPeerRequest.
+message DownloadPersistentPeerFinishedRequest {
+}
+
+// DownloadPersistentPeerBackToSourceFinishedRequest represents cache peer download back-to-source finished request of AnnouncePersistentPeerRequest.
+message DownloadPersistentPeerBackToSourceFinishedRequest {
+}
+
+// DownloadPersistentPeerFailedRequest represents persistent peer download failed request of AnnouncePersistentPeerRequest.
+message DownloadPersistentPeerFailedRequest {
+  // The description of the download failed.
+  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+}
+
+// DownloadPersistentPeerBackToSourceFailedRequest represents cache peer download back-to-source failed request of AnnouncePersistentPeerRequest.
+message DownloadPersistentPeerBackToSourceFailedRequest {
+  // The description of the download back-to-source failed.
+  optional string description = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+}
+
+// AnnouncePersistentPeerRequest represents request of AnnouncePersistentPeer.
+message AnnouncePersistentPeerRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+
+  oneof request {
+    option (validate.required) = true;
+
+    RegisterPersistentPeerRequest register_persistent_peer_request = 4;
+    DownloadPersistentPeerStartedRequest download_persistent_peer_started_request = 5;
+    DownloadPersistentPeerBackToSourceStartedRequest download_persistent_peer_back_to_source_started_request = 6;
+    ReschedulePersistentPeerRequest reschedule_persistent_peer_request = 7;
+    DownloadPersistentPeerFinishedRequest download_persistent_peer_finished_request = 8;
+    DownloadPersistentPeerBackToSourceFinishedRequest download_persistent_peer_back_to_source_finished_request = 9;
+    DownloadPersistentPeerFailedRequest download_persistent_peer_failed_request = 10;
+    DownloadPersistentPeerBackToSourceFailedRequest download_persistent_peer_back_to_source_failed_request = 11;
+    DownloadPieceFinishedRequest download_piece_finished_request = 12;
+    DownloadPieceBackToSourceFinishedRequest download_piece_back_to_source_finished_request = 13;
+    DownloadPieceFailedRequest download_piece_failed_request = 14;
+    DownloadPieceBackToSourceFailedRequest download_piece_back_to_source_failed_request = 15;
+  }
+}
+
+// EmptyPersistentTaskResponse represents empty persistent task response of AnnouncePersistentPeerResponse.
+message EmptyPersistentTaskResponse {
+}
+
+// NormalPersistentTaskResponse represents normal persistent task response of AnnouncePersistentPeerResponse.
+message NormalPersistentTaskResponse {
+  // Candidate parents.
+  repeated common.v2.PersistentPeer candidate_parents = 1 [(validate.rules).repeated.min_items = 1];
+}
+
+// AnnouncePersistentPeerResponse represents response of AnnouncePersistentPeer.
+message AnnouncePersistentPeerResponse {
+  oneof response {
+    option (validate.required) = true;
+
+    EmptyPersistentTaskResponse empty_persistent_task_response = 1;
+    NormalPersistentTaskResponse normal_persistent_task_response = 2;
+    NeedBackToSourceResponse need_back_to_source_response = 3;
+  }
+}
+
+// StatPersistentPeerRequest represents request of StatPersistentPeer.
+message StatPersistentPeerRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+}
+
+// DeletePersistentPeerRequest represents request of DeletePersistentPeer.
+message DeletePersistentPeerRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+}
+
+// UploadPersistentTaskStartedRequest represents upload persistent task started request of UploadPersistentTaskStarted.
+message UploadPersistentTaskStartedRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+  // This is the key of the object storage where the persistent task will be stored,
+  // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+  // object_storage.endpoint and object_storage.region must be unique, because
+  // the persistent task cannot be overwritten once it is uploaded.
+  string object_storage_key = 4 [(validate.rules).string.min_len = 1];
+    // Object storage protocol information.
+  common.v2.ObjectStorage object_storage = 5 [(validate.rules).message.required = true];
+  // Replica count of the persistent task.
+  uint64 persistent_replica_count = 6 [(validate.rules).uint64.gte = 1];
+  // Tag is used to distinguish different persistent tasks.
+  optional string tag = 7;
+  // Application of task.
+  optional string application = 8;
+  // Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
+  uint64 piece_length = 9 [(validate.rules).uint64.gte = 4194304];
+  // Task content length.
+  uint64 content_length = 10;
+  // Task piece count.
+  uint32 piece_count = 11;
+  // TTL of the persistent task.
+  google.protobuf.Duration ttl = 12 [(validate.rules).duration = {gte:{seconds: 300}, lte:{seconds: 604800}}];
+}
+
+// UploadPersistentTaskFinishedRequest represents upload persistent task finished request of UploadPersistentTaskFinished.
+message UploadPersistentTaskFinishedRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+}
+
+// UploadPersistentTaskFailedRequest represents upload persistent task failed request of UploadPersistentTaskFailed.
+message UploadPersistentTaskFailedRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+  // Peer id.
+  string peer_id = 3 [(validate.rules).string.min_len = 1];
+  // The description of the upload failed.
+  optional string description = 4 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+}
+
+// StatPersistentTaskRequest represents request of StatPersistentTask.
+message StatPersistentTaskRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+}
+
+// DeletePersistentTaskRequest represents request of DeletePersistentTask.
+message DeletePersistentTaskRequest {
+  // Host id.
+  string host_id = 1 [(validate.rules).string.min_len = 1];
+  // Task id.
+  string task_id = 2 [(validate.rules).string.min_len = 1];
+}
+
 // RegisterPersistentCachePeerRequest represents persistent cache peer registered request of AnnouncePersistentCachePeerRequest.
 message RegisterPersistentCachePeerRequest {
   // Persistent represents whether the persistent cache task is persistent.
@@ -903,6 +1108,30 @@ service Scheduler {
 
   // DeleteCacheTask releases cache task in scheduler.
   rpc DeleteCacheTask(DeleteCacheTaskRequest)returns(google.protobuf.Empty);
+
+  // AnnouncePersistentPeer announces persistent peer to scheduler.
+  rpc AnnouncePersistentPeer(stream AnnouncePersistentPeerRequest) returns(stream AnnouncePersistentPeerResponse);
+
+  // Checks information of persistent peer.
+  rpc StatPersistentPeer(StatPersistentPeerRequest)returns(common.v2.PersistentPeer);
+
+  // DeletePersistentPeer releases persistent peer in scheduler.
+  rpc DeletePersistentPeer(DeletePersistentPeerRequest)returns(google.protobuf.Empty);
+
+  // UploadPersistentTaskStarted uploads persistent task started to scheduler.
+  rpc UploadPersistentTaskStarted(UploadPersistentTaskStartedRequest)returns(google.protobuf.Empty);
+
+  // UploadPersistentTaskFinished uploads persistent task finished to scheduler.
+  rpc UploadPersistentTaskFinished(UploadPersistentTaskFinishedRequest)returns(common.v2.PersistentTask);
+
+  // UploadPersistentTaskFailed uploads persistent task failed to scheduler.
+  rpc UploadPersistentTaskFailed(UploadPersistentTaskFailedRequest)returns(google.protobuf.Empty);
+
+  // Checks information of persistent task.
+  rpc StatPersistentTask(StatPersistentTaskRequest)returns(common.v2.PersistentTask);
+
+  // DeletePersistentTask releases persistent task in scheduler.
+  rpc DeletePersistentTask(DeletePersistentTaskRequest)returns(google.protobuf.Empty);
 
   // AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
   rpc AnnouncePersistentCachePeer(stream AnnouncePersistentCachePeerRequest) returns(stream AnnouncePersistentCachePeerResponse);
