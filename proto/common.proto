@@ -169,6 +169,31 @@ message CachePeer {
   optional uint32 concurrent_piece_count = 12;
 }
 
+// PersistentPeer metadata.
+message PersistentPeer {
+  // Peer id.
+  string id = 1;
+  // Persistent represents whether the persistent peer is persistent.
+  // If the persistent peer is persistent, the persistent peer will
+  // not be deleted when dfdaemon runs garbage collection. It only be deleted
+  // when the task is deleted by the user.
+  bool persistent = 2;
+  // Peer downloads costs time.
+  google.protobuf.Duration cost = 3;
+  // Peer state.
+  string state = 4;
+  // Persistent task info.
+  PersistentTask task = 5;
+  // Host info.
+  Host host = 6;
+  // Peer create time.
+  google.protobuf.Timestamp created_at = 7;
+  // Peer update time.
+  google.protobuf.Timestamp updated_at = 8;
+  // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+  optional uint32 concurrent_piece_count = 9;
+}
+
 // PersistentCachePeer metadata.
 message PersistentCachePeer {
   // Peer id.
@@ -286,6 +311,48 @@ message CacheTask {
   google.protobuf.Timestamp created_at = 16;
   // Task update time.
   google.protobuf.Timestamp updated_at = 17;
+}
+
+// PersistentTask metadata.
+message PersistentTask {
+  // Task id.
+  string id = 1;
+  // Replica count of the persistent task. The persistent task will
+  // not be deleted when dfdamon runs garbage collection. It only be deleted
+  // when the task is deleted by the user.
+  uint64 persistent_replica_count = 2;
+  // Current replica count of the persistent task. The persistent task
+  // will not be deleted when dfdaemon runs garbage collection. It only be deleted
+  // when the task is deleted by the user.
+  uint64 current_persistent_replica_count = 3;
+  // Current replica count of the task. If task is not persistent,
+  // the persistent task will be deleted when dfdaemon runs garbage collection.
+  uint64 current_replica_count = 4;
+  // Tag is used to distinguish different persistent tasks.
+  optional string tag = 5;
+  // Application of task.
+  optional string application = 6;
+  // Task piece length.
+  uint64 piece_length = 7;
+  // Task content length.
+  uint64 content_length = 8;
+  // Task piece count.
+  uint32 piece_count = 9;
+  // Task state.
+  string state = 10;
+  // This is the key of the object storage where the persistent task will be stored,
+  // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+  // object_storage.endpoint and object_storage.region must be unique, because
+  // the persistent task cannot be overwritten once it is uploaded.
+  string object_storage_key = 11;
+  // Object storage protocol information.
+  ObjectStorage object_storage = 12;
+  // TTL of the persistent task.
+  google.protobuf.Duration ttl = 13;
+  // Task create time.
+  google.protobuf.Timestamp created_at = 14;
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 15;
 }
 
 // PersistentCacheTask metadata.

@@ -636,6 +636,339 @@ pub struct DeleteCacheTaskRequest {
     #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
 }
+/// RegisterPersistentPeerRequest represents persistent peer registered request of AnnouncePersistentPeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RegisterPersistentPeerRequest {
+    /// This is the key of the object storage where the persistent task will be stored,
+    /// for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+    /// object_storage.endpoint and object_storage.region must be unique, because
+    /// the persistent task cannot be overwritten once it is uploaded.
+    #[prost(string, tag = "1")]
+    pub object_storage_key: ::prost::alloc::string::String,
+    /// Object storage protocol information.
+    #[prost(message, optional, tag = "2")]
+    pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
+    /// Persistent represents whether the persistent task is persistent.
+    /// If the persistent task is persistent, the persistent peer will
+    /// not be deleted when dfdaemon runs garbage collection.
+    #[prost(bool, tag = "3")]
+    pub persistent: bool,
+    /// Tag is used to distinguish different persistent tasks.
+    #[prost(string, optional, tag = "4")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "5")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
+    #[prost(uint64, tag = "6")]
+    pub piece_length: u64,
+    /// File path to be exported.
+    #[prost(string, optional, tag = "7")]
+    pub output_path: ::core::option::Option<::prost::alloc::string::String>,
+    /// Download timeout.
+    #[prost(message, optional, tag = "8")]
+    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
+    #[prost(uint32, optional, tag = "9")]
+    pub concurrent_piece_count: ::core::option::Option<u32>,
+    /// Task piece count.
+    #[prost(uint64, tag = "10")]
+    pub piece_count: u64,
+}
+/// DownloadPersistentPeerStartedRequest represents persistent peer download started request of AnnouncePersistentPeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct DownloadPersistentPeerStartedRequest {}
+/// DownloadPersistentPeerBackToSourceStartedRequest represents cache peer download back-to-source started request of AnnouncePersistentPeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadPersistentPeerBackToSourceStartedRequest {
+    /// The description of the back-to-source reason.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// ReschedulePersistentPeerRequest represents reschedule request of AnnouncePersistentPeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReschedulePersistentPeerRequest {
+    /// Candidate parent ids.
+    #[prost(message, repeated, tag = "1")]
+    pub candidate_parents: ::prost::alloc::vec::Vec<
+        super::super::common::v2::PersistentPeer,
+    >,
+    /// The description of the reschedule reason.
+    #[prost(string, optional, tag = "2")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// DownloadPersistentPeerFinishedRequest represents persistent peer download finished request of AnnouncePersistentPeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct DownloadPersistentPeerFinishedRequest {}
+/// DownloadPersistentPeerBackToSourceFinishedRequest represents cache peer download back-to-source finished request of AnnouncePersistentPeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct DownloadPersistentPeerBackToSourceFinishedRequest {}
+/// DownloadPersistentPeerFailedRequest represents persistent peer download failed request of AnnouncePersistentPeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadPersistentPeerFailedRequest {
+    /// The description of the download failed.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// DownloadPersistentPeerBackToSourceFailedRequest represents cache peer download back-to-source failed request of AnnouncePersistentPeerRequest.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DownloadPersistentPeerBackToSourceFailedRequest {
+    /// The description of the download back-to-source failed.
+    #[prost(string, optional, tag = "1")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// AnnouncePersistentPeerRequest represents request of AnnouncePersistentPeer.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AnnouncePersistentPeerRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+    #[prost(
+        oneof = "announce_persistent_peer_request::Request",
+        tags = "4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15"
+    )]
+    pub request: ::core::option::Option<announce_persistent_peer_request::Request>,
+}
+/// Nested message and enum types in `AnnouncePersistentPeerRequest`.
+pub mod announce_persistent_peer_request {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Request {
+        #[prost(message, tag = "4")]
+        RegisterPersistentPeerRequest(super::RegisterPersistentPeerRequest),
+        #[prost(message, tag = "5")]
+        DownloadPersistentPeerStartedRequest(
+            super::DownloadPersistentPeerStartedRequest,
+        ),
+        #[prost(message, tag = "6")]
+        DownloadPersistentPeerBackToSourceStartedRequest(
+            super::DownloadPersistentPeerBackToSourceStartedRequest,
+        ),
+        #[prost(message, tag = "7")]
+        ReschedulePersistentPeerRequest(super::ReschedulePersistentPeerRequest),
+        #[prost(message, tag = "8")]
+        DownloadPersistentPeerFinishedRequest(
+            super::DownloadPersistentPeerFinishedRequest,
+        ),
+        #[prost(message, tag = "9")]
+        DownloadPersistentPeerBackToSourceFinishedRequest(
+            super::DownloadPersistentPeerBackToSourceFinishedRequest,
+        ),
+        #[prost(message, tag = "10")]
+        DownloadPersistentPeerFailedRequest(super::DownloadPersistentPeerFailedRequest),
+        #[prost(message, tag = "11")]
+        DownloadPersistentPeerBackToSourceFailedRequest(
+            super::DownloadPersistentPeerBackToSourceFailedRequest,
+        ),
+        #[prost(message, tag = "12")]
+        DownloadPieceFinishedRequest(super::DownloadPieceFinishedRequest),
+        #[prost(message, tag = "13")]
+        DownloadPieceBackToSourceFinishedRequest(
+            super::DownloadPieceBackToSourceFinishedRequest,
+        ),
+        #[prost(message, tag = "14")]
+        DownloadPieceFailedRequest(super::DownloadPieceFailedRequest),
+        #[prost(message, tag = "15")]
+        DownloadPieceBackToSourceFailedRequest(
+            super::DownloadPieceBackToSourceFailedRequest,
+        ),
+    }
+}
+/// EmptyPersistentTaskResponse represents empty persistent task response of AnnouncePersistentPeerResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct EmptyPersistentTaskResponse {}
+/// NormalPersistentTaskResponse represents normal persistent task response of AnnouncePersistentPeerResponse.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NormalPersistentTaskResponse {
+    /// Candidate parents.
+    #[prost(message, repeated, tag = "1")]
+    pub candidate_parents: ::prost::alloc::vec::Vec<
+        super::super::common::v2::PersistentPeer,
+    >,
+}
+/// AnnouncePersistentPeerResponse represents response of AnnouncePersistentPeer.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AnnouncePersistentPeerResponse {
+    #[prost(oneof = "announce_persistent_peer_response::Response", tags = "1, 2, 3")]
+    pub response: ::core::option::Option<announce_persistent_peer_response::Response>,
+}
+/// Nested message and enum types in `AnnouncePersistentPeerResponse`.
+pub mod announce_persistent_peer_response {
+    #[derive(serde::Serialize, serde::Deserialize)]
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Response {
+        #[prost(message, tag = "1")]
+        EmptyPersistentTaskResponse(super::EmptyPersistentTaskResponse),
+        #[prost(message, tag = "2")]
+        NormalPersistentTaskResponse(super::NormalPersistentTaskResponse),
+        #[prost(message, tag = "3")]
+        NeedBackToSourceResponse(super::NeedBackToSourceResponse),
+    }
+}
+/// StatPersistentPeerRequest represents request of StatPersistentPeer.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatPersistentPeerRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+}
+/// DeletePersistentPeerRequest represents request of DeletePersistentPeer.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeletePersistentPeerRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+}
+/// UploadPersistentTaskStartedRequest represents upload persistent task started request of UploadPersistentTaskStarted.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UploadPersistentTaskStartedRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+    /// This is the key of the object storage where the persistent task will be stored,
+    /// for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+    /// object_storage.endpoint and object_storage.region must be unique, because
+    /// the persistent task cannot be overwritten once it is uploaded.
+    #[prost(string, tag = "4")]
+    pub object_storage_key: ::prost::alloc::string::String,
+    /// Object storage protocol information.
+    #[prost(message, optional, tag = "5")]
+    pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
+    /// Replica count of the persistent task.
+    #[prost(uint64, tag = "6")]
+    pub persistent_replica_count: u64,
+    /// Tag is used to distinguish different persistent tasks.
+    #[prost(string, optional, tag = "7")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "8")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
+    #[prost(uint64, tag = "9")]
+    pub piece_length: u64,
+    /// Task content length.
+    #[prost(uint64, tag = "10")]
+    pub content_length: u64,
+    /// Task piece count.
+    #[prost(uint32, tag = "11")]
+    pub piece_count: u32,
+    /// TTL of the persistent task.
+    #[prost(message, optional, tag = "12")]
+    pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
+}
+/// UploadPersistentTaskFinishedRequest represents upload persistent task finished request of UploadPersistentTaskFinished.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UploadPersistentTaskFinishedRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+}
+/// UploadPersistentTaskFailedRequest represents upload persistent task failed request of UploadPersistentTaskFailed.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct UploadPersistentTaskFailedRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Peer id.
+    #[prost(string, tag = "3")]
+    pub peer_id: ::prost::alloc::string::String,
+    /// The description of the upload failed.
+    #[prost(string, optional, tag = "4")]
+    pub description: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// StatPersistentTaskRequest represents request of StatPersistentTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatPersistentTaskRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+}
+/// DeletePersistentTaskRequest represents request of DeletePersistentTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeletePersistentTaskRequest {
+    /// Host id.
+    #[prost(string, tag = "1")]
+    pub host_id: ::prost::alloc::string::String,
+    /// Task id.
+    #[prost(string, tag = "2")]
+    pub task_id: ::prost::alloc::string::String,
+}
 /// RegisterPersistentCachePeerRequest represents persistent cache peer registered request of AnnouncePersistentCachePeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1683,6 +2016,227 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteCacheTask"));
             self.inner.unary(req, path, codec).await
         }
+        /// AnnouncePersistentPeer announces persistent peer to scheduler.
+        pub async fn announce_persistent_peer(
+            &mut self,
+            request: impl tonic::IntoStreamingRequest<
+                Message = super::AnnouncePersistentPeerRequest,
+            >,
+        ) -> std::result::Result<
+            tonic::Response<
+                tonic::codec::Streaming<super::AnnouncePersistentPeerResponse>,
+            >,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/AnnouncePersistentPeer",
+            );
+            let mut req = request.into_streaming_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("scheduler.v2.Scheduler", "AnnouncePersistentPeer"),
+                );
+            self.inner.streaming(req, path, codec).await
+        }
+        /// Checks information of persistent peer.
+        pub async fn stat_persistent_peer(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatPersistentPeerRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentPeer>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/StatPersistentPeer",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatPersistentPeer"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// DeletePersistentPeer releases persistent peer in scheduler.
+        pub async fn delete_persistent_peer(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeletePersistentPeerRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/DeletePersistentPeer",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("scheduler.v2.Scheduler", "DeletePersistentPeer"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// UploadPersistentTaskStarted uploads persistent task started to scheduler.
+        pub async fn upload_persistent_task_started(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UploadPersistentTaskStartedRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/UploadPersistentTaskStarted",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "scheduler.v2.Scheduler",
+                        "UploadPersistentTaskStarted",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// UploadPersistentTaskFinished uploads persistent task finished to scheduler.
+        pub async fn upload_persistent_task_finished(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UploadPersistentTaskFinishedRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentTask>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/UploadPersistentTaskFinished",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "scheduler.v2.Scheduler",
+                        "UploadPersistentTaskFinished",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// UploadPersistentTaskFailed uploads persistent task failed to scheduler.
+        pub async fn upload_persistent_task_failed(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UploadPersistentTaskFailedRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/UploadPersistentTaskFailed",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "scheduler.v2.Scheduler",
+                        "UploadPersistentTaskFailed",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// Checks information of persistent task.
+        pub async fn stat_persistent_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatPersistentTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentTask>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/StatPersistentTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatPersistentTask"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// DeletePersistentTask releases persistent task in scheduler.
+        pub async fn delete_persistent_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeletePersistentTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/DeletePersistentTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("scheduler.v2.Scheduler", "DeletePersistentTask"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         /// AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
         pub async fn announce_persistent_cache_peer(
             &mut self,
@@ -2156,6 +2710,69 @@ pub mod scheduler_server {
         async fn delete_cache_task(
             &self,
             request: tonic::Request<super::DeleteCacheTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Server streaming response type for the AnnouncePersistentPeer method.
+        type AnnouncePersistentPeerStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<
+                    super::AnnouncePersistentPeerResponse,
+                    tonic::Status,
+                >,
+            >
+            + std::marker::Send
+            + 'static;
+        /// AnnouncePersistentPeer announces persistent peer to scheduler.
+        async fn announce_persistent_peer(
+            &self,
+            request: tonic::Request<
+                tonic::Streaming<super::AnnouncePersistentPeerRequest>,
+            >,
+        ) -> std::result::Result<
+            tonic::Response<Self::AnnouncePersistentPeerStream>,
+            tonic::Status,
+        >;
+        /// Checks information of persistent peer.
+        async fn stat_persistent_peer(
+            &self,
+            request: tonic::Request<super::StatPersistentPeerRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentPeer>,
+            tonic::Status,
+        >;
+        /// DeletePersistentPeer releases persistent peer in scheduler.
+        async fn delete_persistent_peer(
+            &self,
+            request: tonic::Request<super::DeletePersistentPeerRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// UploadPersistentTaskStarted uploads persistent task started to scheduler.
+        async fn upload_persistent_task_started(
+            &self,
+            request: tonic::Request<super::UploadPersistentTaskStartedRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// UploadPersistentTaskFinished uploads persistent task finished to scheduler.
+        async fn upload_persistent_task_finished(
+            &self,
+            request: tonic::Request<super::UploadPersistentTaskFinishedRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentTask>,
+            tonic::Status,
+        >;
+        /// UploadPersistentTaskFailed uploads persistent task failed to scheduler.
+        async fn upload_persistent_task_failed(
+            &self,
+            request: tonic::Request<super::UploadPersistentTaskFailedRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// Checks information of persistent task.
+        async fn stat_persistent_task(
+            &self,
+            request: tonic::Request<super::StatPersistentTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentTask>,
+            tonic::Status,
+        >;
+        /// DeletePersistentTask releases persistent task in scheduler.
+        async fn delete_persistent_task(
+            &self,
+            request: tonic::Request<super::DeletePersistentTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// Server streaming response type for the AnnouncePersistentCachePeer method.
         type AnnouncePersistentCachePeerStream: tonic::codegen::tokio_stream::Stream<
@@ -2926,6 +3543,396 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeleteCacheTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/AnnouncePersistentPeer" => {
+                    #[allow(non_camel_case_types)]
+                    struct AnnouncePersistentPeerSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::StreamingService<
+                        super::AnnouncePersistentPeerRequest,
+                    > for AnnouncePersistentPeerSvc<T> {
+                        type Response = super::AnnouncePersistentPeerResponse;
+                        type ResponseStream = T::AnnouncePersistentPeerStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                tonic::Streaming<super::AnnouncePersistentPeerRequest>,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::announce_persistent_peer(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = AnnouncePersistentPeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.streaming(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/StatPersistentPeer" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatPersistentPeerSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::StatPersistentPeerRequest>
+                    for StatPersistentPeerSvc<T> {
+                        type Response = super::super::super::common::v2::PersistentPeer;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatPersistentPeerRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::stat_persistent_peer(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatPersistentPeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/DeletePersistentPeer" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeletePersistentPeerSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::DeletePersistentPeerRequest>
+                    for DeletePersistentPeerSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeletePersistentPeerRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::delete_persistent_peer(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeletePersistentPeerSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/UploadPersistentTaskStarted" => {
+                    #[allow(non_camel_case_types)]
+                    struct UploadPersistentTaskStartedSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<
+                        super::UploadPersistentTaskStartedRequest,
+                    > for UploadPersistentTaskStartedSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::UploadPersistentTaskStartedRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::upload_persistent_task_started(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = UploadPersistentTaskStartedSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/UploadPersistentTaskFinished" => {
+                    #[allow(non_camel_case_types)]
+                    struct UploadPersistentTaskFinishedSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<
+                        super::UploadPersistentTaskFinishedRequest,
+                    > for UploadPersistentTaskFinishedSvc<T> {
+                        type Response = super::super::super::common::v2::PersistentTask;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::UploadPersistentTaskFinishedRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::upload_persistent_task_finished(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = UploadPersistentTaskFinishedSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/UploadPersistentTaskFailed" => {
+                    #[allow(non_camel_case_types)]
+                    struct UploadPersistentTaskFailedSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<
+                        super::UploadPersistentTaskFailedRequest,
+                    > for UploadPersistentTaskFailedSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::UploadPersistentTaskFailedRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::upload_persistent_task_failed(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = UploadPersistentTaskFailedSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/StatPersistentTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatPersistentTaskSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::StatPersistentTaskRequest>
+                    for StatPersistentTaskSvc<T> {
+                        type Response = super::super::super::common::v2::PersistentTask;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatPersistentTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::stat_persistent_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatPersistentTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/DeletePersistentTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeletePersistentTaskSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::DeletePersistentTaskRequest>
+                    for DeletePersistentTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeletePersistentTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::delete_persistent_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeletePersistentTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

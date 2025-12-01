@@ -334,6 +334,170 @@ message DeleteCacheTaskRequest {
   optional string remote_ip = 2;
 }
 
+// DownloadPersistentTaskRequest represents request of DownloadPersistentTask.
+message DownloadPersistentTaskRequest {
+  // This is the key of the object storage where the persistent task will be stored,
+  // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+  // object_storage.endpoint and object_storage.region must be unique, because
+  // the persistent task cannot be overwritten once it is uploaded.
+  string object_storage_key = 1;
+    // Object storage protocol information.
+  common.v2.ObjectStorage object_storage = 2;
+  // Persistent represents whether the persistent task is persistent.
+  // If the persistent task is persistent, the persistent peer will
+  // not be deleted when dfdaemon runs garbage collection.
+  bool persistent = 3;
+  // Tag is used to distinguish different persistent tasks.
+  optional string tag = 4;
+  // Application of task.
+  optional string application = 5;
+  // File path to be exported. If output_path is set, the exported file will be saved to the specified path.
+  // Dfdaemon will try to create hard link to the output path before starting the export. If hard link creation fails,
+  // it will copy the file to the output path after the export is completed.
+  // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
+  optional string output_path = 6;
+  // Download timeout.
+  optional google.protobuf.Duration timeout = 7;
+  // need_piece_content is the flag to indicate whether the response needs to return piece content.
+  bool need_piece_content = 8;
+  // force_hard_link is the flag to indicate whether the exported file must be hard linked to the output path.
+  // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
+  bool force_hard_link = 9;
+  // Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
+  // Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
+  // Returns an error if the computed digest mismatches the expected value.
+  //
+  // Performance
+  // Digest calculation increases processing time. Enable only when data integrity verification is critical.
+  optional string digest = 10;
+  // Remote IP represents the IP address of the client initiating the download request.
+  optional string remote_ip = 11;
+  // Overwrite indicates whether to overwrite the existing file at output path.
+  bool overwrite = 12;
+}
+
+// DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.
+message DownloadPersistentTaskStartedResponse {
+  // Task content length.
+  uint64 content_length = 1;
+}
+
+// DownloadPersistentTaskResponse represents response of DownloadPersistentTask.
+message DownloadPersistentTaskResponse {
+  // Host id.
+  string host_id = 1;
+  // Task id.
+  string task_id = 2;
+  // Peer id.
+  string peer_id = 3;
+
+  oneof response {
+    DownloadPersistentTaskStartedResponse download_persistent_task_started_response = 4;
+    DownloadPieceFinishedResponse download_piece_finished_response = 5;
+  }
+}
+
+// UploadPersistentTaskRequest represents request of UploadPersistentTask.
+message UploadPersistentTaskRequest {
+  // This is the key of the object storage where the persistent task will be stored,
+  // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+  // object_storage.endpoint and object_storage.region must be unique, because
+  // the persistent task cannot be overwritten once it is uploaded.
+  string object_storage_key = 1;
+  // Object storage protocol information.
+  common.v2.ObjectStorage object_storage = 2;
+  // Source file path of the persistent task.
+  string path = 3;
+  // Replica count of the persistent persistent task.
+  uint64 persistent_replica_count = 4;
+  // Tag is used to distinguish different persistent tasks.
+  optional string tag = 5;
+  // Application of the persistent task.
+  optional string application = 6;
+  // Piece length of the persistent task, the value needs to be greater than or equal to 4194304(4MiB).
+  optional uint64 piece_length = 7;
+  // TTL of the persistent task.
+  google.protobuf.Duration ttl = 8;
+  // Download timeout.
+  optional google.protobuf.Duration timeout = 9;
+  // Remote IP represents the IP address of the client initiating the upload request.
+  optional string remote_ip = 10;
+}
+
+// UpdatePersistentTaskRequest represents request of UpdatePersistentTask.
+message UpdatePersistentTaskRequest {
+  // Task id.
+  string task_id = 1;
+  // Persistent represents whether the persistent peer is persistent.
+  // If the persistent peer is persistent, the persistent peer will
+  // not be deleted when dfdaemon runs garbage collection. It only be deleted
+  // when the task is deleted by the user.
+  bool persistent = 2;
+  // Remote IP represents the IP address of the client initiating the list request.
+  optional string remote_ip = 3;
+}
+
+// StatPersistentTaskRequest represents request of StatPersistentTask.
+message StatPersistentTaskRequest {
+  // Task id.
+  string task_id = 1;
+  // Remote IP represents the IP address of the client initiating the stat request.
+  optional string remote_ip = 2;
+}
+
+// DeletePersistentTaskRequest represents request of DeletePersistentTask.
+message DeletePersistentTaskRequest {
+  // Task id.
+  string task_id = 1;
+  // Remote IP represents the IP address of the client initiating the delete request.
+  optional string remote_ip = 2;
+}
+
+// SyncPersistentPiecesRequest represents request of SyncPersistentPieces.
+message SyncPersistentPiecesRequest {
+  // Host id.
+  string host_id = 1;
+  // Task id.
+  string task_id = 2;
+  // Interested piece numbers.
+  repeated uint32 interested_piece_numbers = 3;
+}
+
+// SyncPersistentPiecesResponse represents response of SyncPersistentPieces.
+message SyncPersistentPiecesResponse {
+  // Exist piece number.
+  uint32 number = 1;
+  // Piece offset.
+  uint64 offset = 2;
+  // Piece length.
+  uint64 length = 3;
+  // IP is used to indicate the IP address of the peer. If protocol is rdma,
+  // the IP is used to exchange the queue pair endpoint of IBVerbs.
+  string ip = 4;
+  // TCP port is used to indicate the tcp server port of the peer.
+  optional int32 tcp_port = 5;
+  // QUIC port is used to indicate the quic server port of the peer.
+  optional int32 quic_port = 6;
+}
+
+// DownloadPersistentPieceRequest represents request of DownloadPersistentPiece.
+message DownloadPersistentPieceRequest{
+  // Host id.
+  string host_id = 1;
+  // Task id.
+  string task_id = 2;
+  // Piece number.
+  uint32 piece_number = 3;
+}
+
+// DownloadPersistentPieceResponse represents response of DownloadPersistentPieces.
+message DownloadPersistentPieceResponse {
+  // Piece information.
+  common.v2.Piece piece = 1;
+  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
+  optional string digest = 2;
+}
+
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
 message DownloadPersistentCacheTaskRequest {
   // Task id.
@@ -396,7 +560,7 @@ message DownloadPersistentCacheTaskResponse {
 message UploadPersistentCacheTaskRequest {
   // content_for_calculating_task_id is the content used to calculate the task id.
   // If content_for_calculating_task_id is set, use its value to calculate the task ID.
-  // Otherwise, calculate the task ID based on the file content, tag and application by crc32 algorithm`.
+  // Otherwise, calculate the task ID based on the file content, tag and application by blake3 algorithm`.
   optional string content_for_calculating_task_id = 1;
   // Upload file path of persistent cache task.
   string path = 2;
@@ -555,6 +719,24 @@ service DfdaemonUpload {
   // DownloadCachePiece downloads cache piece from the remote peer.
   rpc DownloadCachePiece(DownloadCachePieceRequest)returns(DownloadCachePieceResponse);
 
+  // DownloadPersistentTask downloads persistent task from p2p network.
+  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns(stream DownloadPersistentTaskResponse);
+
+  // SyncPersistentPieces syncs persistent pieces from remote peer.
+  rpc SyncPersistentPieces(SyncPersistentPiecesRequest) returns(stream SyncPersistentPiecesResponse);
+
+  // DownloadPersistentPiece downloads persistent piece from p2p network.
+  rpc DownloadPersistentPiece(DownloadPersistentPieceRequest)returns(DownloadPersistentPieceResponse);
+
+  // UpdatePersistentTask updates metadate of thr persistent task in p2p network.
+  rpc UpdatePersistentTask(UpdatePersistentTaskRequest) returns(google.protobuf.Empty);
+
+  // StatPersistentTask stats persistent task information.
+  rpc StatPersistentTask(StatPersistentTaskRequest) returns(common.v2.PersistentTask);
+
+  // DeletePersistentTask deletes persistent task from p2p network.
+  rpc DeletePersistentTask(DeletePersistentTaskRequest) returns(google.protobuf.Empty);
+
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
 
@@ -572,7 +754,7 @@ service DfdaemonUpload {
 
   // DownloadPersistentCachePiece downloads persistent cache piece from p2p network.
   rpc DownloadPersistentCachePiece(DownloadPersistentCachePieceRequest)returns(DownloadPersistentCachePieceResponse);
-
+  
   // SyncHost sync host info from parents.
   rpc SyncHost(SyncHostRequest) returns (stream common.v2.Host);
 
@@ -605,6 +787,12 @@ service DfdaemonDownload {
 
   // DeleteCacheTask deletes cache task from p2p network.
   rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
+
+  // DownloadPersistentTask downloads persistent task from p2p network.
+  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns(stream DownloadPersistentTaskResponse);
+
+  // UploadPersistentTask uploads persistent task to p2p network.
+  rpc UploadPersistentTask(UploadPersistentTaskRequest) returns(common.v2.PersistentTask);
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);

@@ -83,6 +83,42 @@ pub struct CachePeer {
     #[prost(uint32, optional, tag = "12")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
 }
+/// PersistentPeer metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PersistentPeer {
+    /// Peer id.
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    /// Persistent represents whether the persistent peer is persistent.
+    /// If the persistent peer is persistent, the persistent peer will
+    /// not be deleted when dfdaemon runs garbage collection. It only be deleted
+    /// when the task is deleted by the user.
+    #[prost(bool, tag = "2")]
+    pub persistent: bool,
+    /// Peer downloads costs time.
+    #[prost(message, optional, tag = "3")]
+    pub cost: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Peer state.
+    #[prost(string, tag = "4")]
+    pub state: ::prost::alloc::string::String,
+    /// Persistent task info.
+    #[prost(message, optional, tag = "5")]
+    pub task: ::core::option::Option<PersistentTask>,
+    /// Host info.
+    #[prost(message, optional, tag = "6")]
+    pub host: ::core::option::Option<Host>,
+    /// Peer create time.
+    #[prost(message, optional, tag = "7")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Peer update time.
+    #[prost(message, optional, tag = "8")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
+    #[prost(uint32, optional, tag = "9")]
+    pub concurrent_piece_count: ::core::option::Option<u32>,
+}
 /// PersistentCachePeer metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -255,6 +291,65 @@ pub struct CacheTask {
     pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
     #[prost(message, optional, tag = "17")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+}
+/// PersistentTask metadata.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PersistentTask {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub id: ::prost::alloc::string::String,
+    /// Replica count of the persistent task. The persistent task will
+    /// not be deleted when dfdamon runs garbage collection. It only be deleted
+    /// when the task is deleted by the user.
+    #[prost(uint64, tag = "2")]
+    pub persistent_replica_count: u64,
+    /// Current replica count of the persistent task. The persistent task
+    /// will not be deleted when dfdaemon runs garbage collection. It only be deleted
+    /// when the task is deleted by the user.
+    #[prost(uint64, tag = "3")]
+    pub current_persistent_replica_count: u64,
+    /// Current replica count of the task. If task is not persistent,
+    /// the persistent task will be deleted when dfdaemon runs garbage collection.
+    #[prost(uint64, tag = "4")]
+    pub current_replica_count: u64,
+    /// Tag is used to distinguish different persistent tasks.
+    #[prost(string, optional, tag = "5")]
+    pub tag: ::core::option::Option<::prost::alloc::string::String>,
+    /// Application of task.
+    #[prost(string, optional, tag = "6")]
+    pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Task piece length.
+    #[prost(uint64, tag = "7")]
+    pub piece_length: u64,
+    /// Task content length.
+    #[prost(uint64, tag = "8")]
+    pub content_length: u64,
+    /// Task piece count.
+    #[prost(uint32, tag = "9")]
+    pub piece_count: u32,
+    /// Task state.
+    #[prost(string, tag = "10")]
+    pub state: ::prost::alloc::string::String,
+    /// This is the key of the object storage where the persistent task will be stored,
+    /// for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+    /// object_storage.endpoint and object_storage.region must be unique, because
+    /// the persistent task cannot be overwritten once it is uploaded.
+    #[prost(string, tag = "11")]
+    pub object_storage_key: ::prost::alloc::string::String,
+    /// Object storage protocol information.
+    #[prost(message, optional, tag = "12")]
+    pub object_storage: ::core::option::Option<ObjectStorage>,
+    /// TTL of the persistent task.
+    #[prost(message, optional, tag = "13")]
+    pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Task create time.
+    #[prost(message, optional, tag = "14")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task update time.
+    #[prost(message, optional, tag = "15")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// PersistentCacheTask metadata.

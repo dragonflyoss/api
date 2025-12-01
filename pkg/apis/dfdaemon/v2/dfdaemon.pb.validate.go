@@ -3670,6 +3670,1843 @@ var _ interface {
 	ErrorName() string
 } = DeleteCacheTaskRequestValidationError{}
 
+// Validate checks the field values on DownloadPersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DownloadPersistentTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPersistentTaskRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// DownloadPersistentTaskRequestMultiError, or nil if none found.
+func (m *DownloadPersistentTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPersistentTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
+		err := DownloadPersistentTaskRequestValidationError{
+			field:  "ObjectStorageKey",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetObjectStorage() == nil {
+		err := DownloadPersistentTaskRequestValidationError{
+			field:  "ObjectStorage",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetObjectStorage()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DownloadPersistentTaskRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DownloadPersistentTaskRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DownloadPersistentTaskRequestValidationError{
+				field:  "ObjectStorage",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for Persistent
+
+	// no validation rules for NeedPieceContent
+
+	// no validation rules for ForceHardLink
+
+	// no validation rules for Overwrite
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if m.OutputPath != nil {
+
+		if m.GetOutputPath() != "" {
+
+			if utf8.RuneCountInString(m.GetOutputPath()) < 1 {
+				err := DownloadPersistentTaskRequestValidationError{
+					field:  "OutputPath",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Timeout != nil {
+
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPersistentTaskRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPersistentTaskRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPersistentTaskRequestValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.Digest != nil {
+		// no validation rules for Digest
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := DownloadPersistentTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return DownloadPersistentTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPersistentTaskRequestMultiError is an error wrapping multiple
+// validation errors returned by DownloadPersistentTaskRequest.ValidateAll()
+// if the designated constraints aren't met.
+type DownloadPersistentTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPersistentTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPersistentTaskRequestMultiError) AllErrors() []error { return m }
+
+// DownloadPersistentTaskRequestValidationError is the validation error
+// returned by DownloadPersistentTaskRequest.Validate if the designated
+// constraints aren't met.
+type DownloadPersistentTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPersistentTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPersistentTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPersistentTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPersistentTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPersistentTaskRequestValidationError) ErrorName() string {
+	return "DownloadPersistentTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPersistentTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPersistentTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPersistentTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPersistentTaskRequestValidationError{}
+
+// Validate checks the field values on DownloadPersistentTaskStartedResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *DownloadPersistentTaskStartedResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPersistentTaskStartedResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// DownloadPersistentTaskStartedResponseMultiError, or nil if none found.
+func (m *DownloadPersistentTaskStartedResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPersistentTaskStartedResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ContentLength
+
+	if len(errors) > 0 {
+		return DownloadPersistentTaskStartedResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPersistentTaskStartedResponseMultiError is an error wrapping
+// multiple validation errors returned by
+// DownloadPersistentTaskStartedResponse.ValidateAll() if the designated
+// constraints aren't met.
+type DownloadPersistentTaskStartedResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPersistentTaskStartedResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPersistentTaskStartedResponseMultiError) AllErrors() []error { return m }
+
+// DownloadPersistentTaskStartedResponseValidationError is the validation error
+// returned by DownloadPersistentTaskStartedResponse.Validate if the
+// designated constraints aren't met.
+type DownloadPersistentTaskStartedResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPersistentTaskStartedResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPersistentTaskStartedResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPersistentTaskStartedResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPersistentTaskStartedResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPersistentTaskStartedResponseValidationError) ErrorName() string {
+	return "DownloadPersistentTaskStartedResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPersistentTaskStartedResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPersistentTaskStartedResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPersistentTaskStartedResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPersistentTaskStartedResponseValidationError{}
+
+// Validate checks the field values on DownloadPersistentTaskResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DownloadPersistentTaskResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPersistentTaskResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// DownloadPersistentTaskResponseMultiError, or nil if none found.
+func (m *DownloadPersistentTaskResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPersistentTaskResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetHostId()) < 1 {
+		err := DownloadPersistentTaskResponseValidationError{
+			field:  "HostId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := DownloadPersistentTaskResponseValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPeerId()) < 1 {
+		err := DownloadPersistentTaskResponseValidationError{
+			field:  "PeerId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	switch v := m.Response.(type) {
+	case *DownloadPersistentTaskResponse_DownloadPersistentTaskStartedResponse:
+		if v == nil {
+			err := DownloadPersistentTaskResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetDownloadPersistentTaskStartedResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPersistentTaskResponseValidationError{
+						field:  "DownloadPersistentTaskStartedResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPersistentTaskResponseValidationError{
+						field:  "DownloadPersistentTaskStartedResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadPersistentTaskStartedResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPersistentTaskResponseValidationError{
+					field:  "DownloadPersistentTaskStartedResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *DownloadPersistentTaskResponse_DownloadPieceFinishedResponse:
+		if v == nil {
+			err := DownloadPersistentTaskResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+		if all {
+			switch v := interface{}(m.GetDownloadPieceFinishedResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPersistentTaskResponseValidationError{
+						field:  "DownloadPieceFinishedResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPersistentTaskResponseValidationError{
+						field:  "DownloadPieceFinishedResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetDownloadPieceFinishedResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPersistentTaskResponseValidationError{
+					field:  "DownloadPieceFinishedResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	default:
+		_ = v // ensures v is used
+	}
+
+	if len(errors) > 0 {
+		return DownloadPersistentTaskResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPersistentTaskResponseMultiError is an error wrapping multiple
+// validation errors returned by DownloadPersistentTaskResponse.ValidateAll()
+// if the designated constraints aren't met.
+type DownloadPersistentTaskResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPersistentTaskResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPersistentTaskResponseMultiError) AllErrors() []error { return m }
+
+// DownloadPersistentTaskResponseValidationError is the validation error
+// returned by DownloadPersistentTaskResponse.Validate if the designated
+// constraints aren't met.
+type DownloadPersistentTaskResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPersistentTaskResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPersistentTaskResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPersistentTaskResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPersistentTaskResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPersistentTaskResponseValidationError) ErrorName() string {
+	return "DownloadPersistentTaskResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPersistentTaskResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPersistentTaskResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPersistentTaskResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPersistentTaskResponseValidationError{}
+
+// Validate checks the field values on UploadPersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UploadPersistentTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UploadPersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UploadPersistentTaskRequestMultiError, or nil if none found.
+func (m *UploadPersistentTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UploadPersistentTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
+		err := UploadPersistentTaskRequestValidationError{
+			field:  "ObjectStorageKey",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetObjectStorage() == nil {
+		err := UploadPersistentTaskRequestValidationError{
+			field:  "ObjectStorage",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetObjectStorage()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, UploadPersistentTaskRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, UploadPersistentTaskRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UploadPersistentTaskRequestValidationError{
+				field:  "ObjectStorage",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetPath()) < 1 {
+		err := UploadPersistentTaskRequestValidationError{
+			field:  "Path",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for PersistentReplicaCount
+
+	if d := m.GetTtl(); d != nil {
+		dur, err := d.AsDuration(), d.CheckValid()
+		if err != nil {
+			err = UploadPersistentTaskRequestValidationError{
+				field:  "Ttl",
+				reason: "value is not a valid duration",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else {
+
+			lte := time.Duration(604800*time.Second + 0*time.Nanosecond)
+			gte := time.Duration(60*time.Second + 0*time.Nanosecond)
+
+			if dur < gte || dur > lte {
+				err := UploadPersistentTaskRequestValidationError{
+					field:  "Ttl",
+					reason: "value must be inside range [1m0s, 168h0m0s]",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+	}
+
+	if m.Tag != nil {
+		// no validation rules for Tag
+	}
+
+	if m.Application != nil {
+		// no validation rules for Application
+	}
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if m.GetPieceLength() < 4194304 {
+				err := UploadPersistentTaskRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be greater than or equal to 4194304",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Timeout != nil {
+
+		if all {
+			switch v := interface{}(m.GetTimeout()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, UploadPersistentTaskRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, UploadPersistentTaskRequestValidationError{
+						field:  "Timeout",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetTimeout()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return UploadPersistentTaskRequestValidationError{
+					field:  "Timeout",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := UploadPersistentTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return UploadPersistentTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UploadPersistentTaskRequestMultiError is an error wrapping multiple
+// validation errors returned by UploadPersistentTaskRequest.ValidateAll() if
+// the designated constraints aren't met.
+type UploadPersistentTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UploadPersistentTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UploadPersistentTaskRequestMultiError) AllErrors() []error { return m }
+
+// UploadPersistentTaskRequestValidationError is the validation error returned
+// by UploadPersistentTaskRequest.Validate if the designated constraints
+// aren't met.
+type UploadPersistentTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UploadPersistentTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UploadPersistentTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UploadPersistentTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UploadPersistentTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UploadPersistentTaskRequestValidationError) ErrorName() string {
+	return "UploadPersistentTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UploadPersistentTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUploadPersistentTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UploadPersistentTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UploadPersistentTaskRequestValidationError{}
+
+// Validate checks the field values on UpdatePersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdatePersistentTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdatePersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdatePersistentTaskRequestMultiError, or nil if none found.
+func (m *UpdatePersistentTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdatePersistentTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := UpdatePersistentTaskRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Persistent
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := UpdatePersistentTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return UpdatePersistentTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdatePersistentTaskRequestMultiError is an error wrapping multiple
+// validation errors returned by UpdatePersistentTaskRequest.ValidateAll() if
+// the designated constraints aren't met.
+type UpdatePersistentTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdatePersistentTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdatePersistentTaskRequestMultiError) AllErrors() []error { return m }
+
+// UpdatePersistentTaskRequestValidationError is the validation error returned
+// by UpdatePersistentTaskRequest.Validate if the designated constraints
+// aren't met.
+type UpdatePersistentTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdatePersistentTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdatePersistentTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdatePersistentTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdatePersistentTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdatePersistentTaskRequestValidationError) ErrorName() string {
+	return "UpdatePersistentTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdatePersistentTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdatePersistentTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdatePersistentTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdatePersistentTaskRequestValidationError{}
+
+// Validate checks the field values on StatPersistentTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *StatPersistentTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatPersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// StatPersistentTaskRequestMultiError, or nil if none found.
+func (m *StatPersistentTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatPersistentTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := StatPersistentTaskRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := StatPersistentTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatPersistentTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatPersistentTaskRequestMultiError is an error wrapping multiple validation
+// errors returned by StatPersistentTaskRequest.ValidateAll() if the
+// designated constraints aren't met.
+type StatPersistentTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatPersistentTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatPersistentTaskRequestMultiError) AllErrors() []error { return m }
+
+// StatPersistentTaskRequestValidationError is the validation error returned by
+// StatPersistentTaskRequest.Validate if the designated constraints aren't met.
+type StatPersistentTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatPersistentTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatPersistentTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatPersistentTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatPersistentTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatPersistentTaskRequestValidationError) ErrorName() string {
+	return "StatPersistentTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e StatPersistentTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatPersistentTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatPersistentTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatPersistentTaskRequestValidationError{}
+
+// Validate checks the field values on DeletePersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeletePersistentTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeletePersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeletePersistentTaskRequestMultiError, or nil if none found.
+func (m *DeletePersistentTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeletePersistentTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := DeletePersistentTaskRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := DeletePersistentTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return DeletePersistentTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeletePersistentTaskRequestMultiError is an error wrapping multiple
+// validation errors returned by DeletePersistentTaskRequest.ValidateAll() if
+// the designated constraints aren't met.
+type DeletePersistentTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeletePersistentTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeletePersistentTaskRequestMultiError) AllErrors() []error { return m }
+
+// DeletePersistentTaskRequestValidationError is the validation error returned
+// by DeletePersistentTaskRequest.Validate if the designated constraints
+// aren't met.
+type DeletePersistentTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeletePersistentTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeletePersistentTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeletePersistentTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeletePersistentTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeletePersistentTaskRequestValidationError) ErrorName() string {
+	return "DeletePersistentTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeletePersistentTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeletePersistentTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeletePersistentTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeletePersistentTaskRequestValidationError{}
+
+// Validate checks the field values on SyncPersistentPiecesRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SyncPersistentPiecesRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SyncPersistentPiecesRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SyncPersistentPiecesRequestMultiError, or nil if none found.
+func (m *SyncPersistentPiecesRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SyncPersistentPiecesRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetHostId()) < 1 {
+		err := SyncPersistentPiecesRequestValidationError{
+			field:  "HostId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := SyncPersistentPiecesRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(m.GetInterestedPieceNumbers()) < 1 {
+		err := SyncPersistentPiecesRequestValidationError{
+			field:  "InterestedPieceNumbers",
+			reason: "value must contain at least 1 item(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return SyncPersistentPiecesRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// SyncPersistentPiecesRequestMultiError is an error wrapping multiple
+// validation errors returned by SyncPersistentPiecesRequest.ValidateAll() if
+// the designated constraints aren't met.
+type SyncPersistentPiecesRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SyncPersistentPiecesRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SyncPersistentPiecesRequestMultiError) AllErrors() []error { return m }
+
+// SyncPersistentPiecesRequestValidationError is the validation error returned
+// by SyncPersistentPiecesRequest.Validate if the designated constraints
+// aren't met.
+type SyncPersistentPiecesRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncPersistentPiecesRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncPersistentPiecesRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncPersistentPiecesRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncPersistentPiecesRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncPersistentPiecesRequestValidationError) ErrorName() string {
+	return "SyncPersistentPiecesRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SyncPersistentPiecesRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncPersistentPiecesRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncPersistentPiecesRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncPersistentPiecesRequestValidationError{}
+
+// Validate checks the field values on SyncPersistentPiecesResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *SyncPersistentPiecesResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SyncPersistentPiecesResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SyncPersistentPiecesResponseMultiError, or nil if none found.
+func (m *SyncPersistentPiecesResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SyncPersistentPiecesResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Number
+
+	// no validation rules for Offset
+
+	// no validation rules for Length
+
+	if ip := net.ParseIP(m.GetIp()); ip == nil {
+		err := SyncPersistentPiecesResponseValidationError{
+			field:  "Ip",
+			reason: "value must be a valid IP address",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.TcpPort != nil {
+
+		if m.GetTcpPort() != 0 {
+
+			if val := m.GetTcpPort(); val < 1024 || val >= 65535 {
+				err := SyncPersistentPiecesResponseValidationError{
+					field:  "TcpPort",
+					reason: "value must be inside range [1024, 65535)",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.QuicPort != nil {
+
+		if m.GetQuicPort() != 0 {
+
+			if val := m.GetQuicPort(); val < 1024 || val >= 65535 {
+				err := SyncPersistentPiecesResponseValidationError{
+					field:  "QuicPort",
+					reason: "value must be inside range [1024, 65535)",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return SyncPersistentPiecesResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// SyncPersistentPiecesResponseMultiError is an error wrapping multiple
+// validation errors returned by SyncPersistentPiecesResponse.ValidateAll() if
+// the designated constraints aren't met.
+type SyncPersistentPiecesResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SyncPersistentPiecesResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SyncPersistentPiecesResponseMultiError) AllErrors() []error { return m }
+
+// SyncPersistentPiecesResponseValidationError is the validation error returned
+// by SyncPersistentPiecesResponse.Validate if the designated constraints
+// aren't met.
+type SyncPersistentPiecesResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SyncPersistentPiecesResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SyncPersistentPiecesResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SyncPersistentPiecesResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SyncPersistentPiecesResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SyncPersistentPiecesResponseValidationError) ErrorName() string {
+	return "SyncPersistentPiecesResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e SyncPersistentPiecesResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSyncPersistentPiecesResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SyncPersistentPiecesResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SyncPersistentPiecesResponseValidationError{}
+
+// Validate checks the field values on DownloadPersistentPieceRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DownloadPersistentPieceRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPersistentPieceRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// DownloadPersistentPieceRequestMultiError, or nil if none found.
+func (m *DownloadPersistentPieceRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPersistentPieceRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetHostId()) < 1 {
+		err := DownloadPersistentPieceRequestValidationError{
+			field:  "HostId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := DownloadPersistentPieceRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for PieceNumber
+
+	if len(errors) > 0 {
+		return DownloadPersistentPieceRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPersistentPieceRequestMultiError is an error wrapping multiple
+// validation errors returned by DownloadPersistentPieceRequest.ValidateAll()
+// if the designated constraints aren't met.
+type DownloadPersistentPieceRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPersistentPieceRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPersistentPieceRequestMultiError) AllErrors() []error { return m }
+
+// DownloadPersistentPieceRequestValidationError is the validation error
+// returned by DownloadPersistentPieceRequest.Validate if the designated
+// constraints aren't met.
+type DownloadPersistentPieceRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPersistentPieceRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPersistentPieceRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPersistentPieceRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPersistentPieceRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPersistentPieceRequestValidationError) ErrorName() string {
+	return "DownloadPersistentPieceRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPersistentPieceRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPersistentPieceRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPersistentPieceRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPersistentPieceRequestValidationError{}
+
+// Validate checks the field values on DownloadPersistentPieceResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DownloadPersistentPieceResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DownloadPersistentPieceResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// DownloadPersistentPieceResponseMultiError, or nil if none found.
+func (m *DownloadPersistentPieceResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DownloadPersistentPieceResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetPiece() == nil {
+		err := DownloadPersistentPieceResponseValidationError{
+			field:  "Piece",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetPiece()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DownloadPersistentPieceResponseValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DownloadPersistentPieceResponseValidationError{
+					field:  "Piece",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetPiece()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DownloadPersistentPieceResponseValidationError{
+				field:  "Piece",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.Digest != nil {
+
+		if m.GetDigest() != "" {
+
+			if !_DownloadPersistentPieceResponse_Digest_Pattern.MatchString(m.GetDigest()) {
+				err := DownloadPersistentPieceResponseValidationError{
+					field:  "Digest",
+					reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$\"",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return DownloadPersistentPieceResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DownloadPersistentPieceResponseMultiError is an error wrapping multiple
+// validation errors returned by DownloadPersistentPieceResponse.ValidateAll()
+// if the designated constraints aren't met.
+type DownloadPersistentPieceResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DownloadPersistentPieceResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DownloadPersistentPieceResponseMultiError) AllErrors() []error { return m }
+
+// DownloadPersistentPieceResponseValidationError is the validation error
+// returned by DownloadPersistentPieceResponse.Validate if the designated
+// constraints aren't met.
+type DownloadPersistentPieceResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DownloadPersistentPieceResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DownloadPersistentPieceResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DownloadPersistentPieceResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DownloadPersistentPieceResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DownloadPersistentPieceResponseValidationError) ErrorName() string {
+	return "DownloadPersistentPieceResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DownloadPersistentPieceResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDownloadPersistentPieceResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DownloadPersistentPieceResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DownloadPersistentPieceResponseValidationError{}
+
+var _DownloadPersistentPieceResponse_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$")
+
 // Validate checks the field values on DownloadPersistentCacheTaskRequest with
 // the rules defined in the proto definition for this message. If any rules
 // are violated, the first error encountered is returned, or nil if there are
