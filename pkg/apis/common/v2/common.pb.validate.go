@@ -3440,6 +3440,8 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for Overwrite
 
+	// no validation rules for EnableTaskIdBasedBlobDigest
+
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {

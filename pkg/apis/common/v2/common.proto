@@ -635,6 +635,12 @@ message Download {
   optional uint64 actual_content_length = 28;
   // Actual piece count by calculating.
   optional uint64 actual_piece_count = 29;
+  // enable_task_id_based_blob_digest indicates whether to use the blob digest for task ID calculation
+  // when downloading from OCI registries. When enabled for OCI blob URLs (e.g., /v2/<name>/blobs/sha256:<digest>),
+  // the task ID is derived from the blob digest rather than the full URL. This enables deduplication across
+  // registries - the same blob from different registries shares one task ID, eliminating redundant downloads
+  // and storage.
+  bool enable_task_id_based_blob_digest = 30;
 
   reserved 21;
   reserved "load_to_cache";

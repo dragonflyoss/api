@@ -745,6 +745,13 @@ pub struct Download {
     /// Actual piece count by calculating.
     #[prost(uint64, optional, tag = "29")]
     pub actual_piece_count: ::core::option::Option<u64>,
+    /// enable_task_id_based_blob_digest indicates whether to use the blob digest for task ID calculation
+    /// when downloading from OCI registries. When enabled for OCI blob URLs (e.g., /v2/<name>/blobs/sha256:<digest>),
+    /// the task ID is derived from the blob digest rather than the full URL. This enables deduplication across
+    /// registries - the same blob from different registries shares one task ID, eliminating redundant downloads
+    /// and storage.
+    #[prost(bool, tag = "30")]
+    pub enable_task_id_based_blob_digest: bool,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
