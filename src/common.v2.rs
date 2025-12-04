@@ -116,8 +116,8 @@ pub struct PersistentPeer {
     #[prost(message, optional, tag = "8")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
-    #[prost(uint32, optional, tag = "9")]
-    pub concurrent_piece_count: ::core::option::Option<u32>,
+    #[prost(uint32, tag = "9")]
+    pub concurrent_piece_count: u32,
 }
 /// PersistentCachePeer metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -152,8 +152,8 @@ pub struct PersistentCachePeer {
     #[prost(message, optional, tag = "8")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
-    #[prost(uint32, optional, tag = "9")]
-    pub concurrent_piece_count: ::core::option::Option<u32>,
+    #[prost(uint32, tag = "9")]
+    pub concurrent_piece_count: u32,
 }
 /// Task metadata.
 #[derive(serde::Serialize, serde::Deserialize)]
