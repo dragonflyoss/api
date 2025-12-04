@@ -197,7 +197,7 @@ message PersistentPeer {
   // Peer update time.
   google.protobuf.Timestamp updated_at = 8 [(validate.rules).timestamp.required = true];
   // ConcurrentPieceCount is the number of pieces that can be downloaded concurrently.
-  optional uint32 concurrent_piece_count = 9;
+  uint32 concurrent_piece_count = 9;
 }
 
 // PersistentCachePeer metadata.

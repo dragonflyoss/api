@@ -855,9 +855,7 @@ func (m *PersistentPeer) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.ConcurrentPieceCount != nil {
-		// no validation rules for ConcurrentPieceCount
-	}
+	// no validation rules for ConcurrentPieceCount
 
 	if len(errors) > 0 {
 		return PersistentPeerMultiError(errors)
