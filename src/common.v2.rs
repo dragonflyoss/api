@@ -333,23 +333,14 @@ pub struct PersistentTask {
     /// Task state.
     #[prost(string, tag = "10")]
     pub state: ::prost::alloc::string::String,
-    /// This is the key of the object storage where the persistent task will be stored,
-    /// for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
-    /// object_storage.endpoint and object_storage.region must be unique, because
-    /// the persistent task cannot be overwritten once it is uploaded.
-    #[prost(string, tag = "11")]
-    pub object_storage_key: ::prost::alloc::string::String,
-    /// Object storage protocol information.
-    #[prost(message, optional, tag = "12")]
-    pub object_storage: ::core::option::Option<ObjectStorage>,
     /// TTL of the persistent task.
-    #[prost(message, optional, tag = "13")]
+    #[prost(message, optional, tag = "11")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Task create time.
-    #[prost(message, optional, tag = "14")]
+    #[prost(message, optional, tag = "12")]
     pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
-    #[prost(message, optional, tag = "15")]
+    #[prost(message, optional, tag = "13")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// PersistentCacheTask metadata.

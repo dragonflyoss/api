@@ -347,9 +347,9 @@ message DownloadPersistentTaskRequest {
   // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
   // object_storage.endpoint and object_storage.region must be unique, because
   // the persistent task cannot be overwritten once it is uploaded.
-  string object_storage_key = 1 [(validate.rules).string.min_len = 1];
+  optional string object_storage_key = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
     // Object storage protocol information.
-  common.v2.ObjectStorage object_storage = 2 [(validate.rules).message.required = true];
+  optional common.v2.ObjectStorage object_storage = 2;
   // Persistent represents whether the persistent task is persistent.
   // If the persistent task is persistent, the persistent peer will
   // not be deleted when dfdaemon runs garbage collection.
@@ -381,6 +381,8 @@ message DownloadPersistentTaskRequest {
   optional string remote_ip = 11 [(validate.rules).string = {ip: true, ignore_empty: true}];
   // Overwrite indicates whether to overwrite the existing file at output path.
   bool overwrite = 12;
+  // If need_back_to_source is true, the client can download the task from the object storage when peers has no replica.
+  bool need_back_to_source = 13;
 }
 
 // DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.
