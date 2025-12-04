@@ -482,8 +482,8 @@ pub struct DownloadPersistentTaskRequest {
     /// for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
     /// object_storage.endpoint and object_storage.region must be unique, because
     /// the persistent task cannot be overwritten once it is uploaded.
-    #[prost(string, tag = "1")]
-    pub object_storage_key: ::prost::alloc::string::String,
+    #[prost(string, optional, tag = "1")]
+    pub object_storage_key: ::core::option::Option<::prost::alloc::string::String>,
     /// Object storage protocol information.
     #[prost(message, optional, tag = "2")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
@@ -528,6 +528,9 @@ pub struct DownloadPersistentTaskRequest {
     /// Overwrite indicates whether to overwrite the existing file at output path.
     #[prost(bool, tag = "12")]
     pub overwrite: bool,
+    /// If need_back_to_source is true, the client can download the task from the object storage when peers has no replica.
+    #[prost(bool, tag = "13")]
+    pub need_back_to_source: bool,
 }
 /// DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]

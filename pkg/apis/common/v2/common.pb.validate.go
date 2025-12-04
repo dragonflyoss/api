@@ -1779,57 +1779,6 @@ func (m *PersistentTask) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
-		err := PersistentTaskValidationError{
-			field:  "ObjectStorageKey",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetObjectStorage() == nil {
-		err := PersistentTaskValidationError{
-			field:  "ObjectStorage",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetObjectStorage()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, PersistentTaskValidationError{
-					field:  "ObjectStorage",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, PersistentTaskValidationError{
-					field:  "ObjectStorage",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return PersistentTaskValidationError{
-				field:  "ObjectStorage",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if m.GetTtl() == nil {
 		err := PersistentTaskValidationError{
 			field:  "Ttl",

@@ -3692,57 +3692,6 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
-		err := DownloadPersistentTaskRequestValidationError{
-			field:  "ObjectStorageKey",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if m.GetObjectStorage() == nil {
-		err := DownloadPersistentTaskRequestValidationError{
-			field:  "ObjectStorage",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if all {
-		switch v := interface{}(m.GetObjectStorage()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, DownloadPersistentTaskRequestValidationError{
-					field:  "ObjectStorage",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, DownloadPersistentTaskRequestValidationError{
-					field:  "ObjectStorage",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return DownloadPersistentTaskRequestValidationError{
-				field:  "ObjectStorage",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	// no validation rules for Persistent
 
 	// no validation rules for NeedPieceContent
@@ -3750,6 +3699,60 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 	// no validation rules for ForceHardLink
 
 	// no validation rules for Overwrite
+
+	// no validation rules for NeedBackToSource
+
+	if m.ObjectStorageKey != nil {
+
+		if m.GetObjectStorageKey() != "" {
+
+			if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
+				err := DownloadPersistentTaskRequestValidationError{
+					field:  "ObjectStorageKey",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ObjectStorage != nil {
+
+		if all {
+			switch v := interface{}(m.GetObjectStorage()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadPersistentTaskRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadPersistentTaskRequestValidationError{
+						field:  "ObjectStorage",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadPersistentTaskRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
 
 	if m.Tag != nil {
 		// no validation rules for Tag

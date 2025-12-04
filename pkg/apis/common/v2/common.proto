@@ -346,19 +346,12 @@ message PersistentTask {
   uint32 piece_count = 9;
   // Task state.
   string state = 10 [(validate.rules).string.min_len = 1];
-  // This is the key of the object storage where the persistent task will be stored,
-  // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
-  // object_storage.endpoint and object_storage.region must be unique, because
-  // the persistent task cannot be overwritten once it is uploaded.
-  string object_storage_key = 11 [(validate.rules).string.min_len = 1];
-  // Object storage protocol information.
-  ObjectStorage object_storage = 12 [(validate.rules).message.required = true];
   // TTL of the persistent task.
-  google.protobuf.Duration ttl = 13 [(validate.rules).duration.required = true];
+  google.protobuf.Duration ttl = 11 [(validate.rules).duration.required = true];
   // Task create time.
-  google.protobuf.Timestamp created_at = 14 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 12 [(validate.rules).timestamp.required = true];
   // Task update time.
-  google.protobuf.Timestamp updated_at = 15 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 13 [(validate.rules).timestamp.required = true];
 }
 
 // PersistentCacheTask metadata.
