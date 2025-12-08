@@ -1441,6 +1441,9 @@ pub struct Layer {
     /// URL is the URL of the layer.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
+    /// IsFinished indicates whether the layer is finished on peer.
+    #[prost(bool, optional, tag = "2")]
+    pub is_finished: ::core::option::Option<bool>,
 }
 /// PreheatFileRequest represents request of PreheatFile.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1617,6 +1620,9 @@ pub struct File {
     /// URL is the url of the file.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
+    /// IsFinished indicates whether the file is finished on peer.
+    #[prost(bool, optional, tag = "2")]
+    pub is_finished: ::core::option::Option<bool>,
 }
 /// Generated client implementations.
 pub mod scheduler_client {

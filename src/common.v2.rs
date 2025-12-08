@@ -223,6 +223,9 @@ pub struct Task {
     /// Task update time.
     #[prost(message, optional, tag = "17")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// LocalFinished indicates whether the task is finished on peer.
+    #[prost(bool, optional, tag = "18")]
+    pub local_finished: ::core::option::Option<bool>,
 }
 /// CacheTask metadata.
 #[derive(serde::Serialize, serde::Deserialize)]

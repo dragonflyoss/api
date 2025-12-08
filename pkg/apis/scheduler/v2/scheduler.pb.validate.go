@@ -13810,6 +13810,10 @@ func (m *Layer) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.IsFinished != nil {
+		// no validation rules for IsFinished
+	}
+
 	if len(errors) > 0 {
 		return LayerMultiError(errors)
 	}
@@ -14840,6 +14844,10 @@ func (m *File) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
+	}
+
+	if m.IsFinished != nil {
+		// no validation rules for IsFinished
 	}
 
 	if len(errors) > 0 {
