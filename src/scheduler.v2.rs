@@ -1441,6 +1441,9 @@ pub struct Layer {
     /// URL is the URL of the layer.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
+    /// IsFinished indicates whether the layer is finished on peer.
+    #[prost(bool, optional, tag = "2")]
+    pub is_finished: ::core::option::Option<bool>,
 }
 /// PreheatFileRequest represents request of PreheatFile.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1605,6 +1608,21 @@ pub struct PeerFile {
     /// Hostname is the hostname of the peer.
     #[prost(string, tag = "2")]
     pub hostname: ::prost::alloc::string::String,
+    /// CachedFiles is the list of files that the peer has downloaded.
+    #[prost(message, repeated, tag = "3")]
+    pub cached_files: ::prost::alloc::vec::Vec<File>,
+}
+/// File represents the file information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct File {
+    /// URL is the url of the file.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// IsFinished indicates whether the file is finished on peer.
+    #[prost(bool, optional, tag = "2")]
+    pub is_finished: ::core::option::Option<bool>,
 }
 /// Generated client implementations.
 pub mod scheduler_client {

@@ -950,6 +950,8 @@ message Image {
 message Layer {
 	// URL is the URL of the layer.
   string url = 1 [(validate.rules).string.uri = true];
+  // IsFinished indicates whether the layer is finished on peer.
+  optional bool is_finished = 2;
 }
 
 // PreheatFileRequest represents request of PreheatFile.
@@ -1066,7 +1068,18 @@ message PeerFile {
   string ip = 1;
 	// Hostname is the hostname of the peer.
   string hostname = 2;
+  // CachedFiles is the list of files that the peer has downloaded.
+  repeated File cached_files = 3;
 }
+
+// File represents the file information.
+message File { 
+  // URL is the url of the file.
+  string url = 1 [(validate.rules).string.uri = true];
+  // IsFinished indicates whether the file is finished on peer.
+  optional bool is_finished = 2;
+}
+
 
 // Scheduler RPC Service.
 service Scheduler {

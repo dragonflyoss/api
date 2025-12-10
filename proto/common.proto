@@ -264,6 +264,8 @@ message Task {
   google.protobuf.Timestamp created_at = 16;
   // Task update time.
   google.protobuf.Timestamp updated_at = 17;
+  // LocalFinished indicates whether the task is finished on peer.
+  optional bool localFinished = 18;
 }
 
 // CacheTask metadata.
