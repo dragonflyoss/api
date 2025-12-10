@@ -1441,7 +1441,7 @@ pub struct Layer {
     /// URL is the URL of the layer.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
-    /// IsFinished indicates whether the layer is finished on peer.
+    /// IsFinished indicates whether the layer has finished downloading on the peer.
     #[prost(bool, optional, tag = "2")]
     pub is_finished: ::core::option::Option<bool>,
 }
@@ -1620,7 +1620,7 @@ pub struct File {
     /// URL is the url of the file.
     #[prost(string, tag = "1")]
     pub url: ::prost::alloc::string::String,
-    /// IsFinished indicates whether the file is finished on peer.
+    /// IsFinished indicates whether the file has finished downloading on the peer.
     #[prost(bool, optional, tag = "2")]
     pub is_finished: ::core::option::Option<bool>,
 }

@@ -270,8 +270,6 @@ message Task {
   google.protobuf.Timestamp created_at = 16 [(validate.rules).timestamp.required = true];
   // Task update time.
   google.protobuf.Timestamp updated_at = 17 [(validate.rules).timestamp.required = true];
-  // LocalFinished indicates whether the task is finished on peer.
-  optional bool localFinished = 18;
 }
 
 // CacheTask metadata.
