@@ -6133,7 +6133,7 @@ type Layer struct {
 
 	// URL is the URL of the layer.
 	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
-	// IsFinished indicates whether the layer is finished on peer.
+	// IsFinished indicates whether the layer has finished downloading on the peer.
 	IsFinished *bool `protobuf:"varint,2,opt,name=is_finished,json=isFinished,proto3,oneof" json:"is_finished,omitempty"`
 }
 
@@ -6698,7 +6698,7 @@ type File struct {
 
 	// URL is the url of the file.
 	Url string `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
-	// IsFinished indicates whether the file is finished on peer.
+	// IsFinished indicates whether the file has finished downloading on the peer.
 	IsFinished *bool `protobuf:"varint,2,opt,name=is_finished,json=isFinished,proto3,oneof" json:"is_finished,omitempty"`
 }
 

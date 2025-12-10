@@ -1361,10 +1361,6 @@ func (m *Task) validate(all bool) error {
 		// no validation rules for Application
 	}
 
-	if m.LocalFinished != nil {
-		// no validation rules for LocalFinished
-	}
-
 	if len(errors) > 0 {
 		return TaskMultiError(errors)
 	}
