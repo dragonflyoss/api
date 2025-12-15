@@ -169,6 +169,48 @@ pub struct StatLocalTaskRequest {
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
+/// StatLocalTaskResponse represents response of StatLocalTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatLocalTaskResponse {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Task piece length.
+    #[prost(uint64, optional, tag = "2")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// Task content length.
+    #[prost(uint64, tag = "3")]
+    pub content_length: u64,
+    /// Task response headers.
+    #[prost(map = "string, string", tag = "4")]
+    pub response_header: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+    /// Uploading count is the count of the task being uploaded by other peers.
+    #[prost(uint64, tag = "5")]
+    pub uploading_count: u64,
+    /// Uploaded count is the count of the task has been uploaded by other peers.
+    #[prost(uint64, tag = "6")]
+    pub uploaded_count: u64,
+    /// Task create time.
+    #[prost(message, optional, tag = "7")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task update time.
+    #[prost(message, optional, tag = "8")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task prefetch time.
+    #[prost(message, optional, tag = "9")]
+    pub prefetched_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task fail time.
+    #[prost(message, optional, tag = "10")]
+    pub failed_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task finish time.
+    #[prost(message, optional, tag = "11")]
+    pub finished_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+}
 /// ListTaskEntriesRequest represents request of ListTaskEntries.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1158,7 +1200,7 @@ pub mod dfdaemon_upload_client {
             &mut self,
             request: impl tonic::IntoRequest<super::StatLocalTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Response<super::StatLocalTaskResponse>,
             tonic::Status,
         > {
             self.inner
@@ -1979,7 +2021,7 @@ pub mod dfdaemon_download_client {
             &mut self,
             request: impl tonic::IntoRequest<super::StatLocalTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Response<super::StatLocalTaskResponse>,
             tonic::Status,
         > {
             self.inner
@@ -2352,7 +2394,7 @@ pub mod dfdaemon_upload_server {
             &self,
             request: tonic::Request<super::StatLocalTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Response<super::StatLocalTaskResponse>,
             tonic::Status,
         >;
         /// ListTaskEntries lists task entries for downloading directory.
@@ -2757,7 +2799,7 @@ pub mod dfdaemon_upload_server {
                         T: DfdaemonUpload,
                     > tonic::server::UnaryService<super::StatLocalTaskRequest>
                     for StatLocalTaskSvc<T> {
-                        type Response = super::super::super::common::v2::Task;
+                        type Response = super::StatLocalTaskResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
@@ -3994,7 +4036,7 @@ pub mod dfdaemon_download_server {
             &self,
             request: tonic::Request<super::StatLocalTaskRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Response<super::StatLocalTaskResponse>,
             tonic::Status,
         >;
         /// ListTaskEntries lists task entries for downloading directory.
@@ -4280,7 +4322,7 @@ pub mod dfdaemon_download_server {
                         T: DfdaemonDownload,
                     > tonic::server::UnaryService<super::StatLocalTaskRequest>
                     for StatLocalTaskSvc<T> {
-                        type Response = super::super::super::common::v2::Task;
+                        type Response = super::StatLocalTaskResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,

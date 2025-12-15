@@ -29,7 +29,7 @@ type DfdaemonUploadClient interface {
 	// StatTask stats task information.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
 	// StatLocalTask stats local task information from peer.
-	StatLocalTask(ctx context.Context, in *StatLocalTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
+	StatLocalTask(ctx context.Context, in *StatLocalTaskRequest, opts ...grpc.CallOption) (*StatLocalTaskResponse, error)
 	// ListTaskEntries lists task entries for downloading directory.
 	ListTaskEntries(ctx context.Context, in *ListTaskEntriesRequest, opts ...grpc.CallOption) (*ListTaskEntriesResponse, error)
 	// DeleteTask deletes task from p2p network.
@@ -127,8 +127,8 @@ func (c *dfdaemonUploadClient) StatTask(ctx context.Context, in *StatTaskRequest
 	return out, nil
 }
 
-func (c *dfdaemonUploadClient) StatLocalTask(ctx context.Context, in *StatLocalTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
-	out := new(v2.Task)
+func (c *dfdaemonUploadClient) StatLocalTask(ctx context.Context, in *StatLocalTaskRequest, opts ...grpc.CallOption) (*StatLocalTaskResponse, error) {
+	out := new(StatLocalTaskResponse)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/StatLocalTask", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -536,7 +536,7 @@ type DfdaemonUploadServer interface {
 	// StatTask stats task information.
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
 	// StatLocalTask stats local task information from peer.
-	StatLocalTask(context.Context, *StatLocalTaskRequest) (*v2.Task, error)
+	StatLocalTask(context.Context, *StatLocalTaskRequest) (*StatLocalTaskResponse, error)
 	// ListTaskEntries lists task entries for downloading directory.
 	ListTaskEntries(context.Context, *ListTaskEntriesRequest) (*ListTaskEntriesResponse, error)
 	// DeleteTask deletes task from p2p network.
@@ -595,7 +595,7 @@ func (UnimplementedDfdaemonUploadServer) DownloadTask(*DownloadTaskRequest, Dfda
 func (UnimplementedDfdaemonUploadServer) StatTask(context.Context, *StatTaskRequest) (*v2.Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
 }
-func (UnimplementedDfdaemonUploadServer) StatLocalTask(context.Context, *StatLocalTaskRequest) (*v2.Task, error) {
+func (UnimplementedDfdaemonUploadServer) StatLocalTask(context.Context, *StatLocalTaskRequest) (*StatLocalTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatLocalTask not implemented")
 }
 func (UnimplementedDfdaemonUploadServer) ListTaskEntries(context.Context, *ListTaskEntriesRequest) (*ListTaskEntriesResponse, error) {
@@ -1309,7 +1309,7 @@ type DfdaemonDownloadClient interface {
 	// StatTask stats task information.
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
 	// StatLocalTask stats local task information from peer.
-	StatLocalTask(ctx context.Context, in *StatLocalTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
+	StatLocalTask(ctx context.Context, in *StatLocalTaskRequest, opts ...grpc.CallOption) (*StatLocalTaskResponse, error)
 	// ListTaskEntries lists task entries for downloading directory.
 	ListTaskEntries(ctx context.Context, in *ListTaskEntriesRequest, opts ...grpc.CallOption) (*ListTaskEntriesResponse, error)
 	// DeleteTask deletes task from p2p network.
@@ -1383,8 +1383,8 @@ func (c *dfdaemonDownloadClient) StatTask(ctx context.Context, in *StatTaskReque
 	return out, nil
 }
 
-func (c *dfdaemonDownloadClient) StatLocalTask(ctx context.Context, in *StatLocalTaskRequest, opts ...grpc.CallOption) (*v2.Task, error) {
-	out := new(v2.Task)
+func (c *dfdaemonDownloadClient) StatLocalTask(ctx context.Context, in *StatLocalTaskRequest, opts ...grpc.CallOption) (*StatLocalTaskResponse, error) {
+	out := new(StatLocalTaskResponse)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/StatLocalTask", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -1569,7 +1569,7 @@ type DfdaemonDownloadServer interface {
 	// StatTask stats task information.
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
 	// StatLocalTask stats local task information from peer.
-	StatLocalTask(context.Context, *StatLocalTaskRequest) (*v2.Task, error)
+	StatLocalTask(context.Context, *StatLocalTaskRequest) (*StatLocalTaskResponse, error)
 	// ListTaskEntries lists task entries for downloading directory.
 	ListTaskEntries(context.Context, *ListTaskEntriesRequest) (*ListTaskEntriesResponse, error)
 	// DeleteTask deletes task from p2p network.
@@ -1604,7 +1604,7 @@ func (UnimplementedDfdaemonDownloadServer) DownloadTask(*DownloadTaskRequest, Df
 func (UnimplementedDfdaemonDownloadServer) StatTask(context.Context, *StatTaskRequest) (*v2.Task, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatTask not implemented")
 }
-func (UnimplementedDfdaemonDownloadServer) StatLocalTask(context.Context, *StatLocalTaskRequest) (*v2.Task, error) {
+func (UnimplementedDfdaemonDownloadServer) StatLocalTask(context.Context, *StatLocalTaskRequest) (*StatLocalTaskResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatLocalTask not implemented")
 }
 func (UnimplementedDfdaemonDownloadServer) ListTaskEntries(context.Context, *ListTaskEntriesRequest) (*ListTaskEntriesResponse, error) {
