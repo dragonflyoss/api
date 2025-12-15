@@ -127,6 +127,14 @@ message StatTaskRequest {
   bool local_only = 3;
 }
 
+// StatLocalTaskRequest represents request of StatLocalTask.
+message StatLocalTaskRequest {
+  // Task id.
+  string task_id = 1;
+  // Remote IP represents the IP address of the client initiating the stat request.
+  optional string remote_ip = 2;
+}
+
 // ListTaskEntriesRequest represents request of ListTaskEntries.
 message ListTaskEntriesRequest {
   // Task id.
@@ -694,6 +702,9 @@ service DfdaemonUpload {
   // StatTask stats task information.
   rpc StatTask(StatTaskRequest) returns(common.v2.Task);
 
+  // StatLocalTask stats local task information from peer.
+  rpc StatLocalTask(StatLocalTaskRequest) returns(common.v2.Task);
+
   // ListTaskEntries lists task entries for downloading directory.
   rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
 
@@ -771,6 +782,9 @@ service DfdaemonDownload {
 
   // StatTask stats task information.
   rpc StatTask(StatTaskRequest) returns(common.v2.Task);
+
+  // StatLocalTask stats local task information from peer.
+  rpc StatLocalTask(StatLocalTaskRequest) returns(common.v2.Task);
 
   // ListTaskEntries lists task entries for downloading directory.
   rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);

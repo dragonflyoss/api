@@ -157,6 +157,18 @@ pub struct StatTaskRequest {
     #[prost(bool, tag = "3")]
     pub local_only: bool,
 }
+/// StatLocalTaskRequest represents request of StatLocalTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StatLocalTaskRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the stat request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
 /// ListTaskEntriesRequest represents request of ListTaskEntries.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1141,6 +1153,32 @@ pub mod dfdaemon_upload_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "StatTask"));
             self.inner.unary(req, path, codec).await
         }
+        /// StatLocalTask stats local task information from peer.
+        pub async fn stat_local_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatLocalTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/StatLocalTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "StatLocalTask"));
+            self.inner.unary(req, path, codec).await
+        }
         /// ListTaskEntries lists task entries for downloading directory.
         pub async fn list_task_entries(
             &mut self,
@@ -1936,6 +1974,34 @@ pub mod dfdaemon_download_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "StatTask"));
             self.inner.unary(req, path, codec).await
         }
+        /// StatLocalTask stats local task information from peer.
+        pub async fn stat_local_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatLocalTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/StatLocalTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "StatLocalTask"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         /// ListTaskEntries lists task entries for downloading directory.
         pub async fn list_task_entries(
             &mut self,
@@ -2277,6 +2343,14 @@ pub mod dfdaemon_upload_server {
         async fn stat_task(
             &self,
             request: tonic::Request<super::StatTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Status,
+        >;
+        /// StatLocalTask stats local task information from peer.
+        async fn stat_local_task(
+            &self,
+            request: tonic::Request<super::StatLocalTaskRequest>,
         ) -> std::result::Result<
             tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
@@ -2661,6 +2735,52 @@ pub mod dfdaemon_upload_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StatTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/StatLocalTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatLocalTaskSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<super::StatLocalTaskRequest>
+                    for StatLocalTaskSvc<T> {
+                        type Response = super::super::super::common::v2::Task;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatLocalTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::stat_local_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatLocalTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -3869,6 +3989,14 @@ pub mod dfdaemon_download_server {
             tonic::Response<super::super::super::common::v2::Task>,
             tonic::Status,
         >;
+        /// StatLocalTask stats local task information from peer.
+        async fn stat_local_task(
+            &self,
+            request: tonic::Request<super::StatLocalTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::Task>,
+            tonic::Status,
+        >;
         /// ListTaskEntries lists task entries for downloading directory.
         async fn list_task_entries(
             &self,
@@ -4130,6 +4258,52 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StatTaskSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/StatLocalTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatLocalTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::StatLocalTaskRequest>
+                    for StatLocalTaskSvc<T> {
+                        type Response = super::super::super::common::v2::Task;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatLocalTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::stat_local_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatLocalTaskSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
