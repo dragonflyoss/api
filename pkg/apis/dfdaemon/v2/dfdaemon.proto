@@ -22,6 +22,7 @@ import "pkg/apis/common/v2/common.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "validate/validate.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v2;dfdaemon";
 
@@ -138,6 +139,32 @@ message StatLocalTaskRequest {
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the stat request.
   optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+}
+
+// StatLocalTaskResponse represents response of StatLocalTask.
+message StatLocalTaskResponse {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Task piece length.
+  optional uint64 piece_length = 2 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];;
+  // Task content length.
+  uint64 content_length = 3;
+  // Task response headers.
+  map<string, string> response_header = 4;
+  // Uploading count is the count of the task being uploaded by other peers.
+  uint64 uploading_count = 5;
+  // Uploaded count is the count of the task has been uploaded by other peers.
+  uint64 uploaded_count = 6;
+  // Task create time.
+  google.protobuf.Timestamp created_at = 7 [(validate.rules).timestamp.required = true];
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 8 [(validate.rules).timestamp.required = true];
+  // Task prefetch time.
+  optional google.protobuf.Timestamp prefetched_at = 9;
+  // Task fail time.
+  optional google.protobuf.Timestamp failed_at = 10;
+  // Task finish time.
+  optional google.protobuf.Timestamp finished_at = 11;
 }
 
 // ListTaskEntriesRequest represents request of ListTaskEntries.
@@ -712,7 +739,7 @@ service DfdaemonUpload {
   rpc StatTask(StatTaskRequest) returns(common.v2.Task);
 
   // StatLocalTask stats local task information from peer.
-  rpc StatLocalTask(StatLocalTaskRequest) returns(common.v2.Task);
+  rpc StatLocalTask(StatLocalTaskRequest) returns(StatLocalTaskResponse);
 
   // ListTaskEntries lists task entries for downloading directory.
   rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
@@ -793,7 +820,7 @@ service DfdaemonDownload {
   rpc StatTask(StatTaskRequest) returns(common.v2.Task);
 
   // StatLocalTask stats local task information from peer.
-  rpc StatLocalTask(StatLocalTaskRequest) returns(common.v2.Task);
+  rpc StatLocalTask(StatLocalTaskRequest) returns(StatLocalTaskResponse);
 
   // ListTaskEntries lists task entries for downloading directory.
   rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
