@@ -6871,10 +6871,20 @@ func (m *RegisterPersistentPeerRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = RegisterPersistentPeerRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
 		err := RegisterPersistentPeerRequestValidationError{
-			field:  "ObjectStorageKey",
-			reason: "value length must be at least 1 runes",
+			field:  "Url",
+			reason: "value must be absolute",
 		}
 		if !all {
 			return err
@@ -9426,10 +9436,20 @@ func (m *UploadPersistentTaskStartedRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = UploadPersistentTaskStartedRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
 		err := UploadPersistentTaskStartedRequestValidationError{
-			field:  "ObjectStorageKey",
-			reason: "value length must be at least 1 runes",
+			field:  "Url",
+			reason: "value must be absolute",
 		}
 		if !all {
 			return err
