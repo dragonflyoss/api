@@ -443,7 +443,7 @@ message RegisterPersistentPeerRequest {
   // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
   // object_storage.endpoint and object_storage.region must be unique, because
   // the persistent task cannot be overwritten once it is uploaded.
-  string object_storage_key = 1 [(validate.rules).string.min_len = 1];
+  string url = 1 [(validate.rules).string.uri = true];
     // Object storage protocol information.
   common.v2.ObjectStorage object_storage = 2 [(validate.rules).message.required = true];
   // Persistent represents whether the persistent task is persistent.
@@ -585,7 +585,7 @@ message UploadPersistentTaskStartedRequest {
   // for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
   // object_storage.endpoint and object_storage.region must be unique, because
   // the persistent task cannot be overwritten once it is uploaded.
-  string object_storage_key = 4 [(validate.rules).string.min_len = 1];
+  string url = 4 [(validate.rules).string.uri = true];
     // Object storage protocol information.
   common.v2.ObjectStorage object_storage = 5 [(validate.rules).message.required = true];
   // Replica count of the persistent task.

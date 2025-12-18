@@ -641,12 +641,12 @@ pub struct DeleteCacheTaskRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RegisterPersistentPeerRequest {
-    /// This is the key of the object storage where the persistent task will be stored,
-    /// for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+    /// This is the url of the object storage protocal where the persistent task will be stored,
+    /// for example: `s3://<bucket>/path`, `gcs://<bucket>/path`. The combination of url,
     /// object_storage.endpoint and object_storage.region must be unique, because
     /// the persistent task cannot be overwritten once it is uploaded.
     #[prost(string, tag = "1")]
-    pub object_storage_key: ::prost::alloc::string::String,
+    pub url: ::prost::alloc::string::String,
     /// Object storage protocol information.
     #[prost(message, optional, tag = "2")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
@@ -886,7 +886,7 @@ pub struct UploadPersistentTaskStartedRequest {
     /// object_storage.endpoint and object_storage.region must be unique, because
     /// the persistent task cannot be overwritten once it is uploaded.
     #[prost(string, tag = "4")]
-    pub object_storage_key: ::prost::alloc::string::String,
+    pub url: ::prost::alloc::string::String,
     /// Object storage protocol information.
     #[prost(message, optional, tag = "5")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
