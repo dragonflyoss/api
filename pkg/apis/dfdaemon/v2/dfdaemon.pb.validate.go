@@ -4145,6 +4145,10 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 
 	}
 
+	if m.ContentForCalculatingTaskId != nil {
+		// no validation rules for ContentForCalculatingTaskId
+	}
+
 	if m.Tag != nil {
 		// no validation rules for Tag
 	}
@@ -4754,6 +4758,10 @@ func (m *UploadPersistentTaskRequest) validate(all bool) error {
 			}
 
 		}
+	}
+
+	if m.ContentForCalculatingTaskId != nil {
+		// no validation rules for ContentForCalculatingTaskId
 	}
 
 	if m.Tag != nil {
