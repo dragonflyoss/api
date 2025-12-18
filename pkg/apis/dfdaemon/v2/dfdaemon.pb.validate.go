@@ -4093,6 +4093,25 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 
 	// no validation rules for NeedBackToSource
 
+	if m.TaskId != nil {
+
+		if m.GetTaskId() != "" {
+
+			if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+				err := DownloadPersistentTaskRequestValidationError{
+					field:  "TaskId",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if m.ObjectStorageKey != nil {
 
 		if m.GetObjectStorageKey() != "" {
