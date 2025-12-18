@@ -4112,14 +4112,24 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 
 	}
 
-	if m.ObjectStorageKey != nil {
+	if m.Url != nil {
 
-		if m.GetObjectStorageKey() != "" {
+		if m.GetUrl() != "" {
 
-			if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
+			if uri, err := url.Parse(m.GetUrl()); err != nil {
+				err = DownloadPersistentTaskRequestValidationError{
+					field:  "Url",
+					reason: "value must be a valid URI",
+					cause:  err,
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			} else if !uri.IsAbs() {
 				err := DownloadPersistentTaskRequestValidationError{
-					field:  "ObjectStorageKey",
-					reason: "value length must be at least 1 runes",
+					field:  "Url",
+					reason: "value must be absolute",
 				}
 				if !all {
 					return err
@@ -4684,10 +4694,20 @@ func (m *UploadPersistentTaskRequest) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetObjectStorageKey()) < 1 {
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = UploadPersistentTaskRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
 		err := UploadPersistentTaskRequestValidationError{
-			field:  "ObjectStorageKey",
-			reason: "value length must be at least 1 runes",
+			field:  "Url",
+			reason: "value must be absolute",
 		}
 		if !all {
 			return err
