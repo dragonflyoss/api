@@ -121,11 +121,9 @@ message StatTaskRequest {
   string task_id = 1;
   // Remote IP represents the IP address of the client initiating the stat request.
   optional string remote_ip = 2;
-  // local_only specifies whether to query task information from local client only.
-  // If true, the query will be restricted to the local client.
-  // By default (false), the query may be forwarded to the scheduler
-  // for a cluster-wide search.
-  bool local_only = 3;
+
+  reserved 3;
+  reserved "local_only";
 }
 
 // StatLocalTaskRequest represents request of StatLocalTask.
@@ -354,11 +352,6 @@ message StatCacheTaskRequest {
   string task_id = 1;
   // Remote IP represents the IP address of the client initiating the stat request.
   optional string remote_ip = 2;
-  // local_only specifies whether to query task information from local client only.
-  // If true, the query will be restricted to the local client.
-  // By default (false), the query may be forwarded to the scheduler
-  // for a cluster-wide search.
-  bool local_only = 3;
 }
 
 // DeleteCacheTaskRequest represents request of DeleteCacheTask.
