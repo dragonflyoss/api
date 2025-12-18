@@ -1611,8 +1611,6 @@ func (m *StatLocalTaskResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for ContentLength
-
 	// no validation rules for ResponseHeader
 
 	// no validation rules for UploadingCount
@@ -1658,6 +1656,10 @@ func (m *StatLocalTaskResponse) validate(all bool) error {
 
 		}
 
+	}
+
+	if m.ContentLength != nil {
+		// no validation rules for ContentLength
 	}
 
 	if m.PrefetchedAt != nil {

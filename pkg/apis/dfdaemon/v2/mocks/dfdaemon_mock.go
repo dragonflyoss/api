@@ -345,6 +345,26 @@ func (mr *MockDfdaemonUploadClientMockRecorder) StatCacheTask(ctx, in any, opts 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).StatCacheTask), varargs...)
 }
 
+// StatLocalTask mocks base method.
+func (m *MockDfdaemonUploadClient) StatLocalTask(ctx context.Context, in *dfdaemon.StatLocalTaskRequest, opts ...grpc.CallOption) (*dfdaemon.StatLocalTaskResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StatLocalTask", varargs...)
+	ret0, _ := ret[0].(*dfdaemon.StatLocalTaskResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatLocalTask indicates an expected call of StatLocalTask.
+func (mr *MockDfdaemonUploadClientMockRecorder) StatLocalTask(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatLocalTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).StatLocalTask), varargs...)
+}
+
 // StatPersistentCacheTask mocks base method.
 func (m *MockDfdaemonUploadClient) StatPersistentCacheTask(ctx context.Context, in *dfdaemon.StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*common.PersistentCacheTask, error) {
 	m.ctrl.T.Helper()
@@ -1906,6 +1926,21 @@ func (mr *MockDfdaemonUploadServerMockRecorder) StatCacheTask(arg0, arg1 any) *g
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).StatCacheTask), arg0, arg1)
 }
 
+// StatLocalTask mocks base method.
+func (m *MockDfdaemonUploadServer) StatLocalTask(arg0 context.Context, arg1 *dfdaemon.StatLocalTaskRequest) (*dfdaemon.StatLocalTaskResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "StatLocalTask", arg0, arg1)
+	ret0, _ := ret[0].(*dfdaemon.StatLocalTaskResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatLocalTask indicates an expected call of StatLocalTask.
+func (mr *MockDfdaemonUploadServerMockRecorder) StatLocalTask(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatLocalTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).StatLocalTask), arg0, arg1)
+}
+
 // StatPersistentCacheTask mocks base method.
 func (m *MockDfdaemonUploadServer) StatPersistentCacheTask(arg0 context.Context, arg1 *dfdaemon.StatPersistentCacheTaskRequest) (*common.PersistentCacheTask, error) {
 	m.ctrl.T.Helper()
@@ -3371,6 +3406,26 @@ func (mr *MockDfdaemonDownloadClientMockRecorder) StatCacheTask(ctx, in any, opt
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).StatCacheTask), varargs...)
 }
 
+// StatLocalTask mocks base method.
+func (m *MockDfdaemonDownloadClient) StatLocalTask(ctx context.Context, in *dfdaemon.StatLocalTaskRequest, opts ...grpc.CallOption) (*dfdaemon.StatLocalTaskResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "StatLocalTask", varargs...)
+	ret0, _ := ret[0].(*dfdaemon.StatLocalTaskResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatLocalTask indicates an expected call of StatLocalTask.
+func (mr *MockDfdaemonDownloadClientMockRecorder) StatLocalTask(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatLocalTask", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).StatLocalTask), varargs...)
+}
+
 // StatPersistentCacheTask mocks base method.
 func (m *MockDfdaemonDownloadClient) StatPersistentCacheTask(ctx context.Context, in *dfdaemon.StatPersistentCacheTaskRequest, opts ...grpc.CallOption) (*common.PersistentCacheTask, error) {
 	m.ctrl.T.Helper()
@@ -4100,6 +4155,21 @@ func (m *MockDfdaemonDownloadServer) StatCacheTask(arg0 context.Context, arg1 *d
 func (mr *MockDfdaemonDownloadServerMockRecorder) StatCacheTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatCacheTask", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).StatCacheTask), arg0, arg1)
+}
+
+// StatLocalTask mocks base method.
+func (m *MockDfdaemonDownloadServer) StatLocalTask(arg0 context.Context, arg1 *dfdaemon.StatLocalTaskRequest) (*dfdaemon.StatLocalTaskResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "StatLocalTask", arg0, arg1)
+	ret0, _ := ret[0].(*dfdaemon.StatLocalTaskResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// StatLocalTask indicates an expected call of StatLocalTask.
+func (mr *MockDfdaemonDownloadServerMockRecorder) StatLocalTask(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatLocalTask", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).StatLocalTask), arg0, arg1)
 }
 
 // StatPersistentCacheTask mocks base method.
