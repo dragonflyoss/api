@@ -141,7 +141,7 @@ message StatLocalTaskResponse {
   // Task piece length.
   optional uint64 piece_length = 2;
   // Task content length.
-  uint64 content_length = 3;
+  optional uint64 content_length = 3;
   // Task response headers.
   map<string, string> response_header = 4;
   // Uploading count is the count of the task being uploaded by other peers.

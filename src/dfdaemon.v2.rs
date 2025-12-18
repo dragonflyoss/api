@@ -175,8 +175,8 @@ pub struct StatLocalTaskResponse {
     #[prost(uint64, optional, tag = "2")]
     pub piece_length: ::core::option::Option<u64>,
     /// Task content length.
-    #[prost(uint64, tag = "3")]
-    pub content_length: u64,
+    #[prost(uint64, optional, tag = "3")]
+    pub content_length: ::core::option::Option<u64>,
     /// Task response headers.
     #[prost(map = "string, string", tag = "4")]
     pub response_header: ::std::collections::HashMap<
