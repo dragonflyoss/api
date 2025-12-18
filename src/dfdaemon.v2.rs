@@ -522,23 +522,23 @@ pub struct DeleteCacheTaskRequest {
 pub struct DownloadPersistentTaskRequest {
     /// Task id. Priority order for task retrieval:
     /// 1. task_id - Download persistent task by ID if set.
-    /// 2. object_storage_key & object_storage.endpoint & object_storage.region - Use storage key, endpoint,
+    /// 2. url & object_storage.endpoint & object_storage.region - Use object storage url, endpoint,
     ///     and region to identify the task if task_id is not provided.
     /// 3. content_for_calculating_task_id - Calculate task_id from provided content.
     #[prost(string, optional, tag = "1")]
     pub task_id: ::core::option::Option<::prost::alloc::string::String>,
-    /// This is the key of the object storage where the persistent task will be stored,
-    /// for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+    /// This is the url of the object storage protocal where the persistent task will be stored,
+    /// for example: `s3://<bucket>/path`, `gcs://<bucket>/path`. The combination of url,
     /// object_storage.endpoint and object_storage.region must be unique, because
     /// the persistent task cannot be overwritten once it is uploaded.
     #[prost(string, optional, tag = "2")]
-    pub object_storage_key: ::core::option::Option<::prost::alloc::string::String>,
+    pub url: ::core::option::Option<::prost::alloc::string::String>,
     /// Object storage protocol information.
     #[prost(message, optional, tag = "3")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
     /// content_for_calculating_task_id is the content used to calculate the task id.
     /// If content_for_calculating_task_id is set, use its value to calculate the task ID.
-    /// Otherwise, calculate the task ID based on object key, region, endpoint, piece_length, tag, application, and filtered_query_params.
+    /// Otherwise, calculate the task ID based on object storage url, region, endpoint, piece_length, tag, application, and filtered_query_params.
     #[prost(string, optional, tag = "4")]
     pub content_for_calculating_task_id: ::core::option::Option<
         ::prost::alloc::string::String,
@@ -633,12 +633,12 @@ pub mod download_persistent_task_response {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UploadPersistentTaskRequest {
-    /// This is the key of the object storage where the persistent task will be stored,
-    /// for example: `file.txt` or `dir/file.txt`. The combination of object_storage_key,
+    /// This is the url of the object storage protocal where the persistent task will be stored,
+    /// for example: `s3://<bucket>/path`, `gcs://<bucket>/path`. The combination of url,
     /// object_storage.endpoint and object_storage.region must be unique, because
     /// the persistent task cannot be overwritten once it is uploaded.
     #[prost(string, tag = "1")]
-    pub object_storage_key: ::prost::alloc::string::String,
+    pub url: ::prost::alloc::string::String,
     /// Object storage protocol information.
     #[prost(message, optional, tag = "2")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
