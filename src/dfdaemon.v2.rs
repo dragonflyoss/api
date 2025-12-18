@@ -150,12 +150,6 @@ pub struct StatTaskRequest {
     /// Remote IP represents the IP address of the client initiating the stat request.
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
-    /// local_only specifies whether to query task information from local client only.
-    /// If true, the query will be restricted to the local client.
-    /// By default (false), the query may be forwarded to the scheduler
-    /// for a cluster-wide search.
-    #[prost(bool, tag = "3")]
-    pub local_only: bool,
 }
 /// StatLocalTaskRequest represents request of StatLocalTask.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -508,12 +502,6 @@ pub struct StatCacheTaskRequest {
     /// Remote IP represents the IP address of the client initiating the stat request.
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
-    /// local_only specifies whether to query task information from local client only.
-    /// If true, the query will be restricted to the local client.
-    /// By default (false), the query may be forwarded to the scheduler
-    /// for a cluster-wide search.
-    #[prost(bool, tag = "3")]
-    pub local_only: bool,
 }
 /// DeleteCacheTaskRequest represents request of DeleteCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
