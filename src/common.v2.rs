@@ -315,32 +315,23 @@ pub struct PersistentTask {
     /// the persistent task will be deleted when dfdaemon runs garbage collection.
     #[prost(uint64, tag = "4")]
     pub current_replica_count: u64,
-    /// Tag is used to distinguish different persistent tasks.
-    #[prost(string, optional, tag = "5")]
-    pub tag: ::core::option::Option<::prost::alloc::string::String>,
-    /// Application of task.
-    #[prost(string, optional, tag = "6")]
-    pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Task piece length.
-    #[prost(uint64, tag = "7")]
-    pub piece_length: u64,
     /// Task content length.
-    #[prost(uint64, tag = "8")]
+    #[prost(uint64, tag = "5")]
     pub content_length: u64,
     /// Task piece count.
-    #[prost(uint32, tag = "9")]
+    #[prost(uint32, tag = "6")]
     pub piece_count: u32,
     /// Task state.
-    #[prost(string, tag = "10")]
+    #[prost(string, tag = "7")]
     pub state: ::prost::alloc::string::String,
     /// TTL of the persistent task.
-    #[prost(message, optional, tag = "11")]
+    #[prost(message, optional, tag = "8")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Task create time.
-    #[prost(message, optional, tag = "12")]
+    #[prost(message, optional, tag = "9")]
     pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
     /// Task update time.
-    #[prost(message, optional, tag = "13")]
+    #[prost(message, optional, tag = "10")]
     pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
 /// PersistentCacheTask metadata.

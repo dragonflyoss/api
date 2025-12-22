@@ -534,30 +534,21 @@ pub struct DownloadPersistentTaskRequest {
     /// not be deleted when dfdaemon runs garbage collection.
     #[prost(bool, tag = "3")]
     pub persistent: bool,
-    /// Tag is used to distinguish different persistent tasks.
-    #[prost(string, optional, tag = "4")]
-    pub tag: ::core::option::Option<::prost::alloc::string::String>,
-    /// Application of task.
-    #[prost(string, optional, tag = "5")]
-    pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Task piece length.
-    #[prost(uint64, optional, tag = "6")]
-    pub piece_length: ::core::option::Option<u64>,
     /// File path to be exported. If output_path is set, the exported file will be saved to the specified path.
     /// Dfdaemon will try to create hard link to the output path before starting the export. If hard link creation fails,
     /// it will copy the file to the output path after the export is completed.
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
-    #[prost(string, optional, tag = "7")]
+    #[prost(string, optional, tag = "4")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
-    #[prost(message, optional, tag = "8")]
+    #[prost(message, optional, tag = "5")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// need_piece_content is the flag to indicate whether the response needs to return piece content.
-    #[prost(bool, tag = "9")]
+    #[prost(bool, tag = "6")]
     pub need_piece_content: bool,
     /// force_hard_link is the flag to indicate whether the exported file must be hard linked to the output path.
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
-    #[prost(bool, tag = "10")]
+    #[prost(bool, tag = "7")]
     pub force_hard_link: bool,
     /// Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
     /// Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
@@ -565,16 +556,16 @@ pub struct DownloadPersistentTaskRequest {
     ///
     /// Performance
     /// Digest calculation increases processing time. Enable only when data integrity verification is critical.
-    #[prost(string, optional, tag = "11")]
+    #[prost(string, optional, tag = "8")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// Remote IP represents the IP address of the client initiating the download request.
-    #[prost(string, optional, tag = "12")]
+    #[prost(string, optional, tag = "9")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
     /// Overwrite indicates whether to overwrite the existing file at output path.
-    #[prost(bool, tag = "13")]
+    #[prost(bool, tag = "10")]
     pub overwrite: bool,
     /// If need_back_to_source is true, the client can download the task from the object storage when peers has no replica.
-    #[prost(bool, tag = "14")]
+    #[prost(bool, tag = "11")]
     pub need_back_to_source: bool,
 }
 /// DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.
@@ -637,23 +628,14 @@ pub struct UploadPersistentTaskRequest {
     /// Replica count of the persistent persistent task.
     #[prost(uint64, tag = "4")]
     pub persistent_replica_count: u64,
-    /// Tag is used to distinguish different persistent tasks.
-    #[prost(string, optional, tag = "5")]
-    pub tag: ::core::option::Option<::prost::alloc::string::String>,
-    /// Application of the persistent task.
-    #[prost(string, optional, tag = "6")]
-    pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Piece length of the persistent task, the value needs to be greater than or equal to 4194304(4MiB).
-    #[prost(uint64, optional, tag = "7")]
-    pub piece_length: ::core::option::Option<u64>,
     /// TTL of the persistent task.
-    #[prost(message, optional, tag = "8")]
+    #[prost(message, optional, tag = "5")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Download timeout.
-    #[prost(message, optional, tag = "9")]
+    #[prost(message, optional, tag = "6")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Remote IP represents the IP address of the client initiating the upload request.
-    #[prost(string, optional, tag = "10")]
+    #[prost(string, optional, tag = "7")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// UpdatePersistentTaskRequest represents request of UpdatePersistentTask.

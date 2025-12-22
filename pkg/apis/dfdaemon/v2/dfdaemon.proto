@@ -382,37 +382,31 @@ message DownloadPersistentTaskRequest {
   // If the persistent task is persistent, the persistent peer will
   // not be deleted when dfdaemon runs garbage collection.
   bool persistent = 3;
-  // Tag is used to distinguish different persistent tasks.
-  optional string tag = 4;
-  // Application of task.
-  optional string application = 5;
-  // Task piece length.
-  optional uint64 piece_length = 6 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];
   // File path to be exported. If output_path is set, the exported file will be saved to the specified path.
   // Dfdaemon will try to create hard link to the output path before starting the export. If hard link creation fails,
   // it will copy the file to the output path after the export is completed.
   // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
-  optional string output_path = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string output_path = 4 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
   // Download timeout.
-  optional google.protobuf.Duration timeout = 8;
+  optional google.protobuf.Duration timeout = 5;
   // need_piece_content is the flag to indicate whether the response needs to return piece content.
-  bool need_piece_content = 9;
+  bool need_piece_content = 6;
   // force_hard_link is the flag to indicate whether the exported file must be hard linked to the output path.
   // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
-  bool force_hard_link = 10;
+  bool force_hard_link = 7;
   // Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
   // Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
   // Returns an error if the computed digest mismatches the expected value.
   //
   // Performance
   // Digest calculation increases processing time. Enable only when data integrity verification is critical.
-  optional string digest = 11;
+  optional string digest = 8;
   // Remote IP represents the IP address of the client initiating the download request.
-  optional string remote_ip = 12 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 9 [(validate.rules).string = {ip: true, ignore_empty: true}];
   // Overwrite indicates whether to overwrite the existing file at output path.
-  bool overwrite = 13;
+  bool overwrite = 10;
   // If need_back_to_source is true, the client can download the task from the object storage when peers has no replica.
-  bool need_back_to_source = 14;
+  bool need_back_to_source = 11;
 }
 
 // DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.
@@ -449,18 +443,12 @@ message UploadPersistentTaskRequest {
   string path = 3 [(validate.rules).string = {min_len: 1}];
   // Replica count of the persistent persistent task.
   uint64 persistent_replica_count = 4;
-  // Tag is used to distinguish different persistent tasks.
-  optional string tag = 5;
-  // Application of the persistent task.
-  optional string application = 6;
-  // Piece length of the persistent task, the value needs to be greater than or equal to 4194304(4MiB).
-  optional uint64 piece_length = 7 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];
   // TTL of the persistent task.
-  google.protobuf.Duration ttl = 8 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
+  google.protobuf.Duration ttl = 5 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
   // Download timeout.
-  optional google.protobuf.Duration timeout = 9;
+  optional google.protobuf.Duration timeout = 6;
   // Remote IP represents the IP address of the client initiating the upload request.
-  optional string remote_ip = 10 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 7 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
 // UpdatePersistentTaskRequest represents request of UpdatePersistentTask.

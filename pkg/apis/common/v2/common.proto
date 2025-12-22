@@ -334,24 +334,18 @@ message PersistentTask {
   // Current replica count of the task. If task is not persistent,
   // the persistent task will be deleted when dfdaemon runs garbage collection.
   uint64 current_replica_count = 4;
-  // Tag is used to distinguish different persistent tasks.
-  optional string tag = 5;
-  // Application of task.
-  optional string application = 6;
-  // Task piece length.
-  uint64 piece_length = 7 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864}];
   // Task content length.
-  uint64 content_length = 8;
+  uint64 content_length = 5;
   // Task piece count.
-  uint32 piece_count = 9;
+  uint32 piece_count = 6;
   // Task state.
-  string state = 10 [(validate.rules).string.min_len = 1];
+  string state = 7 [(validate.rules).string.min_len = 1];
   // TTL of the persistent task.
-  google.protobuf.Duration ttl = 11 [(validate.rules).duration.required = true];
+  google.protobuf.Duration ttl = 8 [(validate.rules).duration.required = true];
   // Task create time.
-  google.protobuf.Timestamp created_at = 12 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp created_at = 9 [(validate.rules).timestamp.required = true];
   // Task update time.
-  google.protobuf.Timestamp updated_at = 13 [(validate.rules).timestamp.required = true];
+  google.protobuf.Timestamp updated_at = 10 [(validate.rules).timestamp.required = true];
 }
 
 // PersistentCacheTask metadata.

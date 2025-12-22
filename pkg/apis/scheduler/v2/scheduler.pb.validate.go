@@ -6934,26 +6934,7 @@ func (m *RegisterPersistentPeerRequest) validate(all bool) error {
 
 	// no validation rules for Persistent
 
-	if m.GetPieceLength() < 4194304 {
-		err := RegisterPersistentPeerRequestValidationError{
-			field:  "PieceLength",
-			reason: "value must be greater than or equal to 4194304",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	// no validation rules for PieceCount
-
-	if m.Tag != nil {
-		// no validation rules for Tag
-	}
-
-	if m.Application != nil {
-		// no validation rules for Application
-	}
 
 	if m.OutputPath != nil {
 
@@ -9508,17 +9489,6 @@ func (m *UploadPersistentTaskStartedRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetPieceLength() < 4194304 {
-		err := UploadPersistentTaskStartedRequestValidationError{
-			field:  "PieceLength",
-			reason: "value must be greater than or equal to 4194304",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	// no validation rules for ContentLength
 
 	// no validation rules for PieceCount
@@ -9552,14 +9522,6 @@ func (m *UploadPersistentTaskStartedRequest) validate(all bool) error {
 			}
 
 		}
-	}
-
-	if m.Tag != nil {
-		// no validation rules for Tag
-	}
-
-	if m.Application != nil {
-		// no validation rules for Application
 	}
 
 	if len(errors) > 0 {

@@ -1753,17 +1753,6 @@ func (m *PersistentTask) validate(all bool) error {
 
 	// no validation rules for CurrentReplicaCount
 
-	if val := m.GetPieceLength(); val < 4194304 || val > 67108864 {
-		err := PersistentTaskValidationError{
-			field:  "PieceLength",
-			reason: "value must be inside range [4194304, 67108864]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	// no validation rules for ContentLength
 
 	// no validation rules for PieceCount
@@ -1810,14 +1799,6 @@ func (m *PersistentTask) validate(all bool) error {
 			return err
 		}
 		errors = append(errors, err)
-	}
-
-	if m.Tag != nil {
-		// no validation rules for Tag
-	}
-
-	if m.Application != nil {
-		// no validation rules for Application
 	}
 
 	if len(errors) > 0 {
