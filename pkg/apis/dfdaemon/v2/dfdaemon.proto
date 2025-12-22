@@ -375,9 +375,9 @@ message DownloadPersistentTaskRequest {
   // for example: `s3://<bucket>/path`, `gcs://<bucket>/path`. The combination of url,
   // object_storage.endpoint and object_storage.region must be unique, because
   // the persistent task cannot be overwritten once it is uploaded.
-  optional string url = 1 [(validate.rules).string = {uri: true, ignore_empty: true}];
+  string url = 1 [(validate.rules).string = {uri: true, ignore_empty: true}];
     // Object storage protocol information.
-  optional common.v2.ObjectStorage object_storage = 2;
+  common.v2.ObjectStorage object_storage = 2;
   // Persistent represents whether the persistent task is persistent.
   // If the persistent task is persistent, the persistent peer will
   // not be deleted when dfdaemon runs garbage collection.
@@ -443,26 +443,22 @@ message UploadPersistentTaskRequest {
   string url = 1  [(validate.rules).string.uri = true];
     // Object storage protocol information.
   common.v2.ObjectStorage object_storage = 2 [(validate.rules).message.required = true];
-  // content_for_calculating_task_id is the content used to calculate the task id.
-  // If content_for_calculating_task_id is set, use its value to calculate the task ID.
-  // Otherwise, calculate the task ID based on object key, region, endpoint, piece_length, tag, application, and filtered_query_params.
-  optional string content_for_calculating_task_id = 3;
   // Source file path of the persistent task.
-  string path = 4 [(validate.rules).string = {min_len: 1}];
+  string path = 3 [(validate.rules).string = {min_len: 1}];
   // Replica count of the persistent persistent task.
-  uint64 persistent_replica_count = 5;
+  uint64 persistent_replica_count = 4;
   // Tag is used to distinguish different persistent tasks.
-  optional string tag = 6;
+  optional string tag = 5;
   // Application of the persistent task.
-  optional string application = 7;
+  optional string application = 6;
   // Piece length of the persistent task, the value needs to be greater than or equal to 4194304(4MiB).
-  optional uint64 piece_length = 8 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];
+  optional uint64 piece_length = 7 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];
   // TTL of the persistent task.
-  google.protobuf.Duration ttl = 9 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
+  google.protobuf.Duration ttl = 8 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
   // Download timeout.
-  optional google.protobuf.Duration timeout = 10;
+  optional google.protobuf.Duration timeout = 9;
   // Remote IP represents the IP address of the client initiating the upload request.
-  optional string remote_ip = 11 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 10 [(validate.rules).string = {ip: true, ignore_empty: true}];
 }
 
 // UpdatePersistentTaskRequest represents request of UpdatePersistentTask.
