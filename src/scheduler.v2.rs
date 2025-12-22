@@ -655,26 +655,17 @@ pub struct RegisterPersistentPeerRequest {
     /// not be deleted when dfdaemon runs garbage collection.
     #[prost(bool, tag = "3")]
     pub persistent: bool,
-    /// Tag is used to distinguish different persistent tasks.
-    #[prost(string, optional, tag = "4")]
-    pub tag: ::core::option::Option<::prost::alloc::string::String>,
-    /// Application of task.
-    #[prost(string, optional, tag = "5")]
-    pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
-    #[prost(uint64, tag = "6")]
-    pub piece_length: u64,
     /// File path to be exported.
-    #[prost(string, optional, tag = "7")]
+    #[prost(string, optional, tag = "4")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
-    #[prost(message, optional, tag = "8")]
+    #[prost(message, optional, tag = "5")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
-    #[prost(uint32, optional, tag = "9")]
+    #[prost(uint32, optional, tag = "6")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
     /// Task piece count.
-    #[prost(uint64, tag = "10")]
+    #[prost(uint64, tag = "7")]
     pub piece_count: u64,
 }
 /// DownloadPersistentPeerStartedRequest represents persistent peer download started request of AnnouncePersistentPeerRequest.
@@ -893,23 +884,14 @@ pub struct UploadPersistentTaskStartedRequest {
     /// Replica count of the persistent task.
     #[prost(uint64, tag = "6")]
     pub persistent_replica_count: u64,
-    /// Tag is used to distinguish different persistent tasks.
-    #[prost(string, optional, tag = "7")]
-    pub tag: ::core::option::Option<::prost::alloc::string::String>,
-    /// Application of task.
-    #[prost(string, optional, tag = "8")]
-    pub application: ::core::option::Option<::prost::alloc::string::String>,
-    /// Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
-    #[prost(uint64, tag = "9")]
-    pub piece_length: u64,
     /// Task content length.
-    #[prost(uint64, tag = "10")]
+    #[prost(uint64, tag = "7")]
     pub content_length: u64,
     /// Task piece count.
-    #[prost(uint32, tag = "11")]
+    #[prost(uint32, tag = "8")]
     pub piece_count: u32,
     /// TTL of the persistent task.
-    #[prost(message, optional, tag = "12")]
+    #[prost(message, optional, tag = "9")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// UploadPersistentTaskFinishedRequest represents upload persistent task finished request of UploadPersistentTaskFinished.

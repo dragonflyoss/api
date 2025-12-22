@@ -4147,33 +4147,6 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 
 	// no validation rules for NeedBackToSource
 
-	if m.Tag != nil {
-		// no validation rules for Tag
-	}
-
-	if m.Application != nil {
-		// no validation rules for Application
-	}
-
-	if m.PieceLength != nil {
-
-		if m.GetPieceLength() != 0 {
-
-			if m.GetPieceLength() < 4194304 {
-				err := DownloadPersistentTaskRequestValidationError{
-					field:  "PieceLength",
-					reason: "value must be greater than or equal to 4194304",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
 	if m.OutputPath != nil {
 
 		if m.GetOutputPath() != "" {
@@ -4785,33 +4758,6 @@ func (m *UploadPersistentTaskRequest) validate(all bool) error {
 			}
 
 		}
-	}
-
-	if m.Tag != nil {
-		// no validation rules for Tag
-	}
-
-	if m.Application != nil {
-		// no validation rules for Application
-	}
-
-	if m.PieceLength != nil {
-
-		if m.GetPieceLength() != 0 {
-
-			if m.GetPieceLength() < 4194304 {
-				err := UploadPersistentTaskRequestValidationError{
-					field:  "PieceLength",
-					reason: "value must be greater than or equal to 4194304",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
 	}
 
 	if m.Timeout != nil {
