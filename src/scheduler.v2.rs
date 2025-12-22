@@ -658,14 +658,11 @@ pub struct RegisterPersistentPeerRequest {
     /// File path to be exported.
     #[prost(string, optional, tag = "4")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
-    /// Download timeout.
-    #[prost(message, optional, tag = "5")]
-    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
-    #[prost(uint32, optional, tag = "6")]
+    #[prost(uint32, optional, tag = "5")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
     /// Task piece count.
-    #[prost(uint64, tag = "7")]
+    #[prost(uint64, tag = "6")]
     pub piece_count: u64,
 }
 /// DownloadPersistentPeerStartedRequest represents persistent peer download started request of AnnouncePersistentPeerRequest.
@@ -973,14 +970,11 @@ pub struct RegisterPersistentCachePeerRequest {
     /// File path to be exported.
     #[prost(string, optional, tag = "5")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
-    /// Download timeout.
-    #[prost(message, optional, tag = "6")]
-    pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// concurrent_piece_count is the number of pieces that can be downloaded concurrently.
-    #[prost(uint32, optional, tag = "7")]
+    #[prost(uint32, optional, tag = "6")]
     pub concurrent_piece_count: ::core::option::Option<u32>,
     /// Task piece count.
-    #[prost(uint64, tag = "8")]
+    #[prost(uint64, tag = "7")]
     pub piece_count: u64,
 }
 /// DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.

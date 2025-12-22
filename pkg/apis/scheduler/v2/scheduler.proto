@@ -452,12 +452,10 @@ message RegisterPersistentPeerRequest {
   bool persistent = 3;
   // File path to be exported.
   optional string output_path = 4 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // Download timeout.
-  optional google.protobuf.Duration timeout = 5;
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
-  optional uint32 concurrent_piece_count = 6;
+  optional uint32 concurrent_piece_count = 5;
   // Task piece count.
-  uint64 piece_count = 7;
+  uint64 piece_count = 6;
 }
 
 // DownloadPersistentPeerStartedRequest represents persistent peer download started request of AnnouncePersistentPeerRequest.
@@ -644,12 +642,10 @@ message RegisterPersistentCachePeerRequest {
   uint64 piece_length = 4 [(validate.rules).uint64.gte = 4194304];
   // File path to be exported.
   optional string output_path = 5 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
-  // Download timeout.
-  optional google.protobuf.Duration timeout = 6;
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
-  optional uint32 concurrent_piece_count = 7;
+  optional uint32 concurrent_piece_count = 6;
   // Task piece count.
-  uint64 piece_count = 8;
+  uint64 piece_count = 7;
 }
 
 // DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.
