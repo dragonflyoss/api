@@ -4155,6 +4155,25 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 		// no validation rules for Application
 	}
 
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if m.GetPieceLength() < 4194304 {
+				err := DownloadPersistentTaskRequestValidationError{
+					field:  "PieceLength",
+					reason: "value must be greater than or equal to 4194304",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if m.OutputPath != nil {
 
 		if m.GetOutputPath() != "" {

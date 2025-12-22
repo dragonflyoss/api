@@ -540,21 +540,24 @@ pub struct DownloadPersistentTaskRequest {
     /// Application of task.
     #[prost(string, optional, tag = "5")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
+    /// Task piece length.
+    #[prost(uint64, optional, tag = "6")]
+    pub piece_length: ::core::option::Option<u64>,
     /// File path to be exported. If output_path is set, the exported file will be saved to the specified path.
     /// Dfdaemon will try to create hard link to the output path before starting the export. If hard link creation fails,
     /// it will copy the file to the output path after the export is completed.
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
-    #[prost(string, optional, tag = "6")]
+    #[prost(string, optional, tag = "7")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
-    #[prost(message, optional, tag = "7")]
+    #[prost(message, optional, tag = "8")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// need_piece_content is the flag to indicate whether the response needs to return piece content.
-    #[prost(bool, tag = "8")]
+    #[prost(bool, tag = "9")]
     pub need_piece_content: bool,
     /// force_hard_link is the flag to indicate whether the exported file must be hard linked to the output path.
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
-    #[prost(bool, tag = "9")]
+    #[prost(bool, tag = "10")]
     pub force_hard_link: bool,
     /// Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
     /// Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
@@ -562,16 +565,16 @@ pub struct DownloadPersistentTaskRequest {
     ///
     /// Performance
     /// Digest calculation increases processing time. Enable only when data integrity verification is critical.
-    #[prost(string, optional, tag = "10")]
+    #[prost(string, optional, tag = "11")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// Remote IP represents the IP address of the client initiating the download request.
-    #[prost(string, optional, tag = "11")]
+    #[prost(string, optional, tag = "12")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
     /// Overwrite indicates whether to overwrite the existing file at output path.
-    #[prost(bool, tag = "12")]
+    #[prost(bool, tag = "13")]
     pub overwrite: bool,
     /// If need_back_to_source is true, the client can download the task from the object storage when peers has no replica.
-    #[prost(bool, tag = "13")]
+    #[prost(bool, tag = "14")]
     pub need_back_to_source: bool,
 }
 /// DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.
