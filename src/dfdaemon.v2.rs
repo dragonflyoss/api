@@ -520,55 +520,41 @@ pub struct DeleteCacheTaskRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadPersistentTaskRequest {
-    /// Task id. Priority order for task retrieval:
-    /// 1. task_id - Download persistent task by ID if set.
-    /// 2. url & object_storage.endpoint & object_storage.region - Use object storage url, endpoint,
-    ///     and region to identify the task if task_id is not provided.
-    /// 3. content_for_calculating_task_id - Calculate task_id from provided content.
-    #[prost(string, optional, tag = "1")]
-    pub task_id: ::core::option::Option<::prost::alloc::string::String>,
     /// This is the url of the object storage protocal where the persistent task will be stored,
     /// for example: `s3://<bucket>/path`, `gcs://<bucket>/path`. The combination of url,
     /// object_storage.endpoint and object_storage.region must be unique, because
     /// the persistent task cannot be overwritten once it is uploaded.
-    #[prost(string, optional, tag = "2")]
+    #[prost(string, optional, tag = "1")]
     pub url: ::core::option::Option<::prost::alloc::string::String>,
     /// Object storage protocol information.
-    #[prost(message, optional, tag = "3")]
+    #[prost(message, optional, tag = "2")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
-    /// content_for_calculating_task_id is the content used to calculate the task id.
-    /// If content_for_calculating_task_id is set, use its value to calculate the task ID.
-    /// Otherwise, calculate the task ID based on object storage url, region, endpoint, piece_length, tag, application, and filtered_query_params.
-    #[prost(string, optional, tag = "4")]
-    pub content_for_calculating_task_id: ::core::option::Option<
-        ::prost::alloc::string::String,
-    >,
     /// Persistent represents whether the persistent task is persistent.
     /// If the persistent task is persistent, the persistent peer will
     /// not be deleted when dfdaemon runs garbage collection.
-    #[prost(bool, tag = "5")]
+    #[prost(bool, tag = "3")]
     pub persistent: bool,
     /// Tag is used to distinguish different persistent tasks.
-    #[prost(string, optional, tag = "6")]
+    #[prost(string, optional, tag = "4")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of task.
-    #[prost(string, optional, tag = "7")]
+    #[prost(string, optional, tag = "5")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// File path to be exported. If output_path is set, the exported file will be saved to the specified path.
     /// Dfdaemon will try to create hard link to the output path before starting the export. If hard link creation fails,
     /// it will copy the file to the output path after the export is completed.
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
-    #[prost(string, optional, tag = "8")]
+    #[prost(string, optional, tag = "6")]
     pub output_path: ::core::option::Option<::prost::alloc::string::String>,
     /// Download timeout.
-    #[prost(message, optional, tag = "9")]
+    #[prost(message, optional, tag = "7")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// need_piece_content is the flag to indicate whether the response needs to return piece content.
-    #[prost(bool, tag = "10")]
+    #[prost(bool, tag = "8")]
     pub need_piece_content: bool,
     /// force_hard_link is the flag to indicate whether the exported file must be hard linked to the output path.
     /// For more details refer to <https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.>
-    #[prost(bool, tag = "11")]
+    #[prost(bool, tag = "9")]
     pub force_hard_link: bool,
     /// Verifies task data integrity after download using a digest. Supports CRC32, SHA256, and SHA512 algorithms.
     /// Format: `<algorithm>:<hash>`, e.g., `crc32:xxx`, `sha256:yyy`, `sha512:zzz`.
@@ -576,16 +562,16 @@ pub struct DownloadPersistentTaskRequest {
     ///
     /// Performance
     /// Digest calculation increases processing time. Enable only when data integrity verification is critical.
-    #[prost(string, optional, tag = "12")]
+    #[prost(string, optional, tag = "10")]
     pub digest: ::core::option::Option<::prost::alloc::string::String>,
     /// Remote IP represents the IP address of the client initiating the download request.
-    #[prost(string, optional, tag = "13")]
+    #[prost(string, optional, tag = "11")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
     /// Overwrite indicates whether to overwrite the existing file at output path.
-    #[prost(bool, tag = "14")]
+    #[prost(bool, tag = "12")]
     pub overwrite: bool,
     /// If need_back_to_source is true, the client can download the task from the object storage when peers has no replica.
-    #[prost(bool, tag = "15")]
+    #[prost(bool, tag = "13")]
     pub need_back_to_source: bool,
 }
 /// DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.
