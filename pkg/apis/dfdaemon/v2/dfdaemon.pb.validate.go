@@ -4083,6 +4083,60 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 
 	var errors []error
 
+	if m.GetUrl() != "" {
+
+		if uri, err := url.Parse(m.GetUrl()); err != nil {
+			err = DownloadPersistentTaskRequestValidationError{
+				field:  "Url",
+				reason: "value must be a valid URI",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		} else if !uri.IsAbs() {
+			err := DownloadPersistentTaskRequestValidationError{
+				field:  "Url",
+				reason: "value must be absolute",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if all {
+		switch v := interface{}(m.GetObjectStorage()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DownloadPersistentTaskRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DownloadPersistentTaskRequestValidationError{
+					field:  "ObjectStorage",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DownloadPersistentTaskRequestValidationError{
+				field:  "ObjectStorage",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	// no validation rules for Persistent
 
 	// no validation rules for NeedPieceContent
@@ -4092,68 +4146,6 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 	// no validation rules for Overwrite
 
 	// no validation rules for NeedBackToSource
-
-	if m.Url != nil {
-
-		if m.GetUrl() != "" {
-
-			if uri, err := url.Parse(m.GetUrl()); err != nil {
-				err = DownloadPersistentTaskRequestValidationError{
-					field:  "Url",
-					reason: "value must be a valid URI",
-					cause:  err,
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			} else if !uri.IsAbs() {
-				err := DownloadPersistentTaskRequestValidationError{
-					field:  "Url",
-					reason: "value must be absolute",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
-	if m.ObjectStorage != nil {
-
-		if all {
-			switch v := interface{}(m.GetObjectStorage()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, DownloadPersistentTaskRequestValidationError{
-						field:  "ObjectStorage",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, DownloadPersistentTaskRequestValidationError{
-						field:  "ObjectStorage",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetObjectStorage()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return DownloadPersistentTaskRequestValidationError{
-					field:  "ObjectStorage",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	}
 
 	if m.Tag != nil {
 		// no validation rules for Tag
@@ -4774,10 +4766,6 @@ func (m *UploadPersistentTaskRequest) validate(all bool) error {
 			}
 
 		}
-	}
-
-	if m.ContentForCalculatingTaskId != nil {
-		// no validation rules for ContentForCalculatingTaskId
 	}
 
 	if m.Tag != nil {

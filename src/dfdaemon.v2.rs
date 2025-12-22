@@ -524,8 +524,8 @@ pub struct DownloadPersistentTaskRequest {
     /// for example: `s3://<bucket>/path`, `gcs://<bucket>/path`. The combination of url,
     /// object_storage.endpoint and object_storage.region must be unique, because
     /// the persistent task cannot be overwritten once it is uploaded.
-    #[prost(string, optional, tag = "1")]
-    pub url: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
     /// Object storage protocol information.
     #[prost(message, optional, tag = "2")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
@@ -628,36 +628,29 @@ pub struct UploadPersistentTaskRequest {
     /// Object storage protocol information.
     #[prost(message, optional, tag = "2")]
     pub object_storage: ::core::option::Option<super::super::common::v2::ObjectStorage>,
-    /// content_for_calculating_task_id is the content used to calculate the task id.
-    /// If content_for_calculating_task_id is set, use its value to calculate the task ID.
-    /// Otherwise, calculate the task ID based on object key, region, endpoint, piece_length, tag, application, and filtered_query_params.
-    #[prost(string, optional, tag = "3")]
-    pub content_for_calculating_task_id: ::core::option::Option<
-        ::prost::alloc::string::String,
-    >,
     /// Source file path of the persistent task.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "3")]
     pub path: ::prost::alloc::string::String,
     /// Replica count of the persistent persistent task.
-    #[prost(uint64, tag = "5")]
+    #[prost(uint64, tag = "4")]
     pub persistent_replica_count: u64,
     /// Tag is used to distinguish different persistent tasks.
-    #[prost(string, optional, tag = "6")]
+    #[prost(string, optional, tag = "5")]
     pub tag: ::core::option::Option<::prost::alloc::string::String>,
     /// Application of the persistent task.
-    #[prost(string, optional, tag = "7")]
+    #[prost(string, optional, tag = "6")]
     pub application: ::core::option::Option<::prost::alloc::string::String>,
     /// Piece length of the persistent task, the value needs to be greater than or equal to 4194304(4MiB).
-    #[prost(uint64, optional, tag = "8")]
+    #[prost(uint64, optional, tag = "7")]
     pub piece_length: ::core::option::Option<u64>,
     /// TTL of the persistent task.
-    #[prost(message, optional, tag = "9")]
+    #[prost(message, optional, tag = "8")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Download timeout.
-    #[prost(message, optional, tag = "10")]
+    #[prost(message, optional, tag = "9")]
     pub timeout: ::core::option::Option<::prost_wkt_types::Duration>,
     /// Remote IP represents the IP address of the client initiating the upload request.
-    #[prost(string, optional, tag = "11")]
+    #[prost(string, optional, tag = "10")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// UpdatePersistentTaskRequest represents request of UpdatePersistentTask.
