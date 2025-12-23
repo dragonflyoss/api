@@ -564,9 +564,6 @@ pub struct DownloadPersistentTaskRequest {
     /// Overwrite indicates whether to overwrite the existing file at output path.
     #[prost(bool, tag = "10")]
     pub overwrite: bool,
-    /// If need_back_to_source is true, the client can download the task from the object storage when peers has no replica.
-    #[prost(bool, tag = "11")]
-    pub need_back_to_source: bool,
 }
 /// DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.
 #[derive(serde::Serialize, serde::Deserialize)]
