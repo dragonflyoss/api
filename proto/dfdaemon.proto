@@ -398,8 +398,6 @@ message DownloadPersistentTaskRequest {
   optional string remote_ip = 9;
   // Overwrite indicates whether to overwrite the existing file at output path.
   bool overwrite = 10;
-  // If need_back_to_source is true, the client can download the task from the object storage when peers has no replica.
-  bool need_back_to_source = 11;
 }
 
 // DownloadPersistentTaskStartedResponse represents task download started response of DownloadPersistentTaskResponse.

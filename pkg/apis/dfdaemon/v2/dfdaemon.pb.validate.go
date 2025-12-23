@@ -4145,8 +4145,6 @@ func (m *DownloadPersistentTaskRequest) validate(all bool) error {
 
 	// no validation rules for Overwrite
 
-	// no validation rules for NeedBackToSource
-
 	if m.OutputPath != nil {
 
 		if m.GetOutputPath() != "" {
