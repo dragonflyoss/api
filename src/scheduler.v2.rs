@@ -664,6 +664,9 @@ pub struct RegisterPersistentPeerRequest {
     /// Task piece count.
     #[prost(uint64, tag = "6")]
     pub piece_count: u64,
+    /// NeedBackToSource needs downloaded from source.
+    #[prost(bool, tag = "7")]
+    pub need_back_to_source: bool,
 }
 /// DownloadPersistentPeerStartedRequest represents persistent peer download started request of AnnouncePersistentPeerRequest.
 #[derive(serde::Serialize, serde::Deserialize)]
