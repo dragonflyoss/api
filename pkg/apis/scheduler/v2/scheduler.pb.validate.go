@@ -6936,6 +6936,8 @@ func (m *RegisterPersistentPeerRequest) validate(all bool) error {
 
 	// no validation rules for PieceCount
 
+	// no validation rules for NeedBackToSource
+
 	if m.OutputPath != nil {
 
 		if m.GetOutputPath() != "" {

@@ -442,6 +442,8 @@ message RegisterPersistentPeerRequest {
   optional uint32 concurrent_piece_count = 5;
   // Task piece count.
   uint64 piece_count = 6;
+  // NeedBackToSource needs downloaded from source.
+  bool need_back_to_source = 7;
 }
 
 // DownloadPersistentPeerStartedRequest represents persistent peer download started request of AnnouncePersistentPeerRequest.
