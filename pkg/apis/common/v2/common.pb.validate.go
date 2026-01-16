@@ -2177,6 +2177,8 @@ func (m *Host) validate(all bool) error {
 
 	// no validation rules for ProxyPort
 
+	// no validation rules for Name
+
 	if m.Cpu != nil {
 
 		if all {

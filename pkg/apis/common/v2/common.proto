@@ -18,9 +18,9 @@ syntax = "proto3";
 
 package common.v2;
 
-import "validate/validate.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/common/v2;common";
 
@@ -128,7 +128,10 @@ message Peer {
   // Peer priority.
   Priority priority = 3 [(validate.rules).enum.defined_only = true];
   // Pieces of peer.
-  repeated Piece pieces = 4 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated Piece pieces = 4 [(validate.rules).repeated = {
+    min_items: 1
+    ignore_empty: true
+  }];
   // Peer downloads costs time.
   google.protobuf.Duration cost = 5 [(validate.rules).duration.required = true];
   // Peer state.
@@ -156,7 +159,10 @@ message CachePeer {
   // Peer priority.
   Priority priority = 3 [(validate.rules).enum.defined_only = true];
   // Pieces of peer.
-  repeated Piece pieces = 4 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated Piece pieces = 4 [(validate.rules).repeated = {
+    min_items: 1
+    ignore_empty: true
+  }];
   // Peer downloads costs time.
   google.protobuf.Duration cost = 5 [(validate.rules).duration.required = true];
   // Peer state.
@@ -239,7 +245,10 @@ message Task {
   //
   // Performance
   // Digest calculation increases processing time. Enable only when data integrity verification is critical.
-  optional string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
+  optional string digest = 4 [(validate.rules).string = {
+    pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$"
+    ignore_empty: true
+  }];
   // URL tag identifies different task for same url.
   optional string tag = 5;
   // Application of task.
@@ -259,7 +268,10 @@ message Task {
   // Task size scope.
   SizeScope size_scope = 11;
   // Pieces of task.
-  repeated Piece pieces = 12 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated Piece pieces = 12 [(validate.rules).repeated = {
+    min_items: 1
+    ignore_empty: true
+  }];
   // Task state.
   string state = 13 [(validate.rules).string.min_len = 1];
   // Task peer count.
@@ -286,7 +298,10 @@ message CacheTask {
   //
   // Performance
   // Digest calculation increases processing time. Enable only when data integrity verification is critical.
-  optional string digest = 4 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
+  optional string digest = 4 [(validate.rules).string = {
+    pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$"
+    ignore_empty: true
+  }];
   // URL tag identifies different task for same url.
   optional string tag = 5;
   // Application of task.
@@ -306,7 +321,10 @@ message CacheTask {
   // Task size scope.
   SizeScope size_scope = 11;
   // Pieces of task.
-  repeated Piece pieces = 12 [(validate.rules).repeated = {min_items: 1, ignore_empty: true}];
+  repeated Piece pieces = 12 [(validate.rules).repeated = {
+    min_items: 1
+    ignore_empty: true
+  }];
   // Task state.
   string state = 13 [(validate.rules).string.min_len = 1];
   // Task peer count.
@@ -368,7 +386,10 @@ message PersistentCacheTask {
   // Application of task.
   optional string application = 6;
   // Task piece length.
-  uint64 piece_length = 7 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864}];
+  uint64 piece_length = 7 [(validate.rules).uint64 = {
+    gte: 4194304
+    lte: 67108864
+  }];
   // Task content length.
   uint64 content_length = 8;
   // Task piece count.
@@ -394,9 +415,15 @@ message Host {
   // Host ip.
   string ip = 4 [(validate.rules).string.ip = true];
   // Port of grpc service.
-  int32 port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
-    // Port of download server.
-  int32 download_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 5 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
+  // Port of download server.
+  int32 download_port = 6 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Host OS.
   string os = 7;
   // Host platform.
@@ -423,6 +450,9 @@ message Host {
   bool disable_shared = 18;
   // Port of proxy server.
   int32 proxy_port = 19;
+  // Name of the host.
+  // Format: ${POD_NAMESPACE}-${POD_NAME}
+  string name = 20;
 }
 
 // CPU Stat.
@@ -473,9 +503,15 @@ message Memory {
   // RAM used by programs.
   uint64 used = 3;
   // Percentage of RAM used by programs.
-  double used_percent = 4 [(validate.rules).double = {gte: 0, lte: 100}];
+  double used_percent = 4 [(validate.rules).double = {
+    gte: 0
+    lte: 100
+  }];
   // Calculates the percentage of memory used by process.
-  double process_used_percent = 5 [(validate.rules).double = {gte: 0, lte: 100}];
+  double process_used_percent = 5 [(validate.rules).double = {
+    gte: 0
+    lte: 100
+  }];
   // This is the kernel's notion of free memory.
   uint64 free = 6;
 }
@@ -518,7 +554,10 @@ message Disk {
   // Used amount of disk on the data path of dragonfly.
   uint64 used = 3;
   // Used percent of disk on the data path of dragonfly directory.
-  double used_percent = 4 [(validate.rules).double = {gte: 0, lte: 100}];
+  double used_percent = 4 [(validate.rules).double = {
+    gte: 0
+    lte: 100
+  }];
   // Total amount of indoes on the data path of dragonfly directory.
   uint64 inodes_total = 5;
   // Used amount of indoes on the data path of dragonfly directory.
@@ -526,7 +565,10 @@ message Disk {
   // Free amount of indoes on the data path of dragonfly directory.
   uint64 inodes_free = 7;
   // Used percent of indoes on the data path of dragonfly directory.
-  double inodes_used_percent = 8 [(validate.rules).double = {gte: 0, lte: 100}];
+  double inodes_used_percent = 8 [(validate.rules).double = {
+    gte: 0
+    lte: 100
+  }];
   // Disk read bandwidth, in bytes per second.
   uint64 read_bandwidth = 9;
   // Disk write bandwidth, in bytes per second.
@@ -552,7 +594,10 @@ message Download {
   // Download url.
   string url = 1 [(validate.rules).string.uri = true];
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
+  optional string digest = 2 [(validate.rules).string = {
+    pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$"
+    ignore_empty: true
+  }];
   // Range is url range of request. If protocol is http, range
   // will set in request header. If protocol is others, range
   // will set in range field.
@@ -573,16 +618,23 @@ message Download {
   repeated string filtered_query_params = 8;
   // Task request headers.
   map<string, string> request_header = 9;
-	// Piece Length is the piece length(bytes) for downloading file. The value needs to
-	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
-	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
-	// the piece length will be calculated according to the file size.
-  optional uint64 piece_length = 10 [(validate.rules).uint64 = {gte: 4194304, lte: 67108864, ignore_empty: true}];
+  // Piece Length is the piece length(bytes) for downloading file. The value needs to
+  // be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+  // for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+  // the piece length will be calculated according to the file size.
+  optional uint64 piece_length = 10 [(validate.rules).uint64 = {
+    gte: 4194304
+    lte: 67108864
+    ignore_empty: true
+  }];
   // File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
   // Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
   // it will copy the file to the output path after the download is completed.
   // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
-  optional string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string output_path = 11 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Download timeout.
   optional google.protobuf.Duration timeout = 12;
   // Dfdaemon cannot download the task from the source if disable_back_to_source is true.
@@ -611,7 +663,10 @@ message Download {
   // remote_ip represents the IP address of the client initiating the download request.
   // For proxy requests, it is set to the IP address of the request source.
   // For dfget requests, it is set to the IP address of the dfget.
-  optional string remote_ip = 24 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 24 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
   // concurrent_piece_count is the number of pieces that can be downloaded concurrently.
   optional uint32 concurrent_piece_count = 25;
   // Overwrite indicates whether to overwrite the existing file at output path.
@@ -636,27 +691,48 @@ message Download {
 // Object Storage related information.
 message ObjectStorage {
   // Region is the region of the object storage service.
-  optional string region = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string region = 1 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Endpoint is the endpoint of the object storage service.
-  optional string endpoint = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string endpoint = 2 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Access key that used to access the object storage service.
   optional string access_key_id = 3 [(validate.rules).string.min_len = 1];
   // Access secret that used to access the object storage service.
   optional string access_key_secret = 4 [(validate.rules).string.min_len = 1];
   // Session token that used to access s3 storage service.
-  optional string session_token = 5 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string session_token = 5 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Local path to credential file for Google Cloud Storage service OAuth2 authentication.
-  optional string credential_path = 6 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string credential_path = 6 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Predefined ACL that used for the Google Cloud Storage service.
-  optional string predefined_acl = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string predefined_acl = 7 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Temporary STS security token for accessing OSS.
-  optional string security_token = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string security_token = 8 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
 }
 
 // HDFS related information.
 message HDFS {
   // Delegation token for Web HDFS operator.
-  optional string delegation_token = 1 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string delegation_token = 1 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
 }
 
 // Range represents download range.
@@ -672,15 +748,24 @@ message Piece {
   // Piece number.
   uint32 number = 1;
   // Parent peer id.
-  optional string parent_id = 2 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string parent_id = 2 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Piece offset.
   uint64 offset = 3;
   // Piece length.
   uint64 length = 4;
   // Digest of the piece data, for example blake3:xxx or sha256:yyy.
-  string digest = 5 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
+  string digest = 5 [(validate.rules).string = {
+    pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$"
+    ignore_empty: true
+  }];
   // Piece content.
-  optional bytes content = 6 [(validate.rules).bytes = {min_len: 1, ignore_empty: true}];
+  optional bytes content = 6 [(validate.rules).bytes = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Traffic type.
   optional TrafficType traffic_type = 7;
   // Downloading piece costs time.

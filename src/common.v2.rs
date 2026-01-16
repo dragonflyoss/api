@@ -446,6 +446,10 @@ pub struct Host {
     /// Port of proxy server.
     #[prost(int32, tag = "19")]
     pub proxy_port: i32,
+    /// Name of the host.
+    /// Format: ${POD_NAMESPACE}-${POD_NAME}
+    #[prost(string, tag = "20")]
+    pub name: ::prost::alloc::string::String,
 }
 /// CPU Stat.
 #[derive(serde::Serialize, serde::Deserialize)]
