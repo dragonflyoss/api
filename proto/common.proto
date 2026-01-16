@@ -417,6 +417,9 @@ message Host {
   bool disable_shared = 18;
   // Port of proxy server.
   int32 proxy_port = 19;
+  // Name of the host.
+  // Format: ${POD_NAMESPACE}-${POD_NAME}
+  string name = 20;
 }
 
 // CPU Stat.
@@ -567,10 +570,10 @@ message Download {
   repeated string filtered_query_params = 8;
   // Task request headers.
   map<string, string> request_header = 9;
-	// Piece Length is the piece length(bytes) for downloading file. The value needs to
-	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
-	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
-	// the piece length will be calculated according to the file size.
+  // Piece Length is the piece length(bytes) for downloading file. The value needs to
+  // be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+  // for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+  // the piece length will be calculated according to the file size.
   optional uint64 piece_length = 10;
   // File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
   // Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
