@@ -480,24 +480,6 @@ message SyncPersistentPiecesResponse {
   optional int32 quic_port = 6;
 }
 
-// DownloadPersistentPieceRequest represents request of DownloadPersistentPiece.
-message DownloadPersistentPieceRequest{
-  // Host id.
-  string host_id = 1;
-  // Task id.
-  string task_id = 2;
-  // Piece number.
-  uint32 piece_number = 3;
-}
-
-// DownloadPersistentPieceResponse represents response of DownloadPersistentPieces.
-message DownloadPersistentPieceResponse {
-  // Piece information.
-  common.v2.Piece piece = 1;
-  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
-  optional string digest = 2;
-}
-
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
 message DownloadPersistentCacheTaskRequest {
   // Task id.
@@ -636,24 +618,6 @@ message SyncPersistentCachePiecesResponse {
   optional int32 quic_port = 6;
 }
 
-// DownloadPersistentCachePieceRequest represents request of DownloadPersistentCachePiece.
-message DownloadPersistentCachePieceRequest{
-  // Host id.
-  string host_id = 1;
-  // Task id.
-  string task_id = 2;
-  // Piece number.
-  uint32 piece_number = 3;
-}
-
-// DownloadPersistentCachePieceResponse represents response of DownloadPersistentCachePieces.
-message DownloadPersistentCachePieceResponse {
-  // Piece information.
-  common.v2.Piece piece = 1;
-  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
-  optional string digest = 2;
-}
-
 // SyncHostRequest represents request of SyncHost.
 message SyncHostRequest {
   // Host id.
@@ -725,9 +689,6 @@ service DfdaemonUpload {
   // SyncPersistentPieces syncs persistent pieces from remote peer.
   rpc SyncPersistentPieces(SyncPersistentPiecesRequest) returns(stream SyncPersistentPiecesResponse);
 
-  // DownloadPersistentPiece downloads persistent piece from p2p network.
-  rpc DownloadPersistentPiece(DownloadPersistentPieceRequest)returns(DownloadPersistentPieceResponse);
-
   // UpdatePersistentTask updates metadate of thr persistent task in p2p network.
   rpc UpdatePersistentTask(UpdatePersistentTaskRequest) returns(google.protobuf.Empty);
 
@@ -752,9 +713,6 @@ service DfdaemonUpload {
   // SyncPersistentCachePieces syncs persistent cache pieces from remote peer.
   rpc SyncPersistentCachePieces(SyncPersistentCachePiecesRequest) returns(stream SyncPersistentCachePiecesResponse);
 
-  // DownloadPersistentCachePiece downloads persistent cache piece from p2p network.
-  rpc DownloadPersistentCachePiece(DownloadPersistentCachePieceRequest)returns(DownloadPersistentCachePieceResponse);
-  
   // SyncHost sync host info from parents.
   rpc SyncHost(SyncHostRequest) returns (stream common.v2.Host);
 
