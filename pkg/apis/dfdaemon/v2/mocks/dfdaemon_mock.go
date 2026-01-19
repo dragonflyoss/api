@@ -245,26 +245,6 @@ func (mr *MockDfdaemonUploadClientMockRecorder) DownloadPersistentTask(ctx, in a
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadPersistentTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).DownloadPersistentTask), varargs...)
 }
 
-// DownloadPiece mocks base method.
-func (m *MockDfdaemonUploadClient) DownloadPiece(ctx context.Context, in *dfdaemon.DownloadPieceRequest, opts ...grpc.CallOption) (*dfdaemon.DownloadPieceResponse, error) {
-	m.ctrl.T.Helper()
-	varargs := []any{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "DownloadPiece", varargs...)
-	ret0, _ := ret[0].(*dfdaemon.DownloadPieceResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DownloadPiece indicates an expected call of DownloadPiece.
-func (mr *MockDfdaemonUploadClientMockRecorder) DownloadPiece(ctx, in any, opts ...any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadPiece", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).DownloadPiece), varargs...)
-}
-
 // DownloadTask mocks base method.
 func (m *MockDfdaemonUploadClient) DownloadTask(ctx context.Context, in *dfdaemon.DownloadTaskRequest, opts ...grpc.CallOption) (dfdaemon.DfdaemonUpload_DownloadTaskClient, error) {
 	m.ctrl.T.Helper()
@@ -1850,21 +1830,6 @@ func (m *MockDfdaemonUploadServer) DownloadPersistentTask(arg0 *dfdaemon.Downloa
 func (mr *MockDfdaemonUploadServerMockRecorder) DownloadPersistentTask(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadPersistentTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).DownloadPersistentTask), arg0, arg1)
-}
-
-// DownloadPiece mocks base method.
-func (m *MockDfdaemonUploadServer) DownloadPiece(arg0 context.Context, arg1 *dfdaemon.DownloadPieceRequest) (*dfdaemon.DownloadPieceResponse, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DownloadPiece", arg0, arg1)
-	ret0, _ := ret[0].(*dfdaemon.DownloadPieceResponse)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// DownloadPiece indicates an expected call of DownloadPiece.
-func (mr *MockDfdaemonUploadServerMockRecorder) DownloadPiece(arg0, arg1 any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DownloadPiece", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).DownloadPiece), arg0, arg1)
 }
 
 // DownloadTask mocks base method.
