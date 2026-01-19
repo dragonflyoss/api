@@ -36,8 +36,6 @@ type DfdaemonUploadClient interface {
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncPiecesClient, error)
-	// DownloadPiece downloads piece from the remote peer.
-	DownloadPiece(ctx context.Context, in *DownloadPieceRequest, opts ...grpc.CallOption) (*DownloadPieceResponse, error)
 	// DownloadCacheTask downloads cache task from p2p network.
 	DownloadCacheTask(ctx context.Context, in *DownloadCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonUpload_DownloadCacheTaskClient, error)
 	// StatCacheTask stats cache task information.
@@ -184,15 +182,6 @@ func (x *dfdaemonUploadSyncPiecesClient) Recv() (*SyncPiecesResponse, error) {
 		return nil, err
 	}
 	return m, nil
-}
-
-func (c *dfdaemonUploadClient) DownloadPiece(ctx context.Context, in *DownloadPieceRequest, opts ...grpc.CallOption) (*DownloadPieceResponse, error) {
-	out := new(DownloadPieceResponse)
-	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/DownloadPiece", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *dfdaemonUploadClient) DownloadCacheTask(ctx context.Context, in *DownloadCacheTaskRequest, opts ...grpc.CallOption) (DfdaemonUpload_DownloadCacheTaskClient, error) {
@@ -543,8 +532,6 @@ type DfdaemonUploadServer interface {
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error
-	// DownloadPiece downloads piece from the remote peer.
-	DownloadPiece(context.Context, *DownloadPieceRequest) (*DownloadPieceResponse, error)
 	// DownloadCacheTask downloads cache task from p2p network.
 	DownloadCacheTask(*DownloadCacheTaskRequest, DfdaemonUpload_DownloadCacheTaskServer) error
 	// StatCacheTask stats cache task information.
@@ -606,9 +593,6 @@ func (UnimplementedDfdaemonUploadServer) DeleteTask(context.Context, *DeleteTask
 }
 func (UnimplementedDfdaemonUploadServer) SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncPieces not implemented")
-}
-func (UnimplementedDfdaemonUploadServer) DownloadPiece(context.Context, *DownloadPieceRequest) (*DownloadPieceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DownloadPiece not implemented")
 }
 func (UnimplementedDfdaemonUploadServer) DownloadCacheTask(*DownloadCacheTaskRequest, DfdaemonUpload_DownloadCacheTaskServer) error {
 	return status.Errorf(codes.Unimplemented, "method DownloadCacheTask not implemented")
@@ -791,24 +775,6 @@ type dfdaemonUploadSyncPiecesServer struct {
 
 func (x *dfdaemonUploadSyncPiecesServer) Send(m *SyncPiecesResponse) error {
 	return x.ServerStream.SendMsg(m)
-}
-
-func _DfdaemonUpload_DownloadPiece_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DownloadPieceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DfdaemonUploadServer).DownloadPiece(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/dfdaemon.v2.DfdaemonUpload/DownloadPiece",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DfdaemonUploadServer).DownloadPiece(ctx, req.(*DownloadPieceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _DfdaemonUpload_DownloadCacheTask_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -1196,10 +1162,6 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTask",
 			Handler:    _DfdaemonUpload_DeleteTask_Handler,
-		},
-		{
-			MethodName: "DownloadPiece",
-			Handler:    _DfdaemonUpload_DownloadPiece_Handler,
 		},
 		{
 			MethodName: "StatCacheTask",

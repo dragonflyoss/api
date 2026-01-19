@@ -112,33 +112,6 @@ pub struct SyncPiecesResponse {
     #[prost(int32, optional, tag = "6")]
     pub quic_port: ::core::option::Option<i32>,
 }
-/// DownloadPieceRequest represents request of DownloadPiece.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadPieceRequest {
-    /// Host id.
-    #[prost(string, tag = "1")]
-    pub host_id: ::prost::alloc::string::String,
-    /// Task id.
-    #[prost(string, tag = "2")]
-    pub task_id: ::prost::alloc::string::String,
-    /// Piece number.
-    #[prost(uint32, tag = "3")]
-    pub piece_number: u32,
-}
-/// DownloadPieceResponse represents response of DownloadPieces.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadPieceResponse {
-    /// Piece information.
-    #[prost(message, optional, tag = "1")]
-    pub piece: ::core::option::Option<super::super::common::v2::Piece>,
-    /// Piece metadata digest, it is used to verify the integrity of the piece metadata.
-    #[prost(string, optional, tag = "2")]
-    pub digest: ::core::option::Option<::prost::alloc::string::String>,
-}
 /// StatTaskRequest represents request of StatTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1268,32 +1241,6 @@ pub mod dfdaemon_upload_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "SyncPieces"));
             self.inner.server_streaming(req, path, codec).await
         }
-        /// DownloadPiece downloads piece from the remote peer.
-        pub async fn download_piece(
-            &mut self,
-            request: impl tonic::IntoRequest<super::DownloadPieceRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::DownloadPieceResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
-            let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/dfdaemon.v2.DfdaemonUpload/DownloadPiece",
-            );
-            let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DownloadPiece"));
-            self.inner.unary(req, path, codec).await
-        }
         /// DownloadCacheTask downloads cache task from p2p network.
         pub async fn download_cache_task(
             &mut self,
@@ -2391,14 +2338,6 @@ pub mod dfdaemon_upload_server {
             &self,
             request: tonic::Request<super::SyncPiecesRequest>,
         ) -> std::result::Result<tonic::Response<Self::SyncPiecesStream>, tonic::Status>;
-        /// DownloadPiece downloads piece from the remote peer.
-        async fn download_piece(
-            &self,
-            request: tonic::Request<super::DownloadPieceRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::DownloadPieceResponse>,
-            tonic::Status,
-        >;
         /// Server streaming response type for the DownloadCacheTask method.
         type DownloadCacheTaskStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
@@ -2941,51 +2880,6 @@ pub mod dfdaemon_upload_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.server_streaming(method, req).await;
-                        Ok(res)
-                    };
-                    Box::pin(fut)
-                }
-                "/dfdaemon.v2.DfdaemonUpload/DownloadPiece" => {
-                    #[allow(non_camel_case_types)]
-                    struct DownloadPieceSvc<T: DfdaemonUpload>(pub Arc<T>);
-                    impl<
-                        T: DfdaemonUpload,
-                    > tonic::server::UnaryService<super::DownloadPieceRequest>
-                    for DownloadPieceSvc<T> {
-                        type Response = super::DownloadPieceResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
-                        fn call(
-                            &mut self,
-                            request: tonic::Request<super::DownloadPieceRequest>,
-                        ) -> Self::Future {
-                            let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as DfdaemonUpload>::download_piece(&inner, request).await
-                            };
-                            Box::pin(fut)
-                        }
-                    }
-                    let accept_compression_encodings = self.accept_compression_encodings;
-                    let send_compression_encodings = self.send_compression_encodings;
-                    let max_decoding_message_size = self.max_decoding_message_size;
-                    let max_encoding_message_size = self.max_encoding_message_size;
-                    let inner = self.inner.clone();
-                    let fut = async move {
-                        let method = DownloadPieceSvc(inner);
-                        let codec = tonic::codec::ProstCodec::default();
-                        let mut grpc = tonic::server::Grpc::new(codec)
-                            .apply_compression_config(
-                                accept_compression_encodings,
-                                send_compression_encodings,
-                            )
-                            .apply_max_message_size_config(
-                                max_decoding_message_size,
-                                max_encoding_message_size,
-                            );
-                        let res = grpc.unary(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)

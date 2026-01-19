@@ -97,24 +97,6 @@ message SyncPiecesResponse {
   optional int32 quic_port = 6;
 }
 
-// DownloadPieceRequest represents request of DownloadPiece.
-message DownloadPieceRequest{
-  // Host id.
-  string host_id = 1;
-  // Task id.
-  string task_id = 2;
-  // Piece number.
-  uint32 piece_number = 3;
-}
-
-// DownloadPieceResponse represents response of DownloadPieces.
-message DownloadPieceResponse {
-  // Piece information.
-  common.v2.Piece piece = 1;
-  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
-  optional string digest = 2;
-}
-
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest {
   // Task id.
@@ -721,9 +703,6 @@ service DfdaemonUpload {
 
   // SyncPieces syncs piece metadatas from remote peer.
   rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
-
-  // DownloadPiece downloads piece from the remote peer.
-  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
 
   // DownloadCacheTask downloads cache task from p2p network.
   rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);

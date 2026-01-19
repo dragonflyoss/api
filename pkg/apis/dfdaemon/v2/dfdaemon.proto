@@ -102,24 +102,6 @@ message SyncPiecesResponse {
   optional int32 quic_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
 }
 
-// DownloadPieceRequest represents request of DownloadPiece.
-message DownloadPieceRequest{
-  // Host id.
-  string host_id = 1 [(validate.rules).string.min_len = 1];
-  // Task id.
-  string task_id = 2 [(validate.rules).string.min_len = 1];
-  // Piece number.
-  uint32 piece_number = 3;
-}
-
-// DownloadPieceResponse represents response of DownloadPieces.
-message DownloadPieceResponse {
-  // Piece information.
-  common.v2.Piece piece = 1 [(validate.rules).message.required = true];
-  // Piece metadata digest, it is used to verify the integrity of the piece metadata.
-  optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
-}
-
 // StatTaskRequest represents request of StatTask.
 message StatTaskRequest {
   // Task id.
@@ -730,9 +712,6 @@ service DfdaemonUpload {
 
   // SyncPieces syncs piece metadatas from remote peer.
   rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
-
-  // DownloadPiece downloads piece from the remote peer.
-  rpc DownloadPiece(DownloadPieceRequest)returns(DownloadPieceResponse);
 
   // DownloadCacheTask downloads cache task from p2p network.
   rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
