@@ -724,6 +724,10 @@ message ObjectStorage {
     min_len: 1
     ignore_empty: true
   }];
+  // Insecure skip verify indicates whether to skip verifying the server's certificate chain.
+  optional bool insecure_skip_verify = 9;
+  // Plain http indicates whether to use plain HTTP for downloading.
+  optional bool plain_http = 10;
 }
 
 // HDFS related information.

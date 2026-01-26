@@ -768,6 +768,12 @@ pub struct ObjectStorage {
     /// Temporary STS security token for accessing OSS.
     #[prost(string, optional, tag = "8")]
     pub security_token: ::core::option::Option<::prost::alloc::string::String>,
+    /// Insecure skip verify indicates whether to skip verifying the server's certificate chain.
+    #[prost(bool, optional, tag = "9")]
+    pub insecure_skip_verify: ::core::option::Option<bool>,
+    /// Plain http indicates whether to use plain HTTP for downloading.
+    #[prost(bool, optional, tag = "10")]
+    pub plain_http: ::core::option::Option<bool>,
 }
 /// HDFS related information.
 #[derive(serde::Serialize, serde::Deserialize)]
