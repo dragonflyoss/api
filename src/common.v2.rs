@@ -771,9 +771,6 @@ pub struct ObjectStorage {
     /// Insecure skip verify indicates whether to skip verifying the server's certificate chain.
     #[prost(bool, optional, tag = "9")]
     pub insecure_skip_verify: ::core::option::Option<bool>,
-    /// Plain http indicates whether to use plain HTTP for downloading.
-    #[prost(bool, optional, tag = "10")]
-    pub plain_http: ::core::option::Option<bool>,
 }
 /// HDFS related information.
 #[derive(serde::Serialize, serde::Deserialize)]
