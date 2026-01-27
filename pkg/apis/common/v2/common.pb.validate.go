@@ -3853,6 +3853,14 @@ func (m *ObjectStorage) validate(all bool) error {
 
 	}
 
+	if m.InsecureSkipVerify != nil {
+		// no validation rules for InsecureSkipVerify
+	}
+
+	if m.PlainHttp != nil {
+		// no validation rules for PlainHttp
+	}
+
 	if len(errors) > 0 {
 		return ObjectStorageMultiError(errors)
 	}
