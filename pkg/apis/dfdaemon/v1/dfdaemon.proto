@@ -18,13 +18,13 @@ syntax = "proto3";
 
 package dfdaemon;
 
-import "pkg/apis/common/v1/common.proto";
 import "google/protobuf/empty.proto";
+import "pkg/apis/common/v1/common.proto";
 import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v1;dfdaemon";
 
-message DownRequest{
+message DownRequest {
   // Identify one downloading, the framework will fill it automatically.
   // Deprecated
   string uuid = 1;
@@ -51,7 +51,7 @@ message DownRequest{
   bool recursive = 13;
 }
 
-message DownResult{
+message DownResult {
   // Task id.
   string task_id = 2 [(validate.rules).string.min_len = 1];
   // Peer id.
@@ -64,7 +64,7 @@ message DownResult{
   string output = 6;
 }
 
-message StatTaskRequest{
+message StatTaskRequest {
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
@@ -73,7 +73,7 @@ message StatTaskRequest{
   bool local_only = 3;
 }
 
-message ImportTaskRequest{
+message ImportTaskRequest {
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
@@ -84,7 +84,7 @@ message ImportTaskRequest{
   common.TaskType type = 4;
 }
 
-message ExportTaskRequest{
+message ExportTaskRequest {
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // Output path of downloaded file.
@@ -103,7 +103,7 @@ message ExportTaskRequest{
   bool local_only = 9;
 }
 
-message DeleteTaskRequest{
+message DeleteTaskRequest {
   // Download url.
   string url = 1 [(validate.rules).string.min_len = 1];
   // URL meta info.
@@ -128,29 +128,29 @@ message PeerMetadata {
 
 // PeerExchangeData represents metadata of peer tasks.
 message PeerExchangeData {
-  repeated PeerMetadata PeerMetadatas= 1;
+  repeated PeerMetadata PeerMetadatas = 1;
 }
 
 // Daemon Client RPC Service
-service Daemon{
+service Daemon {
   // Trigger client to download file
-  rpc Download(DownRequest) returns(stream DownResult);
+  rpc Download(DownRequest) returns (stream DownResult);
   // Get piece tasks from other peers
-  rpc GetPieceTasks(common.PieceTaskRequest)returns(common.PiecePacket);
+  rpc GetPieceTasks(common.PieceTaskRequest) returns (common.PiecePacket);
   // Check daemon health
-  rpc CheckHealth(google.protobuf.Empty)returns(google.protobuf.Empty);
+  rpc CheckHealth(google.protobuf.Empty) returns (google.protobuf.Empty);
   // Sync piece tasks with other peers
-  rpc SyncPieceTasks(stream common.PieceTaskRequest)returns(stream common.PiecePacket);
+  rpc SyncPieceTasks(stream common.PieceTaskRequest) returns (stream common.PiecePacket);
   // Check if given task exists in P2P cache system
-  rpc StatTask(StatTaskRequest) returns(google.protobuf.Empty);
+  rpc StatTask(StatTaskRequest) returns (google.protobuf.Empty);
   // Import the given file into P2P cache system
-  rpc ImportTask(ImportTaskRequest) returns(google.protobuf.Empty);
+  rpc ImportTask(ImportTaskRequest) returns (google.protobuf.Empty);
   // Export or download file from P2P cache system
-  rpc ExportTask(ExportTaskRequest) returns(google.protobuf.Empty);
+  rpc ExportTask(ExportTaskRequest) returns (google.protobuf.Empty);
   // Delete file from P2P cache system
-  rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
   // LeaveHost releases host in scheduler.
-  rpc LeaveHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+  rpc LeaveHost(google.protobuf.Empty) returns (google.protobuf.Empty);
   // Exchange peers between daemons
-  rpc PeerExchange(stream PeerExchangeData)returns(stream PeerExchangeData);
+  rpc PeerExchange(stream PeerExchangeData) returns (stream PeerExchangeData);
 }

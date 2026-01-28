@@ -104,17 +104,17 @@ enum SizeScope {
 
 // TaskType represents type of task.
 enum TaskType {
-	// Normal is normal type of task,
-	// normal task is a normal p2p task.
+  // Normal is normal type of task,
+  // normal task is a normal p2p task.
   Normal = 0;
 
-	// DfCache is dfcache type of task,
-	// dfcache task is a cache task, and the task url is fake url.
-	// It can only be used for caching and cannot be downloaded back to source.
+  // DfCache is dfcache type of task,
+  // dfcache task is a cache task, and the task url is fake url.
+  // It can only be used for caching and cannot be downloaded back to source.
   DfCache = 1;
 
-	// DfStore is dfstore type of task,
-	// dfstore task is a persistent task in backend.
+  // DfStore is dfstore type of task,
+  // dfstore task is a persistent task in backend.
   DfStore = 2;
 }
 
@@ -163,11 +163,17 @@ message GrpcDfError {
 // UrlMeta describes url meta info.
 message UrlMeta {
   // Digest checks integrity of url content, for example md5:xxx or sha256:yyy.
-  string digest = 1 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$", ignore_empty:true}];
+  string digest = 1 [(validate.rules).string = {
+    pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$"
+    ignore_empty: true
+  }];
   // URL tag identifies different task for same url, conflict with digest.
   string tag = 2;
   // Content range for url.
-  string range = 3 [(validate.rules).string = {pattern: "^[0-9]+-[0-9]*$", ignore_empty:true}];
+  string range = 3 [(validate.rules).string = {
+    pattern: "^[0-9]+-[0-9]*$"
+    ignore_empty: true
+  }];
   // Filter url used to generate task id.
   string filter = 4;
   // Other url header infos.
@@ -195,14 +201,17 @@ message PieceInfo {
   int32 piece_num = 1;
   uint64 range_start = 2 [(validate.rules).uint64.gte = 0];
   uint32 range_size = 3 [(validate.rules).uint32.gte = 0];
-  string piece_md5 = 4 [(validate.rules).string = {pattern:"([a-f\\d]{32}|[A-F\\d]{32}|[a-f\\d]{16}|[A-F\\d]{16})", ignore_empty:true}];
+  string piece_md5 = 4 [(validate.rules).string = {
+    pattern: "([a-f\\d]{32}|[A-F\\d]{32}|[a-f\\d]{16}|[A-F\\d]{16})"
+    ignore_empty: true
+  }];
   uint64 piece_offset = 5 [(validate.rules).uint64.gte = 0];
   PieceStyle piece_style = 6;
   // Cost of the downloading.
   uint64 download_cost = 7 [(validate.rules).uint64.gte = 0];
 }
 
- // ExtendAttribute is extend attribute.
+// ExtendAttribute is extend attribute.
 message ExtendAttribute {
   // Task response header, eg: HTTP Response Header.
   map<string, string> header = 1;
@@ -238,13 +247,25 @@ message Host {
   // Peer hostname.
   string hostname = 3 [(validate.rules).string.hostname = true];
   // Port of grpc service.
-  int32 port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 4 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Port of download server.
-  int32 download_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 download_port = 5 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Host location, eg: area|country|province|city.
-  string location = 7 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  string location = 7 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // IDC where the peer host is located.
-  string idc = 8 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  string idc = 8 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Port of proxy server.
   int32 proxy_port = 9;
 }
