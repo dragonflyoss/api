@@ -153,6 +153,8 @@ message SchedulerCluster {
   bytes client_config = 5;
   // Cluster scopes.
   bytes scopes = 6;
+  // Cluster seed client config.
+  bytes seed_client_config = 7;
 }
 
 // SeedPeerCluster represents scheduler for network.
@@ -302,29 +304,29 @@ message KeepAliveRequest {
 // Manager RPC Service.
 service Manager {
   // Get SeedPeer and SeedPeer cluster configuration.
-  rpc GetSeedPeer(GetSeedPeerRequest) returns(SeedPeer);
+  rpc GetSeedPeer(GetSeedPeerRequest) returns (SeedPeer);
 
   // List acitve schedulers configuration.
-  rpc ListSeedPeers(ListSeedPeersRequest)returns(ListSeedPeersResponse);
+  rpc ListSeedPeers(ListSeedPeersRequest) returns (ListSeedPeersResponse);
 
   // Update SeedPeer configuration.
-  rpc UpdateSeedPeer(UpdateSeedPeerRequest) returns(SeedPeer);
+  rpc UpdateSeedPeer(UpdateSeedPeerRequest) returns (SeedPeer);
 
   // Delete SeedPeer configuration.
-  rpc DeleteSeedPeer(DeleteSeedPeerRequest) returns(google.protobuf.Empty);
+  rpc DeleteSeedPeer(DeleteSeedPeerRequest) returns (google.protobuf.Empty);
 
   // Get Scheduler and Scheduler cluster configuration.
-  rpc GetScheduler(GetSchedulerRequest)returns(Scheduler);
+  rpc GetScheduler(GetSchedulerRequest) returns (Scheduler);
 
   // Update scheduler configuration.
-  rpc UpdateScheduler(UpdateSchedulerRequest) returns(Scheduler);
+  rpc UpdateScheduler(UpdateSchedulerRequest) returns (Scheduler);
 
   // List acitve schedulers configuration.
-  rpc ListSchedulers(ListSchedulersRequest)returns(ListSchedulersResponse);
+  rpc ListSchedulers(ListSchedulersRequest) returns (ListSchedulersResponse);
 
   // List applications configuration.
-  rpc ListApplications(ListApplicationsRequest)returns(ListApplicationsResponse);
+  rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse);
 
   // KeepAlive with manager.
-  rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
+  rpc KeepAlive(stream KeepAliveRequest) returns (google.protobuf.Empty);
 }

@@ -29,7 +29,11 @@ message Backend {
   // Backend HTTP response header.
   map<string, string> header = 2;
   // Backend HTTP status code.
-  optional int32 status_code = 3 [(validate.rules).int32 = {gte: 100, lt: 599, ignore_empty: true}];
+  optional int32 status_code = 3 [(validate.rules).int32 = {
+    gte: 100
+    lt: 599
+    ignore_empty: true
+  }];
 }
 
 // Unknown is error detail for Unknown.

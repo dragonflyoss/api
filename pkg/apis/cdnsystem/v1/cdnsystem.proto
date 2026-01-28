@@ -23,7 +23,7 @@ import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/cdnsystem/v1;cdnsystem";
 
-message SeedRequest{
+message SeedRequest {
   string task_id = 1 [(validate.rules).string.min_len = 1];
   string url = 2 [(validate.rules).string.uri = true];
   common.UrlMeta url_meta = 3;
@@ -31,7 +31,7 @@ message SeedRequest{
 
 // keep piece meta and data separately
 // check piece md5, md5s sign and total content length
-message PieceSeed{
+message PieceSeed {
   // reuse already downloaded peer
   bool reuse = 1;
   // peer id for cdn node, need suffix with _CDN
@@ -55,12 +55,11 @@ message PieceSeed{
 }
 
 // CDN System RPC Service
-service Seeder{
+service Seeder {
   // Generate seeds and return to scheduler
-  rpc ObtainSeeds(SeedRequest)returns(stream PieceSeed);
+  rpc ObtainSeeds(SeedRequest) returns (stream PieceSeed);
   // Get piece tasks from cdn
-  rpc GetPieceTasks(common.PieceTaskRequest)returns(common.PiecePacket);
+  rpc GetPieceTasks(common.PieceTaskRequest) returns (common.PiecePacket);
   // Sync piece tasks with other peers
-  rpc SyncPieceTasks(stream common.PieceTaskRequest)returns(stream common.PiecePacket);
+  rpc SyncPieceTasks(stream common.PieceTaskRequest) returns (stream common.PiecePacket);
 }
-

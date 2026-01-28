@@ -181,6 +181,9 @@ pub struct SchedulerCluster {
     /// Cluster scopes.
     #[prost(bytes = "vec", tag = "6")]
     pub scopes: ::prost::alloc::vec::Vec<u8>,
+    /// Cluster seed client config.
+    #[prost(bytes = "vec", tag = "7")]
+    pub seed_client_config: ::prost::alloc::vec::Vec<u8>,
 }
 /// SeedPeerCluster represents scheduler for network.
 #[derive(serde::Serialize, serde::Deserialize)]

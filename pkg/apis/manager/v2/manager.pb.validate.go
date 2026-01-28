@@ -1313,6 +1313,8 @@ func (m *SchedulerCluster) validate(all bool) error {
 
 	// no validation rules for Scopes
 
+	// no validation rules for SeedClientConfig
+
 	if len(errors) > 0 {
 		return SchedulerClusterMultiError(errors)
 	}

@@ -20,8 +20,8 @@ package scheduler.v2;
 
 import "common.proto";
 import "errordetails.proto";
-import "google/protobuf/empty.proto";
 import "google/protobuf/duration.proto";
+import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
@@ -31,8 +31,7 @@ message RegisterPeerRequest {
 }
 
 // DownloadPeerStartedRequest represents peer download started request of AnnouncePeerRequest.
-message DownloadPeerStartedRequest {
-}
+message DownloadPeerStartedRequest {}
 
 // DownloadPeerBackToSourceStartedRequest represents peer download back-to-source started request of AnnouncePeerRequest.
 message DownloadPeerBackToSourceStartedRequest {
@@ -137,8 +136,7 @@ message AnnouncePeerRequest {
 }
 
 // EmptyTaskResponse represents empty task response of AnnouncePeerResponse.
-message EmptyTaskResponse {
-}
+message EmptyTaskResponse {}
 
 // NormalTaskResponse represents normal task response of AnnouncePeerResponse.
 message NormalTaskResponse {
@@ -207,8 +205,8 @@ message AnnounceHostRequest {
 
 // ListHostsRequest represents request of ListHosts.
 message ListHostsRequest {
-    // Type to filter hosts.
-    optional uint32 type = 1;
+  // Type to filter hosts.
+  optional uint32 type = 1;
 }
 
 // ListHostsResponse represents response of ListHosts.
@@ -218,7 +216,7 @@ message ListHostsResponse {
 }
 
 // DeleteHostRequest represents request of DeleteHost.
-message DeleteHostRequest{
+message DeleteHostRequest {
   // Host id.
   string host_id = 1;
 }
@@ -249,10 +247,10 @@ message RegisterCachePeerRequest {
   repeated string filtered_query_params = 8;
   // Task request headers.
   map<string, string> request_header = 9;
-	// Piece Length is the piece length(bytes) for downloading file. The value needs to
-	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
-	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
-	// the piece length will be calculated according to the file size.
+  // Piece Length is the piece length(bytes) for downloading file. The value needs to
+  // be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+  // for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+  // the piece length will be calculated according to the file size.
   optional uint64 piece_length = 10;
   // File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
   // Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
@@ -296,8 +294,7 @@ message RegisterCachePeerRequest {
 }
 
 // DownloadCachePeerStartedRequest represents cache peer download started request of AnnounceCachePeerRequest.
-message DownloadCachePeerStartedRequest {
-}
+message DownloadCachePeerStartedRequest {}
 
 // DownloadCachePeerBackToSourceStartedRequest represents cache peer download back-to-source started request of AnnounceCachePeerRequest.
 message DownloadCachePeerBackToSourceStartedRequest {
@@ -369,8 +366,7 @@ message AnnounceCachePeerRequest {
 }
 
 // EmptyCacheTaskResponse represents empty cache task response of AnnounceCachePeerResponse.
-message EmptyCacheTaskResponse {
-}
+message EmptyCacheTaskResponse {}
 
 // NormalCacheTaskResponse represents normal cache task response of AnnounceCachePeerResponse.
 message NormalCacheTaskResponse {
@@ -430,7 +426,7 @@ message RegisterPersistentPeerRequest {
   // object_storage.endpoint and object_storage.region must be unique, because
   // the persistent task cannot be overwritten once it is uploaded.
   string url = 1;
-    // Object storage protocol information.
+  // Object storage protocol information.
   common.v2.ObjectStorage object_storage = 2;
   // Persistent represents whether the persistent task is persistent.
   // If the persistent task is persistent, the persistent peer will
@@ -447,8 +443,7 @@ message RegisterPersistentPeerRequest {
 }
 
 // DownloadPersistentPeerStartedRequest represents persistent peer download started request of AnnouncePersistentPeerRequest.
-message DownloadPersistentPeerStartedRequest {
-}
+message DownloadPersistentPeerStartedRequest {}
 
 // DownloadPersistentPeerBackToSourceStartedRequest represents cache peer download back-to-source started request of AnnouncePersistentPeerRequest.
 message DownloadPersistentPeerBackToSourceStartedRequest {
@@ -466,12 +461,10 @@ message ReschedulePersistentPeerRequest {
 }
 
 // DownloadPersistentPeerFinishedRequest represents persistent peer download finished request of AnnouncePersistentPeerRequest.
-message DownloadPersistentPeerFinishedRequest {
-}
+message DownloadPersistentPeerFinishedRequest {}
 
 // DownloadPersistentPeerBackToSourceFinishedRequest represents cache peer download back-to-source finished request of AnnouncePersistentPeerRequest.
-message DownloadPersistentPeerBackToSourceFinishedRequest {
-}
+message DownloadPersistentPeerBackToSourceFinishedRequest {}
 
 // DownloadPersistentPeerFailedRequest represents persistent peer download failed request of AnnouncePersistentPeerRequest.
 message DownloadPersistentPeerFailedRequest {
@@ -511,8 +504,7 @@ message AnnouncePersistentPeerRequest {
 }
 
 // EmptyPersistentTaskResponse represents empty persistent task response of AnnouncePersistentPeerResponse.
-message EmptyPersistentTaskResponse {
-}
+message EmptyPersistentTaskResponse {}
 
 // NormalPersistentTaskResponse represents normal persistent task response of AnnouncePersistentPeerResponse.
 message NormalPersistentTaskResponse {
@@ -562,7 +554,7 @@ message UploadPersistentTaskStartedRequest {
   // object_storage.endpoint and object_storage.region must be unique, because
   // the persistent task cannot be overwritten once it is uploaded.
   string url = 4;
-    // Object storage protocol information.
+  // Object storage protocol information.
   common.v2.ObjectStorage object_storage = 5;
   // Replica count of the persistent task.
   uint64 persistent_replica_count = 6;
@@ -633,8 +625,7 @@ message RegisterPersistentCachePeerRequest {
 }
 
 // DownloadPersistentCachePeerStartedRequest represents persistent cache peer download started request of AnnouncePersistentCachePeerRequest.
-message DownloadPersistentCachePeerStartedRequest {
-}
+message DownloadPersistentCachePeerStartedRequest {}
 
 // ReschedulePersistentCachePeerRequest represents reschedule request of AnnouncePersistentCachePeerRequest.
 message ReschedulePersistentCachePeerRequest {
@@ -678,8 +669,7 @@ message AnnouncePersistentCachePeerRequest {
 }
 
 // EmptyPersistentCacheTaskResponse represents empty persistent cache task response of AnnouncePersistentCachePeerResponse.
-message EmptyPersistentCacheTaskResponse {
-}
+message EmptyPersistentCacheTaskResponse {}
 
 // NormalPersistentCacheTaskResponse represents normal persistent cache task response of AnnouncePersistentCachePeerResponse.
 message NormalPersistentCacheTaskResponse {
@@ -781,14 +771,14 @@ message DeletePersistentCacheTaskRequest {
 message PreheatImageRequest {
   // URL is the image manifest url for preheating.
   string url = 1;
-	// Piece Length is the piece length(bytes) for downloading file. The value needs to
-	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
-	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
-	// the piece length will be calculated according to the file size.
+  // Piece Length is the piece length(bytes) for downloading file. The value needs to
+  // be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+  // for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+  // the piece length will be calculated according to the file size.
   optional uint64 piece_length = 2;
-	// Tag is the tag for preheating.
+  // Tag is the tag for preheating.
   optional string tag = 3;
-	// Application is the application string for preheating.
+  // Application is the application string for preheating.
   optional string application = 4;
   // Filtered query params to generate the task id.
   // When filter is ["Signature", "Expires", "ns"], for example:
@@ -796,11 +786,11 @@ message PreheatImageRequest {
   // will generate the same task id.
   // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
   repeated string filtered_query_params = 5;
-	// Header is the http headers for authentication.
+  // Header is the http headers for authentication.
   map<string, string> header = 6;
-	// Username is the username for authentication.
+  // Username is the username for authentication.
   optional string username = 7;
-	// Password is the password for authentication.
+  // Password is the password for authentication.
   optional string password = 8;
   // Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
   optional string platform = 9;
@@ -809,30 +799,30 @@ message PreheatImageRequest {
   // - all_peers: preheat from all available peers.
   // - all_seed_peers: preheat from all seed peers.
   string scope = 10;
-	// IPs is a list of specific peer IPs for preheating.
-	// This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
-	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  // IPs is a list of specific peer IPs for preheating.
+  // This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
+  // Applies to 'all_peers' and 'all_seed_peers' scopes.
   repeated string ips = 11;
-	// Percentage is the percentage of available peers to preheat.
-	// This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
-	// It must be a value between 1 and 100 (inclusive) if provided.
-	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  // Percentage is the percentage of available peers to preheat.
+  // This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
+  // It must be a value between 1 and 100 (inclusive) if provided.
+  // Applies to 'all_peers' and 'all_seed_peers' scopes.
   optional uint32 percentage = 12;
-	// Count is the desired number of peers to preheat.
-	// This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
-	// It must be a value between 1 and 200 (inclusive) if provided.
-	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  // Count is the desired number of peers to preheat.
+  // This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
+  // It must be a value between 1 and 200 (inclusive) if provided.
+  // Applies to 'all_peers' and 'all_seed_peers' scopes.
   optional uint32 count = 13;
-	// ConcurrentTaskCount specifies the maximum number of tasks (e.g., image layers) to preheat concurrently.
-	// For example, if preheating 100 layers with ConcurrentTaskCount set to 10, up to 10 layers are processed simultaneously.
-	// If ConcurrentPeerCount is 10 for 1000 peers, each layer is preheated by 10 peers concurrently.
-	// Default is 8, maximum is 100.
+  // ConcurrentTaskCount specifies the maximum number of tasks (e.g., image layers) to preheat concurrently.
+  // For example, if preheating 100 layers with ConcurrentTaskCount set to 10, up to 10 layers are processed simultaneously.
+  // If ConcurrentPeerCount is 10 for 1000 peers, each layer is preheated by 10 peers concurrently.
+  // Default is 8, maximum is 100.
   optional int64 concurrent_task_count = 14;
-	// ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task (e.g., an image layer).
-	// For example, if preheating a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
-	// Default is 500, maximum is 1000.
+  // ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task (e.g., an image layer).
+  // For example, if preheating a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
+  // Default is 500, maximum is 1000.
   optional int64 concurrent_peer_count = 15;
-	// Timeout is the timeout for preheating, default is 30 minutes.
+  // Timeout is the timeout for preheating, default is 30 minutes.
   optional google.protobuf.Duration timeout = 16;
   // Preheat priority.
   common.v2.Priority priority = 17;
@@ -846,14 +836,14 @@ message PreheatImageRequest {
 message StatImageRequest {
   // URL is the image manifest url for preheating.
   string url = 1;
-	// Piece Length is the piece length(bytes) for downloading file. The value needs to
-	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
-	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
-	// the piece length will be calculated according to the file size.
+  // Piece Length is the piece length(bytes) for downloading file. The value needs to
+  // be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+  // for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+  // the piece length will be calculated according to the file size.
   optional uint64 piece_length = 2;
-	// Tag is the tag for preheating.
+  // Tag is the tag for preheating.
   optional string tag = 3;
-	// Application is the application string for preheating.
+  // Application is the application string for preheating.
   optional string application = 4;
   // Filtered query params to generate the task id.
   // When filter is ["Signature", "Expires", "ns"], for example:
@@ -861,24 +851,24 @@ message StatImageRequest {
   // will generate the same task id.
   // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
   repeated string filtered_query_params = 5;
-	// Header is the http headers for authentication.
+  // Header is the http headers for authentication.
   map<string, string> header = 6;
-	// Username is the username for authentication.
+  // Username is the username for authentication.
   optional string username = 7;
-	// Password is the password for authentication.
+  // Password is the password for authentication.
   optional string password = 8;
   // Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
   optional string platform = 9;
-	// ConcurrentLayerCount specifies the maximum number of layers to get concurrently.
-	// For example, if stat 100 layers with ConcurrentLayerCount set to 10, up to 10 layers are processed simultaneously.
-	// If ConcurrentPeerCount is 10 for 1000 peers, each layer is stated by 10 peers concurrently.
-	// Default is 8, maximum is 100.
+  // ConcurrentLayerCount specifies the maximum number of layers to get concurrently.
+  // For example, if stat 100 layers with ConcurrentLayerCount set to 10, up to 10 layers are processed simultaneously.
+  // If ConcurrentPeerCount is 10 for 1000 peers, each layer is stated by 10 peers concurrently.
+  // Default is 8, maximum is 100.
   optional int64 concurrent_layer_count = 10;
-	// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task (e.g., an image layer).
-	// For example, if stat a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
-	// Default is 500, maximum is 1000.
+  // ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task (e.g., an image layer).
+  // For example, if stat a layer with ConcurrentPeerCount set to 10, up to 10 peers process that layer simultaneously.
+  // Default is 500, maximum is 1000.
   optional int64 concurrent_peer_count = 11;
-	// Timeout is the timeout for preheating, default is 30 minutes.
+  // Timeout is the timeout for preheating, default is 30 minutes.
   optional google.protobuf.Duration timeout = 12;
   // certificate_chain is the client certs with DER format for the backend client.
   repeated bytes certificate_chain = 13;
@@ -888,19 +878,19 @@ message StatImageRequest {
 
 // StatImageResponse represents response of StatImage.
 message StatImageResponse {
-	// Image is the image information.
-	Image image = 1;
-	// Peers is the peers that have downloaded the image.
-	repeated PeerImage peers = 2;
+  // Image is the image information.
+  Image image = 1;
+  // Peers is the peers that have downloaded the image.
+  repeated PeerImage peers = 2;
 }
 
 // PeerImage represents a peer in the get image job.
 message PeerImage {
-	// IP is the IP address of the peer.
+  // IP is the IP address of the peer.
   string ip = 1;
-	// Hostname is the hostname of the peer.
+  // Hostname is the hostname of the peer.
   string hostname = 2;
-	// CachedLayers is the list of layers that the peer has downloaded.
+  // CachedLayers is the list of layers that the peer has downloaded.
   repeated Layer cached_layers = 3;
 }
 
@@ -912,7 +902,7 @@ message Image {
 
 // Layer represents a layer of the image.
 message Layer {
-	// URL is the URL of the layer.
+  // URL is the URL of the layer.
   string url = 1;
   // IsFinished indicates whether the layer has finished downloading on the peer.
   optional bool is_finished = 2;
@@ -922,14 +912,14 @@ message Layer {
 message PreheatFileRequest {
   // URL is the file url for preheating.
   string url = 1;
-	// Piece Length is the piece length(bytes) for downloading file. The value needs to
-	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
-	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
-	// the piece length will be calculated according to the file size.
+  // Piece Length is the piece length(bytes) for downloading file. The value needs to
+  // be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+  // for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+  // the piece length will be calculated according to the file size.
   optional uint64 piece_length = 2;
-	// Tag is the tag for preheating.
+  // Tag is the tag for preheating.
   optional string tag = 3;
-	// Application is the application string for preheating.
+  // Application is the application string for preheating.
   optional string application = 4;
   // Filtered query params to generate the task id.
   // When filter is ["Signature", "Expires", "ns"], for example:
@@ -937,37 +927,37 @@ message PreheatFileRequest {
   // will generate the same task id.
   // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
   repeated string filtered_query_params = 5;
-	// Header is the http headers for authentication.
+  // Header is the http headers for authentication.
   map<string, string> header = 6;
   // Scope is the scope for preheating, it can be one of the following values:
   // - single_seed_peer: preheat from a single seed peer.
   // - all_peers: preheat from all available peers.
   // - all_seed_peers: preheat from all seed peers.
   string scope = 7;
-	// IPs is a list of specific peer IPs for preheating.
-	// This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
-	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  // IPs is a list of specific peer IPs for preheating.
+  // This field has the highest priority: if provided, both 'Count' and 'Percentage' will be ignored.
+  // Applies to 'all_peers' and 'all_seed_peers' scopes.
   repeated string ips = 8;
-	// Percentage is the percentage of available peers to preheat.
-	// This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
-	// It must be a value between 1 and 100 (inclusive) if provided.
-	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  // Percentage is the percentage of available peers to preheat.
+  // This field has the lowest priority and is only used if both 'IPs' and 'Count' are not provided.
+  // It must be a value between 1 and 100 (inclusive) if provided.
+  // Applies to 'all_peers' and 'all_seed_peers' scopes.
   optional uint32 percentage = 9;
-	// Count is the desired number of peers to preheat.
-	// This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
-	// It must be a value between 1 and 200 (inclusive) if provided.
-	// Applies to 'all_peers' and 'all_seed_peers' scopes.
+  // Count is the desired number of peers to preheat.
+  // This field is used only when 'IPs' is not specified. It has priority over 'Percentage'.
+  // It must be a value between 1 and 200 (inclusive) if provided.
+  // Applies to 'all_peers' and 'all_seed_peers' scopes.
   optional uint32 count = 10;
-	// ConcurrentTaskCount specifies the maximum number of tasks to preheat concurrently.
-	// For example, if preheating 100 files with ConcurrentTaskCount set to 10, up to 10 files are processed simultaneously.
-	// If ConcurrentPeerCount is 10 for 1000 peers, each file is preheated by 10 peers concurrently.
-	// Default is 8, maximum is 100.
+  // ConcurrentTaskCount specifies the maximum number of tasks to preheat concurrently.
+  // For example, if preheating 100 files with ConcurrentTaskCount set to 10, up to 10 files are processed simultaneously.
+  // If ConcurrentPeerCount is 10 for 1000 peers, each file is preheated by 10 peers concurrently.
+  // Default is 8, maximum is 100.
   optional int64 concurrent_task_count = 11;
-	// ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task.
-	// For example, if preheating a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
-	// Default is 500, maximum is 1000.
+  // ConcurrentPeerCount specifies the maximum number of peers to preheat concurrently for a single task.
+  // For example, if preheating a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
+  // Default is 500, maximum is 1000.
   optional int64 concurrent_peer_count = 12;
-	// Timeout is the timeout for preheating, default is 30 minutes.
+  // Timeout is the timeout for preheating, default is 30 minutes.
   optional google.protobuf.Duration timeout = 13;
   // Preheat priority.
   common.v2.Priority priority = 14;
@@ -987,14 +977,14 @@ message PreheatFileRequest {
 message StatFileRequest {
   // URL is the file url for stat.
   string url = 1;
-	// Piece Length is the piece length(bytes) for downloading file. The value needs to
-	// be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
-	// for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
-	// the piece length will be calculated according to the file size.
+  // Piece Length is the piece length(bytes) for downloading file. The value needs to
+  // be greater than 4MiB (4,194,304 bytes) and less than 64MiB (67,108,864 bytes),
+  // for example: 4194304(4mib), 8388608(8mib). If the piece length is not specified,
+  // the piece length will be calculated according to the file size.
   optional uint64 piece_length = 2;
-	// Tag is the tag for stat.
+  // Tag is the tag for stat.
   optional string tag = 3;
-	// Application is the application string for stat.
+  // Application is the application string for stat.
   optional string application = 4;
   // Filtered query params to generate the task id.
   // When filter is ["Signature", "Expires", "ns"], for example:
@@ -1002,13 +992,13 @@ message StatFileRequest {
   // will generate the same task id.
   // Default value includes the filtered query params of s3, gcs, oss, obs, cos.
   repeated string filtered_query_params = 5;
-	// Header is the http headers for authentication.
+  // Header is the http headers for authentication.
   map<string, string> header = 6;
-	// ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task.
-	// For example, if stat a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
-	// Default is 500, maximum is 1000.
+  // ConcurrentPeerCount specifies the maximum number of peers stat concurrently for a single task.
+  // For example, if stat a file with ConcurrentPeerCount set to 10, up to 10 peers process that file simultaneously.
+  // Default is 500, maximum is 1000.
   optional int64 concurrent_peer_count = 7;
-	// Timeout is the timeout for stat, default is 30 minutes.
+  // Timeout is the timeout for stat, default is 30 minutes.
   optional google.protobuf.Duration timeout = 8;
   // certificate_chain is the client certs with DER format for the backend client.
   repeated bytes certificate_chain = 9;
@@ -1022,22 +1012,22 @@ message StatFileRequest {
 
 // StatFileResponse represents response of StatFile.
 message StatFileResponse {
-	// Peers is the peers that have downloaded the file.
-	repeated PeerFile peers = 1;
+  // Peers is the peers that have downloaded the file.
+  repeated PeerFile peers = 1;
 }
 
 // PeerFile represents a peer in the get file job.
 message PeerFile {
-	// IP is the IP address of the peer.
+  // IP is the IP address of the peer.
   string ip = 1;
-	// Hostname is the hostname of the peer.
+  // Hostname is the hostname of the peer.
   string hostname = 2;
   // CachedFiles is the list of files that the peer has downloaded.
-  repeated File cached_files = 3; 
+  repeated File cached_files = 3;
 }
 
 // File represents the file information.
-message File { 
+message File {
   // URL is the url of the file.
   string url = 1;
   // IsFinished indicates whether the file has finished downloading on the peer.
@@ -1047,91 +1037,91 @@ message File {
 // Scheduler RPC Service.
 service Scheduler {
   // AnnouncePeer announces peer to scheduler.
-  rpc AnnouncePeer(stream AnnouncePeerRequest) returns(stream AnnouncePeerResponse);
+  rpc AnnouncePeer(stream AnnouncePeerRequest) returns (stream AnnouncePeerResponse);
 
   // Checks information of peer.
-  rpc StatPeer(StatPeerRequest)returns(common.v2.Peer);
+  rpc StatPeer(StatPeerRequest) returns (common.v2.Peer);
 
   // DeletePeer releases peer in scheduler.
-  rpc DeletePeer(DeletePeerRequest)returns(google.protobuf.Empty);
+  rpc DeletePeer(DeletePeerRequest) returns (google.protobuf.Empty);
 
   // Checks information of task.
-  rpc StatTask(StatTaskRequest)returns(common.v2.Task);
+  rpc StatTask(StatTaskRequest) returns (common.v2.Task);
 
   // DeleteTask releases task in scheduler.
-  rpc DeleteTask(DeleteTaskRequest)returns(google.protobuf.Empty);
+  rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
 
   // AnnounceHost announces host to scheduler.
-  rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);
+  rpc AnnounceHost(AnnounceHostRequest) returns (google.protobuf.Empty);
 
   // ListHosts lists hosts in scheduler.
-  rpc ListHosts(ListHostsRequest)returns(ListHostsResponse);
+  rpc ListHosts(ListHostsRequest) returns (ListHostsResponse);
 
   // DeleteHost releases host in scheduler.
-  rpc DeleteHost(DeleteHostRequest)returns(google.protobuf.Empty);
+  rpc DeleteHost(DeleteHostRequest) returns (google.protobuf.Empty);
 
   // AnnounceCachePeer announces cache peer to scheduler.
-  rpc AnnounceCachePeer(stream AnnounceCachePeerRequest) returns(stream AnnounceCachePeerResponse);
+  rpc AnnounceCachePeer(stream AnnounceCachePeerRequest) returns (stream AnnounceCachePeerResponse);
 
   // Checks information of cache peer.
-  rpc StatCachePeer(StatCachePeerRequest)returns(common.v2.CachePeer);
+  rpc StatCachePeer(StatCachePeerRequest) returns (common.v2.CachePeer);
 
   // DeletCacheePeer releases cache peer in scheduler.
-  rpc DeleteCachePeer(DeleteCachePeerRequest)returns(google.protobuf.Empty);
+  rpc DeleteCachePeer(DeleteCachePeerRequest) returns (google.protobuf.Empty);
 
   // Checks information of cache task.
-  rpc StatCacheTask(StatCacheTaskRequest)returns(common.v2.CacheTask);
+  rpc StatCacheTask(StatCacheTaskRequest) returns (common.v2.CacheTask);
 
   // DeleteCacheTask releases cache task in scheduler.
-  rpc DeleteCacheTask(DeleteCacheTaskRequest)returns(google.protobuf.Empty);
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns (google.protobuf.Empty);
 
   // AnnouncePersistentPeer announces persistent peer to scheduler.
-  rpc AnnouncePersistentPeer(stream AnnouncePersistentPeerRequest) returns(stream AnnouncePersistentPeerResponse);
+  rpc AnnouncePersistentPeer(stream AnnouncePersistentPeerRequest) returns (stream AnnouncePersistentPeerResponse);
 
   // Checks information of persistent peer.
-  rpc StatPersistentPeer(StatPersistentPeerRequest)returns(common.v2.PersistentPeer);
+  rpc StatPersistentPeer(StatPersistentPeerRequest) returns (common.v2.PersistentPeer);
 
   // DeletePersistentPeer releases persistent peer in scheduler.
-  rpc DeletePersistentPeer(DeletePersistentPeerRequest)returns(google.protobuf.Empty);
+  rpc DeletePersistentPeer(DeletePersistentPeerRequest) returns (google.protobuf.Empty);
 
   // UploadPersistentTaskStarted uploads persistent task started to scheduler.
-  rpc UploadPersistentTaskStarted(UploadPersistentTaskStartedRequest)returns(google.protobuf.Empty);
+  rpc UploadPersistentTaskStarted(UploadPersistentTaskStartedRequest) returns (google.protobuf.Empty);
 
   // UploadPersistentTaskFinished uploads persistent task finished to scheduler.
-  rpc UploadPersistentTaskFinished(UploadPersistentTaskFinishedRequest)returns(common.v2.PersistentTask);
+  rpc UploadPersistentTaskFinished(UploadPersistentTaskFinishedRequest) returns (common.v2.PersistentTask);
 
   // UploadPersistentTaskFailed uploads persistent task failed to scheduler.
-  rpc UploadPersistentTaskFailed(UploadPersistentTaskFailedRequest)returns(google.protobuf.Empty);
+  rpc UploadPersistentTaskFailed(UploadPersistentTaskFailedRequest) returns (google.protobuf.Empty);
 
   // Checks information of persistent task.
-  rpc StatPersistentTask(StatPersistentTaskRequest)returns(common.v2.PersistentTask);
+  rpc StatPersistentTask(StatPersistentTaskRequest) returns (common.v2.PersistentTask);
 
   // DeletePersistentTask releases persistent task in scheduler.
-  rpc DeletePersistentTask(DeletePersistentTaskRequest)returns(google.protobuf.Empty);
+  rpc DeletePersistentTask(DeletePersistentTaskRequest) returns (google.protobuf.Empty);
 
   // AnnouncePersistentCachePeer announces persistent cache peer to scheduler.
-  rpc AnnouncePersistentCachePeer(stream AnnouncePersistentCachePeerRequest) returns(stream AnnouncePersistentCachePeerResponse);
+  rpc AnnouncePersistentCachePeer(stream AnnouncePersistentCachePeerRequest) returns (stream AnnouncePersistentCachePeerResponse);
 
   // Checks information of persistent cache peer.
-  rpc StatPersistentCachePeer(StatPersistentCachePeerRequest)returns(common.v2.PersistentCachePeer);
+  rpc StatPersistentCachePeer(StatPersistentCachePeerRequest) returns (common.v2.PersistentCachePeer);
 
   // DeletePersistentCachePeer releases persistent cache peer in scheduler.
-  rpc DeletePersistentCachePeer(DeletePersistentCachePeerRequest)returns(google.protobuf.Empty);
+  rpc DeletePersistentCachePeer(DeletePersistentCachePeerRequest) returns (google.protobuf.Empty);
 
   // UploadPersistentCacheTaskStarted uploads persistent cache task started to scheduler.
-  rpc UploadPersistentCacheTaskStarted(UploadPersistentCacheTaskStartedRequest)returns(google.protobuf.Empty);
+  rpc UploadPersistentCacheTaskStarted(UploadPersistentCacheTaskStartedRequest) returns (google.protobuf.Empty);
 
   // UploadPersistentCacheTaskFinished uploads persistent cache task finished to scheduler.
-  rpc UploadPersistentCacheTaskFinished(UploadPersistentCacheTaskFinishedRequest)returns(common.v2.PersistentCacheTask);
+  rpc UploadPersistentCacheTaskFinished(UploadPersistentCacheTaskFinishedRequest) returns (common.v2.PersistentCacheTask);
 
   // UploadPersistentCacheTaskFailed uploads persistent cache task failed to scheduler.
-  rpc UploadPersistentCacheTaskFailed(UploadPersistentCacheTaskFailedRequest)returns(google.protobuf.Empty);
+  rpc UploadPersistentCacheTaskFailed(UploadPersistentCacheTaskFailedRequest) returns (google.protobuf.Empty);
 
   // Checks information of persistent cache task.
-  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest)returns(common.v2.PersistentCacheTask);
+  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns (common.v2.PersistentCacheTask);
 
   // DeletePersistentCacheTask releases persistent cache task in scheduler.
-  rpc DeletePersistentCacheTask(DeletePersistentCacheTaskRequest)returns(google.protobuf.Empty);
+  rpc DeletePersistentCacheTask(DeletePersistentCacheTaskRequest) returns (google.protobuf.Empty);
 
   // PreheatImage synchronously resolves an image manifest and triggers an asynchronous preheat task.
   //
@@ -1143,15 +1133,15 @@ service Scheduler {
   //
   // A successful response (google.protobuf.Empty) confirms that the preparation is complete
   // and the asynchronous download task has been scheduled.
-  rpc PreheatImage(PreheatImageRequest)returns(google.protobuf.Empty);
+  rpc PreheatImage(PreheatImageRequest) returns (google.protobuf.Empty);
 
   // StatImage provides detailed status for a container image's distribution in peers.
   //
   // This is a blocking call that first resolves the image manifest and then queries
   // all peers to collect the image's download state across the network.
   // The response includes both layer information and the status on each peer.
-  rpc StatImage(StatImageRequest)returns(StatImageResponse);
-  
+  rpc StatImage(StatImageRequest) returns (StatImageResponse);
+
   // PreheatFile synchronously resolves a file URL and triggers an asynchronous preheat task.
   //
   // This is a blocking call. The RPC will not return until the server has completed the
@@ -1162,12 +1152,12 @@ service Scheduler {
   //
   // A successful response (google.protobuf.Empty) confirms that the preparation is complete
   // and the asynchronous download task has been scheduled.
-  rpc PreheatFile(PreheatFileRequest)returns(google.protobuf.Empty);
+  rpc PreheatFile(PreheatFileRequest) returns (google.protobuf.Empty);
 
   // StatFile provides detailed status for a file's distribution in peers.
   //
   // This is a blocking call that first resolves the file URL and then queries
   // all peers to collect the file's download state across the network.
   // The response includes both file information and the status on each peer.
-  rpc StatFile(StatFileRequest)returns(StatFileResponse);
+  rpc StatFile(StatFileRequest) returns (StatFileResponse);
 }

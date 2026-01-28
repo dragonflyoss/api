@@ -311,7 +311,7 @@ message SyncCachePiecesResponse {
 }
 
 // DownloadCachePieceRequest represents request of DownloadCachePiece.
-message DownloadCachePieceRequest{
+message DownloadCachePieceRequest {
   // Host id.
   string host_id = 1;
   // Task id.
@@ -651,116 +651,116 @@ message ExchangeIBVerbsQueuePairEndpointResponse {
 // DfdaemonUpload represents upload service of dfdaemon.
 service DfdaemonUpload {
   // DownloadTask downloads task from p2p network.
-  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
+  rpc DownloadTask(DownloadTaskRequest) returns (stream DownloadTaskResponse);
 
   // StatTask stats task information.
-  rpc StatTask(StatTaskRequest) returns(common.v2.Task);
+  rpc StatTask(StatTaskRequest) returns (common.v2.Task);
 
   // StatLocalTask stats local task information from peer.
-  rpc StatLocalTask(StatLocalTaskRequest) returns(StatLocalTaskResponse);
+  rpc StatLocalTask(StatLocalTaskRequest) returns (StatLocalTaskResponse);
 
   // ListTaskEntries lists task entries for downloading directory.
-  rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
+  rpc ListTaskEntries(ListTaskEntriesRequest) returns (ListTaskEntriesResponse);
 
   // DeleteTask deletes task from p2p network.
-  rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
 
   // SyncPieces syncs piece metadatas from remote peer.
-  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
+  rpc SyncPieces(SyncPiecesRequest) returns (stream SyncPiecesResponse);
 
   // DownloadCacheTask downloads cache task from p2p network.
-  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns (stream DownloadCacheTaskResponse);
 
   // StatCacheTask stats cache task information.
-  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+  rpc StatCacheTask(StatCacheTaskRequest) returns (common.v2.CacheTask);
 
   // DeleteCacheTask deletes cache task from p2p network.
-  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns (google.protobuf.Empty);
 
   // SyncCachePieces syncs cache piece metadatas from remote peer.
-  rpc SyncCachePieces(SyncCachePiecesRequest) returns(stream SyncCachePiecesResponse);
+  rpc SyncCachePieces(SyncCachePiecesRequest) returns (stream SyncCachePiecesResponse);
 
   // DownloadCachePiece downloads cache piece from the remote peer.
-  rpc DownloadCachePiece(DownloadCachePieceRequest)returns(DownloadCachePieceResponse);
+  rpc DownloadCachePiece(DownloadCachePieceRequest) returns (DownloadCachePieceResponse);
 
   // DownloadPersistentTask downloads persistent task from p2p network.
-  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns(stream DownloadPersistentTaskResponse);
+  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns (stream DownloadPersistentTaskResponse);
 
   // SyncPersistentPieces syncs persistent pieces from remote peer.
-  rpc SyncPersistentPieces(SyncPersistentPiecesRequest) returns(stream SyncPersistentPiecesResponse);
+  rpc SyncPersistentPieces(SyncPersistentPiecesRequest) returns (stream SyncPersistentPiecesResponse);
 
   // UpdatePersistentTask updates metadate of thr persistent task in p2p network.
-  rpc UpdatePersistentTask(UpdatePersistentTaskRequest) returns(google.protobuf.Empty);
+  rpc UpdatePersistentTask(UpdatePersistentTaskRequest) returns (google.protobuf.Empty);
 
   // StatPersistentTask stats persistent task information.
-  rpc StatPersistentTask(StatPersistentTaskRequest) returns(common.v2.PersistentTask);
+  rpc StatPersistentTask(StatPersistentTaskRequest) returns (common.v2.PersistentTask);
 
   // DeletePersistentTask deletes persistent task from p2p network.
-  rpc DeletePersistentTask(DeletePersistentTaskRequest) returns(google.protobuf.Empty);
+  rpc DeletePersistentTask(DeletePersistentTaskRequest) returns (google.protobuf.Empty);
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
-  rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
+  rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns (stream DownloadPersistentCacheTaskResponse);
 
   // UpdatePersistentCacheTask updates metadate of thr persistent cache task in p2p network.
-  rpc UpdatePersistentCacheTask(UpdatePersistentCacheTaskRequest) returns(google.protobuf.Empty);
+  rpc UpdatePersistentCacheTask(UpdatePersistentCacheTaskRequest) returns (google.protobuf.Empty);
 
   // StatPersistentCacheTask stats persistent cache task information.
-  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
+  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns (common.v2.PersistentCacheTask);
 
   // DeletePersistentCacheTask deletes persistent cache task from p2p network.
-  rpc DeletePersistentCacheTask(DeletePersistentCacheTaskRequest) returns(google.protobuf.Empty);
+  rpc DeletePersistentCacheTask(DeletePersistentCacheTaskRequest) returns (google.protobuf.Empty);
 
   // SyncPersistentCachePieces syncs persistent cache pieces from remote peer.
-  rpc SyncPersistentCachePieces(SyncPersistentCachePiecesRequest) returns(stream SyncPersistentCachePiecesResponse);
+  rpc SyncPersistentCachePieces(SyncPersistentCachePiecesRequest) returns (stream SyncPersistentCachePiecesResponse);
 
   // SyncHost sync host info from parents.
   rpc SyncHost(SyncHostRequest) returns (stream common.v2.Host);
 
   // ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
-  rpc ExchangeIBVerbsQueuePairEndpoint(ExchangeIBVerbsQueuePairEndpointRequest) returns(ExchangeIBVerbsQueuePairEndpointResponse);
+  rpc ExchangeIBVerbsQueuePairEndpoint(ExchangeIBVerbsQueuePairEndpointRequest) returns (ExchangeIBVerbsQueuePairEndpointResponse);
 }
 
 // DfdaemonDownload represents download service of dfdaemon.
 service DfdaemonDownload {
   // DownloadTask downloads task from p2p network.
-  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
+  rpc DownloadTask(DownloadTaskRequest) returns (stream DownloadTaskResponse);
 
   // StatTask stats task information.
-  rpc StatTask(StatTaskRequest) returns(common.v2.Task);
+  rpc StatTask(StatTaskRequest) returns (common.v2.Task);
 
   // StatLocalTask stats local task information from peer.
-  rpc StatLocalTask(StatLocalTaskRequest) returns(StatLocalTaskResponse);
+  rpc StatLocalTask(StatLocalTaskRequest) returns (StatLocalTaskResponse);
 
   // ListTaskEntries lists task entries for downloading directory.
-  rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
+  rpc ListTaskEntries(ListTaskEntriesRequest) returns (ListTaskEntriesResponse);
 
   // DeleteTask deletes task from p2p network.
-  rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
 
   // DeleteHost releases host in scheduler.
-  rpc DeleteHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+  rpc DeleteHost(google.protobuf.Empty) returns (google.protobuf.Empty);
 
-   // DownloadCacheTask downloads cache task from p2p network.
-  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+  // DownloadCacheTask downloads cache task from p2p network.
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns (stream DownloadCacheTaskResponse);
 
   // StatCacheTask stats cache task information.
-  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+  rpc StatCacheTask(StatCacheTaskRequest) returns (common.v2.CacheTask);
 
   // DeleteCacheTask deletes cache task from p2p network.
-  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns (google.protobuf.Empty);
 
   // DownloadPersistentTask downloads persistent task from p2p network.
-  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns(stream DownloadPersistentTaskResponse);
+  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns (stream DownloadPersistentTaskResponse);
 
   // UploadPersistentTask uploads persistent task to p2p network.
-  rpc UploadPersistentTask(UploadPersistentTaskRequest) returns(common.v2.PersistentTask);
+  rpc UploadPersistentTask(UploadPersistentTaskRequest) returns (common.v2.PersistentTask);
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
-  rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
+  rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns (stream DownloadPersistentCacheTaskResponse);
 
   // UploadPersistentCacheTask uploads persistent cache task to p2p network.
-  rpc UploadPersistentCacheTask(UploadPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
+  rpc UploadPersistentCacheTask(UploadPersistentCacheTaskRequest) returns (common.v2.PersistentCacheTask);
 
   // StatPersistentCacheTask stats persistent cache task information.
-  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
+  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns (common.v2.PersistentCacheTask);
 }

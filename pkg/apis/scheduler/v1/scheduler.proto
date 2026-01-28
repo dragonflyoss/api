@@ -18,15 +18,15 @@ syntax = "proto3";
 
 package scheduler;
 
+import "google/protobuf/empty.proto";
 import "pkg/apis/common/v1/common.proto";
 import "pkg/apis/errordetails/v1/errordetails.proto";
 import "validate/validate.proto";
-import "google/protobuf/empty.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/scheduler/v1;scheduler";
 
 // PeerTaskRequest represents request of RegisterPeerTask.
-message PeerTaskRequest{
+message PeerTaskRequest {
   // Download url.
   string url = 1 [(validate.rules).string.uri = true];
   // URL meta info.
@@ -44,7 +44,7 @@ message PeerTaskRequest{
 }
 
 // RegisterResult represents response of RegisterPeerTask.
-message RegisterResult{
+message RegisterResult {
   // Task type.
   common.TaskType task_type = 1;
   // Task id
@@ -52,7 +52,7 @@ message RegisterResult{
   // File size scope.
   common.SizeScope size_scope = 3;
   // Download the only piece directly for small or tiny file.
-  oneof direct_piece{
+  oneof direct_piece {
     // Return single piece info when size scope is small.
     SinglePiece single_piece = 4;
     // Return task content when size scope is tiny.
@@ -64,7 +64,7 @@ message RegisterResult{
 }
 
 // SinglePiece represents information of single piece.
-message SinglePiece{
+message SinglePiece {
   // Destination peer id.
   string dst_pid = 1 [(validate.rules).string.min_len = 1];
   // Destination download address.
@@ -74,15 +74,21 @@ message SinglePiece{
 }
 
 // PeerHost represents information of peer host.
-message PeerHost{
+message PeerHost {
   // Peer host id.
   string id = 1 [(validate.rules).string.min_len = 1];
   // peer host ip
   string ip = 2 [(validate.rules).string.ip = true];
   // Port of grpc service.
-  int32 rpc_port = 3 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 rpc_port = 3 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Port of download server.
-  int32 down_port = 4 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 down_port = 4 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Peer hostname.
   string hostname = 5 [(validate.rules).string.hostname = true];
   // Location path(area|country|province|city|...).
@@ -94,7 +100,7 @@ message PeerHost{
 }
 
 // PieceResult represents request of ReportPieceResult.
-message PieceResult{
+message PieceResult {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Source peer id.
@@ -119,12 +125,15 @@ message PieceResult{
 }
 
 // PeerPacket represents response of ReportPieceResult.
-message PeerPacket{
-  message DestPeer{
+message PeerPacket {
+  message DestPeer {
     // Destination ip.
     string ip = 1 [(validate.rules).string.ip = true];
     // Port of grpc service.
-    int32 rpc_port = 2 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+    int32 rpc_port = 2 [(validate.rules).int32 = {
+      gte: 1024
+      lt: 65535
+    }];
     // Destination peer id.
     string peer_id = 3 [(validate.rules).string.min_len = 1];
   }
@@ -140,14 +149,14 @@ message PeerPacket{
   // Result code.
   common.Code code = 7;
   // Error detail.
-  oneof errordetails{
+  oneof errordetails {
     // Source error.
     errordetails.SourceError source_error = 8;
   }
 }
 
 // PeerResult represents response of ReportPeerResult.
-message PeerResult{
+message PeerResult {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Peer id.
@@ -171,18 +180,21 @@ message PeerResult{
   // Task total piece count.
   int32 total_piece_count = 12 [(validate.rules).int32.gte = -1];
   // Error detail.
-  oneof errordetails{
+  oneof errordetails {
     // Source error.
     errordetails.SourceError source_error = 13;
   }
 }
 
 // AnnounceTaskRequest represents request of AnnounceTask.
-message AnnounceTaskRequest{
+message AnnounceTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Download url.
-  string url = 2 [(validate.rules).string = {uri: true, ignore_empty: true}];
+  string url = 2 [(validate.rules).string = {
+    uri: true
+    ignore_empty: true
+  }];
   // URL meta info.
   common.UrlMeta url_meta = 3 [(validate.rules).message.required = true];
   // Peer host info.
@@ -194,13 +206,13 @@ message AnnounceTaskRequest{
 }
 
 // StatTaskRequest represents request of StatTask.
-message StatTaskRequest{
+message StatTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // Task represents download task.
-message Task{
+message Task {
   // Task id.
   string id = 1 [(validate.rules).string.min_len = 1];
   // Task type.
@@ -218,7 +230,7 @@ message Task{
 }
 
 // PeerTarget represents request of LeaveTask.
-message PeerTarget{
+message PeerTarget {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Peer id.
@@ -226,25 +238,36 @@ message PeerTarget{
 }
 
 // LeaveHostRequest represents request of LeaveHost.
-message LeaveHostRequest{
+message LeaveHostRequest {
   // Host id.
   string id = 1 [(validate.rules).string.min_len = 1];
 }
 
 // AnnounceHostRequest represents request of AnnounceHost.
-message AnnounceHostRequest{
+message AnnounceHostRequest {
   // Host id.
   string id = 1 [(validate.rules).string.min_len = 1];
   // Host type.
-  string type = 2 [(validate.rules).string = {in: ["normal", "super"]}];
+  string type = 2 [(validate.rules).string = {
+    in: [
+      "normal",
+      "super"
+    ]
+  }];
   // Hostname.
   string hostname = 3 [(validate.rules).string.min_len = 1];
   // Host ip.
   string ip = 4 [(validate.rules).string.ip = true];
   // Port of grpc service.
-  int32 port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 5 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Port of download server.
-  int32 download_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 download_port = 6 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Host OS.
   string os = 7;
   // Host platform.
@@ -268,7 +291,11 @@ message AnnounceHostRequest{
   // ID of the cluster to which the host belongs.
   uint64 scheduler_cluster_id = 17;
   // Port of object storage server.
-  int32 object_storage_port = 18 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  int32 object_storage_port = 18 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+    ignore_empty: true
+  }];
   // Port of proxy server.
   int32 proxy_port = 19;
 }
@@ -349,7 +376,10 @@ message Disk {
   // Used amount of disk on the data path of dragonfly.
   uint64 used = 3;
   // Used percent of disk on the data path of dragonfly directory.
-  double used_percent = 4 [(validate.rules).double = {gte: 0, lte: 100}];
+  double used_percent = 4 [(validate.rules).double = {
+    gte: 0
+    lte: 100
+  }];
   // Total amount of indoes on the data path of dragonfly directory.
   uint64 inodes_total = 5;
   // Used amount of indoes on the data path of dragonfly directory.
@@ -357,7 +387,10 @@ message Disk {
   // Free amount of indoes on the data path of dragonfly directory.
   uint64 inodes_free = 7;
   // Used percent of indoes on the data path of dragonfly directory.
-  double inodes_used_percent = 8 [(validate.rules).double = {gte: 0, lte: 100}];
+  double inodes_used_percent = 8 [(validate.rules).double = {
+    gte: 0
+    lte: 100
+  }];
 }
 
 // Build information.
@@ -373,28 +406,28 @@ message Build {
 }
 
 // Scheduler RPC Service.
-service Scheduler{
+service Scheduler {
   // RegisterPeerTask registers a peer into task.
-  rpc RegisterPeerTask(PeerTaskRequest)returns(RegisterResult);
+  rpc RegisterPeerTask(PeerTaskRequest) returns (RegisterResult);
 
   // ReportPieceResult reports piece results and receives peer packets.
-  rpc ReportPieceResult(stream PieceResult)returns(stream PeerPacket);
+  rpc ReportPieceResult(stream PieceResult) returns (stream PeerPacket);
 
   // ReportPeerResult reports downloading result for the peer.
-  rpc ReportPeerResult(PeerResult)returns(google.protobuf.Empty);
+  rpc ReportPeerResult(PeerResult) returns (google.protobuf.Empty);
 
   // A peer announces that it has the announced task to other peers.
-  rpc AnnounceTask(AnnounceTaskRequest) returns(google.protobuf.Empty);
+  rpc AnnounceTask(AnnounceTaskRequest) returns (google.protobuf.Empty);
 
   // Checks if any peer has the given task.
-  rpc StatTask(StatTaskRequest)returns(Task);
+  rpc StatTask(StatTaskRequest) returns (Task);
 
   // LeaveTask makes the peer leaving from task.
-  rpc LeaveTask(PeerTarget)returns(google.protobuf.Empty);
+  rpc LeaveTask(PeerTarget) returns (google.protobuf.Empty);
 
   // AnnounceHost announces host to scheduler.
-  rpc AnnounceHost(AnnounceHostRequest)returns(google.protobuf.Empty);
+  rpc AnnounceHost(AnnounceHostRequest) returns (google.protobuf.Empty);
 
   // LeaveHost makes the peers leaving from host.
-  rpc LeaveHost(LeaveHostRequest)returns(google.protobuf.Empty);
+  rpc LeaveHost(LeaveHostRequest) returns (google.protobuf.Empty);
 }

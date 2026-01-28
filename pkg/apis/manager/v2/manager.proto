@@ -18,8 +18,8 @@ syntax = "proto3";
 
 package manager.v2;
 
-import "pkg/apis/common/v2/common.proto";
 import "google/protobuf/empty.proto";
+import "pkg/apis/common/v2/common.proto";
 import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/manager/v2;manager";
@@ -64,7 +64,7 @@ message SeedPeer {
   string ip = 6;
   // Seed peer grpc port.
   int32 port = 7;
-   // Seed peer download port.
+  // Seed peer download port.
   int32 download_port = 8;
   // Seed peer state.
   string state = 9;
@@ -85,7 +85,10 @@ message GetSeedPeerRequest {
   // ID of the cluster to which the seed peer belongs.
   uint64 seed_peer_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Seed peer ip.
-  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  string ip = 4 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // ListSeedPeersRequest represents request of ListSeedPeers.
@@ -97,9 +100,17 @@ message ListSeedPeersRequest {
   // Source service ip.
   string ip = 3 [(validate.rules).string.ip = true];
   // Dfdaemon version.
-  string version = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string version = 4 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
   // Dfdaemon commit.
-  string commit = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string commit = 5 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
 }
 
 // ListSeedPeersResponse represents response of ListSeedPeers.
@@ -115,17 +126,32 @@ message UpdateSeedPeerRequest {
   // Seed peer hostname.
   string hostname = 2 [(validate.rules).string.hostname = true];
   // Seed peer type.
-  string type = 3 [(validate.rules).string = {in: ["super"]}];
+  string type = 3 [(validate.rules).string = {
+    in: ["super"]
+  }];
   // Seed peer idc.
-  optional string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  optional string idc = 4 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
   // Seed peer location.
-  optional string location = 5 [(validate.rules).string = {max_len: 1024, ignore_empty: true}];
+  optional string location = 5 [(validate.rules).string = {
+    max_len: 1024
+    ignore_empty: true
+  }];
   // Seed peer ip.
   string ip = 6 [(validate.rules).string = {ip: true}];
   // Seed peer port.
-  int32 port = 7 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 7 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Seed peer download port.
-  int32 download_port = 8 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 download_port = 8 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // ID of the cluster to which the seed peer belongs.
   uint64 seed_peer_cluster_id = 9 [(validate.rules).uint64 = {gte: 1}];
 }
@@ -139,7 +165,10 @@ message DeleteSeedPeerRequest {
   // ID of the cluster to which the seed peer belongs.
   uint64 seed_peer_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Seed peer ip.
-  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  string ip = 4 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // SeedPeerCluster represents cluster of scheduler.
@@ -156,6 +185,8 @@ message SchedulerCluster {
   bytes client_config = 5;
   // Cluster scopes.
   bytes scopes = 6;
+  // Cluster seed client config.
+  bytes seed_client_config = 7;
 }
 
 // SeedPeerCluster represents scheduler for network.
@@ -193,7 +224,10 @@ message GetSchedulerRequest {
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Scheduler ip.
-  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  string ip = 4 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // UpdateSchedulerRequest represents request of UpdateScheduler.
@@ -205,13 +239,24 @@ message UpdateSchedulerRequest {
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Scheduler idc.
-  optional string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  optional string idc = 4 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
   // Scheduler location.
-  optional string location = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  optional string location = 5 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
   // Scheduler ip.
   string ip = 6 [(validate.rules).string = {ip: true}];
   // Scheduler port.
-  int32 port = 7 [(validate.rules).int32 = {gte: 1024, lt: 65535}];
+  int32 port = 7 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+  }];
   // Scheduler features.
   repeated string features = 8;
   // Scheduler configuration.
@@ -227,13 +272,29 @@ message ListSchedulersRequest {
   // Source service ip.
   string ip = 3 [(validate.rules).string.ip = true];
   // Source idc.
-  optional string idc = 4 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  optional string idc = 4 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
   // Source location.
-  optional string location = 5 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  optional string location = 5 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
   // Dfdaemon version.
-  string version = 6 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string version = 6 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
   // Dfdaemon commit.
-  string commit = 7 [(validate.rules).string = {min_len: 1, max_len: 1024, ignore_empty: true}];
+  string commit = 7 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+    ignore_empty: true
+  }];
   // ID of the cluster to which the scheduler belongs.
   uint64 scheduler_cluster_id = 8;
 }
@@ -265,7 +326,10 @@ message Application {
   // Application id.
   uint64 id = 1 [(validate.rules).uint64 = {gte: 1}];
   // Application name.
-  string name = 2 [(validate.rules).string = {min_len: 1, max_len: 1024}];
+  string name = 2 [(validate.rules).string = {
+    min_len: 1
+    max_len: 1024
+  }];
   // Application url.
   string url = 3 [(validate.rules).string.uri = true];
   // Application biography.
@@ -299,35 +363,38 @@ message KeepAliveRequest {
   // ID of the cluster to which the source service belongs.
   uint64 cluster_id = 3 [(validate.rules).uint64 = {gte: 1}];
   // Source service ip.
-  string ip = 4 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  string ip = 4 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // Manager RPC Service.
 service Manager {
   // Get SeedPeer and SeedPeer cluster configuration.
-  rpc GetSeedPeer(GetSeedPeerRequest) returns(SeedPeer);
+  rpc GetSeedPeer(GetSeedPeerRequest) returns (SeedPeer);
 
   // List acitve schedulers configuration.
-  rpc ListSeedPeers(ListSeedPeersRequest)returns(ListSeedPeersResponse);
+  rpc ListSeedPeers(ListSeedPeersRequest) returns (ListSeedPeersResponse);
 
   // Update SeedPeer configuration.
-  rpc UpdateSeedPeer(UpdateSeedPeerRequest) returns(SeedPeer);
+  rpc UpdateSeedPeer(UpdateSeedPeerRequest) returns (SeedPeer);
 
   // Delete SeedPeer configuration.
-  rpc DeleteSeedPeer(DeleteSeedPeerRequest) returns(google.protobuf.Empty);
+  rpc DeleteSeedPeer(DeleteSeedPeerRequest) returns (google.protobuf.Empty);
 
   // Get Scheduler and Scheduler cluster configuration.
-  rpc GetScheduler(GetSchedulerRequest)returns(Scheduler);
+  rpc GetScheduler(GetSchedulerRequest) returns (Scheduler);
 
   // Update scheduler configuration.
-  rpc UpdateScheduler(UpdateSchedulerRequest) returns(Scheduler);
+  rpc UpdateScheduler(UpdateSchedulerRequest) returns (Scheduler);
 
   // List acitve schedulers configuration.
-  rpc ListSchedulers(ListSchedulersRequest)returns(ListSchedulersResponse);
+  rpc ListSchedulers(ListSchedulersRequest) returns (ListSchedulersResponse);
 
   // List applications configuration.
-  rpc ListApplications(ListApplicationsRequest)returns(ListApplicationsResponse);
+  rpc ListApplications(ListApplicationsRequest) returns (ListApplicationsResponse);
 
   // KeepAlive with manager.
-  rpc KeepAlive(stream KeepAliveRequest)returns(google.protobuf.Empty);
+  rpc KeepAlive(stream KeepAliveRequest) returns (google.protobuf.Empty);
 }

@@ -18,11 +18,11 @@ syntax = "proto3";
 
 package dfdaemon.v2;
 
-import "pkg/apis/common/v2/common.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
-import "validate/validate.proto";
 import "google/protobuf/timestamp.proto";
+import "pkg/apis/common/v2/common.proto";
+import "validate/validate.proto";
 
 option go_package = "d7y.io/api/v2/pkg/apis/dfdaemon/v2;dfdaemon";
 
@@ -97,9 +97,17 @@ message SyncPiecesResponse {
   // the IP is used to exchange the queue pair endpoint of IBVerbs.
   string ip = 4 [(validate.rules).string.ip = true];
   // TCP port is used to indicate the tcp server port of the peer.
-  optional int32 tcp_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  optional int32 tcp_port = 5 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+    ignore_empty: true
+  }];
   // QUIC port is used to indicate the quic server port of the peer.
-  optional int32 quic_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  optional int32 quic_port = 6 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+    ignore_empty: true
+  }];
 }
 
 // StatTaskRequest represents request of StatTask.
@@ -107,7 +115,10 @@ message StatTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the stat request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 
   reserved 3;
   reserved "local_only";
@@ -118,7 +129,10 @@ message StatLocalTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the stat request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // StatLocalTaskResponse represents response of StatLocalTask.
@@ -126,7 +140,10 @@ message StatLocalTaskResponse {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Task piece length.
-  optional uint64 piece_length = 2 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];;
+  optional uint64 piece_length = 2 [(validate.rules).uint64 = {
+    gte: 4194304
+    ignore_empty: true
+  }];
   // Task content length.
   optional uint64 content_length = 3;
   // Task response headers.
@@ -164,7 +181,10 @@ message ListTaskEntriesRequest {
   // HDFS protocol information.
   optional common.v2.HDFS hdfs = 7;
   // Remote IP represents the IP address of the client initiating the list request.
-  optional string remote_ip = 8 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 8 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // ListTaskEntriesResponse represents response of ListTaskEntries.
@@ -174,7 +194,11 @@ message ListTaskEntriesResponse {
   // HTTP header to be sent with the request.
   map<string, string> response_header = 2;
   // Backend HTTP status code.
-  optional int32 status_code = 3 [(validate.rules).int32 = {gte: 100, lt: 599, ignore_empty: true}];
+  optional int32 status_code = 3 [(validate.rules).int32 = {
+    gte: 100
+    lt: 599
+    ignore_empty: true
+  }];
   /// Entries is the information of the entries in the directory.
   repeated Entry entries = 4;
 }
@@ -194,15 +218,21 @@ message DeleteTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the delete request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // DownloadCacheTaskRequest represents request of DownloadCacheTask.
 message DownloadCacheTaskRequest {
-   // Download url.
+  // Download url.
   string url = 1 [(validate.rules).string.uri = true];
   // Digest of the task digest, for example blake3:xxx or sha256:yyy.
-  optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
+  optional string digest = 2 [(validate.rules).string = {
+    pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$"
+    ignore_empty: true
+  }];
   // Range is url range of request. If protocol is http, range
   // will set in request header. If protocol is others, range
   // will set in range field.
@@ -224,12 +254,18 @@ message DownloadCacheTaskRequest {
   // Task request headers.
   map<string, string> request_header = 9;
   // Task piece length, the value needs to be greater than or equal to 4194304(4MiB).
-  optional uint64 piece_length = 10 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];
+  optional uint64 piece_length = 10 [(validate.rules).uint64 = {
+    gte: 4194304
+    ignore_empty: true
+  }];
   // File path to be downloaded. If output_path is set, the downloaded file will be saved to the specified path.
   // Dfdaemon will try to create hard link to the output path before starting the download. If hard link creation fails,
   // it will copy the file to the output path after the download is completed.
   // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
-  optional string output_path = 11 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string output_path = 11 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Download timeout.
   optional google.protobuf.Duration timeout = 12;
   // Dfdaemon cannot download the task from the source if disable_back_to_source is true.
@@ -255,7 +291,10 @@ message DownloadCacheTaskRequest {
   // remote_ip represents the IP address of the client initiating the download request.
   // For proxy requests, it is set to the IP address of the request source.
   // For dfget requests, it is set to the IP address of the dfget.
-  optional string remote_ip = 22 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 22 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
   // Overwrite indicates whether to overwrite the existing file at output path.
   bool overwrite = 23;
 }
@@ -318,7 +357,7 @@ message SyncCachePiecesResponse {
 }
 
 // DownloadCachePieceRequest represents request of DownloadCachePiece.
-message DownloadCachePieceRequest{
+message DownloadCachePieceRequest {
   // Host id.
   string host_id = 1 [(validate.rules).string.min_len = 1];
   // Task id.
@@ -332,7 +371,10 @@ message DownloadCachePieceResponse {
   // Piece information.
   common.v2.Piece piece = 1 [(validate.rules).message.required = true];
   // Piece metadata digest, it is used to verify the integrity of the piece metadata.
-  optional string digest = 2 [(validate.rules).string = {pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$", ignore_empty: true}];
+  optional string digest = 2 [(validate.rules).string = {
+    pattern: "^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$"
+    ignore_empty: true
+  }];
 }
 
 // StatCacheTaskRequest represents request of StatCacheTask.
@@ -340,7 +382,10 @@ message StatCacheTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the stat request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // DeleteCacheTaskRequest represents request of DeleteCacheTask.
@@ -348,7 +393,10 @@ message DeleteCacheTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the delete request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // DownloadPersistentTaskRequest represents request of DownloadPersistentTask.
@@ -357,8 +405,11 @@ message DownloadPersistentTaskRequest {
   // for example: `s3://<bucket>/path`, `gcs://<bucket>/path`. The combination of url,
   // object_storage.endpoint and object_storage.region must be unique, because
   // the persistent task cannot be overwritten once it is uploaded.
-  string url = 1 [(validate.rules).string = {uri: true, ignore_empty: true}];
-    // Object storage protocol information.
+  string url = 1 [(validate.rules).string = {
+    uri: true
+    ignore_empty: true
+  }];
+  // Object storage protocol information.
   common.v2.ObjectStorage object_storage = 2;
   // Persistent represents whether the persistent task is persistent.
   // If the persistent task is persistent, the persistent peer will
@@ -368,7 +419,10 @@ message DownloadPersistentTaskRequest {
   // Dfdaemon will try to create hard link to the output path before starting the export. If hard link creation fails,
   // it will copy the file to the output path after the export is completed.
   // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
-  optional string output_path = 4 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string output_path = 4 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Download timeout.
   optional google.protobuf.Duration timeout = 5;
   // need_piece_content is the flag to indicate whether the response needs to return piece content.
@@ -384,7 +438,10 @@ message DownloadPersistentTaskRequest {
   // Digest calculation increases processing time. Enable only when data integrity verification is critical.
   optional string digest = 8;
   // Remote IP represents the IP address of the client initiating the download request.
-  optional string remote_ip = 9 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 9 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
   // Overwrite indicates whether to overwrite the existing file at output path.
   bool overwrite = 10;
 }
@@ -416,19 +473,25 @@ message UploadPersistentTaskRequest {
   // for example: `s3://<bucket>/path`, `gcs://<bucket>/path`. The combination of url,
   // object_storage.endpoint and object_storage.region must be unique, because
   // the persistent task cannot be overwritten once it is uploaded.
-  string url = 1  [(validate.rules).string.uri = true];
-    // Object storage protocol information.
+  string url = 1 [(validate.rules).string.uri = true];
+  // Object storage protocol information.
   common.v2.ObjectStorage object_storage = 2 [(validate.rules).message.required = true];
   // Source file path of the persistent task.
   string path = 3 [(validate.rules).string = {min_len: 1}];
   // Replica count of the persistent persistent task.
   uint64 persistent_replica_count = 4;
   // TTL of the persistent task.
-  google.protobuf.Duration ttl = 5 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
+  google.protobuf.Duration ttl = 5 [(validate.rules).duration = {
+    gte: {seconds: 60}
+    lte: {seconds: 604800}
+  }];
   // Download timeout.
   optional google.protobuf.Duration timeout = 6;
   // Remote IP represents the IP address of the client initiating the upload request.
-  optional string remote_ip = 7 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 7 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // UpdatePersistentTaskRequest represents request of UpdatePersistentTask.
@@ -441,7 +504,10 @@ message UpdatePersistentTaskRequest {
   // when the task is deleted by the user.
   bool persistent = 2;
   // Remote IP represents the IP address of the client initiating the list request.
-  optional string remote_ip = 3 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 3 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // StatPersistentTaskRequest represents request of StatPersistentTask.
@@ -449,7 +515,10 @@ message StatPersistentTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the stat request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // DeletePersistentTaskRequest represents request of DeletePersistentTask.
@@ -457,7 +526,10 @@ message DeletePersistentTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the delete request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // SyncPersistentPiecesRequest represents request of SyncPersistentPieces.
@@ -482,9 +554,17 @@ message SyncPersistentPiecesResponse {
   // the IP is used to exchange the queue pair endpoint of IBVerbs.
   string ip = 4 [(validate.rules).string.ip = true];
   // TCP port is used to indicate the tcp server port of the peer.
-  optional int32 tcp_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  optional int32 tcp_port = 5 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+    ignore_empty: true
+  }];
   // QUIC port is used to indicate the quic server port of the peer.
-  optional int32 quic_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  optional int32 quic_port = 6 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+    ignore_empty: true
+  }];
 }
 
 // DownloadPersistentCacheTaskRequest represents request of DownloadPersistentCacheTask.
@@ -503,7 +583,10 @@ message DownloadPersistentCacheTaskRequest {
   // Dfdaemon will try to create hard link to the output path before starting the export. If hard link creation fails,
   // it will copy the file to the output path after the export is completed.
   // For more details refer to https://github.com/dragonflyoss/design/blob/main/systems-analysis/file-download-workflow-with-hard-link/README.md.
-  optional string output_path = 5 [(validate.rules).string = {min_len: 1, ignore_empty: true}];
+  optional string output_path = 5 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
   // Download timeout.
   optional google.protobuf.Duration timeout = 6;
   // need_piece_content is the flag to indicate whether the response needs to return piece content.
@@ -519,7 +602,10 @@ message DownloadPersistentCacheTaskRequest {
   // Digest calculation increases processing time. Enable only when data integrity verification is critical.
   optional string digest = 9;
   // Remote IP represents the IP address of the client initiating the download request.
-  optional string remote_ip = 10 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 10 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
   // Overwrite indicates whether to overwrite the existing file at output path.
   bool overwrite = 11;
 }
@@ -556,19 +642,31 @@ message UploadPersistentCacheTaskRequest {
   // Upload file path of persistent cache task.
   string path = 2 [(validate.rules).string = {min_len: 1}];
   // Replica count of the persistent persistent cache task.
-  uint64 persistent_replica_count = 3 [(validate.rules).uint64 = {gte: 1, lte: 5}];
+  uint64 persistent_replica_count = 3 [(validate.rules).uint64 = {
+    gte: 1
+    lte: 5
+  }];
   // Tag is used to distinguish different persistent cache tasks.
   optional string tag = 4;
   // Application of the persistent cache task.
   optional string application = 5;
   // Piece length of the persistent cache task, the value needs to be greater than or equal to 4194304(4MiB).
-  optional uint64 piece_length = 6 [(validate.rules).uint64 = {gte: 4194304, ignore_empty: true}];
+  optional uint64 piece_length = 6 [(validate.rules).uint64 = {
+    gte: 4194304
+    ignore_empty: true
+  }];
   // TTL of the persistent cache task.
-  google.protobuf.Duration ttl = 7 [(validate.rules).duration = {gte:{seconds: 60}, lte:{seconds: 604800}}];
+  google.protobuf.Duration ttl = 7 [(validate.rules).duration = {
+    gte: {seconds: 60}
+    lte: {seconds: 604800}
+  }];
   // Download timeout.
   optional google.protobuf.Duration timeout = 8;
   // Remote IP represents the IP address of the client initiating the upload request.
-  optional string remote_ip = 9 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 9 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // UpdatePersistentCacheTaskRequest represents request of UpdatePersistentCacheTask.
@@ -581,7 +679,10 @@ message UpdatePersistentCacheTaskRequest {
   // when the task is deleted by the user.
   bool persistent = 2;
   // Remote IP represents the IP address of the client initiating the update request.
-  optional string remote_ip = 3 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 3 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // StatPersistentCacheTaskRequest represents request of StatPersistentCacheTask.
@@ -589,7 +690,10 @@ message StatPersistentCacheTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the stat request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // DeletePersistentCacheTaskRequest represents request of DeletePersistentCacheTask.
@@ -597,7 +701,10 @@ message DeletePersistentCacheTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the delete request.
-  optional string remote_ip = 2 [(validate.rules).string = {ip: true, ignore_empty: true}];
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
 }
 
 // SyncPersistentCachePiecesRequest represents request of SyncPersistentCachePieces.
@@ -622,9 +729,17 @@ message SyncPersistentCachePiecesResponse {
   // the IP is used to exchange the queue pair endpoint of IBVerbs.
   string ip = 4 [(validate.rules).string.ip = true];
   // TCP port is used to indicate the tcp server port of the peer.
-  optional int32 tcp_port = 5 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  optional int32 tcp_port = 5 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+    ignore_empty: true
+  }];
   // QUIC port is used to indicate the quic server port of the peer.
-  optional int32 quic_port = 6 [(validate.rules).int32 = {gte: 1024, lt: 65535, ignore_empty: true}];
+  optional int32 quic_port = 6 [(validate.rules).int32 = {
+    gte: 1024
+    lt: 65535
+    ignore_empty: true
+  }];
 }
 
 // SyncHostRequest represents request of SyncHost.
@@ -660,116 +775,116 @@ message ExchangeIBVerbsQueuePairEndpointResponse {
 // DfdaemonUpload represents dfdaemon upload service.
 service DfdaemonUpload {
   // DownloadTask downloads task from p2p network.
-  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
+  rpc DownloadTask(DownloadTaskRequest) returns (stream DownloadTaskResponse);
 
   // StatTask stats task information.
-  rpc StatTask(StatTaskRequest) returns(common.v2.Task);
+  rpc StatTask(StatTaskRequest) returns (common.v2.Task);
 
   // StatLocalTask stats local task information from peer.
-  rpc StatLocalTask(StatLocalTaskRequest) returns(StatLocalTaskResponse);
+  rpc StatLocalTask(StatLocalTaskRequest) returns (StatLocalTaskResponse);
 
   // ListTaskEntries lists task entries for downloading directory.
-  rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
+  rpc ListTaskEntries(ListTaskEntriesRequest) returns (ListTaskEntriesResponse);
 
   // DeleteTask deletes task from p2p network.
-  rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
 
   // SyncPieces syncs piece metadatas from remote peer.
-  rpc SyncPieces(SyncPiecesRequest) returns(stream SyncPiecesResponse);
+  rpc SyncPieces(SyncPiecesRequest) returns (stream SyncPiecesResponse);
 
   // DownloadCacheTask downloads cache task from p2p network.
-  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns (stream DownloadCacheTaskResponse);
 
   // StatCacheTask stats cache task information.
-  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+  rpc StatCacheTask(StatCacheTaskRequest) returns (common.v2.CacheTask);
 
   // DeleteCacheTask deletes cache task from p2p network.
-  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns (google.protobuf.Empty);
 
   // SyncCachePieces syncs cache piece metadatas from remote peer.
-  rpc SyncCachePieces(SyncCachePiecesRequest) returns(stream SyncCachePiecesResponse);
+  rpc SyncCachePieces(SyncCachePiecesRequest) returns (stream SyncCachePiecesResponse);
 
   // DownloadCachePiece downloads cache piece from the remote peer.
-  rpc DownloadCachePiece(DownloadCachePieceRequest)returns(DownloadCachePieceResponse);
+  rpc DownloadCachePiece(DownloadCachePieceRequest) returns (DownloadCachePieceResponse);
 
   // DownloadPersistentTask downloads persistent task from p2p network.
-  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns(stream DownloadPersistentTaskResponse);
+  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns (stream DownloadPersistentTaskResponse);
 
   // SyncPersistentPieces syncs persistent pieces from remote peer.
-  rpc SyncPersistentPieces(SyncPersistentPiecesRequest) returns(stream SyncPersistentPiecesResponse);
+  rpc SyncPersistentPieces(SyncPersistentPiecesRequest) returns (stream SyncPersistentPiecesResponse);
 
   // UpdatePersistentTask updates metadate of thr persistent task in p2p network.
-  rpc UpdatePersistentTask(UpdatePersistentTaskRequest) returns(google.protobuf.Empty);
+  rpc UpdatePersistentTask(UpdatePersistentTaskRequest) returns (google.protobuf.Empty);
 
   // StatPersistentTask stats persistent task information.
-  rpc StatPersistentTask(StatPersistentTaskRequest) returns(common.v2.PersistentTask);
+  rpc StatPersistentTask(StatPersistentTaskRequest) returns (common.v2.PersistentTask);
 
   // DeletePersistentTask deletes persistent task from p2p network.
-  rpc DeletePersistentTask(DeletePersistentTaskRequest) returns(google.protobuf.Empty);
+  rpc DeletePersistentTask(DeletePersistentTaskRequest) returns (google.protobuf.Empty);
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
-  rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
+  rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns (stream DownloadPersistentCacheTaskResponse);
 
   // UpdatePersistentCacheTask updates metadate of thr persistent cache task in p2p network.
-  rpc UpdatePersistentCacheTask(UpdatePersistentCacheTaskRequest) returns(google.protobuf.Empty);
+  rpc UpdatePersistentCacheTask(UpdatePersistentCacheTaskRequest) returns (google.protobuf.Empty);
 
   // StatPersistentCacheTask stats persistent cache task information.
-  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
+  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns (common.v2.PersistentCacheTask);
 
   // DeletePersistentCacheTask deletes persistent cache task from p2p network.
-  rpc DeletePersistentCacheTask(DeletePersistentCacheTaskRequest) returns(google.protobuf.Empty);
+  rpc DeletePersistentCacheTask(DeletePersistentCacheTaskRequest) returns (google.protobuf.Empty);
 
   // SyncPersistentCachePieces syncs persistent cache pieces from remote peer.
-  rpc SyncPersistentCachePieces(SyncPersistentCachePiecesRequest) returns(stream SyncPersistentCachePiecesResponse);
+  rpc SyncPersistentCachePieces(SyncPersistentCachePiecesRequest) returns (stream SyncPersistentCachePiecesResponse);
 
   // SyncHost sync host info from parents.
   rpc SyncHost(SyncHostRequest) returns (stream common.v2.Host);
 
   // ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
-  rpc ExchangeIBVerbsQueuePairEndpoint(ExchangeIBVerbsQueuePairEndpointRequest) returns(ExchangeIBVerbsQueuePairEndpointResponse);
+  rpc ExchangeIBVerbsQueuePairEndpoint(ExchangeIBVerbsQueuePairEndpointRequest) returns (ExchangeIBVerbsQueuePairEndpointResponse);
 }
 
 // DfdaemonDownload represents dfdaemon download service.
 service DfdaemonDownload {
   // DownloadTask downloads task from p2p network.
-  rpc DownloadTask(DownloadTaskRequest) returns(stream DownloadTaskResponse);
+  rpc DownloadTask(DownloadTaskRequest) returns (stream DownloadTaskResponse);
 
   // StatTask stats task information.
-  rpc StatTask(StatTaskRequest) returns(common.v2.Task);
+  rpc StatTask(StatTaskRequest) returns (common.v2.Task);
 
   // StatLocalTask stats local task information from peer.
-  rpc StatLocalTask(StatLocalTaskRequest) returns(StatLocalTaskResponse);
+  rpc StatLocalTask(StatLocalTaskRequest) returns (StatLocalTaskResponse);
 
   // ListTaskEntries lists task entries for downloading directory.
-  rpc ListTaskEntries(ListTaskEntriesRequest) returns(ListTaskEntriesResponse);
+  rpc ListTaskEntries(ListTaskEntriesRequest) returns (ListTaskEntriesResponse);
 
   // DeleteTask deletes task from p2p network.
-  rpc DeleteTask(DeleteTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
 
   // DeleteHost releases host in scheduler.
-  rpc DeleteHost(google.protobuf.Empty)returns(google.protobuf.Empty);
+  rpc DeleteHost(google.protobuf.Empty) returns (google.protobuf.Empty);
 
   // DownloadCacheTask downloads cache task from p2p network.
-  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns(stream DownloadCacheTaskResponse);
+  rpc DownloadCacheTask(DownloadCacheTaskRequest) returns (stream DownloadCacheTaskResponse);
 
   // StatCacheTask stats cache task information.
-  rpc StatCacheTask(StatCacheTaskRequest) returns(common.v2.CacheTask);
+  rpc StatCacheTask(StatCacheTaskRequest) returns (common.v2.CacheTask);
 
   // DeleteCacheTask deletes cache task from p2p network.
-  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns(google.protobuf.Empty);
+  rpc DeleteCacheTask(DeleteCacheTaskRequest) returns (google.protobuf.Empty);
 
   // DownloadPersistentTask downloads persistent task from p2p network.
-  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns(stream DownloadPersistentTaskResponse);
+  rpc DownloadPersistentTask(DownloadPersistentTaskRequest) returns (stream DownloadPersistentTaskResponse);
 
   // UploadPersistentTask uploads persistent task to p2p network.
-  rpc UploadPersistentTask(UploadPersistentTaskRequest) returns(common.v2.PersistentTask);
+  rpc UploadPersistentTask(UploadPersistentTaskRequest) returns (common.v2.PersistentTask);
 
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
-  rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns(stream DownloadPersistentCacheTaskResponse);
+  rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns (stream DownloadPersistentCacheTaskResponse);
 
   // UploadPersistentCacheTask uploads persistent cache task to p2p network.
-  rpc UploadPersistentCacheTask(UploadPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
+  rpc UploadPersistentCacheTask(UploadPersistentCacheTaskRequest) returns (common.v2.PersistentCacheTask);
 
   // StatPersistentCacheTask stats persistent cache task information.
-  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns(common.v2.PersistentCacheTask);
+  rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns (common.v2.PersistentCacheTask);
 }
