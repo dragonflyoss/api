@@ -467,6 +467,18 @@ message CPU {
   double process_percent = 4 [(validate.rules).double.gte = 0];
   // CPUTimes contains the amounts of time the CPU has spent performing different kinds of work.
   optional CPUTimes times = 5;
+  // Cgroup CPU Stat.
+  optional CgroupCPU cgroup = 6;
+}
+
+// Cgroup CPU Stat.
+message CgroupCPU {
+  // CFS shares.
+  uint64 shares = 1;
+  // CFS period in microseconds.
+  uint64 period = 2;
+  // CFS quota in microseconds.
+  int64 quota = 3;
 }
 
 // CPUTimes contains the amounts of time the CPU has spent performing different
@@ -514,6 +526,20 @@ message Memory {
   }];
   // This is the kernel's notion of free memory.
   uint64 free = 6;
+  // Cgroup Memory Stat.
+  optional CgroupMemory cgroup = 7;
+}
+
+// Cgroup Memory Stat.
+message CgroupMemory {
+  // Limit is the memory limit in bytes.
+  int64 limit = 1;
+  // Usage is the current memory usage in bytes.
+  uint64 usage = 2;
+  // MaxUsage is the maximum memory usage recorded in bytes.
+  uint64 max_usage = 3;
+  // Failcnt is the number of times memory allocation failed.
+  uint64 failcnt = 4;
 }
 
 // Network Stat.

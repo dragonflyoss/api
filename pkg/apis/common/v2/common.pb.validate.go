@@ -2501,6 +2501,39 @@ func (m *CPU) validate(all bool) error {
 
 	}
 
+	if m.Cgroup != nil {
+
+		if all {
+			switch v := interface{}(m.GetCgroup()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, CPUValidationError{
+						field:  "Cgroup",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, CPUValidationError{
+						field:  "Cgroup",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetCgroup()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return CPUValidationError{
+					field:  "Cgroup",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return CPUMultiError(errors)
 	}
@@ -2577,6 +2610,111 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CPUValidationError{}
+
+// Validate checks the field values on CgroupCPU with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *CgroupCPU) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CgroupCPU with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CgroupCPUMultiError, or nil
+// if none found.
+func (m *CgroupCPU) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CgroupCPU) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Shares
+
+	// no validation rules for Period
+
+	// no validation rules for Quota
+
+	if len(errors) > 0 {
+		return CgroupCPUMultiError(errors)
+	}
+
+	return nil
+}
+
+// CgroupCPUMultiError is an error wrapping multiple validation errors returned
+// by CgroupCPU.ValidateAll() if the designated constraints aren't met.
+type CgroupCPUMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CgroupCPUMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CgroupCPUMultiError) AllErrors() []error { return m }
+
+// CgroupCPUValidationError is the validation error returned by
+// CgroupCPU.Validate if the designated constraints aren't met.
+type CgroupCPUValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CgroupCPUValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CgroupCPUValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CgroupCPUValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CgroupCPUValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CgroupCPUValidationError) ErrorName() string { return "CgroupCPUValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CgroupCPUValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCgroupCPU.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CgroupCPUValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CgroupCPUValidationError{}
 
 // Validate checks the field values on CPUTimes with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
@@ -2838,6 +2976,39 @@ func (m *Memory) validate(all bool) error {
 
 	// no validation rules for Free
 
+	if m.Cgroup != nil {
+
+		if all {
+			switch v := interface{}(m.GetCgroup()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, MemoryValidationError{
+						field:  "Cgroup",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, MemoryValidationError{
+						field:  "Cgroup",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetCgroup()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return MemoryValidationError{
+					field:  "Cgroup",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return MemoryMultiError(errors)
 	}
@@ -2914,6 +3085,113 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = MemoryValidationError{}
+
+// Validate checks the field values on CgroupMemory with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *CgroupMemory) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CgroupMemory with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CgroupMemoryMultiError, or
+// nil if none found.
+func (m *CgroupMemory) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CgroupMemory) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Limit
+
+	// no validation rules for Usage
+
+	// no validation rules for MaxUsage
+
+	// no validation rules for Failcnt
+
+	if len(errors) > 0 {
+		return CgroupMemoryMultiError(errors)
+	}
+
+	return nil
+}
+
+// CgroupMemoryMultiError is an error wrapping multiple validation errors
+// returned by CgroupMemory.ValidateAll() if the designated constraints aren't met.
+type CgroupMemoryMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CgroupMemoryMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CgroupMemoryMultiError) AllErrors() []error { return m }
+
+// CgroupMemoryValidationError is the validation error returned by
+// CgroupMemory.Validate if the designated constraints aren't met.
+type CgroupMemoryValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CgroupMemoryValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CgroupMemoryValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CgroupMemoryValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CgroupMemoryValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CgroupMemoryValidationError) ErrorName() string { return "CgroupMemoryValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CgroupMemoryValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCgroupMemory.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CgroupMemoryValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CgroupMemoryValidationError{}
 
 // Validate checks the field values on Network with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
