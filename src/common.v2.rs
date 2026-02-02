@@ -471,6 +471,24 @@ pub struct Cpu {
     /// CPUTimes contains the amounts of time the CPU has spent performing different kinds of work.
     #[prost(message, optional, tag = "5")]
     pub times: ::core::option::Option<CpuTimes>,
+    /// Cgroup CPU Stat.
+    #[prost(message, optional, tag = "6")]
+    pub cgroup: ::core::option::Option<CgroupCpu>,
+}
+/// Cgroup CPU Stat.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct CgroupCpu {
+    /// CFS shares.
+    #[prost(uint64, tag = "1")]
+    pub shares: u64,
+    /// CFS period in microseconds.
+    #[prost(uint64, tag = "2")]
+    pub period: u64,
+    /// CFS quota in microseconds.
+    #[prost(int64, tag = "3")]
+    pub quota: i64,
 }
 /// CPUTimes contains the amounts of time the CPU has spent performing different
 /// kinds of work. Time units are in seconds.
@@ -532,6 +550,27 @@ pub struct Memory {
     /// This is the kernel's notion of free memory.
     #[prost(uint64, tag = "6")]
     pub free: u64,
+    /// Cgroup Memory Stat.
+    #[prost(message, optional, tag = "7")]
+    pub cgroup: ::core::option::Option<CgroupMemory>,
+}
+/// Cgroup Memory Stat.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct CgroupMemory {
+    /// Limit is the memory limit in bytes.
+    #[prost(int64, tag = "1")]
+    pub limit: i64,
+    /// Usage is the current memory usage in bytes.
+    #[prost(uint64, tag = "2")]
+    pub usage: u64,
+    /// MaxUsage is the maximum memory usage recorded in bytes.
+    #[prost(uint64, tag = "3")]
+    pub max_usage: u64,
+    /// Failcnt is the number of times memory allocation failed.
+    #[prost(uint64, tag = "4")]
+    pub failcnt: u64,
 }
 /// Network Stat.
 #[derive(serde::Serialize, serde::Deserialize)]
