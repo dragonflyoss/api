@@ -473,12 +473,10 @@ message CPU {
 
 // Cgroup CPU Stat.
 message CgroupCPU {
-  // CFS shares.
-  uint64 shares = 1;
   // CFS period in microseconds.
-  uint64 period = 2;
+  uint64 period = 1;
   // CFS quota in microseconds.
-  int64 quota = 3;
+  int64 quota = 2;
 }
 
 // CPUTimes contains the amounts of time the CPU has spent performing different
@@ -536,10 +534,6 @@ message CgroupMemory {
   int64 limit = 1;
   // Usage is the current memory usage in bytes.
   uint64 usage = 2;
-  // MaxUsage is the maximum memory usage recorded in bytes.
-  uint64 max_usage = 3;
-  // Failcnt is the number of times memory allocation failed.
-  uint64 failcnt = 4;
 }
 
 // Network Stat.

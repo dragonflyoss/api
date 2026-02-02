@@ -480,14 +480,11 @@ pub struct Cpu {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct CgroupCpu {
-    /// CFS shares.
-    #[prost(uint64, tag = "1")]
-    pub shares: u64,
     /// CFS period in microseconds.
-    #[prost(uint64, tag = "2")]
+    #[prost(uint64, tag = "1")]
     pub period: u64,
     /// CFS quota in microseconds.
-    #[prost(int64, tag = "3")]
+    #[prost(int64, tag = "2")]
     pub quota: i64,
 }
 /// CPUTimes contains the amounts of time the CPU has spent performing different
@@ -565,12 +562,6 @@ pub struct CgroupMemory {
     /// Usage is the current memory usage in bytes.
     #[prost(uint64, tag = "2")]
     pub usage: u64,
-    /// MaxUsage is the maximum memory usage recorded in bytes.
-    #[prost(uint64, tag = "3")]
-    pub max_usage: u64,
-    /// Failcnt is the number of times memory allocation failed.
-    #[prost(uint64, tag = "4")]
-    pub failcnt: u64,
 }
 /// Network Stat.
 #[derive(serde::Serialize, serde::Deserialize)]

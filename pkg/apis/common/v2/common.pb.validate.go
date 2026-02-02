@@ -2633,8 +2633,6 @@ func (m *CgroupCPU) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Shares
-
 	// no validation rules for Period
 
 	// no validation rules for Quota
@@ -3111,10 +3109,6 @@ func (m *CgroupMemory) validate(all bool) error {
 	// no validation rules for Limit
 
 	// no validation rules for Usage
-
-	// no validation rules for MaxUsage
-
-	// no validation rules for Failcnt
 
 	if len(errors) > 0 {
 		return CgroupMemoryMultiError(errors)
