@@ -486,6 +486,9 @@ pub struct CgroupCpu {
     /// CFS quota in microseconds.
     #[prost(int64, tag = "2")]
     pub quota: i64,
+    /// Calculates the percentage of cpu used by cgroup.
+    #[prost(double, tag = "3")]
+    pub used_percent: f64,
 }
 /// CPUTimes contains the amounts of time the CPU has spent performing different
 /// kinds of work. Time units are in seconds.
@@ -562,6 +565,9 @@ pub struct CgroupMemory {
     /// Usage is the current memory usage in bytes.
     #[prost(uint64, tag = "2")]
     pub usage: u64,
+    /// Calculates the percentage of memory used by cgroup.
+    #[prost(double, tag = "3")]
+    pub used_percent: f64,
 }
 /// Network Stat.
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -2637,6 +2637,8 @@ func (m *CgroupCPU) validate(all bool) error {
 
 	// no validation rules for Quota
 
+	// no validation rules for UsedPercent
+
 	if len(errors) > 0 {
 		return CgroupCPUMultiError(errors)
 	}
@@ -3109,6 +3111,8 @@ func (m *CgroupMemory) validate(all bool) error {
 	// no validation rules for Limit
 
 	// no validation rules for Usage
+
+	// no validation rules for UsedPercent
 
 	if len(errors) > 0 {
 		return CgroupMemoryMultiError(errors)
