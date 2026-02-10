@@ -185,6 +185,8 @@ message ListTaskEntriesRequest {
     ip: true
     ignore_empty: true
   }];
+  // HuggingFace protocol information.
+  optional common.v2.HuggingFace hugging_face = 9;
 }
 
 // ListTaskEntriesResponse represents response of ListTaskEntries.

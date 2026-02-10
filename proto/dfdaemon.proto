@@ -160,6 +160,8 @@ message ListTaskEntriesRequest {
   optional common.v2.HDFS hdfs = 7;
   // Remote IP represents the IP address of the client initiating the list request.
   optional string remote_ip = 8;
+  // HuggingFace protocol information.
+  optional common.v2.HuggingFace hugging_face = 9;
 }
 
 // ListTaskEntriesResponse represents response of ListTaskEntries.

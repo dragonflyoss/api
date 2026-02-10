@@ -210,6 +210,9 @@ pub struct ListTaskEntriesRequest {
     /// Remote IP represents the IP address of the client initiating the list request.
     #[prost(string, optional, tag = "8")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+    /// HuggingFace protocol information.
+    #[prost(message, optional, tag = "9")]
+    pub hugging_face: ::core::option::Option<super::super::common::v2::HuggingFace>,
 }
 /// ListTaskEntriesResponse represents response of ListTaskEntries.
 #[derive(serde::Serialize, serde::Deserialize)]
