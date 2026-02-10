@@ -444,6 +444,8 @@ message CgroupCPU {
   uint64 period = 1;
   // CFS quota in microseconds.
   int64 quota = 2;
+  // Calculates the percentage of cpu used by cgroup.
+  double used_percent = 3;
 }
 
 // CPUTimes contains the amounts of time the CPU has spent performing different
@@ -495,6 +497,8 @@ message CgroupMemory {
   int64 limit = 1;
   // Usage is the current memory usage in bytes.
   uint64 usage = 2;
+  // Calculates the percentage of memory used by cgroup.
+  double used_percent = 3;
 }
 
 // Network Stat.
