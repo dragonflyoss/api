@@ -3880,6 +3880,39 @@ func (m *Download) validate(all bool) error {
 		// no validation rules for ActualPieceCount
 	}
 
+	if m.HuggingFace != nil {
+
+		if all {
+			switch v := interface{}(m.GetHuggingFace()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "HuggingFace",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "HuggingFace",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHuggingFace()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadValidationError{
+					field:  "HuggingFace",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}
@@ -4323,6 +4356,124 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = HDFSValidationError{}
+
+// Validate checks the field values on HuggingFace with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *HuggingFace) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HuggingFace with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in HuggingFaceMultiError, or
+// nil if none found.
+func (m *HuggingFace) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HuggingFace) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.Token != nil {
+
+		if m.GetToken() != "" {
+
+			if utf8.RuneCountInString(m.GetToken()) < 1 {
+				err := HuggingFaceValidationError{
+					field:  "Token",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return HuggingFaceMultiError(errors)
+	}
+
+	return nil
+}
+
+// HuggingFaceMultiError is an error wrapping multiple validation errors
+// returned by HuggingFace.ValidateAll() if the designated constraints aren't met.
+type HuggingFaceMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HuggingFaceMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HuggingFaceMultiError) AllErrors() []error { return m }
+
+// HuggingFaceValidationError is the validation error returned by
+// HuggingFace.Validate if the designated constraints aren't met.
+type HuggingFaceValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HuggingFaceValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HuggingFaceValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HuggingFaceValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HuggingFaceValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HuggingFaceValidationError) ErrorName() string { return "HuggingFaceValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HuggingFaceValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHuggingFace.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HuggingFaceValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HuggingFaceValidationError{}
 
 // Validate checks the field values on Range with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
