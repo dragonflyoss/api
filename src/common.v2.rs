@@ -768,6 +768,9 @@ pub struct Download {
     /// and storage.
     #[prost(bool, tag = "30")]
     pub enable_task_id_based_blob_digest: bool,
+    /// HuggingFace protocol information.
+    #[prost(message, optional, tag = "31")]
+    pub hugging_face: ::core::option::Option<HuggingFace>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -810,6 +813,15 @@ pub struct Hdfs {
     /// Delegation token for Web HDFS operator.
     #[prost(string, optional, tag = "1")]
     pub delegation_token: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// HuggingFace related information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct HuggingFace {
+    /// Access token for HuggingFace Hub.
+    #[prost(string, optional, tag = "1")]
+    pub token: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]

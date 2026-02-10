@@ -645,6 +645,8 @@ message Download {
   // registries - the same blob from different registries shares one task ID, eliminating redundant downloads
   // and storage.
   bool enable_task_id_based_blob_digest = 30;
+  // HuggingFace protocol information.
+  optional HuggingFace hugging_face = 31;
 
   reserved 21;
   reserved "load_to_cache";
@@ -676,6 +678,12 @@ message ObjectStorage {
 message HDFS {
   // Delegation token for Web HDFS operator.
   optional string delegation_token = 1;
+}
+
+// HuggingFace related information.
+message HuggingFace {
+  // Access token for HuggingFace Hub.
+  optional string token = 1;
 }
 
 // Range represents download range.
