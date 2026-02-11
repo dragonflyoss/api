@@ -37,6 +37,7 @@ mysql
 .DS_Store
 .AppleDouble
 .LSOverride
+.venv/
 
 # Icon must end with two \r
 Icon
