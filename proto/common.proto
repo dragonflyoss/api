@@ -688,6 +688,8 @@ message HDFS {
 message HuggingFace {
   // Access token for HuggingFace Hub.
   optional string token = 1;
+  // Insecure skip verify indicates whether to skip verifying the server's certificate chain.
+  optional bool insecure_skip_verify = 2;
 }
 
 // Range represents download range.

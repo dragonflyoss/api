@@ -4402,6 +4402,10 @@ func (m *HuggingFace) validate(all bool) error {
 
 	}
 
+	if m.InsecureSkipVerify != nil {
+		// no validation rules for InsecureSkipVerify
+	}
+
 	if len(errors) > 0 {
 		return HuggingFaceMultiError(errors)
 	}

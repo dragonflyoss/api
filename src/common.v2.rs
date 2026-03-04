@@ -828,6 +828,9 @@ pub struct HuggingFace {
     /// Access token for HuggingFace Hub.
     #[prost(string, optional, tag = "1")]
     pub token: ::core::option::Option<::prost::alloc::string::String>,
+    /// Insecure skip verify indicates whether to skip verifying the server's certificate chain.
+    #[prost(bool, optional, tag = "2")]
+    pub insecure_skip_verify: ::core::option::Option<bool>,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]
