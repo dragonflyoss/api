@@ -73,3 +73,6 @@ artifacts
 
 # Added by cargo
 /target
+__pycache__/
+*.pyc
+.venv/
