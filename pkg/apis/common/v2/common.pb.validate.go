@@ -4406,6 +4406,25 @@ func (m *HuggingFace) validate(all bool) error {
 		// no validation rules for InsecureSkipVerify
 	}
 
+	if m.Revision != nil {
+
+		if m.GetRevision() != "" {
+
+			if utf8.RuneCountInString(m.GetRevision()) < 1 {
+				err := HuggingFaceValidationError{
+					field:  "Revision",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return HuggingFaceMultiError(errors)
 	}
