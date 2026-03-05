@@ -690,6 +690,9 @@ message HuggingFace {
   optional string token = 1;
   // Insecure skip verify indicates whether to skip verifying the server's certificate chain.
   optional bool insecure_skip_verify = 2;
+  // Revision of the HuggingFace model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
+  // it defaults to the repository's default main branch.
+  optional string revision = 3;
 }
 
 // Range represents download range.
