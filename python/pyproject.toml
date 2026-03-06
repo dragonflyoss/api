@@ -1,0 +1,13 @@
+[project]
+name = "dragonfly-api"
+version = "0.1.0"
+description = "Python gRPC API dependency package for Dragonfly"
+requires-python = ">=3.8"
+dependencies = [
+  "grpcio>=1.50",
+  "protobuf>=4.21",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
