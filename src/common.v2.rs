@@ -833,8 +833,8 @@ pub struct HuggingFace {
     pub insecure_skip_verify: ::core::option::Option<bool>,
     /// Revision of the HuggingFace model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
     /// it defaults to the repository's default main branch.
-    #[prost(string, optional, tag = "3")]
-    pub revision: ::core::option::Option<::prost::alloc::string::String>,
+    #[prost(string, tag = "3")]
+    pub revision: ::prost::alloc::string::String,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]
