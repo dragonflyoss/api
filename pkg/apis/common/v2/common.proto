@@ -774,9 +774,8 @@ message HuggingFace {
   optional bool insecure_skip_verify = 2;
   // Revision of the HuggingFace model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
   // it defaults to the repository's default main branch.
-  optional string revision = 3 [(validate.rules).string = {
+  string revision = 3 [(validate.rules).string = {
     min_len: 1
-    ignore_empty: true
   }];
 }
 
