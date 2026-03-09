@@ -1740,6 +1740,39 @@ func (m *ListTaskEntriesRequest) validate(all bool) error {
 
 	}
 
+	if m.ModelScope != nil {
+
+		if all {
+			switch v := interface{}(m.GetModelScope()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListTaskEntriesRequestValidationError{
+						field:  "ModelScope",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListTaskEntriesRequestValidationError{
+						field:  "ModelScope",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetModelScope()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListTaskEntriesRequestValidationError{
+					field:  "ModelScope",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return ListTaskEntriesRequestMultiError(errors)
 	}

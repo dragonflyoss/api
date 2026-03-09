@@ -187,6 +187,8 @@ message ListTaskEntriesRequest {
   }];
   // HuggingFace protocol information.
   optional common.v2.HuggingFace hugging_face = 9;
+  // ModelScope protocol information.
+  optional common.v2.ModelScope model_scope = 10;
 }
 
 // ListTaskEntriesResponse represents response of ListTaskEntries.
