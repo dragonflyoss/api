@@ -213,6 +213,9 @@ pub struct ListTaskEntriesRequest {
     /// HuggingFace protocol information.
     #[prost(message, optional, tag = "9")]
     pub hugging_face: ::core::option::Option<super::super::common::v2::HuggingFace>,
+    /// ModelScope protocol information.
+    #[prost(message, optional, tag = "10")]
+    pub model_scope: ::core::option::Option<super::super::common::v2::ModelScope>,
 }
 /// ListTaskEntriesResponse represents response of ListTaskEntries.
 #[derive(serde::Serialize, serde::Deserialize)]
