@@ -709,6 +709,8 @@ message Download {
   bool enable_task_id_based_blob_digest = 30;
   // HuggingFace protocol information.
   optional HuggingFace hugging_face = 31;
+  // ModelScope protocol information.
+  optional ModelScope model_scope = 32;
 
   reserved 21;
   reserved "load_to_cache";
@@ -770,11 +772,23 @@ message HuggingFace {
     min_len: 1
     ignore_empty: true
   }];
-  // Insecure skip verify indicates whether to skip verifying the server's certificate chain.
-  optional bool insecure_skip_verify = 2;
   // Revision of the HuggingFace model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
   // it defaults to the repository's default main branch.
-  string revision = 3 [(validate.rules).string = {
+  string revision = 2 [(validate.rules).string = {
+    min_len: 1
+  }];
+}
+
+// ModelScope related information.
+message ModelScope {
+  // Access token for ModelScope Hub.
+  optional string token = 1 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
+  // Revision of the ModelScope model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
+  // it defaults to the repository's default main branch.
+  string revision = 2 [(validate.rules).string = {
     min_len: 1
   }];
 }

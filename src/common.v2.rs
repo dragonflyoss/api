@@ -777,6 +777,9 @@ pub struct Download {
     /// HuggingFace protocol information.
     #[prost(message, optional, tag = "31")]
     pub hugging_face: ::core::option::Option<HuggingFace>,
+    /// ModelScope protocol information.
+    #[prost(message, optional, tag = "32")]
+    pub model_scope: ::core::option::Option<ModelScope>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -828,12 +831,22 @@ pub struct HuggingFace {
     /// Access token for HuggingFace Hub.
     #[prost(string, optional, tag = "1")]
     pub token: ::core::option::Option<::prost::alloc::string::String>,
-    /// Insecure skip verify indicates whether to skip verifying the server's certificate chain.
-    #[prost(bool, optional, tag = "2")]
-    pub insecure_skip_verify: ::core::option::Option<bool>,
     /// Revision of the HuggingFace model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
     /// it defaults to the repository's default main branch.
-    #[prost(string, tag = "3")]
+    #[prost(string, tag = "2")]
+    pub revision: ::prost::alloc::string::String,
+}
+/// ModelScope related information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ModelScope {
+    /// Access token for ModelScope Hub.
+    #[prost(string, optional, tag = "1")]
+    pub token: ::core::option::Option<::prost::alloc::string::String>,
+    /// Revision of the ModelScope model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
+    /// it defaults to the repository's default main branch.
+    #[prost(string, tag = "2")]
     pub revision: ::prost::alloc::string::String,
 }
 /// Range represents download range.
