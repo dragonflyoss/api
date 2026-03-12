@@ -1,6 +1,6 @@
 [package]
 name = "dragonfly-api"
-version = "2.2.24"
+version = "2.2.25"
 authors = ["Gaius <gaius.qi@gmail.com>"]
 edition = "2021"
 license = "Apache-2.0"
@@ -13,8 +13,6 @@ readme = "README.md"
 [dependencies]
 tonic = "0.14.3"
 tonic-prost = "0.14.3"
-tonic-reflection = "0.14.3"
-tonic-health = "0.14.3"
 prost = "0.14.3"
 prost-types = "0.14.3"
 tokio = { version = "1.50.0", features = ["rt-multi-thread", "macros"] }

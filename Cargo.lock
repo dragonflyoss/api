@@ -119,7 +119,7 @@ dependencies = [
 
 [[package]]
 name = "dragonfly-api"
-version = "2.2.24"
+version = "2.2.25"
 dependencies = [
  "prost",
  "prost-types",
@@ -127,10 +127,8 @@ dependencies = [
  "serde",
  "tokio",
  "tonic",
- "tonic-health",
  "tonic-prost",
  "tonic-prost-build",
- "tonic-reflection",
 ]
 
 [[package]]
@@ -885,7 +883,6 @@ dependencies = [
  "futures-core",
  "pin-project-lite",
  "tokio",
- "tokio-util",
 ]
 
 [[package]]
@@ -943,19 +940,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tonic-health"
-version = "0.14.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f4ff0636fef47afb3ec02818f5bceb4377b8abb9d6a386aeade18bd6212f8eb7"
-dependencies = [
- "prost",
- "tokio",
- "tokio-stream",
- "tonic",
- "tonic-prost",
-]
-
-[[package]]
 name = "tonic-prost"
 version = "0.14.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -980,20 +964,6 @@ dependencies = [
  "syn",
  "tempfile",
  "tonic-build",
-]
-
-[[package]]
-name = "tonic-reflection"
-version = "0.14.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aaf0685a51e6d02b502ba0764002e766b7f3042aed13d9234925b6ffbfa3fca7"
-dependencies = [
- "prost",
- "prost-types",
- "tokio",
- "tokio-stream",
- "tonic",
- "tonic-prost",
 ]
 
 [[package]]
