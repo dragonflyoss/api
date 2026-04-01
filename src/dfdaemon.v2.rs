@@ -170,8 +170,12 @@ pub struct StatLocalTaskResponse {
 }
 /// ListLocalTasksRequest represents request of ListLocalTasks.
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListLocalTasksRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListLocalTasksRequest {
+    /// Remote IP represents the IP address of the client initiating the list request.
+    #[prost(string, optional, tag = "1")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
 /// ListLocalTasksResponse represents response of ListLocalTasks.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -689,8 +693,12 @@ pub struct StatLocalPersistentTaskResponse {
 }
 /// ListLocalPersistentTasksRequest represents request of ListLocalPersistentTasks.
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListLocalPersistentTasksRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListLocalPersistentTasksRequest {
+    /// Remote IP represents the IP address of the client initiating the list request.
+    #[prost(string, optional, tag = "1")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
 /// ListLocalPersistentTasksResponse represents response of ListLocalPersistentTasks.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -953,8 +961,12 @@ pub struct StatLocalPersistentCacheTaskResponse {
 }
 /// ListLocalPersistentCacheTasksRequest represents request of ListLocalPersistentCacheTasks.
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ListLocalPersistentCacheTasksRequest {}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListLocalPersistentCacheTasksRequest {
+    /// Remote IP represents the IP address of the client initiating the list request.
+    #[prost(string, optional, tag = "1")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
 /// ListLocalPersistentTasksResponse represents response of ListLocalPersistentTasks.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]

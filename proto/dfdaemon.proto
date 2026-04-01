@@ -143,7 +143,10 @@ message StatLocalTaskResponse {
 }
 
 // ListLocalTasksRequest represents request of ListLocalTasks.
-message ListLocalTasksRequest {}
+message ListLocalTasksRequest {
+  // Remote IP represents the IP address of the client initiating the list request.
+  optional string remote_ip = 1;
+}
 
 // ListLocalTasksResponse represents response of ListLocalTasks.
 message ListLocalTasksResponse {
@@ -503,7 +506,10 @@ message StatLocalPersistentTaskResponse {
 }
 
 // ListLocalPersistentTasksRequest represents request of ListLocalPersistentTasks.
-message ListLocalPersistentTasksRequest {}
+message ListLocalPersistentTasksRequest {
+  // Remote IP represents the IP address of the client initiating the list request.
+  optional string remote_ip = 1;
+}
 
 // ListLocalPersistentTasksResponse represents response of ListLocalPersistentTasks.
 message ListLocalPersistentTasksResponse {
@@ -686,7 +692,10 @@ message StatLocalPersistentCacheTaskResponse {
 }
 
 // ListLocalPersistentCacheTasksRequest represents request of ListLocalPersistentCacheTasks.
-message ListLocalPersistentCacheTasksRequest {}
+message ListLocalPersistentCacheTasksRequest {
+  // Remote IP represents the IP address of the client initiating the list request.
+  optional string remote_ip = 1;
+}
 
 // ListLocalPersistentTasksResponse represents response of ListLocalPersistentTasks.
 message ListLocalPersistentCacheTasksResponse {

@@ -1574,6 +1574,25 @@ func (m *ListLocalTasksRequest) validate(all bool) error {
 
 	var errors []error
 
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := ListLocalTasksRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return ListLocalTasksRequestMultiError(errors)
 	}
@@ -5720,6 +5739,25 @@ func (m *ListLocalPersistentTasksRequest) validate(all bool) error {
 
 	var errors []error
 
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := ListLocalPersistentTasksRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return ListLocalPersistentTasksRequestMultiError(errors)
 	}
@@ -7850,6 +7888,25 @@ func (m *ListLocalPersistentCacheTasksRequest) validate(all bool) error {
 	}
 
 	var errors []error
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := ListLocalPersistentCacheTasksRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
 
 	if len(errors) > 0 {
 		return ListLocalPersistentCacheTasksRequestMultiError(errors)
