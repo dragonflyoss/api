@@ -1552,6 +1552,244 @@ var _ interface {
 	ErrorName() string
 } = StatLocalTaskResponseValidationError{}
 
+// Validate checks the field values on ListLocalTasksRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListLocalTasksRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListLocalTasksRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListLocalTasksRequestMultiError, or nil if none found.
+func (m *ListLocalTasksRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListLocalTasksRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return ListLocalTasksRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListLocalTasksRequestMultiError is an error wrapping multiple validation
+// errors returned by ListLocalTasksRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ListLocalTasksRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListLocalTasksRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListLocalTasksRequestMultiError) AllErrors() []error { return m }
+
+// ListLocalTasksRequestValidationError is the validation error returned by
+// ListLocalTasksRequest.Validate if the designated constraints aren't met.
+type ListLocalTasksRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListLocalTasksRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListLocalTasksRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListLocalTasksRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListLocalTasksRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListLocalTasksRequestValidationError) ErrorName() string {
+	return "ListLocalTasksRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListLocalTasksRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListLocalTasksRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListLocalTasksRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListLocalTasksRequestValidationError{}
+
+// Validate checks the field values on ListLocalTasksResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListLocalTasksResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListLocalTasksResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListLocalTasksResponseMultiError, or nil if none found.
+func (m *ListLocalTasksResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListLocalTasksResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetTasks() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListLocalTasksResponseValidationError{
+						field:  fmt.Sprintf("Tasks[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListLocalTasksResponseValidationError{
+						field:  fmt.Sprintf("Tasks[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListLocalTasksResponseValidationError{
+					field:  fmt.Sprintf("Tasks[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListLocalTasksResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListLocalTasksResponseMultiError is an error wrapping multiple validation
+// errors returned by ListLocalTasksResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListLocalTasksResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListLocalTasksResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListLocalTasksResponseMultiError) AllErrors() []error { return m }
+
+// ListLocalTasksResponseValidationError is the validation error returned by
+// ListLocalTasksResponse.Validate if the designated constraints aren't met.
+type ListLocalTasksResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListLocalTasksResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListLocalTasksResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListLocalTasksResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListLocalTasksResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListLocalTasksResponseValidationError) ErrorName() string {
+	return "ListLocalTasksResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListLocalTasksResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListLocalTasksResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListLocalTasksResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListLocalTasksResponseValidationError{}
+
 // Validate checks the field values on ListTaskEntriesRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -2247,6 +2485,138 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteTaskRequestValidationError{}
+
+// Validate checks the field values on DeleteLocalTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteLocalTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteLocalTaskRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteLocalTaskRequestMultiError, or nil if none found.
+func (m *DeleteLocalTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteLocalTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := DeleteLocalTaskRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := DeleteLocalTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return DeleteLocalTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteLocalTaskRequestMultiError is an error wrapping multiple validation
+// errors returned by DeleteLocalTaskRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteLocalTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteLocalTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteLocalTaskRequestMultiError) AllErrors() []error { return m }
+
+// DeleteLocalTaskRequestValidationError is the validation error returned by
+// DeleteLocalTaskRequest.Validate if the designated constraints aren't met.
+type DeleteLocalTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteLocalTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteLocalTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteLocalTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteLocalTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteLocalTaskRequestValidationError) ErrorName() string {
+	return "DeleteLocalTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteLocalTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteLocalTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteLocalTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteLocalTaskRequestValidationError{}
 
 // Validate checks the field values on DownloadCacheTaskRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -4935,6 +5305,641 @@ var _ interface {
 	ErrorName() string
 } = StatPersistentTaskRequestValidationError{}
 
+// Validate checks the field values on StatLocalPersistentTaskRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *StatLocalPersistentTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatLocalPersistentTaskRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// StatLocalPersistentTaskRequestMultiError, or nil if none found.
+func (m *StatLocalPersistentTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatLocalPersistentTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := StatLocalPersistentTaskRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := StatLocalPersistentTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatLocalPersistentTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatLocalPersistentTaskRequestMultiError is an error wrapping multiple
+// validation errors returned by StatLocalPersistentTaskRequest.ValidateAll()
+// if the designated constraints aren't met.
+type StatLocalPersistentTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatLocalPersistentTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatLocalPersistentTaskRequestMultiError) AllErrors() []error { return m }
+
+// StatLocalPersistentTaskRequestValidationError is the validation error
+// returned by StatLocalPersistentTaskRequest.Validate if the designated
+// constraints aren't met.
+type StatLocalPersistentTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatLocalPersistentTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatLocalPersistentTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatLocalPersistentTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatLocalPersistentTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatLocalPersistentTaskRequestValidationError) ErrorName() string {
+	return "StatLocalPersistentTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e StatLocalPersistentTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatLocalPersistentTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatLocalPersistentTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatLocalPersistentTaskRequestValidationError{}
+
+// Validate checks the field values on StatLocalPersistentTaskResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *StatLocalPersistentTaskResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatLocalPersistentTaskResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// StatLocalPersistentTaskResponseMultiError, or nil if none found.
+func (m *StatLocalPersistentTaskResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatLocalPersistentTaskResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := StatLocalPersistentTaskResponseValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Persistent
+
+	if all {
+		switch v := interface{}(m.GetTtl()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, StatLocalPersistentTaskResponseValidationError{
+					field:  "Ttl",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, StatLocalPersistentTaskResponseValidationError{
+					field:  "Ttl",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetTtl()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return StatLocalPersistentTaskResponseValidationError{
+				field:  "Ttl",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for UploadingCount
+
+	// no validation rules for UploadedCount
+
+	if m.GetCreatedAt() == nil {
+		err := StatLocalPersistentTaskResponseValidationError{
+			field:  "CreatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUpdatedAt() == nil {
+		err := StatLocalPersistentTaskResponseValidationError{
+			field:  "UpdatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if m.GetPieceLength() < 4194304 {
+				err := StatLocalPersistentTaskResponseValidationError{
+					field:  "PieceLength",
+					reason: "value must be greater than or equal to 4194304",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ContentLength != nil {
+		// no validation rules for ContentLength
+	}
+
+	if m.FailedAt != nil {
+
+		if all {
+			switch v := interface{}(m.GetFailedAt()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatLocalPersistentTaskResponseValidationError{
+						field:  "FailedAt",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatLocalPersistentTaskResponseValidationError{
+						field:  "FailedAt",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetFailedAt()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatLocalPersistentTaskResponseValidationError{
+					field:  "FailedAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.FinishedAt != nil {
+
+		if all {
+			switch v := interface{}(m.GetFinishedAt()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatLocalPersistentTaskResponseValidationError{
+						field:  "FinishedAt",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatLocalPersistentTaskResponseValidationError{
+						field:  "FinishedAt",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetFinishedAt()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatLocalPersistentTaskResponseValidationError{
+					field:  "FinishedAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatLocalPersistentTaskResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatLocalPersistentTaskResponseMultiError is an error wrapping multiple
+// validation errors returned by StatLocalPersistentTaskResponse.ValidateAll()
+// if the designated constraints aren't met.
+type StatLocalPersistentTaskResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatLocalPersistentTaskResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatLocalPersistentTaskResponseMultiError) AllErrors() []error { return m }
+
+// StatLocalPersistentTaskResponseValidationError is the validation error
+// returned by StatLocalPersistentTaskResponse.Validate if the designated
+// constraints aren't met.
+type StatLocalPersistentTaskResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatLocalPersistentTaskResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatLocalPersistentTaskResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatLocalPersistentTaskResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatLocalPersistentTaskResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatLocalPersistentTaskResponseValidationError) ErrorName() string {
+	return "StatLocalPersistentTaskResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e StatLocalPersistentTaskResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatLocalPersistentTaskResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatLocalPersistentTaskResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatLocalPersistentTaskResponseValidationError{}
+
+// Validate checks the field values on ListLocalPersistentTasksRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListLocalPersistentTasksRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListLocalPersistentTasksRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// ListLocalPersistentTasksRequestMultiError, or nil if none found.
+func (m *ListLocalPersistentTasksRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListLocalPersistentTasksRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return ListLocalPersistentTasksRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListLocalPersistentTasksRequestMultiError is an error wrapping multiple
+// validation errors returned by ListLocalPersistentTasksRequest.ValidateAll()
+// if the designated constraints aren't met.
+type ListLocalPersistentTasksRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListLocalPersistentTasksRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListLocalPersistentTasksRequestMultiError) AllErrors() []error { return m }
+
+// ListLocalPersistentTasksRequestValidationError is the validation error
+// returned by ListLocalPersistentTasksRequest.Validate if the designated
+// constraints aren't met.
+type ListLocalPersistentTasksRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListLocalPersistentTasksRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListLocalPersistentTasksRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListLocalPersistentTasksRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListLocalPersistentTasksRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListLocalPersistentTasksRequestValidationError) ErrorName() string {
+	return "ListLocalPersistentTasksRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListLocalPersistentTasksRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListLocalPersistentTasksRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListLocalPersistentTasksRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListLocalPersistentTasksRequestValidationError{}
+
+// Validate checks the field values on ListLocalPersistentTasksResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *ListLocalPersistentTasksResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListLocalPersistentTasksResponse with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the result is a list of violation errors wrapped in
+// ListLocalPersistentTasksResponseMultiError, or nil if none found.
+func (m *ListLocalPersistentTasksResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListLocalPersistentTasksResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetTasks() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListLocalPersistentTasksResponseValidationError{
+						field:  fmt.Sprintf("Tasks[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListLocalPersistentTasksResponseValidationError{
+						field:  fmt.Sprintf("Tasks[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListLocalPersistentTasksResponseValidationError{
+					field:  fmt.Sprintf("Tasks[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListLocalPersistentTasksResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListLocalPersistentTasksResponseMultiError is an error wrapping multiple
+// validation errors returned by
+// ListLocalPersistentTasksResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListLocalPersistentTasksResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListLocalPersistentTasksResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListLocalPersistentTasksResponseMultiError) AllErrors() []error { return m }
+
+// ListLocalPersistentTasksResponseValidationError is the validation error
+// returned by ListLocalPersistentTasksResponse.Validate if the designated
+// constraints aren't met.
+type ListLocalPersistentTasksResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListLocalPersistentTasksResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListLocalPersistentTasksResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListLocalPersistentTasksResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListLocalPersistentTasksResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListLocalPersistentTasksResponseValidationError) ErrorName() string {
+	return "ListLocalPersistentTasksResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListLocalPersistentTasksResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListLocalPersistentTasksResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListLocalPersistentTasksResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListLocalPersistentTasksResponseValidationError{}
+
 // Validate checks the field values on DeletePersistentTaskRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -6425,6 +7430,647 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = StatPersistentCacheTaskRequestValidationError{}
+
+// Validate checks the field values on StatLocalPersistentCacheTaskRequest with
+// the rules defined in the proto definition for this message. If any rules
+// are violated, the first error encountered is returned, or nil if there are
+// no violations.
+func (m *StatLocalPersistentCacheTaskRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatLocalPersistentCacheTaskRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// StatLocalPersistentCacheTaskRequestMultiError, or nil if none found.
+func (m *StatLocalPersistentCacheTaskRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatLocalPersistentCacheTaskRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := StatLocalPersistentCacheTaskRequestValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := StatLocalPersistentCacheTaskRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatLocalPersistentCacheTaskRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatLocalPersistentCacheTaskRequestMultiError is an error wrapping multiple
+// validation errors returned by
+// StatLocalPersistentCacheTaskRequest.ValidateAll() if the designated
+// constraints aren't met.
+type StatLocalPersistentCacheTaskRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatLocalPersistentCacheTaskRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatLocalPersistentCacheTaskRequestMultiError) AllErrors() []error { return m }
+
+// StatLocalPersistentCacheTaskRequestValidationError is the validation error
+// returned by StatLocalPersistentCacheTaskRequest.Validate if the designated
+// constraints aren't met.
+type StatLocalPersistentCacheTaskRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatLocalPersistentCacheTaskRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatLocalPersistentCacheTaskRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatLocalPersistentCacheTaskRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatLocalPersistentCacheTaskRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatLocalPersistentCacheTaskRequestValidationError) ErrorName() string {
+	return "StatLocalPersistentCacheTaskRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e StatLocalPersistentCacheTaskRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatLocalPersistentCacheTaskRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatLocalPersistentCacheTaskRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatLocalPersistentCacheTaskRequestValidationError{}
+
+// Validate checks the field values on StatLocalPersistentCacheTaskResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *StatLocalPersistentCacheTaskResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on StatLocalPersistentCacheTaskResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// StatLocalPersistentCacheTaskResponseMultiError, or nil if none found.
+func (m *StatLocalPersistentCacheTaskResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *StatLocalPersistentCacheTaskResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+		err := StatLocalPersistentCacheTaskResponseValidationError{
+			field:  "TaskId",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Persistent
+
+	if all {
+		switch v := interface{}(m.GetTtl()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, StatLocalPersistentCacheTaskResponseValidationError{
+					field:  "Ttl",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, StatLocalPersistentCacheTaskResponseValidationError{
+					field:  "Ttl",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetTtl()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return StatLocalPersistentCacheTaskResponseValidationError{
+				field:  "Ttl",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for UploadingCount
+
+	// no validation rules for UploadedCount
+
+	if m.GetCreatedAt() == nil {
+		err := StatLocalPersistentCacheTaskResponseValidationError{
+			field:  "CreatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.GetUpdatedAt() == nil {
+		err := StatLocalPersistentCacheTaskResponseValidationError{
+			field:  "UpdatedAt",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.PieceLength != nil {
+
+		if m.GetPieceLength() != 0 {
+
+			if m.GetPieceLength() < 4194304 {
+				err := StatLocalPersistentCacheTaskResponseValidationError{
+					field:  "PieceLength",
+					reason: "value must be greater than or equal to 4194304",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.ContentLength != nil {
+		// no validation rules for ContentLength
+	}
+
+	if m.FailedAt != nil {
+
+		if all {
+			switch v := interface{}(m.GetFailedAt()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatLocalPersistentCacheTaskResponseValidationError{
+						field:  "FailedAt",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatLocalPersistentCacheTaskResponseValidationError{
+						field:  "FailedAt",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetFailedAt()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatLocalPersistentCacheTaskResponseValidationError{
+					field:  "FailedAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if m.FinishedAt != nil {
+
+		if all {
+			switch v := interface{}(m.GetFinishedAt()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, StatLocalPersistentCacheTaskResponseValidationError{
+						field:  "FinishedAt",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, StatLocalPersistentCacheTaskResponseValidationError{
+						field:  "FinishedAt",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetFinishedAt()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return StatLocalPersistentCacheTaskResponseValidationError{
+					field:  "FinishedAt",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return StatLocalPersistentCacheTaskResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// StatLocalPersistentCacheTaskResponseMultiError is an error wrapping multiple
+// validation errors returned by
+// StatLocalPersistentCacheTaskResponse.ValidateAll() if the designated
+// constraints aren't met.
+type StatLocalPersistentCacheTaskResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m StatLocalPersistentCacheTaskResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m StatLocalPersistentCacheTaskResponseMultiError) AllErrors() []error { return m }
+
+// StatLocalPersistentCacheTaskResponseValidationError is the validation error
+// returned by StatLocalPersistentCacheTaskResponse.Validate if the designated
+// constraints aren't met.
+type StatLocalPersistentCacheTaskResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StatLocalPersistentCacheTaskResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StatLocalPersistentCacheTaskResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StatLocalPersistentCacheTaskResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StatLocalPersistentCacheTaskResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StatLocalPersistentCacheTaskResponseValidationError) ErrorName() string {
+	return "StatLocalPersistentCacheTaskResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e StatLocalPersistentCacheTaskResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStatLocalPersistentCacheTaskResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StatLocalPersistentCacheTaskResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StatLocalPersistentCacheTaskResponseValidationError{}
+
+// Validate checks the field values on ListLocalPersistentCacheTasksRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *ListLocalPersistentCacheTasksRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListLocalPersistentCacheTasksRequest
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// ListLocalPersistentCacheTasksRequestMultiError, or nil if none found.
+func (m *ListLocalPersistentCacheTasksRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListLocalPersistentCacheTasksRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return ListLocalPersistentCacheTasksRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListLocalPersistentCacheTasksRequestMultiError is an error wrapping multiple
+// validation errors returned by
+// ListLocalPersistentCacheTasksRequest.ValidateAll() if the designated
+// constraints aren't met.
+type ListLocalPersistentCacheTasksRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListLocalPersistentCacheTasksRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListLocalPersistentCacheTasksRequestMultiError) AllErrors() []error { return m }
+
+// ListLocalPersistentCacheTasksRequestValidationError is the validation error
+// returned by ListLocalPersistentCacheTasksRequest.Validate if the designated
+// constraints aren't met.
+type ListLocalPersistentCacheTasksRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListLocalPersistentCacheTasksRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListLocalPersistentCacheTasksRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListLocalPersistentCacheTasksRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListLocalPersistentCacheTasksRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListLocalPersistentCacheTasksRequestValidationError) ErrorName() string {
+	return "ListLocalPersistentCacheTasksRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListLocalPersistentCacheTasksRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListLocalPersistentCacheTasksRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListLocalPersistentCacheTasksRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListLocalPersistentCacheTasksRequestValidationError{}
+
+// Validate checks the field values on ListLocalPersistentCacheTasksResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the first error encountered is returned, or nil if
+// there are no violations.
+func (m *ListLocalPersistentCacheTasksResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListLocalPersistentCacheTasksResponse
+// with the rules defined in the proto definition for this message. If any
+// rules are violated, the result is a list of violation errors wrapped in
+// ListLocalPersistentCacheTasksResponseMultiError, or nil if none found.
+func (m *ListLocalPersistentCacheTasksResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListLocalPersistentCacheTasksResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetTasks() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListLocalPersistentCacheTasksResponseValidationError{
+						field:  fmt.Sprintf("Tasks[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListLocalPersistentCacheTasksResponseValidationError{
+						field:  fmt.Sprintf("Tasks[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListLocalPersistentCacheTasksResponseValidationError{
+					field:  fmt.Sprintf("Tasks[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListLocalPersistentCacheTasksResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListLocalPersistentCacheTasksResponseMultiError is an error wrapping
+// multiple validation errors returned by
+// ListLocalPersistentCacheTasksResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListLocalPersistentCacheTasksResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListLocalPersistentCacheTasksResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListLocalPersistentCacheTasksResponseMultiError) AllErrors() []error { return m }
+
+// ListLocalPersistentCacheTasksResponseValidationError is the validation error
+// returned by ListLocalPersistentCacheTasksResponse.Validate if the
+// designated constraints aren't met.
+type ListLocalPersistentCacheTasksResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListLocalPersistentCacheTasksResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListLocalPersistentCacheTasksResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListLocalPersistentCacheTasksResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListLocalPersistentCacheTasksResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListLocalPersistentCacheTasksResponseValidationError) ErrorName() string {
+	return "ListLocalPersistentCacheTasksResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListLocalPersistentCacheTasksResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListLocalPersistentCacheTasksResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListLocalPersistentCacheTasksResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListLocalPersistentCacheTasksResponseValidationError{}
 
 // Validate checks the field values on DeletePersistentCacheTaskRequest with
 // the rules defined in the proto definition for this message. If any rules

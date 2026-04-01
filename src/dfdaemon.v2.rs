@@ -168,6 +168,18 @@ pub struct StatLocalTaskResponse {
     #[prost(message, optional, tag = "11")]
     pub finished_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
 }
+/// ListLocalTasksRequest represents request of ListLocalTasks.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListLocalTasksRequest {}
+/// ListLocalTasksResponse represents response of ListLocalTasks.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListLocalTasksResponse {
+    /// Task ids of the local tasks.
+    #[prost(message, repeated, tag = "1")]
+    pub tasks: ::prost::alloc::vec::Vec<StatLocalTaskResponse>,
+}
 /// ListTaskEntriesRequest represents request of ListTaskEntries.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -244,6 +256,17 @@ pub struct Entry {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DeleteTaskRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the delete request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// DeleteLocalTaskRequest represents request of DeleteLocalTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct DeleteLocalTaskRequest {
     /// Task id.
     #[prost(string, tag = "1")]
     pub task_id: ::prost::alloc::string::String,
@@ -613,6 +636,69 @@ pub struct StatPersistentTaskRequest {
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
+/// StatLocalPersistentTaskRequest represents request of StatLocalPersistentTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StatLocalPersistentTaskRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the stat request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// StatLocalPersistentTaskResponse represents response of StatLocalPersistentTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StatLocalPersistentTaskResponse {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Persistent represents whether the persistent task is persistent.
+    /// If the persistent task is persistent, the persistent peer will
+    /// not be deleted when dfdamon runs garbage collection.
+    #[prost(bool, tag = "2")]
+    pub persistent: bool,
+    /// TTL of the persistent task.
+    #[prost(message, optional, tag = "3")]
+    pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Task piece length.
+    #[prost(uint64, optional, tag = "4")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// Task content length.
+    #[prost(uint64, optional, tag = "5")]
+    pub content_length: ::core::option::Option<u64>,
+    /// Uploading count is the count of the persistent task being uploaded by other peers.
+    #[prost(uint64, tag = "6")]
+    pub uploading_count: u64,
+    /// Uploaded count is the count of the persistent task has been uploaded by other peers.
+    #[prost(uint64, tag = "7")]
+    pub uploaded_count: u64,
+    /// Task create time.
+    #[prost(message, optional, tag = "8")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task update time.
+    #[prost(message, optional, tag = "9")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task fail time.
+    #[prost(message, optional, tag = "10")]
+    pub failed_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task finish time.
+    #[prost(message, optional, tag = "11")]
+    pub finished_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+}
+/// ListLocalPersistentTasksRequest represents request of ListLocalPersistentTasks.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListLocalPersistentTasksRequest {}
+/// ListLocalPersistentTasksResponse represents response of ListLocalPersistentTasks.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListLocalPersistentTasksResponse {
+    /// Task ids of the local tasks.
+    #[prost(message, repeated, tag = "1")]
+    pub tasks: ::prost::alloc::vec::Vec<StatLocalPersistentTaskResponse>,
+}
 /// DeletePersistentTaskRequest represents request of DeletePersistentTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
@@ -813,6 +899,69 @@ pub struct StatPersistentCacheTaskRequest {
     /// Remote IP represents the IP address of the client initiating the stat request.
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// StatLocalPersistentCacheTaskRequest represents request of StatLocalPersistentCacheTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StatLocalPersistentCacheTaskRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Remote IP represents the IP address of the client initiating the stat request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// StatLocalPersistentTaskResponse represents response of StatLocalPersistentTask.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct StatLocalPersistentCacheTaskResponse {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// Persistent represents whether the persistent cache task is persistent.
+    /// If the persistent cache task is persistent, the persistent cache peer will
+    /// not be deleted when dfdamon runs garbage collection.
+    #[prost(bool, tag = "2")]
+    pub persistent: bool,
+    /// TTL of the persistent task.
+    #[prost(message, optional, tag = "3")]
+    pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
+    /// Task piece length.
+    #[prost(uint64, optional, tag = "4")]
+    pub piece_length: ::core::option::Option<u64>,
+    /// Task content length.
+    #[prost(uint64, optional, tag = "5")]
+    pub content_length: ::core::option::Option<u64>,
+    /// Uploading count is the count of the persistent cache task being uploaded by other peers.
+    #[prost(uint64, tag = "6")]
+    pub uploading_count: u64,
+    /// Uploaded count is the count of the persistent cache task has been uploaded by other peers.
+    #[prost(uint64, tag = "7")]
+    pub uploaded_count: u64,
+    /// Task create time.
+    #[prost(message, optional, tag = "8")]
+    pub created_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task update time.
+    #[prost(message, optional, tag = "9")]
+    pub updated_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task fail time.
+    #[prost(message, optional, tag = "10")]
+    pub failed_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+    /// Task finish time.
+    #[prost(message, optional, tag = "11")]
+    pub finished_at: ::core::option::Option<::prost_wkt_types::Timestamp>,
+}
+/// ListLocalPersistentCacheTasksRequest represents request of ListLocalPersistentCacheTasks.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListLocalPersistentCacheTasksRequest {}
+/// ListLocalPersistentTasksResponse represents response of ListLocalPersistentTasks.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListLocalPersistentCacheTasksResponse {
+    /// Task ids of the local tasks.
+    #[prost(message, repeated, tag = "1")]
+    pub tasks: ::prost::alloc::vec::Vec<StatLocalPersistentCacheTaskResponse>,
 }
 /// DeletePersistentCacheTaskRequest represents request of DeletePersistentCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -3267,6 +3416,33 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        /// ListLocalTasks lists local tasks from peer.
+        pub async fn list_local_tasks(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListLocalTasksRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListLocalTasksResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/ListLocalTasks",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "ListLocalTasks"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         /// ListTaskEntries lists task entries for downloading directory.
         pub async fn list_task_entries(
             &mut self,
@@ -3314,6 +3490,30 @@ pub mod dfdaemon_download_client {
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "DeleteTask"));
+            self.inner.unary(req, path, codec).await
+        }
+        /// DeleteLocalTask deletes local task from peer.
+        pub async fn delete_local_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteLocalTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/DeleteLocalTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "DeleteLocalTask"),
+                );
             self.inner.unary(req, path, codec).await
         }
         /// DeleteHost releases host in scheduler.
@@ -3478,6 +3678,93 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        /// StatPersistentTask stats persistent task information.
+        pub async fn stat_persistent_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatPersistentTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentTask>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/StatPersistentTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "StatPersistentTask"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// StatLocalPersistentTask stats local persistent task information from peer.
+        pub async fn stat_local_persistent_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatLocalPersistentTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StatLocalPersistentTaskResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/StatLocalPersistentTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "dfdaemon.v2.DfdaemonDownload",
+                        "StatLocalPersistentTask",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// ListLocalPersistentTasks lists local persistent tasks from peer.
+        pub async fn list_local_persistent_tasks(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListLocalPersistentTasksRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListLocalPersistentTasksResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/ListLocalPersistentTasks",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "dfdaemon.v2.DfdaemonDownload",
+                        "ListLocalPersistentTasks",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         /// DownloadPersistentCacheTask downloads persistent cache task from p2p network.
         pub async fn download_persistent_cache_task(
             &mut self,
@@ -3570,6 +3857,66 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        /// StatLocalPersistentCacheTask stats local persistent cache task information from peer.
+        pub async fn stat_local_persistent_cache_task(
+            &mut self,
+            request: impl tonic::IntoRequest<super::StatLocalPersistentCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StatLocalPersistentCacheTaskResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/StatLocalPersistentCacheTask",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "dfdaemon.v2.DfdaemonDownload",
+                        "StatLocalPersistentCacheTask",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        /// ListLocalPersistentCacheTasks lists local persistent cache tasks from peer.
+        pub async fn list_local_persistent_cache_tasks(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListLocalPersistentCacheTasksRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListLocalPersistentCacheTasksResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/ListLocalPersistentCacheTasks",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "dfdaemon.v2.DfdaemonDownload",
+                        "ListLocalPersistentCacheTasks",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -3615,6 +3962,14 @@ pub mod dfdaemon_download_server {
             tonic::Response<super::StatLocalTaskResponse>,
             tonic::Status,
         >;
+        /// ListLocalTasks lists local tasks from peer.
+        async fn list_local_tasks(
+            &self,
+            request: tonic::Request<super::ListLocalTasksRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListLocalTasksResponse>,
+            tonic::Status,
+        >;
         /// ListTaskEntries lists task entries for downloading directory.
         async fn list_task_entries(
             &self,
@@ -3627,6 +3982,11 @@ pub mod dfdaemon_download_server {
         async fn delete_task(
             &self,
             request: tonic::Request<super::DeleteTaskRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// DeleteLocalTask deletes local task from peer.
+        async fn delete_local_task(
+            &self,
+            request: tonic::Request<super::DeleteLocalTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
         /// DeleteHost releases host in scheduler.
         async fn delete_host(
@@ -3688,6 +4048,30 @@ pub mod dfdaemon_download_server {
             tonic::Response<super::super::super::common::v2::PersistentTask>,
             tonic::Status,
         >;
+        /// StatPersistentTask stats persistent task information.
+        async fn stat_persistent_task(
+            &self,
+            request: tonic::Request<super::StatPersistentTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::super::super::common::v2::PersistentTask>,
+            tonic::Status,
+        >;
+        /// StatLocalPersistentTask stats local persistent task information from peer.
+        async fn stat_local_persistent_task(
+            &self,
+            request: tonic::Request<super::StatLocalPersistentTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StatLocalPersistentTaskResponse>,
+            tonic::Status,
+        >;
+        /// ListLocalPersistentTasks lists local persistent tasks from peer.
+        async fn list_local_persistent_tasks(
+            &self,
+            request: tonic::Request<super::ListLocalPersistentTasksRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListLocalPersistentTasksResponse>,
+            tonic::Status,
+        >;
         /// Server streaming response type for the DownloadPersistentCacheTask method.
         type DownloadPersistentCacheTaskStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<
@@ -3719,6 +4103,22 @@ pub mod dfdaemon_download_server {
             request: tonic::Request<super::StatPersistentCacheTaskRequest>,
         ) -> std::result::Result<
             tonic::Response<super::super::super::common::v2::PersistentCacheTask>,
+            tonic::Status,
+        >;
+        /// StatLocalPersistentCacheTask stats local persistent cache task information from peer.
+        async fn stat_local_persistent_cache_task(
+            &self,
+            request: tonic::Request<super::StatLocalPersistentCacheTaskRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::StatLocalPersistentCacheTaskResponse>,
+            tonic::Status,
+        >;
+        /// ListLocalPersistentCacheTasks lists local persistent cache tasks from peer.
+        async fn list_local_persistent_cache_tasks(
+            &self,
+            request: tonic::Request<super::ListLocalPersistentCacheTasksRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListLocalPersistentCacheTasksResponse>,
             tonic::Status,
         >;
     }
@@ -3937,6 +4337,52 @@ pub mod dfdaemon_download_server {
                     };
                     Box::pin(fut)
                 }
+                "/dfdaemon.v2.DfdaemonDownload/ListLocalTasks" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListLocalTasksSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::ListLocalTasksRequest>
+                    for ListLocalTasksSvc<T> {
+                        type Response = super::ListLocalTasksResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ListLocalTasksRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::list_local_tasks(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ListLocalTasksSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/dfdaemon.v2.DfdaemonDownload/ListTaskEntries" => {
                     #[allow(non_camel_case_types)]
                     struct ListTaskEntriesSvc<T: DfdaemonDownload>(pub Arc<T>);
@@ -4013,6 +4459,52 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeleteTaskSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/DeleteLocalTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteLocalTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::DeleteLocalTaskRequest>
+                    for DeleteLocalTaskSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteLocalTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::delete_local_task(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeleteLocalTaskSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -4311,6 +4803,157 @@ pub mod dfdaemon_download_server {
                     };
                     Box::pin(fut)
                 }
+                "/dfdaemon.v2.DfdaemonDownload/StatPersistentTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatPersistentTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::StatPersistentTaskRequest>
+                    for StatPersistentTaskSvc<T> {
+                        type Response = super::super::super::common::v2::PersistentTask;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::StatPersistentTaskRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::stat_persistent_task(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatPersistentTaskSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/StatLocalPersistentTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatLocalPersistentTaskSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::StatLocalPersistentTaskRequest>
+                    for StatLocalPersistentTaskSvc<T> {
+                        type Response = super::StatLocalPersistentTaskResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::StatLocalPersistentTaskRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::stat_local_persistent_task(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatLocalPersistentTaskSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/ListLocalPersistentTasks" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListLocalPersistentTasksSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::ListLocalPersistentTasksRequest>
+                    for ListLocalPersistentTasksSvc<T> {
+                        type Response = super::ListLocalPersistentTasksResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::ListLocalPersistentTasksRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::list_local_persistent_tasks(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ListLocalPersistentTasksSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/dfdaemon.v2.DfdaemonDownload/DownloadPersistentCacheTask" => {
                     #[allow(non_camel_case_types)]
                     struct DownloadPersistentCacheTaskSvc<T: DfdaemonDownload>(
@@ -4454,6 +5097,114 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = StatPersistentCacheTaskSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/StatLocalPersistentCacheTask" => {
+                    #[allow(non_camel_case_types)]
+                    struct StatLocalPersistentCacheTaskSvc<T: DfdaemonDownload>(
+                        pub Arc<T>,
+                    );
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<
+                        super::StatLocalPersistentCacheTaskRequest,
+                    > for StatLocalPersistentCacheTaskSvc<T> {
+                        type Response = super::StatLocalPersistentCacheTaskResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::StatLocalPersistentCacheTaskRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::stat_local_persistent_cache_task(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StatLocalPersistentCacheTaskSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/ListLocalPersistentCacheTasks" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListLocalPersistentCacheTasksSvc<T: DfdaemonDownload>(
+                        pub Arc<T>,
+                    );
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<
+                        super::ListLocalPersistentCacheTasksRequest,
+                    > for ListLocalPersistentCacheTasksSvc<T> {
+                        type Response = super::ListLocalPersistentCacheTasksResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<
+                                super::ListLocalPersistentCacheTasksRequest,
+                            >,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::list_local_persistent_cache_tasks(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ListLocalPersistentCacheTasksSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

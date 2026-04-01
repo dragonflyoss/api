@@ -164,6 +164,15 @@ message StatLocalTaskResponse {
   optional google.protobuf.Timestamp finished_at = 11;
 }
 
+// ListLocalTasksRequest represents request of ListLocalTasks.
+message ListLocalTasksRequest {}
+
+// ListLocalTasksResponse represents response of ListLocalTasks.
+message ListLocalTasksResponse {
+  // Task ids of the local tasks.
+  repeated StatLocalTaskResponse tasks = 1;
+}
+
 // ListTaskEntriesRequest represents request of ListTaskEntries.
 message ListTaskEntriesRequest {
   // Task id.
@@ -219,6 +228,17 @@ message Entry {
 
 // DeleteTaskRequest represents request of DeleteTask.
 message DeleteTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Remote IP represents the IP address of the client initiating the delete request.
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
+}
+
+// DeleteLocalTaskRequest represents request of DeleteLocalTask.
+message DeleteLocalTaskRequest {
   // Task id.
   string task_id = 1 [(validate.rules).string.min_len = 1];
   // Remote IP represents the IP address of the client initiating the delete request.
@@ -525,6 +545,57 @@ message StatPersistentTaskRequest {
   }];
 }
 
+// StatLocalPersistentTaskRequest represents request of StatLocalPersistentTask.
+message StatLocalPersistentTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Remote IP represents the IP address of the client initiating the stat request.
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
+}
+
+// StatLocalPersistentTaskResponse represents response of StatLocalPersistentTask.
+message StatLocalPersistentTaskResponse {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Persistent represents whether the persistent task is persistent.
+  // If the persistent task is persistent, the persistent peer will
+  // not be deleted when dfdamon runs garbage collection.
+  bool persistent = 2;
+  // TTL of the persistent task.
+  google.protobuf.Duration ttl = 3;
+  // Task piece length.
+  optional uint64 piece_length = 4 [(validate.rules).uint64 = {
+    gte: 4194304
+    ignore_empty: true
+  }];
+  // Task content length.
+  optional uint64 content_length = 5;
+  // Uploading count is the count of the task being uploaded by other peers.
+  uint64 uploading_count = 6;
+  // Uploaded count is the count of the task has been uploaded by other peers.
+  uint64 uploaded_count = 7;
+  // Task create time.
+  google.protobuf.Timestamp created_at = 8 [(validate.rules).timestamp.required = true];
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 9 [(validate.rules).timestamp.required = true];
+  // Task fail time.
+  optional google.protobuf.Timestamp failed_at = 10;
+  // Task finish time.
+  optional google.protobuf.Timestamp finished_at = 11;
+}
+
+// ListLocalPersistentTasksRequest represents request of ListLocalPersistentTasks.
+message ListLocalPersistentTasksRequest {}
+
+// ListLocalPersistentTasksResponse represents response of ListLocalPersistentTasks.
+message ListLocalPersistentTasksResponse {
+  // Task ids of the local tasks.
+  repeated StatLocalPersistentTaskResponse tasks = 1;
+}
+
 // DeletePersistentTaskRequest represents request of DeletePersistentTask.
 message DeletePersistentTaskRequest {
   // Task id.
@@ -700,6 +771,57 @@ message StatPersistentCacheTaskRequest {
   }];
 }
 
+// StatLocalPersistentCacheTaskRequest represents request of StatLocalPersistentCacheTask.
+message StatLocalPersistentCacheTaskRequest {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Remote IP represents the IP address of the client initiating the stat request.
+  optional string remote_ip = 2 [(validate.rules).string = {
+    ip: true
+    ignore_empty: true
+  }];
+}
+
+// StatLocalPersistentTaskResponse represents response of StatLocalPersistentTask.
+message StatLocalPersistentCacheTaskResponse {
+  // Task id.
+  string task_id = 1 [(validate.rules).string.min_len = 1];
+  // Persistent represents whether the persistent cache task is persistent.
+  // If the persistent cache task is persistent, the persistent cache peer will
+  // not be deleted when dfdamon runs garbage collection.
+  bool persistent = 2;
+  // TTL of the persistent cache task.
+  google.protobuf.Duration ttl = 3;
+  // Task piece length.
+  optional uint64 piece_length = 4 [(validate.rules).uint64 = {
+    gte: 4194304
+    ignore_empty: true
+  }];
+  // Task content length.
+  optional uint64 content_length = 5;
+  // Uploading count is the count of the task being uploaded by other peers.
+  uint64 uploading_count = 6;
+  // Uploaded count is the count of the task has been uploaded by other peers.
+  uint64 uploaded_count = 7;
+  // Task create time.
+  google.protobuf.Timestamp created_at = 8 [(validate.rules).timestamp.required = true];
+  // Task update time.
+  google.protobuf.Timestamp updated_at = 9 [(validate.rules).timestamp.required = true];
+  // Task fail time.
+  optional google.protobuf.Timestamp failed_at = 10;
+  // Task finish time.
+  optional google.protobuf.Timestamp finished_at = 11;
+}
+
+// ListLocalPersistentCacheTasksRequest represents request of ListLocalPersistentCacheTasks.
+message ListLocalPersistentCacheTasksRequest {}
+
+// ListLocalPersistentTasksResponse represents response of ListLocalPersistentTasks.
+message ListLocalPersistentCacheTasksResponse {
+  // Task ids of the local tasks.
+  repeated StatLocalPersistentCacheTaskResponse tasks = 1;
+}
+
 // DeletePersistentCacheTaskRequest represents request of DeletePersistentCacheTask.
 message DeletePersistentCacheTaskRequest {
   // Task id.
@@ -859,11 +981,17 @@ service DfdaemonDownload {
   // StatLocalTask stats local task information from peer.
   rpc StatLocalTask(StatLocalTaskRequest) returns (StatLocalTaskResponse);
 
+  // ListLocalTasks lists local tasks from peer.
+  rpc ListLocalTasks(ListLocalTasksRequest) returns (ListLocalTasksResponse);
+
   // ListTaskEntries lists task entries for downloading directory.
   rpc ListTaskEntries(ListTaskEntriesRequest) returns (ListTaskEntriesResponse);
 
   // DeleteTask deletes task from p2p network.
   rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
+
+  // DeleteLocalTask deletes local task from peer.
+  rpc DeleteLocalTask(DeleteLocalTaskRequest) returns (google.protobuf.Empty);
 
   // DeleteHost releases host in scheduler.
   rpc DeleteHost(google.protobuf.Empty) returns (google.protobuf.Empty);
@@ -883,6 +1011,15 @@ service DfdaemonDownload {
   // UploadPersistentTask uploads persistent task to p2p network.
   rpc UploadPersistentTask(UploadPersistentTaskRequest) returns (common.v2.PersistentTask);
 
+  // StatPersistentTask stats persistent task information.
+  rpc StatPersistentTask(StatPersistentTaskRequest) returns (common.v2.PersistentTask);
+
+  // StatLocalPersistentTask stats local persistent task information from peer.
+  rpc StatLocalPersistentTask(StatLocalPersistentTaskRequest) returns (StatLocalPersistentTaskResponse);
+
+  // ListLocalPersistentTasks lists local persistent tasks from peer.
+  rpc ListLocalPersistentTasks(ListLocalPersistentTasksRequest) returns (ListLocalPersistentTasksResponse);
+
   // DownloadPersistentCacheTask downloads persistent cache task from p2p network.
   rpc DownloadPersistentCacheTask(DownloadPersistentCacheTaskRequest) returns (stream DownloadPersistentCacheTaskResponse);
 
@@ -891,4 +1028,10 @@ service DfdaemonDownload {
 
   // StatPersistentCacheTask stats persistent cache task information.
   rpc StatPersistentCacheTask(StatPersistentCacheTaskRequest) returns (common.v2.PersistentCacheTask);
+
+  // StatLocalPersistentCacheTask stats local persistent cache task information from peer.
+  rpc StatLocalPersistentCacheTask(StatLocalPersistentCacheTaskRequest) returns (StatLocalPersistentCacheTaskResponse);
+
+  // ListLocalPersistentCacheTasks lists local persistent cache tasks from peer.
+  rpc ListLocalPersistentCacheTasks(ListLocalPersistentCacheTasksRequest) returns (ListLocalPersistentCacheTasksResponse);
 }
