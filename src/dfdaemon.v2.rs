@@ -278,6 +278,17 @@ pub struct DeleteLocalTaskRequest {
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
+/// ExemptTaskFromGcRequest represents request of ExemptTaskFromGc.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ExemptTaskFromGcRequest {
+    /// Task id.
+    #[prost(string, tag = "1")]
+    pub task_id: ::prost::alloc::string::String,
+    /// exempt controls whether the task should be exempt from garbage collection.
+    #[prost(bool, tag = "2")]
+    pub exempt: bool,
+}
 /// DownloadCacheTaskRequest represents request of DownloadCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -3929,6 +3940,32 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        /// ExemptTaskFromGc sets or clears the garbage collection exemption flag on a normal task.
+        /// As long as the flag is set on a task that is locally available on the peer,
+        /// that task will not be considered for eviction during a GC run.
+        pub async fn exempt_task_from_gc(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ExemptTaskFromGcRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/ExemptTaskFromGc",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "ExemptTaskFromGc"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -4133,6 +4170,13 @@ pub mod dfdaemon_download_server {
             tonic::Response<super::ListLocalPersistentCacheTasksResponse>,
             tonic::Status,
         >;
+        /// ExemptTaskFromGc sets or clears the garbage collection exemption flag on a normal task.
+        /// As long as the flag is set on a task that is locally available on the peer,
+        /// that task will not be considered for eviction during a GC run.
+        async fn exempt_task_from_gc(
+            &self,
+            request: tonic::Request<super::ExemptTaskFromGcRequest>,
+        ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
     }
     /// DfdaemonDownload represents download service of dfdaemon.
     #[derive(Debug)]
@@ -5217,6 +5261,55 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = ListLocalPersistentCacheTasksSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/ExemptTaskFromGc" => {
+                    #[allow(non_camel_case_types)]
+                    struct ExemptTaskFromGcSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::ExemptTaskFromGcRequest>
+                    for ExemptTaskFromGcSvc<T> {
+                        type Response = ();
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ExemptTaskFromGcRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::exempt_task_from_gc(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ExemptTaskFromGcSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
