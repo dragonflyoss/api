@@ -216,6 +216,14 @@ message DeleteLocalTaskRequest {
   optional string remote_ip = 2;
 }
 
+// ExemptTaskFromGcRequest represents request of ExemptTaskFromGc.
+message ExemptTaskFromGcRequest {
+  // Task id.
+  string task_id = 1;
+  // exempt controls whether the task should be exempt from garbage collection.
+  bool exempt = 2;
+}
+
 // DownloadCacheTaskRequest represents request of DownloadCacheTask.
 message DownloadCacheTaskRequest {
   // Download url.
@@ -904,4 +912,9 @@ service DfdaemonDownload {
 
   // ListLocalPersistentCacheTasks lists local persistent cache tasks from peer.
   rpc ListLocalPersistentCacheTasks(ListLocalPersistentCacheTasksRequest) returns (ListLocalPersistentCacheTasksResponse);
+
+  // ExemptTaskFromGc sets or clears the garbage collection exemption flag on a normal task.
+  // As long as the flag is set on a task that is locally available on the peer,
+  // that task will not be considered for eviction during a GC run.
+  rpc ExemptTaskFromGc(ExemptTaskFromGcRequest) returns (google.protobuf.Empty);
 }
