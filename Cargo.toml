@@ -12,7 +12,7 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 tonic = "0.14.2"
-tonic-prost = "0.14.2"
+tonic-prost = "0.14.6"
 prost = "0.14.2"
 prost-types = "0.14.2"
 tokio = { version = "1.52.1", features = ["rt-multi-thread", "macros"] }
