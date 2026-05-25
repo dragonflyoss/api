@@ -777,6 +777,11 @@ message HuggingFace {
   string revision = 2 [(validate.rules).string = {
     min_len: 1
   }];
+  // Base URL of HuggingFace Hub. If not specified, it defaults to https://huggingface.co.
+  optional string base_url = 3 [(validate.rules).string = {
+    uri: true
+    ignore_empty: true
+  }];
 }
 
 // ModelScope related information.
@@ -790,6 +795,11 @@ message ModelScope {
   // it defaults to the repository's default main branch.
   string revision = 2 [(validate.rules).string = {
     min_len: 1
+  }];
+  // Base URL of ModelScope Hub. If not specified, it defaults to https://modelscope.cn.
+  optional string base_url = 3 [(validate.rules).string = {
+    uri: true
+    ignore_empty: true
   }];
 }
 

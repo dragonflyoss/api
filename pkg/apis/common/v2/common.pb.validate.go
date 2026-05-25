@@ -4446,6 +4446,35 @@ func (m *HuggingFace) validate(all bool) error {
 
 	}
 
+	if m.BaseUrl != nil {
+
+		if m.GetBaseUrl() != "" {
+
+			if uri, err := url.Parse(m.GetBaseUrl()); err != nil {
+				err = HuggingFaceValidationError{
+					field:  "BaseUrl",
+					reason: "value must be a valid URI",
+					cause:  err,
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			} else if !uri.IsAbs() {
+				err := HuggingFaceValidationError{
+					field:  "BaseUrl",
+					reason: "value must be absolute",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return HuggingFaceMultiError(errors)
 	}
@@ -4564,6 +4593,35 @@ func (m *ModelScope) validate(all bool) error {
 				err := ModelScopeValidationError{
 					field:  "Token",
 					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.BaseUrl != nil {
+
+		if m.GetBaseUrl() != "" {
+
+			if uri, err := url.Parse(m.GetBaseUrl()); err != nil {
+				err = ModelScopeValidationError{
+					field:  "BaseUrl",
+					reason: "value must be a valid URI",
+					cause:  err,
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			} else if !uri.IsAbs() {
+				err := ModelScopeValidationError{
+					field:  "BaseUrl",
+					reason: "value must be absolute",
 				}
 				if !all {
 					return err
