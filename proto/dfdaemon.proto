@@ -756,18 +756,6 @@ message IBVerbsQueuePairEndpoint {
   bytes gid = 3;
 }
 
-// ExchangeIBVerbsQueuePairEndpointRequest represents request of ExchangeIBVerbsQueuePairEndpoint.
-message ExchangeIBVerbsQueuePairEndpointRequest {
-  // Information of the source's queue pair endpoint of IBVerbs.
-  IBVerbsQueuePairEndpoint endpoint = 1;
-}
-
-// ExchangeIBVerbsQueuePairEndpointResponse represents response of ExchangeIBVerbsQueuePairEndpoint.
-message ExchangeIBVerbsQueuePairEndpointResponse {
-  // Information of the destination's queue pair endpoint of IBVerbs.
-  IBVerbsQueuePairEndpoint endpoint = 1;
-}
-
 // DfdaemonUpload represents upload service of dfdaemon.
 service DfdaemonUpload {
   // DownloadTask downloads task from p2p network.
@@ -835,9 +823,6 @@ service DfdaemonUpload {
 
   // SyncHost sync host info from parents.
   rpc SyncHost(SyncHostRequest) returns (stream common.v2.Host);
-
-  // ExchangeIBVerbsQueuePairEndpoint exchanges queue pair endpoint of IBVerbs with remote peer.
-  rpc ExchangeIBVerbsQueuePairEndpoint(ExchangeIBVerbsQueuePairEndpointRequest) returns (ExchangeIBVerbsQueuePairEndpointResponse);
 }
 
 // DfdaemonDownload represents download service of dfdaemon.
