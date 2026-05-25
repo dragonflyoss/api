@@ -814,6 +814,9 @@ pub struct HuggingFace {
     /// it defaults to the repository's default main branch.
     #[prost(string, tag = "2")]
     pub revision: ::prost::alloc::string::String,
+    /// Base URL of HuggingFace Hub. If not specified, it defaults to <https://huggingface.co.>
+    #[prost(string, optional, tag = "3")]
+    pub base_url: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// ModelScope related information.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -826,6 +829,9 @@ pub struct ModelScope {
     /// it defaults to the repository's default main branch.
     #[prost(string, tag = "2")]
     pub revision: ::prost::alloc::string::String,
+    /// Base URL of ModelScope Hub. If not specified, it defaults to <https://modelscope.cn.>
+    #[prost(string, optional, tag = "3")]
+    pub base_url: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -693,6 +693,8 @@ message HuggingFace {
   // Revision of the HuggingFace model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
   // it defaults to the repository's default main branch.
   string revision = 2;
+  // Base URL of HuggingFace Hub. If not specified, it defaults to https://huggingface.co.
+  optional string base_url = 3;
 }
 
 // ModelScope related information.
@@ -702,6 +704,8 @@ message ModelScope {
   // Revision of the ModelScope model, dataset, or space. It can be a branch name, tag name, or commit hash. If not specified,
   // it defaults to the repository's default main branch.
   string revision = 2;
+  // Base URL of ModelScope Hub. If not specified, it defaults to https://modelscope.cn.
+  optional string base_url = 3;
 }
 
 // Range represents download range.
