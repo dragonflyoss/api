@@ -2,9 +2,9 @@ name: Lint
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   golang-lint:
@@ -44,7 +44,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
-          toolchain: 1.85.0
+          toolchain: 1.88.0
 
       - name: Run cargo check
         uses: actions-rs/cargo@v1
