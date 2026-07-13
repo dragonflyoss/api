@@ -597,6 +597,16 @@ message Disk {
   uint64 read_bandwidth = 9;
   // Disk write bandwidth, in bytes per second.
   uint64 write_bandwidth = 10;
+  // Cgroup Disk Stat.
+  optional CgroupDisk cgroup = 11;
+}
+
+// Cgroup Disk Stat.
+message CgroupDisk {
+  // Disk read bandwidth, in bytes per second.
+  uint64 read_bandwidth = 1;
+  // Disk write bandwidth, in bytes per second.
+  uint64 write_bandwidth = 2;
 }
 
 // Build information.
