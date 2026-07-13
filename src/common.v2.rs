@@ -618,6 +618,20 @@ pub struct Disk {
     /// Disk write bandwidth, in bytes per second.
     #[prost(uint64, tag = "10")]
     pub write_bandwidth: u64,
+    /// Cgroup Disk Stat.
+    #[prost(message, optional, tag = "11")]
+    pub cgroup: ::core::option::Option<CgroupDisk>,
+}
+/// Cgroup Disk Stat.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct CgroupDisk {
+    /// Disk read bandwidth, in bytes per second.
+    #[prost(uint64, tag = "1")]
+    pub read_bandwidth: u64,
+    /// Disk write bandwidth, in bytes per second.
+    #[prost(uint64, tag = "2")]
+    pub write_bandwidth: u64,
 }
 /// Build information.
 #[derive(serde::Serialize, serde::Deserialize)]
