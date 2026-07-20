@@ -2660,6 +2660,108 @@ var _ interface {
 	ErrorName() string
 } = NeedBackToSourceResponseValidationError{}
 
+// Validate checks the field values on HitLocalCacheResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *HitLocalCacheResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HitLocalCacheResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// HitLocalCacheResponseMultiError, or nil if none found.
+func (m *HitLocalCacheResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HitLocalCacheResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return HitLocalCacheResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// HitLocalCacheResponseMultiError is an error wrapping multiple validation
+// errors returned by HitLocalCacheResponse.ValidateAll() if the designated
+// constraints aren't met.
+type HitLocalCacheResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HitLocalCacheResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HitLocalCacheResponseMultiError) AllErrors() []error { return m }
+
+// HitLocalCacheResponseValidationError is the validation error returned by
+// HitLocalCacheResponse.Validate if the designated constraints aren't met.
+type HitLocalCacheResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HitLocalCacheResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HitLocalCacheResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HitLocalCacheResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HitLocalCacheResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HitLocalCacheResponseValidationError) ErrorName() string {
+	return "HitLocalCacheResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e HitLocalCacheResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHitLocalCacheResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HitLocalCacheResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HitLocalCacheResponseValidationError{}
+
 // Validate checks the field values on AnnouncePeerResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -2804,6 +2906,48 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerResponseValidationError{
 					field:  "NeedBackToSourceResponse",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	case *AnnouncePeerResponse_HitLocalCacheResponse:
+		if v == nil {
+			err := AnnouncePeerResponseValidationError{
+				field:  "Response",
+				reason: "oneof value cannot be a typed-nil",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+		oneofResponsePresent = true
+
+		if all {
+			switch v := interface{}(m.GetHitLocalCacheResponse()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, AnnouncePeerResponseValidationError{
+						field:  "HitLocalCacheResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, AnnouncePeerResponseValidationError{
+						field:  "HitLocalCacheResponse",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetHitLocalCacheResponse()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return AnnouncePeerResponseValidationError{
+					field:  "HitLocalCacheResponse",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
