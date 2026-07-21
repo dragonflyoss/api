@@ -2660,22 +2660,22 @@ var _ interface {
 	ErrorName() string
 } = NeedBackToSourceResponseValidationError{}
 
-// Validate checks the field values on HitLocalCacheResponse with the rules
+// Validate checks the field values on MetadataOnlyResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *HitLocalCacheResponse) Validate() error {
+func (m *MetadataOnlyResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on HitLocalCacheResponse with the rules
+// ValidateAll checks the field values on MetadataOnlyResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// HitLocalCacheResponseMultiError, or nil if none found.
-func (m *HitLocalCacheResponse) ValidateAll() error {
+// MetadataOnlyResponseMultiError, or nil if none found.
+func (m *MetadataOnlyResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *HitLocalCacheResponse) validate(all bool) error {
+func (m *MetadataOnlyResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -2683,19 +2683,19 @@ func (m *HitLocalCacheResponse) validate(all bool) error {
 	var errors []error
 
 	if len(errors) > 0 {
-		return HitLocalCacheResponseMultiError(errors)
+		return MetadataOnlyResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// HitLocalCacheResponseMultiError is an error wrapping multiple validation
-// errors returned by HitLocalCacheResponse.ValidateAll() if the designated
+// MetadataOnlyResponseMultiError is an error wrapping multiple validation
+// errors returned by MetadataOnlyResponse.ValidateAll() if the designated
 // constraints aren't met.
-type HitLocalCacheResponseMultiError []error
+type MetadataOnlyResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m HitLocalCacheResponseMultiError) Error() string {
+func (m MetadataOnlyResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2704,11 +2704,11 @@ func (m HitLocalCacheResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m HitLocalCacheResponseMultiError) AllErrors() []error { return m }
+func (m MetadataOnlyResponseMultiError) AllErrors() []error { return m }
 
-// HitLocalCacheResponseValidationError is the validation error returned by
-// HitLocalCacheResponse.Validate if the designated constraints aren't met.
-type HitLocalCacheResponseValidationError struct {
+// MetadataOnlyResponseValidationError is the validation error returned by
+// MetadataOnlyResponse.Validate if the designated constraints aren't met.
+type MetadataOnlyResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2716,24 +2716,24 @@ type HitLocalCacheResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e HitLocalCacheResponseValidationError) Field() string { return e.field }
+func (e MetadataOnlyResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e HitLocalCacheResponseValidationError) Reason() string { return e.reason }
+func (e MetadataOnlyResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e HitLocalCacheResponseValidationError) Cause() error { return e.cause }
+func (e MetadataOnlyResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e HitLocalCacheResponseValidationError) Key() bool { return e.key }
+func (e MetadataOnlyResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e HitLocalCacheResponseValidationError) ErrorName() string {
-	return "HitLocalCacheResponseValidationError"
+func (e MetadataOnlyResponseValidationError) ErrorName() string {
+	return "MetadataOnlyResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e HitLocalCacheResponseValidationError) Error() string {
+func (e MetadataOnlyResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2745,14 +2745,14 @@ func (e HitLocalCacheResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sHitLocalCacheResponse.%s: %s%s",
+		"invalid %sMetadataOnlyResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = HitLocalCacheResponseValidationError{}
+var _ error = MetadataOnlyResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -2760,7 +2760,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = HitLocalCacheResponseValidationError{}
+} = MetadataOnlyResponseValidationError{}
 
 // Validate checks the field values on AnnouncePeerResponse with the rules
 // defined in the proto definition for this message. If any rules are
@@ -2912,7 +2912,7 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 			}
 		}
 
-	case *AnnouncePeerResponse_HitLocalCacheResponse:
+	case *AnnouncePeerResponse_MetadataOnlyResponse:
 		if v == nil {
 			err := AnnouncePeerResponseValidationError{
 				field:  "Response",
@@ -2926,11 +2926,11 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 		oneofResponsePresent = true
 
 		if all {
-			switch v := interface{}(m.GetHitLocalCacheResponse()).(type) {
+			switch v := interface{}(m.GetMetadataOnlyResponse()).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
 					errors = append(errors, AnnouncePeerResponseValidationError{
-						field:  "HitLocalCacheResponse",
+						field:  "MetadataOnlyResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -2938,16 +2938,16 @@ func (m *AnnouncePeerResponse) validate(all bool) error {
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
 					errors = append(errors, AnnouncePeerResponseValidationError{
-						field:  "HitLocalCacheResponse",
+						field:  "MetadataOnlyResponse",
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			}
-		} else if v, ok := interface{}(m.GetHitLocalCacheResponse()).(interface{ Validate() error }); ok {
+		} else if v, ok := interface{}(m.GetMetadataOnlyResponse()).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return AnnouncePeerResponseValidationError{
-					field:  "HitLocalCacheResponse",
+					field:  "MetadataOnlyResponse",
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
