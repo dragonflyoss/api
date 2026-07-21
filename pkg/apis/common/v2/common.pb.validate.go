@@ -3784,6 +3784,8 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for EnableTaskIdBasedBlobDigest
 
+	// no validation rules for HitLocalCache
+
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {

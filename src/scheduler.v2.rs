@@ -191,11 +191,17 @@ pub struct NeedBackToSourceResponse {
     #[prost(string, optional, tag = "1")]
     pub description: ::core::option::Option<::prost::alloc::string::String>,
 }
+/// HitLocalCacheResponse represents hit local cache response of AnnouncePeerResponse,
+/// used when the download hits the local cache completely and the peer only reports
+/// the metadata to the scheduler, no need to be scheduled for downloading pieces.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct HitLocalCacheResponse {}
 /// AnnouncePeerResponse represents response of AnnouncePeer.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct AnnouncePeerResponse {
-    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3")]
+    #[prost(oneof = "announce_peer_response::Response", tags = "1, 2, 3, 4")]
     pub response: ::core::option::Option<announce_peer_response::Response>,
 }
 /// Nested message and enum types in `AnnouncePeerResponse`.
@@ -209,6 +215,8 @@ pub mod announce_peer_response {
         NormalTaskResponse(super::NormalTaskResponse),
         #[prost(message, tag = "3")]
         NeedBackToSourceResponse(super::NeedBackToSourceResponse),
+        #[prost(message, tag = "4")]
+        HitLocalCacheResponse(super::HitLocalCacheResponse),
     }
 }
 /// StatPeerRequest represents request of StatPeer.

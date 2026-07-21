@@ -150,12 +150,18 @@ message NeedBackToSourceResponse {
   optional string description = 1;
 }
 
+// HitLocalCacheResponse represents hit local cache response of AnnouncePeerResponse,
+// used when the download hits the local cache completely and the peer only reports
+// the metadata to the scheduler, no need to be scheduled for downloading pieces.
+message HitLocalCacheResponse {}
+
 // AnnouncePeerResponse represents response of AnnouncePeer.
 message AnnouncePeerResponse {
   oneof response {
     EmptyTaskResponse empty_task_response = 1;
     NormalTaskResponse normal_task_response = 2;
     NeedBackToSourceResponse need_back_to_source_response = 3;
+    HitLocalCacheResponse hit_local_cache_response = 4;
   }
 }
 
