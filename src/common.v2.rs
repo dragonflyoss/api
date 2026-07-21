@@ -776,11 +776,11 @@ pub struct Download {
     /// ModelScope protocol information.
     #[prost(message, optional, tag = "32")]
     pub model_scope: ::core::option::Option<ModelScope>,
-    /// Hit local cache indicates whether the download hits the local cache completely.
-    /// If hit_local_cache is true, the peer registers with the scheduler only to report
+    /// Metadata only indicates whether the download hits the local cache completely.
+    /// If metadata_only is true, the peer registers with the scheduler only to report
     /// the metadata of the task, no need to be scheduled for downloading pieces.
     #[prost(bool, tag = "33")]
-    pub hit_local_cache: bool,
+    pub metadata_only: bool,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
