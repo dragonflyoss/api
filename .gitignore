@@ -78,3 +78,4 @@ __pycache__/
 *.egg-info/
 dist/
 .venv/
+python/LICENSE

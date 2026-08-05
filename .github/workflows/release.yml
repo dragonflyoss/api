@@ -50,6 +50,7 @@ jobs:
 
       - name: Build distributions
         run: |
+          cp LICENSE python/LICENSE
           python -m pip install build
           python -m build python/
 
