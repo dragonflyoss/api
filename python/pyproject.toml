@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dragonfly-api"
+dynamic = ["version"]
+description = "Canonical location of the Dragonfly API definition"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [{ name = "Gaius", email = "gaius.qi@gmail.com" }]
+requires-python = ">=3.9"
+dependencies = [
+    "grpcio>=1.76.0",
+    "protobuf>=6.31.1,<8.0.0",
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://d7y.io"
+Repository = "https://github.com/dragonflyoss/api"
+
+[tool.hatch.version]
+source = "vcs"
+raw-options = { root = ".." }
+
+[tool.hatch.build.targets.wheel]
+packages = ["dragonfly_api"]

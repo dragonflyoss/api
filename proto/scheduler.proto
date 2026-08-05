@@ -22,7 +22,6 @@ import "common.proto";
 import "errordetails.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 
 // RegisterPeerRequest represents peer registered request of AnnouncePeerRequest.
 message RegisterPeerRequest {

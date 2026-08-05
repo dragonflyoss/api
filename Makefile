@@ -32,7 +32,7 @@ generate: protoc
 .PHONY: generate
 
 # Generate grpc protos
-protoc: go-protoc rust-protoc
+protoc: go-protoc rust-protoc python-protoc
 .PHONY: protoc
 
 # Generate grpc protos of golang
@@ -47,6 +47,12 @@ rust-protoc:
 	@cargo build --release
 .PHONY: rust-protoc
 
+# Generate grpc protos of python
+python-protoc:
+	@echo "Begin to generate grpc protos of python."
+	@./hack/protoc-python.sh
+.PHONY: python-protoc
+
 # Clear compiled files
 clean:
 	@go clean
@@ -60,4 +66,5 @@ help:
 	@echo "make protoc                         generate grpc protos"
 	@echo "make go-protoc                      generate grpc protos of golang"
 	@echo "make rust-protoc                    generate grpc protos of rust"
+	@echo "make python-protoc                  generate grpc protos of python"
 	@echo "make clean                          clean"
