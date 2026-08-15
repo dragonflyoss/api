@@ -4088,6 +4088,39 @@ func (m *Download) validate(all bool) error {
 
 	}
 
+	if m.OpenCsg != nil {
+
+		if all {
+			switch v := interface{}(m.GetOpenCsg()).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "OpenCsg",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, DownloadValidationError{
+						field:  "OpenCsg",
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(m.GetOpenCsg()).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return DownloadValidationError{
+					field:  "OpenCsg",
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return DownloadMultiError(errors)
 	}
@@ -4847,6 +4880,163 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ModelScopeValidationError{}
+
+// Validate checks the field values on OpenCSG with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *OpenCSG) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on OpenCSG with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in OpenCSGMultiError, or nil if none found.
+func (m *OpenCSG) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *OpenCSG) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetRevision()) < 1 {
+		err := OpenCSGValidationError{
+			field:  "Revision",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if m.Token != nil {
+
+		if m.GetToken() != "" {
+
+			if utf8.RuneCountInString(m.GetToken()) < 1 {
+				err := OpenCSGValidationError{
+					field:  "Token",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.BaseUrl != nil {
+
+		if m.GetBaseUrl() != "" {
+
+			if uri, err := url.Parse(m.GetBaseUrl()); err != nil {
+				err = OpenCSGValidationError{
+					field:  "BaseUrl",
+					reason: "value must be a valid URI",
+					cause:  err,
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			} else if !uri.IsAbs() {
+				err := OpenCSGValidationError{
+					field:  "BaseUrl",
+					reason: "value must be absolute",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return OpenCSGMultiError(errors)
+	}
+
+	return nil
+}
+
+// OpenCSGMultiError is an error wrapping multiple validation errors returned
+// by OpenCSG.ValidateAll() if the designated constraints aren't met.
+type OpenCSGMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m OpenCSGMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m OpenCSGMultiError) AllErrors() []error { return m }
+
+// OpenCSGValidationError is the validation error returned by OpenCSG.Validate
+// if the designated constraints aren't met.
+type OpenCSGValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e OpenCSGValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e OpenCSGValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e OpenCSGValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e OpenCSGValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e OpenCSGValidationError) ErrorName() string { return "OpenCSGValidationError" }
+
+// Error satisfies the builtin error interface
+func (e OpenCSGValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sOpenCSG.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = OpenCSGValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = OpenCSGValidationError{}
 
 // Validate checks the field values on Range with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

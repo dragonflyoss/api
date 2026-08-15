@@ -667,6 +667,8 @@ message Download {
   // If metadata_only is true, the peer registers with the scheduler only to report
   // the metadata of the task, no need to be scheduled for downloading pieces.
   bool metadata_only = 33;
+  // OpenCSG protocol information.
+  optional OpenCSG open_csg = 34;
 
   reserved 21;
   reserved "load_to_cache";
@@ -719,6 +721,17 @@ message ModelScope {
   // it defaults to the repository's default main branch.
   string revision = 2;
   // Base URL of ModelScope Hub. If not specified, it defaults to https://modelscope.cn.
+  optional string base_url = 3;
+}
+
+// OpenCSG related information.
+message OpenCSG {
+  // Access token for OpenCSG Hub.
+  optional string token = 1;
+  // Revision of the OpenCSG repository. It can be a branch name, tag name, or commit hash. This field must not be empty.
+  // Clients should use "main" when the user does not specify a revision.
+  string revision = 2;
+  // Base URL of OpenCSG Hub. If not specified, it defaults to https://hub.opencsg.com/csg/.
   optional string base_url = 3;
 }
 

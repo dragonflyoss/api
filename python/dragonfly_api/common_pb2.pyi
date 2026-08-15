@@ -494,7 +494,7 @@ class Build(_message.Message):
     def __init__(self, git_version: _Optional[str] = ..., git_commit: _Optional[str] = ..., go_version: _Optional[str] = ..., rust_version: _Optional[str] = ..., platform: _Optional[str] = ...) -> None: ...
 
 class Download(_message.Message):
-    __slots__ = ("url", "digest", "range", "type", "tag", "application", "priority", "filtered_query_params", "request_header", "piece_length", "output_path", "timeout", "disable_back_to_source", "need_back_to_source", "certificate_chain", "prefetch", "object_storage", "hdfs", "is_prefetch", "need_piece_content", "force_hard_link", "content_for_calculating_task_id", "remote_ip", "concurrent_piece_count", "overwrite", "actual_piece_length", "actual_content_length", "actual_piece_count", "enable_task_id_based_blob_digest", "hugging_face", "model_scope", "metadata_only")
+    __slots__ = ("url", "digest", "range", "type", "tag", "application", "priority", "filtered_query_params", "request_header", "piece_length", "output_path", "timeout", "disable_back_to_source", "need_back_to_source", "certificate_chain", "prefetch", "object_storage", "hdfs", "is_prefetch", "need_piece_content", "force_hard_link", "content_for_calculating_task_id", "remote_ip", "concurrent_piece_count", "overwrite", "actual_piece_length", "actual_content_length", "actual_piece_count", "enable_task_id_based_blob_digest", "hugging_face", "model_scope", "metadata_only", "open_csg")
     class RequestHeaderEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -534,6 +534,7 @@ class Download(_message.Message):
     HUGGING_FACE_FIELD_NUMBER: _ClassVar[int]
     MODEL_SCOPE_FIELD_NUMBER: _ClassVar[int]
     METADATA_ONLY_FIELD_NUMBER: _ClassVar[int]
+    OPEN_CSG_FIELD_NUMBER: _ClassVar[int]
     url: str
     digest: str
     range: Range
@@ -566,7 +567,8 @@ class Download(_message.Message):
     hugging_face: HuggingFace
     model_scope: ModelScope
     metadata_only: bool
-    def __init__(self, url: _Optional[str] = ..., digest: _Optional[str] = ..., range: _Optional[_Union[Range, _Mapping]] = ..., type: _Optional[_Union[TaskType, str]] = ..., tag: _Optional[str] = ..., application: _Optional[str] = ..., priority: _Optional[_Union[Priority, str]] = ..., filtered_query_params: _Optional[_Iterable[str]] = ..., request_header: _Optional[_Mapping[str, str]] = ..., piece_length: _Optional[int] = ..., output_path: _Optional[str] = ..., timeout: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ..., disable_back_to_source: bool = ..., need_back_to_source: bool = ..., certificate_chain: _Optional[_Iterable[bytes]] = ..., prefetch: bool = ..., object_storage: _Optional[_Union[ObjectStorage, _Mapping]] = ..., hdfs: _Optional[_Union[HDFS, _Mapping]] = ..., is_prefetch: bool = ..., need_piece_content: bool = ..., force_hard_link: bool = ..., content_for_calculating_task_id: _Optional[str] = ..., remote_ip: _Optional[str] = ..., concurrent_piece_count: _Optional[int] = ..., overwrite: bool = ..., actual_piece_length: _Optional[int] = ..., actual_content_length: _Optional[int] = ..., actual_piece_count: _Optional[int] = ..., enable_task_id_based_blob_digest: bool = ..., hugging_face: _Optional[_Union[HuggingFace, _Mapping]] = ..., model_scope: _Optional[_Union[ModelScope, _Mapping]] = ..., metadata_only: bool = ...) -> None: ...
+    open_csg: OpenCSG
+    def __init__(self, url: _Optional[str] = ..., digest: _Optional[str] = ..., range: _Optional[_Union[Range, _Mapping]] = ..., type: _Optional[_Union[TaskType, str]] = ..., tag: _Optional[str] = ..., application: _Optional[str] = ..., priority: _Optional[_Union[Priority, str]] = ..., filtered_query_params: _Optional[_Iterable[str]] = ..., request_header: _Optional[_Mapping[str, str]] = ..., piece_length: _Optional[int] = ..., output_path: _Optional[str] = ..., timeout: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ..., disable_back_to_source: bool = ..., need_back_to_source: bool = ..., certificate_chain: _Optional[_Iterable[bytes]] = ..., prefetch: bool = ..., object_storage: _Optional[_Union[ObjectStorage, _Mapping]] = ..., hdfs: _Optional[_Union[HDFS, _Mapping]] = ..., is_prefetch: bool = ..., need_piece_content: bool = ..., force_hard_link: bool = ..., content_for_calculating_task_id: _Optional[str] = ..., remote_ip: _Optional[str] = ..., concurrent_piece_count: _Optional[int] = ..., overwrite: bool = ..., actual_piece_length: _Optional[int] = ..., actual_content_length: _Optional[int] = ..., actual_piece_count: _Optional[int] = ..., enable_task_id_based_blob_digest: bool = ..., hugging_face: _Optional[_Union[HuggingFace, _Mapping]] = ..., model_scope: _Optional[_Union[ModelScope, _Mapping]] = ..., metadata_only: bool = ..., open_csg: _Optional[_Union[OpenCSG, _Mapping]] = ...) -> None: ...
 
 class ObjectStorage(_message.Message):
     __slots__ = ("region", "endpoint", "access_key_id", "access_key_secret", "session_token", "credential_path", "predefined_acl", "security_token", "insecure_skip_verify")
@@ -607,6 +609,16 @@ class HuggingFace(_message.Message):
     def __init__(self, token: _Optional[str] = ..., revision: _Optional[str] = ..., base_url: _Optional[str] = ...) -> None: ...
 
 class ModelScope(_message.Message):
+    __slots__ = ("token", "revision", "base_url")
+    TOKEN_FIELD_NUMBER: _ClassVar[int]
+    REVISION_FIELD_NUMBER: _ClassVar[int]
+    BASE_URL_FIELD_NUMBER: _ClassVar[int]
+    token: str
+    revision: str
+    base_url: str
+    def __init__(self, token: _Optional[str] = ..., revision: _Optional[str] = ..., base_url: _Optional[str] = ...) -> None: ...
+
+class OpenCSG(_message.Message):
     __slots__ = ("token", "revision", "base_url")
     TOKEN_FIELD_NUMBER: _ClassVar[int]
     REVISION_FIELD_NUMBER: _ClassVar[int]
