@@ -781,6 +781,9 @@ pub struct Download {
     /// the metadata of the task, no need to be scheduled for downloading pieces.
     #[prost(bool, tag = "33")]
     pub metadata_only: bool,
+    /// OpenCSG protocol information.
+    #[prost(message, optional, tag = "34")]
+    pub open_csg: ::core::option::Option<OpenCsg>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -849,6 +852,21 @@ pub struct ModelScope {
     #[prost(string, tag = "2")]
     pub revision: ::prost::alloc::string::String,
     /// Base URL of ModelScope Hub. If not specified, it defaults to <https://modelscope.cn.>
+    #[prost(string, optional, tag = "3")]
+    pub base_url: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// OpenCSG related information.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct OpenCsg {
+    /// Access token for OpenCSG Hub.
+    #[prost(string, optional, tag = "1")]
+    pub token: ::core::option::Option<::prost::alloc::string::String>,
+    /// Revision of the OpenCSG repository. It can be a branch name, tag name, or commit hash. This field must not be empty.
+    /// Clients should use "main" when the user does not specify a revision.
+    #[prost(string, tag = "2")]
+    pub revision: ::prost::alloc::string::String,
+    /// Base URL of OpenCSG Hub. If not specified, it defaults to <https://hub.opencsg.com/csg/.>
     #[prost(string, optional, tag = "3")]
     pub base_url: ::core::option::Option<::prost::alloc::string::String>,
 }

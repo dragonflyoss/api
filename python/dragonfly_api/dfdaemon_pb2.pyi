@@ -147,7 +147,7 @@ class ListLocalTasksResponse(_message.Message):
     def __init__(self, tasks: _Optional[_Iterable[_Union[StatLocalTaskResponse, _Mapping]]] = ...) -> None: ...
 
 class ListTaskEntriesRequest(_message.Message):
-    __slots__ = ("task_id", "url", "request_header", "timeout", "certificate_chain", "object_storage", "hdfs", "remote_ip", "hugging_face", "model_scope")
+    __slots__ = ("task_id", "url", "request_header", "timeout", "certificate_chain", "object_storage", "hdfs", "remote_ip", "hugging_face", "model_scope", "open_csg")
     class RequestHeaderEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -165,6 +165,7 @@ class ListTaskEntriesRequest(_message.Message):
     REMOTE_IP_FIELD_NUMBER: _ClassVar[int]
     HUGGING_FACE_FIELD_NUMBER: _ClassVar[int]
     MODEL_SCOPE_FIELD_NUMBER: _ClassVar[int]
+    OPEN_CSG_FIELD_NUMBER: _ClassVar[int]
     task_id: str
     url: str
     request_header: _containers.ScalarMap[str, str]
@@ -175,7 +176,8 @@ class ListTaskEntriesRequest(_message.Message):
     remote_ip: str
     hugging_face: _common_pb2.HuggingFace
     model_scope: _common_pb2.ModelScope
-    def __init__(self, task_id: _Optional[str] = ..., url: _Optional[str] = ..., request_header: _Optional[_Mapping[str, str]] = ..., timeout: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ..., certificate_chain: _Optional[_Iterable[bytes]] = ..., object_storage: _Optional[_Union[_common_pb2.ObjectStorage, _Mapping]] = ..., hdfs: _Optional[_Union[_common_pb2.HDFS, _Mapping]] = ..., remote_ip: _Optional[str] = ..., hugging_face: _Optional[_Union[_common_pb2.HuggingFace, _Mapping]] = ..., model_scope: _Optional[_Union[_common_pb2.ModelScope, _Mapping]] = ...) -> None: ...
+    open_csg: _common_pb2.OpenCSG
+    def __init__(self, task_id: _Optional[str] = ..., url: _Optional[str] = ..., request_header: _Optional[_Mapping[str, str]] = ..., timeout: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ..., certificate_chain: _Optional[_Iterable[bytes]] = ..., object_storage: _Optional[_Union[_common_pb2.ObjectStorage, _Mapping]] = ..., hdfs: _Optional[_Union[_common_pb2.HDFS, _Mapping]] = ..., remote_ip: _Optional[str] = ..., hugging_face: _Optional[_Union[_common_pb2.HuggingFace, _Mapping]] = ..., model_scope: _Optional[_Union[_common_pb2.ModelScope, _Mapping]] = ..., open_csg: _Optional[_Union[_common_pb2.OpenCSG, _Mapping]] = ...) -> None: ...
 
 class ListTaskEntriesResponse(_message.Message):
     __slots__ = ("content_length", "response_header", "status_code", "entries")

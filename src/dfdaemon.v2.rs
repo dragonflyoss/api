@@ -221,6 +221,9 @@ pub struct ListTaskEntriesRequest {
     /// ModelScope protocol information.
     #[prost(message, optional, tag = "10")]
     pub model_scope: ::core::option::Option<super::super::common::v2::ModelScope>,
+    /// OpenCSG protocol information.
+    #[prost(message, optional, tag = "11")]
+    pub open_csg: ::core::option::Option<super::super::common::v2::OpenCsg>,
 }
 /// ListTaskEntriesResponse represents response of ListTaskEntries.
 #[derive(serde::Serialize, serde::Deserialize)]
