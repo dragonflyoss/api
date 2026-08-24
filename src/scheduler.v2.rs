@@ -1297,6 +1297,13 @@ pub struct StatImageRequest {
     /// insecure_skip_verify indicates whether to skip TLS verification.
     #[prost(bool, tag = "14")]
     pub insecure_skip_verify: bool,
+    /// Scope is the scope for stating image, it can be one of the following values:
+    ///
+    /// * all_seed_peers: stat image from all seed peers.
+    /// * all_peers: stat image from all available peers.
+    ///   If not specified, stat image from all available peers.
+    #[prost(string, tag = "15")]
+    pub scope: ::prost::alloc::string::String,
 }
 /// StatImageResponse represents response of StatImage.
 #[derive(serde::Serialize, serde::Deserialize)]

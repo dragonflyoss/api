@@ -13190,6 +13190,21 @@ func (m *StatImageRequest) validate(all bool) error {
 
 	// no validation rules for InsecureSkipVerify
 
+	if m.GetScope() != "" {
+
+		if !_StatImageRequest_Scope_Pattern.MatchString(m.GetScope()) {
+			err := StatImageRequestValidationError{
+				field:  "Scope",
+				reason: "value does not match regex pattern \"^(all_seed_peers|all_peers)$\"",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if m.PieceLength != nil {
 
 		if m.GetPieceLength() != 0 {
@@ -13377,6 +13392,8 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = StatImageRequestValidationError{}
+
+var _StatImageRequest_Scope_Pattern = regexp.MustCompile("^(all_seed_peers|all_peers)$")
 
 // Validate checks the field values on StatImageResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the
