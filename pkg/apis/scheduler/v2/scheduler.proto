@@ -1010,6 +1010,14 @@ message StatImageRequest {
   repeated bytes certificate_chain = 13;
   // insecure_skip_verify indicates whether to skip TLS verification.
   bool insecure_skip_verify = 14;
+  // Scope is the scope for stating image, it can be one of the following values:
+  // - all_seed_peers: stat image from all seed peers.
+  // - all_peers: stat image from all available peers.
+  // If not specified, stat image from all available peers.
+  string scope = 15 [(validate.rules).string = {
+    pattern: "^(all_seed_peers|all_peers)$"
+    ignore_empty: true
+  }];
 }
 
 // StatImageResponse represents response of StatImage.

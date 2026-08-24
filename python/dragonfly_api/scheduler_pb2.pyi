@@ -811,7 +811,7 @@ class PreheatImageRequest(_message.Message):
     def __init__(self, url: _Optional[str] = ..., piece_length: _Optional[int] = ..., tag: _Optional[str] = ..., application: _Optional[str] = ..., filtered_query_params: _Optional[_Iterable[str]] = ..., header: _Optional[_Mapping[str, str]] = ..., username: _Optional[str] = ..., password: _Optional[str] = ..., platform: _Optional[str] = ..., scope: _Optional[str] = ..., ips: _Optional[_Iterable[str]] = ..., percentage: _Optional[int] = ..., count: _Optional[int] = ..., concurrent_task_count: _Optional[int] = ..., concurrent_peer_count: _Optional[int] = ..., timeout: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ..., priority: _Optional[_Union[_common_pb2.Priority, str]] = ..., certificate_chain: _Optional[_Iterable[bytes]] = ..., insecure_skip_verify: bool = ...) -> None: ...
 
 class StatImageRequest(_message.Message):
-    __slots__ = ("url", "piece_length", "tag", "application", "filtered_query_params", "header", "username", "password", "platform", "concurrent_layer_count", "concurrent_peer_count", "timeout", "certificate_chain", "insecure_skip_verify")
+    __slots__ = ("url", "piece_length", "tag", "application", "filtered_query_params", "header", "username", "password", "platform", "concurrent_layer_count", "concurrent_peer_count", "timeout", "certificate_chain", "insecure_skip_verify", "scope")
     class HeaderEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
@@ -833,6 +833,7 @@ class StatImageRequest(_message.Message):
     TIMEOUT_FIELD_NUMBER: _ClassVar[int]
     CERTIFICATE_CHAIN_FIELD_NUMBER: _ClassVar[int]
     INSECURE_SKIP_VERIFY_FIELD_NUMBER: _ClassVar[int]
+    SCOPE_FIELD_NUMBER: _ClassVar[int]
     url: str
     piece_length: int
     tag: str
@@ -847,7 +848,8 @@ class StatImageRequest(_message.Message):
     timeout: _duration_pb2.Duration
     certificate_chain: _containers.RepeatedScalarFieldContainer[bytes]
     insecure_skip_verify: bool
-    def __init__(self, url: _Optional[str] = ..., piece_length: _Optional[int] = ..., tag: _Optional[str] = ..., application: _Optional[str] = ..., filtered_query_params: _Optional[_Iterable[str]] = ..., header: _Optional[_Mapping[str, str]] = ..., username: _Optional[str] = ..., password: _Optional[str] = ..., platform: _Optional[str] = ..., concurrent_layer_count: _Optional[int] = ..., concurrent_peer_count: _Optional[int] = ..., timeout: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ..., certificate_chain: _Optional[_Iterable[bytes]] = ..., insecure_skip_verify: bool = ...) -> None: ...
+    scope: str
+    def __init__(self, url: _Optional[str] = ..., piece_length: _Optional[int] = ..., tag: _Optional[str] = ..., application: _Optional[str] = ..., filtered_query_params: _Optional[_Iterable[str]] = ..., header: _Optional[_Mapping[str, str]] = ..., username: _Optional[str] = ..., password: _Optional[str] = ..., platform: _Optional[str] = ..., concurrent_layer_count: _Optional[int] = ..., concurrent_peer_count: _Optional[int] = ..., timeout: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ..., certificate_chain: _Optional[_Iterable[bytes]] = ..., insecure_skip_verify: bool = ..., scope: _Optional[str] = ...) -> None: ...
 
 class StatImageResponse(_message.Message):
     __slots__ = ("image", "peers")
