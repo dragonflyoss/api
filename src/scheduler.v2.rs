@@ -1304,6 +1304,12 @@ pub struct StatImageRequest {
     ///   If not specified, stat image from all available peers.
     #[prost(string, tag = "15")]
     pub scope: ::prost::alloc::string::String,
+    /// enable_task_id_based_blob_digest indicates whether to use the blob digest for task ID calculation
+    /// when the layer url is an OCI blob url (e.g., /v2/<name>/blobs/sha256:<digest>). It should be
+    /// consistent with the value used when the image was preheated, otherwise the tasks can not be
+    /// found on the peers.
+    #[prost(bool, tag = "16")]
+    pub enable_task_id_based_blob_digest: bool,
 }
 /// StatImageResponse represents response of StatImage.
 #[derive(serde::Serialize, serde::Deserialize)]

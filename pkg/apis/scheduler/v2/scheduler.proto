@@ -1018,6 +1018,11 @@ message StatImageRequest {
     pattern: "^(all_seed_peers|all_peers)$"
     ignore_empty: true
   }];
+  // enable_task_id_based_blob_digest indicates whether to use the blob digest for task ID calculation
+  // when the layer url is an OCI blob url (e.g., /v2/<name>/blobs/sha256:<digest>). It should be
+  // consistent with the value used when the image was preheated, otherwise the tasks can not be
+  // found on the peers.
+  bool enable_task_id_based_blob_digest = 16;
 }
 
 // StatImageResponse represents response of StatImage.
