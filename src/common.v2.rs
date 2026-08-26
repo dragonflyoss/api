@@ -784,6 +784,12 @@ pub struct Download {
     /// OpenCSG protocol information.
     #[prost(message, optional, tag = "34")]
     pub open_csg: ::core::option::Option<OpenCsg>,
+    /// Need scheduling is the flag to indicate whether the download needs to be scheduled
+    /// by the scheduler even if the content length is smaller than the minimum piece length,
+    /// so that the peer announces the task to the scheduler and other peers can discover
+    /// it as a parent.
+    #[prost(bool, tag = "35")]
+    pub need_scheduling: bool,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]

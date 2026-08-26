@@ -3786,6 +3786,8 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for MetadataOnly
 
+	// no validation rules for NeedScheduling
+
 	if m.Digest != nil {
 
 		if m.GetDigest() != "" {
