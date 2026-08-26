@@ -119,6 +119,19 @@ enum Priority {
   LEVEL6 = 6;
 }
 
+// SchedulingPolicy represents how the download interacts with the scheduler.
+enum SchedulingPolicy {
+  // AUTO downloads through the scheduler unless the content length is smaller
+  // than the minimum piece length, in which case it downloads from the source
+  // directly, skipping the scheduler.
+  AUTO = 0;
+
+  // ALWAYS downloads through the scheduler even if the content length is smaller
+  // than the minimum piece length, so that the peer announces the task to the
+  // scheduler and other peers can discover it as a parent.
+  ALWAYS = 1;
+}
+
 // Peer metadata.
 message Peer {
   // Peer id.
@@ -727,11 +740,9 @@ message Download {
   bool metadata_only = 33;
   // OpenCSG protocol information.
   optional OpenCSG open_csg = 34;
-  // Need scheduling is the flag to indicate whether the download needs to be scheduled
-  // by the scheduler even if the content length is smaller than the minimum piece length,
-  // so that the peer announces the task to the scheduler and other peers can discover
-  // it as a parent.
-  bool need_scheduling = 35;
+  // Scheduling policy represents how the download interacts with the scheduler,
+  // default is AUTO.
+  SchedulingPolicy scheduling_policy = 35 [(validate.rules).enum.defined_only = true];
 
   reserved 21;
   reserved "load_to_cache";

@@ -3786,7 +3786,16 @@ func (m *Download) validate(all bool) error {
 
 	// no validation rules for MetadataOnly
 
-	// no validation rules for NeedScheduling
+	if _, ok := SchedulingPolicy_name[int32(m.GetSchedulingPolicy())]; !ok {
+		err := DownloadValidationError{
+			field:  "SchedulingPolicy",
+			reason: "value must be one of the defined enum values",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if m.Digest != nil {
 

@@ -784,12 +784,10 @@ pub struct Download {
     /// OpenCSG protocol information.
     #[prost(message, optional, tag = "34")]
     pub open_csg: ::core::option::Option<OpenCsg>,
-    /// Need scheduling is the flag to indicate whether the download needs to be scheduled
-    /// by the scheduler even if the content length is smaller than the minimum piece length,
-    /// so that the peer announces the task to the scheduler and other peers can discover
-    /// it as a parent.
-    #[prost(bool, tag = "35")]
-    pub need_scheduling: bool,
+    /// Scheduling policy represents how the download interacts with the scheduler,
+    /// default is AUTO.
+    #[prost(enumeration = "SchedulingPolicy", tag = "35")]
+    pub scheduling_policy: i32,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1101,6 +1099,40 @@ impl Priority {
             "LEVEL4" => Some(Self::Level4),
             "LEVEL5" => Some(Self::Level5),
             "LEVEL6" => Some(Self::Level6),
+            _ => None,
+        }
+    }
+}
+/// SchedulingPolicy represents how the download interacts with the scheduler.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum SchedulingPolicy {
+    /// AUTO downloads through the scheduler unless the content length is smaller
+    /// than the minimum piece length, in which case it downloads from the source
+    /// directly, skipping the scheduler.
+    Auto = 0,
+    /// ALWAYS downloads through the scheduler even if the content length is smaller
+    /// than the minimum piece length, so that the peer announces the task to the
+    /// scheduler and other peers can discover it as a parent.
+    Always = 1,
+}
+impl SchedulingPolicy {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Auto => "AUTO",
+            Self::Always => "ALWAYS",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "AUTO" => Some(Self::Auto),
+            "ALWAYS" => Some(Self::Always),
             _ => None,
         }
     }
