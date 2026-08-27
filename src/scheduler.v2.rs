@@ -1235,6 +1235,13 @@ pub struct PreheatImageRequest {
     /// insecure_skip_verify indicates whether to skip TLS verification.
     #[prost(bool, tag = "19")]
     pub insecure_skip_verify: bool,
+    /// enable_task_id_based_blob_digest indicates whether to use the blob digest for task ID calculation
+    /// when the layer url is an OCI blob url (e.g., /v2/<name>/blobs/sha256:<digest>). When enabled,
+    /// the task ID is derived from the blob digest rather than the full URL, so the same blob from
+    /// different registries shares one task ID. This enables deduplication across registries and
+    /// eliminates redundant downloads and storage.
+    #[prost(bool, tag = "20")]
+    pub enable_task_id_based_blob_digest: bool,
 }
 /// StatImageRequest represents request of StatImage.
 #[derive(serde::Serialize, serde::Deserialize)]

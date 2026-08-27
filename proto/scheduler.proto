@@ -835,6 +835,12 @@ message PreheatImageRequest {
   repeated bytes certificate_chain = 18;
   // insecure_skip_verify indicates whether to skip TLS verification.
   bool insecure_skip_verify = 19;
+  // enable_task_id_based_blob_digest indicates whether to use the blob digest for task ID calculation
+  // when the layer url is an OCI blob url (e.g., /v2/<name>/blobs/sha256:<digest>). When enabled,
+  // the task ID is derived from the blob digest rather than the full URL, so the same blob from
+  // different registries shares one task ID. This enables deduplication across registries and
+  // eliminates redundant downloads and storage.
+  bool enable_task_id_based_blob_digest = 20;
 }
 
 // StatImageRequest represents request of StatImage.

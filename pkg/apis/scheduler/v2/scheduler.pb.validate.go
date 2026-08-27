@@ -12913,6 +12913,8 @@ func (m *PreheatImageRequest) validate(all bool) error {
 
 	// no validation rules for InsecureSkipVerify
 
+	// no validation rules for EnableTaskIdBasedBlobDigest
+
 	if m.PieceLength != nil {
 
 		if m.GetPieceLength() != 0 {
