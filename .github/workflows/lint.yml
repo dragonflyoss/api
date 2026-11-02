@@ -17,6 +17,11 @@ jobs:
         with:
           fetch-depth: '0'
 
+      - name: Setup Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+
       - name: Golangci lint
         uses: golangci/golangci-lint-action@v9
         with:
