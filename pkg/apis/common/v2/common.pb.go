@@ -308,13 +308,13 @@ func (Priority) EnumDescriptor() ([]byte, []int) {
 type SchedulingPolicy int32
 
 const (
-	// AUTO downloads through the scheduler unless the content length or the range
-	// length is less than or equal to 16MiB, in which case it downloads from the
-	// source directly, skipping the scheduler.
+	// AUTO downloads through the scheduler unless the content length is smaller
+	// than the minimum piece length, in which case it downloads from the source
+	// directly, skipping the scheduler.
 	SchedulingPolicy_AUTO SchedulingPolicy = 0
-	// ALWAYS downloads through the scheduler even for small files, so that the peer
-	// announces the task to the scheduler and other peers can discover it as a
-	// parent.
+	// ALWAYS downloads through the scheduler even if the content length is smaller
+	// than the minimum piece length, so that the peer announces the task to the
+	// scheduler and other peers can discover it as a parent.
 	SchedulingPolicy_ALWAYS SchedulingPolicy = 1
 )
 
