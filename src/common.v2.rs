@@ -1108,13 +1108,13 @@ impl Priority {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 pub enum SchedulingPolicy {
-    /// AUTO downloads through the scheduler unless the content length is smaller
-    /// than the minimum piece length, in which case it downloads from the source
-    /// directly, skipping the scheduler.
+    /// AUTO downloads through the scheduler unless the content length or the range
+    /// length is less than or equal to 16MiB, in which case it downloads from the
+    /// source directly, skipping the scheduler.
     Auto = 0,
-    /// ALWAYS downloads through the scheduler even if the content length is smaller
-    /// than the minimum piece length, so that the peer announces the task to the
-    /// scheduler and other peers can discover it as a parent.
+    /// ALWAYS downloads through the scheduler even for small files, so that the peer
+    /// announces the task to the scheduler and other peers can discover it as a
+    /// parent.
     Always = 1,
 }
 impl SchedulingPolicy {
