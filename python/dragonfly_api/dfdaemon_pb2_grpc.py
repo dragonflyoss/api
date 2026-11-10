@@ -62,6 +62,11 @@ class DfdaemonUploadStub(object):
                 request_serializer=dfdaemon__pb2.DeleteTaskRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
+        self.DeleteImage = channel.unary_unary(
+                '/dfdaemon.v2.DfdaemonUpload/DeleteImage',
+                request_serializer=dfdaemon__pb2.DeleteImageRequest.SerializeToString,
+                response_deserializer=dfdaemon__pb2.DeleteImageResponse.FromString,
+                _registered_method=True)
         self.SyncPieces = channel.unary_stream(
                 '/dfdaemon.v2.DfdaemonUpload/SyncPieces',
                 request_serializer=dfdaemon__pb2.SyncPiecesRequest.SerializeToString,
@@ -183,6 +188,14 @@ class DfdaemonUploadServicer(object):
 
     def DeleteTask(self, request, context):
         """DeleteTask deletes task from p2p network.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteImage(self, request, context):
+        """DeleteImage deletes the tasks of the image in the peer, except the tasks still
+        referenced by other images.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -334,6 +347,11 @@ def add_DfdaemonUploadServicer_to_server(servicer, server):
                     servicer.DeleteTask,
                     request_deserializer=dfdaemon__pb2.DeleteTaskRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'DeleteImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteImage,
+                    request_deserializer=dfdaemon__pb2.DeleteImageRequest.FromString,
+                    response_serializer=dfdaemon__pb2.DeleteImageResponse.SerializeToString,
             ),
             'SyncPieces': grpc.unary_stream_rpc_method_handler(
                     servicer.SyncPieces,
@@ -557,6 +575,33 @@ class DfdaemonUpload(object):
             '/dfdaemon.v2.DfdaemonUpload/DeleteTask',
             dfdaemon__pb2.DeleteTaskRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteImage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/dfdaemon.v2.DfdaemonUpload/DeleteImage',
+            dfdaemon__pb2.DeleteImageRequest.SerializeToString,
+            dfdaemon__pb2.DeleteImageResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -1072,6 +1117,11 @@ class DfdaemonDownloadStub(object):
                 request_serializer=dfdaemon__pb2.DeleteLocalTaskRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
+        self.DeleteImage = channel.unary_unary(
+                '/dfdaemon.v2.DfdaemonDownload/DeleteImage',
+                request_serializer=dfdaemon__pb2.DeleteImageRequest.SerializeToString,
+                response_deserializer=dfdaemon__pb2.DeleteImageResponse.FromString,
+                _registered_method=True)
         self.DeleteHost = channel.unary_unary(
                 '/dfdaemon.v2.DfdaemonDownload/DeleteHost',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
@@ -1192,6 +1242,14 @@ class DfdaemonDownloadServicer(object):
 
     def DeleteLocalTask(self, request, context):
         """DeleteLocalTask deletes local task from peer.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteImage(self, request, context):
+        """DeleteImage deletes the tasks of the image in the peer, except the tasks still
+        referenced by other images.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -1332,6 +1390,11 @@ def add_DfdaemonDownloadServicer_to_server(servicer, server):
                     servicer.DeleteLocalTask,
                     request_deserializer=dfdaemon__pb2.DeleteLocalTaskRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'DeleteImage': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteImage,
+                    request_deserializer=dfdaemon__pb2.DeleteImageRequest.FromString,
+                    response_serializer=dfdaemon__pb2.DeleteImageResponse.SerializeToString,
             ),
             'DeleteHost': grpc.unary_unary_rpc_method_handler(
                     servicer.DeleteHost,
@@ -1594,6 +1657,33 @@ class DfdaemonDownload(object):
             '/dfdaemon.v2.DfdaemonDownload/DeleteLocalTask',
             dfdaemon__pb2.DeleteLocalTaskRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteImage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/dfdaemon.v2.DfdaemonDownload/DeleteImage',
+            dfdaemon__pb2.DeleteImageRequest.SerializeToString,
+            dfdaemon__pb2.DeleteImageResponse.FromString,
             options,
             channel_credentials,
             insecure,

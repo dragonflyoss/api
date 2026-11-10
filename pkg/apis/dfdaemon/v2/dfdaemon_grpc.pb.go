@@ -34,6 +34,9 @@ type DfdaemonUploadClient interface {
 	ListTaskEntries(ctx context.Context, in *ListTaskEntriesRequest, opts ...grpc.CallOption) (*ListTaskEntriesResponse, error)
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteImage deletes the tasks of the image in the peer, except the tasks still
+	// referenced by other images.
+	DeleteImage(ctx context.Context, in *DeleteImageRequest, opts ...grpc.CallOption) (*DeleteImageResponse, error)
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(ctx context.Context, in *SyncPiecesRequest, opts ...grpc.CallOption) (DfdaemonUpload_SyncPiecesClient, error)
 	// DownloadCacheTask downloads cache task from p2p network.
@@ -142,6 +145,15 @@ func (c *dfdaemonUploadClient) ListTaskEntries(ctx context.Context, in *ListTask
 func (c *dfdaemonUploadClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/DeleteTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dfdaemonUploadClient) DeleteImage(ctx context.Context, in *DeleteImageRequest, opts ...grpc.CallOption) (*DeleteImageResponse, error) {
+	out := new(DeleteImageResponse)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonUpload/DeleteImage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -508,6 +520,9 @@ type DfdaemonUploadServer interface {
 	ListTaskEntries(context.Context, *ListTaskEntriesRequest) (*ListTaskEntriesResponse, error)
 	// DeleteTask deletes task from p2p network.
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
+	// DeleteImage deletes the tasks of the image in the peer, except the tasks still
+	// referenced by other images.
+	DeleteImage(context.Context, *DeleteImageRequest) (*DeleteImageResponse, error)
 	// SyncPieces syncs piece metadatas from remote peer.
 	SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error
 	// DownloadCacheTask downloads cache task from p2p network.
@@ -564,6 +579,9 @@ func (UnimplementedDfdaemonUploadServer) ListTaskEntries(context.Context, *ListT
 }
 func (UnimplementedDfdaemonUploadServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
+}
+func (UnimplementedDfdaemonUploadServer) DeleteImage(context.Context, *DeleteImageRequest) (*DeleteImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteImage not implemented")
 }
 func (UnimplementedDfdaemonUploadServer) SyncPieces(*SyncPiecesRequest, DfdaemonUpload_SyncPiecesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncPieces not implemented")
@@ -720,6 +738,24 @@ func _DfdaemonUpload_DeleteTask_Handler(srv interface{}, ctx context.Context, de
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DfdaemonUploadServer).DeleteTask(ctx, req.(*DeleteTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DfdaemonUpload_DeleteImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DfdaemonUploadServer).DeleteImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dfdaemon.v2.DfdaemonUpload/DeleteImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DfdaemonUploadServer).DeleteImage(ctx, req.(*DeleteImageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1096,6 +1132,10 @@ var DfdaemonUpload_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DfdaemonUpload_DeleteTask_Handler,
 		},
 		{
+			MethodName: "DeleteImage",
+			Handler:    _DfdaemonUpload_DeleteImage_Handler,
+		},
+		{
 			MethodName: "StatCacheTask",
 			Handler:    _DfdaemonUpload_StatCacheTask_Handler,
 		},
@@ -1204,6 +1244,9 @@ type DfdaemonDownloadClient interface {
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// DeleteLocalTask deletes local task from peer.
 	DeleteLocalTask(ctx context.Context, in *DeleteLocalTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// DeleteImage deletes the tasks of the image in the peer, except the tasks still
+	// referenced by other images.
+	DeleteImage(ctx context.Context, in *DeleteImageRequest, opts ...grpc.CallOption) (*DeleteImageResponse, error)
 	// DeleteHost releases host in scheduler.
 	DeleteHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// DownloadCacheTask downloads cache task from p2p network.
@@ -1322,6 +1365,15 @@ func (c *dfdaemonDownloadClient) DeleteTask(ctx context.Context, in *DeleteTaskR
 func (c *dfdaemonDownloadClient) DeleteLocalTask(ctx context.Context, in *DeleteLocalTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/DeleteLocalTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dfdaemonDownloadClient) DeleteImage(ctx context.Context, in *DeleteImageRequest, opts ...grpc.CallOption) (*DeleteImageResponse, error) {
+	out := new(DeleteImageResponse)
+	err := c.cc.Invoke(ctx, "/dfdaemon.v2.DfdaemonDownload/DeleteImage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1541,6 +1593,9 @@ type DfdaemonDownloadServer interface {
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
 	// DeleteLocalTask deletes local task from peer.
 	DeleteLocalTask(context.Context, *DeleteLocalTaskRequest) (*emptypb.Empty, error)
+	// DeleteImage deletes the tasks of the image in the peer, except the tasks still
+	// referenced by other images.
+	DeleteImage(context.Context, *DeleteImageRequest) (*DeleteImageResponse, error)
 	// DeleteHost releases host in scheduler.
 	DeleteHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	// DownloadCacheTask downloads cache task from p2p network.
@@ -1595,6 +1650,9 @@ func (UnimplementedDfdaemonDownloadServer) DeleteTask(context.Context, *DeleteTa
 }
 func (UnimplementedDfdaemonDownloadServer) DeleteLocalTask(context.Context, *DeleteLocalTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteLocalTask not implemented")
+}
+func (UnimplementedDfdaemonDownloadServer) DeleteImage(context.Context, *DeleteImageRequest) (*DeleteImageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteImage not implemented")
 }
 func (UnimplementedDfdaemonDownloadServer) DeleteHost(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteHost not implemented")
@@ -1775,6 +1833,24 @@ func _DfdaemonDownload_DeleteLocalTask_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(DfdaemonDownloadServer).DeleteLocalTask(ctx, req.(*DeleteLocalTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DfdaemonDownload_DeleteImage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteImageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DfdaemonDownloadServer).DeleteImage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/dfdaemon.v2.DfdaemonDownload/DeleteImage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DfdaemonDownloadServer).DeleteImage(ctx, req.(*DeleteImageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2070,6 +2146,10 @@ var DfdaemonDownload_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteLocalTask",
 			Handler:    _DfdaemonDownload_DeleteLocalTask_Handler,
+		},
+		{
+			MethodName: "DeleteImage",
+			Handler:    _DfdaemonDownload_DeleteImage_Handler,
 		},
 		{
 			MethodName: "DeleteHost",

@@ -1242,6 +1242,10 @@ pub struct PreheatImageRequest {
     /// eliminates redundant downloads and storage.
     #[prost(bool, tag = "20")]
     pub enable_task_id_based_blob_digest: bool,
+    /// Image is the OCI image that the preheated tasks belong to, the peers record the tasks
+    /// as referenced by the image. It must match the image of the url and the platform.
+    #[prost(message, optional, tag = "21")]
+    pub image: ::core::option::Option<super::super::common::v2::Image>,
 }
 /// StatImageRequest represents request of StatImage.
 #[derive(serde::Serialize, serde::Deserialize)]

@@ -788,6 +788,11 @@ pub struct Download {
     /// default is AUTO.
     #[prost(enumeration = "SchedulingPolicy", tag = "35")]
     pub scheduling_policy: i32,
+    /// Image is the OCI image that the task belongs to, such as the manifest, config or layer
+    /// of the image. The peer records the task as referenced by the image, so deleting the
+    /// image keeps the tasks still referenced by other images.
+    #[prost(message, optional, tag = "36")]
+    pub image: ::core::option::Option<Image>,
 }
 /// Object Storage related information.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -873,6 +878,18 @@ pub struct OpenCsg {
     /// Base URL of OpenCSG Hub. If not specified, it defaults to <https://hub.opencsg.com/csg/.>
     #[prost(string, optional, tag = "3")]
     pub base_url: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// Image represents an OCI image.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct Image {
+    /// Reference is the canonical reference of the image, for example docker.io/library/nginx:latest
+    /// or docker.io/library/nginx@sha256:xxx. The same image must use the same reference.
+    #[prost(string, tag = "1")]
+    pub reference: ::prost::alloc::string::String,
+    /// Platform of the image in the format of os/arch, for example linux/amd64.
+    #[prost(string, tag = "2")]
+    pub platform: ::prost::alloc::string::String,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]

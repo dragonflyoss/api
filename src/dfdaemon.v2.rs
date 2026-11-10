@@ -281,6 +281,29 @@ pub struct DeleteLocalTaskRequest {
     #[prost(string, optional, tag = "2")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
+/// DeleteImageRequest represents request of DeleteImage.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct DeleteImageRequest {
+    /// Image to delete.
+    #[prost(message, optional, tag = "1")]
+    pub image: ::core::option::Option<super::super::common::v2::Image>,
+    /// Remote IP represents the IP address of the client initiating the delete request.
+    #[prost(string, optional, tag = "2")]
+    pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// DeleteImageResponse represents response of DeleteImage.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct DeleteImageResponse {
+    /// Deleted task ids, which are not referenced by other images in the peer.
+    #[prost(string, repeated, tag = "1")]
+    pub deleted_task_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// Retained task ids, which are still referenced by other images or still downloading
+    /// in the peer.
+    #[prost(string, repeated, tag = "2")]
+    pub retained_task_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
 /// DownloadCacheTaskRequest represents request of DownloadCacheTask.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1268,6 +1291,32 @@ pub mod dfdaemon_upload_client {
                 .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DeleteTask"));
             self.inner.unary(req, path, codec).await
         }
+        /// DeleteImage deletes the tasks of the image in the peer, except the tasks still
+        /// referenced by other images.
+        pub async fn delete_image(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteImageRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeleteImageResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonUpload/DeleteImage",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonUpload", "DeleteImage"));
+            self.inner.unary(req, path, codec).await
+        }
         /// SyncPieces syncs piece metadatas from remote peer.
         pub async fn sync_pieces(
             &mut self,
@@ -1792,6 +1841,15 @@ pub mod dfdaemon_upload_server {
             &self,
             request: tonic::Request<super::DeleteTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// DeleteImage deletes the tasks of the image in the peer, except the tasks still
+        /// referenced by other images.
+        async fn delete_image(
+            &self,
+            request: tonic::Request<super::DeleteImageRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeleteImageResponse>,
+            tonic::Status,
+        >;
         /// Server streaming response type for the SyncPieces method.
         type SyncPiecesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::SyncPiecesResponse, tonic::Status>,
@@ -2264,6 +2322,51 @@ pub mod dfdaemon_upload_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeleteTaskSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonUpload/DeleteImage" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteImageSvc<T: DfdaemonUpload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonUpload,
+                    > tonic::server::UnaryService<super::DeleteImageRequest>
+                    for DeleteImageSvc<T> {
+                        type Response = super::DeleteImageResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteImageRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonUpload>::delete_image(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeleteImageSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -3421,6 +3524,32 @@ pub mod dfdaemon_download_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        /// DeleteImage deletes the tasks of the image in the peer, except the tasks still
+        /// referenced by other images.
+        pub async fn delete_image(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteImageRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeleteImageResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/dfdaemon.v2.DfdaemonDownload/DeleteImage",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("dfdaemon.v2.DfdaemonDownload", "DeleteImage"));
+            self.inner.unary(req, path, codec).await
+        }
         /// DeleteHost releases host in scheduler.
         pub async fn delete_host(
             &mut self,
@@ -3893,6 +4022,15 @@ pub mod dfdaemon_download_server {
             &self,
             request: tonic::Request<super::DeleteLocalTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// DeleteImage deletes the tasks of the image in the peer, except the tasks still
+        /// referenced by other images.
+        async fn delete_image(
+            &self,
+            request: tonic::Request<super::DeleteImageRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeleteImageResponse>,
+            tonic::Status,
+        >;
         /// DeleteHost releases host in scheduler.
         async fn delete_host(
             &self,
@@ -4410,6 +4548,51 @@ pub mod dfdaemon_download_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeleteLocalTaskSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/dfdaemon.v2.DfdaemonDownload/DeleteImage" => {
+                    #[allow(non_camel_case_types)]
+                    struct DeleteImageSvc<T: DfdaemonDownload>(pub Arc<T>);
+                    impl<
+                        T: DfdaemonDownload,
+                    > tonic::server::UnaryService<super::DeleteImageRequest>
+                    for DeleteImageSvc<T> {
+                        type Response = super::DeleteImageResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DeleteImageRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as DfdaemonDownload>::delete_image(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = DeleteImageSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

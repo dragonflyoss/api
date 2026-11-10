@@ -960,6 +960,9 @@ message PreheatImageRequest {
   // different registries shares one task ID. This enables deduplication across registries and
   // eliminates redundant downloads and storage.
   bool enable_task_id_based_blob_digest = 20;
+  // Image is the OCI image that the preheated tasks belong to, the peers record the tasks
+  // as referenced by the image. It must match the image of the url and the platform.
+  optional common.v2.Image image = 21;
 }
 
 // StatImageRequest represents request of StatImage.

@@ -224,6 +224,22 @@ class DeleteLocalTaskRequest(_message.Message):
     remote_ip: str
     def __init__(self, task_id: _Optional[str] = ..., remote_ip: _Optional[str] = ...) -> None: ...
 
+class DeleteImageRequest(_message.Message):
+    __slots__ = ("image", "remote_ip")
+    IMAGE_FIELD_NUMBER: _ClassVar[int]
+    REMOTE_IP_FIELD_NUMBER: _ClassVar[int]
+    image: _common_pb2.Image
+    remote_ip: str
+    def __init__(self, image: _Optional[_Union[_common_pb2.Image, _Mapping]] = ..., remote_ip: _Optional[str] = ...) -> None: ...
+
+class DeleteImageResponse(_message.Message):
+    __slots__ = ("deleted_task_ids", "retained_task_ids")
+    DELETED_TASK_IDS_FIELD_NUMBER: _ClassVar[int]
+    RETAINED_TASK_IDS_FIELD_NUMBER: _ClassVar[int]
+    deleted_task_ids: _containers.RepeatedScalarFieldContainer[str]
+    retained_task_ids: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, deleted_task_ids: _Optional[_Iterable[str]] = ..., retained_task_ids: _Optional[_Iterable[str]] = ...) -> None: ...
+
 class DownloadCacheTaskRequest(_message.Message):
     __slots__ = ("url", "digest", "range", "type", "tag", "application", "priority", "filtered_query_params", "request_header", "piece_length", "output_path", "timeout", "disable_back_to_source", "need_back_to_source", "certificate_chain", "prefetch", "object_storage", "hdfs", "is_prefetch", "need_piece_content", "content_for_calculating_task_id", "remote_ip", "overwrite")
     class RequestHeaderEntry(_message.Message):
