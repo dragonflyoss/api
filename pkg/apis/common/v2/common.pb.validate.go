@@ -5114,15 +5114,23 @@ func (m *Image) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if !_Image_Platform_Pattern.MatchString(m.GetPlatform()) {
-		err := ImageValidationError{
-			field:  "Platform",
-			reason: "value does not match regex pattern \"^[a-z0-9]+/[a-z0-9]+$\"",
+	if m.Platform != nil {
+
+		if m.GetPlatform() != "" {
+
+			if !_Image_Platform_Pattern.MatchString(m.GetPlatform()) {
+				err := ImageValidationError{
+					field:  "Platform",
+					reason: "value does not match regex pattern \"^[a-z0-9]+/[a-z0-9]+$\"",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
 	if len(errors) > 0 {

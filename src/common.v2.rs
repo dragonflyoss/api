@@ -879,17 +879,19 @@ pub struct OpenCsg {
     #[prost(string, optional, tag = "3")]
     pub base_url: ::core::option::Option<::prost::alloc::string::String>,
 }
-/// Image represents an OCI image.
+/// Image represents an OCI image, which is identified by the reference and the
+/// platform.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct Image {
-    /// Reference is the canonical reference of the image, for example docker.io/library/nginx:latest
-    /// or docker.io/library/nginx@sha256:xxx. The same image must use the same reference.
+    /// Reference is the reference of the image, for example docker.io/library/nginx:latest
+    /// or docker.io/library/nginx@sha256:xxx.
     #[prost(string, tag = "1")]
     pub reference: ::prost::alloc::string::String,
-    /// Platform of the image in the format of os/arch, for example linux/amd64.
-    #[prost(string, tag = "2")]
-    pub platform: ::prost::alloc::string::String,
+    /// Platform of the image in the format of os/arch, for example linux/amd64. If it is
+    /// not specified, the task belongs to all the platforms of the image.
+    #[prost(string, optional, tag = "2")]
+    pub platform: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// Range represents download range.
 #[derive(serde::Serialize, serde::Deserialize)]

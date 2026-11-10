@@ -220,10 +220,14 @@ message DeleteLocalTaskRequest {
 
 // DeleteImageRequest represents request of DeleteImage.
 message DeleteImageRequest {
-  // Image to delete.
-  common.v2.Image image = 1;
+  // URL is the image manifest url for deleting, the same as the url of
+  // PreheatImageRequest.
+  string url = 1;
+  // Platform is the platform for deleting, such as linux/amd64, linux/arm64, etc. If it is
+  // not specified, all the platforms of the image are deleted.
+  optional string platform = 2;
   // Remote IP represents the IP address of the client initiating the delete request.
-  optional string remote_ip = 2;
+  optional string remote_ip = 3;
 }
 
 // DeleteImageResponse represents response of DeleteImage.

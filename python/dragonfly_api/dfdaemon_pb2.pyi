@@ -225,12 +225,14 @@ class DeleteLocalTaskRequest(_message.Message):
     def __init__(self, task_id: _Optional[str] = ..., remote_ip: _Optional[str] = ...) -> None: ...
 
 class DeleteImageRequest(_message.Message):
-    __slots__ = ("image", "remote_ip")
-    IMAGE_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("url", "platform", "remote_ip")
+    URL_FIELD_NUMBER: _ClassVar[int]
+    PLATFORM_FIELD_NUMBER: _ClassVar[int]
     REMOTE_IP_FIELD_NUMBER: _ClassVar[int]
-    image: _common_pb2.Image
+    url: str
+    platform: str
     remote_ip: str
-    def __init__(self, image: _Optional[_Union[_common_pb2.Image, _Mapping]] = ..., remote_ip: _Optional[str] = ...) -> None: ...
+    def __init__(self, url: _Optional[str] = ..., platform: _Optional[str] = ..., remote_ip: _Optional[str] = ...) -> None: ...
 
 class DeleteImageResponse(_message.Message):
     __slots__ = ("deleted_task_ids", "retained_task_ids")
