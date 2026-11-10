@@ -218,6 +218,23 @@ message DeleteLocalTaskRequest {
   optional string remote_ip = 2;
 }
 
+// DeleteImageRequest represents request of DeleteImage.
+message DeleteImageRequest {
+  // Image to delete.
+  common.v2.Image image = 1;
+  // Remote IP represents the IP address of the client initiating the delete request.
+  optional string remote_ip = 2;
+}
+
+// DeleteImageResponse represents response of DeleteImage.
+message DeleteImageResponse {
+  // Deleted task ids, which are not referenced by other images in the peer.
+  repeated string deleted_task_ids = 1;
+  // Retained task ids, which are still referenced by other images or still downloading
+  // in the peer.
+  repeated string retained_task_ids = 2;
+}
+
 // DownloadCacheTaskRequest represents request of DownloadCacheTask.
 message DownloadCacheTaskRequest {
   // Download url.
@@ -775,6 +792,10 @@ service DfdaemonUpload {
   // DeleteTask deletes task from p2p network.
   rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
 
+  // DeleteImage deletes the tasks of the image in the peer, except the tasks still
+  // referenced by other images.
+  rpc DeleteImage(DeleteImageRequest) returns (DeleteImageResponse);
+
   // SyncPieces syncs piece metadatas from remote peer.
   rpc SyncPieces(SyncPiecesRequest) returns (stream SyncPiecesResponse);
 
@@ -849,6 +870,10 @@ service DfdaemonDownload {
 
   // DeleteLocalTask deletes local task from peer.
   rpc DeleteLocalTask(DeleteLocalTaskRequest) returns (google.protobuf.Empty);
+
+  // DeleteImage deletes the tasks of the image in the peer, except the tasks still
+  // referenced by other images.
+  rpc DeleteImage(DeleteImageRequest) returns (DeleteImageResponse);
 
   // DeleteHost releases host in scheduler.
   rpc DeleteHost(google.protobuf.Empty) returns (google.protobuf.Empty);

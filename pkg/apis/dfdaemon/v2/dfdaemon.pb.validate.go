@@ -2670,6 +2670,269 @@ var _ interface {
 	ErrorName() string
 } = DeleteLocalTaskRequestValidationError{}
 
+// Validate checks the field values on DeleteImageRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteImageRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteImageRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteImageRequestMultiError, or nil if none found.
+func (m *DeleteImageRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteImageRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetImage() == nil {
+		err := DeleteImageRequestValidationError{
+			field:  "Image",
+			reason: "value is required",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetImage()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DeleteImageRequestValidationError{
+					field:  "Image",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DeleteImageRequestValidationError{
+					field:  "Image",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetImage()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DeleteImageRequestValidationError{
+				field:  "Image",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if m.RemoteIp != nil {
+
+		if m.GetRemoteIp() != "" {
+
+			if ip := net.ParseIP(m.GetRemoteIp()); ip == nil {
+				err := DeleteImageRequestValidationError{
+					field:  "RemoteIp",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return DeleteImageRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteImageRequestMultiError is an error wrapping multiple validation errors
+// returned by DeleteImageRequest.ValidateAll() if the designated constraints
+// aren't met.
+type DeleteImageRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteImageRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteImageRequestMultiError) AllErrors() []error { return m }
+
+// DeleteImageRequestValidationError is the validation error returned by
+// DeleteImageRequest.Validate if the designated constraints aren't met.
+type DeleteImageRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteImageRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteImageRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteImageRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteImageRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteImageRequestValidationError) ErrorName() string {
+	return "DeleteImageRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteImageRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteImageRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteImageRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteImageRequestValidationError{}
+
+// Validate checks the field values on DeleteImageResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteImageResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteImageResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteImageResponseMultiError, or nil if none found.
+func (m *DeleteImageResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteImageResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return DeleteImageResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteImageResponseMultiError is an error wrapping multiple validation
+// errors returned by DeleteImageResponse.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteImageResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteImageResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteImageResponseMultiError) AllErrors() []error { return m }
+
+// DeleteImageResponseValidationError is the validation error returned by
+// DeleteImageResponse.Validate if the designated constraints aren't met.
+type DeleteImageResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteImageResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteImageResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteImageResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteImageResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteImageResponseValidationError) ErrorName() string {
+	return "DeleteImageResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteImageResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteImageResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteImageResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteImageResponseValidationError{}
+
 // Validate checks the field values on DownloadCacheTaskRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.

@@ -65,6 +65,26 @@ func (mr *MockDfdaemonUploadClientMockRecorder) DeleteCacheTask(ctx, in any, opt
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCacheTask", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).DeleteCacheTask), varargs...)
 }
 
+// DeleteImage mocks base method.
+func (m *MockDfdaemonUploadClient) DeleteImage(ctx context.Context, in *dfdaemon.DeleteImageRequest, opts ...grpc.CallOption) (*dfdaemon.DeleteImageResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteImage", varargs...)
+	ret0, _ := ret[0].(*dfdaemon.DeleteImageResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteImage indicates an expected call of DeleteImage.
+func (mr *MockDfdaemonUploadClientMockRecorder) DeleteImage(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteImage", reflect.TypeOf((*MockDfdaemonUploadClient)(nil).DeleteImage), varargs...)
+}
+
 // DeletePersistentCacheTask mocks base method.
 func (m *MockDfdaemonUploadClient) DeletePersistentCacheTask(ctx context.Context, in *dfdaemon.DeletePersistentCacheTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -1660,6 +1680,21 @@ func (mr *MockDfdaemonUploadServerMockRecorder) DeleteCacheTask(arg0, arg1 any) 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteCacheTask", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).DeleteCacheTask), arg0, arg1)
 }
 
+// DeleteImage mocks base method.
+func (m *MockDfdaemonUploadServer) DeleteImage(arg0 context.Context, arg1 *dfdaemon.DeleteImageRequest) (*dfdaemon.DeleteImageResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteImage", arg0, arg1)
+	ret0, _ := ret[0].(*dfdaemon.DeleteImageResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteImage indicates an expected call of DeleteImage.
+func (mr *MockDfdaemonUploadServerMockRecorder) DeleteImage(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteImage", reflect.TypeOf((*MockDfdaemonUploadServer)(nil).DeleteImage), arg0, arg1)
+}
+
 // DeletePersistentCacheTask mocks base method.
 func (m *MockDfdaemonUploadServer) DeletePersistentCacheTask(arg0 context.Context, arg1 *dfdaemon.DeletePersistentCacheTaskRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -3161,6 +3196,26 @@ func (mr *MockDfdaemonDownloadClientMockRecorder) DeleteHost(ctx, in any, opts .
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteHost", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).DeleteHost), varargs...)
 }
 
+// DeleteImage mocks base method.
+func (m *MockDfdaemonDownloadClient) DeleteImage(ctx context.Context, in *dfdaemon.DeleteImageRequest, opts ...grpc.CallOption) (*dfdaemon.DeleteImageResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "DeleteImage", varargs...)
+	ret0, _ := ret[0].(*dfdaemon.DeleteImageResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteImage indicates an expected call of DeleteImage.
+func (mr *MockDfdaemonDownloadClientMockRecorder) DeleteImage(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteImage", reflect.TypeOf((*MockDfdaemonDownloadClient)(nil).DeleteImage), varargs...)
+}
+
 // DeleteLocalTask mocks base method.
 func (m *MockDfdaemonDownloadClient) DeleteLocalTask(ctx context.Context, in *dfdaemon.DeleteLocalTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -4089,6 +4144,21 @@ func (m *MockDfdaemonDownloadServer) DeleteHost(arg0 context.Context, arg1 *empt
 func (mr *MockDfdaemonDownloadServerMockRecorder) DeleteHost(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteHost", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).DeleteHost), arg0, arg1)
+}
+
+// DeleteImage mocks base method.
+func (m *MockDfdaemonDownloadServer) DeleteImage(arg0 context.Context, arg1 *dfdaemon.DeleteImageRequest) (*dfdaemon.DeleteImageResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteImage", arg0, arg1)
+	ret0, _ := ret[0].(*dfdaemon.DeleteImageResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DeleteImage indicates an expected call of DeleteImage.
+func (mr *MockDfdaemonDownloadServerMockRecorder) DeleteImage(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteImage", reflect.TypeOf((*MockDfdaemonDownloadServer)(nil).DeleteImage), arg0, arg1)
 }
 
 // DeleteLocalTask mocks base method.

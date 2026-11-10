@@ -685,6 +685,10 @@ message Download {
   // Scheduling policy represents how the download interacts with the scheduler,
   // default is AUTO.
   SchedulingPolicy scheduling_policy = 35;
+  // Image is the OCI image that the task belongs to, such as the manifest, config or layer
+  // of the image. The peer records the task as referenced by the image, so deleting the
+  // image keeps the tasks still referenced by other images.
+  optional Image image = 36;
 
   reserved 21;
   reserved "load_to_cache";
@@ -749,6 +753,15 @@ message OpenCSG {
   string revision = 2;
   // Base URL of OpenCSG Hub. If not specified, it defaults to https://hub.opencsg.com/csg/.
   optional string base_url = 3;
+}
+
+// Image represents an OCI image.
+message Image {
+  // Reference is the canonical reference of the image, for example docker.io/library/nginx:latest
+  // or docker.io/library/nginx@sha256:xxx. The same image must use the same reference.
+  string reference = 1;
+  // Platform of the image in the format of os/arch, for example linux/amd64.
+  string platform = 2;
 }
 
 // Range represents download range.
