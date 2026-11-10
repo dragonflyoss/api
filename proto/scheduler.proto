@@ -797,7 +797,8 @@ message PreheatImageRequest {
   optional string username = 7;
   // Password is the password for authentication.
   optional string password = 8;
-  // Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
+  // Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc. If it is
+  // not specified, all the platforms of the image are preheated.
   optional string platform = 9;
   // Scope is the scope for preheating, it can be one of the following values:
   // - single_seed_peer: preheat from a single seed peer.
@@ -841,9 +842,6 @@ message PreheatImageRequest {
   // different registries shares one task ID. This enables deduplication across registries and
   // eliminates redundant downloads and storage.
   bool enable_task_id_based_blob_digest = 20;
-  // Image is the OCI image that the preheated tasks belong to, the peers record the tasks
-  // as referenced by the image. It must match the image of the url and the platform.
-  optional common.v2.Image image = 21;
 }
 
 // StatImageRequest represents request of StatImage.
@@ -871,7 +869,8 @@ message StatImageRequest {
   optional string username = 7;
   // Password is the password for authentication.
   optional string password = 8;
-  // Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
+  // Platform is the platform for stating, such as linux/amd64, linux/arm64, etc. If it is
+  // not specified, all the platforms of the image are stated.
   optional string platform = 9;
   // ConcurrentLayerCount specifies the maximum number of layers to get concurrently.
   // For example, if stat 100 layers with ConcurrentLayerCount set to 10, up to 10 layers are processed simultaneously.

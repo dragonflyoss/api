@@ -285,11 +285,16 @@ pub struct DeleteLocalTaskRequest {
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct DeleteImageRequest {
-    /// Image to delete.
-    #[prost(message, optional, tag = "1")]
-    pub image: ::core::option::Option<super::super::common::v2::Image>,
-    /// Remote IP represents the IP address of the client initiating the delete request.
+    /// URL is the image manifest url for deleting, the same as the url of
+    /// PreheatImageRequest.
+    #[prost(string, tag = "1")]
+    pub url: ::prost::alloc::string::String,
+    /// Platform is the platform for deleting, such as linux/amd64, linux/arm64, etc. If it is
+    /// not specified, all the platforms of the image are deleted.
     #[prost(string, optional, tag = "2")]
+    pub platform: ::core::option::Option<::prost::alloc::string::String>,
+    /// Remote IP represents the IP address of the client initiating the delete request.
+    #[prost(string, optional, tag = "3")]
     pub remote_ip: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DeleteImageResponse represents response of DeleteImage.

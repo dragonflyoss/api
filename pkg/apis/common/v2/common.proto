@@ -858,13 +858,18 @@ message OpenCSG {
   }];
 }
 
-// Image represents an OCI image.
+// Image represents an OCI image, which is identified by the reference and the
+// platform.
 message Image {
-  // Reference is the canonical reference of the image, for example docker.io/library/nginx:latest
-  // or docker.io/library/nginx@sha256:xxx. The same image must use the same reference.
+  // Reference is the reference of the image, for example docker.io/library/nginx:latest
+  // or docker.io/library/nginx@sha256:xxx.
   string reference = 1 [(validate.rules).string.min_len = 1];
-  // Platform of the image in the format of os/arch, for example linux/amd64.
-  string platform = 2 [(validate.rules).string.pattern = "^[a-z0-9]+/[a-z0-9]+$"];
+  // Platform of the image in the format of os/arch, for example linux/amd64. If it is
+  // not specified, the task belongs to all the platforms of the image.
+  optional string platform = 2 [(validate.rules).string = {
+    pattern: "^[a-z0-9]+/[a-z0-9]+$"
+    ignore_empty: true
+  }];
 }
 
 // Range represents download range.

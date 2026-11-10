@@ -2692,10 +2692,20 @@ func (m *DeleteImageRequest) validate(all bool) error {
 
 	var errors []error
 
-	if m.GetImage() == nil {
+	if uri, err := url.Parse(m.GetUrl()); err != nil {
+		err = DeleteImageRequestValidationError{
+			field:  "Url",
+			reason: "value must be a valid URI",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	} else if !uri.IsAbs() {
 		err := DeleteImageRequestValidationError{
-			field:  "Image",
-			reason: "value is required",
+			field:  "Url",
+			reason: "value must be absolute",
 		}
 		if !all {
 			return err
@@ -2703,33 +2713,8 @@ func (m *DeleteImageRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if all {
-		switch v := interface{}(m.GetImage()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, DeleteImageRequestValidationError{
-					field:  "Image",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, DeleteImageRequestValidationError{
-					field:  "Image",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetImage()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return DeleteImageRequestValidationError{
-				field:  "Image",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
+	if m.Platform != nil {
+		// no validation rules for Platform
 	}
 
 	if m.RemoteIp != nil {

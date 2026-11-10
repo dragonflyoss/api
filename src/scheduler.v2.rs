@@ -1185,7 +1185,8 @@ pub struct PreheatImageRequest {
     /// Password is the password for authentication.
     #[prost(string, optional, tag = "8")]
     pub password: ::core::option::Option<::prost::alloc::string::String>,
-    /// Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
+    /// Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc. If it is
+    /// not specified, all the platforms of the image are preheated.
     #[prost(string, optional, tag = "9")]
     pub platform: ::core::option::Option<::prost::alloc::string::String>,
     /// Scope is the scope for preheating, it can be one of the following values:
@@ -1242,10 +1243,6 @@ pub struct PreheatImageRequest {
     /// eliminates redundant downloads and storage.
     #[prost(bool, tag = "20")]
     pub enable_task_id_based_blob_digest: bool,
-    /// Image is the OCI image that the preheated tasks belong to, the peers record the tasks
-    /// as referenced by the image. It must match the image of the url and the platform.
-    #[prost(message, optional, tag = "21")]
-    pub image: ::core::option::Option<super::super::common::v2::Image>,
 }
 /// StatImageRequest represents request of StatImage.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1285,7 +1282,8 @@ pub struct StatImageRequest {
     /// Password is the password for authentication.
     #[prost(string, optional, tag = "8")]
     pub password: ::core::option::Option<::prost::alloc::string::String>,
-    /// Platform is the platform for preheating, such as linux/amd64, linux/arm64, etc.
+    /// Platform is the platform for stating, such as linux/amd64, linux/arm64, etc. If it is
+    /// not specified, all the platforms of the image are stated.
     #[prost(string, optional, tag = "9")]
     pub platform: ::core::option::Option<::prost::alloc::string::String>,
     /// ConcurrentLayerCount specifies the maximum number of layers to get concurrently.
