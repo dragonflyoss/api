@@ -3562,6 +3562,261 @@ var _ interface {
 	ErrorName() string
 } = DeleteTaskRequestValidationError{}
 
+// Validate checks the field values on ListPeersRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ListPeersRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListPeersRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListPeersRequestMultiError, or nil if none found.
+func (m *ListPeersRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListPeersRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.TaskId != nil {
+
+		if m.GetTaskId() != "" {
+
+			if utf8.RuneCountInString(m.GetTaskId()) < 1 {
+				err := ListPeersRequestValidationError{
+					field:  "TaskId",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListPeersRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListPeersRequestMultiError is an error wrapping multiple validation errors
+// returned by ListPeersRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ListPeersRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListPeersRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListPeersRequestMultiError) AllErrors() []error { return m }
+
+// ListPeersRequestValidationError is the validation error returned by
+// ListPeersRequest.Validate if the designated constraints aren't met.
+type ListPeersRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListPeersRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListPeersRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListPeersRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListPeersRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListPeersRequestValidationError) ErrorName() string { return "ListPeersRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ListPeersRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListPeersRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListPeersRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListPeersRequestValidationError{}
+
+// Validate checks the field values on ListPeersResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ListPeersResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ListPeersResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ListPeersResponseMultiError, or nil if none found.
+func (m *ListPeersResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ListPeersResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetPeers() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ListPeersResponseValidationError{
+						field:  fmt.Sprintf("Peers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ListPeersResponseValidationError{
+						field:  fmt.Sprintf("Peers[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListPeersResponseValidationError{
+					field:  fmt.Sprintf("Peers[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return ListPeersResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ListPeersResponseMultiError is an error wrapping multiple validation errors
+// returned by ListPeersResponse.ValidateAll() if the designated constraints
+// aren't met.
+type ListPeersResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ListPeersResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ListPeersResponseMultiError) AllErrors() []error { return m }
+
+// ListPeersResponseValidationError is the validation error returned by
+// ListPeersResponse.Validate if the designated constraints aren't met.
+type ListPeersResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListPeersResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListPeersResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListPeersResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListPeersResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListPeersResponseValidationError) ErrorName() string {
+	return "ListPeersResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListPeersResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListPeersResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListPeersResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListPeersResponseValidationError{}
+
 // Validate checks the field values on AnnounceHostRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.

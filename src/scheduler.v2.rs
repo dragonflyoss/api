@@ -269,6 +269,22 @@ pub struct DeleteTaskRequest {
     #[prost(string, tag = "2")]
     pub task_id: ::prost::alloc::string::String,
 }
+/// ListPeersRequest represents request of ListPeers.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct ListPeersRequest {
+    /// Task id to filter peers.
+    #[prost(string, optional, tag = "1")]
+    pub task_id: ::core::option::Option<::prost::alloc::string::String>,
+}
+/// ListPeersResponse represents response of ListPeers.
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListPeersResponse {
+    /// Peers info.
+    #[prost(message, repeated, tag = "1")]
+    pub peers: ::prost::alloc::vec::Vec<super::super::common::v2::Peer>,
+}
 /// AnnounceHostRequest represents request of AnnounceHost.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -1752,6 +1768,32 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "DeleteTask"));
             self.inner.unary(req, path, codec).await
         }
+        /// ListPeers lists peers in scheduler. It only reads the scheduler, no peer is
+        /// registered and no seed peer is triggered.
+        pub async fn list_peers(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListPeersRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListPeersResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/scheduler.v2.Scheduler/ListPeers",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "ListPeers"));
+            self.inner.unary(req, path, codec).await
+        }
         /// AnnounceHost announces host to scheduler.
         pub async fn announce_host(
             &mut self,
@@ -2562,6 +2604,15 @@ pub mod scheduler_server {
             &self,
             request: tonic::Request<super::DeleteTaskRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
+        /// ListPeers lists peers in scheduler. It only reads the scheduler, no peer is
+        /// registered and no seed peer is triggered.
+        async fn list_peers(
+            &self,
+            request: tonic::Request<super::ListPeersRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListPeersResponse>,
+            tonic::Status,
+        >;
         /// AnnounceHost announces host to scheduler.
         async fn announce_host(
             &self,
@@ -3092,6 +3143,51 @@ pub mod scheduler_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = DeleteTaskSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/scheduler.v2.Scheduler/ListPeers" => {
+                    #[allow(non_camel_case_types)]
+                    struct ListPeersSvc<T: Scheduler>(pub Arc<T>);
+                    impl<
+                        T: Scheduler,
+                    > tonic::server::UnaryService<super::ListPeersRequest>
+                    for ListPeersSvc<T> {
+                        type Response = super::ListPeersResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ListPeersRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as Scheduler>::list_peers(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = ListPeersSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

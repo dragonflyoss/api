@@ -62,6 +62,11 @@ class SchedulerStub(object):
                 request_serializer=scheduler__pb2.DeleteTaskRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
+        self.ListPeers = channel.unary_unary(
+                '/scheduler.v2.Scheduler/ListPeers',
+                request_serializer=scheduler__pb2.ListPeersRequest.SerializeToString,
+                response_deserializer=scheduler__pb2.ListPeersResponse.FromString,
+                _registered_method=True)
         self.AnnounceHost = channel.unary_unary(
                 '/scheduler.v2.Scheduler/AnnounceHost',
                 request_serializer=scheduler__pb2.AnnounceHostRequest.SerializeToString,
@@ -238,6 +243,14 @@ class SchedulerServicer(object):
 
     def DeleteTask(self, request, context):
         """DeleteTask releases task in scheduler.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListPeers(self, request, context):
+        """ListPeers lists peers in scheduler. It only reads the scheduler, no peer is
+        registered and no seed peer is triggered.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -492,6 +505,11 @@ def add_SchedulerServicer_to_server(servicer, server):
                     servicer.DeleteTask,
                     request_deserializer=scheduler__pb2.DeleteTaskRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'ListPeers': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListPeers,
+                    request_deserializer=scheduler__pb2.ListPeersRequest.FromString,
+                    response_serializer=scheduler__pb2.ListPeersResponse.SerializeToString,
             ),
             'AnnounceHost': grpc.unary_unary_rpc_method_handler(
                     servicer.AnnounceHost,
@@ -770,6 +788,33 @@ class Scheduler(object):
             '/scheduler.v2.Scheduler/DeleteTask',
             scheduler__pb2.DeleteTaskRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListPeers(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/scheduler.v2.Scheduler/ListPeers',
+            scheduler__pb2.ListPeersRequest.SerializeToString,
+            scheduler__pb2.ListPeersResponse.FromString,
             options,
             channel_credentials,
             insecure,
