@@ -34,6 +34,9 @@ type SchedulerClient interface {
 	StatTask(ctx context.Context, in *StatTaskRequest, opts ...grpc.CallOption) (*v2.Task, error)
 	// DeleteTask releases task in scheduler.
 	DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// ListPeers lists peers in scheduler. It only reads the scheduler, no peer is
+	// registered and no seed peer is triggered.
+	ListPeers(ctx context.Context, in *ListPeersRequest, opts ...grpc.CallOption) (*ListPeersResponse, error)
 	// AnnounceHost announces host to scheduler.
 	AnnounceHost(ctx context.Context, in *AnnounceHostRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	// ListHosts lists hosts in scheduler.
@@ -187,6 +190,15 @@ func (c *schedulerClient) StatTask(ctx context.Context, in *StatTaskRequest, opt
 func (c *schedulerClient) DeleteTask(ctx context.Context, in *DeleteTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/DeleteTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulerClient) ListPeers(ctx context.Context, in *ListPeersRequest, opts ...grpc.CallOption) (*ListPeersResponse, error) {
+	out := new(ListPeersResponse)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/ListPeers", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -525,6 +537,9 @@ type SchedulerServer interface {
 	StatTask(context.Context, *StatTaskRequest) (*v2.Task, error)
 	// DeleteTask releases task in scheduler.
 	DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error)
+	// ListPeers lists peers in scheduler. It only reads the scheduler, no peer is
+	// registered and no seed peer is triggered.
+	ListPeers(context.Context, *ListPeersRequest) (*ListPeersResponse, error)
 	// AnnounceHost announces host to scheduler.
 	AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error)
 	// ListHosts lists hosts in scheduler.
@@ -627,6 +642,9 @@ func (UnimplementedSchedulerServer) StatTask(context.Context, *StatTaskRequest) 
 }
 func (UnimplementedSchedulerServer) DeleteTask(context.Context, *DeleteTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteTask not implemented")
+}
+func (UnimplementedSchedulerServer) ListPeers(context.Context, *ListPeersRequest) (*ListPeersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPeers not implemented")
 }
 func (UnimplementedSchedulerServer) AnnounceHost(context.Context, *AnnounceHostRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AnnounceHost not implemented")
@@ -818,6 +836,24 @@ func _Scheduler_DeleteTask_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SchedulerServer).DeleteTask(ctx, req.(*DeleteTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduler_ListPeers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPeersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).ListPeers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/ListPeers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).ListPeers(ctx, req.(*ListPeersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1372,6 +1408,10 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteTask",
 			Handler:    _Scheduler_DeleteTask_Handler,
+		},
+		{
+			MethodName: "ListPeers",
+			Handler:    _Scheduler_ListPeers_Handler,
 		},
 		{
 			MethodName: "AnnounceHost",

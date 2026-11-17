@@ -225,6 +225,21 @@ message DeleteTaskRequest {
   string task_id = 2 [(validate.rules).string.min_len = 1];
 }
 
+// ListPeersRequest represents request of ListPeers.
+message ListPeersRequest {
+  // Task id to filter peers.
+  optional string task_id = 1 [(validate.rules).string = {
+    min_len: 1
+    ignore_empty: true
+  }];
+}
+
+// ListPeersResponse represents response of ListPeers.
+message ListPeersResponse {
+  // Peers info.
+  repeated common.v2.Peer peers = 1;
+}
+
 // AnnounceHostRequest represents request of AnnounceHost.
 message AnnounceHostRequest {
   // Host info.
@@ -1238,6 +1253,10 @@ service Scheduler {
 
   // DeleteTask releases task in scheduler.
   rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
+
+  // ListPeers lists peers in scheduler. It only reads the scheduler, no peer is
+  // registered and no seed peer is triggered.
+  rpc ListPeers(ListPeersRequest) returns (ListPeersResponse);
 
   // AnnounceHost announces host to scheduler.
   rpc AnnounceHost(AnnounceHostRequest) returns (google.protobuf.Empty);

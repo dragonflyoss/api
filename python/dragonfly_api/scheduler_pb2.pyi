@@ -190,6 +190,18 @@ class DeleteTaskRequest(_message.Message):
     task_id: str
     def __init__(self, host_id: _Optional[str] = ..., task_id: _Optional[str] = ...) -> None: ...
 
+class ListPeersRequest(_message.Message):
+    __slots__ = ("task_id",)
+    TASK_ID_FIELD_NUMBER: _ClassVar[int]
+    task_id: str
+    def __init__(self, task_id: _Optional[str] = ...) -> None: ...
+
+class ListPeersResponse(_message.Message):
+    __slots__ = ("peers",)
+    PEERS_FIELD_NUMBER: _ClassVar[int]
+    peers: _containers.RepeatedCompositeFieldContainer[_common_pb2.Peer]
+    def __init__(self, peers: _Optional[_Iterable[_Union[_common_pb2.Peer, _Mapping]]] = ...) -> None: ...
+
 class AnnounceHostRequest(_message.Message):
     __slots__ = ("host", "interval")
     HOST_FIELD_NUMBER: _ClassVar[int]
