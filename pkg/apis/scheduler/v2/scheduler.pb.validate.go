@@ -3603,6 +3603,25 @@ func (m *ListPeersRequest) validate(all bool) error {
 
 	}
 
+	if m.PageSize != nil {
+
+		if m.GetPageSize() < 0 {
+			err := ListPeersRequestValidationError{
+				field:  "PageSize",
+				reason: "value must be greater than or equal to 0",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.PageToken != nil {
+		// no validation rules for PageToken
+	}
+
 	if len(errors) > 0 {
 		return ListPeersRequestMultiError(errors)
 	}
@@ -3735,6 +3754,10 @@ func (m *ListPeersResponse) validate(all bool) error {
 			}
 		}
 
+	}
+
+	if m.NextPageToken != nil {
+		// no validation rules for NextPageToken
 	}
 
 	if len(errors) > 0 {
@@ -4018,6 +4041,25 @@ func (m *ListHostsRequest) validate(all bool) error {
 		// no validation rules for Type
 	}
 
+	if m.PageSize != nil {
+
+		if m.GetPageSize() < 0 {
+			err := ListHostsRequestValidationError{
+				field:  "PageSize",
+				reason: "value must be greater than or equal to 0",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.PageToken != nil {
+		// no validation rules for PageToken
+	}
+
 	if len(errors) > 0 {
 		return ListHostsRequestMultiError(errors)
 	}
@@ -4150,6 +4192,10 @@ func (m *ListHostsResponse) validate(all bool) error {
 			}
 		}
 
+	}
+
+	if m.NextPageToken != nil {
+		// no validation rules for NextPageToken
 	}
 
 	if len(errors) > 0 {
