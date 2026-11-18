@@ -276,6 +276,16 @@ pub struct ListPeersRequest {
     /// Task id to filter peers.
     #[prost(string, optional, tag = "1")]
     pub task_id: ::core::option::Option<::prost::alloc::string::String>,
+    /// Page size is the maximum number of peers to return. The scheduler may
+    /// return fewer peers than this value. If unspecified, all the peers are
+    /// returned.
+    #[prost(int32, optional, tag = "2")]
+    pub page_size: ::core::option::Option<i32>,
+    /// Page token is the next page token received from a previous ListPeers
+    /// call, provide it to retrieve the subsequent page. When paginating, all
+    /// other parameters must match the call that provided the page token.
+    #[prost(string, optional, tag = "3")]
+    pub page_token: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// ListPeersResponse represents response of ListPeers.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -284,6 +294,10 @@ pub struct ListPeersResponse {
     /// Peers info.
     #[prost(message, repeated, tag = "1")]
     pub peers: ::prost::alloc::vec::Vec<super::super::common::v2::Peer>,
+    /// Next page token is sent as the page token to retrieve the next page. If it
+    /// is not set, there are no subsequent pages.
+    #[prost(string, optional, tag = "2")]
+    pub next_page_token: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// AnnounceHostRequest represents request of AnnounceHost.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -298,11 +312,21 @@ pub struct AnnounceHostRequest {
 }
 /// ListHostsRequest represents request of ListHosts.
 #[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct ListHostsRequest {
     /// Type to filter hosts.
     #[prost(uint32, optional, tag = "1")]
     pub r#type: ::core::option::Option<u32>,
+    /// Page size is the maximum number of hosts to return. The scheduler may
+    /// return fewer hosts than this value. If unspecified, all the hosts are
+    /// returned.
+    #[prost(int32, optional, tag = "2")]
+    pub page_size: ::core::option::Option<i32>,
+    /// Page token is the next page token received from a previous ListHosts
+    /// call, provide it to retrieve the subsequent page. When paginating, all
+    /// other parameters must match the call that provided the page token.
+    #[prost(string, optional, tag = "3")]
+    pub page_token: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// ListHostsResponse represents response of ListHosts.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -311,6 +335,10 @@ pub struct ListHostsResponse {
     /// Hosts info.
     #[prost(message, repeated, tag = "1")]
     pub hosts: ::prost::alloc::vec::Vec<super::super::common::v2::Host>,
+    /// Next page token is sent as the page token to retrieve the next page. If it
+    /// is not set, there are no subsequent pages.
+    #[prost(string, optional, tag = "2")]
+    pub next_page_token: ::core::option::Option<::prost::alloc::string::String>,
 }
 /// DeleteHostRequest represents request of DeleteHost.
 #[derive(serde::Serialize, serde::Deserialize)]
