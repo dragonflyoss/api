@@ -207,6 +207,16 @@ class SchedulerStub(object):
                 request_serializer=scheduler__pb2.StatFileRequest.SerializeToString,
                 response_deserializer=scheduler__pb2.StatFileResponse.FromString,
                 _registered_method=True)
+        self.StatImageManifest = channel.unary_unary(
+                '/scheduler.v2.Scheduler/StatImageManifest',
+                request_serializer=scheduler__pb2.StatImageManifestRequest.SerializeToString,
+                response_deserializer=scheduler__pb2.StatImageManifestResponse.FromString,
+                _registered_method=True)
+        self.AnnounceImageManifest = channel.unary_unary(
+                '/scheduler.v2.Scheduler/AnnounceImageManifest',
+                request_serializer=scheduler__pb2.AnnounceImageManifestRequest.SerializeToString,
+                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                _registered_method=True)
 
 
 class SchedulerServicer(object):
@@ -478,6 +488,23 @@ class SchedulerServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def StatImageManifest(self, request, context):
+        """StatImageManifest returns the image manifest that the tag of the image is resolved to.
+        The image manifest is announced by the peer that resolved the tag from the registry,
+        the scheduler does not access the registry.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AnnounceImageManifest(self, request, context):
+        """AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
+        the scheduler keeps it until the ttl expires.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SchedulerServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -650,6 +677,16 @@ def add_SchedulerServicer_to_server(servicer, server):
                     servicer.StatFile,
                     request_deserializer=scheduler__pb2.StatFileRequest.FromString,
                     response_serializer=scheduler__pb2.StatFileResponse.SerializeToString,
+            ),
+            'StatImageManifest': grpc.unary_unary_rpc_method_handler(
+                    servicer.StatImageManifest,
+                    request_deserializer=scheduler__pb2.StatImageManifestRequest.FromString,
+                    response_serializer=scheduler__pb2.StatImageManifestResponse.SerializeToString,
+            ),
+            'AnnounceImageManifest': grpc.unary_unary_rpc_method_handler(
+                    servicer.AnnounceImageManifest,
+                    request_deserializer=scheduler__pb2.AnnounceImageManifestRequest.FromString,
+                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -1571,6 +1608,60 @@ class Scheduler(object):
             '/scheduler.v2.Scheduler/StatFile',
             scheduler__pb2.StatFileRequest.SerializeToString,
             scheduler__pb2.StatFileResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def StatImageManifest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/scheduler.v2.Scheduler/StatImageManifest',
+            scheduler__pb2.StatImageManifestRequest.SerializeToString,
+            scheduler__pb2.StatImageManifestResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AnnounceImageManifest(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/scheduler.v2.Scheduler/AnnounceImageManifest',
+            scheduler__pb2.AnnounceImageManifestRequest.SerializeToString,
+            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,
