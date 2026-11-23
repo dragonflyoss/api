@@ -119,6 +119,13 @@ type SchedulerClient interface {
 	// all peers to collect the file's download state across the network.
 	// The response includes both file information and the status on each peer.
 	StatFile(ctx context.Context, in *StatFileRequest, opts ...grpc.CallOption) (*StatFileResponse, error)
+	// StatImageManifest returns the image manifest that the tag of the image is resolved to.
+	// The image manifest is announced by the peer that resolved the tag from the registry,
+	// the scheduler does not access the registry.
+	StatImageManifest(ctx context.Context, in *StatImageManifestRequest, opts ...grpc.CallOption) (*StatImageManifestResponse, error)
+	// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
+	// the scheduler keeps it until the ttl expires.
+	AnnounceImageManifest(ctx context.Context, in *AnnounceImageManifestRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type schedulerClient struct {
@@ -523,6 +530,24 @@ func (c *schedulerClient) StatFile(ctx context.Context, in *StatFileRequest, opt
 	return out, nil
 }
 
+func (c *schedulerClient) StatImageManifest(ctx context.Context, in *StatImageManifestRequest, opts ...grpc.CallOption) (*StatImageManifestResponse, error) {
+	out := new(StatImageManifestResponse)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatImageManifest", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *schedulerClient) AnnounceImageManifest(ctx context.Context, in *AnnounceImageManifestRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/AnnounceImageManifest", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SchedulerServer is the server API for Scheduler service.
 // All implementations should embed UnimplementedSchedulerServer
 // for forward compatibility
@@ -622,6 +647,13 @@ type SchedulerServer interface {
 	// all peers to collect the file's download state across the network.
 	// The response includes both file information and the status on each peer.
 	StatFile(context.Context, *StatFileRequest) (*StatFileResponse, error)
+	// StatImageManifest returns the image manifest that the tag of the image is resolved to.
+	// The image manifest is announced by the peer that resolved the tag from the registry,
+	// the scheduler does not access the registry.
+	StatImageManifest(context.Context, *StatImageManifestRequest) (*StatImageManifestResponse, error)
+	// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
+	// the scheduler keeps it until the ttl expires.
+	AnnounceImageManifest(context.Context, *AnnounceImageManifestRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedSchedulerServer should be embedded to have forward compatible implementations.
@@ -729,6 +761,12 @@ func (UnimplementedSchedulerServer) PreheatFile(context.Context, *PreheatFileReq
 }
 func (UnimplementedSchedulerServer) StatFile(context.Context, *StatFileRequest) (*StatFileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatFile not implemented")
+}
+func (UnimplementedSchedulerServer) StatImageManifest(context.Context, *StatImageManifestRequest) (*StatImageManifestResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatImageManifest not implemented")
+}
+func (UnimplementedSchedulerServer) AnnounceImageManifest(context.Context, *AnnounceImageManifestRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AnnounceImageManifest not implemented")
 }
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
@@ -1386,6 +1424,42 @@ func _Scheduler_StatFile_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Scheduler_StatImageManifest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatImageManifestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).StatImageManifest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/StatImageManifest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).StatImageManifest(ctx, req.(*StatImageManifestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Scheduler_AnnounceImageManifest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AnnounceImageManifestRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SchedulerServer).AnnounceImageManifest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/scheduler.v2.Scheduler/AnnounceImageManifest",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SchedulerServer).AnnounceImageManifest(ctx, req.(*AnnounceImageManifestRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Scheduler_ServiceDesc is the grpc.ServiceDesc for Scheduler service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1512,6 +1586,14 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "StatFile",
 			Handler:    _Scheduler_StatFile_Handler,
+		},
+		{
+			MethodName: "StatImageManifest",
+			Handler:    _Scheduler_StatImageManifest_Handler,
+		},
+		{
+			MethodName: "AnnounceImageManifest",
+			Handler:    _Scheduler_AnnounceImageManifest_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
