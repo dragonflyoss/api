@@ -6,8 +6,8 @@ VENV_PATH=.cache/protoc-python
 PROTO_PATH=proto
 OUTPUT_PATH=python/dragonfly_api
 
-proto_modules="common errordetails dfdaemon manager scheduler"
-grpc_proto_modules="dfdaemon manager scheduler"
+proto_modules="common errordetails dfdaemon manager nydussnapshotter scheduler"
+grpc_proto_modules="dfdaemon manager nydussnapshotter scheduler"
 
 if [ ! -x "${VENV_PATH}/bin/python" ]; then
   if ! ${PYTHON} -m venv ${VENV_PATH}; then
