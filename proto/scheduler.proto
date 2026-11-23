@@ -200,6 +200,29 @@ message DeleteTaskRequest {
   string task_id = 2;
 }
 
+// ListPeersRequest represents request of ListPeers.
+message ListPeersRequest {
+  // Task id to filter peers.
+  optional string task_id = 1;
+  // Page size is the maximum number of peers to return. The scheduler may
+  // return fewer peers than this value. If unspecified, all the peers are
+  // returned.
+  optional int32 page_size = 2;
+  // Page token is the next page token received from a previous ListPeers
+  // call, provide it to retrieve the subsequent page. When paginating, all
+  // other parameters must match the call that provided the page token.
+  optional string page_token = 3;
+}
+
+// ListPeersResponse represents response of ListPeers.
+message ListPeersResponse {
+  // Peers info.
+  repeated common.v2.Peer peers = 1;
+  // Next page token is sent as the page token to retrieve the next page. If it
+  // is not set, there are no subsequent pages.
+  optional string next_page_token = 2;
+}
+
 // AnnounceHostRequest represents request of AnnounceHost.
 message AnnounceHostRequest {
   // Host information.
@@ -212,12 +235,23 @@ message AnnounceHostRequest {
 message ListHostsRequest {
   // Type to filter hosts.
   optional uint32 type = 1;
+  // Page size is the maximum number of hosts to return. The scheduler may
+  // return fewer hosts than this value. If unspecified, all the hosts are
+  // returned.
+  optional int32 page_size = 2;
+  // Page token is the next page token received from a previous ListHosts
+  // call, provide it to retrieve the subsequent page. When paginating, all
+  // other parameters must match the call that provided the page token.
+  optional string page_token = 3;
 }
 
 // ListHostsResponse represents response of ListHosts.
 message ListHostsResponse {
   // Hosts info.
   repeated common.v2.Host hosts = 1;
+  // Next page token is sent as the page token to retrieve the next page. If it
+  // is not set, there are no subsequent pages.
+  optional string next_page_token = 2;
 }
 
 // DeleteHostRequest represents request of DeleteHost.
@@ -1073,6 +1107,10 @@ service Scheduler {
 
   // DeleteTask releases task in scheduler.
   rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty);
+
+  // ListPeers lists peers in scheduler. It only reads the scheduler, no peer is
+  // registered and no seed peer is triggered.
+  rpc ListPeers(ListPeersRequest) returns (ListPeersResponse);
 
   // AnnounceHost announces host to scheduler.
   rpc AnnounceHost(AnnounceHostRequest) returns (google.protobuf.Empty);

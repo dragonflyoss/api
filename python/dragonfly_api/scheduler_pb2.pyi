@@ -190,6 +190,24 @@ class DeleteTaskRequest(_message.Message):
     task_id: str
     def __init__(self, host_id: _Optional[str] = ..., task_id: _Optional[str] = ...) -> None: ...
 
+class ListPeersRequest(_message.Message):
+    __slots__ = ("task_id", "page_size", "page_token")
+    TASK_ID_FIELD_NUMBER: _ClassVar[int]
+    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    task_id: str
+    page_size: int
+    page_token: str
+    def __init__(self, task_id: _Optional[str] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
+
+class ListPeersResponse(_message.Message):
+    __slots__ = ("peers", "next_page_token")
+    PEERS_FIELD_NUMBER: _ClassVar[int]
+    NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    peers: _containers.RepeatedCompositeFieldContainer[_common_pb2.Peer]
+    next_page_token: str
+    def __init__(self, peers: _Optional[_Iterable[_Union[_common_pb2.Peer, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
+
 class AnnounceHostRequest(_message.Message):
     __slots__ = ("host", "interval")
     HOST_FIELD_NUMBER: _ClassVar[int]
@@ -199,16 +217,22 @@ class AnnounceHostRequest(_message.Message):
     def __init__(self, host: _Optional[_Union[_common_pb2.Host, _Mapping]] = ..., interval: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ...) -> None: ...
 
 class ListHostsRequest(_message.Message):
-    __slots__ = ("type",)
+    __slots__ = ("type", "page_size", "page_token")
     TYPE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_SIZE_FIELD_NUMBER: _ClassVar[int]
+    PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     type: int
-    def __init__(self, type: _Optional[int] = ...) -> None: ...
+    page_size: int
+    page_token: str
+    def __init__(self, type: _Optional[int] = ..., page_size: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
 
 class ListHostsResponse(_message.Message):
-    __slots__ = ("hosts",)
+    __slots__ = ("hosts", "next_page_token")
     HOSTS_FIELD_NUMBER: _ClassVar[int]
+    NEXT_PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
     hosts: _containers.RepeatedCompositeFieldContainer[_common_pb2.Host]
-    def __init__(self, hosts: _Optional[_Iterable[_Union[_common_pb2.Host, _Mapping]]] = ...) -> None: ...
+    next_page_token: str
+    def __init__(self, hosts: _Optional[_Iterable[_Union[_common_pb2.Host, _Mapping]]] = ..., next_page_token: _Optional[str] = ...) -> None: ...
 
 class DeleteHostRequest(_message.Message):
     __slots__ = ("host_id",)

@@ -345,6 +345,26 @@ func (mr *MockSchedulerClientMockRecorder) ListHosts(ctx, in any, opts ...any) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListHosts", reflect.TypeOf((*MockSchedulerClient)(nil).ListHosts), varargs...)
 }
 
+// ListPeers mocks base method.
+func (m *MockSchedulerClient) ListPeers(ctx context.Context, in *scheduler.ListPeersRequest, opts ...grpc.CallOption) (*scheduler.ListPeersResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListPeers", varargs...)
+	ret0, _ := ret[0].(*scheduler.ListPeersResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListPeers indicates an expected call of ListPeers.
+func (mr *MockSchedulerClientMockRecorder) ListPeers(ctx, in any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPeers", reflect.TypeOf((*MockSchedulerClient)(nil).ListPeers), varargs...)
+}
+
 // PreheatFile mocks base method.
 func (m *MockSchedulerClient) PreheatFile(ctx context.Context, in *scheduler.PreheatFileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
@@ -1500,6 +1520,21 @@ func (m *MockSchedulerServer) ListHosts(arg0 context.Context, arg1 *scheduler.Li
 func (mr *MockSchedulerServerMockRecorder) ListHosts(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListHosts", reflect.TypeOf((*MockSchedulerServer)(nil).ListHosts), arg0, arg1)
+}
+
+// ListPeers mocks base method.
+func (m *MockSchedulerServer) ListPeers(arg0 context.Context, arg1 *scheduler.ListPeersRequest) (*scheduler.ListPeersResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListPeers", arg0, arg1)
+	ret0, _ := ret[0].(*scheduler.ListPeersResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListPeers indicates an expected call of ListPeers.
+func (mr *MockSchedulerServerMockRecorder) ListPeers(arg0, arg1 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListPeers", reflect.TypeOf((*MockSchedulerServer)(nil).ListPeers), arg0, arg1)
 }
 
 // PreheatFile mocks base method.
