@@ -23,6 +23,12 @@ pub mod manager {
 }
 
 #[path = ""]
+pub mod nydussnapshotter {
+    #[path = "nydussnapshotter.v1.rs"]
+    pub mod v1;
+}
+
+#[path = ""]
 pub mod scheduler {
     #[path = "scheduler.v2.rs"]
     pub mod v2;
