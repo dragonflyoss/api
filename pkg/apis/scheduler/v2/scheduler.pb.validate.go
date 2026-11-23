@@ -15479,7 +15479,7 @@ func (m *StatImageManifestResponse) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Size
+	// no validation rules for ContentLength
 
 	if len(errors) > 0 {
 		return StatImageManifestResponseMultiError(errors)
@@ -15629,7 +15629,7 @@ func (m *AnnounceImageManifestRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Size
+	// no validation rules for ContentLength
 
 	if m.GetTtl() == nil {
 		err := AnnounceImageManifestRequestValidationError{

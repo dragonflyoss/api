@@ -79,3 +79,7 @@ __pycache__/
 dist/
 .venv/
 python/LICENSE
+
+# Claude AI
+claude-ai/
+.claude

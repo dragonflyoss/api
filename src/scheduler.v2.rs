@@ -1604,9 +1604,9 @@ pub struct StatImageManifestResponse {
     /// Media type is the media type of the image manifest.
     #[prost(string, tag = "2")]
     pub media_type: ::prost::alloc::string::String,
-    /// Size is the size(bytes) of the image manifest.
+    /// Content length is the size(bytes) of the image manifest.
     #[prost(uint64, tag = "3")]
-    pub size: u64,
+    pub content_length: u64,
 }
 /// AnnounceImageManifestRequest represents request of AnnounceImageManifest.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -1624,9 +1624,9 @@ pub struct AnnounceImageManifestRequest {
     /// Media type is the media type of the image manifest.
     #[prost(string, tag = "4")]
     pub media_type: ::prost::alloc::string::String,
-    /// Size is the size(bytes) of the image manifest.
+    /// Content length is the size(bytes) of the image manifest.
     #[prost(uint64, tag = "5")]
-    pub size: u64,
+    pub content_length: u64,
     /// TTL is the time to live of the image manifest in the scheduler.
     #[prost(message, optional, tag = "6")]
     pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,

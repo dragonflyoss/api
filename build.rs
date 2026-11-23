@@ -20,6 +20,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 "proto/errordetails.proto",
                 "proto/dfdaemon.proto",
                 "proto/manager.proto",
+                "proto/nydussnapshotter.proto",
                 "proto/scheduler.proto",
             ],
             &["proto/"],

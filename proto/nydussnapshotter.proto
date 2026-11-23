@@ -1,0 +1,116 @@
+/*
+ *     Copyright 2026 The Dragonfly Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+syntax = "proto3";
+
+package nydussnapshotter.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+// ImageState represents state of image.
+enum ImageState {
+  // PENDING image waits for the images in preheating to finish.
+  PENDING = 0;
+
+  // RUNNING image is downloading its blobs to the node.
+  RUNNING = 1;
+
+  // SUCCEEDED image has downloaded every blob to the node.
+  SUCCEEDED = 2;
+
+  // FAILED image has stopped at the first blob that failed to download.
+  FAILED = 3;
+}
+
+// BasicAuth represents basic credential of registry.
+message BasicAuth {
+  // Username is the username of the registry.
+  string username = 1;
+  // Password is the password of the registry.
+  string password = 2;
+}
+
+// PreheatImageRequest represents request of PreheatImage.
+message PreheatImageRequest {
+  // Image is the reference of the image for preheating, containerd has pulled it.
+  string image = 1;
+  // Namespace is the containerd namespace of the image, default is k8s.io.
+  optional string namespace = 2;
+
+  oneof auth {
+    // Basic auth is the basic credential of the registry, it is used by this preheat only.
+    BasicAuth basic_auth = 3;
+    // Bearer token is the token sent to the registry as is, it is used by this preheat only.
+    string bearer_token = 4;
+  }
+}
+
+// StatImageRequest represents request of StatImage.
+message StatImageRequest {
+  // Image is the reference of the image for stating, containerd has pulled it.
+  string image = 1;
+  // Namespace is the containerd namespace of the image, default is k8s.io.
+  optional string namespace = 2;
+}
+
+// StatImageResponse represents response of StatImage.
+message StatImageResponse {
+  // State is the state of the image.
+  ImageState state = 1;
+  // Blobs is the list of blobs of the image, in the order they are downloaded.
+  repeated Blob blobs = 2;
+  // Description is the reason of the failure, it never holds the credential.
+  optional string description = 3;
+  // CreatedAt is the time when the image is queued for preheating.
+  google.protobuf.Timestamp created_at = 4;
+  // UpdatedAt is the time when the state of the image is updated.
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+// Blob represents blob of image.
+message Blob {
+  // Digest is the digest of the blob, for example sha256:yyy.
+  string digest = 1;
+  // Content length is the size(bytes) of the blob.
+  uint64 content_length = 2;
+  // Finished content length is the size(bytes) of the blob downloaded to the node.
+  uint64 finished_content_length = 3;
+  // IsFinished indicates whether the blob has finished downloading.
+  bool is_finished = 4;
+}
+
+// NydusSnapshotter RPC Service.
+service NydusSnapshotter {
+  // PreheatImage resolves an image containerd has pulled and triggers an asynchronous preheat task.
+  //
+  // This is a blocking call. The RPC will not return until the server has completed the
+  // initial synchronous work: resolving the image and queuing the preheat.
+  //
+  // After this call successfully returns, the snapshotter downloads every blob of the image
+  // to the node in the background. If a preheat of the same image is pending or running,
+  // no second one is started.
+  //
+  // A successful response (google.protobuf.Empty) confirms that the preparation is complete
+  // and the asynchronous preheat task has been queued.
+  rpc PreheatImage(PreheatImageRequest) returns (google.protobuf.Empty);
+
+  // StatImage provides the preheat status of a container image in the node.
+  //
+  // This is a blocking call that first resolves the image and then returns the state
+  // of its preheat and the download state of every blob of the image.
+  rpc StatImage(StatImageRequest) returns (StatImageResponse);
+}

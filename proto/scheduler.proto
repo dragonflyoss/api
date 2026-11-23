@@ -1105,8 +1105,8 @@ message StatImageManifestResponse {
   string digest = 1;
   // Media type is the media type of the image manifest.
   string media_type = 2;
-  // Size is the size(bytes) of the image manifest.
-  uint64 size = 3;
+  // Content length is the size(bytes) of the image manifest.
+  uint64 content_length = 3;
 }
 
 // AnnounceImageManifestRequest represents request of AnnounceImageManifest.
@@ -1119,8 +1119,8 @@ message AnnounceImageManifestRequest {
   string digest = 3;
   // Media type is the media type of the image manifest.
   string media_type = 4;
-  // Size is the size(bytes) of the image manifest.
-  uint64 size = 5;
+  // Content length is the size(bytes) of the image manifest.
+  uint64 content_length = 5;
   // TTL is the time to live of the image manifest in the scheduler.
   google.protobuf.Duration ttl = 6;
 }
