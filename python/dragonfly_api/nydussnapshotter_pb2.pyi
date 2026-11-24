@@ -22,14 +22,6 @@ RUNNING: ImageState
 SUCCEEDED: ImageState
 FAILED: ImageState
 
-class BasicAuth(_message.Message):
-    __slots__ = ("username", "password")
-    USERNAME_FIELD_NUMBER: _ClassVar[int]
-    PASSWORD_FIELD_NUMBER: _ClassVar[int]
-    username: str
-    password: str
-    def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
-
 class PreheatImageRequest(_message.Message):
     __slots__ = ("image", "namespace", "basic_auth", "bearer_token")
     IMAGE_FIELD_NUMBER: _ClassVar[int]
@@ -41,6 +33,14 @@ class PreheatImageRequest(_message.Message):
     basic_auth: BasicAuth
     bearer_token: str
     def __init__(self, image: _Optional[str] = ..., namespace: _Optional[str] = ..., basic_auth: _Optional[_Union[BasicAuth, _Mapping]] = ..., bearer_token: _Optional[str] = ...) -> None: ...
+
+class BasicAuth(_message.Message):
+    __slots__ = ("username", "password")
+    USERNAME_FIELD_NUMBER: _ClassVar[int]
+    PASSWORD_FIELD_NUMBER: _ClassVar[int]
+    username: str
+    password: str
+    def __init__(self, username: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
 
 class StatImageRequest(_message.Message):
     __slots__ = ("image", "namespace")

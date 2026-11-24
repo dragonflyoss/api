@@ -35,127 +35,6 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on BasicAuth with the rules defined in the
-// proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *BasicAuth) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on BasicAuth with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in BasicAuthMultiError, or nil
-// if none found.
-func (m *BasicAuth) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *BasicAuth) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if utf8.RuneCountInString(m.GetUsername()) < 1 {
-		err := BasicAuthValidationError{
-			field:  "Username",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetPassword()) < 1 {
-		err := BasicAuthValidationError{
-			field:  "Password",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return BasicAuthMultiError(errors)
-	}
-
-	return nil
-}
-
-// BasicAuthMultiError is an error wrapping multiple validation errors returned
-// by BasicAuth.ValidateAll() if the designated constraints aren't met.
-type BasicAuthMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m BasicAuthMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m BasicAuthMultiError) AllErrors() []error { return m }
-
-// BasicAuthValidationError is the validation error returned by
-// BasicAuth.Validate if the designated constraints aren't met.
-type BasicAuthValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e BasicAuthValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e BasicAuthValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e BasicAuthValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e BasicAuthValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e BasicAuthValidationError) ErrorName() string { return "BasicAuthValidationError" }
-
-// Error satisfies the builtin error interface
-func (e BasicAuthValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sBasicAuth.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = BasicAuthValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = BasicAuthValidationError{}
-
 // Validate checks the field values on PreheatImageRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -369,6 +248,127 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PreheatImageRequestValidationError{}
+
+// Validate checks the field values on BasicAuth with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *BasicAuth) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on BasicAuth with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in BasicAuthMultiError, or nil
+// if none found.
+func (m *BasicAuth) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *BasicAuth) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetUsername()) < 1 {
+		err := BasicAuthValidationError{
+			field:  "Username",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetPassword()) < 1 {
+		err := BasicAuthValidationError{
+			field:  "Password",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return BasicAuthMultiError(errors)
+	}
+
+	return nil
+}
+
+// BasicAuthMultiError is an error wrapping multiple validation errors returned
+// by BasicAuth.ValidateAll() if the designated constraints aren't met.
+type BasicAuthMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m BasicAuthMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m BasicAuthMultiError) AllErrors() []error { return m }
+
+// BasicAuthValidationError is the validation error returned by
+// BasicAuth.Validate if the designated constraints aren't met.
+type BasicAuthValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e BasicAuthValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e BasicAuthValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e BasicAuthValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e BasicAuthValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e BasicAuthValidationError) ErrorName() string { return "BasicAuthValidationError" }
+
+// Error satisfies the builtin error interface
+func (e BasicAuthValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sBasicAuth.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = BasicAuthValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = BasicAuthValidationError{}
 
 // Validate checks the field values on StatImageRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
@@ -590,7 +590,22 @@ func (m *StatImageResponse) validate(all bool) error {
 	}
 
 	if m.Description != nil {
-		// no validation rules for Description
+
+		if m.GetDescription() != "" {
+
+			if utf8.RuneCountInString(m.GetDescription()) < 1 {
+				err := StatImageResponseValidationError{
+					field:  "Description",
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
 	}
 
 	if len(errors) > 0 {
@@ -694,15 +709,19 @@ func (m *Blob) validate(all bool) error {
 
 	var errors []error
 
-	if utf8.RuneCountInString(m.GetDigest()) < 1 {
-		err := BlobValidationError{
-			field:  "Digest",
-			reason: "value length must be at least 1 runes",
+	if m.GetDigest() != "" {
+
+		if !_Blob_Digest_Pattern.MatchString(m.GetDigest()) {
+			err := BlobValidationError{
+				field:  "Digest",
+				reason: "value does not match regex pattern \"^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$\"",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
 	// no validation rules for ContentLength
@@ -787,3 +806,5 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = BlobValidationError{}
+
+var _Blob_Digest_Pattern = regexp.MustCompile("^(md5:[a-fA-F0-9]{32}|sha1:[a-fA-F0-9]{40}|sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128}|blake3:[a-fA-F0-9]{64}|crc32:[a-fA-F0-9]+)$")
