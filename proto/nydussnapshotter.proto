@@ -36,14 +36,6 @@ enum ImageState {
   FAILED = 3;
 }
 
-// BasicAuth represents basic credential of registry.
-message BasicAuth {
-  // Username is the username of the registry.
-  string username = 1;
-  // Password is the password of the registry.
-  string password = 2;
-}
-
 // PreheatImageRequest represents request of PreheatImage.
 message PreheatImageRequest {
   // Image is the reference of the image for preheating, containerd has pulled it.
@@ -59,6 +51,14 @@ message PreheatImageRequest {
   }
 }
 
+// BasicAuth represents basic credential of registry.
+message BasicAuth {
+  // Username is the username of the registry.
+  string username = 1;
+  // Password is the password of the registry.
+  string password = 2;
+}
+
 // StatImageRequest represents request of StatImage.
 message StatImageRequest {
   // Image is the reference of the image for stating, containerd has pulled it.
@@ -71,7 +71,7 @@ message StatImageRequest {
 message StatImageResponse {
   // State is the state of the image.
   ImageState state = 1;
-  // Blobs is the list of blobs of the image, in the order they are downloaded.
+  // Blobs is the list of blobs of the image.
   repeated Blob blobs = 2;
   // Description is the reason of the failure, it never holds the credential.
   optional string description = 3;
@@ -85,9 +85,9 @@ message StatImageResponse {
 message Blob {
   // Digest is the digest of the blob, for example sha256:yyy.
   string digest = 1;
-  // Content length is the size(bytes) of the blob.
+  // Content length is the uncompressed size(bytes) of the blob.
   uint64 content_length = 2;
-  // Finished content length is the size(bytes) of the blob downloaded to the node.
+  // Finished content length is the uncompressed size(bytes) of the blob downloaded to the node.
   uint64 finished_content_length = 3;
   // IsFinished indicates whether the blob has finished downloading.
   bool is_finished = 4;
