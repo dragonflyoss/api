@@ -1019,7 +1019,7 @@ class File(_message.Message):
     is_finished: bool
     def __init__(self, url: _Optional[str] = ..., is_finished: bool = ...) -> None: ...
 
-class StatImageManifestRequest(_message.Message):
+class StatManifestTagRequest(_message.Message):
     __slots__ = ("host_id", "reference")
     HOST_ID_FIELD_NUMBER: _ClassVar[int]
     REFERENCE_FIELD_NUMBER: _ClassVar[int]
@@ -1027,7 +1027,7 @@ class StatImageManifestRequest(_message.Message):
     reference: str
     def __init__(self, host_id: _Optional[str] = ..., reference: _Optional[str] = ...) -> None: ...
 
-class StatImageManifestResponse(_message.Message):
+class StatManifestTagResponse(_message.Message):
     __slots__ = ("digest", "media_type", "content_length")
     DIGEST_FIELD_NUMBER: _ClassVar[int]
     MEDIA_TYPE_FIELD_NUMBER: _ClassVar[int]
@@ -1037,7 +1037,7 @@ class StatImageManifestResponse(_message.Message):
     content_length: int
     def __init__(self, digest: _Optional[str] = ..., media_type: _Optional[str] = ..., content_length: _Optional[int] = ...) -> None: ...
 
-class AnnounceImageManifestRequest(_message.Message):
+class AnnounceManifestTagRequest(_message.Message):
     __slots__ = ("host_id", "reference", "digest", "media_type", "content_length")
     HOST_ID_FIELD_NUMBER: _ClassVar[int]
     REFERENCE_FIELD_NUMBER: _ClassVar[int]

@@ -119,13 +119,13 @@ type SchedulerClient interface {
 	// all peers to collect the file's download state across the network.
 	// The response includes both file information and the status on each peer.
 	StatFile(ctx context.Context, in *StatFileRequest, opts ...grpc.CallOption) (*StatFileResponse, error)
-	// StatImageManifest returns the image manifest that the tag of the image is resolved to.
+	// StatManifestTag returns the image manifest that the tag of the image is resolved to.
 	// The image manifest is announced by the peer that resolved the tag from the registry,
 	// the scheduler does not access the registry.
-	StatImageManifest(ctx context.Context, in *StatImageManifestRequest, opts ...grpc.CallOption) (*StatImageManifestResponse, error)
-	// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
+	StatManifestTag(ctx context.Context, in *StatManifestTagRequest, opts ...grpc.CallOption) (*StatManifestTagResponse, error)
+	// AnnounceManifestTag announces the image manifest that the tag of the image is resolved to,
 	// the scheduler keeps it until the ttl of the cache in the scheduler expires.
-	AnnounceImageManifest(ctx context.Context, in *AnnounceImageManifestRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	AnnounceManifestTag(ctx context.Context, in *AnnounceManifestTagRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type schedulerClient struct {
@@ -530,18 +530,18 @@ func (c *schedulerClient) StatFile(ctx context.Context, in *StatFileRequest, opt
 	return out, nil
 }
 
-func (c *schedulerClient) StatImageManifest(ctx context.Context, in *StatImageManifestRequest, opts ...grpc.CallOption) (*StatImageManifestResponse, error) {
-	out := new(StatImageManifestResponse)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatImageManifest", in, out, opts...)
+func (c *schedulerClient) StatManifestTag(ctx context.Context, in *StatManifestTagRequest, opts ...grpc.CallOption) (*StatManifestTagResponse, error) {
+	out := new(StatManifestTagResponse)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/StatManifestTag", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *schedulerClient) AnnounceImageManifest(ctx context.Context, in *AnnounceImageManifestRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *schedulerClient) AnnounceManifestTag(ctx context.Context, in *AnnounceManifestTagRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/AnnounceImageManifest", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/scheduler.v2.Scheduler/AnnounceManifestTag", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -647,13 +647,13 @@ type SchedulerServer interface {
 	// all peers to collect the file's download state across the network.
 	// The response includes both file information and the status on each peer.
 	StatFile(context.Context, *StatFileRequest) (*StatFileResponse, error)
-	// StatImageManifest returns the image manifest that the tag of the image is resolved to.
+	// StatManifestTag returns the image manifest that the tag of the image is resolved to.
 	// The image manifest is announced by the peer that resolved the tag from the registry,
 	// the scheduler does not access the registry.
-	StatImageManifest(context.Context, *StatImageManifestRequest) (*StatImageManifestResponse, error)
-	// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
+	StatManifestTag(context.Context, *StatManifestTagRequest) (*StatManifestTagResponse, error)
+	// AnnounceManifestTag announces the image manifest that the tag of the image is resolved to,
 	// the scheduler keeps it until the ttl of the cache in the scheduler expires.
-	AnnounceImageManifest(context.Context, *AnnounceImageManifestRequest) (*emptypb.Empty, error)
+	AnnounceManifestTag(context.Context, *AnnounceManifestTagRequest) (*emptypb.Empty, error)
 }
 
 // UnimplementedSchedulerServer should be embedded to have forward compatible implementations.
@@ -762,11 +762,11 @@ func (UnimplementedSchedulerServer) PreheatFile(context.Context, *PreheatFileReq
 func (UnimplementedSchedulerServer) StatFile(context.Context, *StatFileRequest) (*StatFileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StatFile not implemented")
 }
-func (UnimplementedSchedulerServer) StatImageManifest(context.Context, *StatImageManifestRequest) (*StatImageManifestResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StatImageManifest not implemented")
+func (UnimplementedSchedulerServer) StatManifestTag(context.Context, *StatManifestTagRequest) (*StatManifestTagResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StatManifestTag not implemented")
 }
-func (UnimplementedSchedulerServer) AnnounceImageManifest(context.Context, *AnnounceImageManifestRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AnnounceImageManifest not implemented")
+func (UnimplementedSchedulerServer) AnnounceManifestTag(context.Context, *AnnounceManifestTagRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AnnounceManifestTag not implemented")
 }
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
@@ -1424,38 +1424,38 @@ func _Scheduler_StatFile_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_StatImageManifest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StatImageManifestRequest)
+func _Scheduler_StatManifestTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StatManifestTagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).StatImageManifest(ctx, in)
+		return srv.(SchedulerServer).StatManifestTag(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/StatImageManifest",
+		FullMethod: "/scheduler.v2.Scheduler/StatManifestTag",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).StatImageManifest(ctx, req.(*StatImageManifestRequest))
+		return srv.(SchedulerServer).StatManifestTag(ctx, req.(*StatManifestTagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Scheduler_AnnounceImageManifest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AnnounceImageManifestRequest)
+func _Scheduler_AnnounceManifestTag_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AnnounceManifestTagRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SchedulerServer).AnnounceImageManifest(ctx, in)
+		return srv.(SchedulerServer).AnnounceManifestTag(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/scheduler.v2.Scheduler/AnnounceImageManifest",
+		FullMethod: "/scheduler.v2.Scheduler/AnnounceManifestTag",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SchedulerServer).AnnounceImageManifest(ctx, req.(*AnnounceImageManifestRequest))
+		return srv.(SchedulerServer).AnnounceManifestTag(ctx, req.(*AnnounceManifestTagRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1588,12 +1588,12 @@ var Scheduler_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Scheduler_StatFile_Handler,
 		},
 		{
-			MethodName: "StatImageManifest",
-			Handler:    _Scheduler_StatImageManifest_Handler,
+			MethodName: "StatManifestTag",
+			Handler:    _Scheduler_StatManifestTag_Handler,
 		},
 		{
-			MethodName: "AnnounceImageManifest",
-			Handler:    _Scheduler_AnnounceImageManifest_Handler,
+			MethodName: "AnnounceManifestTag",
+			Handler:    _Scheduler_AnnounceManifestTag_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
