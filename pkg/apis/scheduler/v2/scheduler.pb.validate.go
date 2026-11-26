@@ -15631,47 +15631,6 @@ func (m *AnnounceImageManifestRequest) validate(all bool) error {
 
 	// no validation rules for ContentLength
 
-	if m.GetTtl() == nil {
-		err := AnnounceImageManifestRequestValidationError{
-			field:  "Ttl",
-			reason: "value is required",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if d := m.GetTtl(); d != nil {
-		dur, err := d.AsDuration(), d.CheckValid()
-		if err != nil {
-			err = AnnounceImageManifestRequestValidationError{
-				field:  "Ttl",
-				reason: "value is not a valid duration",
-				cause:  err,
-			}
-			if !all {
-				return err
-			}
-			errors = append(errors, err)
-		} else {
-
-			gte := time.Duration(1*time.Second + 0*time.Nanosecond)
-
-			if dur < gte {
-				err := AnnounceImageManifestRequestValidationError{
-					field:  "Ttl",
-					reason: "value must be greater than or equal to 1s",
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-	}
-
 	if len(errors) > 0 {
 		return AnnounceImageManifestRequestMultiError(errors)
 	}

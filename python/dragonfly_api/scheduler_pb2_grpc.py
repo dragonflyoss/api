@@ -499,7 +499,7 @@ class SchedulerServicer(object):
 
     def AnnounceImageManifest(self, request, context):
         """AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
-        the scheduler keeps it until the ttl expires.
+        the scheduler keeps it until the ttl of the cache in the scheduler expires.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')

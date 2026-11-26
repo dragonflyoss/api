@@ -1627,9 +1627,6 @@ pub struct AnnounceImageManifestRequest {
     /// Content length is the size(bytes) of the image manifest.
     #[prost(uint64, tag = "5")]
     pub content_length: u64,
-    /// TTL is the time to live of the image manifest in the scheduler.
-    #[prost(message, optional, tag = "6")]
-    pub ttl: ::core::option::Option<::prost_wkt_types::Duration>,
 }
 /// Generated client implementations.
 pub mod scheduler_client {
@@ -2653,7 +2650,7 @@ pub mod scheduler_client {
             self.inner.unary(req, path, codec).await
         }
         /// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
-        /// the scheduler keeps it until the ttl expires.
+        /// the scheduler keeps it until the ttl of the cache in the scheduler expires.
         pub async fn announce_image_manifest(
             &mut self,
             request: impl tonic::IntoRequest<super::AnnounceImageManifestRequest>,
@@ -2991,7 +2988,7 @@ pub mod scheduler_server {
             tonic::Status,
         >;
         /// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
-        /// the scheduler keeps it until the ttl expires.
+        /// the scheduler keeps it until the ttl of the cache in the scheduler expires.
         async fn announce_image_manifest(
             &self,
             request: tonic::Request<super::AnnounceImageManifestRequest>,
