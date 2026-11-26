@@ -15311,22 +15311,22 @@ var _ interface {
 	ErrorName() string
 } = FileValidationError{}
 
-// Validate checks the field values on StatImageManifestRequest with the rules
+// Validate checks the field values on StatManifestTagRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StatImageManifestRequest) Validate() error {
+func (m *StatManifestTagRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on StatImageManifestRequest with the
-// rules defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on StatManifestTagRequest with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// StatImageManifestRequestMultiError, or nil if none found.
-func (m *StatImageManifestRequest) ValidateAll() error {
+// StatManifestTagRequestMultiError, or nil if none found.
+func (m *StatManifestTagRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *StatImageManifestRequest) validate(all bool) error {
+func (m *StatManifestTagRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -15334,7 +15334,7 @@ func (m *StatImageManifestRequest) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetHostId()) < 1 {
-		err := StatImageManifestRequestValidationError{
+		err := StatManifestTagRequestValidationError{
 			field:  "HostId",
 			reason: "value length must be at least 1 runes",
 		}
@@ -15345,7 +15345,7 @@ func (m *StatImageManifestRequest) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetReference()) < 1 {
-		err := StatImageManifestRequestValidationError{
+		err := StatManifestTagRequestValidationError{
 			field:  "Reference",
 			reason: "value length must be at least 1 runes",
 		}
@@ -15356,19 +15356,19 @@ func (m *StatImageManifestRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return StatImageManifestRequestMultiError(errors)
+		return StatManifestTagRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// StatImageManifestRequestMultiError is an error wrapping multiple validation
-// errors returned by StatImageManifestRequest.ValidateAll() if the designated
+// StatManifestTagRequestMultiError is an error wrapping multiple validation
+// errors returned by StatManifestTagRequest.ValidateAll() if the designated
 // constraints aren't met.
-type StatImageManifestRequestMultiError []error
+type StatManifestTagRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m StatImageManifestRequestMultiError) Error() string {
+func (m StatManifestTagRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -15377,11 +15377,11 @@ func (m StatImageManifestRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m StatImageManifestRequestMultiError) AllErrors() []error { return m }
+func (m StatManifestTagRequestMultiError) AllErrors() []error { return m }
 
-// StatImageManifestRequestValidationError is the validation error returned by
-// StatImageManifestRequest.Validate if the designated constraints aren't met.
-type StatImageManifestRequestValidationError struct {
+// StatManifestTagRequestValidationError is the validation error returned by
+// StatManifestTagRequest.Validate if the designated constraints aren't met.
+type StatManifestTagRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -15389,24 +15389,24 @@ type StatImageManifestRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e StatImageManifestRequestValidationError) Field() string { return e.field }
+func (e StatManifestTagRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e StatImageManifestRequestValidationError) Reason() string { return e.reason }
+func (e StatManifestTagRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e StatImageManifestRequestValidationError) Cause() error { return e.cause }
+func (e StatManifestTagRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e StatImageManifestRequestValidationError) Key() bool { return e.key }
+func (e StatManifestTagRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e StatImageManifestRequestValidationError) ErrorName() string {
-	return "StatImageManifestRequestValidationError"
+func (e StatManifestTagRequestValidationError) ErrorName() string {
+	return "StatManifestTagRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e StatImageManifestRequestValidationError) Error() string {
+func (e StatManifestTagRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -15418,14 +15418,14 @@ func (e StatImageManifestRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sStatImageManifestRequest.%s: %s%s",
+		"invalid %sStatManifestTagRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = StatImageManifestRequestValidationError{}
+var _ error = StatManifestTagRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -15433,32 +15433,32 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = StatImageManifestRequestValidationError{}
+} = StatManifestTagRequestValidationError{}
 
-// Validate checks the field values on StatImageManifestResponse with the rules
+// Validate checks the field values on StatManifestTagResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StatImageManifestResponse) Validate() error {
+func (m *StatManifestTagResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on StatImageManifestResponse with the
+// ValidateAll checks the field values on StatManifestTagResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// StatImageManifestResponseMultiError, or nil if none found.
-func (m *StatImageManifestResponse) ValidateAll() error {
+// StatManifestTagResponseMultiError, or nil if none found.
+func (m *StatManifestTagResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *StatImageManifestResponse) validate(all bool) error {
+func (m *StatManifestTagResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	if !_StatImageManifestResponse_Digest_Pattern.MatchString(m.GetDigest()) {
-		err := StatImageManifestResponseValidationError{
+	if !_StatManifestTagResponse_Digest_Pattern.MatchString(m.GetDigest()) {
+		err := StatManifestTagResponseValidationError{
 			field:  "Digest",
 			reason: "value does not match regex pattern \"^(sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
 		}
@@ -15469,7 +15469,7 @@ func (m *StatImageManifestResponse) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetMediaType()) < 1 {
-		err := StatImageManifestResponseValidationError{
+		err := StatManifestTagResponseValidationError{
 			field:  "MediaType",
 			reason: "value length must be at least 1 runes",
 		}
@@ -15482,19 +15482,19 @@ func (m *StatImageManifestResponse) validate(all bool) error {
 	// no validation rules for ContentLength
 
 	if len(errors) > 0 {
-		return StatImageManifestResponseMultiError(errors)
+		return StatManifestTagResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// StatImageManifestResponseMultiError is an error wrapping multiple validation
-// errors returned by StatImageManifestResponse.ValidateAll() if the
-// designated constraints aren't met.
-type StatImageManifestResponseMultiError []error
+// StatManifestTagResponseMultiError is an error wrapping multiple validation
+// errors returned by StatManifestTagResponse.ValidateAll() if the designated
+// constraints aren't met.
+type StatManifestTagResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m StatImageManifestResponseMultiError) Error() string {
+func (m StatManifestTagResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -15503,11 +15503,11 @@ func (m StatImageManifestResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m StatImageManifestResponseMultiError) AllErrors() []error { return m }
+func (m StatManifestTagResponseMultiError) AllErrors() []error { return m }
 
-// StatImageManifestResponseValidationError is the validation error returned by
-// StatImageManifestResponse.Validate if the designated constraints aren't met.
-type StatImageManifestResponseValidationError struct {
+// StatManifestTagResponseValidationError is the validation error returned by
+// StatManifestTagResponse.Validate if the designated constraints aren't met.
+type StatManifestTagResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -15515,24 +15515,24 @@ type StatImageManifestResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e StatImageManifestResponseValidationError) Field() string { return e.field }
+func (e StatManifestTagResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e StatImageManifestResponseValidationError) Reason() string { return e.reason }
+func (e StatManifestTagResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e StatImageManifestResponseValidationError) Cause() error { return e.cause }
+func (e StatManifestTagResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e StatImageManifestResponseValidationError) Key() bool { return e.key }
+func (e StatManifestTagResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e StatImageManifestResponseValidationError) ErrorName() string {
-	return "StatImageManifestResponseValidationError"
+func (e StatManifestTagResponseValidationError) ErrorName() string {
+	return "StatManifestTagResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e StatImageManifestResponseValidationError) Error() string {
+func (e StatManifestTagResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -15544,14 +15544,14 @@ func (e StatImageManifestResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sStatImageManifestResponse.%s: %s%s",
+		"invalid %sStatManifestTagResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = StatImageManifestResponseValidationError{}
+var _ error = StatManifestTagResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -15559,26 +15559,26 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = StatImageManifestResponseValidationError{}
+} = StatManifestTagResponseValidationError{}
 
-var _StatImageManifestResponse_Digest_Pattern = regexp.MustCompile("^(sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$")
+var _StatManifestTagResponse_Digest_Pattern = regexp.MustCompile("^(sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$")
 
-// Validate checks the field values on AnnounceImageManifestRequest with the
+// Validate checks the field values on AnnounceManifestTagRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *AnnounceImageManifestRequest) Validate() error {
+func (m *AnnounceManifestTagRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AnnounceImageManifestRequest with the
+// ValidateAll checks the field values on AnnounceManifestTagRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// AnnounceImageManifestRequestMultiError, or nil if none found.
-func (m *AnnounceImageManifestRequest) ValidateAll() error {
+// AnnounceManifestTagRequestMultiError, or nil if none found.
+func (m *AnnounceManifestTagRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AnnounceImageManifestRequest) validate(all bool) error {
+func (m *AnnounceManifestTagRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -15586,7 +15586,7 @@ func (m *AnnounceImageManifestRequest) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetHostId()) < 1 {
-		err := AnnounceImageManifestRequestValidationError{
+		err := AnnounceManifestTagRequestValidationError{
 			field:  "HostId",
 			reason: "value length must be at least 1 runes",
 		}
@@ -15597,7 +15597,7 @@ func (m *AnnounceImageManifestRequest) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetReference()) < 1 {
-		err := AnnounceImageManifestRequestValidationError{
+		err := AnnounceManifestTagRequestValidationError{
 			field:  "Reference",
 			reason: "value length must be at least 1 runes",
 		}
@@ -15607,8 +15607,8 @@ func (m *AnnounceImageManifestRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if !_AnnounceImageManifestRequest_Digest_Pattern.MatchString(m.GetDigest()) {
-		err := AnnounceImageManifestRequestValidationError{
+	if !_AnnounceManifestTagRequest_Digest_Pattern.MatchString(m.GetDigest()) {
+		err := AnnounceManifestTagRequestValidationError{
 			field:  "Digest",
 			reason: "value does not match regex pattern \"^(sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$\"",
 		}
@@ -15619,7 +15619,7 @@ func (m *AnnounceImageManifestRequest) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetMediaType()) < 1 {
-		err := AnnounceImageManifestRequestValidationError{
+		err := AnnounceManifestTagRequestValidationError{
 			field:  "MediaType",
 			reason: "value length must be at least 1 runes",
 		}
@@ -15632,19 +15632,19 @@ func (m *AnnounceImageManifestRequest) validate(all bool) error {
 	// no validation rules for ContentLength
 
 	if len(errors) > 0 {
-		return AnnounceImageManifestRequestMultiError(errors)
+		return AnnounceManifestTagRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// AnnounceImageManifestRequestMultiError is an error wrapping multiple
-// validation errors returned by AnnounceImageManifestRequest.ValidateAll() if
+// AnnounceManifestTagRequestMultiError is an error wrapping multiple
+// validation errors returned by AnnounceManifestTagRequest.ValidateAll() if
 // the designated constraints aren't met.
-type AnnounceImageManifestRequestMultiError []error
+type AnnounceManifestTagRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AnnounceImageManifestRequestMultiError) Error() string {
+func (m AnnounceManifestTagRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -15653,12 +15653,11 @@ func (m AnnounceImageManifestRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AnnounceImageManifestRequestMultiError) AllErrors() []error { return m }
+func (m AnnounceManifestTagRequestMultiError) AllErrors() []error { return m }
 
-// AnnounceImageManifestRequestValidationError is the validation error returned
-// by AnnounceImageManifestRequest.Validate if the designated constraints
-// aren't met.
-type AnnounceImageManifestRequestValidationError struct {
+// AnnounceManifestTagRequestValidationError is the validation error returned
+// by AnnounceManifestTagRequest.Validate if the designated constraints aren't met.
+type AnnounceManifestTagRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -15666,24 +15665,24 @@ type AnnounceImageManifestRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e AnnounceImageManifestRequestValidationError) Field() string { return e.field }
+func (e AnnounceManifestTagRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AnnounceImageManifestRequestValidationError) Reason() string { return e.reason }
+func (e AnnounceManifestTagRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AnnounceImageManifestRequestValidationError) Cause() error { return e.cause }
+func (e AnnounceManifestTagRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AnnounceImageManifestRequestValidationError) Key() bool { return e.key }
+func (e AnnounceManifestTagRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AnnounceImageManifestRequestValidationError) ErrorName() string {
-	return "AnnounceImageManifestRequestValidationError"
+func (e AnnounceManifestTagRequestValidationError) ErrorName() string {
+	return "AnnounceManifestTagRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e AnnounceImageManifestRequestValidationError) Error() string {
+func (e AnnounceManifestTagRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -15695,14 +15694,14 @@ func (e AnnounceImageManifestRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAnnounceImageManifestRequest.%s: %s%s",
+		"invalid %sAnnounceManifestTagRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AnnounceImageManifestRequestValidationError{}
+var _ error = AnnounceManifestTagRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -15710,6 +15709,6 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AnnounceImageManifestRequestValidationError{}
+} = AnnounceManifestTagRequestValidationError{}
 
-var _AnnounceImageManifestRequest_Digest_Pattern = regexp.MustCompile("^(sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$")
+var _AnnounceManifestTagRequest_Digest_Pattern = regexp.MustCompile("^(sha256:[a-fA-F0-9]{64}|sha512:[a-fA-F0-9]{128})$")

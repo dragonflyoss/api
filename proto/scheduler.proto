@@ -1091,16 +1091,16 @@ message File {
   optional bool is_finished = 2;
 }
 
-// StatImageManifestRequest represents request of StatImageManifest.
-message StatImageManifestRequest {
+// StatManifestTagRequest represents request of StatManifestTag.
+message StatManifestTagRequest {
   // Host id.
   string host_id = 1;
   // Reference is the image reference with the tag, for example docker.io/library/nginx:latest.
   string reference = 2;
 }
 
-// StatImageManifestResponse represents response of StatImageManifest.
-message StatImageManifestResponse {
+// StatManifestTagResponse represents response of StatManifestTag.
+message StatManifestTagResponse {
   // Digest is the digest of the image manifest that the tag is resolved to.
   string digest = 1;
   // Media type is the media type of the image manifest.
@@ -1109,8 +1109,8 @@ message StatImageManifestResponse {
   uint64 content_length = 3;
 }
 
-// AnnounceImageManifestRequest represents request of AnnounceImageManifest.
-message AnnounceImageManifestRequest {
+// AnnounceManifestTagRequest represents request of AnnounceManifestTag.
+message AnnounceManifestTagRequest {
   // Host id.
   string host_id = 1;
   // Reference is the image reference with the tag, for example docker.io/library/nginx:latest.
@@ -1254,12 +1254,12 @@ service Scheduler {
   // The response includes both file information and the status on each peer.
   rpc StatFile(StatFileRequest) returns (StatFileResponse);
 
-  // StatImageManifest returns the image manifest that the tag of the image is resolved to.
+  // StatManifestTag returns the image manifest that the tag of the image is resolved to.
   // The image manifest is announced by the peer that resolved the tag from the registry,
   // the scheduler does not access the registry.
-  rpc StatImageManifest(StatImageManifestRequest) returns (StatImageManifestResponse);
+  rpc StatManifestTag(StatManifestTagRequest) returns (StatManifestTagResponse);
 
-  // AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
+  // AnnounceManifestTag announces the image manifest that the tag of the image is resolved to,
   // the scheduler keeps it until the ttl of the cache in the scheduler expires.
-  rpc AnnounceImageManifest(AnnounceImageManifestRequest) returns (google.protobuf.Empty);
+  rpc AnnounceManifestTag(AnnounceManifestTagRequest) returns (google.protobuf.Empty);
 }

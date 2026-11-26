@@ -1583,10 +1583,10 @@ pub struct File {
     #[prost(bool, optional, tag = "2")]
     pub is_finished: ::core::option::Option<bool>,
 }
-/// StatImageManifestRequest represents request of StatImageManifest.
+/// StatManifestTagRequest represents request of StatManifestTag.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct StatImageManifestRequest {
+pub struct StatManifestTagRequest {
     /// Host id.
     #[prost(string, tag = "1")]
     pub host_id: ::prost::alloc::string::String,
@@ -1594,10 +1594,10 @@ pub struct StatImageManifestRequest {
     #[prost(string, tag = "2")]
     pub reference: ::prost::alloc::string::String,
 }
-/// StatImageManifestResponse represents response of StatImageManifest.
+/// StatManifestTagResponse represents response of StatManifestTag.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct StatImageManifestResponse {
+pub struct StatManifestTagResponse {
     /// Digest is the digest of the image manifest that the tag is resolved to.
     #[prost(string, tag = "1")]
     pub digest: ::prost::alloc::string::String,
@@ -1608,10 +1608,10 @@ pub struct StatImageManifestResponse {
     #[prost(uint64, tag = "3")]
     pub content_length: u64,
 }
-/// AnnounceImageManifestRequest represents request of AnnounceImageManifest.
+/// AnnounceManifestTagRequest represents request of AnnounceManifestTag.
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct AnnounceImageManifestRequest {
+pub struct AnnounceManifestTagRequest {
     /// Host id.
     #[prost(string, tag = "1")]
     pub host_id: ::prost::alloc::string::String,
@@ -2622,14 +2622,14 @@ pub mod scheduler_client {
                 .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatFile"));
             self.inner.unary(req, path, codec).await
         }
-        /// StatImageManifest returns the image manifest that the tag of the image is resolved to.
+        /// StatManifestTag returns the image manifest that the tag of the image is resolved to.
         /// The image manifest is announced by the peer that resolved the tag from the registry,
         /// the scheduler does not access the registry.
-        pub async fn stat_image_manifest(
+        pub async fn stat_manifest_tag(
             &mut self,
-            request: impl tonic::IntoRequest<super::StatImageManifestRequest>,
+            request: impl tonic::IntoRequest<super::StatManifestTagRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::StatImageManifestResponse>,
+            tonic::Response<super::StatManifestTagResponse>,
             tonic::Status,
         > {
             self.inner
@@ -2642,18 +2642,18 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.v2.Scheduler/StatImageManifest",
+                "/scheduler.v2.Scheduler/StatManifestTag",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatImageManifest"));
+                .insert(GrpcMethod::new("scheduler.v2.Scheduler", "StatManifestTag"));
             self.inner.unary(req, path, codec).await
         }
-        /// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
+        /// AnnounceManifestTag announces the image manifest that the tag of the image is resolved to,
         /// the scheduler keeps it until the ttl of the cache in the scheduler expires.
-        pub async fn announce_image_manifest(
+        pub async fn announce_manifest_tag(
             &mut self,
-            request: impl tonic::IntoRequest<super::AnnounceImageManifestRequest>,
+            request: impl tonic::IntoRequest<super::AnnounceManifestTagRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status> {
             self.inner
                 .ready()
@@ -2665,12 +2665,12 @@ pub mod scheduler_client {
                 })?;
             let codec = tonic_prost::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/scheduler.v2.Scheduler/AnnounceImageManifest",
+                "/scheduler.v2.Scheduler/AnnounceManifestTag",
             );
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(
-                    GrpcMethod::new("scheduler.v2.Scheduler", "AnnounceImageManifest"),
+                    GrpcMethod::new("scheduler.v2.Scheduler", "AnnounceManifestTag"),
                 );
             self.inner.unary(req, path, codec).await
         }
@@ -2977,21 +2977,21 @@ pub mod scheduler_server {
             tonic::Response<super::StatFileResponse>,
             tonic::Status,
         >;
-        /// StatImageManifest returns the image manifest that the tag of the image is resolved to.
+        /// StatManifestTag returns the image manifest that the tag of the image is resolved to.
         /// The image manifest is announced by the peer that resolved the tag from the registry,
         /// the scheduler does not access the registry.
-        async fn stat_image_manifest(
+        async fn stat_manifest_tag(
             &self,
-            request: tonic::Request<super::StatImageManifestRequest>,
+            request: tonic::Request<super::StatManifestTagRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::StatImageManifestResponse>,
+            tonic::Response<super::StatManifestTagResponse>,
             tonic::Status,
         >;
-        /// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
+        /// AnnounceManifestTag announces the image manifest that the tag of the image is resolved to,
         /// the scheduler keeps it until the ttl of the cache in the scheduler expires.
-        async fn announce_image_manifest(
+        async fn announce_manifest_tag(
             &self,
-            request: tonic::Request<super::AnnounceImageManifestRequest>,
+            request: tonic::Request<super::AnnounceManifestTagRequest>,
         ) -> std::result::Result<tonic::Response<()>, tonic::Status>;
     }
     /// Scheduler RPC Service.
@@ -4694,25 +4694,25 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.v2.Scheduler/StatImageManifest" => {
+                "/scheduler.v2.Scheduler/StatManifestTag" => {
                     #[allow(non_camel_case_types)]
-                    struct StatImageManifestSvc<T: Scheduler>(pub Arc<T>);
+                    struct StatManifestTagSvc<T: Scheduler>(pub Arc<T>);
                     impl<
                         T: Scheduler,
-                    > tonic::server::UnaryService<super::StatImageManifestRequest>
-                    for StatImageManifestSvc<T> {
-                        type Response = super::StatImageManifestResponse;
+                    > tonic::server::UnaryService<super::StatManifestTagRequest>
+                    for StatManifestTagSvc<T> {
+                        type Response = super::StatManifestTagResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::StatImageManifestRequest>,
+                            request: tonic::Request<super::StatManifestTagRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as Scheduler>::stat_image_manifest(&inner, request).await
+                                <T as Scheduler>::stat_manifest_tag(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -4723,7 +4723,7 @@ pub mod scheduler_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let method = StatImageManifestSvc(inner);
+                        let method = StatManifestTagSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(
@@ -4739,13 +4739,13 @@ pub mod scheduler_server {
                     };
                     Box::pin(fut)
                 }
-                "/scheduler.v2.Scheduler/AnnounceImageManifest" => {
+                "/scheduler.v2.Scheduler/AnnounceManifestTag" => {
                     #[allow(non_camel_case_types)]
-                    struct AnnounceImageManifestSvc<T: Scheduler>(pub Arc<T>);
+                    struct AnnounceManifestTagSvc<T: Scheduler>(pub Arc<T>);
                     impl<
                         T: Scheduler,
-                    > tonic::server::UnaryService<super::AnnounceImageManifestRequest>
-                    for AnnounceImageManifestSvc<T> {
+                    > tonic::server::UnaryService<super::AnnounceManifestTagRequest>
+                    for AnnounceManifestTagSvc<T> {
                         type Response = ();
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
@@ -4753,11 +4753,11 @@ pub mod scheduler_server {
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::AnnounceImageManifestRequest>,
+                            request: tonic::Request<super::AnnounceManifestTagRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as Scheduler>::announce_image_manifest(&inner, request)
+                                <T as Scheduler>::announce_manifest_tag(&inner, request)
                                     .await
                             };
                             Box::pin(fut)
@@ -4769,7 +4769,7 @@ pub mod scheduler_server {
                     let max_encoding_message_size = self.max_encoding_message_size;
                     let inner = self.inner.clone();
                     let fut = async move {
-                        let method = AnnounceImageManifestSvc(inner);
+                        let method = AnnounceManifestTagSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

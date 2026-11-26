@@ -85,24 +85,24 @@ func (mr *MockSchedulerClientMockRecorder) AnnounceHost(ctx, in any, opts ...any
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnounceHost", reflect.TypeOf((*MockSchedulerClient)(nil).AnnounceHost), varargs...)
 }
 
-// AnnounceImageManifest mocks base method.
-func (m *MockSchedulerClient) AnnounceImageManifest(ctx context.Context, in *scheduler.AnnounceImageManifestRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+// AnnounceManifestTag mocks base method.
+func (m *MockSchedulerClient) AnnounceManifestTag(ctx context.Context, in *scheduler.AnnounceManifestTagRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "AnnounceImageManifest", varargs...)
+	ret := m.ctrl.Call(m, "AnnounceManifestTag", varargs...)
 	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// AnnounceImageManifest indicates an expected call of AnnounceImageManifest.
-func (mr *MockSchedulerClientMockRecorder) AnnounceImageManifest(ctx, in any, opts ...any) *gomock.Call {
+// AnnounceManifestTag indicates an expected call of AnnounceManifestTag.
+func (mr *MockSchedulerClientMockRecorder) AnnounceManifestTag(ctx, in any, opts ...any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnounceImageManifest", reflect.TypeOf((*MockSchedulerClient)(nil).AnnounceImageManifest), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnounceManifestTag", reflect.TypeOf((*MockSchedulerClient)(nil).AnnounceManifestTag), varargs...)
 }
 
 // AnnouncePeer mocks base method.
@@ -505,24 +505,24 @@ func (mr *MockSchedulerClientMockRecorder) StatImage(ctx, in any, opts ...any) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatImage", reflect.TypeOf((*MockSchedulerClient)(nil).StatImage), varargs...)
 }
 
-// StatImageManifest mocks base method.
-func (m *MockSchedulerClient) StatImageManifest(ctx context.Context, in *scheduler.StatImageManifestRequest, opts ...grpc.CallOption) (*scheduler.StatImageManifestResponse, error) {
+// StatManifestTag mocks base method.
+func (m *MockSchedulerClient) StatManifestTag(ctx context.Context, in *scheduler.StatManifestTagRequest, opts ...grpc.CallOption) (*scheduler.StatManifestTagResponse, error) {
 	m.ctrl.T.Helper()
 	varargs := []any{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "StatImageManifest", varargs...)
-	ret0, _ := ret[0].(*scheduler.StatImageManifestResponse)
+	ret := m.ctrl.Call(m, "StatManifestTag", varargs...)
+	ret0, _ := ret[0].(*scheduler.StatManifestTagResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// StatImageManifest indicates an expected call of StatImageManifest.
-func (mr *MockSchedulerClientMockRecorder) StatImageManifest(ctx, in any, opts ...any) *gomock.Call {
+// StatManifestTag indicates an expected call of StatManifestTag.
+func (mr *MockSchedulerClientMockRecorder) StatManifestTag(ctx, in any, opts ...any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatImageManifest", reflect.TypeOf((*MockSchedulerClient)(nil).StatImageManifest), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatManifestTag", reflect.TypeOf((*MockSchedulerClient)(nil).StatManifestTag), varargs...)
 }
 
 // StatPeer mocks base method.
@@ -1370,19 +1370,19 @@ func (mr *MockSchedulerServerMockRecorder) AnnounceHost(arg0, arg1 any) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnounceHost", reflect.TypeOf((*MockSchedulerServer)(nil).AnnounceHost), arg0, arg1)
 }
 
-// AnnounceImageManifest mocks base method.
-func (m *MockSchedulerServer) AnnounceImageManifest(arg0 context.Context, arg1 *scheduler.AnnounceImageManifestRequest) (*emptypb.Empty, error) {
+// AnnounceManifestTag mocks base method.
+func (m *MockSchedulerServer) AnnounceManifestTag(arg0 context.Context, arg1 *scheduler.AnnounceManifestTagRequest) (*emptypb.Empty, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AnnounceImageManifest", arg0, arg1)
+	ret := m.ctrl.Call(m, "AnnounceManifestTag", arg0, arg1)
 	ret0, _ := ret[0].(*emptypb.Empty)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// AnnounceImageManifest indicates an expected call of AnnounceImageManifest.
-func (mr *MockSchedulerServerMockRecorder) AnnounceImageManifest(arg0, arg1 any) *gomock.Call {
+// AnnounceManifestTag indicates an expected call of AnnounceManifestTag.
+func (mr *MockSchedulerServerMockRecorder) AnnounceManifestTag(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnounceImageManifest", reflect.TypeOf((*MockSchedulerServer)(nil).AnnounceImageManifest), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnnounceManifestTag", reflect.TypeOf((*MockSchedulerServer)(nil).AnnounceManifestTag), arg0, arg1)
 }
 
 // AnnouncePeer mocks base method.
@@ -1682,19 +1682,19 @@ func (mr *MockSchedulerServerMockRecorder) StatImage(arg0, arg1 any) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatImage", reflect.TypeOf((*MockSchedulerServer)(nil).StatImage), arg0, arg1)
 }
 
-// StatImageManifest mocks base method.
-func (m *MockSchedulerServer) StatImageManifest(arg0 context.Context, arg1 *scheduler.StatImageManifestRequest) (*scheduler.StatImageManifestResponse, error) {
+// StatManifestTag mocks base method.
+func (m *MockSchedulerServer) StatManifestTag(arg0 context.Context, arg1 *scheduler.StatManifestTagRequest) (*scheduler.StatManifestTagResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "StatImageManifest", arg0, arg1)
-	ret0, _ := ret[0].(*scheduler.StatImageManifestResponse)
+	ret := m.ctrl.Call(m, "StatManifestTag", arg0, arg1)
+	ret0, _ := ret[0].(*scheduler.StatManifestTagResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// StatImageManifest indicates an expected call of StatImageManifest.
-func (mr *MockSchedulerServerMockRecorder) StatImageManifest(arg0, arg1 any) *gomock.Call {
+// StatManifestTag indicates an expected call of StatManifestTag.
+func (mr *MockSchedulerServerMockRecorder) StatManifestTag(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatImageManifest", reflect.TypeOf((*MockSchedulerServer)(nil).StatImageManifest), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatManifestTag", reflect.TypeOf((*MockSchedulerServer)(nil).StatManifestTag), arg0, arg1)
 }
 
 // StatPeer mocks base method.
