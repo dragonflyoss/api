@@ -1289,11 +1289,6 @@ message AnnounceImageManifestRequest {
   string media_type = 4 [(validate.rules).string.min_len = 1];
   // Content length is the size(bytes) of the image manifest.
   uint64 content_length = 5;
-  // TTL is the time to live of the image manifest in the scheduler.
-  google.protobuf.Duration ttl = 6 [(validate.rules).duration = {
-    required: true
-    gte: {seconds: 1}
-  }];
 }
 
 // Scheduler RPC Service.
@@ -1433,6 +1428,6 @@ service Scheduler {
   rpc StatImageManifest(StatImageManifestRequest) returns (StatImageManifestResponse);
 
   // AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
-  // the scheduler keeps it until the ttl expires.
+  // the scheduler keeps it until the ttl of the cache in the scheduler expires.
   rpc AnnounceImageManifest(AnnounceImageManifestRequest) returns (google.protobuf.Empty);
 }

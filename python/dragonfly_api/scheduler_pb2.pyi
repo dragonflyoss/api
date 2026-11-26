@@ -1038,17 +1038,15 @@ class StatImageManifestResponse(_message.Message):
     def __init__(self, digest: _Optional[str] = ..., media_type: _Optional[str] = ..., content_length: _Optional[int] = ...) -> None: ...
 
 class AnnounceImageManifestRequest(_message.Message):
-    __slots__ = ("host_id", "reference", "digest", "media_type", "content_length", "ttl")
+    __slots__ = ("host_id", "reference", "digest", "media_type", "content_length")
     HOST_ID_FIELD_NUMBER: _ClassVar[int]
     REFERENCE_FIELD_NUMBER: _ClassVar[int]
     DIGEST_FIELD_NUMBER: _ClassVar[int]
     MEDIA_TYPE_FIELD_NUMBER: _ClassVar[int]
     CONTENT_LENGTH_FIELD_NUMBER: _ClassVar[int]
-    TTL_FIELD_NUMBER: _ClassVar[int]
     host_id: str
     reference: str
     digest: str
     media_type: str
     content_length: int
-    ttl: _duration_pb2.Duration
-    def __init__(self, host_id: _Optional[str] = ..., reference: _Optional[str] = ..., digest: _Optional[str] = ..., media_type: _Optional[str] = ..., content_length: _Optional[int] = ..., ttl: _Optional[_Union[datetime.timedelta, _duration_pb2.Duration, _Mapping]] = ...) -> None: ...
+    def __init__(self, host_id: _Optional[str] = ..., reference: _Optional[str] = ..., digest: _Optional[str] = ..., media_type: _Optional[str] = ..., content_length: _Optional[int] = ...) -> None: ...

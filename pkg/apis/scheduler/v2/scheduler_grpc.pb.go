@@ -124,7 +124,7 @@ type SchedulerClient interface {
 	// the scheduler does not access the registry.
 	StatImageManifest(ctx context.Context, in *StatImageManifestRequest, opts ...grpc.CallOption) (*StatImageManifestResponse, error)
 	// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
-	// the scheduler keeps it until the ttl expires.
+	// the scheduler keeps it until the ttl of the cache in the scheduler expires.
 	AnnounceImageManifest(ctx context.Context, in *AnnounceImageManifestRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
@@ -652,7 +652,7 @@ type SchedulerServer interface {
 	// the scheduler does not access the registry.
 	StatImageManifest(context.Context, *StatImageManifestRequest) (*StatImageManifestResponse, error)
 	// AnnounceImageManifest announces the image manifest that the tag of the image is resolved to,
-	// the scheduler keeps it until the ttl expires.
+	// the scheduler keeps it until the ttl of the cache in the scheduler expires.
 	AnnounceImageManifest(context.Context, *AnnounceImageManifestRequest) (*emptypb.Empty, error)
 }
 
